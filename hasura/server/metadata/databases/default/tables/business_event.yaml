@@ -23,7 +23,8 @@ insert_permissions:
         - gps_location
         - schedule
         - schedule_type
-        - time
+        - ends_at
+        - starts_at
 select_permissions:
   - role: business_operator
     permission:
@@ -34,8 +35,9 @@ select_permissions:
         - id
         - schedule
         - address
-        - time
         - schedule_type
+        - ends_at
+        - starts_at
       filter:
         business:
           operators:
@@ -44,14 +46,15 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - id
+        - address
         - business_id
-        - schedule_type
-        - schedule
         - details_id
         - gps_location
-        - address
-        - time
+        - id
+        - schedule
+        - schedule_type
+        - ends_at
+        - starts_at
       filter: {}
       allow_aggregations: true
 update_permissions:
@@ -62,7 +65,8 @@ update_permissions:
         - gps_location
         - schedule
         - schedule_type
-        - time
+        - ends_at
+        - starts_at
       filter:
         business:
           operators:

@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -44,7 +45,7 @@ class SearchItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      item.name[userLanguage] ?? '${_i18n()['noName']}',
+                      item.name.getTranslation(userLanguage),
                       maxLines: 2,
                       style: context.txt.bodyLarge,
                     ),

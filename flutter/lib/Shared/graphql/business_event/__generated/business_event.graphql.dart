@@ -435,7 +435,14 @@ const documentNodeQueryget_event_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'time'),
+            name: NameNode(value: 'starts_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'ends_at'),
             alias: null,
             arguments: [],
             directives: [],
@@ -750,7 +757,8 @@ class Query$get_event_by_id$business_event_by_pk {
     required this.schedule_type,
     this.gps_location,
     this.address,
-    this.time,
+    this.starts_at,
+    this.ends_at,
     required this.details,
     required this.$__typename,
   });
@@ -763,7 +771,8 @@ class Query$get_event_by_id$business_event_by_pk {
     final l$schedule_type = json['schedule_type'];
     final l$gps_location = json['gps_location'];
     final l$address = json['address'];
-    final l$time = json['time'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$get_event_by_id$business_event_by_pk(
@@ -775,7 +784,8 @@ class Query$get_event_by_id$business_event_by_pk {
       gps_location:
           l$gps_location == null ? null : geographyFromJson(l$gps_location),
       address: (l$address as String?),
-      time: (l$time as String?),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
       details: Query$get_event_by_id$business_event_by_pk$details.fromJson(
           (l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -794,7 +804,9 @@ class Query$get_event_by_id$business_event_by_pk {
 
   final String? address;
 
-  final String? time;
+  final String? starts_at;
+
+  final String? ends_at;
 
   final Query$get_event_by_id$business_event_by_pk$details details;
 
@@ -815,8 +827,10 @@ class Query$get_event_by_id$business_event_by_pk {
         l$gps_location == null ? null : geographyToJson(l$gps_location);
     final l$address = address;
     _resultData['address'] = l$address;
-    final l$time = time;
-    _resultData['time'] = l$time;
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -832,7 +846,8 @@ class Query$get_event_by_id$business_event_by_pk {
     final l$schedule_type = schedule_type;
     final l$gps_location = gps_location;
     final l$address = address;
-    final l$time = time;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -842,7 +857,8 @@ class Query$get_event_by_id$business_event_by_pk {
       l$schedule_type,
       l$gps_location,
       l$address,
-      l$time,
+      l$starts_at,
+      l$ends_at,
       l$details,
       l$$__typename,
     ]);
@@ -887,9 +903,14 @@ class Query$get_event_by_id$business_event_by_pk {
     if (l$address != lOther$address) {
       return false;
     }
-    final l$time = time;
-    final lOther$time = other.time;
-    if (l$time != lOther$time) {
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
       return false;
     }
     final l$details = details;
@@ -932,7 +953,8 @@ abstract class CopyWith$Query$get_event_by_id$business_event_by_pk<TRes> {
     String? schedule_type,
     Geography? gps_location,
     String? address,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_event_by_id$business_event_by_pk$details? details,
     String? $__typename,
   });
@@ -961,7 +983,8 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk<TRes>
     Object? schedule_type = _undefined,
     Object? gps_location = _undefined,
     Object? address = _undefined,
-    Object? time = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -981,7 +1004,11 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk<TRes>
             : (gps_location as Geography?),
         address:
             address == _undefined ? _instance.address : (address as String?),
-        time: time == _undefined ? _instance.time : (time as String?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
         details: details == _undefined || details == null
             ? _instance.details
             : (details as Query$get_event_by_id$business_event_by_pk$details),
@@ -1017,7 +1044,8 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk<TRes>
     String? schedule_type,
     Geography? gps_location,
     String? address,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_event_by_id$business_event_by_pk$details? details,
     String? $__typename,
   }) =>
@@ -3920,7 +3948,14 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'time'),
+            name: NameNode(value: 'starts_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'ends_at'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4145,7 +4180,8 @@ class Query$get_event_by_category$business_event {
     this.address,
     required this.schedule_type,
     this.schedule,
-    this.time,
+    this.starts_at,
+    this.ends_at,
     required this.business,
     required this.$__typename,
   });
@@ -4158,7 +4194,8 @@ class Query$get_event_by_category$business_event {
     final l$address = json['address'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
-    final l$time = json['time'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
     final l$business = json['business'];
     final l$$__typename = json['__typename'];
     return Query$get_event_by_category$business_event(
@@ -4170,7 +4207,8 @@ class Query$get_event_by_category$business_event {
       address: (l$address as String?),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
-      time: (l$time as String?),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
       business: Query$get_event_by_category$business_event$business.fromJson(
           (l$business as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4189,7 +4227,9 @@ class Query$get_event_by_category$business_event {
 
   final dynamic? schedule;
 
-  final String? time;
+  final String? starts_at;
+
+  final String? ends_at;
 
   final Query$get_event_by_category$business_event$business business;
 
@@ -4210,8 +4250,10 @@ class Query$get_event_by_category$business_event {
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
-    final l$time = time;
-    _resultData['time'] = l$time;
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$$__typename = $__typename;
@@ -4227,7 +4269,8 @@ class Query$get_event_by_category$business_event {
     final l$address = address;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
-    final l$time = time;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
     final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -4237,7 +4280,8 @@ class Query$get_event_by_category$business_event {
       l$address,
       l$schedule_type,
       l$schedule,
-      l$time,
+      l$starts_at,
+      l$ends_at,
       l$business,
       l$$__typename,
     ]);
@@ -4282,9 +4326,14 @@ class Query$get_event_by_category$business_event {
     if (l$schedule != lOther$schedule) {
       return false;
     }
-    final l$time = time;
-    final lOther$time = other.time;
-    if (l$time != lOther$time) {
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
       return false;
     }
     final l$business = business;
@@ -4327,7 +4376,8 @@ abstract class CopyWith$Query$get_event_by_category$business_event<TRes> {
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_event_by_category$business_event$business? business,
     String? $__typename,
   });
@@ -4356,7 +4406,8 @@ class _CopyWithImpl$Query$get_event_by_category$business_event<TRes>
     Object? address = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
-    Object? time = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
     Object? business = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -4376,7 +4427,11 @@ class _CopyWithImpl$Query$get_event_by_category$business_event<TRes>
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
-        time: time == _undefined ? _instance.time : (time as String?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
         business: business == _undefined || business == null
             ? _instance.business
             : (business as Query$get_event_by_category$business_event$business),
@@ -4412,7 +4467,8 @@ class _CopyWithStubImpl$Query$get_event_by_category$business_event<TRes>
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_event_by_category$business_event$business? business,
     String? $__typename,
   }) =>
@@ -6489,7 +6545,14 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'time'),
+            name: NameNode(value: 'starts_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'ends_at'),
             alias: null,
             arguments: [],
             directives: [],
@@ -6714,7 +6777,8 @@ class Query$get_class_by_category$business_event {
     this.address,
     required this.schedule_type,
     this.schedule,
-    this.time,
+    this.starts_at,
+    this.ends_at,
     required this.business,
     required this.$__typename,
   });
@@ -6727,7 +6791,8 @@ class Query$get_class_by_category$business_event {
     final l$address = json['address'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
-    final l$time = json['time'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
     final l$business = json['business'];
     final l$$__typename = json['__typename'];
     return Query$get_class_by_category$business_event(
@@ -6739,7 +6804,8 @@ class Query$get_class_by_category$business_event {
       address: (l$address as String?),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
-      time: (l$time as String?),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
       business: Query$get_class_by_category$business_event$business.fromJson(
           (l$business as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -6758,7 +6824,9 @@ class Query$get_class_by_category$business_event {
 
   final dynamic? schedule;
 
-  final String? time;
+  final String? starts_at;
+
+  final String? ends_at;
 
   final Query$get_class_by_category$business_event$business business;
 
@@ -6779,8 +6847,10 @@ class Query$get_class_by_category$business_event {
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
-    final l$time = time;
-    _resultData['time'] = l$time;
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$$__typename = $__typename;
@@ -6796,7 +6866,8 @@ class Query$get_class_by_category$business_event {
     final l$address = address;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
-    final l$time = time;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
     final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -6806,7 +6877,8 @@ class Query$get_class_by_category$business_event {
       l$address,
       l$schedule_type,
       l$schedule,
-      l$time,
+      l$starts_at,
+      l$ends_at,
       l$business,
       l$$__typename,
     ]);
@@ -6851,9 +6923,14 @@ class Query$get_class_by_category$business_event {
     if (l$schedule != lOther$schedule) {
       return false;
     }
-    final l$time = time;
-    final lOther$time = other.time;
-    if (l$time != lOther$time) {
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
       return false;
     }
     final l$business = business;
@@ -6896,7 +6973,8 @@ abstract class CopyWith$Query$get_class_by_category$business_event<TRes> {
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_class_by_category$business_event$business? business,
     String? $__typename,
   });
@@ -6925,7 +7003,8 @@ class _CopyWithImpl$Query$get_class_by_category$business_event<TRes>
     Object? address = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
-    Object? time = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
     Object? business = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -6945,7 +7024,11 @@ class _CopyWithImpl$Query$get_class_by_category$business_event<TRes>
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
-        time: time == _undefined ? _instance.time : (time as String?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
         business: business == _undefined || business == null
             ? _instance.business
             : (business as Query$get_class_by_category$business_event$business),
@@ -6981,7 +7064,8 @@ class _CopyWithStubImpl$Query$get_class_by_category$business_event<TRes>
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_class_by_category$business_event$business? business,
     String? $__typename,
   }) =>
@@ -13114,7 +13198,14 @@ const documentNodeQueryget_business_events = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'time'),
+            name: NameNode(value: 'starts_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'ends_at'),
             alias: null,
             arguments: [],
             directives: [],
@@ -13489,7 +13580,8 @@ class Query$get_business_events$business_event {
     this.address,
     required this.schedule_type,
     this.schedule,
-    this.time,
+    this.starts_at,
+    this.ends_at,
     required this.details,
     required this.business,
     required this.$__typename,
@@ -13502,7 +13594,8 @@ class Query$get_business_events$business_event {
     final l$address = json['address'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
-    final l$time = json['time'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
     final l$details = json['details'];
     final l$business = json['business'];
     final l$$__typename = json['__typename'];
@@ -13513,7 +13606,8 @@ class Query$get_business_events$business_event {
       address: (l$address as String?),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
-      time: (l$time as String?),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
       details: Query$get_business_events$business_event$details.fromJson(
           (l$details as Map<String, dynamic>)),
       business: Query$get_business_events$business_event$business.fromJson(
@@ -13532,7 +13626,9 @@ class Query$get_business_events$business_event {
 
   final dynamic? schedule;
 
-  final String? time;
+  final String? starts_at;
+
+  final String? ends_at;
 
   final Query$get_business_events$business_event$details details;
 
@@ -13553,8 +13649,10 @@ class Query$get_business_events$business_event {
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
-    final l$time = time;
-    _resultData['time'] = l$time;
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$business = business;
@@ -13571,7 +13669,8 @@ class Query$get_business_events$business_event {
     final l$address = address;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
-    final l$time = time;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
     final l$details = details;
     final l$business = business;
     final l$$__typename = $__typename;
@@ -13581,7 +13680,8 @@ class Query$get_business_events$business_event {
       l$address,
       l$schedule_type,
       l$schedule,
-      l$time,
+      l$starts_at,
+      l$ends_at,
       l$details,
       l$business,
       l$$__typename,
@@ -13622,9 +13722,14 @@ class Query$get_business_events$business_event {
     if (l$schedule != lOther$schedule) {
       return false;
     }
-    final l$time = time;
-    final lOther$time = other.time;
-    if (l$time != lOther$time) {
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
       return false;
     }
     final l$details = details;
@@ -13671,7 +13776,8 @@ abstract class CopyWith$Query$get_business_events$business_event<TRes> {
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_business_events$business_event$details? details,
     Query$get_business_events$business_event$business? business,
     String? $__typename,
@@ -13699,7 +13805,8 @@ class _CopyWithImpl$Query$get_business_events$business_event<TRes>
     Object? address = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
-    Object? time = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
     Object? details = _undefined,
     Object? business = _undefined,
     Object? $__typename = _undefined,
@@ -13717,7 +13824,11 @@ class _CopyWithImpl$Query$get_business_events$business_event<TRes>
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
-        time: time == _undefined ? _instance.time : (time as String?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
         details: details == _undefined || details == null
             ? _instance.details
             : (details as Query$get_business_events$business_event$details),
@@ -13754,7 +13865,8 @@ class _CopyWithStubImpl$Query$get_business_events$business_event<TRes>
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_business_events$business_event$details? details,
     Query$get_business_events$business_event$business? business,
     String? $__typename,

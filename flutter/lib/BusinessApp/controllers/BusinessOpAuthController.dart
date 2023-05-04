@@ -23,13 +23,8 @@ class BusinessOpAuthController extends GetxController {
 
   /// this getter should be used only after the operator is set
   /// otherwise it will throw an exception
-  BusinessProfile get businessProfile {
-    if (_businessProfile == null) {
-      throw StateError("🛑🛑 Business profile is null");
-    } else {
-      mezDbgPrint("Business profile ====>$businessProfile");
-      return _businessProfile!;
-    }
+  BusinessProfile? get businessProfile {
+    return _businessProfile;
   }
 
   @override

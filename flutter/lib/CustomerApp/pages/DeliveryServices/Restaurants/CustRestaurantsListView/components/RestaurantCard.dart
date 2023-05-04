@@ -62,12 +62,14 @@ class _RestaurantCardState extends State<RestaurantCard> {
                     children: <Widget>[
                       Text(widget.restaurant.info.name, style: txt.bodyLarge),
                       //  SizedBox(height: 5),
-                      if (widget.restaurant.info.description?[userLanguage] !=
+                      if (widget.restaurant.info.description
+                              ?.getTranslation(userLanguage) !=
                           null)
                         Padding(
                           padding: const EdgeInsets.only(top: 2.0),
                           child: Text(
-                            widget.restaurant.info.description![userLanguage]!,
+                            widget.restaurant.info.description!
+                                .getTranslation(userLanguage),
                             style: txt.bodyMedium,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,

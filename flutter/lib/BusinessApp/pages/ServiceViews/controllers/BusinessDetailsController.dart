@@ -160,6 +160,8 @@ class BusinessItemDetailsController {
         (TimeUnit key, TextEditingController value) => key == timeUnit);
   }
 
+  void clearPrices() => priceTimeUnitMap.clear();
+
   Future<void> addItemImage(
       {required int itemIndex, required BuildContext context}) async {
     final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);

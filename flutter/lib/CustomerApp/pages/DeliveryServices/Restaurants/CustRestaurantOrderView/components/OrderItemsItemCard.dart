@@ -158,7 +158,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
               SizedBox(
                 width: 10,
               ),
-              if (widget.item.name[userLanguage] != null)
+              if (widget.item.name.getTranslation(userLanguage) != null)
                 Flexible(
                   fit: FlexFit.tight,
                   child: Column(
@@ -168,7 +168,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         text: TextSpan(
-                          text: widget.item.name[userLanguage]!,
+                          text: widget.item.name.getTranslation(userLanguage),
                           style: txt.bodyLarge?.copyWith(
                               color: widget.item.unavailable
                                   ? Colors.black.withOpacity(0.5)

@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -172,20 +173,20 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 0),
             child: Text(
-              category.name?[userLanguage]?.inCaps ??
+              category.name?.getTranslation(userLanguage).inCaps ??
                   '${_i18n()["undefinedCategory"]}',
-              style: category.name?[userLanguage] != null
+              style: category.name?.getTranslation(userLanguage) != null
                   ? context.txt.headlineSmall
                   : context.txt.bodyMedium?.copyWith(
                       color: Color(0xFF787878),
                     ),
             ),
           ),
-          if (category.dialog?[userLanguage] != null &&
-              category.dialog![userLanguage]!.inCaps != "")
+          if (category.dialog != null &&
+              category.dialog!.getTranslation(userLanguage).inCaps != "unnamed")
             Container(
               child: Text(
-                category.dialog![userLanguage]!.inCaps,
+                category.dialog!.getTranslation(userLanguage).inCaps,
                 style: context.txt.bodyMedium?.copyWith(
                   color: offLightShadeGreyColor,
                 ),

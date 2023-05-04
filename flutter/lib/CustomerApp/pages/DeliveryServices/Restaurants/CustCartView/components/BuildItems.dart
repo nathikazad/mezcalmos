@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 final NumberFormat currency = new NumberFormat("#,##0.00", "en_US");
 
@@ -49,8 +50,7 @@ class CartItemsBuilder extends StatelessWidget {
                     showImage: viewController.showItemsImages,
                     imageUrl: cartItem.item.image,
                     itemName:
-                        cartItem.item.name[userLanguage]![0].toUpperCase() +
-                            cartItem.item.name[userLanguage]!.substring(1),
+                        cartItem.item.name.getTranslation(userLanguage).inCaps,
                     itemsPrice: cartItem.totalCost().toStringAsFixed(0),
                     viewController: viewController,
                   )),

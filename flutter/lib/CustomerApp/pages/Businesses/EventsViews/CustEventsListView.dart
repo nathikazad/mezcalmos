@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -271,9 +272,8 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                     ),
                     Expanded(
                       child: Text(
-                        viewController
-                                .events[index].details.name[userLanguage] ??
-                            "",
+                        viewController.events[index].details.name
+                .getTranslation(userLanguage),
                         style: context.textTheme.displaySmall?.copyWith(
                             fontSize: 11.75.mezSp,
                             fontWeight: FontWeight.bold,

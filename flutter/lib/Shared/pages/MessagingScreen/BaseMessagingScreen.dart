@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -129,8 +130,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                   ),
                 ),
                 content: Text(
-                  controller.incomingViewLink!.name[userLanguage] ??
-                      controller.incomingViewLink!.name.entries.first.value,
+                  controller.incomingViewLink!.name
+                      .getTranslation(userLanguage),
                 ),
               ),
               singleChatComponent(

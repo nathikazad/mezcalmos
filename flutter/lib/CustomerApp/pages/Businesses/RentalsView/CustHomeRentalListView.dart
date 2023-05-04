@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dar
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -209,9 +210,8 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          viewController
-                                  .rentals[index].details.name[userLanguage] ??
-                              "",
+                          viewController.rentals[index].details.name
+                              .getTranslation(userLanguage),
                           overflow: TextOverflow.ellipsis,
                           style: context.textTheme.displaySmall?.copyWith(
                               fontSize: 12.5.mezSp,

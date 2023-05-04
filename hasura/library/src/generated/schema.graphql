@@ -1314,6 +1314,7 @@ type business_event {
   """An object relationship"""
   details: business_item_details!
   details_id: Int!
+  ends_at: timestamptz
   gps_location: geography
   id: Int!
   schedule(
@@ -1323,7 +1324,7 @@ type business_event {
 
   """scheduled or OnDemand"""
   schedule_type: String!
-  time: timestamptz
+  starts_at: timestamptz
 }
 
 """
@@ -1422,11 +1423,12 @@ input business_event_bool_exp {
   business_id: Int_comparison_exp
   details: business_item_details_bool_exp
   details_id: Int_comparison_exp
+  ends_at: timestamptz_comparison_exp
   gps_location: geography_comparison_exp
   id: Int_comparison_exp
   schedule: jsonb_comparison_exp
   schedule_type: String_comparison_exp
-  time: timestamptz_comparison_exp
+  starts_at: timestamptz_comparison_exp
 }
 
 """
@@ -1484,13 +1486,14 @@ input business_event_insert_input {
   business_id: Int
   details: business_item_details_obj_rel_insert_input
   details_id: Int
+  ends_at: timestamptz
   gps_location: geography
   id: Int
   schedule: jsonb
 
   """scheduled or OnDemand"""
   schedule_type: String
-  time: timestamptz
+  starts_at: timestamptz
 }
 
 """aggregate max on columns"""
@@ -1498,11 +1501,12 @@ type business_event_max_fields {
   address: String
   business_id: Int
   details_id: Int
+  ends_at: timestamptz
   id: Int
 
   """scheduled or OnDemand"""
   schedule_type: String
-  time: timestamptz
+  starts_at: timestamptz
 }
 
 """
@@ -1512,11 +1516,12 @@ input business_event_max_order_by {
   address: order_by
   business_id: order_by
   details_id: order_by
+  ends_at: order_by
   id: order_by
 
   """scheduled or OnDemand"""
   schedule_type: order_by
-  time: order_by
+  starts_at: order_by
 }
 
 """aggregate min on columns"""
@@ -1524,11 +1529,12 @@ type business_event_min_fields {
   address: String
   business_id: Int
   details_id: Int
+  ends_at: timestamptz
   id: Int
 
   """scheduled or OnDemand"""
   schedule_type: String
-  time: timestamptz
+  starts_at: timestamptz
 }
 
 """
@@ -1538,11 +1544,12 @@ input business_event_min_order_by {
   address: order_by
   business_id: order_by
   details_id: order_by
+  ends_at: order_by
   id: order_by
 
   """scheduled or OnDemand"""
   schedule_type: order_by
-  time: order_by
+  starts_at: order_by
 }
 
 """
@@ -1582,11 +1589,12 @@ input business_event_order_by {
   business_id: order_by
   details: business_item_details_order_by
   details_id: order_by
+  ends_at: order_by
   gps_location: order_by
   id: order_by
   schedule: order_by
   schedule_type: order_by
-  time: order_by
+  starts_at: order_by
 }
 
 """primary key columns input for table: business.event"""
@@ -1613,6 +1621,9 @@ enum business_event_select_column {
   details_id
 
   """column name"""
+  ends_at
+
+  """column name"""
   gps_location
 
   """column name"""
@@ -1625,7 +1636,7 @@ enum business_event_select_column {
   schedule_type
 
   """column name"""
-  time
+  starts_at
 }
 
 """
@@ -1635,13 +1646,14 @@ input business_event_set_input {
   address: String
   business_id: Int
   details_id: Int
+  ends_at: timestamptz
   gps_location: geography
   id: Int
   schedule: jsonb
 
   """scheduled or OnDemand"""
   schedule_type: String
-  time: timestamptz
+  starts_at: timestamptz
 }
 
 """aggregate stddev on columns"""
@@ -1708,13 +1720,14 @@ input business_event_stream_cursor_value_input {
   address: String
   business_id: Int
   details_id: Int
+  ends_at: timestamptz
   gps_location: geography
   id: Int
   schedule: jsonb
 
   """scheduled or OnDemand"""
   schedule_type: String
-  time: timestamptz
+  starts_at: timestamptz
 }
 
 """aggregate sum on columns"""
@@ -1747,6 +1760,9 @@ enum business_event_update_column {
   details_id
 
   """column name"""
+  ends_at
+
+  """column name"""
   gps_location
 
   """column name"""
@@ -1759,7 +1775,7 @@ enum business_event_update_column {
   schedule_type
 
   """column name"""
-  time
+  starts_at
 }
 
 input business_event_updates {

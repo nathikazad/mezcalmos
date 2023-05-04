@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpScheduleTypeSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/controllers/BsEventViewController.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingLocationCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -13,11 +17,13 @@ import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 
 class BsOpEventView extends StatefulWidget {
   const BsOpEventView({Key? key}) : super(key: key);
-  static Future<bool?> navigate({required int? id}) async {
+  static Future<bool?> navigate(
+      {required int? id, required bool isClass}) async {
     String route = BusinessOpRoutes.kBsOpEvent;
     route = route.replaceFirst(":id", id?.toString() ?? "add");
     await MezRouter.toPath(
       route,
+      arguments: {"class": isClass},
     );
     return MezRouter.backResult;
   }
@@ -31,8 +37,9 @@ class _BsOpEventViewState extends State<BsOpEventView>
   BsEventViewController viewController = BsEventViewController();
   @override
   void initState() {
-   
-    viewController.init(thickerProvider: this,);
+    viewController.init(
+        thickerProvider: this,
+        isClass: MezRouter.bodyArguments?["class"] ?? false);
     int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
       viewController.initEditMode(id: id);
@@ -54,7 +61,9 @@ class _BsOpEventViewState extends State<BsOpEventView>
       bottomNavigationBar: MezButton(
         label: "Save",
         borderRadius: 0,
-        onClick: () async {},
+        onClick: () async {
+          await viewController.save();
+        },
       ),
       body: TabBarView(
         controller: viewController.tabController,
@@ -77,9 +86,15 @@ class _BsOpEventViewState extends State<BsOpEventView>
                 text: "Spanish",
               )
             ], controller: viewController.tabController)),
-        titleWidget: Obx(() => Text(viewController.events != null
-            ? "${viewController.events!.details.name[userLanguage] ?? ""}"
-            : "Event")));
+        titleWidget: Obx(() => Text(getAppbartitle())));
+  }
+
+  String getAppbartitle() {
+    return viewController.event != null
+        ? "${viewController.event!.details.name.getTranslation(userLanguage)}"
+        : (viewController.isClass == false)
+            ? "Event"
+            : "Class";
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -139,6 +154,21 @@ class _BsOpEventViewState extends State<BsOpEventView>
               ),
             ),
             bigSeperator,
+            Obx(
+              () => BsOpScheduleTypeSelector(
+                items: viewController.getScheduleType(),
+                label: "Select event type",
+                value: viewController.getScheduleType().firstWhereOrNull(
+                    (ScheduleTypeInput element) =>
+                        element.type == viewController.scheduleType.value),
+                onChanged: (ScheduleTypeInput? v) {
+                  if (v != null) {
+                    viewController.switchScheduleType(v.type);
+                  }
+                },
+              ),
+            ),
+            bigSeperator,
             Text(
               "Images",
               style: context.textTheme.bodyLarge,
@@ -178,18 +208,29 @@ class _BsOpEventViewState extends State<BsOpEventView>
               ),
             ),
             bigSeperator,
-            Row(
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    "Prices",
-                    style: context.textTheme.bodyLarge,
-                  ),
-                ),
-              ],
+            Obx(
+              () => BsOpOfferingPricesList(
+                availbleUnits: viewController.avalbleUnits,
+                onAddPrice: (TimeUnit unit) {
+                  viewController.detailsController.addPriceTimeUnit(unit);
+                },
+                onRemovePrice: (TimeUnit unit) {
+                  viewController.detailsController.removeTimeUnit(unit);
+                },
+                seletedPrices:
+                    viewController.detailsController.priceTimeUnitMap,
+              ),
             ),
-            smallSepartor,
+            bigSeperator,
+            Obx(
+              () => BsOpOfferingLocationCard(
+                  onLocationSelected: (Location v) {
+                    viewController.setLocation(v);
+                  },
+                  location: viewController.location.value),
+            ),
+            bigSeperator,
+            Obx(() => viewController.getScheduleWidget()),
           ],
         ),
       ),

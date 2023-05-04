@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
@@ -64,8 +65,8 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        viewController.homeRental!.details.name[userLanguage] ??
-                            _i18n()['noTitle'],
+                        viewController.homeRental!.details.name
+                            .getTranslation(userLanguage),
                         style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
@@ -89,8 +90,8 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                         style: context.textTheme.bodyLarge,
                       ),
                       Text(
-                        viewController.homeRental!.details
-                                .description?[userLanguage] ??
+                        viewController.homeRental!.details.description
+                                ?.getTranslation(userLanguage) ??
                             _i18n()['noDescription'],
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),

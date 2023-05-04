@@ -7,6 +7,7 @@ import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -79,7 +80,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
               )
             ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.product != null
-            ? "${viewController.product!.details.name[userLanguage] ?? ""}"
+            ? "${viewController.product!.details.name.getTranslation(userLanguage)}"
             : "Product")));
   }
 

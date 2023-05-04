@@ -95,7 +95,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                           height: 4,
                         ),
                         Text(
-                          "${laundry.value!.info.description![userLanguage]}",
+                          "${laundry.value!.info.description!.getTranslation(userLanguage)}",
                           style: context.txt.titleSmall,
                         ),
                       ],
@@ -150,7 +150,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           Flexible(
             flex: 1,
             child: Text(
-              item.name[userLanguage]?.toString().inCaps ?? "",
+              item.name.getTranslation(userLanguage).toString().inCaps,
               style: context.txt.titleSmall,
               maxLines: 1,
             ),

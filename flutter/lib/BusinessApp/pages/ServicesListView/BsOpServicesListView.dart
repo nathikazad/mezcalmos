@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dar
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -65,7 +66,10 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         style: context.textTheme.bodyLarge,
                       )),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      /// TODO: Only to view purpose
+                      viewController.changeBusiness();
+                    },
                     child: Ink(
                       padding: const EdgeInsets.all(5),
                       child: Row(
@@ -114,9 +118,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 customImageUrl,
                           ),
                           content: Text(
-                            viewController.homeRentals[index].details
-                                    .name[userLanguage] ??
-                                "name error",
+                            viewController.homeRentals[index].details.name
+                                .getTranslation(userLanguage),
                             style: context.textTheme.bodyLarge,
                           ))),
                 ),
@@ -144,9 +147,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 customImageUrl,
                           ),
                           content: Text(
-                            viewController.rentals[index].details
-                                    .name[userLanguage] ??
-                                "name error",
+                            viewController.rentals[index].details.name
+                                .getTranslation(userLanguage),
                             style: context.textTheme.bodyLarge,
                           ))),
                 ),
@@ -166,17 +168,18 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                       (int index) => MezCard(
                           onClick: () {
                             BsOpEventView.navigate(
-                                id: viewController.events[index].details.id
-                                    .toInt());
+                              id: viewController.events[index].details.id
+                                  .toInt(),
+                              isClass: false,
+                            );
                           },
                           firstAvatarBgImage: NetworkImage(
                             viewController.events[index].details.firstImage ??
                                 customImageUrl,
                           ),
                           content: Text(
-                            viewController
-                                    .events[index].details.name[userLanguage] ??
-                                "name error",
+                            viewController.events[index].details.name
+                                .getTranslation(userLanguage),
                             style: context.textTheme.bodyLarge,
                           ))),
                 ),
@@ -204,9 +207,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 customImageUrl,
                           ),
                           content: Text(
-                            viewController.services[index].details
-                                    .name[userLanguage] ??
-                                "name error",
+                            viewController.services[index].details.name
+                                .getTranslation(userLanguage),
                             style: context.textTheme.bodyLarge,
                           ))),
                 ),
@@ -234,9 +236,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 customImageUrl,
                           ),
                           content: Text(
-                            viewController.product[index].details
-                                    .name[userLanguage] ??
-                                "name error",
+                            viewController.product[index].details.name
+                                .getTranslation(userLanguage),
                             style: context.textTheme.bodyLarge,
                           ))),
                 ),
@@ -257,32 +258,13 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
             context: context,
             isScrollControlled: true,
             builder: (BuildContext context) {
-              BusinessServiceType currentSelectedService =
-                  BusinessServiceType.Rental;
+              Map<String, Object> currentSelectedService =
+                  viewController.currentBottomSheetData.first;
 
               void navigateToOfferingView() {
-                switch (currentSelectedService) {
-                  case BusinessServiceType.Rental:
-                    BsOpRentalView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.HomeRental:
-                    BsOpHomeRentalView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.Event:
-                    BsOpEventView.navigate(
-                      id: null,
-                    );
-                    return;
-                  case BusinessServiceType.Class:
-                    BsOpEventView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.Service:
-                    BsOpServiceView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.Product:
-                    BsOpProductView.navigate(id: null);
-                    return;
-                }
+                final Function navigate =
+                    currentSelectedService["route"] as Function;
+                navigate();
               }
 
               return StatefulBuilder(builder: (BuildContext context, setState) {
@@ -304,8 +286,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         Divider(
                           height: 35,
                         ),
-                        ...BusinessServiceType.values.map(
-                          (BusinessServiceType value) => Row(
+                        ...viewController.currentBottomSheetData.map(
+                          (Map<String, Object> value) => Row(
                             children: [
                               Flexible(
                                 fit: FlexFit.tight,
@@ -313,14 +295,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      _i18n()[value.name.toLowerCase()]["title"]
-                                          .toString(),
+                                      value["title"].toString(),
                                       style: context.textTheme.bodyLarge,
                                     ),
                                     Text(
-                                      _i18n()[value.name.toLowerCase()]
-                                              ["subtitle"]
-                                          .toString(),
+                                      value["subtitle"].toString(),
                                     )
                                   ],
                                 ),

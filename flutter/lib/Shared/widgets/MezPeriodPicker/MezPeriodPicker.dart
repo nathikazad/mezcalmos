@@ -7,8 +7,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezPeriodPicker/controller/MezPeriodPickerController.dart';
 
@@ -61,7 +59,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
               margin: const EdgeInsets.all(8),
               child: Text(
                 widget.title ?? '${_i18n()["title"]}',
-                style: context.txt.headline3,
+                style: context.txt.displaySmall,
               ),
             ),
             Divider(),
@@ -179,7 +177,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
                   backgroundColor: offRedColor,
                   textColor: Colors.red,
                   onClick: () async {
-                    MezRouter.back();
+                    Navigator.pop(context);
                   },
                 )),
                 const SizedBox(
@@ -190,7 +188,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
                   label: widget.confirmBtnText ?? '${_i18n()["confirm"]}',
                   withGradient: true,
                   onClick: () async {
-                    _controller.confirmCallBack();
+                    _controller.confirmCallBack(context);
                   },
                 )),
               ],

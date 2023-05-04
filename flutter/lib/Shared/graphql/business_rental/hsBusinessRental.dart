@@ -49,7 +49,7 @@ Future<List<RentalCard>> get_rental_by_category(
         rental: Rental(
             category1: data.details.category1.toRentalCategory1(),
             category2: data.details.category2.toRentalCategory2(),
-            category3: data.category3,
+            category3: data.category3.toRentalCategory3(),
             details: BusinessItemDetails(
               id: data.id,
               name: toLanguageMap(translations: data.details.name.translations),
@@ -104,7 +104,7 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
               id: id,
               category1: data.details.category1.toRentalCategory1(),
               category2: data.details.category2.toRentalCategory2(),
-              category3: data.category3,
+              category3: data.category3.toRentalCategory3(),
               details: BusinessItemDetails(
                 nameId: data.details.name_id,
                 descriptionId: data.details.description_id,
@@ -343,7 +343,7 @@ Future<int?> add_one_rental({required Rental rental}) async {
           variables: Variables$Mutation$create_rental(
               object: Input$business_rental_insert_input(
                   business_id: rental.details.businessId.toInt(),
-                  category3: rental.category3,
+                  category3: rental.category3?.toFirebaseFormatString(),
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                           available: rental.details.available,
@@ -425,7 +425,7 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
     rental: Input$business_rental_obj_rel_insert_input(
         data: Input$business_rental_insert_input(
             business_id: rental.details.businessId.toInt(),
-            category3: rental.category3,
+            category3: rental.category3?.toFirebaseFormatString(),
             details: Input$business_item_details_obj_rel_insert_input(
                 data: Input$business_item_details_insert_input(
                     available: rental.details.available,
@@ -522,7 +522,7 @@ Future<Rental?> update_business_home_rental(
         id: id,
         category1: data.rental.details.category1.toRentalCategory1(),
         category2: data.rental.details.category2.toRentalCategory2(),
-        category3: data.rental.category3,
+        category3: data.rental.category3.toRentalCategory3(),
         details: BusinessItemDetails(
           nameId: data.rental.details.name_id,
           descriptionId: data.rental.details.description_id,

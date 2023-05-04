@@ -4,6 +4,7 @@ import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
@@ -34,7 +35,7 @@ class CustBusinessProductCard extends StatelessWidget {
               ? CachedNetworkImageProvider(product.details.image![0])
               : null,
       content: Text(
-        product.details.name[userLanguage] ?? "",
+        product.details.name.getTranslation(userLanguage),
         style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.sp),
         overflow: TextOverflow.ellipsis,
       ),
@@ -64,7 +65,7 @@ class CustBusinessProductCard extends StatelessWidget {
           Flexible(
             flex: 7,
             child: Text(
-              product.details.name[userLanguage] ?? "",
+              product.details.name.getTranslation(userLanguage) ?? "",
               style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.sp),
               overflow: TextOverflow.ellipsis,
             ),

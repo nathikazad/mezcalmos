@@ -237,7 +237,8 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
       ]),
       titleWidget: Obx(() {
         if (viewController.editMode.isTrue) {
-          return Text(viewController.choice.value!.name[userLanguage]!);
+          return Text(
+              viewController.choice.value!.name.getTranslation(userLanguage));
         } else {
           return Text(
             "${_i18n()['newChoice']}",

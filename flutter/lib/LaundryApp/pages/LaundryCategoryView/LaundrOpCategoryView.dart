@@ -94,7 +94,8 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
       titleWidget: Obx(
         () => Text((_viewController.editMode.value &&
                 _viewController.copyOfCategory.value != null)
-            ? _viewController.copyOfCategory.value!.name[userLanguage] ?? ""
+            ? _viewController.copyOfCategory.value!.name
+                .getTranslation(userLanguage)
             : "${_i18n()["addCategory"]}"),
       ),
     );

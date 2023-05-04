@@ -51,7 +51,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                   Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      widget.category.name?[userLanguage] ?? "",
+                      widget.category.name?.getTranslation(userLanguage) ?? "",
                       style: context.txt.bodyLarge,
                     ),
                   ),
@@ -60,11 +60,11 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                       : _categoryMenuBtn(context)
                 ],
               ),
-              if (widget.category.dialog?[userLanguage] != null)
+              if (widget.category.dialog != null)
                 Container(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                    widget.category.dialog![userLanguage]!,
+                    widget.category.dialog!.getTranslation(userLanguage),
                     style: context.txt.bodyMedium,
                   ),
                 ),

@@ -536,7 +536,7 @@ factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(json) {
   }
 }
 
-enum BusinessProfile { SurfShop, VehicleRental, HomeRental, WellnessClass, Party, Volunteer, TourAgency, DanceClass, Therapy, Cleaning }
+enum BusinessProfile { SurfShop, VehicleRental, YogaStudio, HomeRental, LanguageSchool, TourAgency, ArtisanalProduct, CleaningService, PetSitting, WellnessPractitioner, Volunteer, Entertainment }
 extension ParseBusinessProfileToString on BusinessProfile {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;
@@ -2050,7 +2050,7 @@ class Rental {
   num? id;
   RentalCategory1 category1;
   RentalCategory2? category2;
-  String? category3;
+  RentalCategory3? category3;
   BusinessItemDetails details;
   num? bedrooms;
   num? bathrooms;
@@ -2082,10 +2082,11 @@ class Event {
   Schedule? schedule;
   BusinessItemDetails details;
   Location? gpsLocation;
-  String? time;
+  String? startsAt;
+  String? endsAt;
   List<EventTag>? tags;
   Event({
-    this.id, required this.category1, this.category2, required this.scheduleType, this.schedule, required this.details, this.gpsLocation, this.time, this.tags});
+    this.id, required this.category1, this.category2, required this.scheduleType, this.schedule, required this.details, this.gpsLocation, this.startsAt, this.endsAt, this.tags});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -2095,7 +2096,8 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "schedule": schedule,
       "details": details,
       "gpsLocation": gpsLocation,
-      "time": time,
+      "startsAt": startsAt,
+      "endsAt": endsAt,
       "tags": tags,
     };
   }
@@ -2242,6 +2244,22 @@ extension ParseStringToRentalCategory2 on String {
     return RentalCategory2.values.firstWhere(
         (RentalCategory2 rentalCategory2) =>
             rentalCategory2.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum RentalCategory3 { Retro, Scooter, ThreeWheeler }
+extension ParseRentalCategory3ToString on RentalCategory3 {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToRentalCategory3 on String {
+  RentalCategory3 toRentalCategory3() {
+    return RentalCategory3.values.firstWhere(
+        (RentalCategory3 rentalCategory3) =>
+            rentalCategory3.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 

@@ -29,7 +29,7 @@ class ItemChosenChoiceComponent extends StatelessWidget {
           height: 5,
         ),
         Text(
-          optionName[userLanguage] ?? "OptionName",
+          optionName.getTranslation(userLanguage),
           style: context.txt.bodyLarge,
         ),
         SizedBox(
@@ -46,7 +46,7 @@ class ItemChosenChoiceComponent extends StatelessWidget {
                         Flexible(
                           flex: 3,
                           child: Text(
-                            choices[index].name[userLanguage] ?? "choiceName",
+                            choices[index].name.getTranslation(userLanguage),
                             style: context.txt.bodyMedium,
                             maxLines: 2,
                           ),

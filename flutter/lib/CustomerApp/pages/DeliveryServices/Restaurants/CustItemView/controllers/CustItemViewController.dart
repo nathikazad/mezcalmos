@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 enum ViewItemScreenMode { AddItemMode, EditItemMode }
 
@@ -40,11 +41,8 @@ class CustItemViewController {
       currentMode == ViewItemScreenMode.AddItemMode &&
       cartContainCurrentItem == false;
   bool get itemHasDescription {
-    return getItem!.description?[userLanguage] != null &&
-        getItem!.description![userLanguage]!
-            .toString()
-            .removeAllWhitespace
-            .isNotEmpty;
+    return getItem!.description != null &&
+        getItem!.description!.getTranslation(userLanguage) != "unnamed";
   }
 
   // methods //

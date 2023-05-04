@@ -67,7 +67,7 @@ class BsHomeRentalViewController {
       details: details,
     );
     return rental;
-  }
+  } 
 
   Future<void> save() async {
     if (formKey.currentState?.validate() == true) {

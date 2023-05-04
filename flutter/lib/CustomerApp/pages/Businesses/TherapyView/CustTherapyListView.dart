@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -258,9 +259,8 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CachedNetworkImage(
-                            imageUrl: viewController
-                                    .therapy[index].details.image?.first ??
-                                "",
+                            imageUrl: viewController.therapy[index].details.name
+                                .getTranslation(userLanguage),
                             imageBuilder: (BuildContext context,
                                     ImageProvider<Object> imageProvider) =>
                                 CircleAvatar(
