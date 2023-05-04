@@ -25,8 +25,9 @@ class BusinessItemDetailsController {
   TextEditingController scDescriptionController = TextEditingController();
   // state variables //
   RxList<String?> imagesUrls = RxList.filled(5, null);
-  RxMap<TextEditingController, TimeUnit> priceTimeUnitMap =
-      RxMap<TextEditingController, TimeUnit>();
+
+  RxMap<TimeUnit, TextEditingController> priceTimeUnitMap =
+      RxMap<TimeUnit, TextEditingController>();
   RxList<File?> images = RxList.filled(5, null);
   RxBool isAvailable = false.obs;
   RxBool isEditing = false.obs;
@@ -57,7 +58,7 @@ class BusinessItemDetailsController {
       details!.cost.forEach((TimeUnit key, num value) {
         TextEditingController _controller = TextEditingController();
         _controller.text = value.toString();
-        priceTimeUnitMap[_controller] = key;
+        priceTimeUnitMap[key] = _controller;
       });
     }
   }
@@ -78,8 +79,8 @@ class BusinessItemDetailsController {
         businessId: Get.find<BusinessOpAuthController>().companyId!,
         available: isAvailable.value,
         cost: priceTimeUnitMap.value.map(
-            (TextEditingController key, TimeUnit value) =>
-                MapEntry(value, double.parse(key.text))));
+            (TimeUnit key, TextEditingController value) =>
+                MapEntry(key, double.parse(value.text))));
   }
 
   Future<void> updateItemDetails() async {
@@ -150,13 +151,13 @@ class BusinessItemDetailsController {
   }
 
   void addPriceTimeUnit(TimeUnit timeUnit) {
-    priceTimeUnitMap[TextEditingController()] = timeUnit;
+    priceTimeUnitMap[timeUnit] = TextEditingController();
     // priceTimeUnitMap.refresh();
   }
 
   void removeTimeUnit(TimeUnit timeUnit) {
     priceTimeUnitMap.removeWhere(
-        (TextEditingController key, TimeUnit value) => value == timeUnit);
+        (TimeUnit key, TextEditingController value) => key == timeUnit);
   }
 
   Future<void> addItemImage(

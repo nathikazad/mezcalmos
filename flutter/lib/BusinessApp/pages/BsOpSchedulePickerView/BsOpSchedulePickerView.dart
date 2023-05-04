@@ -28,7 +28,9 @@ class _BsOpSchedulePickerViewState extends State<BsOpSchedulePickerView> {
 
   @override
   void initState() {
-    viewController.init();
+    final Schedule? schedule =
+        MezRouter.bodyArguments!["schedule"] as Schedule?;
+    viewController.init(schedule: schedule);
     viewWidgets = BsOpSchedulePickerWidgets(
         context: context, viewController: viewController);
     super.initState();
@@ -42,7 +44,9 @@ class _BsOpSchedulePickerViewState extends State<BsOpSchedulePickerView> {
         AppBarLeftButtonType.Back,
         title: "Schedule",
         onClick: () {
-          MezRouter.back();
+          MezRouter.back(
+            backResult: viewController.newSchedule.value,
+          );
         },
       ),
       bottomNavigationBar: MezButton(

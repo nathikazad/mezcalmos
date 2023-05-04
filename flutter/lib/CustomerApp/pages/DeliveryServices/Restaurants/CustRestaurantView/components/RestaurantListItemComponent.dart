@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
-import 'package:sizer/sizer.dart';
 
 class RestaurantsListOfItemsComponent extends StatefulWidget {
   const RestaurantsListOfItemsComponent({

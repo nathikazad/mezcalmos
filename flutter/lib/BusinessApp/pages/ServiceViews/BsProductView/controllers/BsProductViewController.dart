@@ -24,39 +24,53 @@ class BsProductViewController {
   TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
-  TextEditingController priceController = TextEditingController();
   // vars //
   bool shouldRefetch = false;
   // state variables //
   Rxn<ProductWithBusinessCard> _product = Rxn<ProductWithBusinessCard>();
   ProductWithBusinessCard? get product => _product.value;
   bool get isEditing => _product.value != null;
+  Rxn<ProductCategory1> productCategory = Rxn<ProductCategory1>();
+
+  List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([TimeUnit.Unit]);
+  List<TimeUnit> get avalbleUnits => _possibleTimeUnits
+      .where((TimeUnit element) =>
+          detailsController.priceTimeUnitMap.keys.contains(element) == false)
+      .toList();
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
+    detailsController.addPriceTimeUnit(avalbleUnits.first);
   }
 
   Future<void> initEditMode({required int id}) async {
     _product.value = await get_product_by_id(id: id, withCache: false);
-    mezDbgPrint("product id : $id ${_product.value?.toFirebaseFormattedJson()}");
+    mezDbgPrint(
+        "product id : $id ${_product.value?.toFirebaseFormattedJson()}");
     if (product != null) {
       await detailsController.initEditMode(
-          detalsId: product!.details.id.toInt());
+        detalsId: product!.details.id.toInt(),
+      );
+      productCategory.value = product!.category1;
     }
   }
 
   Future<void> saveItemDetails() async {
     await detailsController.updateItemDetails();
+    if (productCategory.value != null) {
+      await update_product_category1(
+        id: product!.details.id.toInt(),
+        productCategory: productCategory.value!,
+      );
+      showSavedSnackBar();
+    }
   }
 
   Future<Product> _constructProduct() async {
     final BusinessItemDetails details =
         await detailsController.contructDetails();
-    details.cost = {
-      TimeUnit.Total: num.parse(priceController.text.trim().toString()),
-    };
     final Product product = Product(
-      category1: ProductCategory1.Consumable,
+      category1: productCategory.value!,
       details: details,
     );
     return product;
@@ -69,6 +83,8 @@ class BsProductViewController {
         shouldRefetch = true;
       } else {
         final Product _product = await _constructProduct();
+        mezDbgPrint("busniess id : ${_product.details.businessId}");
+
         await createItem(_product);
       }
     }

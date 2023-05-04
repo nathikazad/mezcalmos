@@ -7,6 +7,8 @@ import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
+typedef OfferingPricesMap = Map<TimeUnit, TextEditingController>;
+
 class BsHomeRentalViewController {
   // instances //
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -26,19 +28,21 @@ class BsHomeRentalViewController {
   Rental? get rental => _rental.value;
   bool get isEditing => _rental.value != null;
 
-  List<TimeUnit> get timeUnits => List.unmodifiable([
+  List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
+        
         TimeUnit.PerHour,
         TimeUnit.PerDay,
         TimeUnit.PerWeek,
         TimeUnit.PerMonth,
       ]);
-  List<TimeUnit> get units => timeUnits
+  List<TimeUnit> get avalbleUnits => _possibleTimeUnits
       .where((TimeUnit element) =>
-          detailsController.priceTimeUnitMap.values.contains(element) == false)
+          detailsController.priceTimeUnitMap.keys.contains(element) == false)
       .toList();
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
+    detailsController.addPriceTimeUnit(avalbleUnits.first);
   }
 
   Future<void> initEditMode({required int id}) async {

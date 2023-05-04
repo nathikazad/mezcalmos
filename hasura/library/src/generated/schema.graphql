@@ -536,6 +536,8 @@ input business_business_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_business_set_input
+
+  """filter the rows which have to be updated"""
   where: business_business_bool_exp!
 }
 
@@ -1084,6 +1086,8 @@ input business_cart_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_cart_item_set_input
+
+  """filter the rows which have to be updated"""
   where: business_cart_item_bool_exp!
 }
 
@@ -1271,6 +1275,8 @@ input business_cart_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_cart_set_input
+
+  """filter the rows which have to be updated"""
   where: business_cart_bool_exp!
 }
 
@@ -1784,6 +1790,8 @@ input business_event_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_event_set_input
+
+  """filter the rows which have to be updated"""
   where: business_event_bool_exp!
 }
 
@@ -2112,6 +2120,8 @@ input business_home_rental_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_home_rental_set_input
+
+  """filter the rows which have to be updated"""
   where: business_home_rental_bool_exp!
 }
 
@@ -2587,6 +2597,8 @@ input business_item_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_item_details_set_input
+
+  """filter the rows which have to be updated"""
   where: business_item_details_bool_exp!
 }
 
@@ -2618,6 +2630,8 @@ type business_item_details_variance_fields {
 columns and relationships of "business.operator"
 """
 type business_operator {
+  """An object relationship"""
+  business: business_business!
   business_id: Int!
   details_id: Int!
   id: Int!
@@ -2718,6 +2732,7 @@ input business_operator_bool_exp {
   _and: [business_operator_bool_exp!]
   _not: business_operator_bool_exp
   _or: [business_operator_bool_exp!]
+  business: business_business_bool_exp
   business_id: Int_comparison_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
@@ -2760,6 +2775,7 @@ input business_operator_inc_input {
 input type for inserting data into table "business.operator"
 """
 input business_operator_insert_input {
+  business: business_business_obj_rel_insert_input
   business_id: Int
   details_id: Int
   id: Int
@@ -2836,6 +2852,7 @@ input business_operator_on_conflict {
 
 """Ordering options when selecting data from "business.operator"."""
 input business_operator_order_by {
+  business: business_business_order_by
   business_id: order_by
   details_id: order_by
   id: order_by
@@ -2990,6 +3007,8 @@ input business_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: business_operator_bool_exp!
 }
 
@@ -3685,6 +3704,8 @@ input business_order_request_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_order_request_item_set_input
+
+  """filter the rows which have to be updated"""
   where: business_order_request_item_bool_exp!
 }
 
@@ -3989,6 +4010,8 @@ input business_order_request_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_order_request_set_input
+
+  """filter the rows which have to be updated"""
   where: business_order_request_bool_exp!
 }
 
@@ -4368,6 +4391,8 @@ input business_product_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_product_set_input
+
+  """filter the rows which have to be updated"""
   where: business_product_bool_exp!
 }
 
@@ -4784,6 +4809,8 @@ input business_rental_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_rental_set_input
+
+  """filter the rows which have to be updated"""
   where: business_rental_bool_exp!
 }
 
@@ -5178,6 +5205,8 @@ input business_service_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_service_set_input
+
+  """filter the rows which have to be updated"""
   where: business_service_bool_exp!
 }
 
@@ -5805,6 +5834,8 @@ input chat_participant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_participant_set_input
+
+  """filter the rows which have to be updated"""
   where: chat_participant_bool_exp!
 }
 
@@ -5998,6 +6029,8 @@ input chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_set_input
+
+  """filter the rows which have to be updated"""
   where: chat_bool_exp!
 }
 
@@ -6147,6 +6180,10 @@ type customer_customer {
     where: customer_stripe_cards_bool_exp
   ): customer_stripe_cards_aggregate!
   stripe_id: String
+  stripe_info(
+    """JSON select path"""
+    path: String
+  ): jsonb
 
   """An array relationship"""
   stripe_sp_ids(
@@ -6214,6 +6251,11 @@ type customer_customer_aggregate_fields {
   variance: customer_customer_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input customer_customer_append_input {
+  stripe_info: jsonb
+}
+
 """aggregate avg on columns"""
 type customer_customer_avg_fields {
   user_id: Float
@@ -6238,6 +6280,7 @@ input customer_customer_bool_exp {
   stripe_cards: customer_stripe_cards_bool_exp
   stripe_cards_aggregate: customer_stripe_cards_aggregate_bool_exp
   stripe_id: String_comparison_exp
+  stripe_info: jsonb_comparison_exp
   stripe_sp_ids: customer_stripe_sp_id_bool_exp
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_bool_exp
   user: user_bool_exp
@@ -6260,6 +6303,28 @@ enum customer_customer_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input customer_customer_delete_at_path_input {
+  stripe_info: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input customer_customer_delete_elem_input {
+  stripe_info: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input customer_customer_delete_key_input {
+  stripe_info: String
+}
+
+"""
 input type for incrementing numeric columns in table "customer.customer"
 """
 input customer_customer_inc_input {
@@ -6279,6 +6344,7 @@ input customer_customer_insert_input {
   service_provider_type: String
   stripe_cards: customer_stripe_cards_arr_rel_insert_input
   stripe_id: String
+  stripe_info: jsonb
   stripe_sp_ids: customer_stripe_sp_id_arr_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
@@ -6343,6 +6409,7 @@ input customer_customer_order_by {
   service_provider_type: order_by
   stripe_cards_aggregate: customer_stripe_cards_aggregate_order_by
   stripe_id: order_by
+  stripe_info: order_by
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_order_by
   user: user_order_by
   user_id: order_by
@@ -6351,6 +6418,11 @@ input customer_customer_order_by {
 """primary key columns input for table: customer.customer"""
 input customer_customer_pk_columns_input {
   user_id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input customer_customer_prepend_input {
+  stripe_info: jsonb
 }
 
 """
@@ -6370,6 +6442,9 @@ enum customer_customer_select_column {
   stripe_id
 
   """column name"""
+  stripe_info
+
+  """column name"""
   user_id
 }
 
@@ -6381,6 +6456,7 @@ input customer_customer_set_input {
   app_version: String
   service_provider_type: String
   stripe_id: String
+  stripe_info: jsonb
   user_id: Int
 }
 
@@ -6416,6 +6492,7 @@ input customer_customer_stream_cursor_value_input {
   app_version: String
   service_provider_type: String
   stripe_id: String
+  stripe_info: jsonb
   user_id: Int
 }
 
@@ -6441,15 +6518,42 @@ enum customer_customer_update_column {
   stripe_id
 
   """column name"""
+  stripe_info
+
+  """column name"""
   user_id
 }
 
 input customer_customer_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: customer_customer_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: customer_customer_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: customer_customer_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: customer_customer_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: customer_customer_inc_input
 
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: customer_customer_prepend_input
+
   """sets the columns of the filtered rows to the given values"""
   _set: customer_customer_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_customer_bool_exp!
 }
 
@@ -6704,6 +6808,8 @@ input customer_favourited_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_favourited_item_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_favourited_item_bool_exp!
 }
 
@@ -7146,6 +7252,8 @@ input customer_minimal_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_minimal_order_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_minimal_order_bool_exp!
 }
 
@@ -7559,6 +7667,8 @@ input customer_saved_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_saved_location_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_saved_location_bool_exp!
 }
 
@@ -8089,6 +8199,8 @@ input customer_stripe_cards_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_stripe_cards_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_stripe_cards_bool_exp!
 }
 
@@ -8489,6 +8601,8 @@ input customer_stripe_sp_id_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_stripe_sp_id_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_stripe_sp_id_bool_exp!
 }
 
@@ -8538,316 +8652,6 @@ input customer_stripe_sp_id_variance_order_by {
   customer_id: order_by
   id: order_by
   sp_id: order_by
-}
-
-"""
-columns and relationships of "data_consumption"
-"""
-type data_consumption {
-  date: date!
-  id: Int!
-  name_of_subscription: String!
-  number_of_events: Int!
-  total_size: Int!
-  user_id: Int!
-}
-
-"""
-aggregated selection of "data_consumption"
-"""
-type data_consumption_aggregate {
-  aggregate: data_consumption_aggregate_fields
-  nodes: [data_consumption!]!
-}
-
-"""
-aggregate fields of "data_consumption"
-"""
-type data_consumption_aggregate_fields {
-  avg: data_consumption_avg_fields
-  count(columns: [data_consumption_select_column!], distinct: Boolean): Int!
-  max: data_consumption_max_fields
-  min: data_consumption_min_fields
-  stddev: data_consumption_stddev_fields
-  stddev_pop: data_consumption_stddev_pop_fields
-  stddev_samp: data_consumption_stddev_samp_fields
-  sum: data_consumption_sum_fields
-  var_pop: data_consumption_var_pop_fields
-  var_samp: data_consumption_var_samp_fields
-  variance: data_consumption_variance_fields
-}
-
-"""aggregate avg on columns"""
-type data_consumption_avg_fields {
-  id: Float
-  number_of_events: Float
-  total_size: Float
-  user_id: Float
-}
-
-"""
-Boolean expression to filter rows from the table "data_consumption". All fields are combined with a logical 'AND'.
-"""
-input data_consumption_bool_exp {
-  _and: [data_consumption_bool_exp!]
-  _not: data_consumption_bool_exp
-  _or: [data_consumption_bool_exp!]
-  date: date_comparison_exp
-  id: Int_comparison_exp
-  name_of_subscription: String_comparison_exp
-  number_of_events: Int_comparison_exp
-  total_size: Int_comparison_exp
-  user_id: Int_comparison_exp
-}
-
-"""
-unique or primary key constraints on table "data_consumption"
-"""
-enum data_consumption_constraint {
-  """
-  unique or primary key constraint on columns "id"
-  """
-  data_consumption_pkey
-}
-
-"""
-input type for incrementing numeric columns in table "data_consumption"
-"""
-input data_consumption_inc_input {
-  id: Int
-  number_of_events: Int
-  total_size: Int
-  user_id: Int
-}
-
-"""
-input type for inserting data into table "data_consumption"
-"""
-input data_consumption_insert_input {
-  date: date
-  id: Int
-  name_of_subscription: String
-  number_of_events: Int
-  total_size: Int
-  user_id: Int
-}
-
-"""aggregate max on columns"""
-type data_consumption_max_fields {
-  date: date
-  id: Int
-  name_of_subscription: String
-  number_of_events: Int
-  total_size: Int
-  user_id: Int
-}
-
-"""aggregate min on columns"""
-type data_consumption_min_fields {
-  date: date
-  id: Int
-  name_of_subscription: String
-  number_of_events: Int
-  total_size: Int
-  user_id: Int
-}
-
-"""
-response of any mutation on the table "data_consumption"
-"""
-type data_consumption_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [data_consumption!]!
-}
-
-"""
-on_conflict condition type for table "data_consumption"
-"""
-input data_consumption_on_conflict {
-  constraint: data_consumption_constraint!
-  update_columns: [data_consumption_update_column!]! = []
-  where: data_consumption_bool_exp
-}
-
-"""Ordering options when selecting data from "data_consumption"."""
-input data_consumption_order_by {
-  date: order_by
-  id: order_by
-  name_of_subscription: order_by
-  number_of_events: order_by
-  total_size: order_by
-  user_id: order_by
-}
-
-"""primary key columns input for table: data_consumption"""
-input data_consumption_pk_columns_input {
-  id: Int!
-}
-
-"""
-select columns of table "data_consumption"
-"""
-enum data_consumption_select_column {
-  """column name"""
-  date
-
-  """column name"""
-  id
-
-  """column name"""
-  name_of_subscription
-
-  """column name"""
-  number_of_events
-
-  """column name"""
-  total_size
-
-  """column name"""
-  user_id
-}
-
-"""
-input type for updating data in table "data_consumption"
-"""
-input data_consumption_set_input {
-  date: date
-  id: Int
-  name_of_subscription: String
-  number_of_events: Int
-  total_size: Int
-  user_id: Int
-}
-
-"""aggregate stddev on columns"""
-type data_consumption_stddev_fields {
-  id: Float
-  number_of_events: Float
-  total_size: Float
-  user_id: Float
-}
-
-"""aggregate stddev_pop on columns"""
-type data_consumption_stddev_pop_fields {
-  id: Float
-  number_of_events: Float
-  total_size: Float
-  user_id: Float
-}
-
-"""aggregate stddev_samp on columns"""
-type data_consumption_stddev_samp_fields {
-  id: Float
-  number_of_events: Float
-  total_size: Float
-  user_id: Float
-}
-
-"""
-Streaming cursor of the table "data_consumption"
-"""
-input data_consumption_stream_cursor_input {
-  """Stream column input with initial value"""
-  initial_value: data_consumption_stream_cursor_value_input!
-
-  """cursor ordering"""
-  ordering: cursor_ordering
-}
-
-"""Initial value of the column from where the streaming should start"""
-input data_consumption_stream_cursor_value_input {
-  date: date
-  id: Int
-  name_of_subscription: String
-  number_of_events: Int
-  total_size: Int
-  user_id: Int
-}
-
-"""aggregate sum on columns"""
-type data_consumption_sum_fields {
-  id: Int
-  number_of_events: Int
-  total_size: Int
-  user_id: Int
-}
-
-"""
-update columns of table "data_consumption"
-"""
-enum data_consumption_update_column {
-  """column name"""
-  date
-
-  """column name"""
-  id
-
-  """column name"""
-  name_of_subscription
-
-  """column name"""
-  number_of_events
-
-  """column name"""
-  total_size
-
-  """column name"""
-  user_id
-}
-
-input data_consumption_updates {
-  """increments the numeric columns with given value of the filtered values"""
-  _inc: data_consumption_inc_input
-
-  """sets the columns of the filtered rows to the given values"""
-  _set: data_consumption_set_input
-
-  """filter the rows which have to be updated"""
-  where: data_consumption_bool_exp!
-}
-
-"""aggregate var_pop on columns"""
-type data_consumption_var_pop_fields {
-  id: Float
-  number_of_events: Float
-  total_size: Float
-  user_id: Float
-}
-
-"""aggregate var_samp on columns"""
-type data_consumption_var_samp_fields {
-  id: Float
-  number_of_events: Float
-  total_size: Float
-  user_id: Float
-}
-
-"""aggregate variance on columns"""
-type data_consumption_variance_fields {
-  id: Float
-  number_of_events: Float
-  total_size: Float
-  user_id: Float
-}
-
-scalar date
-
-"""
-Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'.
-"""
-input date_comparison_exp {
-  _eq: date
-  _gt: date
-  _gte: date
-  _in: [date!]
-  _is_null: Boolean
-  _lt: date
-  _lte: date
-  _neq: date
-  _nin: [date!]
 }
 
 """
@@ -9231,6 +9035,8 @@ input delivery_company_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_company_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_company_bool_exp!
 }
 
@@ -9961,6 +9767,8 @@ input delivery_courier_order_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_courier_order_item_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_courier_order_item_bool_exp!
 }
 
@@ -10378,6 +10186,8 @@ input delivery_courier_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_courier_order_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_courier_order_bool_exp!
 }
 
@@ -10926,6 +10736,8 @@ input delivery_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_details_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_details_bool_exp!
 }
 
@@ -11567,6 +11379,8 @@ input delivery_driver_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_driver_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_driver_bool_exp!
 }
 
@@ -12003,6 +11817,8 @@ input delivery_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_operator_bool_exp!
 }
 
@@ -13077,6 +12893,8 @@ input delivery_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_public_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_order_public_bool_exp!
 }
 
@@ -13716,6 +13534,8 @@ input delivery_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_order_bool_exp!
 }
 
@@ -14101,6 +13921,8 @@ input direct_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: direct_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: direct_chat_bool_exp!
 }
 
@@ -14455,6 +14277,8 @@ enum language_update_column {
 input language_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: language_set_input
+
+  """filter the rows which have to be updated"""
   where: language_bool_exp!
 }
 
@@ -14851,6 +14675,8 @@ input laundry_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_category_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_category_bool_exp!
 }
 
@@ -15296,6 +15122,8 @@ input laundry_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_operator_bool_exp!
 }
 
@@ -16042,6 +15870,8 @@ input laundry_order_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_category_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_order_category_bool_exp!
 }
 
@@ -16660,6 +16490,8 @@ input laundry_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_order_bool_exp!
 }
 
@@ -17218,6 +17050,8 @@ input laundry_store_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_store_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_store_bool_exp!
 }
 
@@ -17535,6 +17369,8 @@ input mez_admin_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_admin_chat_bool_exp!
 }
 
@@ -17713,6 +17549,8 @@ input mez_admin_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_admin_bool_exp!
 }
 
@@ -17909,6 +17747,8 @@ input mez_json_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_json_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_json_bool_exp!
 }
 
@@ -18190,19 +18030,6 @@ type mutation_root {
   delete single row from the table: "customer.stripe_sp_id"
   """
   delete_customer_stripe_sp_id_by_pk(id: Int!): customer_stripe_sp_id
-
-  """
-  delete data from the table: "data_consumption"
-  """
-  delete_data_consumption(
-    """filter the rows which have to be deleted"""
-    where: data_consumption_bool_exp!
-  ): data_consumption_mutation_response
-
-  """
-  delete single row from the table: "data_consumption"
-  """
-  delete_data_consumption_by_pk(id: Int!): data_consumption
 
   """
   delete data from the table: "delivery.company"
@@ -19260,28 +19087,6 @@ type mutation_root {
     """upsert condition"""
     on_conflict: customer_stripe_sp_id_on_conflict
   ): customer_stripe_sp_id
-
-  """
-  insert data into the table: "data_consumption"
-  """
-  insert_data_consumption(
-    """the rows to be inserted"""
-    objects: [data_consumption_insert_input!]!
-
-    """upsert condition"""
-    on_conflict: data_consumption_on_conflict
-  ): data_consumption_mutation_response
-
-  """
-  insert a single row into the table: "data_consumption"
-  """
-  insert_data_consumption_one(
-    """the row to be inserted"""
-    object: data_consumption_insert_input!
-
-    """upsert condition"""
-    on_conflict: data_consumption_on_conflict
-  ): data_consumption
 
   """
   insert data into the table: "delivery.company"
@@ -21027,8 +20832,30 @@ type mutation_root {
   update data of the table: "customer.customer"
   """
   update_customer_customer(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: customer_customer_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: customer_customer_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: customer_customer_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: customer_customer_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -21041,8 +20868,30 @@ type mutation_root {
   update single row of the table: "customer.customer"
   """
   update_customer_customer_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: customer_customer_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: customer_customer_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: customer_customer_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: customer_customer_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -21270,40 +21119,6 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [customer_stripe_sp_id_updates!]!
   ): [customer_stripe_sp_id_mutation_response]
-
-  """
-  update data of the table: "data_consumption"
-  """
-  update_data_consumption(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: data_consumption_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: data_consumption_set_input
-
-    """filter the rows which have to be updated"""
-    where: data_consumption_bool_exp!
-  ): data_consumption_mutation_response
-
-  """
-  update single row of the table: "data_consumption"
-  """
-  update_data_consumption_by_pk(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: data_consumption_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: data_consumption_set_input
-    pk_columns: data_consumption_pk_columns_input!
-  ): data_consumption
-
-  """
-  update multiples rows of table: "data_consumption"
-  """
-  update_data_consumption_many(
-    """updates to execute, in order"""
-    updates: [data_consumption_updates!]!
-  ): [data_consumption_mutation_response]
 
   """
   update data of the table: "delivery.company"
@@ -23493,6 +23308,8 @@ input notification_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: notification_info_set_input
+
+  """filter the rows which have to be updated"""
   where: notification_info_bool_exp!
 }
 
@@ -24477,51 +24294,6 @@ type query_root {
   fetch data from the table: "customer.stripe_sp_id" using primary key columns
   """
   customer_stripe_sp_id_by_pk(id: Int!): customer_stripe_sp_id
-
-  """
-  fetch data from the table: "data_consumption"
-  """
-  data_consumption(
-    """distinct select on columns"""
-    distinct_on: [data_consumption_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [data_consumption_order_by!]
-
-    """filter the rows returned"""
-    where: data_consumption_bool_exp
-  ): [data_consumption!]!
-
-  """
-  fetch aggregated fields from the table: "data_consumption"
-  """
-  data_consumption_aggregate(
-    """distinct select on columns"""
-    distinct_on: [data_consumption_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [data_consumption_order_by!]
-
-    """filter the rows returned"""
-    where: data_consumption_bool_exp
-  ): data_consumption_aggregate!
-
-  """
-  fetch data from the table: "data_consumption" using primary key columns
-  """
-  data_consumption_by_pk(id: Int!): data_consumption
 
   """
   fetch data from the table: "delivery.company"
@@ -27109,11 +26881,6 @@ unique or primary key constraints on table "restaurant.cart_item"
 """
 enum restaurant_cart_item_constraint {
   """
-  unique or primary key constraint on columns "restaurant_item_id", "customer_id"
-  """
-  restaurant_cart_item_customer_id_restaurant_item_id_key
-
-  """
   unique or primary key constraint on columns "id"
   """
   restaurant_cart_pkey
@@ -27406,6 +27173,8 @@ input restaurant_cart_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_cart_item_bool_exp!
 }
 
@@ -27603,6 +27372,8 @@ input restaurant_cart_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_cart_bool_exp!
 }
 
@@ -28089,6 +27860,8 @@ input restaurant_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_category_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_category_bool_exp!
 }
 
@@ -28598,6 +28371,8 @@ input restaurant_choice_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_choice_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_choice_bool_exp!
 }
 
@@ -29407,6 +29182,8 @@ input restaurant_item_option_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_option_map_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_item_option_map_bool_exp!
 }
 
@@ -29754,6 +29531,8 @@ input restaurant_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_item_bool_exp!
 }
 
@@ -30211,6 +29990,8 @@ input restaurant_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_operator_bool_exp!
 }
 
@@ -30871,6 +30652,8 @@ input restaurant_option_choice_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_choice_map_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_option_choice_map_bool_exp!
 }
 
@@ -31282,6 +31065,8 @@ input restaurant_option_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_option_bool_exp!
 }
 
@@ -32226,6 +32011,8 @@ input restaurant_order_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_item_bool_exp!
 }
 
@@ -32764,6 +32551,8 @@ input restaurant_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_public_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_public_bool_exp!
 }
 
@@ -33181,6 +32970,8 @@ input restaurant_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_bool_exp!
 }
 
@@ -33824,6 +33615,8 @@ input restaurant_restaurant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_restaurant_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_restaurant_bool_exp!
 }
 
@@ -34300,6 +34093,8 @@ input review_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: review_set_input
+
+  """filter the rows which have to be updated"""
   where: review_bool_exp!
 }
 
@@ -34612,6 +34407,8 @@ input service_provider_customer_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_customer_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_customer_chat_bool_exp!
 }
 
@@ -34989,6 +34786,8 @@ input service_provider_delivery_partner_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_delivery_partner_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_delivery_partner_bool_exp!
 }
 
@@ -35659,6 +35458,8 @@ input service_provider_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_details_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_details_bool_exp!
 }
 
@@ -35904,6 +35705,8 @@ input service_provider_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_location_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_location_bool_exp!
 }
 
@@ -36232,6 +36035,8 @@ input service_provider_operator_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_operator_details_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_operator_details_bool_exp!
 }
 
@@ -36627,6 +36432,8 @@ input service_provider_post_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_post_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_post_bool_exp!
 }
 
@@ -36858,6 +36665,8 @@ input service_provider_referral_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_referral_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_referral_bool_exp!
 }
 
@@ -37158,6 +36967,8 @@ input service_provider_service_link_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_service_link_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_service_link_bool_exp!
 }
 
@@ -37535,6 +37346,8 @@ input service_provider_stripe_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_stripe_info_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_stripe_info_bool_exp!
 }
 
@@ -37808,6 +37621,8 @@ input service_provider_subscriber_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_subscriber_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_subscriber_bool_exp!
 }
 
@@ -39118,65 +38933,6 @@ type subscription_root {
     """filter the rows returned"""
     where: customer_stripe_sp_id_bool_exp
   ): [customer_stripe_sp_id!]!
-
-  """
-  fetch data from the table: "data_consumption"
-  """
-  data_consumption(
-    """distinct select on columns"""
-    distinct_on: [data_consumption_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [data_consumption_order_by!]
-
-    """filter the rows returned"""
-    where: data_consumption_bool_exp
-  ): [data_consumption!]!
-
-  """
-  fetch aggregated fields from the table: "data_consumption"
-  """
-  data_consumption_aggregate(
-    """distinct select on columns"""
-    distinct_on: [data_consumption_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [data_consumption_order_by!]
-
-    """filter the rows returned"""
-    where: data_consumption_bool_exp
-  ): data_consumption_aggregate!
-
-  """
-  fetch data from the table: "data_consumption" using primary key columns
-  """
-  data_consumption_by_pk(id: Int!): data_consumption
-
-  """
-  fetch data from the table in a streaming manner: "data_consumption"
-  """
-  data_consumption_stream(
-    """maximum number of rows returned in a single batch"""
-    batch_size: Int!
-
-    """cursor to stream the results returned by the query"""
-    cursor: [data_consumption_stream_cursor_input]!
-
-    """filter the rows returned"""
-    where: data_consumption_bool_exp
-  ): [data_consumption!]!
 
   """
   fetch data from the table: "delivery.company"
@@ -42493,6 +42249,8 @@ input translation_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_set_input
+
+  """filter the rows which have to be updated"""
   where: translation_bool_exp!
 }
 
@@ -42803,6 +42561,8 @@ input translation_value_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_value_set_input
+
+  """filter the rows which have to be updated"""
   where: translation_value_bool_exp!
 }
 
@@ -43176,6 +42936,8 @@ input user_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: user_set_input
+
+  """filter the rows which have to be updated"""
   where: user_bool_exp!
 }
 
@@ -43334,6 +43096,8 @@ enum valid_types_app_type_update_column {
 input valid_types_app_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: valid_types_app_type_set_input
+
+  """filter the rows which have to be updated"""
   where: valid_types_app_type_bool_exp!
 }
 
@@ -43473,5 +43237,7 @@ enum valid_types_service_provider_type_update_column {
 input valid_types_service_provider_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: valid_types_service_provider_type_set_input
+
+  """filter the rows which have to be updated"""
   where: valid_types_service_provider_type_bool_exp!
 }

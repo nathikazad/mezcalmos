@@ -8,7 +8,39 @@ object_relationships:
   - name: details
     using:
       foreign_key_constraint_on: details_id
+insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - address
+        - business_id
+        - details_id
+        - gps_location
+        - schedule
+        - schedule_type
+        - time
 select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - gps_location
+        - business_id
+        - details_id
+        - id
+        - schedule
+        - address
+        - time
+        - schedule_type
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
@@ -22,3 +54,22 @@ select_permissions:
         - time
       filter: {}
       allow_aggregations: true
+update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - address
+        - gps_location
+        - schedule
+        - schedule_type
+        - time
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id

@@ -49,7 +49,7 @@ class CustBusinessRentalCost extends StatelessWidget {
               "icon": Icons.calendar_month,
             });
             break;
-          case TimeUnit.Total:
+          case TimeUnit.Unit:
             data.add({
               "cost": double.parse("$value"),
               "unit": removePerFromUnit(key),

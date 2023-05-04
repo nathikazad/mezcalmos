@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/controllers/BsProductViewController.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpDropDown.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 
 class BsOpProductView extends StatefulWidget {
   const BsOpProductView({Key? key}) : super(key: key);
@@ -176,28 +179,37 @@ class _BsOpProductViewState extends State<BsOpProductView>
               ),
             ),
             bigSeperator,
-            Row(
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    "Price",
-                    style: context.textTheme.bodyLarge,
-                  ),
-                ),
-              ],
+            Text(
+              "Category",
+              style: context.textTheme.bodyLarge,
             ),
             smallSepartor,
-            TextFormField(
-              controller: viewController.priceController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "Enter price",
-                prefixIcon: Icon(
-                  Icons.attach_money_rounded,
-                  color: Colors.black,
-                ),
-              ),
+            Obx(() {
+              print(
+                  "productCategory ${viewController.productCategory.value?.toFirebaseFormatString()}");
+              return BsOpDropdown(
+                labelText: "Select category",
+                items: ProductCategory1.values
+                    .map((ProductCategory1 e) => e.toFirebaseFormatString())
+                    .toList(),
+                value: viewController.productCategory.value
+                    ?.toFirebaseFormatString(),
+                onChanged: (category) {
+                  viewController.productCategory.value =
+                      category.toString().toProductCategory1();
+                },
+              );
+            }),
+            smallSepartor,
+            BsOpOfferingPricesList(
+              availbleUnits: viewController.avalbleUnits,
+              onAddPrice: (TimeUnit unit) {
+                viewController.detailsController.addPriceTimeUnit(unit);
+              },
+              onRemovePrice: (TimeUnit unit) {
+                viewController.detailsController.removeTimeUnit(unit);
+              },
+              seletedPrices: viewController.detailsController.priceTimeUnitMap,
             ),
           ],
         ),

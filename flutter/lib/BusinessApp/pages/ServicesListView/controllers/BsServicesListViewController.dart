@@ -34,6 +34,10 @@ class BsServicesListViewController {
   // methods //
   Future<void> init() async {
     homeRentals.value.clear();
+    await fetchAllServices();
+  }
+
+  Future<void> fetchAllServices() async {
     homeRentals.value = await get_business_home_rentals(
       busniessId: _businessOpAuthController.companyId!,
       withCache: false,

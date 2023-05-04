@@ -39,19 +39,40 @@ object_relationships:
 insert_permissions:
   - role: business_operator
     permission:
-      check: {}
+      check:
+        _or:
+          - rental:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - event:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - service:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - product:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
       columns:
-        - available
-        - description_id
-        - id
-        - name_id
-        - position
         - additional_parameters
-        - cost
-        - image
-        - tags
+        - available
         - category1
         - category2
+        - cost
+        - description_id
+        - id
+        - image
+        - name_id
+        - position
+        - tags
 select_permissions:
   - role: business_operator
     permission:
@@ -87,17 +108,16 @@ update_permissions:
   - role: business_operator
     permission:
       columns:
-        - available
-        - description_id
-        - id
-        - name_id
-        - position
         - additional_parameters
-        - cost
-        - image
-        - tags
+        - available
         - category1
         - category2
+        - cost
+        - description_id
+        - image
+        - name_id
+        - position
+        - tags
       filter:
         _or:
           - rental:

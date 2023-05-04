@@ -89,7 +89,7 @@ Future<ProductWithBusinessCard?> get_product_by_id(
           product: Product(
               category1: data.details.category1.toProductCategory1(),
               details: BusinessItemDetails(
-                id: id,
+                id: data.details.id,
                 nameId: data.details.name_id,
                 descriptionId: data.details.description_id,
                 name:
@@ -214,6 +214,29 @@ Future<int?> add_one_product({required Product product}) async {
   } else {
     mezDbgPrint("✅✅✅ Hasura add product mutation success => ${response.data}");
     return response.parsedData?.insert_business_product_one?.id;
+  }
+  return null;
+}
+
+Future<int?> update_product_category1({
+  required int id,
+  required ProductCategory1 productCategory,
+}) async {
+  final QueryResult<Mutation$update_product_category1> response =
+      await _db.graphQLClient.mutate$update_product_category1(
+    Options$Mutation$update_product_category1(
+      variables: Variables$Mutation$update_product_category1(
+        id: id,
+        category1: productCategory.toFirebaseFormatString(),
+      ),
+    ),
+  );
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura update product category mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint("✅✅✅ Hasura update product category mutation success => ${response.data}");
+    return response.parsedData?.update_business_item_details!.affected_rows;
   }
   return null;
 }

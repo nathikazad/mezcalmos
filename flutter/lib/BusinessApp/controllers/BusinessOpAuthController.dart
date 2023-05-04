@@ -17,9 +17,20 @@ class BusinessOpAuthController extends GetxController {
 
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
-
+  BusinessProfile? _businessProfile;
   String? _appLifeCyclePauseCallbackId;
   String? _appLifeCycleResumeCallbackId;
+
+  /// this getter should be used only after the operator is set
+  /// otherwise it will throw an exception
+  BusinessProfile get businessProfile {
+    if (_businessProfile == null) {
+      throw StateError("🛑🛑 Business profile is null");
+    } else {
+      mezDbgPrint("Business profile ====>$businessProfile");
+      return _businessProfile!;
+    }
+  }
 
   @override
   void onInit() {
@@ -36,9 +47,12 @@ class BusinessOpAuthController extends GetxController {
     try {
       mezDbgPrint("Gettign Business operator for user id: $operatorUserId");
       operator.value = await get_business_operator(userId: operatorUserId);
+
       mezDbgPrint("Operator value  ====>${operator.value}");
       if (operator.value != null) {
         _companyId.value = operator.value!.serviceProviderId.toInt();
+        _businessProfile =
+            await get_operator_business_profile(userId: operatorUserId);
       }
     } catch (e, stk) {
       mezDbgPrint(e);

@@ -6,12 +6,15 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceI
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 
 class BsOpServiceView extends StatefulWidget {
   const BsOpServiceView({Key? key}) : super(key: key);
@@ -53,7 +56,9 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
       bottomNavigationBar: MezButton(
         label: "Save",
         borderRadius: 0,
-        onClick: () async {},
+        onClick: () async {
+          await viewController.save();
+        },
       ),
       body: TabBarView(
         controller: viewController.tabController,
@@ -177,45 +182,25 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
               ),
             ),
             bigSeperator,
-            Row(
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    "Prices",
-                    style: context.textTheme.bodyLarge,
-                  ),
-                ),
-              ],
+            BsOpOfferingPricesList(
+              availbleUnits: viewController.avalbleUnits,
+              onAddPrice: (TimeUnit unit) {
+                viewController.detailsController.addPriceTimeUnit(unit);
+              },
+              onRemovePrice: (TimeUnit unit) {
+                viewController.detailsController.removeTimeUnit(unit);
+              },
+              seletedPrices: viewController.detailsController.priceTimeUnitMap,
             ),
             smallSepartor,
-            bigSeperator,
-            Text("Schedule"),
-            smallSepartor,
-            Card(
-              child: InkWell(
-                onTap: () async {
-                  // viewController.showScheduleDialog(context);
-                  Schedule? res = await BsOpSchedulePickerView.navigate();
-                  mezDbgPrint("res: $res");
+            Obx(
+              () => BsOpScheduleSelector(
+                onScheduleSelected: (schedule) {
+                  viewController.changeSchedule(schedule);
                 },
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Text(
-                          "Add schedule",
-                          style: context.textTheme.bodyLarge,
-                        ),
-                      ),
-                      Icon(Icons.add)
-                    ],
-                  ),
-                ),
+                schedule: viewController.serviceSchedule.value,
               ),
-            )
+            ),
           ],
         ),
       ),

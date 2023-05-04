@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/BsOpSchedulePickerView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
@@ -30,9 +31,18 @@ class BsServiceViewController {
   Rxn<ServiceWithBusinessCard> _service = Rxn<ServiceWithBusinessCard>();
   ServiceWithBusinessCard? get service => _service.value;
   bool get isEditing => _service.value != null;
+  Rx<Schedule?> serviceSchedule = Rx(null);
+
+  List<TimeUnit> get _possibleTimeUnits =>
+      List.unmodifiable([TimeUnit.PerHour]);
+  List<TimeUnit> get avalbleUnits => _possibleTimeUnits
+      .where((TimeUnit element) =>
+          detailsController.priceTimeUnitMap.keys.contains(element) == false)
+      .toList();
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
+    detailsController.addPriceTimeUnit(avalbleUnits.first);
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -44,8 +54,36 @@ class BsServiceViewController {
     }
   }
 
+  Future<void> changeSchedule(Schedule? schedule) async {
+    serviceSchedule.value = schedule;
+  }
+
   Future<void> saveItemDetails() async {
     await detailsController.updateItemDetails();
+  }
+
+  Future<Service> _constructService() async {
+    final BusinessItemDetails details =
+        await detailsController.contructDetails();
+    final Service service = Service(
+      category1: ServiceCategory1.Cleaning,
+      details: details,
+    );
+    return service;
+  }
+
+  Future<void> save() async {
+    if (formKey.currentState?.validate() == true) {
+      if (isEditing) {
+        await saveItemDetails();
+        shouldRefetch = true;
+      } else {
+        final Service _service = await _constructService();
+        mezDbgPrint("busniess id : ${_service.details.businessId}");
+
+        await createItem(_service);
+      }
+    }
   }
 
   void dispose() {
