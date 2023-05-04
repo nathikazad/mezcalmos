@@ -190,6 +190,7 @@ Future<EventWithBusinessCard?> get_event_by_id(
     if (data != null) {
       return EventWithBusinessCard(
           event: Event(
+              id: data.id,
               category1: data.details.category1.toEventCategory1(),
               category2: data.details.category2.toEventCategory2(),
               gpsLocation: data.gps_location != null && data.address != null
@@ -204,7 +205,7 @@ Future<EventWithBusinessCard?> get_event_by_id(
                       .toList() ??
                   [],
               details: BusinessItemDetails(
-                id: id,
+                id: data.details.id,
                 nameId: data.details.name_id,
                 descriptionId: data.details.description_id,
                 name:
@@ -379,20 +380,22 @@ Future<int?> add_one_event({required Event event}) async {
                       data: Input$business_item_details_insert_input(
                           available: event.details.available,
                           category1: event.category1.toFirebaseFormatString(),
-                          category2: event.category2?.toFirebaseFormatString() ??
-                              EventCategory2.Uncategorized
-                                  .toFirebaseFormatString(),
-                          cost: event.details.cost,
+                          category2:
+                              event.category2?.toFirebaseFormatString() ??
+                                  EventCategory2.Uncategorized
+                                      .toFirebaseFormatString(),
+                          cost: event.details.cost.map((TimeUnit key,
+                                  num value) =>
+                              MapEntry(key.toFirebaseFormatString(), value)),
                           image: event.details.image,
                           name: Input$translation_obj_rel_insert_input(
                               data: Input$translation_insert_input(
                                   service_provider_id:
                                       event.details.businessId.toInt(),
-                                  service_provider_type: ServiceProviderType.Business
-                                      .toFirebaseFormatString(),
+                                  service_provider_type: ServiceProviderType
+                                      .Business.toFirebaseFormatString(),
                                   translations:
-                                      Input$translation_value_arr_rel_insert_input(data: <
-                                          Input$translation_value_insert_input>[
+                                      Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
                                     Input$translation_value_insert_input(
                                         language_id: Language.EN
                                             .toFirebaseFormatString(),
@@ -403,28 +406,24 @@ Future<int?> add_one_event({required Event event}) async {
                                         value: event.details.name[Language.ES])
                                   ]))),
                           position: event.details.position?.toInt(),
-                          additional_parameters:
-                              event.details.additionalParameters,
+                          additional_parameters: event.details.additionalParameters,
                           description: (event.details.description != null)
                               ? Input$translation_obj_rel_insert_input(
                                   data: Input$translation_insert_input(
-                                      service_provider_id:
-                                          event.details.businessId.toInt(),
-                                      service_provider_type: ServiceProviderType.Business
-                                          .toFirebaseFormatString(),
-                                      translations: Input$translation_value_arr_rel_insert_input(
-                                          data: <Input$translation_value_insert_input>[
-                                            Input$translation_value_insert_input(
-                                                language_id: Language.EN
-                                                    .toFirebaseFormatString(),
-                                                value: event.details
-                                                    .description?[Language.EN]),
-                                            Input$translation_value_insert_input(
-                                                language_id: Language.ES
-                                                    .toFirebaseFormatString(),
-                                                value: event.details
-                                                    .description?[Language.ES])
-                                          ])))
+                                      service_provider_id: event.details.businessId.toInt(),
+                                      service_provider_type: ServiceProviderType.Business.toFirebaseFormatString(),
+                                      translations: Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.EN
+                                                .toFirebaseFormatString(),
+                                            value: event.details
+                                                .description?[Language.EN]),
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.ES
+                                                .toFirebaseFormatString(),
+                                            value: event.details
+                                                .description?[Language.ES])
+                                      ])))
                               : null,
                           tags: event.tags))))));
   if (response.hasException) {

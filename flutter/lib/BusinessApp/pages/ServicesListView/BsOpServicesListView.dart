@@ -166,8 +166,10 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                       (int index) => MezCard(
                           onClick: () {
                             BsOpEventView.navigate(
-                                id: viewController.events[index].details.id
-                                    .toInt());
+                              id: viewController.events[index].details.id
+                                  .toInt(),
+                              isClass: false,
+                            );
                           },
                           firstAvatarBgImage: NetworkImage(
                             viewController.events[index].details.firstImage ??
@@ -269,12 +271,10 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     BsOpHomeRentalView.navigate(id: null);
                     return;
                   case BusinessServiceType.Event:
-                    BsOpEventView.navigate(
-                      id: null,
-                    );
+                    BsOpEventView.navigate(id: null, isClass: false);
                     return;
                   case BusinessServiceType.Class:
-                    BsOpEventView.navigate(id: null);
+                    BsOpEventView.navigate(id: null, isClass: true);
                     return;
                   case BusinessServiceType.Service:
                     BsOpServiceView.navigate(id: null);

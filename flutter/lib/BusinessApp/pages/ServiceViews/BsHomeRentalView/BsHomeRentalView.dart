@@ -180,7 +180,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               ),
             ),
             bigSeperator,
-            Obx(
+            Obx( 
               ()=> BsOpOfferingPricesList(
                 availbleUnits: viewController.avalbleUnits,
                 onAddPrice: (TimeUnit unit) {
