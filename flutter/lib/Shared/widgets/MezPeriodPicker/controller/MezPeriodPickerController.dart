@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -5,7 +6,6 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class MezPeriodPickerController {
   // State variables //
@@ -287,12 +287,12 @@ class MezPeriodPickerController {
     return _constructDateChoices();
   }
 
-  void confirmCallBack() {
+  void confirmCallBack(BuildContext context) {
     mezDbgPrint("ConfirmCallBack");
     _setPeriodOfTime();
 
     if (period.value != null) {
-      MezRouter.back(backResult: period.value);
+      Navigator.pop(context, period.value!);
     }
   }
 }

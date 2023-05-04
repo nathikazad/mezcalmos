@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/controllers/BsEventViewController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class BsOpScheduleTypeSelector extends StatefulWidget {
   final ScheduleTypeInput? value;
@@ -26,9 +27,22 @@ class _BsOpScheduleTypeSelectorState extends State<BsOpScheduleTypeSelector> {
   ScheduleTypeInput? _selectedValue;
 
   @override
+  void initState() {
+    super.initState();
+    mezDbgPrint("✅✅✅✅✅✅✅✅✅ widget.value ${widget.value}");
+    _selectedValue = widget.value;
+  }
+
+  @override
+  void didUpdateWidget(covariant BsOpScheduleTypeSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {
+      _selectedValue = widget.value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    _selectedValue = widget.value;
     return DropdownButtonFormField<ScheduleTypeInput>(
       value: _selectedValue,
       selectedItemBuilder: (BuildContext context) {

@@ -362,6 +362,8 @@ Future<int?> get_number_of_adventure(
 
 Future<int?> add_one_event({required Event event}) async {
   // mezDbgPrint("Adding this rental 🇹🇳 ${rental.toJson()}");
+  mezDbgPrint(
+      "Event sent to db ::: ==============> ${event.schedule?.toFirebaseFormat()}");
 
   final QueryResult<Mutation$add_event> response = await _db.graphQLClient
       .mutate$add_event(Options$Mutation$add_event(
@@ -374,7 +376,7 @@ Future<int?> add_one_event({required Event event}) async {
                       : null,
                   address: event.gpsLocation?.address,
                   schedule_type: event.scheduleType.toFirebaseFormatString(),
-                  schedule: event.schedule,
+                  schedule: event.schedule?.toFirebaseFormat(),
                   time: event.time,
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(

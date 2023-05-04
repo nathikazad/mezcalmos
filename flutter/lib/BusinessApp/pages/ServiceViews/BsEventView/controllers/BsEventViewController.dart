@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpPeriodPicker.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
@@ -58,7 +59,7 @@ class BsEventViewController {
       avalaibilty.value = event!.schedule;
     }
     scheduleType.refresh();
-    mezDbgPrint("🇿🇼🇿🇼🇿🇼🇿🇼 event schedule ====>${scheduleType.value}");
+    mezDbgPrint("🇿🇼🇿🇼🇿🇼🇿🇼 event schedule ====>${avalaibilty.value}");
   }
 
   Future<void> save() async {
@@ -170,13 +171,22 @@ class BsEventViewController {
     switch (scheduleType.value) {
       case ScheduleType.Scheduled:
       case ScheduleType.OnDemand:
-        return Container(
-          child: Text("Schedule"),
+        return Obx(
+          () => BsOpScheduleSelector(
+            onScheduleSelected: (Schedule? v) {
+              avalaibilty.value = v;
+            },
+            schedule: avalaibilty.value,
+          ),
         );
       case ScheduleType.OneTime:
-        return BsOpPeriodPicker(
-          onNewPeriodSelected: (PeriodOfTime v) {},
-          timePeriod: oneTimePeriod.value,
+        return Obx(
+          () => BsOpPeriodPicker(
+            onNewPeriodSelected: (PeriodOfTime v) {
+              oneTimePeriod.value = v;
+            },
+            timePeriod: oneTimePeriod.value,
+          ),
         );
       case null:
         return Container();
