@@ -57,9 +57,9 @@ class BsEventViewController {
       location.value = event!.gpsLocation;
       scheduleType.value = event!.scheduleType;
       avalaibilty.value = event!.schedule;
+      // oneTimePeriod.value = PeriodOfTime(start: start, end: end);
     }
     scheduleType.refresh();
-    mezDbgPrint("🇿🇼🇿🇼🇿🇼🇿🇼 event schedule ====>${avalaibilty.value}");
   }
 
   Future<void> save() async {

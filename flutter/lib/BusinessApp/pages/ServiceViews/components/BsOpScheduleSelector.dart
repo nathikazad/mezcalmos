@@ -17,8 +17,7 @@ class BsOpScheduleSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(
-        "🇹🇿🇹🇿🇹🇿🇹🇿🇹🇿🇹🇿🇹🇿 BsOpScheduleSelector: ${schedule?.openHours}");
+  
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

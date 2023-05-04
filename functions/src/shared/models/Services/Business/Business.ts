@@ -38,7 +38,7 @@ export interface Rental {
     id?: number;
     category1: RentalCategory1;
     category2?: RentalCategory2;
-    category3?: string;
+    category3?: RentalCategory3;
     details: BusinessItemDetails;
     bedrooms?: number;
     bathrooms?: number;
@@ -53,7 +53,8 @@ export interface Event {
     schedule?: Schedule;
     details: BusinessItemDetails;
     gpsLocation?: Location;
-    time?: string;
+    startsAt?: string;
+    endsAt?: string;
     tags?: Array<EventTag>;
 }
 export interface Service {
@@ -131,6 +132,13 @@ export enum RentalCategory2 {
     ATB = "aTB",
     Bicycle = "bicycle",
     Uncategorized = "uncategorized"
+}
+
+export enum RentalCategory3 {
+    Retro = "retro",   
+    Scooter = "scooter",
+    ThreeWheeler = "3-wheeler",
+   
 }
 export enum ServiceCategory1 {
     MealPlanning = "mealPlanning",

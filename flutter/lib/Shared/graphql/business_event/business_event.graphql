@@ -23,7 +23,8 @@ query get_event_by_id($id: Int!) {
     schedule_type
     gps_location
     address
-    time
+    starts_at
+    ends_at
     details {
       name_id
       description_id
@@ -113,7 +114,8 @@ query get_event_by_category($categories1: [String!],
     address
     schedule_type
     schedule
-    time
+    starts_at
+    ends_at
     business {
       id
       details {
@@ -188,7 +190,8 @@ query get_class_by_category($categories1: [String!],
     address
     schedule_type
     schedule
-    time
+    starts_at
+    ends_at
     business {
       id
       details {
@@ -261,7 +264,8 @@ query get_business_events($businessId: Int!, $limit: Int, $offset: Int) {
     schedule_type
     schedule
     
-    time
+    starts_at
+    ends_at
       details {
          name_id
         description_id

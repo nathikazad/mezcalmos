@@ -61,7 +61,7 @@ Future<List<EventCard>> get_event_by_category(
                     lng: data.gps_location!.longitude,
                     address: data.address!)
                 : null,
-            time: data.time,
+            //  time: data.time,
             tags: data.details.tags
                     ?.map<EventTag>((e) => e.toString().toEventTag())
                     .toList() ??
@@ -140,7 +140,7 @@ Future<List<EventCard>> get_class_by_category(
                     lng: data.gps_location!.longitude,
                     address: data.address!)
                 : null,
-            time: data.time,
+            // time: data.time,
             tags: data.details.tags
                     ?.map<EventTag>((e) => e.toString().toEventTag())
                     .toList() ??
@@ -199,7 +199,6 @@ Future<EventWithBusinessCard?> get_event_by_id(
                       lng: data.gps_location!.longitude,
                       address: data.address!)
                   : null,
-              time: data.time,
               tags: data.details.tags
                       ?.map<EventTag>((e) => e.toString().toEventTag())
                       .toList() ??
@@ -377,7 +376,7 @@ Future<int?> add_one_event({required Event event}) async {
                   address: event.gpsLocation?.address,
                   schedule_type: event.scheduleType.toFirebaseFormatString(),
                   schedule: event.schedule?.toFirebaseFormat(),
-                  time: event.time,
+                  //    time: event.time,
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                           available: event.details.available,
@@ -467,7 +466,7 @@ Future<List<EventCard>> get_business_events(
                     lng: data.gps_location!.longitude,
                     address: data.address!)
                 : null,
-            time: data.time,
+            //     time: data.time,
             tags: data.details.tags
                     ?.map<EventTag>((e) => e.toString().toEventTag())
                     .toList() ??
