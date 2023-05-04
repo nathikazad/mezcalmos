@@ -227,7 +227,11 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                 runSpacing: 5,
                                 children: [
                                   Text(
-                                    '\$${viewController.rentals[index].details.cost.values.first.toString()}/${'${_i18n()[viewController.rentals[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
+                                    viewController.rentals[index].details.cost
+                                                .length ==
+                                            0
+                                        ? '- / -'
+                                        : '\$${viewController.rentals[index].details.cost.values.first.toString()}/${'${_i18n()[viewController.rentals[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
                                     overflow: TextOverflow.ellipsis,
                                     style: context.textTheme.bodyLarge
                                         ?.copyWith(

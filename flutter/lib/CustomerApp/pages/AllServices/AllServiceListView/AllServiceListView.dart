@@ -152,11 +152,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                           child: Obx(
                             () => FittedBox(
                               child: Text(
-                                _i18n()[cServiceController
-                                        .deliveryServiceListData[
-                                            currentMezService]!["title"]
-                                        .toString()]
-                                    .toString(),
+                                '${_i18n()[cServiceController.deliveryServiceListData[currentMezService]!['title']]['title']}',
                                 style: txt.headlineSmall,
                               ),
                             ),

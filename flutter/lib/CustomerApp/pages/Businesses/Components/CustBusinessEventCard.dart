@@ -11,7 +11,7 @@ import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 class CustBusinessEventCard extends StatelessWidget {
-  final EdgeInsetsGeometry margin;
+  final EdgeInsets margin;
   final EdgeInsetsGeometry contentPadding;
   final Event event;
   final double? elevation;
@@ -26,6 +26,8 @@ class CustBusinessEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MezCard(
+      elevation: elevation,
+      margin: margin,
       onClick: () {
         CustEventView.navigate(
           eventId: event.details.id.toInt(),

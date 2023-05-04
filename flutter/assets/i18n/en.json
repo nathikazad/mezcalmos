@@ -574,10 +574,33 @@
         }
       },
       "CustHomeWrapper": {
-        "services": "Services",
-        "deliveries": "Deliveries",
-        "rentals": "Rentals",
-        "rental": {
+        "service": "Services",
+        "deliveries": { "title": "Deliveries", "shared": {} },
+        "food": {
+          "title": "Food",
+          "shared": {},
+          "restaurants": {
+            "title": "Restaurants",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "locallyMade": {
+            "title": "Locally Made",
+            "description": "Savor the taste of locally made treats.",
+            "CustFoodListView": {
+              "store": "Store",
+              "uncategorized": "Uncategorized",
+              "cleaning": "Cleaning",
+              "mealplanning": "Meal planning",
+              "petsitting": "Pet sitting",
+              "noUncategorizedFound": "No uncategorized found",
+              "noCleaningFound": "No cleaning found",
+              "noMealPlanningFound": "No meal planning found",
+              "noPetSittingFound": "No pet sitting found",
+              "noBusinessesFound": "No businesses found"
+            }
+          }
+        },
+        "rentals": {
           "title": "Rentals",
           "shared": {
             "store": "Store",
@@ -595,7 +618,6 @@
             "car": "Car",
             "bicycle": "Bicycle"
           },
-
           "surf": {
             "title": "Surf",
             "description": "Find the best surfboards around you.",
@@ -621,19 +643,65 @@
             "agency": "Agency"
           }
         },
-        "classes": "Classes",
-        "class": {
+        "classes": {
           "title": "Classes",
+          "shared": {
+            "filter": "Filter",
+            "class": "Class",
+            "studio": "Studio",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "hour": "Hour",
+            "day": "Day",
+            "week": "Week",
+            "month": "Month",
+            "person": "Person",
+            "total": "Total",
+            "none": "None"
+          },
           "classes": {
             "title": "Class",
             "class": "Class",
             "studio": "Studio"
           }
         },
-        "therapy": "Therapy",
-        "events": "Events",
-        "event": {
+        "therapy": {
+          "title": "Therapies",
+          "shared": {
+            "filter": "Filter",
+            "therapy": "Therapy",
+            "therapist": "Therapist",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "hour": "Hour",
+            "day": "Day",
+            "week": "Week",
+            "month": "Month",
+            "person": "Person",
+            "total": "Total",
+            "none": "None",
+            "noBusinessesFound": "No businesses found",
+            "noTherapyFound": "No therapy found"
+          }
+        },
+        "events": {
           "title": "Events",
+          "shared": {
+            "filter": "Filter",
+            "events": "Events",
+            "organizers": "Organizers",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "hour": "Hour",
+            "day": "Day",
+            "week": "Week",
+            "month": "Month",
+            "person": "Person",
+            "total": "Total",
+            "none": "None",
+            "noBusinessesFound": "No businesses found",
+            "noEventsFound": "No event found"
+          },
           "parties": {
             "title": "Parties",
             "description": "Discover most delicious dishes from the nearest restaurants."
@@ -647,9 +715,17 @@
             "description": "Obtain delivery of anything you desire to your location."
           }
         },
+        "locallyMade": { "title": "Locally Made", "shared": {} },
+        "services": {
+          "title": "Services",
+          "cleaning": {
+            "title": "Cleaning",
+            "desctiption": "Get your clothes cleaned by your nearest laundry service."
+          },
+          "shared": {}
+        },
         "volunteer": "Volunteer",
-        "adventures": "Adventure",
-        "adventure": {
+        "adventures": {
           "title": "Adventure",
           "tour": {
             "title": "Tour",
@@ -660,8 +736,6 @@
             "description": "Get your clothes cleaned by your nearest laundry service."
           }
         },
-        "locallyMade": "Locally Made",
-        "food": "Food",
         "welcomeText": "Welcome to MEZKALA 👋",
         "search": "Search",
         "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services."

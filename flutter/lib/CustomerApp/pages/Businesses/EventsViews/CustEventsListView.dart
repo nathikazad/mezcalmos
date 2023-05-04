@@ -6,11 +6,19 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.d
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustHomeWrapper']['events'];
 
 class CustEventsListView extends StatefulWidget {
   const CustEventsListView({super.key});
@@ -38,7 +46,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Events",
+        title: '${_i18n()['title']}',
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -80,7 +88,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: "Events",
+            label: '${_i18n()['shared']['events']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -100,7 +108,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
         ),
         Flexible(
           child: MezButton(
-            label: "Organizers",
+            label: '${_i18n()['shared']['organizers']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
@@ -148,7 +156,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                 width: 5,
               ),
               Text(
-                "Filter:",
+                '${_i18n()['shared']['filter']}:',
               ),
               SizedBox(
                 width: 3,
@@ -180,15 +188,52 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                 businessId: viewController.businesses[index].id,
               );
             },
+            elevation: 0,
+            contentPadding: EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
+            margin: EdgeInsets.only(bottom: 15),
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.businesses[index].image),
-            content: Text(viewController.businesses[index].name)),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  viewController.businesses[index].name,
+                  style: context.textTheme.displaySmall?.copyWith(
+                      fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _getAcceptedPaymentIcons(
+                        viewController.businesses[index].acceptedPayments),
+                    Row(
+                      children: [
+                        SizedBox(width: 10),
+                        Icon(
+                          Icons.star,
+                          color: primaryBlueColor,
+                        ),
+                        Text(
+                          '${viewController.businesses[index].avgRating ?? '0'}',
+                          style: context.textTheme.bodyLarge,
+                        ),
+                        Text(
+                          '(${viewController.businesses[index].reviewCount})',
+                          style: context.textTheme.bodyMedium,
+                        )
+                      ],
+                    )
+                  ],
+                )
+              ],
+            )),
       ));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No businesses found"));
+          child: Text('${_i18n()['shared']['noBusinessesFound']}'));
   }
 
   Widget _buildEvents() {
@@ -202,15 +247,87 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                 eventId: viewController.events[index].details.id.toInt(),
               );
             },
-            firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.events[index].details.image?.first ?? ""),
-            content: Text(
-                viewController.events[index].details.name[userLanguage] ?? "")),
+            elevation: 0,
+            margin: EdgeInsets.only(bottom: 12.5),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl:
+                          viewController.events[index].details.image?.first ??
+                              "",
+                      imageBuilder: (BuildContext context,
+                              ImageProvider<Object> imageProvider) =>
+                          CircleAvatar(
+                        radius: 16.mezSp,
+                        backgroundImage: imageProvider,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Text(
+                        viewController
+                                .events[index].details.name[userLanguage] ??
+                            "",
+                        style: context.textTheme.displaySmall?.copyWith(
+                            fontSize: 11.75.mezSp,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                    ),
+                    Text(
+                      '\$${viewController.events[index].details.cost.values.first.toString()}/${'${_i18n()['shared'][viewController.events[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.bodyLarge?.copyWith(
+                          fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                Divider(),
+                Text('Date schedule here...'),
+                Divider(),
+                Text(viewController.events[index].businessName)
+              ],
+            )),
       ));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No events found"));
+          child: Text('${_i18n()['shared']['noEventsFound']}'));
+  }
+
+  Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
+    final List<IconData> iconList = [];
+    acceptedPayments.forEach((PaymentType key, bool value) {
+      if (value) {
+        switch (key) {
+          case PaymentType.Cash:
+            iconList.add(Icons.payments_outlined);
+            break;
+          case PaymentType.Card:
+            iconList.add(Icons.credit_card_outlined);
+            break;
+          case PaymentType.BankTransfer:
+            iconList.add(Icons.account_balance_outlined);
+            break;
+        }
+      }
+    });
+
+    return Row(
+      children: <Icon>[
+        for (IconData icon in iconList)
+          Icon(
+            icon,
+            size: 15.mezSp,
+          )
+      ],
+    );
   }
 }

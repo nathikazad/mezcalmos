@@ -98,17 +98,19 @@ class _CustEventViewState extends State<CustEventView> {
                             {},
                       ),
                       // Price
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          generateCost(),
-                          style: context.textTheme.bodyLarge!.copyWith(
-                            color: primaryBlueColor,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        generateCost(),
+                        style: context.textTheme.bodyLarge!.copyWith(
+                          color: primaryBlueColor,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-
+                      SizedBox(
+                        height: 15,
+                      ),
                       Text(
                         _i18n()['description'],
                         style: context.textTheme.bodyLarge,
@@ -119,12 +121,18 @@ class _CustEventViewState extends State<CustEventView> {
                             _i18n()['noDescription'],
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
+                      SizedBox(
+                        height: 15,
+                      ),
 
                       // todo @ChiragKr04 complete the view with the needed data
 
                       CustBusinessScheduleBuilder(
                         schedule: viewController.event!.schedule,
                         scheduleType: viewController.event!.scheduleType,
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
 
                       viewController.event!.gpsLocation == null
@@ -144,10 +152,13 @@ class _CustEventViewState extends State<CustEventView> {
                             ),
 
                       CustBusinessMessageCard(
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.event!.business,
                         offeringName: viewController.event!.details.name,
                       ),
-
+                      SizedBox(
+                        height: 15,
+                      ),
                       CustBusinessNoOrderBanner(),
                     ],
                   ),

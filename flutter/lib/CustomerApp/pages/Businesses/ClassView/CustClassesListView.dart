@@ -8,13 +8,20 @@ import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.da
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
+import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustHomeWrapper']['classes'];
 
 // todo @ChiragKr04 fix the cards and ui  of this page
 class CustClassesListView extends StatefulWidget {
@@ -44,7 +51,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Class",
+        title: '${_i18n()['title']}',
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -86,7 +93,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: "Class",
+            label: '${_i18n()['shared']['class']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -106,7 +113,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
         ),
         Flexible(
           child: MezButton(
-            label: "Studio",
+            label: '${_i18n()['shared']['studio']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
@@ -154,7 +161,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 width: 5,
               ),
               Text(
-                "Filter:",
+                '${_i18n()['shared']['filter']}:',
               ),
               SizedBox(
                 width: 3,
@@ -181,14 +188,51 @@ class _CustClassesListViewState extends State<CustClassesListView> {
           children: List.generate(
         viewController.businesses.length,
         (int index) => MezCard(
+            elevation: 0,
             onClick: () {
               CustBusinessView.navigate(
                 businessId: viewController.businesses[index].id,
               );
             },
+            contentPadding: EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
+            margin: EdgeInsets.only(bottom: 15),
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.businesses[index].image),
-            content: Text(viewController.businesses[index].name)),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  viewController.businesses[index].name,
+                  style: context.textTheme.displaySmall?.copyWith(
+                      fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _getAcceptedPaymentIcons(
+                        viewController.businesses[index].acceptedPayments),
+                    Row(
+                      children: [
+                        SizedBox(width: 10),
+                        Icon(
+                          Icons.star,
+                          color: primaryBlueColor,
+                        ),
+                        Text(
+                          '${viewController.businesses[index].avgRating ?? '0'}',
+                          style: context.textTheme.bodyLarge,
+                        ),
+                        Text(
+                          '(${viewController.businesses[index].reviewCount})',
+                          style: context.textTheme.bodyMedium,
+                        )
+                      ],
+                    )
+                  ],
+                )
+              ],
+            )),
       ));
     } else
       return Container(
@@ -203,21 +247,92 @@ class _CustClassesListViewState extends State<CustClassesListView> {
           children: List.generate(
         viewController.classes.length,
         (int index) => MezCard(
+            elevation: 0,
+            margin: EdgeInsets.only(bottom: 12.5),
             onClick: () {
               CustEventView.navigate(
                 eventId: viewController.classes[index].details.id.toInt(),
               );
             },
-            firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.classes[index].details.image?.first ?? ""),
-            content: Text(
-                viewController.classes[index].details.name[userLanguage] ??
-                    "")),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl: viewController.businesses[index].image,
+                      imageBuilder: (BuildContext context,
+                              ImageProvider<Object> imageProvider) =>
+                          CircleAvatar(
+                        radius: 18.5.mezSp,
+                        backgroundImage: imageProvider,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Text(
+                        viewController
+                                .classes[index].details.name[userLanguage] ??
+                            "",
+                        style: context.textTheme.displaySmall?.copyWith(
+                            fontSize: 11.75.mezSp,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                    ),
+                    Text(
+                      '\$${viewController.classes[index].details.cost.values.first.toString()}/${'${_i18n()['shared'][viewController.classes[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.bodyLarge?.copyWith(
+                          fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                Divider(),
+                if (viewController.classes[index].schedule != null)
+                  MezServiceOpenHours(
+                      schedule: viewController.classes[index].schedule!),
+                Divider(),
+                Text(viewController.classes[index].businessName)
+              ],
+            )),
       ));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
           child: Text("No events found"));
+  }
+
+  Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
+    final List<IconData> iconList = [];
+    acceptedPayments.forEach((PaymentType key, bool value) {
+      if (value) {
+        switch (key) {
+          case PaymentType.Cash:
+            iconList.add(Icons.payments_outlined);
+            break;
+          case PaymentType.Card:
+            iconList.add(Icons.credit_card_outlined);
+            break;
+          case PaymentType.BankTransfer:
+            iconList.add(Icons.account_balance_outlined);
+            break;
+        }
+      }
+    });
+
+    return Row(
+      children: <Icon>[
+        for (IconData icon in iconList)
+          Icon(
+            icon,
+            size: 15.mezSp,
+          )
+      ],
+    );
   }
 }

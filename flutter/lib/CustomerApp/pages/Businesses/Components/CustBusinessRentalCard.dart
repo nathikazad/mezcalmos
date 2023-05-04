@@ -12,7 +12,7 @@ import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['rental'];
+    ['pages']['CustHomeWrapper']['rentals'];
 
 class CustBusinessRentalCard extends StatelessWidget {
   final EdgeInsets margin;
@@ -51,7 +51,9 @@ class CustBusinessRentalCard extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       action: Text(
-        '\$${rental.details.cost.values.first.toString()}/${_i18n()['shared'][rental.details.cost.keys.first.toStringDuration().toLowerCase()]}',
+        rental.details.cost.length == 0
+            ? '- / -'
+            : '\$${rental.details.cost.values.first.toString()}/${_i18n()['shared'][rental.details.cost.keys.first.toStringDuration().toLowerCase()]}',
         style:
             context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
       ),

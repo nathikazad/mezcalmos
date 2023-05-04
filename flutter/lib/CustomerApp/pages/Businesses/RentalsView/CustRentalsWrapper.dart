@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['rental'];
+    ['pages']['CustHomeWrapper']['rentals'];
 
 //TO DO
 class CustRentalWrapper extends StatefulWidget {

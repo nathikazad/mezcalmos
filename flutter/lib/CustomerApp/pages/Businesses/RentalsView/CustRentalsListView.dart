@@ -20,7 +20,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.da
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['rental'];
+    ['pages']['CustHomeWrapper']['rentals'];
 
 // todo @ChiragKr04 fix the cards and ui  of this page
 class CustRentalsListView extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['rental'];
+    ['pages']['CustHomeWrapper']['rentals'];
 
 class CustBusinessRentalCost extends StatelessWidget {
   const CustBusinessRentalCost({super.key, required this.cost});

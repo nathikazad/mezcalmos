@@ -8,13 +8,12 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustomerWrapper'];
+    ['pages']['CustHomeWrapper']['food'];
 
 class CustFoodWrapper extends StatefulWidget {
   const CustFoodWrapper({super.key});
@@ -82,7 +81,7 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: _i18n()['food']['title'],
+        title: _i18n()['title'],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -94,10 +93,11 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
                 navigateToListView(serviceTree[index].name);
               },
               url: getCardImage(serviceTree[index].name),
-              title: _i18n()[serviceTree[index].name.name.toLowerCase()]
+              title: _i18n()[serviceTree[index].name.toFirebaseFormatString()]
                   ['title'],
-              subtitle: _i18n()[serviceTree[index].name.name.toLowerCase()]
-                  ['subtitle'],
+              subtitle:
+                  _i18n()[serviceTree[index].name.toFirebaseFormatString()]
+                      ['description'],
             ),
           ),
         ),

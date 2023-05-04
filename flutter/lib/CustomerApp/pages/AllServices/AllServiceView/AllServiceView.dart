@@ -115,7 +115,7 @@ class _AllServiceViewState extends State<AllServiceView> {
       margin: const EdgeInsets.all(5),
       child: Obx(
         () => Text(
-          "${_i18n()['services']}",
+          "${_i18n()['service']}",
           style: textStyle,
           textAlign: TextAlign.left,
         ),

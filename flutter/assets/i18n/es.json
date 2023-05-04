@@ -112,7 +112,7 @@
         },
         "CustCourierServiceView": {
           "orderNow": "Ordenar ahora",
-          "chatWithUs": "Habla con nosotros",
+          "chatWithUs": "Mensaje",
           "contactUs": "Contáctenos",
           "minimumCost": "Costo mínimo",
           "description": "Descripción",
@@ -571,13 +571,36 @@
         }
       },
       "CustHomeWrapper": {
-        "services": "Servicios",
-        "deliveries": "Entregas",
-        "rentals": "Alquileres",
-        "rental": {
+        "service": "Servicios",
+        "deliveries": { "title": "Entregas", "shared": {} },
+        "food": {
+          "title": "Alimento",
+          "shared": {},
+          "restaurants": {
+            "title": "Restaurantes",
+            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
+          },
+          "locallyMade": {
+            "title": "Hecho localmente",
+            "description": "Saborea el sabor de las golosinas locales.",
+            "CustFoodListView": {
+              "store": "Almacenar",
+              "uncategorized": "Sin categoría",
+              "cleaning": "Limpieza",
+              "mealplanning": "Planificación de comidas",
+              "petsitting": "Cuidado de mascotas",
+              "noUncategorizedFound": "No se encontró sin categoría",
+              "noCleaningFound": "No se encontró limpieza",
+              "noMealPlanningFound": "No se encontró la planificación de comidas",
+              "noPetSittingFound": "No se encontró una mascota sentada",
+              "noBusinessesFound": "No se encontraron negocios"
+            }
+          }
+        },
+        "rentals": {
           "title": "Alquileres",
           "shared": {
-            "store": "Tienda",
+            "store": "Almacenar",
             "filter": "Filtrar",
             "cancel": "Cancelar",
             "confirm": "Confirmar",
@@ -617,57 +640,112 @@
             "agency": "Agencia"
           }
         },
-        "classes": "Clases",
-        "class": {
-          "title": "Classes",
+        "classes": {
+          "title": "Clases",
+          "shared": {
+            "filter": "Filtrar",
+            "class": "Clase",
+            "studio": "Estudio",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "Hora",
+            "day": "Día",
+            "week": "Semana",
+            "month": "Mes",
+            "person": "Persona",
+            "total": "Total",
+            "none": "Ninguna"
+          },
           "classes": {
             "title": "Clase",
             "class": "Clase",
             "studio": "Estudio"
           }
         },
-        "therapy": "Terapia",
-        "events": "Eventos",
-        "event": {
+        "therapy": {
+          "title": "Terapias",
+          "shared": {
+            "filter": "Filtrar",
+            "therapy": "Terapia",
+            "therapist": "Terapeuta",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "Hora",
+            "day": "Día",
+            "week": "Semana",
+            "month": "Mes",
+            "person": "Persona",
+            "total": "total",
+            "none": "Ninguna",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noTherapyFound": "No se encontró terapia"
+          }
+        },
+        "events": {
           "title": "Eventos",
+          "shared": {
+            "filter": "Filtrar",
+            "events": "Eventos",
+            "organizers": "Organizadoras",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "Hora",
+            "day": "Día",
+            "week": "Semana",
+            "month": "Mes",
+            "person": "Persona",
+            "total": "total",
+            "none": "Ninguna",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noEventsFound": "No se encuentra ningún evento"
+          },
           "parties": {
             "title": "Fiestas",
-            "description": "Discover most delicious dishes from the nearest restaurants."
+            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
           },
           "dance": {
-            "title": "Danza",
-            "description": "Get your clothes cleaned by your nearest laundry service."
+            "title": "Bailar",
+            "description": "Haga que su ropa limpie su servicio de lavandería más cercano."
           },
           "getTogether": {
             "title": "Reunirse",
-            "description": "Obtain delivery of anything you desire to your location."
+            "description": "Obtenga la entrega de todo lo que desee a su ubicación."
           }
         },
-        "volunteer": "Voluntario",
-        "adventures": "Aventura",
-        "adventure": {
+        "locallyMade": {
+          "title": "Hecho localmente",
+          "shared": {}
+        },
+        "services": {
+          "title": "Servicios",
+          "cleaning": {
+            "title": "Limpieza",
+            "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+          },
+          "shared": {}
+        },
+        "volunteer": "Voluntaria",
+        "adventures": {
           "title": "Aventura",
           "tour": {
-            "title": "Visita",
-            "description": "Discover most delicious dishes from the nearest restaurants."
+            "title": "Recorrido",
+            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
           },
           "activities": {
             "title": "Actividades",
-            "description": "Get your clothes cleaned by your nearest laundry service."
+            "description": "Haga que su ropa limpie su servicio de lavandería más cercano."
           }
         },
-        "locallyMade": "Fabricación Local",
-        "food": "Alimentos",
-        "search": "Buscar",
         "welcomeText": "Bienvenido a MEZKALA 👋",
-        "appDescription": "Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad."
+        "search": "Buscar",
+        "appDescription": "Su único lugar de parada para encontrar todos sus servicios locales necesarios y dónde puede disfrutar de servicios rápidos y de alta calidad."
       },
       "CustBusinessView": {
         "rentals": "Alquileres",
         "events": "Eventos",
         "products": "Productos",
         "services": "Servicios",
-        "chatWithUs": "habla con nosotros",
+        "chatWithUs": "Mensaje",
         "contactUs": "Contáctenos",
         "reviews": "Reseñas",
         "viewAll": "Ver todo",
