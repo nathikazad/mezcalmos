@@ -66,7 +66,10 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         style: context.textTheme.bodyLarge,
                       )),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      /// TODO: Only to view purpose
+                      viewController.changeBusiness();
+                    },
                     child: Ink(
                       padding: const EdgeInsets.all(5),
                       child: Row(
@@ -255,30 +258,13 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
             context: context,
             isScrollControlled: true,
             builder: (BuildContext context) {
-              BusinessServiceType currentSelectedService =
-                  BusinessServiceType.Rental;
+              Map<String, Object> currentSelectedService =
+                  viewController.currentBottomSheetData.first;
 
               void navigateToOfferingView() {
-                switch (currentSelectedService) {
-                  case BusinessServiceType.Rental:
-                    BsOpRentalView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.HomeRental:
-                    BsOpHomeRentalView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.Event:
-                    BsOpEventView.navigate(id: null, isClass: false);
-                    return;
-                  case BusinessServiceType.Class:
-                    BsOpEventView.navigate(id: null, isClass: true);
-                    return;
-                  case BusinessServiceType.Service:
-                    BsOpServiceView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.Product:
-                    BsOpProductView.navigate(id: null);
-                    return;
-                }
+                final Function navigate =
+                    currentSelectedService["route"] as Function;
+                navigate();
               }
 
               return StatefulBuilder(builder: (BuildContext context, setState) {
@@ -300,8 +286,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         Divider(
                           height: 35,
                         ),
-                        ...BusinessServiceType.values.map(
-                          (BusinessServiceType value) => Row(
+                        ...viewController.currentBottomSheetData.map(
+                          (Map<String, Object> value) => Row(
                             children: [
                               Flexible(
                                 fit: FlexFit.tight,
@@ -309,14 +295,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      _i18n()[value.name.toLowerCase()]["title"]
-                                          .toString(),
+                                      value["title"].toString(),
                                       style: context.textTheme.bodyLarge,
                                     ),
                                     Text(
-                                      _i18n()[value.name.toLowerCase()]
-                                              ["subtitle"]
-                                          .toString(),
+                                      value["subtitle"].toString(),
                                     )
                                   ],
                                 ),
