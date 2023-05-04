@@ -714,7 +714,19 @@
         },
         "locallyMade": {
           "title": "Hecho localmente",
-          "shared": {}
+          "shared": {
+            "store": "Almacenar",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noServiceFound": "No se encuentra el servicio"
+          },
+          "consumable": {
+            "title": "Consumible",
+            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
+          },
+          "personalcare": {
+            "title": "Cuidado personal",
+            "description": "Haga que su ropa limpie su servicio de lavandería más cercano."
+          }
         },
         "services": {
           "title": "Servicios",
@@ -722,7 +734,18 @@
             "title": "Limpieza",
             "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
           },
-          "shared": {}
+          "shared": {
+            "store": "Almacenar",
+            "uncategorized": "Sin categoría",
+            "cleaning": "Limpieza",
+            "mealplanning": "Planificación de comidas",
+            "petsitting": "Cuidado de mascotas",
+            "noUncategorizedFound": "No se encontró sin categoría",
+            "noCleaningFound": "No se encontró limpieza",
+            "noMealPlanningFound": "No se encontró la planificación de comidas",
+            "noPetSittingFound": "No se encontró una mascota sentada",
+            "noBusinessesFound": "No se encontraron negocios"
+          }
         },
         "volunteer": "Voluntaria",
         "adventures": {

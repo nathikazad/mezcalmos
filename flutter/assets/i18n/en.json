@@ -715,14 +715,40 @@
             "description": "Obtain delivery of anything you desire to your location."
           }
         },
-        "locallyMade": { "title": "Locally Made", "shared": {} },
+        "locallyMade": {
+          "title": "Locally Made",
+          "shared": {
+            "store": "Store",
+            "noBusinessesFound": "No businesses found",
+            "noServiceFound": "No service found"
+          },
+          "consumable": {
+            "title": "Consumable",
+            "description": "Discover most delicious dishes from the nearest restaurants."
+          },
+          "personalcare": {
+            "title": "Personal Care",
+            "description": "Get your clothes cleaned by your nearest laundry service."
+          }
+        },
         "services": {
           "title": "Services",
           "cleaning": {
             "title": "Cleaning",
             "desctiption": "Get your clothes cleaned by your nearest laundry service."
           },
-          "shared": {}
+          "shared": {
+            "store": "Store",
+            "uncategorized": "Uncategorized",
+            "cleaning": "Cleaning",
+            "mealplanning": "Meal planning",
+            "petsitting": "Pet sitting",
+            "noUncategorizedFound": "No uncategorized found",
+            "noCleaningFound": "No cleaning found",
+            "noMealPlanningFound": "No meal planning found",
+            "noPetSittingFound": "No pet sitting found",
+            "noBusinessesFound": "No businesses found"
+          }
         },
         "volunteer": "Volunteer",
         "adventures": {

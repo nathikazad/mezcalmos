@@ -1,21 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/controllers/CustLocallyMadeListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Common/MezSearch.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustHomeWrapper']['locallyMade'];
 
 class CustLocallyMadeListView extends StatefulWidget {
   const CustLocallyMadeListView({super.key});
@@ -54,7 +58,8 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        titleWidget: Text(viewController.productsCategory.first.name),
+        titleWidget: Text(
+            '${_i18n()[viewController.productsCategory.first.name.toLowerCase()]['title']}'),
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -119,7 +124,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
         ),
         Flexible(
           child: MezButton(
-            label: "Store",
+            label: '${_i18n()['shared']['store']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
@@ -149,15 +154,52 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                 businessId: viewController.businesses[index].id,
               );
             },
+            elevation: 0,
+            contentPadding: EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
+            margin: EdgeInsets.only(bottom: 15),
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.businesses[index].image),
-            content: Text(viewController.businesses[index].name)),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  viewController.businesses[index].name,
+                  style: context.textTheme.displaySmall?.copyWith(
+                      fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _getAcceptedPaymentIcons(
+                        viewController.businesses[index].acceptedPayments),
+                    Row(
+                      children: [
+                        SizedBox(width: 10),
+                        Icon(
+                          Icons.star,
+                          color: primaryBlueColor,
+                        ),
+                        Text(
+                          '${viewController.businesses[index].avgRating ?? '0'}',
+                          style: context.textTheme.bodyLarge,
+                        ),
+                        Text(
+                          '(${viewController.businesses[index].reviewCount})',
+                          style: context.textTheme.bodyMedium,
+                        )
+                      ],
+                    )
+                  ],
+                )
+              ],
+            )),
       ));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No businesses found"));
+          child: Text('${_i18n()['shared']['noBusinessFound']}'));
   }
 
   Widget _buildProducts() {
@@ -166,25 +208,91 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
           children: List.generate(
         viewController.products.length,
         (int index) => MezCard(
-            onClick: () {
-              CustProductView.navigate(
-                productId: viewController.products[index].details.id.toInt(),
-              );
-            },
-            firstAvatarBgImage:
-                (viewController.products[index].details.firstImage != null)
-                    ? CachedNetworkImageProvider(
-                        viewController.products[index].details.firstImage!)
-                    : CachedNetworkImageProvider(customImageUrl),
-            content: Text(
-                viewController.products[index].details.name[userLanguage] ??
-                    viewController
-                        .products[index].details.name.entries.first.value)),
+          onClick: () {
+            CustProductView.navigate(
+              productId: viewController.products[index].details.id.toInt(),
+            );
+          },
+          elevation: 0,
+          margin: EdgeInsets.only(bottom: 15),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        viewController
+                                .products[index].details.name[userLanguage] ??
+                            "",
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.displaySmall?.copyWith(
+                            fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        '\$${viewController.products[index].details.cost.values.first.toString()}',
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.bodyLarge?.copyWith(
+                            height: 2,
+                            fontSize: 12.5.mezSp,
+                            fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
+                  if (viewController.products[index].details.firstImage != null)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: CachedNetworkImage(
+                          width: 50.mezSp,
+                          height: 50.mezSp,
+                          fit: BoxFit.cover,
+                          imageUrl: viewController
+                              .products[index].details.firstImage!),
+                    )
+                ],
+              ),
+              Divider(),
+              Text(viewController.products[index].businessName)
+            ],
+          ),
+        ),
       ));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No services found"));
+          child: Text('${_i18n()['shared']['noServiceFound']}'));
+  }
+
+  Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
+    final List<IconData> iconList = [];
+    acceptedPayments.forEach((PaymentType key, bool value) {
+      if (value) {
+        switch (key) {
+          case PaymentType.Cash:
+            iconList.add(Icons.payments_outlined);
+            break;
+          case PaymentType.Card:
+            iconList.add(Icons.credit_card_outlined);
+            break;
+          case PaymentType.BankTransfer:
+            iconList.add(Icons.account_balance_outlined);
+            break;
+        }
+      }
+    });
+
+    return Row(
+      children: <Icon>[
+        for (IconData icon in iconList)
+          Icon(
+            icon,
+            size: 15.mezSp,
+          )
+      ],
+    );
   }
 }

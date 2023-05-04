@@ -70,6 +70,9 @@ class _CustProductViewState extends State<CustProductView> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
+                      SizedBox(
+                        height: 12.5,
+                      ),
                       Text(
                         _i18n()['description'],
                         style: context.textTheme.bodyLarge,
@@ -80,9 +83,16 @@ class _CustProductViewState extends State<CustProductView> {
                             _i18n()['noDescription'],
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
+                      SizedBox(
+                        height: 12.5,
+                      ),
                       CustBusinessMessageCard(
+                        contentPadding: EdgeInsets.symmetric(vertical: 15),
                         business: viewController.product!.business,
                         offeringName: viewController.product!.details.name,
+                      ),
+                      SizedBox(
+                        height: 12.5,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],
