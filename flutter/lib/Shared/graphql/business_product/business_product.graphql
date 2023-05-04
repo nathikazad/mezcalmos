@@ -174,3 +174,12 @@ query get_business_products($businessId: Int!, $limit: Int, $offset: Int) {
     }
   
 }
+
+mutation update_product_category1($id: Int!, $category1: String!) {
+  update_business_item_details(
+    where: { id: { _eq: $id } }
+    _set: { category1: $category1 }
+  ) {
+    affected_rows
+  }
+}

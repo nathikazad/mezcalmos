@@ -165,7 +165,10 @@ Future<int?> add_one_service({required Service service}) async {
                           available: service.details.available,
                           category1: service.category1.toFirebaseFormatString(),
                           // category2: service.category2?.toFirebaseFormatString(),
-                          cost: service.details.cost,
+                          cost: service.details.cost.map(
+                              (TimeUnit key, num value) => MapEntry(
+                                  key.toFirebaseFormatString(),
+                                  value.toDouble())),
                           image: service.details.image,
                           name: Input$translation_obj_rel_insert_input(
                               data: Input$translation_insert_input(
@@ -194,24 +197,20 @@ Future<int?> add_one_service({required Service service}) async {
                           description: (service.details.description != null)
                               ? Input$translation_obj_rel_insert_input(
                                   data: Input$translation_insert_input(
-                                      service_provider_id:
-                                          service.details.businessId.toInt(),
-                                      service_provider_type: ServiceProviderType
-                                          .Business.toFirebaseFormatString(),
-                                      translations:
-                                          Input$translation_value_arr_rel_insert_input(
-                                              data: <Input$translation_value_insert_input>[
-                                            Input$translation_value_insert_input(
-                                                language_id: Language.EN
-                                                    .toFirebaseFormatString(),
-                                                value: service.details
-                                                    .description?[Language.EN]),
-                                            Input$translation_value_insert_input(
-                                                language_id: Language.ES
-                                                    .toFirebaseFormatString(),
-                                                value: service.details
-                                                    .description?[Language.ES])
-                                          ])))
+                                      service_provider_id: service.details.businessId.toInt(),
+                                      service_provider_type: ServiceProviderType.Business.toFirebaseFormatString(),
+                                      translations: Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.EN
+                                                .toFirebaseFormatString(),
+                                            value: service.details
+                                                .description?[Language.EN]),
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.ES
+                                                .toFirebaseFormatString(),
+                                            value: service.details
+                                                .description?[Language.ES])
+                                      ])))
                               : null))))));
   if (response.hasException) {
     mezDbgPrint(

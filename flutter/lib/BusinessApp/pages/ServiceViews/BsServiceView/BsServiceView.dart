@@ -57,7 +57,9 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
       bottomNavigationBar: MezButton(
         label: "Save",
         borderRadius: 0,
-        onClick: () async {},
+        onClick: () async {
+          await viewController.save();
+        },
       ),
       body: TabBarView(
         controller: viewController.tabController,

@@ -30,6 +30,14 @@ class _BsOpDropdownState extends State<BsOpDropdown> {
   }
 
   @override
+  void didUpdateWidget(covariant BsOpDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {
+      _selectedValue = widget.value;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
       value: _selectedValue,
