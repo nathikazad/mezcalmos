@@ -27,6 +27,10 @@ class BusinessOpAuthController extends GetxController {
     return _businessProfile;
   }
 
+  set setBusinessProfile(BusinessProfile? value) {
+    _businessProfile = value;
+  }
+
   @override
   void onInit() {
     // ------------------------------------------------------------------------

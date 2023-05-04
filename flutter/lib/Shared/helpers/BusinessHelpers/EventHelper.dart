@@ -9,4 +9,6 @@ extension EventHelper on Event {
     }
     return null;
   }
+
+  bool get isClass => tags?.contains(EventTag.Class) == true;
 }

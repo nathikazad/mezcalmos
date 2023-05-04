@@ -42,7 +42,7 @@ class BsHomeRentalViewController {
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
-    detailsController.addPriceTimeUnit(avalbleUnits.first);
+    detailsController.addPriceTimeUnit(timeUnit:avalbleUnits.first);
   }
 
   Future<void> initEditMode({required int id}) async {

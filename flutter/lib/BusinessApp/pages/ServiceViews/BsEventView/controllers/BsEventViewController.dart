@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpPeriodPicker.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
@@ -29,7 +30,8 @@ class BsEventViewController {
   Rxn<PeriodOfTime> oneTimePeriod = Rxn<PeriodOfTime>();
   Rxn<Location> location = Rxn<Location>();
   // getters //
-  BusinessProfile get businessProfile => BusinessProfile.WellnessPractitioner;
+  BusinessProfile get businessProfile =>
+      Get.find<BusinessOpAuthController>().businessProfile!;
   EventWithBusinessCard? get event => _event.value;
   bool get isEditing => _event.value != null;
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
@@ -39,6 +41,11 @@ class BsEventViewController {
       .where((TimeUnit element) =>
           detailsController.priceTimeUnitMap.keys.contains(element) == false)
       .toList();
+  bool get showLocation =>
+      businessProfile == BusinessProfile.WellnessPractitioner ||
+      businessProfile == BusinessProfile.TourAgency ||
+      businessProfile == BusinessProfile.Entertainment ||
+      businessProfile == BusinessProfile.Volunteer;
 
 // methods //
 
@@ -53,8 +60,11 @@ class BsEventViewController {
 
     mezDbgPrint("event id : $id");
     if (event != null) {
+      detailsController.clearPrices();
       await detailsController.initEditMode(detalsId: event!.details.id.toInt());
+
       isClass = event!.tags?.contains(EventTag.Class) == true;
+
       location.value = event!.gpsLocation;
       scheduleType.value = event!.scheduleType;
       avalaibilty.value = event!.schedule;
@@ -65,10 +75,18 @@ class BsEventViewController {
   Future<void> save() async {
     if (formKey.currentState?.validate() == true) {
       if (isEditing) {
-        await saveItemDetails();
+        try {
+          await saveItemDetails();
+          await update_event_by_id(
+              eventId: event!.id!.toInt(), event: _constructEvent());
+        } catch (e, stk) {
+          mezDbgPrint(
+              " 🛑 ${event?.id?.toInt()}  OperationException : ${e.toString()}");
+          mezDbgPrint(stk);
+        }
         shouldRefetch = true;
       } else {
-        Event _event = await _constructEvent();
+        Event _event = await _constructEventWithDetails();
         await createItem(_event);
       }
     }
@@ -97,18 +115,32 @@ class BsEventViewController {
     }
   }
 
-  Future<Event> _constructEvent() async {
+  Future<Event> _constructEventWithDetails() async {
     BusinessItemDetails details = await detailsController.contructDetails();
     Event event = Event(
         category1: EventCategory1.Party,
         scheduleType: scheduleType.value!,
-        startsAt: oneTimePeriod.value!.start.toUtc().toString(),
-        endsAt: oneTimePeriod.value!.end.toUtc().toString(),
+        startsAt: oneTimePeriod.value?.start.toUtc().toString(),
+        endsAt: oneTimePeriod.value?.end.toUtc().toString(),
         schedule: avalaibilty.value,
         gpsLocation: location.value,
         tags: isClass ? [EventTag.Class] : [],
         // time: oneTimePeriod.value.,
         details: details);
+    return event;
+  }
+
+  Event _constructEvent() {
+    Event event = Event(
+        category1: EventCategory1.Party,
+        scheduleType: scheduleType.value!,
+        startsAt: oneTimePeriod.value?.start.toUtc().toString(),
+        endsAt: oneTimePeriod.value?.end.toUtc().toString(),
+        schedule: avalaibilty.value,
+        gpsLocation: location.value,
+        tags: isClass ? [EventTag.Class] : [],
+        // time: oneTimePeriod.value.,
+        details: detailsController.details!);
     return event;
   }
 
@@ -127,10 +159,6 @@ class BsEventViewController {
               subtitle: "Weekly event",
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Private",
-              subtitle: "Private event",
-              type: ScheduleType.OnDemand),
-          ScheduleTypeInput(
               title: "Workshop",
               subtitle: "Workshop event",
               type: ScheduleType.OneTime),
@@ -147,6 +175,38 @@ class BsEventViewController {
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.WellnessPractitioner:
+        return [
+          ScheduleTypeInput(
+              title: "Weekly",
+              subtitle: "An event that reoccurs on a weekly basis",
+              type: ScheduleType.Scheduled),
+          ScheduleTypeInput(
+              title: "Private session",
+              subtitle: "A one on one event that clients can book with you.",
+              type: ScheduleType.OnDemand),
+          ScheduleTypeInput(
+              title: "Retreat",
+              subtitle:
+                  "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat",
+              type: ScheduleType.OneTime),
+        ];
+      case BusinessProfile.TourAgency:
+        return [
+          ScheduleTypeInput(
+              title: "Weekly",
+              subtitle: "An event that reoccurs on a weekly basis",
+              type: ScheduleType.Scheduled),
+          ScheduleTypeInput(
+              title: "Private session",
+              subtitle: "A one on one event that clients can book with you.",
+              type: ScheduleType.OnDemand),
+          ScheduleTypeInput(
+              title: "Retreat",
+              subtitle:
+                  "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat",
+              type: ScheduleType.OneTime),
+        ];
+      case BusinessProfile.YogaStudio:
         return [
           ScheduleTypeInput(
               title: "Weekly",
@@ -202,9 +262,11 @@ class BsEventViewController {
     detailsController.clearPrices();
     if (scheduleType == ScheduleType.OnDemand &&
         businessProfile != BusinessProfile.Entertainment) {
-      detailsController.addPriceTimeUnit(TimeUnit.PerHour);
+      detailsController.addPriceTimeUnit(
+        timeUnit: TimeUnit.PerHour,
+      );
     } else {
-      detailsController.addPriceTimeUnit(TimeUnit.PerPerson);
+      detailsController.addPriceTimeUnit(timeUnit: TimeUnit.PerPerson);
     }
   }
 

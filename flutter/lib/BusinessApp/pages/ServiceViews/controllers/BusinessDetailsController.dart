@@ -150,8 +150,11 @@ class BusinessItemDetailsController {
     }
   }
 
-  void addPriceTimeUnit(TimeUnit timeUnit) {
-    priceTimeUnitMap[timeUnit] = TextEditingController();
+  void addPriceTimeUnit({
+    required TimeUnit timeUnit,
+  }) {
+    TextEditingController textEditingController = TextEditingController();
+    priceTimeUnitMap[timeUnit] = textEditingController;
     // priceTimeUnitMap.refresh();
   }
 
