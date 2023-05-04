@@ -28,7 +28,7 @@ class BsEventViewController {
   Rxn<PeriodOfTime> oneTimePeriod = Rxn<PeriodOfTime>();
   Rxn<Location> location = Rxn<Location>();
   // getters //
-  BusinessProfile get businessProfile => BusinessProfile.WellnessClass;
+  BusinessProfile get businessProfile => BusinessProfile.WellnessPractitioner;
   EventWithBusinessCard? get event => _event.value;
   bool get isEditing => _event.value != null;
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
@@ -118,7 +118,7 @@ class BsEventViewController {
 
   List<ScheduleTypeInput> getScheduleType() {
     switch (businessProfile) {
-      case BusinessProfile.Party:
+      case BusinessProfile.Entertainment:
         return [
           ScheduleTypeInput(
               title: "Weekly",
@@ -144,7 +144,7 @@ class BsEventViewController {
               subtitle: "One time event",
               type: ScheduleType.OneTime),
         ];
-      case BusinessProfile.WellnessClass:
+      case BusinessProfile.WellnessPractitioner:
         return [
           ScheduleTypeInput(
               title: "Weekly",
@@ -199,7 +199,7 @@ class BsEventViewController {
   void setPrices() {
     detailsController.clearPrices();
     if (scheduleType == ScheduleType.OnDemand &&
-        businessProfile != BusinessProfile.Party) {
+        businessProfile != BusinessProfile.Entertainment) {
       detailsController.addPriceTimeUnit(TimeUnit.PerHour);
     } else {
       detailsController.addPriceTimeUnit(TimeUnit.PerPerson);
