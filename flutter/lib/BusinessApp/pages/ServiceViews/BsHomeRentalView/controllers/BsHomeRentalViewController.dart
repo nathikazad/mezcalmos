@@ -29,7 +29,6 @@ class BsHomeRentalViewController {
   bool get isEditing => _rental.value != null;
 
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
-        
         TimeUnit.PerHour,
         TimeUnit.PerDay,
         TimeUnit.PerWeek,
@@ -42,15 +41,21 @@ class BsHomeRentalViewController {
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
-    detailsController.addPriceTimeUnit(timeUnit:avalbleUnits.first);
+    detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
 
   Future<void> initEditMode({required int id}) async {
     _rental.value = await get_rental_by_id(id: id, withCache: false);
-    mezDbgPrint("rental id : $id");
+    mezDbgPrint(
+        "rental id : $id home type ============>>> ${rental!.homeType}");
     if (rental != null) {
+      detailsController.clearPrices();
       await detailsController.initEditMode(
           detalsId: rental!.details.id.toInt());
+      bedroomsController.text = rental!.bedrooms.toString();
+      bathroomsController.text = rental!.bathrooms.toString();
+      homeLocation.value = rental!.gpsLocation;
+      homeType.value = rental!.homeType;
     }
   }
 
@@ -58,7 +63,7 @@ class BsHomeRentalViewController {
     await detailsController.updateItemDetails();
   }
 
-  Future<Rental> _constructRental() async {
+  Future<Rental> _constructRentalWithDetails() async {
     BusinessItemDetails details = await detailsController.contructDetails();
     Rental rental = Rental(
       homeType: homeType.value,
@@ -67,15 +72,30 @@ class BsHomeRentalViewController {
       details: details,
     );
     return rental;
-  } 
+  }
+
+  Rental _constructRental() {
+    Rental rental = Rental(
+      homeType: homeType.value,
+      category1: RentalCategory1.Home,
+      gpsLocation: homeLocation.value,
+      bathrooms: int.tryParse(bathroomsController.text),
+      bedrooms: int.tryParse(bedroomsController.text),
+      details: detailsController.details!,
+    );
+    return rental;
+  }
 
   Future<void> save() async {
     if (formKey.currentState?.validate() == true) {
       if (isEditing) {
         await saveItemDetails();
+        await update_business_home_rental(
+            id: rental!.id!.toInt(), rental: _constructRental());
+        showSavedSnackBar();
         shouldRefetch = true;
       } else {
-        Rental _rental = await _constructRental();
+        Rental _rental = await _constructRentalWithDetails();
         await createItem(_rental);
       }
     }

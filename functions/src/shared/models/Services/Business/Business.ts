@@ -140,6 +140,7 @@ export enum RentalCategory3 {
   Retro = "retro",
   Scooter = "scooter",
   ThreeWheeler = "3-wheeler",
+  Uncategorized = "uncategorized",
 }
 export enum ServiceCategory1 {
   MealPlanning = "mealPlanning",

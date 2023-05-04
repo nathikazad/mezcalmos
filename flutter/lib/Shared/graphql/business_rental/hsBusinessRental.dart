@@ -99,7 +99,7 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
         response.parsedData?.business_rental_by_pk!;
 
     if (data != null) {
-      return RentalWithBusinessCard(
+      RentalWithBusinessCard returnedRental = RentalWithBusinessCard(
           rental: Rental(
               id: id,
               category1: data.details.category1.toRentalCategory1(),
@@ -147,6 +147,8 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
                     '0.0'),
             reviewCount: data.business.reviews_aggregate.aggregate?.count,
           ));
+      returnedRental.id = id;
+      return returnedRental;
     }
   } else
     return null;
