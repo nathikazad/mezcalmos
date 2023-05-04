@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
@@ -59,8 +60,8 @@ class _CustProductViewState extends State<CustProductView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        viewController.product!.details.name[userLanguage] ??
-                            _i18n()['noTitle'],
+                        viewController.product!.details.name
+                            .getTranslation(userLanguage),
                         style: context.textTheme.displayMedium,
                       ),
                       Text(
@@ -75,8 +76,8 @@ class _CustProductViewState extends State<CustProductView> {
                         style: context.textTheme.bodyLarge,
                       ),
                       Text(
-                        viewController
-                                .product!.details.description?[userLanguage] ??
+                        viewController.product!.details.description
+                                ?.getTranslation(userLanguage) ??
                             _i18n()['noDescription'],
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),

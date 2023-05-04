@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -351,7 +352,7 @@ class _CustLaundryOrderRequestViewState
           Flexible(
             flex: 1,
             child: Text(
-              item.name[userLanguage]?.toString().inCaps ?? "",
+              item.name.getTranslation(userLanguage).inCaps,
               style: context.txt.bodyMedium,
               maxLines: 1,
             ),

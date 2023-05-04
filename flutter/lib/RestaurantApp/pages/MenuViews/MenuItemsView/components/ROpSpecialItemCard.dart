@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpMenuView"]["components"]["ROpItemCard"];
@@ -66,7 +67,7 @@ class ROpSpecialItemCard extends StatelessWidget {
                             Flexible(
                               fit: FlexFit.tight,
                               child: Text(
-                                item.name[userLanguage] ?? "",
+                                item.name.getTranslation(userLanguage),
                                 style: context.txt.bodyLarge,
                               ),
                             ),

@@ -107,7 +107,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
           Flexible(
             fit: FlexFit.tight,
             child: Text(
-              item.name[userLanguage]?.inCaps ?? "",
+              item.name.getTranslation(userLanguage).inCaps,
               maxLines: 1,
             ),
           ),

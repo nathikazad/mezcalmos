@@ -6,12 +6,14 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustIte
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSliverAppbar.dart';
 import 'package:sizer/sizer.dart';
@@ -87,8 +89,9 @@ class _CustItemViewState extends State<CustItemView> {
                   MezSliverAppBar(
                     image: viewController.getItem?.image,
                     ordersRoute: CustomerRoutes.customerOrdersRoute,
-                    title:
-                        viewController.getItem?.name[userLanguage] ?? "Error",
+                    title: viewController.getItem?.name
+                            .getTranslation(userLanguage) ??
+                        "Error",
                   ),
                   SliverToBoxAdapter(
                     child: Container(
@@ -226,7 +229,7 @@ class _CustItemViewState extends State<CustItemView> {
         children: [
           Text("${_i18n()["itemDescription"]}", style: context.txt.bodyLarge),
           Text(
-            "${item.description![userLanguage]?.inCaps}",
+            "${item.description!.getTranslation(userLanguage).inCaps}",
             textAlign: TextAlign.left,
             style: context.txt.bodyMedium,
           ),

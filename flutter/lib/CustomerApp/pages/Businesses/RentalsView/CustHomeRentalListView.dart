@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.da
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -163,9 +164,8 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                     ? CachedNetworkImageProvider(
                         viewController.rentals[index].details.firstImage!)
                     : null,
-            content: Text(
-                viewController.rentals[index].details.name[userLanguage] ??
-                    "")),
+            content: Text(viewController.rentals[index].details.name
+                .getTranslation(userLanguage))),
       ));
     } else
       return Container(

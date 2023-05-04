@@ -9,6 +9,7 @@ import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -80,7 +81,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               )
             ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.rental != null
-            ? "${viewController.rental!.details.name[userLanguage] ?? ""}"
+            ? "${viewController.rental!.details.name.getTranslation(userLanguage)}"
             : "Home rental")));
   }
 
@@ -181,7 +182,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             ),
             bigSeperator,
             Obx(
-              ()=> BsOpOfferingPricesList(
+              () => BsOpOfferingPricesList(
                 availbleUnits: viewController.avalbleUnits,
                 onAddPrice: (TimeUnit unit) {
                   viewController.detailsController.addPriceTimeUnit(unit);
@@ -189,7 +190,8 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
                 onRemovePrice: (TimeUnit unit) {
                   viewController.detailsController.removeTimeUnit(unit);
                 },
-                seletedPrices: viewController.detailsController.priceTimeUnitMap,
+                seletedPrices:
+                    viewController.detailsController.priceTimeUnitMap,
               ),
             ),
             bigSeperator,

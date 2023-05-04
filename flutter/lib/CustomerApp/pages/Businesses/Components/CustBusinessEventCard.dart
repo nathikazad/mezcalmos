@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -48,7 +49,7 @@ class CustBusinessEventCard extends StatelessWidget {
             Flexible(
               flex: 7,
               child: Text(
-                event.details.name[userLanguage] ?? "",
+                event.details.name.getTranslation(userLanguage),
                 style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.sp),
                 overflow: TextOverflow.ellipsis,
               ),

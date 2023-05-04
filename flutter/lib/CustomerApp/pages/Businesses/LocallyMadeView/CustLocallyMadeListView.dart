@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -176,10 +177,8 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                     ? CachedNetworkImageProvider(
                         viewController.products[index].details.firstImage!)
                     : CachedNetworkImageProvider(customImageUrl),
-            content: Text(
-                viewController.products[index].details.name[userLanguage] ??
-                    viewController
-                        .products[index].details.name.entries.first.value)),
+            content: Text(viewController.products[index].details.name
+                    .getTranslation(userLanguage))),
       ));
     } else
       return Container(

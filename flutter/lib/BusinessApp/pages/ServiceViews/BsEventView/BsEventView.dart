@@ -6,6 +6,7 @@ import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -31,8 +32,9 @@ class _BsOpEventViewState extends State<BsOpEventView>
   BsEventViewController viewController = BsEventViewController();
   @override
   void initState() {
-   
-    viewController.init(thickerProvider: this,);
+    viewController.init(
+      thickerProvider: this,
+    );
     int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
       viewController.initEditMode(id: id);
@@ -78,7 +80,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
               )
             ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.events != null
-            ? "${viewController.events!.details.name[userLanguage] ?? ""}"
+            ? "${viewController.events!.details.name.getTranslation(userLanguage)}"
             : "Event")));
   }
 

@@ -6,6 +6,9 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+
+import '../../../../../../Shared/cloudFunctions/model.dart' as cModels;
 
 class RestaurantsListOfItemsComponent extends StatefulWidget {
   const RestaurantsListOfItemsComponent({
@@ -73,7 +76,7 @@ class _RestaurantsListOfItemsComponentState
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "${widget.item.name[userLanguage]?.capitalizeFirstofEach}",
+                        "${widget.item.name.getTranslation(userLanguage).capitalizeFirstofEach}",
                         style: context.txt.displaySmall?.copyWith(
                           fontSize: 13.mezSp,
                         ),

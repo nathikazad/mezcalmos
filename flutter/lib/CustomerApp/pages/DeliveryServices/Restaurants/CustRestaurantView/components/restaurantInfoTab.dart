@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
@@ -45,8 +46,10 @@ class RestaurantInfoTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         _topBarInfo(context),
-        if (restaurant.info.description?[userLanguage] != null &&
-            restaurant.info.description![userLanguage]!.isNotEmpty)
+        if (restaurant.info.description != null &&
+            restaurant.info.description!
+                .getTranslation(userLanguage)
+                .isNotEmpty)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -59,7 +62,8 @@ class RestaurantInfoTab extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
-              Text(restaurant.info.description?[userLanguage] ?? ""),
+              Text(restaurant.info.description?.getTranslation(userLanguage) ??
+                  ""),
             ],
           ),
         if (restaurant.schedule != null)

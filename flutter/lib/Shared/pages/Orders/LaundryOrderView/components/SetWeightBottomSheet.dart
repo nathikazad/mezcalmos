@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundryOrderWeightSelector.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -53,8 +54,9 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                 margin: const EdgeInsets.all(8),
                 child: Text(
                   (widget.viewController.isEditingCategory)
-                      ? widget.viewController.editableCategory.value!
-                          .name[userLanguage]!.capitalizeFirst!
+                      ? widget.viewController.editableCategory.value!.name
+                          .getTranslation(userLanguage)
+                          .capitalizeFirst!
                       : "${_i18n()["newItemsWeight"]}",
                   style: Theme.of(context).textTheme.displaySmall,
                   maxLines: 2,

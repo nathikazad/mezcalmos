@@ -171,8 +171,8 @@ class LaundryCostLineItem {
     final cModels.Language userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     final String availableName = name[name.keys.first]!;
-    if (name[userLanguage] != null) {
-      return name[userLanguage]!;
+    if (name.getTranslation(userLanguage) != null) {
+      return name.getTranslation(userLanguage);
     } else {
       return availableName;
     }

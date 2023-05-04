@@ -99,7 +99,7 @@ class LaundryPricingCompnent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            item.name[userLanguage] ?? "",
+            item.name.getTranslation(userLanguage),
           ),
           Text(
             "\$${item.cost} x ${item.weight}KG = \$${item.weighedCost}",
