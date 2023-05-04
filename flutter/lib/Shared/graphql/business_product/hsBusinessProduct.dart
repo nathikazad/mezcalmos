@@ -218,6 +218,29 @@ Future<int?> add_one_product({required Product product}) async {
   return null;
 }
 
+Future<int?> update_product_category1({
+  required int id,
+  required ProductCategory1 productCategory,
+}) async {
+  final QueryResult<Mutation$update_product_category1> response =
+      await _db.graphQLClient.mutate$update_product_category1(
+    Options$Mutation$update_product_category1(
+      variables: Variables$Mutation$update_product_category1(
+        id: id,
+        category1: productCategory.toFirebaseFormatString(),
+      ),
+    ),
+  );
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura update product category mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint("✅✅✅ Hasura update product category mutation success => ${response.data}");
+    return response.parsedData?.update_business_item_details!.affected_rows;
+  }
+  return null;
+}
+
 Future<List<ProductCard>> get_business_products(
     {required int businessId,
     int? offset,

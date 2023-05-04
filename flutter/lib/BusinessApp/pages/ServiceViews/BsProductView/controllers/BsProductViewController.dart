@@ -57,6 +57,13 @@ class BsProductViewController {
 
   Future<void> saveItemDetails() async {
     await detailsController.updateItemDetails();
+    if (productCategory.value != null) {
+      await update_product_category1(
+        id: product!.details.id.toInt(),
+        productCategory: productCategory.value!,
+      );
+      showSavedSnackBar();
+    }
   }
 
   Future<Product> _constructProduct() async {
