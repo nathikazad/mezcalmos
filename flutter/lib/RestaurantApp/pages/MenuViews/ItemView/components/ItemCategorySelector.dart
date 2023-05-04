@@ -85,7 +85,7 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
                 value: value,
                 // enabled: (widget.oppositeLanguageValue != null &&
                 //     widget.oppositeLanguageValue!.value != value),
-                child: Text(value.name![userLanguage] ?? "error",
+                child: Text(value.name!.getTranslation(userLanguage),
                     style: context.textTheme.bodyMedium?.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,

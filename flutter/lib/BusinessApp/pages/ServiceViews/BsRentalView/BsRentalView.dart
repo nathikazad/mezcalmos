@@ -5,6 +5,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceI
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -74,7 +75,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
               )
             ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.rental != null
-            ? "${viewController.rental!.details.name[userLanguage] ?? ""}"
+            ? "${viewController.rental!.details.name.getTranslation(userLanguage)}"
             : "Rental")));
   }
 

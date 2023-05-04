@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class RestaurantgridItemCard extends StatefulWidget {
   const RestaurantgridItemCard(
@@ -65,7 +66,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
                 height: 5,
               ),
               Text(
-                widget.item.name[userLanguage] ?? "",
+                widget.item.name.getTranslation(userLanguage),
                 textAlign: TextAlign.center,
               ),
               SizedBox(

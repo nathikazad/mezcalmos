@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFi
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -204,8 +205,8 @@ class _CustEventsListViewState extends State<CustEventsListView> {
             },
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.events[index].details.image?.first ?? ""),
-            content: Text(
-                viewController.events[index].details.name[userLanguage] ?? "")),
+            content: Text(viewController.events[index].details.name
+                .getTranslation(userLanguage))),
       ));
     } else
       return Container(

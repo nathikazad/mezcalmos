@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dar
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -114,9 +115,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 customImageUrl,
                           ),
                           content: Text(
-                            viewController.homeRentals[index].details
-                                    .name[userLanguage] ??
-                                "name error",
+                            viewController.homeRentals[index].details.name
+                                .getTranslation(userLanguage),
                             style: context.textTheme.bodyLarge,
                           ))),
                 ),
@@ -144,9 +144,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 customImageUrl,
                           ),
                           content: Text(
-                            viewController.rentals[index].details
-                                    .name[userLanguage] ??
-                                "name error",
+                            viewController.rentals[index].details.name
+                                .getTranslation(userLanguage),
                             style: context.textTheme.bodyLarge,
                           ))),
                 ),
@@ -176,9 +175,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 customImageUrl,
                           ),
                           content: Text(
-                            viewController
-                                    .events[index].details.name[userLanguage] ??
-                                "name error",
+                            viewController.events[index].details.name
+                                .getTranslation(userLanguage),
                             style: context.textTheme.bodyLarge,
                           ))),
                 ),
@@ -206,9 +204,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 customImageUrl,
                           ),
                           content: Text(
-                            viewController.services[index].details
-                                    .name[userLanguage] ??
-                                "name error",
+                            viewController.services[index].details.name
+                                .getTranslation(userLanguage),
                             style: context.textTheme.bodyLarge,
                           ))),
                 ),
@@ -236,9 +233,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 customImageUrl,
                           ),
                           content: Text(
-                            viewController.product[index].details
-                                    .name[userLanguage] ??
-                                "name error",
+                            viewController.product[index].details.name
+                                .getTranslation(userLanguage),
                             style: context.textTheme.bodyLarge,
                           ))),
                 ),

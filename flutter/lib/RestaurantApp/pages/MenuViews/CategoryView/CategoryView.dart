@@ -117,7 +117,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
       AppBarLeftButtonType.Back,
       onClick: MezRouter.back,
       title: (_viewController.editMode.value)
-          ? _viewController.category.value?.name![userLanguage]
+          ? _viewController.category.value?.name!.getTranslation(userLanguage)
           : "${_i18n()["addCategory"]}",
     );
   }

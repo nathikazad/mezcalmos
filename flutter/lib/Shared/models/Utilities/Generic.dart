@@ -95,4 +95,15 @@ extension LanguageMapToFirebaseFormat on LanguageMap {
     });
     return _tempMap;
   }
+
+  String getTranslation(Language userLanguage) {
+    if (containsKey(userLanguage)) {
+      return this[userLanguage]!;
+    } else if (containsKey(Language.EN)) {
+      return this[Language.EN]!;
+    } else {
+      // values.
+      return values.firstOrNull ?? "unnamed";
+    }
+  }
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/ROpOptionViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -40,7 +41,7 @@ class ROpOptionChoiceCard extends StatelessWidget {
                   Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      choice.name[userLanguage] ?? "Choice name error",
+                      choice.name.getTranslation(userLanguage),
                       style: context.txt.bodyLarge,
                     ),
                   ),

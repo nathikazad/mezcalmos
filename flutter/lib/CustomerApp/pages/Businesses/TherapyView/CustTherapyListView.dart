@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -210,9 +211,8 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
             },
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.therapy[index].details.image?.first ?? ""),
-            content: Text(
-                viewController.therapy[index].details.name[userLanguage] ??
-                    "")),
+            content: Text(viewController.therapy[index].details.name
+                .getTranslation(userLanguage))),
       ));
     } else
       return Container(

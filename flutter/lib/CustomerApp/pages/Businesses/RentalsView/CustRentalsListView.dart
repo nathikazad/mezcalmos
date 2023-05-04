@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -332,9 +333,8 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        viewController
-                                .rentals[index].details.name[userLanguage] ??
-                            "",
+                        viewController.rentals[index].details.name
+                            .getTranslation(userLanguage),
                         overflow: TextOverflow.ellipsis,
                         style: context.textTheme.displaySmall?.copyWith(
                             fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
@@ -362,8 +362,8 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                 ],
               ),
               Divider(),
-              Text(viewController
-                      .rentals[index].details.description?[userLanguage] ??
+              Text(viewController.rentals[index].details.description
+                      ?.getTranslation(userLanguage) ??
                   '${_i18n()['shared']['none']}')
             ],
           ),

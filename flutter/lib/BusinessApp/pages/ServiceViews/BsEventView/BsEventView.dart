@@ -9,6 +9,7 @@ import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -90,7 +91,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
 
   String getAppbartitle() {
     return viewController.event != null
-        ? "${viewController.event!.details.name[userLanguage] ?? ""}"
+        ? "${viewController.event!.details.name.getTranslation(userLanguage)}"
         : (viewController.isClass == false)
             ? "Event"
             : "Class";

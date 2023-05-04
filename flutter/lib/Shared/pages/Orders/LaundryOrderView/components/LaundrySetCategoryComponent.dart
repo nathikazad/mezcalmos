@@ -179,7 +179,7 @@ class _LaundrySetCategoryComponentState
           Flexible(
             fit: FlexFit.tight,
             child: Text(
-              item.name[userLanguage] ?? "",
+              item.name.getTranslation(userLanguage),
               maxLines: 1,
               style: context.txt.bodyMedium,
             ),

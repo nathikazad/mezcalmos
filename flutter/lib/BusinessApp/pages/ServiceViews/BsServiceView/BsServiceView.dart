@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -82,7 +83,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
               )
             ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.service != null
-            ? "${viewController.service!.details.name[userLanguage] ?? ""}"
+            ? "${viewController.service!.details.name.getTranslation(userLanguage)}"
             : "Service")));
   }
 

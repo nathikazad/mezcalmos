@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -109,8 +110,8 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               ))
                         ],
                       ),
-                      if (_viewController
-                              .company.info.description?[userLanguage] !=
+                      if (_viewController.company.info.description
+                              ?.getTranslation(userLanguage) !=
                           null)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,8 +123,8 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               '${_i18n()['description']}',
                               style: context.txt.bodyLarge,
                             ),
-                            Text(_viewController
-                                .company.info.description![userLanguage]!),
+                            Text(_viewController.company.info.description!
+                                .getTranslation(userLanguage)),
                           ],
                         ),
                       ServiceLocationCard(

@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -226,7 +227,8 @@ class LaundryOrderViewController {
 
     final LaundryOrderCostLineItem? _tempCatgeory = order.costsByType?.lineItems
         .firstWhereOrNull((LaundryOrderCostLineItem element) =>
-            element.name[userLanguage] == newCostLineItem.name[userLanguage]);
+            element.name.getTranslation(userLanguage) ==
+            newCostLineItem.name.getTranslation(userLanguage));
     if (_tempCatgeory != null && !isEditingCategory) {
       handlingCategroryAlreadySelected();
     } else if (_tempCatgeory != null &&

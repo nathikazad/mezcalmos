@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:sizer/sizer.dart';
 
@@ -70,8 +71,7 @@ class _LaundryOrderWeightSelectorState
                             Flexible(
                               flex: 3,
                               child: Text(
-                                value.name[userLanguage] ??
-                                    "Error catgeory name",
+                                value.name.getTranslation(userLanguage),
                                 style: context.txt.bodyLarge
                                     ?.copyWith(fontSize: 11.sp),
                               ),

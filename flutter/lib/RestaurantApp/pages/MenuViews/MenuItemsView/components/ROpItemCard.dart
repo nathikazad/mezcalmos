@@ -88,7 +88,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                     Flexible(
                       fit: FlexFit.tight,
                       child: Text(
-                        widget.item.name[userLanguage] ?? "",
+                        widget.item.name.getTranslation(userLanguage),
                         style: context.txt.bodyLarge,
                         maxLines: 2,
                       ),
@@ -124,7 +124,8 @@ class _ROpItemCardState extends State<ROpItemCard> {
                               children: [
                                 Text('${_i18n()["category"]}: '),
                                 Text(
-                                  widget.category?.name![userLanguage] ??
+                                  widget.category?.name!
+                                          .getTranslation(userLanguage) ??
                                       "Error",
                                   style: context.txt.bodyMedium,
                                 ),

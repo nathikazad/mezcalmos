@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
@@ -52,7 +53,6 @@ class _CustEventViewState extends State<CustEventView> {
   String generateCost() {
     String removePerFromTime(TimeUnit timeUnit) {
       if (timeUnit == TimeUnit.Unit) {
-  
         return "";
       }
       return "/${timeUnit.name.toString().toLowerCase().replaceFirst("per", "")}";
@@ -89,8 +89,8 @@ class _CustEventViewState extends State<CustEventView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        viewController.event!.details.name[userLanguage] ??
-                            _i18n()['noTitle'],
+                        viewController.event!.details.name
+                            .getTranslation(userLanguage),
                         style: context.textTheme.displayMedium,
                       ),
                       CustBusinessAdditionalData(
@@ -115,8 +115,8 @@ class _CustEventViewState extends State<CustEventView> {
                         style: context.textTheme.bodyLarge,
                       ),
                       Text(
-                        viewController
-                                .event!.details.description?[userLanguage] ??
+                        viewController.event!.details.description
+                                ?.getTranslation(userLanguage) ??
                             _i18n()['noDescription'],
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),

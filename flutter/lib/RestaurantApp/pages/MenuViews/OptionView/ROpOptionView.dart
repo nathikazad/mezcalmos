@@ -306,7 +306,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
     },
         titleWidget: Obx(
           () => Text((_viewController.editMode.isTrue)
-              ? "${_viewController.editableOption.value!.name[userLanguage]!}"
+              ? "${_viewController.editableOption.value!.name.getTranslation(userLanguage)}"
               : '${_i18n()["addOption"]}'),
         ),
         tabBar: TabBar(controller: _tabController, tabs: [
