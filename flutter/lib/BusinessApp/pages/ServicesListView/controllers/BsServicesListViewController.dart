@@ -80,7 +80,7 @@ class BsServicesListViewController {
           {
             "title": "surfClassTitle",
             "subtitle": "surfClassSubtitle",
-            "route": "",
+            "route": () => BsOpEventView.navigate(id: null, isClass: true),
           },
           {
             "title": "surfEventTitle",
@@ -138,7 +138,7 @@ class BsServicesListViewController {
           {
             "title": "yogaClassTitle",
             "subtitle": "yogaClassSubtitle",
-            "route": "",
+            "route": () => BsOpEventView.navigate(id: null, isClass: true),
           },
         ];
       case BusinessProfile.LanguageSchool:
@@ -151,7 +151,7 @@ class BsServicesListViewController {
           {
             "title": "languageSchoolClassTitle",
             "subtitle": "languageClassSubtitle",
-            "route": "",
+            "route": () => BsOpEventView.navigate(id: null, isClass: true),
           },
         ];
       case BusinessProfile.ArtisanalProduct:
@@ -175,7 +175,7 @@ class BsServicesListViewController {
           {
             "title": "petSittingServiceTitle",
             "subtitle": "petSittingServiceSubtitle",
-            "route": "",
+            "route": () => BsOpEventView.navigate(id: null, isClass: true),
           },
         ];
       case BusinessProfile.Entertainment:
