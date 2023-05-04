@@ -183,16 +183,19 @@ Future<EventWithBusinessCard?> get_event_by_id(
   if (response.parsedData?.business_event_by_pk == null) {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   } else if (response.parsedData != null) {
-    mezDbgPrint("✅✅✅✅ Hasura query success ");
+    mezDbgPrint(
+        "✅✅✅✅ Hasura query success starts at =====> ${response.parsedData?.business_event_by_pk?.starts_at} ");
     final Query$get_event_by_id$business_event_by_pk? data =
         response.parsedData?.business_event_by_pk!;
 
     if (data != null) {
-      return EventWithBusinessCard(
+      final EventWithBusinessCard returndedEvent = EventWithBusinessCard(
           event: Event(
               id: data.id,
               category1: data.details.category1.toEventCategory1(),
               category2: data.details.category2.toEventCategory2(),
+              startsAt: data.starts_at,
+              endsAt: data.ends_at,
               gpsLocation: data.gps_location != null && data.address != null
                   ? Location(
                       lat: data.gps_location!.latitude,
@@ -241,6 +244,13 @@ Future<EventWithBusinessCard?> get_event_by_id(
                     '0.0'),
             reviewCount: data.business.reviews_aggregate.aggregate?.count,
           ));
+      returndedEvent.startsAt = data.starts_at;
+      returndedEvent.endsAt = data.ends_at;
+      mezDbgPrint(
+          "returned value 🇹🇨🇹🇨🇹🇨🇹🇨🇹🇨 ${returndedEvent.startsAt}");
+      mezDbgPrint(
+          "returned value 🇹🇨🇹🇨🇹🇨🇹🇨🇹🇨 ${returndedEvent.endsAt}");
+      return returndedEvent;
     }
   } else
     return null;
@@ -362,7 +372,7 @@ Future<int?> get_number_of_adventure(
 Future<int?> add_one_event({required Event event}) async {
   // mezDbgPrint("Adding this rental 🇹🇳 ${rental.toJson()}");
   mezDbgPrint(
-      "Event sent to db ::: ==============> ${event.schedule?.toFirebaseFormat()}");
+      "Event sent to db ::: ==============> ${event.startsAt} \n ${event.endsAt} \n ${event.scheduleType} }");
 
   final QueryResult<Mutation$add_event> response = await _db.graphQLClient
       .mutate$add_event(Options$Mutation$add_event(
@@ -376,6 +386,8 @@ Future<int?> add_one_event({required Event event}) async {
                   address: event.gpsLocation?.address,
                   schedule_type: event.scheduleType.toFirebaseFormatString(),
                   schedule: event.schedule?.toFirebaseFormat(),
+                  starts_at: event.startsAt,
+                  ends_at: event.endsAt,
                   //    time: event.time,
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(

@@ -7,6 +7,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpSchedule
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
@@ -57,9 +58,8 @@ class BsEventViewController {
       location.value = event!.gpsLocation;
       scheduleType.value = event!.scheduleType;
       avalaibilty.value = event!.schedule;
-      // oneTimePeriod.value = PeriodOfTime(start: start, end: end);
+      oneTimePeriod.value = event!.period;
     }
-    scheduleType.refresh();
   }
 
   Future<void> save() async {
@@ -102,6 +102,8 @@ class BsEventViewController {
     Event event = Event(
         category1: EventCategory1.Party,
         scheduleType: scheduleType.value!,
+        startsAt: oneTimePeriod.value!.start.toUtc().toString(),
+        endsAt: oneTimePeriod.value!.end.toUtc().toString(),
         schedule: avalaibilty.value,
         gpsLocation: location.value,
         tags: isClass ? [EventTag.Class] : [],
