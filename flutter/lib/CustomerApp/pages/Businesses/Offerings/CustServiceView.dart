@@ -80,6 +80,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                           : CustBusinessRentalCost(
                               cost: viewController.service!.details.cost,
                             ),
+                      SizedBox(height: 12.5),
                       Text(
                         _i18n()['description'],
                         style: context.textTheme.bodyLarge,
@@ -90,10 +91,13 @@ class _CustServiceViewState extends State<CustServiceView> {
                             _i18n()['noDescription'],
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
+                      SizedBox(height: 12.5),
                       CustBusinessMessageCard(
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.service!.business,
                         offeringName: viewController.service!.details.name,
                       ),
+                      SizedBox(height: 12.5),
                       CustBusinessNoOrderBanner(),
                     ],
                   ),

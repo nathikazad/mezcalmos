@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustHomeWrapper']['shared'];
 
 typedef FilterInput = Map<String, List<String>>;
 Future<FilterInput?> cusShowBusinessFilerSheet({
@@ -22,7 +26,7 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -31,7 +35,7 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(bottom: 20),
                 child: Text(
-                  "Filter",
+                  '${_i18n()['filter']}',
                   style: context.textTheme.displayMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -47,7 +51,7 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                         defaultFilterInput.values.elementAt(index).length == 1
                             ? SizedBox.shrink()
                             : Text(
-                                defaultFilterInput.keys.elementAt(index).inCaps,
+                                '${_i18n()[defaultFilterInput.keys.elementAt(index)]}',
                                 style: context.textTheme.bodyLarge,
                               ),
                         defaultFilterInput.values.elementAt(index).length == 1
@@ -67,9 +71,10 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                                       .elementAt(index)[subIndex];
 
                                   return CheckboxListTile(
+                                    contentPadding: EdgeInsets.zero,
                                     //    checkColor: primaryBlueColor,
                                     activeColor: primaryBlueColor,
-                                    title: Text(actualSubItem),
+                                    title: Text('${_i18n()[actualSubItem]}'),
 
                                     value: selectedFilters[defaultFilterInput
                                                 .keys
@@ -128,10 +133,16 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                 children: [
                   Flexible(
                       child: MezButton(
-                          label: "Cancel",
-                          backgroundColor: offRedColor,
+                          height: 45,
+                          borderColor: redAccentColor,
+                          textStyle: context.textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: redAccentColor),
+                          label: '${_i18n()['cancel']}',
+                          backgroundColor: Colors.transparent,
                           textColor: redAccentColor,
                           onClick: () async {
+                            //   viewController.resetFilter();
                             Navigator.pop(
                               context,
                             );
@@ -141,7 +152,9 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                   ),
                   Flexible(
                       child: MezButton(
-                          label: "Confirm",
+                          height: 45,
+                          withGradient: true,
+                          label: '${_i18n()['confirm']}',
                           onClick: () async {
                             Navigator.pop(
                               context,
@@ -149,7 +162,7 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                             );
                           })),
                 ],
-              ),
+              )
             ],
           ),
         );

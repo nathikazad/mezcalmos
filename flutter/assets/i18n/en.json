@@ -574,6 +574,23 @@
         }
       },
       "CustHomeWrapper": {
+        "shared": {
+          "filter": "Filter",
+          "cancel": "Cancel",
+          "confirm": "Confirm",
+          "categories": "Categories",
+          "schedule": "Schedule",
+          "dance": "Dance",
+          "party": "Party",
+          "social": "Social",
+          "therapy": "Therapy",
+          "scheduled": "Scheduled",
+          "oneTime": "One time",
+          "onDemand": "On demand",
+          "motorcycle": "Motorcycle",
+          "car": "Car",
+          "bicycle": "Bicycle"
+        },
         "service": "Services",
         "deliveries": { "title": "Deliveries", "shared": {} },
         "food": {
@@ -614,6 +631,8 @@
             "person": "Person",
             "total": "Total",
             "none": "None",
+            "unit": "Unit",
+            "son": "Son",
             "motorcycle": "Motorcycle",
             "car": "Car",
             "bicycle": "Bicycle"
@@ -657,6 +676,8 @@
             "month": "Month",
             "person": "Person",
             "total": "Total",
+            "unit": "Unit",
+            "son": "Son",
             "none": "None"
           },
           "classes": {
@@ -679,6 +700,8 @@
             "month": "Month",
             "person": "Person",
             "total": "Total",
+            "unit": "Unit",
+            "son": "Son",
             "none": "None",
             "noBusinessesFound": "No businesses found",
             "noTherapyFound": "No therapy found"
@@ -698,6 +721,8 @@
             "month": "Month",
             "person": "Person",
             "total": "Total",
+            "unit": "Unit",
+            "son": "Son",
             "none": "None",
             "noBusinessesFound": "No businesses found",
             "noEventsFound": "No event found"

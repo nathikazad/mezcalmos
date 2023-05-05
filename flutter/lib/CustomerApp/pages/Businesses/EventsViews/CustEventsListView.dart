@@ -208,23 +208,31 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                   children: [
                     _getAcceptedPaymentIcons(
                         viewController.businesses[index].acceptedPayments),
-                    Row(
-                      children: [
-                        SizedBox(width: 10),
-                        Icon(
-                          Icons.star,
-                          color: primaryBlueColor,
-                        ),
-                        Text(
-                          '${viewController.businesses[index].avgRating ?? '0'}',
-                          style: context.textTheme.bodyLarge,
-                        ),
-                        Text(
-                          '(${viewController.businesses[index].reviewCount})',
-                          style: context.textTheme.bodyMedium,
-                        )
-                      ],
-                    )
+                    Flexible(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 17.5.mezSp,
+                            color: Color(0xFF6779FE),
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                              '${viewController.businesses[index].avgRating ?? '0'}',
+                              style: context.textTheme.bodySmall),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 2, bottom: 3),
+                            child: Text(
+                              '(${viewController.businesses[index].reviewCount})',
+                              style: context.textTheme.bodyMedium,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 )
               ],
@@ -273,7 +281,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                     Expanded(
                       child: Text(
                         viewController.events[index].details.name
-                .getTranslation(userLanguage),
+                            .getTranslation(userLanguage),
                         style: context.textTheme.displaySmall?.copyWith(
                             fontSize: 11.75.mezSp,
                             fontWeight: FontWeight.bold,
@@ -281,7 +289,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                       ),
                     ),
                     Text(
-                      '\$${viewController.events[index].details.cost.values.first.toString()}/${'${_i18n()['shared'][viewController.events[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
+                      '\$${viewController.events[index].details.cost.values.first.toString()}/${'${_i18n()['shared'][viewController.events[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyLarge?.copyWith(
                           fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),

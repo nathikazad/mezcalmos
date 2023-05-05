@@ -571,6 +571,23 @@
         }
       },
       "CustHomeWrapper": {
+        "shared": {
+          "filter": "Filtrar",
+          "cancel": "Cancelar",
+          "confirm": "Confirmar",
+          "categories": "Categorías",
+          "schedule": "Cronograma",
+          "dance": "Bailar",
+          "party": "Fiesta",
+          "social": "social",
+          "therapy": "Terapia",
+          "scheduled": "Programada",
+          "oneTime": "Una vez",
+          "onDemand": "Bajo demanda",
+          "motorcycle": "Motocicleta",
+          "car": "Auto",
+          "bicycle": "Bicicleta"
+        },
         "service": "Servicios",
         "deliveries": { "title": "Entregas", "shared": {} },
         "food": {
@@ -611,6 +628,8 @@
             "person": "Persona",
             "total": "Total",
             "none": "Ninguna",
+            "unit": "Unidad",
+            "son": "Son",
             "motorcycle": "Motocicleta",
             "car": "Auto",
             "bicycle": "Bicicleta"
@@ -654,6 +673,8 @@
             "month": "Mes",
             "person": "Persona",
             "total": "Total",
+            "unit": "Unidad",
+            "son": "Son",
             "none": "Ninguna"
           },
           "classes": {
@@ -676,6 +697,8 @@
             "month": "Mes",
             "person": "Persona",
             "total": "total",
+            "unit": "Unidad",
+            "son": "Son",
             "none": "Ninguna",
             "noBusinessesFound": "No se encontraron negocios",
             "noTherapyFound": "No se encontró terapia"
@@ -695,6 +718,8 @@
             "month": "Mes",
             "person": "Persona",
             "total": "total",
+            "unit": "Unidad",
+            "son": "Hijo",
             "none": "Ninguna",
             "noBusinessesFound": "No se encontraron negocios",
             "noEventsFound": "No se encuentra ningún evento"
