@@ -67,7 +67,10 @@ class _BsOpEventViewState extends State<BsOpEventView>
       ),
       body: TabBarView(
         controller: viewController.tabController,
-        children: [_primaryTab(context), _secondaryTab(context)],
+        children: [
+          Form(key: viewController.formKey, child: _primaryTab(context)),
+          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
+        ],
       ),
     );
   }
@@ -110,6 +113,12 @@ class _BsOpEventViewState extends State<BsOpEventView>
           smallSepartor,
           TextFormField(
             controller: viewController.detailsController.scNameController,
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter a name";
+              }
+              return null;
+            },
             decoration: InputDecoration(
               hintText: "Add item name",
             ),
@@ -137,102 +146,114 @@ class _BsOpEventViewState extends State<BsOpEventView>
   Widget _primaryTab(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      child: Form(
-        key: viewController.formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Obx(
-              () => MezItemAvSwitcher(
-                value: viewController.detailsController.isAvailable.value,
-                onAvalableTap: () {
-                  viewController.detailsController.isAvailable.value = true;
-                },
-                onUnavalableTap: () {
-                  viewController.detailsController.isAvailable.value = false;
-                },
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Obx(
+            () => MezItemAvSwitcher(
+              value: viewController.detailsController.isAvailable.value,
+              onAvalableTap: () {
+                viewController.detailsController.isAvailable.value = true;
+              },
+              onUnavalableTap: () {
+                viewController.detailsController.isAvailable.value = false;
+              },
             ),
-            bigSeperator,
-            Obx(
-              () => BsOpScheduleTypeSelector(
-                items: viewController.getScheduleType(),
-                label: "Select event type",
-                value: viewController.getScheduleType().firstWhereOrNull(
-                    (ScheduleTypeInput element) =>
-                        element.type == viewController.scheduleType.value),
-                onChanged: (ScheduleTypeInput? v) {
-                  if (v != null) {
-                    viewController.switchScheduleType(v.type);
-                  }
-                },
-              ),
+          ),
+          bigSeperator,
+          Obx(
+            () => BsOpScheduleTypeSelector(
+              items: viewController.getScheduleType(),
+              label: "Select event type",
+              value: viewController.getScheduleType().firstWhereOrNull(
+                  (ScheduleTypeInput element) =>
+                      element.type == viewController.scheduleType.value),
+              validator: (ScheduleTypeInput? v) {
+                if (v == null) {
+                  return "Please select a schedule type";
+                }
+                return null;
+              },
+              onChanged: (ScheduleTypeInput? v) {
+                if (v != null) {
+                  viewController.switchScheduleType(v.type);
+                }
+              },
             ),
-            bigSeperator,
-            Text(
-              "Images",
-              style: context.textTheme.bodyLarge,
+          ),
+          bigSeperator,
+          Text(
+            "Images",
+            style: context.textTheme.bodyLarge,
+          ),
+          Text(
+            "You can only upload up to five images.",
+          ),
+          smallSepartor,
+          BsOpServiceImagesGrid(
+            detailsController: viewController.detailsController,
+          ),
+          bigSeperator,
+          Text(
+            "Name",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            controller: viewController.detailsController.nameController,
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter a name";
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+              hintText: "Add event name",
             ),
-            Text(
-              "You can only upload up to five images.",
+          ),
+          bigSeperator,
+          Text(
+            "Description",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            maxLines: 7,
+            minLines: 5,
+            controller: viewController.detailsController.descriptionController,
+            decoration: InputDecoration(
+              hintText: "Enter a description for your event",
             ),
-            smallSepartor,
-            BsOpServiceImagesGrid(
-              detailsController: viewController.detailsController,
+          ),
+          bigSeperator,
+          BsOpOfferingPricesList(
+            availbleUnits: [],
+            onAddPrice: (TimeUnit unit) {
+              viewController.detailsController.addPriceTimeUnit(timeUnit: unit);
+            },
+            onRemovePrice: (TimeUnit unit) {
+              viewController.detailsController.removeTimeUnit(unit);
+            },
+            seletedPrices: viewController.detailsController.priceTimeUnitMap,
+          ),
+          bigSeperator,
+          Obx(
+            () => BsOpOfferingLocationCard(
+              onLocationSelected: (Location v) {
+                viewController.setLocation(v);
+              },
+              location: viewController.location.value,
+              validator: (Location? loc) {
+                if (loc == null) {
+                  return "Please select a location";
+                }
+                return null;
+              },
             ),
-            bigSeperator,
-            Text(
-              "Name",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              controller: viewController.detailsController.nameController,
-              decoration: InputDecoration(
-                hintText: "Add event name",
-              ),
-            ),
-            bigSeperator,
-            Text(
-              "Description",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              maxLines: 7,
-              minLines: 5,
-              controller:
-                  viewController.detailsController.descriptionController,
-              decoration: InputDecoration(
-                hintText: "Enter a description for your event",
-              ),
-            ),
-            bigSeperator,
-            Obx(
-              () => BsOpOfferingPricesList(
-                availbleUnits: viewController.avalbleUnits,
-                onAddPrice: (TimeUnit unit) {
-                  viewController.detailsController.addPriceTimeUnit(timeUnit: unit);
-                },
-                onRemovePrice: (TimeUnit unit) {
-                  viewController.detailsController.removeTimeUnit(unit);
-                },
-                seletedPrices:
-                    viewController.detailsController.priceTimeUnitMap,
-              ),
-            ),
-            bigSeperator,
-            Obx(
-              () => BsOpOfferingLocationCard(
-                  onLocationSelected: (Location v) {
-                    viewController.setLocation(v);
-                  },
-                  location: viewController.location.value),
-            ),
-            bigSeperator,
-            Obx(() => viewController.getScheduleWidget()),
-          ],
-        ),
+          ),
+          bigSeperator,
+          Obx(() => viewController.getScheduleWidget()),
+        ],
       ),
     );
   }

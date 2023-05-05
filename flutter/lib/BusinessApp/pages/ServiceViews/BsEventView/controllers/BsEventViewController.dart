@@ -17,6 +17,9 @@ import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 class BsEventViewController {
   // instances //
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
+  bool firstFormValid = false;
+  bool secondFormValid = false;
   TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
@@ -73,22 +76,23 @@ class BsEventViewController {
   }
 
   Future<void> save() async {
-    if (formKey.currentState?.validate() == true) {
-      if (isEditing) {
-        try {
-          await saveItemDetails();
-          await update_event_by_id(
-              eventId: event!.id!.toInt(), event: _constructEvent());
-        } catch (e, stk) {
-          mezDbgPrint(
-              " 🛑 ${event?.id?.toInt()}  OperationException : ${e.toString()}");
-          mezDbgPrint(stk);
-        }
-        shouldRefetch = true;
-      } else {
-        Event _event = await _constructEventWithDetails();
-        await createItem(_event);
-      }
+    if (validate()) {
+      showSavedSnackBar();
+      // if (isEditing) {
+      //   try {
+      //     await saveItemDetails();
+      //     await update_event_by_id(
+      //         eventId: event!.id!.toInt(), event: _constructEvent());
+      //   } catch (e, stk) {
+      //     mezDbgPrint(
+      //         " 🛑 ${event?.id?.toInt()}  OperationException : ${e.toString()}");
+      //     mezDbgPrint(stk);
+      //   }
+      //   shouldRefetch = true;
+      // } else {
+      //   Event _event = await _constructEventWithDetails();
+      //   await createItem(_event);
+      // }
     }
   }
 
@@ -272,6 +276,45 @@ class BsEventViewController {
 
   void setLocation(Location v) {
     location.value = v;
+  }
+
+  bool validate() {
+    if (isOnFirstTab) {
+      // validate first tab
+      firstFormValid = _isFirstFormValid;
+      if (firstFormValid && !secondFormValid) {
+        tabController?.animateTo(1);
+      }
+    } else {
+      secondFormValid = _isSecondFormValid;
+      if (secondFormValid && !firstFormValid) {
+        tabController?.animateTo(0);
+      }
+    }
+    if (secondFormValid && firstFormValid) {
+      tabController?.animateTo(0);
+    }
+    return secondFormValid && firstFormValid;
+  }
+
+  bool get _isFirstFormValid {
+    return formKey.currentState?.validate() == true;
+  }
+
+  bool get _isSecondFormValid {
+    return scFormKey.currentState?.validate() == true;
+  }
+
+  bool get isBothFormValid {
+    return _isFirstFormValid && _isSecondFormValid;
+  }
+
+  bool get isOnFirstTab {
+    return tabController?.index == 0;
+  }
+
+  bool get isOnSecondTab {
+    return tabController?.index == 1;
   }
 }
 

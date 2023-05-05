@@ -206,4 +206,9 @@ class BusinessItemDetailsController {
       Language.ES: scNameController.text
     };
   }
+
+  bool get hasOneImage {
+    return imagesUrls.any((String? element) => element != null) ||
+        images.any((File? element) => element != null);
+  }
 }
