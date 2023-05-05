@@ -176,6 +176,7 @@ Future<List<MinimalOrder>> get_customer_orders(
   final QueryResult<Query$get_customer_orders> res =
       await _graphClient.query$get_customer_orders(
     Options$Query$get_customer_orders(
+      fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Query$get_customer_orders(
           custId: customerId,
           inProcess: inProcess,

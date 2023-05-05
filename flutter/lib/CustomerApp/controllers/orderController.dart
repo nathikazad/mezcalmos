@@ -36,6 +36,7 @@ class CustomerOrderController extends GetxController {
   }
 
   Future<void> fetchCurrentOrders() async {
+    
     currentOrders.value = await get_customer_orders(
         limit: 10,
         offest: 0 /* To LATER */,
