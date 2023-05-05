@@ -2248,7 +2248,7 @@ extension ParseStringToRentalCategory2 on String {
 }
 
 
-enum RentalCategory3 { Retro, Scooter, ThreeWheeler }
+enum RentalCategory3 { Retro, Scooter, ThreeWheeler, Uncategorized }
 extension ParseRentalCategory3ToString on RentalCategory3 {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;

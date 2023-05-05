@@ -39,7 +39,6 @@ class _BsOpDropdownState extends State<BsOpDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    _selectedValue = widget.value;
     return DropdownButtonFormField<String>(
       value: _selectedValue,
       decoration: InputDecoration(

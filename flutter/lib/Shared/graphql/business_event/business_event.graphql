@@ -302,3 +302,58 @@ query get_business_events($businessId: Int!, $limit: Int, $offset: Int) {
     }
   
 }
+
+mutation update_event_by_id($id: Int!,$object: business_event_set_input) {
+  update_business_event_by_pk(pk_columns: {id : $id}, _set: $object) {
+   business {
+      id
+      details {
+        id
+        accepted_payments
+        image
+        name
+        currency
+      }
+      reviews_aggregate {
+        aggregate {
+          avg {
+            rating
+          }
+          count
+        }
+      }
+    }
+    id
+    schedule
+    schedule_type
+    gps_location
+    address
+    starts_at
+    ends_at
+    details {
+      name_id
+      description_id
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      tags
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      id
+      image
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      position
+    }
+  }
+}

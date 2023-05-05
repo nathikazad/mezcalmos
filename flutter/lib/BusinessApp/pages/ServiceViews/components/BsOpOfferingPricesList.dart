@@ -100,6 +100,15 @@ class BsOpOfferingPricesList extends StatelessWidget {
             flex: 2,
             child: TextFormField(
               style: context.textTheme.bodyLarge,
+              validator: (String? value) {
+                // validate this value it should be double and not null or emtpy
+                if (value == null || value.isEmpty) {
+                  return "Please enter price";
+                } else if (double.tryParse(value) == null) {
+                  return "Please enter a valid price";
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 hintText: "Price",
                 suffixIconConstraints: BoxConstraints(

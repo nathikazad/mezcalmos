@@ -150,8 +150,11 @@ class BusinessItemDetailsController {
     }
   }
 
-  void addPriceTimeUnit(TimeUnit timeUnit) {
-    priceTimeUnitMap[timeUnit] = TextEditingController();
+  void addPriceTimeUnit({
+    required TimeUnit timeUnit,
+  }) {
+    TextEditingController textEditingController = TextEditingController();
+    priceTimeUnitMap[timeUnit] = textEditingController;
     // priceTimeUnitMap.refresh();
   }
 
@@ -202,5 +205,10 @@ class BusinessItemDetailsController {
       Language.EN: nameController.text,
       Language.ES: scNameController.text
     };
+  }
+
+  bool get hasOneImage {
+    return imagesUrls.any((String? element) => element != null) ||
+        images.any((File? element) => element != null);
   }
 }

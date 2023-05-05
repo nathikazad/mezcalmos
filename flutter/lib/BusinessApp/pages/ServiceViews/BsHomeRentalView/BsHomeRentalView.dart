@@ -185,7 +185,8 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               () => BsOpOfferingPricesList(
                 availbleUnits: viewController.avalbleUnits,
                 onAddPrice: (TimeUnit unit) {
-                  viewController.detailsController.addPriceTimeUnit(unit);
+                  viewController.detailsController
+                      .addPriceTimeUnit(timeUnit: unit);
                 },
                 onRemovePrice: (TimeUnit unit) {
                   viewController.detailsController.removeTimeUnit(unit);
@@ -205,17 +206,19 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               style: context.textTheme.bodyLarge,
             ),
             smallSepartor,
-            BsOpDropdown(
-              items: HomeType.values
-                  .map((HomeType e) => e.toFirebaseFormatString())
-                  .toList(),
-              value: viewController.homeType.value?.toFirebaseFormatString(),
-              onChanged: (String? newHomeType) {
-                if (newHomeType != null) {
-                  viewController.homeType.value = newHomeType.toHomeType();
-                }
-              },
-              labelText: 'your home type',
+            Obx(
+              () => BsOpDropdown(
+                items: HomeType.values
+                    .map((HomeType e) => e.toFirebaseFormatString())
+                    .toList(),
+                value: viewController.homeType.value?.toFirebaseFormatString(),
+                onChanged: (String? newHomeType) {
+                  if (newHomeType != null) {
+                    viewController.homeType.value = newHomeType.toHomeType();
+                  }
+                },
+                labelText: 'your home type',
+              ),
             ),
             bigSeperator,
             Obx(

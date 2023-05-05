@@ -170,7 +170,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             BsOpEventView.navigate(
                               id: viewController.events[index].details.id
                                   .toInt(),
-                              isClass: false,
+                              isClass: viewController.events[index].isClass,
                             );
                           },
                           firstAvatarBgImage: NetworkImage(

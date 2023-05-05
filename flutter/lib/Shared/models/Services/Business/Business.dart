@@ -62,7 +62,7 @@ class EventCard extends Event {
           details: event.details,
         );
 
-  bool isClass() {
+  bool get isClass {
     if (tags != null) {
       return tags!.contains(EventTag.Class);
     }

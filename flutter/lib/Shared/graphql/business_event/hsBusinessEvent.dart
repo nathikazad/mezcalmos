@@ -183,16 +183,19 @@ Future<EventWithBusinessCard?> get_event_by_id(
   if (response.parsedData?.business_event_by_pk == null) {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   } else if (response.parsedData != null) {
-    mezDbgPrint("✅✅✅✅ Hasura query success ");
+    mezDbgPrint(
+        "✅✅✅✅ Hasura query success starts at =====> ${response.parsedData?.business_event_by_pk?.starts_at} ");
     final Query$get_event_by_id$business_event_by_pk? data =
         response.parsedData?.business_event_by_pk!;
 
     if (data != null) {
-      return EventWithBusinessCard(
+      final EventWithBusinessCard returndedEvent = EventWithBusinessCard(
           event: Event(
               id: data.id,
               category1: data.details.category1.toEventCategory1(),
               category2: data.details.category2.toEventCategory2(),
+              startsAt: data.starts_at,
+              endsAt: data.ends_at,
               gpsLocation: data.gps_location != null && data.address != null
                   ? Location(
                       lat: data.gps_location!.latitude,
@@ -241,6 +244,14 @@ Future<EventWithBusinessCard?> get_event_by_id(
                     '0.0'),
             reviewCount: data.business.reviews_aggregate.aggregate?.count,
           ));
+      returndedEvent.startsAt = data.starts_at;
+      returndedEvent.endsAt = data.ends_at;
+      returndedEvent.id = data.id;
+      mezDbgPrint(
+          "returned value 🇹🇨🇹🇨🇹🇨🇹🇨🇹🇨 ${returndedEvent.startsAt}");
+      mezDbgPrint(
+          "returned value 🇹🇨🇹🇨🇹🇨🇹🇨🇹🇨 ${returndedEvent.endsAt}");
+      return returndedEvent;
     }
   } else
     return null;
@@ -362,7 +373,7 @@ Future<int?> get_number_of_adventure(
 Future<int?> add_one_event({required Event event}) async {
   // mezDbgPrint("Adding this rental 🇹🇳 ${rental.toJson()}");
   mezDbgPrint(
-      "Event sent to db ::: ==============> ${event.schedule?.toFirebaseFormat()}");
+      "Event sent to db ::: ==============> ${event.startsAt} \n ${event.endsAt} \n ${event.tags} }");
 
   final QueryResult<Mutation$add_event> response = await _db.graphQLClient
       .mutate$add_event(Options$Mutation$add_event(
@@ -376,57 +387,66 @@ Future<int?> add_one_event({required Event event}) async {
                   address: event.gpsLocation?.address,
                   schedule_type: event.scheduleType.toFirebaseFormatString(),
                   schedule: event.schedule?.toFirebaseFormat(),
+                  starts_at: event.startsAt,
+                  ends_at: event.endsAt,
                   //    time: event.time,
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
-                          available: event.details.available,
-                          category1: event.category1.toFirebaseFormatString(),
-                          category2:
-                              event.category2?.toFirebaseFormatString() ??
-                                  EventCategory2.Uncategorized
-                                      .toFirebaseFormatString(),
-                          cost: event.details.cost.map((TimeUnit key,
-                                  num value) =>
-                              MapEntry(key.toFirebaseFormatString(), value)),
-                          image: event.details.image,
-                          name: Input$translation_obj_rel_insert_input(
-                              data: Input$translation_insert_input(
-                                  service_provider_id:
-                                      event.details.businessId.toInt(),
-                                  service_provider_type: ServiceProviderType
-                                      .Business.toFirebaseFormatString(),
-                                  translations:
-                                      Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
-                                    Input$translation_value_insert_input(
-                                        language_id: Language.EN
-                                            .toFirebaseFormatString(),
-                                        value: event.details.name[Language.EN]),
-                                    Input$translation_value_insert_input(
-                                        language_id: Language.ES
-                                            .toFirebaseFormatString(),
-                                        value: event.details.name[Language.ES])
-                                  ]))),
-                          position: event.details.position?.toInt(),
-                          additional_parameters: event.details.additionalParameters,
-                          description: (event.details.description != null)
-                              ? Input$translation_obj_rel_insert_input(
-                                  data: Input$translation_insert_input(
-                                      service_provider_id: event.details.businessId.toInt(),
-                                      service_provider_type: ServiceProviderType.Business.toFirebaseFormatString(),
-                                      translations: Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.EN
-                                                .toFirebaseFormatString(),
-                                            value: event.details
-                                                .description?[Language.EN]),
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.ES
-                                                .toFirebaseFormatString(),
-                                            value: event.details
-                                                .description?[Language.ES])
-                                      ])))
-                              : null,
-                          tags: event.tags))))));
+                    available: event.details.available,
+                    tags: event.tags
+                        ?.map((EventTag e) => e.toFirebaseFormatString())
+                        .toList(),
+                    category1: event.category1.toFirebaseFormatString(),
+                    category2: event.category2?.toFirebaseFormatString() ??
+                        EventCategory2.Uncategorized.toFirebaseFormatString(),
+                    cost: event.details.cost.map((TimeUnit key, num value) =>
+                        MapEntry(key.toFirebaseFormatString(), value)),
+                    image: event.details.image,
+                    name: Input$translation_obj_rel_insert_input(
+                        data: Input$translation_insert_input(
+                            service_provider_id:
+                                event.details.businessId.toInt(),
+                            service_provider_type: ServiceProviderType.Business
+                                .toFirebaseFormatString(),
+                            translations:
+                                Input$translation_value_arr_rel_insert_input(
+                                    data: <
+                                        Input$translation_value_insert_input>[
+                                  Input$translation_value_insert_input(
+                                      language_id:
+                                          Language.EN.toFirebaseFormatString(),
+                                      value: event.details.name[Language.EN]),
+                                  Input$translation_value_insert_input(
+                                      language_id:
+                                          Language.ES.toFirebaseFormatString(),
+                                      value: event.details.name[Language.ES])
+                                ]))),
+                    position: event.details.position?.toInt(),
+                    additional_parameters: event.details.additionalParameters,
+                    description: (event.details.description != null)
+                        ? Input$translation_obj_rel_insert_input(
+                            data: Input$translation_insert_input(
+                                service_provider_id:
+                                    event.details.businessId.toInt(),
+                                service_provider_type: ServiceProviderType
+                                    .Business.toFirebaseFormatString(),
+                                translations:
+                                    Input$translation_value_arr_rel_insert_input(
+                                        data: <
+                                            Input$translation_value_insert_input>[
+                                      Input$translation_value_insert_input(
+                                          language_id: Language.EN
+                                              .toFirebaseFormatString(),
+                                          value: event.details
+                                              .description?[Language.EN]),
+                                      Input$translation_value_insert_input(
+                                          language_id: Language.ES
+                                              .toFirebaseFormatString(),
+                                          value: event.details
+                                              .description?[Language.ES])
+                                    ])))
+                        : null,
+                  ))))));
   if (response.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura add event mutation exception =>${response.exception}");
@@ -494,4 +514,102 @@ Future<List<EventCard>> get_business_events(
   } else {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   }
+}
+
+Future<EventWithBusinessCard?> update_event_by_id(
+    {required int eventId, required Event event}) async {
+  final QueryResult<Mutation$update_event_by_id> res =
+      await _db.graphQLClient.mutate$update_event_by_id(
+    Options$Mutation$update_event_by_id(
+      variables: Variables$Mutation$update_event_by_id(
+        id: eventId,
+        object: Input$business_event_set_input(
+          schedule: event.schedule?.toFirebaseFormat(),
+          schedule_type: event.scheduleType.toFirebaseFormatString(),
+          starts_at: event.startsAt,
+          ends_at: event.endsAt,
+          gps_location: (event.gpsLocation != null)
+              ? Geography(event.gpsLocation!.lat.toDouble(),
+                  event.gpsLocation!.lng.toDouble())
+              : null,
+          address: event.gpsLocation?.address,
+        ),
+      ),
+    ),
+  );
+
+  if (res.hasException || res.parsedData?.update_business_event_by_pk == null) {
+    mezDbgPrint(
+        "🚨🚨🚨🚨 Hasura update event by id exception : ${res.exception}");
+    throw Exception(
+        "🚨🚨🚨🚨 Hasura update event by id exception : ${res.exception}");
+  } else {
+    Mutation$update_event_by_id$update_business_event_by_pk? data =
+        res.parsedData!.update_business_event_by_pk;
+    if (data != null) {
+      final EventWithBusinessCard returndedEvent = EventWithBusinessCard(
+          event: Event(
+              id: data.id,
+              category1: data.details.category1.toEventCategory1(),
+              category2: data.details.category2.toEventCategory2(),
+              startsAt: data.starts_at,
+              endsAt: data.ends_at,
+              gpsLocation: data.gps_location != null && data.address != null
+                  ? Location(
+                      lat: data.gps_location!.latitude,
+                      lng: data.gps_location!.longitude,
+                      address: data.address!)
+                  : null,
+              tags: data.details.tags
+                      ?.map<EventTag>((e) => e.toString().toEventTag())
+                      .toList() ??
+                  [],
+              details: BusinessItemDetails(
+                id: data.details.id,
+                nameId: data.details.name_id,
+                descriptionId: data.details.description_id,
+                name:
+                    toLanguageMap(translations: data.details.name.translations),
+                position: data.details.position,
+                businessId: data.business.id,
+                available: data.details.available,
+                cost: constructBusinessServiceCost(data.details.cost),
+                description: toLanguageMap(
+                    translations: data.details.description?.translations ?? []),
+                additionalParameters: data.details.additional_parameters,
+                image: data.details.image
+                        ?.map((e) => e.toString())
+                        .toList()
+                        .cast<String>() ??
+                    [],
+              ),
+              scheduleType: data.schedule_type.toScheduleType(),
+              schedule: (data.schedule != null)
+                  ? scheduleFromData(data.schedule)
+                  : null),
+          business: BusinessCard(
+            id: data.business.id,
+            detailsId: data.business.details.id,
+            name: data.business.details.name,
+            image: data.business.details.image,
+            currency: data.business.details.currency.toCurrency(),
+            acceptedPayments: PaymentInfo.fromData(
+                    stripeInfo: {},
+                    acceptedPayments: data.business.details.accepted_payments)
+                .acceptedPayments,
+            avgRating: double.tryParse(
+                data.business.reviews_aggregate.aggregate?.avg.toString() ??
+                    '0.0'),
+            reviewCount: data.business.reviews_aggregate.aggregate?.count,
+          ));
+      returndedEvent.startsAt = data.starts_at;
+      returndedEvent.endsAt = data.ends_at;
+      mezDbgPrint(
+          "returned value 🇹🇨🇹🇨🇹🇨🇹🇨🇹🇨 ${returndedEvent.startsAt}");
+      mezDbgPrint(
+          "returned value 🇹🇨🇹🇨🇹🇨🇹🇨🇹🇨 ${returndedEvent.endsAt}");
+      return returndedEvent;
+    }
+  }
+  return null;
 }

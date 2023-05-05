@@ -6,12 +6,12 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProduct
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
-import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
-import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
+import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
+import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 enum BusinessServiceType {
   Rental,
@@ -60,6 +60,8 @@ class BsServicesListViewController {
     } else {
       _idx++;
     }
+    Get.find<BusinessOpAuthController>().setBusinessProfile =
+        _businessProfile.value;
     _setupBottomSheetValue();
   }
   // --
