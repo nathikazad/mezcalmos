@@ -234,3 +234,14 @@ query getBusinessItemDetailsById($id: Int!) {
         position
   }
 }
+mutation update_business_item_additional_params(
+  $_eq: Int!
+  $additional_parameters: jsonb!
+) {
+  update_business_item_details(
+    where: { id: { _eq: $_eq } }
+    _set: { additional_parameters: $additional_parameters }
+  ) {
+    affected_rows
+  }
+}
