@@ -77,22 +77,21 @@ class BsEventViewController {
 
   Future<void> save() async {
     if (validate()) {
-      showSavedSnackBar();
-      // if (isEditing) {
-      //   try {
-      //     await saveItemDetails();
-      //     await update_event_by_id(
-      //         eventId: event!.id!.toInt(), event: _constructEvent());
-      //   } catch (e, stk) {
-      //     mezDbgPrint(
-      //         " 🛑 ${event?.id?.toInt()}  OperationException : ${e.toString()}");
-      //     mezDbgPrint(stk);
-      //   }
-      //   shouldRefetch = true;
-      // } else {
-      //   Event _event = await _constructEventWithDetails();
-      //   await createItem(_event);
-      // }
+      if (isEditing) {
+        try {
+          await saveItemDetails();
+          await update_event_by_id(
+              eventId: event!.id!.toInt(), event: _constructEvent());
+        } catch (e, stk) {
+          mezDbgPrint(
+              " 🛑 ${event?.id?.toInt()}  OperationException : ${e.toString()}");
+          mezDbgPrint(stk);
+        }
+        shouldRefetch = true;
+      } else {
+        Event _event = await _constructEventWithDetails();
+        await createItem(_event);
+      }
     }
   }
 
@@ -285,7 +284,9 @@ class BsEventViewController {
       if (firstFormValid && !secondFormValid) {
         tabController?.animateTo(1);
       }
-    } else {
+    }
+    // second tab
+    else {
       secondFormValid = _isSecondFormValid;
       if (secondFormValid && !firstFormValid) {
         tabController?.animateTo(0);
