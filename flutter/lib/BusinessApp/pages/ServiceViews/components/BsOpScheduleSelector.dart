@@ -10,9 +10,11 @@ class BsOpScheduleSelector extends StatelessWidget {
     super.key,
     required this.onScheduleSelected,
     required this.schedule,
+    this.validator,
   });
   final Function(Schedule?) onScheduleSelected;
   final Schedule? schedule;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {

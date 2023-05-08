@@ -73,6 +73,8 @@ class BsHomeRentalViewController {
       category1: RentalCategory1.Home,
       gpsLocation: homeLocation.value,
       details: details,
+      bathrooms: int.tryParse(bathroomsController.text),
+      bedrooms: int.tryParse(bedroomsController.text),
     );
     return rental;
   }

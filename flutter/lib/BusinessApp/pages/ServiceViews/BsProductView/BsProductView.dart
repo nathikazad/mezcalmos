@@ -209,37 +209,26 @@ class _BsOpProductViewState extends State<BsOpProductView>
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
-          FormField(validator: (value) {
-            if (viewController.productCategory.value == null) {
-              return "Select category";
-            }
-            return null;
-          }, builder: (FormFieldState<Object?> state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Obx(() {
-                  print(
-                      "productCategory ${viewController.productCategory.value?.toFirebaseFormatString()}");
-                  return BsOpDropdown(
-                    labelText: "Select category",
-                    items: ProductCategory1.values
-                        .map((ProductCategory1 e) => e.toFirebaseFormatString())
-                        .toList(),
-                    value: viewController.productCategory.value
-                        ?.toFirebaseFormatString(),
-                    onChanged: (category) {
-                      viewController.productCategory.value =
-                          category.toString().toProductCategory1();
-                    },
-                  );
-                }),
-                Container(
-                  padding: const EdgeInsets.only(top: 5, left: 12),
-                  child: Text(state.errorText ?? "",
-                      style: context.theme.inputDecorationTheme.errorStyle),
-                ),
-              ],
+          Obx(() {
+            print(
+                "productCategory ${viewController.productCategory.value?.toFirebaseFormatString()}");
+            return BsOpDropdown(
+              validator: (p0) {
+                if (viewController.productCategory.value == null) {
+                  return "Select category";
+                }
+                return null;
+              },
+              labelText: "Select category",
+              items: ProductCategory1.values
+                  .map((ProductCategory1 e) => e.toFirebaseFormatString())
+                  .toList(),
+              value: viewController.productCategory.value
+                  ?.toFirebaseFormatString(),
+              onChanged: (category) {
+                viewController.productCategory.value =
+                    category.toString().toProductCategory1();
+              },
             );
           }),
           smallSepartor,

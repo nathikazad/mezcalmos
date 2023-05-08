@@ -177,37 +177,26 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                       style: context.textTheme.bodyLarge,
                     ),
                     smallSepartor,
-                    FormField(validator: (value) {
-                      if (viewController.rentalCategory2.value == null) {
-                        return "Please select category";
-                      }
-                      return null;
-                    }, builder: (state) {
-                      return Column(
-                        children: [
-                          Obx(
-                            () => BsOpDropdown(
-                              labelText: "Select your vehicle type",
-                              value: viewController.rentalCategory2.value
-                                  ?.toFirebaseFormatString(),
-                              items: RentalCategory2.values
-                                  .map((e) => e.toFirebaseFormatString())
-                                  .toList(),
-                              onChanged: (value) {
-                                viewController.rentalCategory2.value =
-                                    value.toString().toRentalCategory2();
-                              },
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(top: 5, left: 12),
-                            child: Text(state.errorText ?? "",
-                                style: context
-                                    .theme.inputDecorationTheme.errorStyle),
-                          ),
-                        ],
-                      );
-                    }),
+                    Obx(
+                      () => BsOpDropdown(
+                        validator: (p0) {
+                          if (viewController.rentalCategory2.value == null) {
+                            return "Please select category";
+                          }
+                          return null;
+                        },
+                        labelText: "Select your vehicle type",
+                        value: viewController.rentalCategory2.value
+                            ?.toFirebaseFormatString(),
+                        items: RentalCategory2.values
+                            .map((e) => e.toFirebaseFormatString())
+                            .toList(),
+                        onChanged: (value) {
+                          viewController.rentalCategory2.value =
+                              value.toString().toRentalCategory2();
+                        },
+                      ),
+                    ),
                     smallSepartor,
                   ],
                 )
@@ -293,35 +282,24 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                         style: context.textTheme.bodySmall,
                       ),
                       smallSepartor,
-                      FormField(validator: (value) {
-                        if (viewController.rentalCategory3.value == null) {
-                          return "Please select category";
-                        }
-                        return null;
-                      }, builder: (state) {
-                        return Column(
-                          children: [
-                            BsOpDropdown(
-                              labelText: "Select your motorcycle type",
-                              value: viewController.rentalCategory3.value
-                                  ?.toFirebaseFormatString(),
-                              items: RentalCategory3.values
-                                  .map((e) => e.toFirebaseFormatString())
-                                  .toList(),
-                              onChanged: (value) {
-                                viewController.rentalCategory3.value =
-                                    value.toString().toRentalCategory3();
-                              },
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(top: 5, left: 12),
-                              child: Text(state.errorText ?? "",
-                                  style: context
-                                      .theme.inputDecorationTheme.errorStyle),
-                            ),
-                          ],
-                        );
-                      }),
+                      BsOpDropdown(
+                        validator: (value) {
+                          if (viewController.rentalCategory3.value == null) {
+                            return "Please select category";
+                          }
+                          return null;
+                        },
+                        labelText: "Select your motorcycle type",
+                        value: viewController.rentalCategory3.value
+                            ?.toFirebaseFormatString(),
+                        items: RentalCategory3.values
+                            .map((e) => e.toFirebaseFormatString())
+                            .toList(),
+                        onChanged: (value) {
+                          viewController.rentalCategory3.value =
+                              value.toString().toRentalCategory3();
+                        },
+                      ),
                       smallSepartor,
                     ],
                   )

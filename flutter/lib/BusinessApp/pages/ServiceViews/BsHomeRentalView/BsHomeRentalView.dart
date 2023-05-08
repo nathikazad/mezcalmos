@@ -216,40 +216,52 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
                     viewController.detailsController.priceTimeUnitMap,
               ),
             ),
-            bigSeperator,
-            Text(
-              "Rental details",
-              style: context.textTheme.bodyLarge,
+          ),
+          bigSeperator,
+          Text(
+            "Rental details",
+            style: context.textTheme.bodyLarge,
+          ),
+          meduimSeperator,
+          Text(
+            "Home type",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          Obx(
+            () => BsOpDropdown(
+              validator: (value) {
+                if (viewController.homeType.value == null) {
+                  return "Please select home type";
+                }
+                return null;
+              },
+              items: HomeType.values
+                  .map((HomeType e) => e.toFirebaseFormatString())
+                  .toList(),
+              value: viewController.homeType.value?.toFirebaseFormatString(),
+              onChanged: (String? newHomeType) {
+                if (newHomeType != null) {
+                  viewController.homeType.value = newHomeType.toHomeType();
+                }
+              },
+              labelText: "Your home type",
             ),
-            meduimSeperator,
-            Text(
-              "Home type",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            Obx(
-              () => BsOpDropdown(
-                items: HomeType.values
-                    .map((HomeType e) => e.toFirebaseFormatString())
-                    .toList(),
-                value: viewController.homeType.value?.toFirebaseFormatString(),
-                onChanged: (String? newHomeType) {
-                  if (newHomeType != null) {
-                    viewController.homeType.value = newHomeType.toHomeType();
-                  }
-                },
-                labelText: 'your home type',
-              ),
-            ),
-            bigSeperator,
-            Obx(
-              () => BsOpOfferingLocationCard(
-                location: viewController.homeLocation.value,
-                label: "Pick house location",
-                onLocationSelected: (Location loc) {
-                  viewController.homeLocation.value = loc;
-                },
-              ),
+          ),
+          bigSeperator,
+          Obx(
+            () => BsOpOfferingLocationCard(
+              location: viewController.homeLocation.value,
+              label: "Pick house location",
+              onLocationSelected: (Location loc) {
+                viewController.homeLocation.value = loc;
+              },
+              validator: (Location? loc) {
+                if (loc == null) {
+                  return "Please select a location";
+                }
+                return null;
+              },
             ),
             bigSeperator,
             Text(

@@ -218,31 +218,20 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             seletedPrices: viewController.detailsController.priceTimeUnitMap,
           ),
           smallSepartor,
-          FormField(validator: (value) {
-            if (viewController.serviceSchedule.value == null) {
-              return "Please add schedule";
-            }
-            return null;
-          }, builder: (state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Obx(
-                  () => BsOpScheduleSelector(
-                    onScheduleSelected: (schedule) {
-                      viewController.changeSchedule(schedule);
-                    },
-                    schedule: viewController.serviceSchedule.value,
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 5, left: 12),
-                  child: Text(state.errorText ?? "",
-                      style: context.theme.inputDecorationTheme.errorStyle),
-                ),
-              ],
-            );
-          }),
+          Obx(
+            () => BsOpScheduleSelector(
+              validator: (p0) {
+                if (viewController.serviceSchedule.value == null) {
+                  return "Please add schedule";
+                }
+                return null;
+              },
+              onScheduleSelected: (schedule) {
+                viewController.changeSchedule(schedule);
+              },
+              schedule: viewController.serviceSchedule.value,
+            ),
+          ),
         ],
       ),
     );
