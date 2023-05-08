@@ -21,12 +21,6 @@ abstract class MessagesListViewController {
 
   Future<void> getMessages();
 
-  Future<void> initiateChat({
-    required int businessId,
-    required String businessImage,
-    required Map<Language, String>? offeringName,
-  });
-
   Future<void> navigateToChatScreen({
     required int chatid,
     IncomingViewLink? viewLink,
@@ -49,9 +43,11 @@ class CustMessagesListViewController extends MessagesListViewController {
     _allChats.value = chatData;
     isLoading.value = false;
   }
-  
-  @override
-  Future<void> initiateChat({required int businessId, required String businessImage, required Map<Language, String>? offeringName}) async {
+
+  Future<void> initiateChat(
+      {required int businessId,
+      required String businessImage,
+      required Map<Language, String>? offeringName}) async {
     final IncomingViewLink? viewLink = offeringName == null
         ? null
         : IncomingViewLink(
@@ -96,5 +92,16 @@ class CustMessagesListViewController extends MessagesListViewController {
       );
       return;
     }
+  }
+}
+
+class BsOpMessagesListViewController extends MessagesListViewController {
+  @override
+  Future<void> getMessages() async {
+    isLoading.value = true;
+    // todo
+    //  List<HasuraChat> chatData =
+    // _allChats.value = chatData;
+    isLoading.value = false;
   }
 }

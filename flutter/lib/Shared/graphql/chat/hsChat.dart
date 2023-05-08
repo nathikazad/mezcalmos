@@ -6,8 +6,8 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/chat/__generated/hsChat.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/env.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/env.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -120,6 +120,7 @@ Future<HasuraChat?> get_service_provider_customer_chat(
         participants: []);
     return RetChat;
   }
+  return null;
 }
 
 Future<List<HasuraChat>> get_customer_chat_by_sp_type(

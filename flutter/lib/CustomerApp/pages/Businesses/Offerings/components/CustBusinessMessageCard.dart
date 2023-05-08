@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
-import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/CustChatController.dart';
+import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
