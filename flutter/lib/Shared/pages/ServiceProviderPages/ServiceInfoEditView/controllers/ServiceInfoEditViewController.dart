@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
@@ -13,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class ServiceInfoEditViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
@@ -82,22 +82,23 @@ class ServiceInfoEditViewController {
     }
   }
 
-  Future<void> updateServiceDescriptionDescription() async {
-    // if (!fd.mapEquals(service.value!.description, _contructDesc())) {
-    if (service.value!.descriptionId != null) {
-      _contructDesc().forEach((Language key, String value) {
-        update_translation(
-            langType: key,
-            value: value,
-            translationId: service.value!.descriptionId!);
-      });
-    } else {
-      newDescId = await insert_translation(
-          translation: _contructDesc(),
-          serviceType: serviceType,
-          serviceId: serviceId);
-      service.value?.descriptionId = newDescId;
-      // }
+  Future<void> updateServiceDescription() async {
+    if (!fd.mapEquals(service.value!.description, _contructDesc())) {
+      if (service.value!.descriptionId != null) {
+        _contructDesc().forEach((Language key, String value) {
+          update_translation(
+              langType: key,
+              value: value,
+              translationId: service.value!.descriptionId!);
+        });
+      } else {
+        newDescId = await insert_translation(
+            translation: _contructDesc(),
+            serviceType: serviceType,
+            serviceId: serviceId);
+        mezDbgPrint("newDescId ==========>>>$newDescId");
+        service.value?.descriptionId = newDescId;
+      }
     }
   }
 
@@ -124,7 +125,7 @@ class ServiceInfoEditViewController {
   //
   Future<bool> saveInfo() async {
     try {
-      await updateServiceDescriptionDescription();
+      await updateServiceDescription();
       await updateServiceLocation();
       if (newImageFile.value != null) {
         final String path = "/services/${serviceType.name}/$serviceId/images";
@@ -196,15 +197,15 @@ class ServiceInfoEditViewController {
     }
   }
 
-  bool _updatePrDesc() {
-    return (primaryServiceDesc.text != '' &&
-        primaryServiceDesc.text != service.value?.description?[primaryLang]);
-  }
+  // bool _updatePrDesc() {
+  //   return (primaryServiceDesc.text != '' &&
+  //       primaryServiceDesc.text != service.value?.description?[primaryLang]);
+  // }
 
-  bool _updateScDesc() {
-    return (secondayServiceDesc.text != '' &&
-        secondayServiceDesc.text != service.value?.description?[secondaryLang]);
-  }
+  // bool _updateScDesc() {
+  //   return (secondayServiceDesc.text != '' &&
+  //       secondayServiceDesc.text != service.value?.description?[secondaryLang]);
+  // }
 
   LanguageMap _contructDesc() {
     return {

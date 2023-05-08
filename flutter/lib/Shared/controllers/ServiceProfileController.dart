@@ -14,7 +14,7 @@ class ServiceProfileController extends GetxController {
   // constants //
   late int serviceId;
   late int detailsId;
-  late int deliveryDetailsId;
+  int? deliveryDetailsId;
   // state vars //
   Rxn<Service> _service = Rxn();
   Rxn<DeliveryCost> _serviceDeliveryCost = Rxn();
@@ -43,7 +43,7 @@ class ServiceProfileController extends GetxController {
   void assignVars(
       {required int serviceDetailsId,
       required int serviceId,
-      required int deliveryDetailsId}) {
+      required int? deliveryDetailsId}) {
     detailsId = serviceDetailsId;
     this.serviceId = serviceId;
     this.deliveryDetailsId = deliveryDetailsId;
@@ -52,10 +52,12 @@ class ServiceProfileController extends GetxController {
   Future<void> fetchService() async {
     _service.value = await get_service_details_by_id(
         serviceDetailsId: detailsId, serviceId: serviceId, withCache: false);
-    _serviceDeliveryCost.value =
-        await get_delivery_cost(deliveryDetailsId: deliveryDetailsId);
-    int? data = await get_service_delivery_partner(
-        serviceId: serviceId, providerType: service.serviceProviderType!);
+    if (deliveryDetailsId != null) {
+      _serviceDeliveryCost.value =
+          await get_delivery_cost(deliveryDetailsId: deliveryDetailsId!);
+      int? data = await get_service_delivery_partner(
+          serviceId: serviceId, providerType: service.serviceProviderType!);
+    }
     if (_service.value != null) {
       _isAprroved.value = _service.value!.state.approved;
       _service.refresh();

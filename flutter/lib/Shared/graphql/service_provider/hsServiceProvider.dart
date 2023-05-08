@@ -210,6 +210,7 @@ Future<cModels.Schedule?> get_service_schedule(
           serviceDetailsId: serviceDetailsId),
     ),
   );
+  mezDbgPrint("👋 called get schedule ===========>${res.data}");
   if (res.parsedData?.service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
@@ -239,7 +240,7 @@ Future<String?> get_service_provider_route(
   final cModels.ServiceProviderType serviceProviderType = res
       .parsedData!.service_provider_details[0].service_provider_type
       .toServiceProviderType();
-  mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${serviceProviderType}");
+  mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ $serviceProviderType");
   String? route;
   switch (serviceProviderType) {
     case cModels.ServiceProviderType.Restaurant:
@@ -290,6 +291,7 @@ Future<ServiceInfo> update_service_info(
       ),
     ),
   );
+
   if (res.parsedData?.update_service_provider_details_by_pk == null) {
     throwError(res.exception);
   }

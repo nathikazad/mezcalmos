@@ -40,7 +40,7 @@ extension OpenHoursFunctions on OpenHours {
 Schedule scheduleFromData(data) {
   final Map<Weekday, OpenHours> openHours = {};
 
-  data.forEach((day, openHour) {
+  data?.forEach((day, openHour) {
     try {
       final List<int> from = openHour["from"]
           .toString()
@@ -60,13 +60,7 @@ Schedule scheduleFromData(data) {
       mezDbgPrint(stk);
     }
   });
-  // final List<num> timezone = data.timezone.split(':').map((String val) {
-  //   return num.parse(val);
-  // }).toList();
-  // if (data.timezone.contains('-')) {
-  //   timezone[1] = -timezone[1];
-  // }
-  // return Schedule(openHours: openHours, timezone: timezone);
+
   return Schedule(openHours: openHours);
 }
 
