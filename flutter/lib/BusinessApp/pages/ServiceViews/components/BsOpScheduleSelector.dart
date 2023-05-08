@@ -10,9 +10,11 @@ class BsOpScheduleSelector extends StatelessWidget {
     super.key,
     required this.onScheduleSelected,
     required this.schedule,
+    this.validator,
   });
   final Function(Schedule?) onScheduleSelected;
   final Schedule? schedule;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,13 @@ class BsOpScheduleSelector extends StatelessWidget {
         initialValue: schedule,
         validator: (Schedule? value) {
           if (value == null) {
+            return "Please select a schedule";
+          }
+
+          /// This condition checks if the schedule has any [isOpen=true] timing
+          else if (!(value.openHours.values
+              .toList()
+              .any((element) => element.isOpen))) {
             return "Please select a schedule";
           }
           return null;

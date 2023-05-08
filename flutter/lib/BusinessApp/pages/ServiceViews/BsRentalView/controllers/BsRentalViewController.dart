@@ -11,6 +11,10 @@ import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 
 class BsRentalViewController {
   // instances //
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
+  bool firstFormValid = false;
+  bool secondFormValid = false;
 
   // streams //
 
@@ -21,7 +25,6 @@ class BsRentalViewController {
   // methods //
 
   // instances //
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
@@ -74,34 +77,6 @@ class BsRentalViewController {
 
   Future<void> saveItemDetails() async {
     await detailsController.updateItemDetails();
-
-    /// Update [rentalCategory2] and [rentalCategory3] when rental is vehicle
-    if (rentalCategory1 == RentalCategory1.Vehicle) {
-      if (rentalCategory2.value != null) {
-        await update_rental_category2(
-          id: rental!.details.id.toInt(),
-          category2: rentalCategory2.value!,
-        );
-      }
-
-      /// Update [rentalCategory3] only when [rentalCategory2] is motorcycle
-      if (rentalCategory2.value == RentalCategory2.Motorcycle) {
-        if (rentalCategory3.value != null) {
-          await update_rental_category3(
-            id: rental!.details.id.toInt(),
-            category3: rentalCategory3.value!,
-          );
-        }
-      }
-    } else if (rentalCategory1 == RentalCategory1.Surf) {
-      /// update addiotional params for surf
-      await update_item_additional_params(
-        id: rental!.details.id.toInt(),
-        additionalParams: {
-          "length": surfBoardLengthController.text.trim(),
-        },
-      );
-    }
   }
 
   Future<Rental> _constructRental() async {
@@ -122,9 +97,43 @@ class BsRentalViewController {
   }
 
   Future<void> save() async {
-    if (formKey.currentState?.validate() == true) {
+    if (validate()) {
       if (isEditing) {
-        await saveItemDetails();
+        try {
+          await saveItemDetails();
+
+          /// Update [rentalCategory2] and [rentalCategory3] when rental is vehicle
+          if (rentalCategory1 == RentalCategory1.Vehicle) {
+            if (rentalCategory2.value != null) {
+              await update_rental_category2(
+                id: rental!.details.id.toInt(),
+                category2: rentalCategory2.value!,
+              );
+            }
+
+            /// Update [rentalCategory3] only when [rentalCategory2] is motorcycle
+            if (rentalCategory2.value == RentalCategory2.Motorcycle) {
+              if (rentalCategory3.value != null) {
+                await update_rental_category3(
+                  id: rental!.details.id.toInt(),
+                  category3: rentalCategory3.value!,
+                );
+              }
+            }
+          } else if (rentalCategory1 == RentalCategory1.Surf) {
+            /// update addiotional params for surf
+            await update_item_additional_params(
+              id: rental!.details.id.toInt(),
+              additionalParams: {
+                "length": surfBoardLengthController.text.trim(),
+              },
+            );
+          }
+        } catch (e, stk) {
+          mezDbgPrint(
+              " 🛑 ${rental?.id?.toInt()}  OperationException : ${e.toString()}");
+          mezDbgPrint(stk);
+        }
         shouldRefetch = true;
       } else {
         final Rental _rental = await _constructRental();
@@ -151,5 +160,46 @@ class BsRentalViewController {
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
     }
+  }
+
+  bool validate() {
+    if (isOnFirstTab) {
+      // validate first tab
+      firstFormValid = _isFirstFormValid;
+      if (firstFormValid && !secondFormValid) {
+        tabController?.animateTo(1);
+      }
+    }
+    // second tab
+    else {
+      secondFormValid = _isSecondFormValid;
+      if (secondFormValid && !firstFormValid) {
+        tabController?.animateTo(0);
+      }
+    }
+    if (secondFormValid && firstFormValid) {
+      tabController?.animateTo(0);
+    }
+    return secondFormValid && firstFormValid;
+  }
+
+  bool get _isFirstFormValid {
+    return formKey.currentState?.validate() == true;
+  }
+
+  bool get _isSecondFormValid {
+    return scFormKey.currentState?.validate() == true;
+  }
+
+  bool get isBothFormValid {
+    return _isFirstFormValid && _isSecondFormValid;
+  }
+
+  bool get isOnFirstTab {
+    return tabController?.index == 0;
+  }
+
+  bool get isOnSecondTab {
+    return tabController?.index == 1;
   }
 }

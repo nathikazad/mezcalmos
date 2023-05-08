@@ -74,7 +74,10 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
       ),
       body: TabBarView(
         controller: viewController.tabController,
-        children: [_primaryTab(context), _secondaryTab(context)],
+        children: [
+          Form(key: viewController.formKey, child: _primaryTab(context)),
+          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
+        ],
       ),
     );
   }
@@ -112,8 +115,14 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
           TextFormField(
             controller: viewController.detailsController.scNameController,
             decoration: InputDecoration(
-              hintText: "Add item name",
+              hintText: "Add rental name",
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter name";
+              }
+              return null;
+            },
           ),
           bigSeperator,
           Text(
@@ -129,6 +138,12 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
             decoration: InputDecoration(
               hintText: "Enter a description for your rental",
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter description";
+              }
+              return null;
+            },
           ),
         ],
       ),
@@ -138,141 +153,121 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
   Widget _primaryTab(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      child: Form(
-        key: viewController.formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Obx(
-              () => MezItemAvSwitcher(
-                value: viewController.detailsController.isAvailable.value,
-                onAvalableTap: () {
-                  viewController.detailsController.isAvailable.value = true;
-                },
-                onUnavalableTap: () {
-                  viewController.detailsController.isAvailable.value = false;
-                },
-              ),
-            ),
-            bigSeperator,
-            rentalCategory == RentalCategory1.Vehicle
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Types of vehicle",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Obx(
-                        () => BsOpDropdown(
-                          labelText: "Select your vehicle type",
-                          value: viewController.rentalCategory2.value
-                              ?.toFirebaseFormatString(),
-                          items: RentalCategory2.values
-                              .map((e) => e.toFirebaseFormatString())
-                              .toList(),
-                          onChanged: (value) {
-                            viewController.rentalCategory2.value =
-                                value.toString().toRentalCategory2();
-                          },
-                        ),
-                      ),
-                      smallSepartor,
-                    ],
-                  )
-                : SizedBox.shrink(),
-            Text(
-              "Images",
-              style: context.textTheme.bodyLarge,
-            ),
-            Text(
-              "You can only upload up to five images.",
-            ),
-            smallSepartor,
-            BsOpServiceImagesGrid(
-              detailsController: viewController.detailsController,
-            ),
-            bigSeperator,
-            Text(
-              "Name",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              controller: viewController.detailsController.nameController,
-              decoration: InputDecoration(
-                hintText: "Add rental name",
-              ),
-            ),
-            bigSeperator,
-            Text(
-              "Description",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              maxLines: 7,
-              minLines: 5,
-              controller:
-                  viewController.detailsController.descriptionController,
-              decoration: InputDecoration(
-                hintText: "Enter a description for your rental",
-              ),
-            ),
-            bigSeperator,
-            BsOpOfferingPricesList(
-              availbleUnits: viewController.avalbleUnits,
-              onAddPrice: (TimeUnit unit) {
-                viewController.detailsController
-                    .addPriceTimeUnit(timeUnit: unit);
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Obx(
+            () => MezItemAvSwitcher(
+              value: viewController.detailsController.isAvailable.value,
+              onAvalableTap: () {
+                viewController.detailsController.isAvailable.value = true;
               },
-              onRemovePrice: (TimeUnit unit) {
-                viewController.detailsController.removeTimeUnit(unit);
+              onUnavalableTap: () {
+                viewController.detailsController.isAvailable.value = false;
               },
-              seletedPrices: viewController.detailsController.priceTimeUnitMap,
             ),
-            smallSepartor,
-
-            /// This to show rental details only when rental is Motorcycle
-            Obx(
-              () => viewController.rentalCategory2.value ==
-                          RentalCategory2.Motorcycle &&
-                      rentalCategory == RentalCategory1.Vehicle
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        bigSeperator,
-                        Text(
-                          "Rental Details",
-                          style: context.textTheme.bodyLarge,
-                        ),
-                        smallSepartor,
-                        Text(
-                          "Motorcycle Type",
-                          style: context.textTheme.bodySmall,
-                        ),
-                        smallSepartor,
-                        BsOpDropdown(
-                          labelText: "Select your motorcycle type",
-                          value: viewController.rentalCategory3.value
-                              ?.toFirebaseFormatString(),
-                          items: RentalCategory3.values
-                              .map((e) => e.toFirebaseFormatString())
-                              .toList(),
-                          onChanged: (value) {
-                            viewController.rentalCategory3.value =
-                                value.toString().toRentalCategory3();
-                          },
-                        ),
-                        smallSepartor,
-                      ],
-                    )
-                  : SizedBox.shrink(),
+          ),
+          bigSeperator,
+          rentalCategory == RentalCategory1.Vehicle
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Types of vehicle",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    smallSepartor,
+                    Obx(
+                      () => BsOpDropdown(
+                        validator: (p0) {
+                          if (viewController.rentalCategory2.value == null) {
+                            return "Please select category";
+                          }
+                          return null;
+                        },
+                        labelText: "Select your vehicle type",
+                        value: viewController.rentalCategory2.value
+                            ?.toFirebaseFormatString(),
+                        items: RentalCategory2.values
+                            .map((e) => e.toFirebaseFormatString())
+                            .toList(),
+                        onChanged: (value) {
+                          viewController.rentalCategory2.value =
+                              value.toString().toRentalCategory2();
+                        },
+                      ),
+                    ),
+                    smallSepartor,
+                  ],
+                )
+              : SizedBox.shrink(),
+          Text(
+            "Images",
+            style: context.textTheme.bodyLarge,
+          ),
+          Text(
+            "You can only upload up to five images.",
+          ),
+          smallSepartor,
+          BsOpServiceImagesGrid(
+            detailsController: viewController.detailsController,
+          ),
+          bigSeperator,
+          Text(
+            "Name",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            controller: viewController.detailsController.nameController,
+            decoration: InputDecoration(
+              hintText: "Add rental name",
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter name";
+              }
+              return null;
+            },
+          ),
+          bigSeperator,
+          Text(
+            "Description",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            maxLines: 7,
+            minLines: 5,
+            controller: viewController.detailsController.descriptionController,
+            decoration: InputDecoration(
+              hintText: "Enter a description for your rental",
+            ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter description";
+              }
+              return null;
+            },
+          ),
+          bigSeperator,
+          BsOpOfferingPricesList(
+            availbleUnits: viewController.avalbleUnits,
+            onAddPrice: (TimeUnit unit) {
+              viewController.detailsController.addPriceTimeUnit(timeUnit: unit);
+            },
+            onRemovePrice: (TimeUnit unit) {
+              viewController.detailsController.removeTimeUnit(unit);
+            },
+            seletedPrices: viewController.detailsController.priceTimeUnitMap,
+          ),
+          smallSepartor,
 
-            /// This to show rental details only when rental is Surf
-            rentalCategory == RentalCategory1.Surf
+          /// This to show rental details only when rental is Motorcycle
+          Obx(
+            () => viewController.rentalCategory2.value ==
+                        RentalCategory2.Motorcycle &&
+                    rentalCategory == RentalCategory1.Vehicle
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -283,31 +278,76 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                       ),
                       smallSepartor,
                       Text(
-                        "Length",
+                        "Motorcycle Type",
                         style: context.textTheme.bodySmall,
                       ),
                       smallSepartor,
-                      TextFormField(
-                        controller: viewController.surfBoardLengthController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintText: "Surf board Length",
-                          suffixIconConstraints: BoxConstraints(
-                            minWidth: 0,
-                            minHeight: 0,
-                          ).tighten(width: 80),
-                          suffixIcon: Text(
-                            "feet",
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                        ),
+                      BsOpDropdown(
+                        validator: (value) {
+                          if (viewController.rentalCategory3.value == null) {
+                            return "Please select category";
+                          }
+                          return null;
+                        },
+                        labelText: "Select your motorcycle type",
+                        value: viewController.rentalCategory3.value
+                            ?.toFirebaseFormatString(),
+                        items: RentalCategory3.values
+                            .map((e) => e.toFirebaseFormatString())
+                            .toList(),
+                        onChanged: (value) {
+                          viewController.rentalCategory3.value =
+                              value.toString().toRentalCategory3();
+                        },
                       ),
                       smallSepartor,
                     ],
                   )
                 : SizedBox.shrink(),
-          ],
-        ),
+          ),
+
+          /// This to show rental details only when rental is Surf
+          rentalCategory == RentalCategory1.Surf
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    bigSeperator,
+                    Text(
+                      "Rental Details",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    smallSepartor,
+                    Text(
+                      "Length",
+                      style: context.textTheme.bodySmall,
+                    ),
+                    smallSepartor,
+                    TextFormField(
+                      controller: viewController.surfBoardLengthController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: "Surf board Length",
+                        suffixIconConstraints: BoxConstraints(
+                          minWidth: 0,
+                          minHeight: 0,
+                        ).tighten(width: 80),
+                        suffixIcon: Text(
+                          "feet",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please board length";
+                        }
+                        return null;
+                      },
+                    ),
+                    smallSepartor,
+                  ],
+                )
+              : SizedBox.shrink(),
+        ],
       ),
     );
   }
