@@ -1,38 +1,69 @@
-
-
-
-
 {
   "BusinessApp": {
     "pages": {
       "services": {
         "services": "Services",
-        "serviceType": "Service Type",
+        "serviceType": "What type of service will you add?",
         "addService": "Add Service",
         "reorder": "Reorder",
-        "rental": {
-          "title": "Rental",
-          "subtitle": "Using a rental service, you can advertise a home for rent."
+        "event": "Events",
+        "rental": "Rentals",
+        "product": "Products",
+        "surfShop": {
+          "rentalTitle": "Surfboard rental",
+          "rentalSubtitle": "Using a surfboard rental service, you can advertise a surfboard for rent.",
+          "classTitle": "Surf class",
+          "classSubtitle": "A surf class service is when you instruct a class for a student.",
+          "eventTitle": "Surf event",
+          "eventSubtitle": "Event service is used to plan events for your business."
         },
-        "homerental": {
-          "title": "Home Rental",
-          "subtitle": "Using a home rental service, you can advertise a home for rent."
+        "vehicleRental": {
+          "rentalTitle": "Rental",
+          "rentalSubtitle": "Using a rental service, you can advertise a vehicle for rent."
         },
-        "class": {
-          "title": "Class",
-          "subtitle": "Using a Class service, you can advertise a Class event."
+        "yogaStudio": {
+          "eventTitle": "Event",
+          "eventSubtitle": "Event service is used to plan events for your business.",
+          "classTitle": "Class",
+          "classSubtitle": "A class service is when you instruct a class for a student."
         },
-        "event": {
-          "title": "Event",
-          "subtitle": "Using a Event service, you can advertise a Event."
+        "homeRental": {
+          "rentalTitle": "Home rental",
+          "rentalSubtitle": "Using a home rental service, you can advertise a home for rent."
         },
-        "service": {
-          "title": "Service",
-          "subtitle": "Using a Service, you can advertise a Service"
+        "languageSchool": {
+          "eventTitle": "Event",
+          "eventSubtitle": "Event service is used to plan events for your business.",
+          "classTitle": "Class",
+          "classSubtitle": "A class service is when you instruct a class for a student."
         },
-        "product": {
-          "title": "Product",
-          "subtitle": "Using a Product service, you can advertise a Product."
+        "tourAgency": {
+          "eventTitle": "Event",
+          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event."
+        },
+        "artisanalProduct": {
+          "productTitle": "Item",
+          "productSubtitle": "Advertise an item that can be bought."
+        },
+        "cleaningService": {
+          "serviceTitle": "Service",
+          "serviceSubtitle": "Advertise a service that clients can book."
+        },
+        "petSitting": {
+          "serviceTitle": "Pet sitting service",
+          "serviceSubtitle": "Advertise your pet sitting service."
+        },
+        "wellnessPractitioner": {
+          "eventTitle": "Event",
+          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event."
+        },
+        "volunteer": {
+          "eventTitle": "Event",
+          "eventSubtitle": "Advertise weekly or one time events."
+        },
+        "entertainment": {
+          "eventTitle": "Event",
+          "eventSubtitle": "Advertise one time or repeat events."
         }
       }
     }
