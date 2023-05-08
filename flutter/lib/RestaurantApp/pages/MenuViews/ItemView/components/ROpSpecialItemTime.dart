@@ -88,7 +88,6 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
                           ],
                         )),
                     onTap: () {
-                      // Todo hasura @m66are
                       if (widget.viewController.schedule.value != null) {
                         showModalBottomSheet<PeriodOfTime>(
                             context: context,
@@ -118,8 +117,8 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
                       margin: const EdgeInsets.only(top: 5, left: 5),
                       child: Text(
                         state.errorText?.toString().inCaps ?? "",
-                        style:
-                            context.txt.subtitle1?.copyWith(color: Colors.red),
+                        style: context.txt.titleMedium
+                            ?.copyWith(color: Colors.red),
                       )),
                 const SizedBox(
                   height: 25,

@@ -205,7 +205,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
             BsOpOfferingPricesList(
               availbleUnits: viewController.avalbleUnits,
               onAddPrice: (TimeUnit unit) {
-                viewController.detailsController.addPriceTimeUnit(unit);
+                viewController.detailsController.addPriceTimeUnit(timeUnit:unit);
               },
               onRemovePrice: (TimeUnit unit) {
                 viewController.detailsController.removeTimeUnit(unit);

@@ -345,3 +345,26 @@ Future<BusinessItemDetails?> get_business_details_by_id(
   }
   return null;
 }
+
+Future<int?> update_item_additional_params({
+  required int id,
+  required Map<String, dynamic> additionalParams,
+}) async {
+  final QueryResult<Mutation$update_business_item_additional_params> response =
+      await _db.graphQLClient.mutate$update_business_item_additional_params(
+    Options$Mutation$update_business_item_additional_params(
+      variables: Variables$Mutation$update_business_item_additional_params(
+        $_eq: id,
+        additional_parameters: additionalParams,
+      ),
+    ),
+  );
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura update rental category3 mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura update rental category3 mutation success => ${response.data}");
+    return response.parsedData?.update_business_item_details!.affected_rows;
+  }
+}

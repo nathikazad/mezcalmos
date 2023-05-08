@@ -30,7 +30,7 @@ extension OpenHoursFunctions on OpenHours {
 
   OpenHours clone() {
     return OpenHours(
-      isOpen: this.isOpen,
+      isOpen: isOpen,
       from: from,
       to: to,
     );
@@ -40,7 +40,7 @@ extension OpenHoursFunctions on OpenHours {
 Schedule scheduleFromData(data) {
   final Map<Weekday, OpenHours> openHours = {};
 
-  data.forEach((day, openHour) {
+  data?.forEach((day, openHour) {
     try {
       final List<int> from = openHour["from"]
           .toString()
@@ -55,17 +55,12 @@ Schedule scheduleFromData(data) {
 
       openHours[day.toString().toWeekDay()] =
           OpenHours(isOpen: openHour["isOpen"], from: from, to: to);
-    } catch (e) {
+    } catch (e, stk) {
       mezDbgPrint("something went wrong $e");
+      mezDbgPrint(stk);
     }
   });
-  // final List<num> timezone = data.timezone.split(':').map((String val) {
-  //   return num.parse(val);
-  // }).toList();
-  // if (data.timezone.contains('-')) {
-  //   timezone[1] = -timezone[1];
-  // }
-  // return Schedule(openHours: openHours, timezone: timezone);
+
   return Schedule(openHours: openHours);
 }
 
@@ -98,7 +93,7 @@ extension ScheduleFunctions on Schedule {
     return isOpen;
   }
 
-  Map<String, dynamic> toFirebaseFormattedJson() {
+  Map<String, dynamic> toFirebaseFormat() {
     final Map<String, dynamic> json = <String, dynamic>{};
     // if (timezone[0] < 0) {
     //   timezone[1] = -timezone[1];

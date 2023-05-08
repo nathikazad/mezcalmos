@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
-// enum ServiceProviderType {
-//   Customer,
-//   Restaurant,
-//   Laundry,
-//   DeliveryCompany,
-//   DeliveryDriver
-// }
+
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 

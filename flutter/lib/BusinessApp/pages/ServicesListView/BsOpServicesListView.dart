@@ -8,6 +8,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProduct
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -52,192 +53,206 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
         },
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _addServiceButton(context),
-              bigSeperator,
-              Row(
-                children: [
-                  Flexible(
-                      fit: FlexFit.tight,
-                      child: Text(
-                        _i18n()["services"],
-                        style: context.textTheme.bodyLarge,
-                      )),
-                  InkWell(
-                    onTap: () {},
-                    child: Ink(
-                      padding: const EdgeInsets.all(5),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          MezIconButton(
-                              iconSize: 18,
-                              padding: EdgeInsets.all(3),
-                              onTap: null,
-                              icon: Icons.low_priority_rounded),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            _i18n()["reorder"],
-                            style: context.textTheme.bodyLarge
-                                ?.copyWith(color: primaryBlueColor),
-                          ),
-                        ],
+          child: Obx(
+            () => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _addServiceButton(context),
+                bigSeperator,
+                Row(
+                  children: [
+                    Flexible(
+                        fit: FlexFit.tight,
+                        child: Text(
+                          _i18n()["services"],
+                          style: context.textTheme.bodyLarge,
+                        )),
+                    InkWell(
+                      onTap: () {
+                        /// TODO: Only to view purpose
+                        viewController.changeBusiness();
+                      },
+                      child: Ink(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            MezIconButton(
+                                iconSize: 18,
+                                padding: EdgeInsets.all(3),
+                                onTap: null,
+                                icon: Icons.low_priority_rounded),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              _i18n()["reorder"],
+                              style: context.textTheme.bodyLarge
+                                  ?.copyWith(color: primaryBlueColor),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                  ],
+                ),
+                Divider(
+                  height: 30,
+                ),
+                Text(
+                  _i18n()["homeRental"]["rentalTitle"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.homeRentals.length,
+                        (int index) => MezCard(
+                            onClick: () {
+                              BsOpHomeRentalView.navigate(
+                                  id: viewController
+                                      .homeRentals[index].details.id
+                                      .toInt());
+                            },
+                            firstAvatarBgImage: NetworkImage(
+                              viewController
+                                      .homeRentals[index].details.firstImage ??
+                                  customImageUrl,
+                            ),
+                            content: Text(
+                              viewController.homeRentals[index].details.name
+                                  .getTranslation(userLanguage),
+                              style: context.textTheme.bodyLarge,
+                            ))),
                   ),
-                ],
-              ),
-              Divider(
-                height: 30,
-              ),
-              Text(
-                _i18n()["homerental"]["title"],
-                style: context.textTheme.bodyLarge,
-              ),
-              smallSepartor,
-              Obx(
-                () => Column(
-                  children: List.generate(
-                      viewController.homeRentals.length,
-                      (int index) => MezCard(
-                          onClick: () {
-                            BsOpHomeRentalView.navigate(
-                                id: viewController.homeRentals[index].details.id
-                                    .toInt());
-                          },
-                          firstAvatarBgImage: NetworkImage(
-                            viewController
-                                    .homeRentals[index].details.firstImage ??
-                                customImageUrl,
-                          ),
-                          content: Text(
-                            viewController.homeRentals[index].details.name
-                                .getTranslation(userLanguage),
-                            style: context.textTheme.bodyLarge,
-                          ))),
                 ),
-              ),
-              Divider(
-                height: 30,
-              ),
-              Text(
-                _i18n()["rental"]["title"],
-                style: context.textTheme.bodyLarge,
-              ),
-              smallSepartor,
-              Obx(
-                () => Column(
-                  children: List.generate(
-                      viewController.rentals.length,
-                      (int index) => MezCard(
-                          onClick: () {
-                            BsOpRentalView.navigate(
+                Divider(
+                  height: 30,
+                ),
+                Text(
+                  _i18n()["rental"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.rentals.length,
+                        (int index) => MezCard(
+                            onClick: () {
+                              BsOpRentalView.navigate(
                                 id: viewController.rentals[index].details.id
-                                    .toInt());
-                          },
-                          firstAvatarBgImage: NetworkImage(
-                            viewController.rentals[index].details.firstImage ??
-                                customImageUrl,
-                          ),
-                          content: Text(
-                            viewController.rentals[index].details.name
-                                .getTranslation(userLanguage),
-                            style: context.textTheme.bodyLarge,
-                          ))),
+                                    .toInt(),
+                                rentalCategory:
+                                    viewController.rentals[index].category1,
+                              );
+                            },
+                            firstAvatarBgImage: NetworkImage(
+                              viewController
+                                      .rentals[index].details.firstImage ??
+                                  customImageUrl,
+                            ),
+                            content: Text(
+                              viewController.rentals[index].details.name
+                                  .getTranslation(userLanguage),
+                              style: context.textTheme.bodyLarge,
+                            ))),
+                  ),
                 ),
-              ),
-              Divider(
-                height: 30,
-              ),
-              Text(
-                _i18n()["event"]["title"],
-                style: context.textTheme.bodyLarge,
-              ),
-              smallSepartor,
-              Obx(
-                () => Column(
-                  children: List.generate(
-                      viewController.events.length,
-                      (int index) => MezCard(
-                          onClick: () {
-                            BsOpEventView.navigate(
+                Divider(
+                  height: 30,
+                ),
+                Text(
+                  _i18n()["event"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.events.length,
+                        (int index) => MezCard(
+                            onClick: () {
+                              BsOpEventView.navigate(
                                 id: viewController.events[index].details.id
-                                    .toInt());
-                          },
-                          firstAvatarBgImage: NetworkImage(
-                            viewController.events[index].details.firstImage ??
-                                customImageUrl,
-                          ),
-                          content: Text(
-                            viewController.events[index].details.name
-                                .getTranslation(userLanguage),
-                            style: context.textTheme.bodyLarge,
-                          ))),
+                                    .toInt(),
+                                isClass: viewController.events[index].isClass,
+                              );
+                            },
+                            firstAvatarBgImage: NetworkImage(
+                              viewController.events[index].details.firstImage ??
+                                  customImageUrl,
+                            ),
+                            content: Text(
+                              viewController.events[index].details.name
+                                  .getTranslation(userLanguage),
+                              style: context.textTheme.bodyLarge,
+                            ))),
+                  ),
                 ),
-              ),
-              Divider(
-                height: 30,
-              ),
-              Text(
-                _i18n()["service"]["title"],
-                style: context.textTheme.bodyLarge,
-              ),
-              smallSepartor,
-              Obx(
-                () => Column(
-                  children: List.generate(
-                      viewController.services.length,
-                      (int index) => MezCard(
-                          onClick: () {
-                            BsOpServiceView.navigate(
-                                id: viewController.services[index].details.id
-                                    .toInt());
-                          },
-                          firstAvatarBgImage: NetworkImage(
-                            viewController.services[index].details.firstImage ??
-                                customImageUrl,
-                          ),
-                          content: Text(
-                            viewController.services[index].details.name
-                                .getTranslation(userLanguage),
-                            style: context.textTheme.bodyLarge,
-                          ))),
+                Divider(
+                  height: 30,
                 ),
-              ),
-              Divider(
-                height: 30,
-              ),
-              Text(
-                _i18n()["product"]["title"],
-                style: context.textTheme.bodyLarge,
-              ),
-              smallSepartor,
-              Obx(
-                () => Column(
-                  children: List.generate(
-                      viewController.product.length,
-                      (int index) => MezCard(
-                          onClick: () {
-                            BsOpProductView.navigate(
-                                id: viewController.product[index].details.id
-                                    .toInt());
-                          },
-                          firstAvatarBgImage: NetworkImage(
-                            viewController.product[index].details.firstImage ??
-                                customImageUrl,
-                          ),
-                          content: Text(
-                            viewController.product[index].details.name
-                                .getTranslation(userLanguage),
-                            style: context.textTheme.bodyLarge,
-                          ))),
+                Text(
+                  _i18n()["services"],
+                  style: context.textTheme.bodyLarge,
                 ),
-              ),
-            ],
+                smallSepartor,
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.services.length,
+                        (int index) => MezCard(
+                            onClick: () {
+                              BsOpServiceView.navigate(
+                                  id: viewController.services[index].details.id
+                                      .toInt());
+                            },
+                            firstAvatarBgImage: NetworkImage(
+                              viewController
+                                      .services[index].details.firstImage ??
+                                  customImageUrl,
+                            ),
+                            content: Text(
+                              viewController.services[index].details.name
+                                  .getTranslation(userLanguage),
+                              style: context.textTheme.bodyLarge,
+                            ))),
+                  ),
+                ),
+                Divider(
+                  height: 30,
+                ),
+                Text(
+                  _i18n()["product"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.product.length,
+                        (int index) => MezCard(
+                            onClick: () {
+                              BsOpProductView.navigate(
+                                  id: viewController.product[index].details.id
+                                      .toInt());
+                            },
+                            firstAvatarBgImage: NetworkImage(
+                              viewController
+                                      .product[index].details.firstImage ??
+                                  customImageUrl,
+                            ),
+                            content: Text(
+                              viewController.product[index].details.name
+                                  .getTranslation(userLanguage),
+                              style: context.textTheme.bodyLarge,
+                            ))),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -253,32 +268,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
             context: context,
             isScrollControlled: true,
             builder: (BuildContext context) {
-              BusinessServiceType currentSelectedService =
-                  BusinessServiceType.Rental;
+              BusinessProfileItem currentSelectedService =
+                  viewController.currentBottomSheetData.first;
 
               void navigateToOfferingView() {
-                switch (currentSelectedService) {
-                  case BusinessServiceType.Rental:
-                    BsOpRentalView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.HomeRental:
-                    BsOpHomeRentalView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.Event:
-                    BsOpEventView.navigate(
-                      id: null,
-                    );
-                    return;
-                  case BusinessServiceType.Class:
-                    BsOpEventView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.Service:
-                    BsOpServiceView.navigate(id: null);
-                    return;
-                  case BusinessServiceType.Product:
-                    BsOpProductView.navigate(id: null);
-                    return;
-                }
+                currentSelectedService.route();
               }
 
               return StatefulBuilder(builder: (BuildContext context, setState) {
@@ -293,15 +287,16 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         Container(
                           alignment: Alignment.center,
                           child: Text(
-                            _i18n()["serviceType"],
+                            "${_i18n()["serviceType"]} ${viewController.businessProfile.value.name}",
                             style: context.textTheme.bodyLarge,
+                            textAlign: TextAlign.center,
                           ),
                         ),
                         Divider(
                           height: 35,
                         ),
-                        ...BusinessServiceType.values.map(
-                          (BusinessServiceType value) => Row(
+                        ...viewController.currentBottomSheetData.map(
+                          (BusinessProfileItem item) => Row(
                             children: [
                               Flexible(
                                 fit: FlexFit.tight,
@@ -309,14 +304,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      _i18n()[value.name.toLowerCase()]["title"]
-                                          .toString(),
+                                      "${_i18n()[viewController.businessProfileFirebaseString][item.title]}",
                                       style: context.textTheme.bodyLarge,
                                     ),
                                     Text(
-                                      _i18n()[value.name.toLowerCase()]
-                                              ["subtitle"]
-                                          .toString(),
+                                      "${_i18n()[viewController.businessProfileFirebaseString][item.subtitle]}",
                                     )
                                   ],
                                 ),
@@ -324,10 +316,10 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                               radioCircleButton(
                                 onTap: (bool v) {
                                   setState(() {
-                                    currentSelectedService = value;
+                                    currentSelectedService = item;
                                   });
                                 },
-                                value: value == currentSelectedService,
+                                value: item == currentSelectedService,
                               ),
                             ],
                           ),

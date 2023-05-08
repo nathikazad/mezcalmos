@@ -435,7 +435,14 @@ const documentNodeQueryget_event_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'time'),
+            name: NameNode(value: 'starts_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'ends_at'),
             alias: null,
             arguments: [],
             directives: [],
@@ -750,7 +757,8 @@ class Query$get_event_by_id$business_event_by_pk {
     required this.schedule_type,
     this.gps_location,
     this.address,
-    this.time,
+    this.starts_at,
+    this.ends_at,
     required this.details,
     required this.$__typename,
   });
@@ -763,7 +771,8 @@ class Query$get_event_by_id$business_event_by_pk {
     final l$schedule_type = json['schedule_type'];
     final l$gps_location = json['gps_location'];
     final l$address = json['address'];
-    final l$time = json['time'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$get_event_by_id$business_event_by_pk(
@@ -775,7 +784,8 @@ class Query$get_event_by_id$business_event_by_pk {
       gps_location:
           l$gps_location == null ? null : geographyFromJson(l$gps_location),
       address: (l$address as String?),
-      time: (l$time as String?),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
       details: Query$get_event_by_id$business_event_by_pk$details.fromJson(
           (l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -794,7 +804,9 @@ class Query$get_event_by_id$business_event_by_pk {
 
   final String? address;
 
-  final String? time;
+  final String? starts_at;
+
+  final String? ends_at;
 
   final Query$get_event_by_id$business_event_by_pk$details details;
 
@@ -815,8 +827,10 @@ class Query$get_event_by_id$business_event_by_pk {
         l$gps_location == null ? null : geographyToJson(l$gps_location);
     final l$address = address;
     _resultData['address'] = l$address;
-    final l$time = time;
-    _resultData['time'] = l$time;
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -832,7 +846,8 @@ class Query$get_event_by_id$business_event_by_pk {
     final l$schedule_type = schedule_type;
     final l$gps_location = gps_location;
     final l$address = address;
-    final l$time = time;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -842,7 +857,8 @@ class Query$get_event_by_id$business_event_by_pk {
       l$schedule_type,
       l$gps_location,
       l$address,
-      l$time,
+      l$starts_at,
+      l$ends_at,
       l$details,
       l$$__typename,
     ]);
@@ -887,9 +903,14 @@ class Query$get_event_by_id$business_event_by_pk {
     if (l$address != lOther$address) {
       return false;
     }
-    final l$time = time;
-    final lOther$time = other.time;
-    if (l$time != lOther$time) {
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
       return false;
     }
     final l$details = details;
@@ -932,7 +953,8 @@ abstract class CopyWith$Query$get_event_by_id$business_event_by_pk<TRes> {
     String? schedule_type,
     Geography? gps_location,
     String? address,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_event_by_id$business_event_by_pk$details? details,
     String? $__typename,
   });
@@ -961,7 +983,8 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk<TRes>
     Object? schedule_type = _undefined,
     Object? gps_location = _undefined,
     Object? address = _undefined,
-    Object? time = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -981,7 +1004,11 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk<TRes>
             : (gps_location as Geography?),
         address:
             address == _undefined ? _instance.address : (address as String?),
-        time: time == _undefined ? _instance.time : (time as String?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
         details: details == _undefined || details == null
             ? _instance.details
             : (details as Query$get_event_by_id$business_event_by_pk$details),
@@ -1017,7 +1044,8 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk<TRes>
     String? schedule_type,
     Geography? gps_location,
     String? address,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_event_by_id$business_event_by_pk$details? details,
     String? $__typename,
   }) =>
@@ -3920,7 +3948,14 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'time'),
+            name: NameNode(value: 'starts_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'ends_at'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4145,7 +4180,8 @@ class Query$get_event_by_category$business_event {
     this.address,
     required this.schedule_type,
     this.schedule,
-    this.time,
+    this.starts_at,
+    this.ends_at,
     required this.business,
     required this.$__typename,
   });
@@ -4158,7 +4194,8 @@ class Query$get_event_by_category$business_event {
     final l$address = json['address'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
-    final l$time = json['time'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
     final l$business = json['business'];
     final l$$__typename = json['__typename'];
     return Query$get_event_by_category$business_event(
@@ -4170,7 +4207,8 @@ class Query$get_event_by_category$business_event {
       address: (l$address as String?),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
-      time: (l$time as String?),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
       business: Query$get_event_by_category$business_event$business.fromJson(
           (l$business as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4189,7 +4227,9 @@ class Query$get_event_by_category$business_event {
 
   final dynamic? schedule;
 
-  final String? time;
+  final String? starts_at;
+
+  final String? ends_at;
 
   final Query$get_event_by_category$business_event$business business;
 
@@ -4210,8 +4250,10 @@ class Query$get_event_by_category$business_event {
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
-    final l$time = time;
-    _resultData['time'] = l$time;
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$$__typename = $__typename;
@@ -4227,7 +4269,8 @@ class Query$get_event_by_category$business_event {
     final l$address = address;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
-    final l$time = time;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
     final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -4237,7 +4280,8 @@ class Query$get_event_by_category$business_event {
       l$address,
       l$schedule_type,
       l$schedule,
-      l$time,
+      l$starts_at,
+      l$ends_at,
       l$business,
       l$$__typename,
     ]);
@@ -4282,9 +4326,14 @@ class Query$get_event_by_category$business_event {
     if (l$schedule != lOther$schedule) {
       return false;
     }
-    final l$time = time;
-    final lOther$time = other.time;
-    if (l$time != lOther$time) {
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
       return false;
     }
     final l$business = business;
@@ -4327,7 +4376,8 @@ abstract class CopyWith$Query$get_event_by_category$business_event<TRes> {
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_event_by_category$business_event$business? business,
     String? $__typename,
   });
@@ -4356,7 +4406,8 @@ class _CopyWithImpl$Query$get_event_by_category$business_event<TRes>
     Object? address = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
-    Object? time = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
     Object? business = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -4376,7 +4427,11 @@ class _CopyWithImpl$Query$get_event_by_category$business_event<TRes>
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
-        time: time == _undefined ? _instance.time : (time as String?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
         business: business == _undefined || business == null
             ? _instance.business
             : (business as Query$get_event_by_category$business_event$business),
@@ -4412,7 +4467,8 @@ class _CopyWithStubImpl$Query$get_event_by_category$business_event<TRes>
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_event_by_category$business_event$business? business,
     String? $__typename,
   }) =>
@@ -6489,7 +6545,14 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'time'),
+            name: NameNode(value: 'starts_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'ends_at'),
             alias: null,
             arguments: [],
             directives: [],
@@ -6714,7 +6777,8 @@ class Query$get_class_by_category$business_event {
     this.address,
     required this.schedule_type,
     this.schedule,
-    this.time,
+    this.starts_at,
+    this.ends_at,
     required this.business,
     required this.$__typename,
   });
@@ -6727,7 +6791,8 @@ class Query$get_class_by_category$business_event {
     final l$address = json['address'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
-    final l$time = json['time'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
     final l$business = json['business'];
     final l$$__typename = json['__typename'];
     return Query$get_class_by_category$business_event(
@@ -6739,7 +6804,8 @@ class Query$get_class_by_category$business_event {
       address: (l$address as String?),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
-      time: (l$time as String?),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
       business: Query$get_class_by_category$business_event$business.fromJson(
           (l$business as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -6758,7 +6824,9 @@ class Query$get_class_by_category$business_event {
 
   final dynamic? schedule;
 
-  final String? time;
+  final String? starts_at;
+
+  final String? ends_at;
 
   final Query$get_class_by_category$business_event$business business;
 
@@ -6779,8 +6847,10 @@ class Query$get_class_by_category$business_event {
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
-    final l$time = time;
-    _resultData['time'] = l$time;
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$$__typename = $__typename;
@@ -6796,7 +6866,8 @@ class Query$get_class_by_category$business_event {
     final l$address = address;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
-    final l$time = time;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
     final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -6806,7 +6877,8 @@ class Query$get_class_by_category$business_event {
       l$address,
       l$schedule_type,
       l$schedule,
-      l$time,
+      l$starts_at,
+      l$ends_at,
       l$business,
       l$$__typename,
     ]);
@@ -6851,9 +6923,14 @@ class Query$get_class_by_category$business_event {
     if (l$schedule != lOther$schedule) {
       return false;
     }
-    final l$time = time;
-    final lOther$time = other.time;
-    if (l$time != lOther$time) {
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
       return false;
     }
     final l$business = business;
@@ -6896,7 +6973,8 @@ abstract class CopyWith$Query$get_class_by_category$business_event<TRes> {
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_class_by_category$business_event$business? business,
     String? $__typename,
   });
@@ -6925,7 +7003,8 @@ class _CopyWithImpl$Query$get_class_by_category$business_event<TRes>
     Object? address = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
-    Object? time = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
     Object? business = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -6945,7 +7024,11 @@ class _CopyWithImpl$Query$get_class_by_category$business_event<TRes>
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
-        time: time == _undefined ? _instance.time : (time as String?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
         business: business == _undefined || business == null
             ? _instance.business
             : (business as Query$get_class_by_category$business_event$business),
@@ -6981,7 +7064,8 @@ class _CopyWithStubImpl$Query$get_class_by_category$business_event<TRes>
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_class_by_category$business_event$business? business,
     String? $__typename,
   }) =>
@@ -13114,7 +13198,14 @@ const documentNodeQueryget_business_events = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'time'),
+            name: NameNode(value: 'starts_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'ends_at'),
             alias: null,
             arguments: [],
             directives: [],
@@ -13489,7 +13580,8 @@ class Query$get_business_events$business_event {
     this.address,
     required this.schedule_type,
     this.schedule,
-    this.time,
+    this.starts_at,
+    this.ends_at,
     required this.details,
     required this.business,
     required this.$__typename,
@@ -13502,7 +13594,8 @@ class Query$get_business_events$business_event {
     final l$address = json['address'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
-    final l$time = json['time'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
     final l$details = json['details'];
     final l$business = json['business'];
     final l$$__typename = json['__typename'];
@@ -13513,7 +13606,8 @@ class Query$get_business_events$business_event {
       address: (l$address as String?),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
-      time: (l$time as String?),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
       details: Query$get_business_events$business_event$details.fromJson(
           (l$details as Map<String, dynamic>)),
       business: Query$get_business_events$business_event$business.fromJson(
@@ -13532,7 +13626,9 @@ class Query$get_business_events$business_event {
 
   final dynamic? schedule;
 
-  final String? time;
+  final String? starts_at;
+
+  final String? ends_at;
 
   final Query$get_business_events$business_event$details details;
 
@@ -13553,8 +13649,10 @@ class Query$get_business_events$business_event {
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
-    final l$time = time;
-    _resultData['time'] = l$time;
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$business = business;
@@ -13571,7 +13669,8 @@ class Query$get_business_events$business_event {
     final l$address = address;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
-    final l$time = time;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
     final l$details = details;
     final l$business = business;
     final l$$__typename = $__typename;
@@ -13581,7 +13680,8 @@ class Query$get_business_events$business_event {
       l$address,
       l$schedule_type,
       l$schedule,
-      l$time,
+      l$starts_at,
+      l$ends_at,
       l$details,
       l$business,
       l$$__typename,
@@ -13622,9 +13722,14 @@ class Query$get_business_events$business_event {
     if (l$schedule != lOther$schedule) {
       return false;
     }
-    final l$time = time;
-    final lOther$time = other.time;
-    if (l$time != lOther$time) {
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
       return false;
     }
     final l$details = details;
@@ -13671,7 +13776,8 @@ abstract class CopyWith$Query$get_business_events$business_event<TRes> {
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_business_events$business_event$details? details,
     Query$get_business_events$business_event$business? business,
     String? $__typename,
@@ -13699,7 +13805,8 @@ class _CopyWithImpl$Query$get_business_events$business_event<TRes>
     Object? address = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
-    Object? time = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
     Object? details = _undefined,
     Object? business = _undefined,
     Object? $__typename = _undefined,
@@ -13717,7 +13824,11 @@ class _CopyWithImpl$Query$get_business_events$business_event<TRes>
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
-        time: time == _undefined ? _instance.time : (time as String?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
         details: details == _undefined || details == null
             ? _instance.details
             : (details as Query$get_business_events$business_event$details),
@@ -13754,7 +13865,8 @@ class _CopyWithStubImpl$Query$get_business_events$business_event<TRes>
     String? address,
     String? schedule_type,
     dynamic? schedule,
-    String? time,
+    String? starts_at,
+    String? ends_at,
     Query$get_business_events$business_event$details? details,
     Query$get_business_events$business_event$business? business,
     String? $__typename,
@@ -15179,6 +15291,3194 @@ class _CopyWithStubImpl$Query$get_business_events$business_event$business$detail
     int? id,
     String? name,
     String? currency,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_event_by_id {
+  factory Variables$Mutation$update_event_by_id({
+    required int id,
+    Input$business_event_set_input? object,
+  }) =>
+      Variables$Mutation$update_event_by_id._({
+        r'id': id,
+        if (object != null) r'object': object,
+      });
+
+  Variables$Mutation$update_event_by_id._(this._$data);
+
+  factory Variables$Mutation$update_event_by_id.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    if (data.containsKey('object')) {
+      final l$object = data['object'];
+      result$data['object'] = l$object == null
+          ? null
+          : Input$business_event_set_input.fromJson(
+              (l$object as Map<String, dynamic>));
+    }
+    return Variables$Mutation$update_event_by_id._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Input$business_event_set_input? get object =>
+      (_$data['object'] as Input$business_event_set_input?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    if (_$data.containsKey('object')) {
+      final l$object = object;
+      result$data['object'] = l$object?.toJson();
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_event_by_id<
+          Variables$Mutation$update_event_by_id>
+      get copyWith => CopyWith$Variables$Mutation$update_event_by_id(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_event_by_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$object = object;
+    final lOther$object = other.object;
+    if (_$data.containsKey('object') != other._$data.containsKey('object')) {
+      return false;
+    }
+    if (l$object != lOther$object) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$object = object;
+    return Object.hashAll([
+      l$id,
+      _$data.containsKey('object') ? l$object : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_event_by_id<TRes> {
+  factory CopyWith$Variables$Mutation$update_event_by_id(
+    Variables$Mutation$update_event_by_id instance,
+    TRes Function(Variables$Mutation$update_event_by_id) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_event_by_id;
+
+  factory CopyWith$Variables$Mutation$update_event_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_event_by_id;
+
+  TRes call({
+    int? id,
+    Input$business_event_set_input? object,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_event_by_id<TRes>
+    implements CopyWith$Variables$Mutation$update_event_by_id<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_event_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_event_by_id _instance;
+
+  final TRes Function(Variables$Mutation$update_event_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? object = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_event_by_id._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (object != _undefined)
+          'object': (object as Input$business_event_set_input?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_event_by_id<TRes>
+    implements CopyWith$Variables$Mutation$update_event_by_id<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_event_by_id(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Input$business_event_set_input? object,
+  }) =>
+      _res;
+}
+
+class Mutation$update_event_by_id {
+  Mutation$update_event_by_id({
+    this.update_business_event_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id.fromJson(Map<String, dynamic> json) {
+    final l$update_business_event_by_pk = json['update_business_event_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id(
+      update_business_event_by_pk: l$update_business_event_by_pk == null
+          ? null
+          : Mutation$update_event_by_id$update_business_event_by_pk.fromJson(
+              (l$update_business_event_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_event_by_id$update_business_event_by_pk?
+      update_business_event_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_event_by_pk = update_business_event_by_pk;
+    _resultData['update_business_event_by_pk'] =
+        l$update_business_event_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_event_by_pk = update_business_event_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_event_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_event_by_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_event_by_pk = update_business_event_by_pk;
+    final lOther$update_business_event_by_pk =
+        other.update_business_event_by_pk;
+    if (l$update_business_event_by_pk != lOther$update_business_event_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id
+    on Mutation$update_event_by_id {
+  CopyWith$Mutation$update_event_by_id<Mutation$update_event_by_id>
+      get copyWith => CopyWith$Mutation$update_event_by_id(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id<TRes> {
+  factory CopyWith$Mutation$update_event_by_id(
+    Mutation$update_event_by_id instance,
+    TRes Function(Mutation$update_event_by_id) then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id;
+
+  factory CopyWith$Mutation$update_event_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id;
+
+  TRes call({
+    Mutation$update_event_by_id$update_business_event_by_pk?
+        update_business_event_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk<TRes>
+      get update_business_event_by_pk;
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id<TRes>
+    implements CopyWith$Mutation$update_event_by_id<TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id _instance;
+
+  final TRes Function(Mutation$update_event_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_event_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_event_by_id(
+        update_business_event_by_pk: update_business_event_by_pk == _undefined
+            ? _instance.update_business_event_by_pk
+            : (update_business_event_by_pk
+                as Mutation$update_event_by_id$update_business_event_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk<TRes>
+      get update_business_event_by_pk {
+    final local$update_business_event_by_pk =
+        _instance.update_business_event_by_pk;
+    return local$update_business_event_by_pk == null
+        ? CopyWith$Mutation$update_event_by_id$update_business_event_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Mutation$update_event_by_id$update_business_event_by_pk(
+            local$update_business_event_by_pk,
+            (e) => call(update_business_event_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id<TRes>
+    implements CopyWith$Mutation$update_event_by_id<TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_event_by_id$update_business_event_by_pk?
+        update_business_event_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk<TRes>
+      get update_business_event_by_pk =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk.stub(
+              _res);
+}
+
+const documentNodeMutationupdate_event_by_id = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_event_by_id'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'object')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'business_event_set_input'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_event_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: VariableNode(name: NameNode(value: 'object')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'business'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'accepted_payments'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'reviews_aggregate'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'aggregate'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'avg'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'rating'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'count'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'schedule'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'schedule_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'gps_location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'starts_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'ends_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'additional_parameters'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category1'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category2'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'tags'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'position'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_event_by_id _parserFn$Mutation$update_event_by_id(
+        Map<String, dynamic> data) =>
+    Mutation$update_event_by_id.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_event_by_id = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_event_by_id?,
+);
+
+class Options$Mutation$update_event_by_id
+    extends graphql.MutationOptions<Mutation$update_event_by_id> {
+  Options$Mutation$update_event_by_id({
+    String? operationName,
+    required Variables$Mutation$update_event_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_event_by_id? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_event_by_id>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_event_by_id(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_event_by_id,
+          parserFn: _parserFn$Mutation$update_event_by_id,
+        );
+
+  final OnMutationCompleted$Mutation$update_event_by_id? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_event_by_id
+    extends graphql.WatchQueryOptions<Mutation$update_event_by_id> {
+  WatchOptions$Mutation$update_event_by_id({
+    String? operationName,
+    required Variables$Mutation$update_event_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_event_by_id,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_event_by_id,
+        );
+}
+
+extension ClientExtension$Mutation$update_event_by_id on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_event_by_id>>
+      mutate$update_event_by_id(
+              Options$Mutation$update_event_by_id options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_event_by_id>
+      watchMutation$update_event_by_id(
+              WatchOptions$Mutation$update_event_by_id options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk {
+  Mutation$update_event_by_id$update_business_event_by_pk({
+    required this.business,
+    required this.id,
+    this.schedule,
+    required this.schedule_type,
+    this.gps_location,
+    this.address,
+    this.starts_at,
+    this.ends_at,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$business = json['business'];
+    final l$id = json['id'];
+    final l$schedule = json['schedule'];
+    final l$schedule_type = json['schedule_type'];
+    final l$gps_location = json['gps_location'];
+    final l$address = json['address'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk(
+      business: Mutation$update_event_by_id$update_business_event_by_pk$business
+          .fromJson((l$business as Map<String, dynamic>)),
+      id: (l$id as int),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+      schedule_type: (l$schedule_type as String),
+      gps_location:
+          l$gps_location == null ? null : geographyFromJson(l$gps_location),
+      address: (l$address as String?),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
+      details: Mutation$update_event_by_id$update_business_event_by_pk$details
+          .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$business
+      business;
+
+  final int id;
+
+  final dynamic? schedule;
+
+  final String schedule_type;
+
+  final Geography? gps_location;
+
+  final String? address;
+
+  final String? starts_at;
+
+  final String? ends_at;
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$details details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$schedule_type = schedule_type;
+    _resultData['schedule_type'] = l$schedule_type;
+    final l$gps_location = gps_location;
+    _resultData['gps_location'] =
+        l$gps_location == null ? null : geographyToJson(l$gps_location);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business = business;
+    final l$id = id;
+    final l$schedule = schedule;
+    final l$schedule_type = schedule_type;
+    final l$gps_location = gps_location;
+    final l$address = address;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business,
+      l$id,
+      l$schedule,
+      l$schedule_type,
+      l$gps_location,
+      l$address,
+      l$starts_at,
+      l$ends_at,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_event_by_id$update_business_event_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$schedule_type = schedule_type;
+    final lOther$schedule_type = other.schedule_type;
+    if (l$schedule_type != lOther$schedule_type) {
+      return false;
+    }
+    final l$gps_location = gps_location;
+    final lOther$gps_location = other.gps_location;
+    if (l$gps_location != lOther$gps_location) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk
+    on Mutation$update_event_by_id$update_business_event_by_pk {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk<
+          Mutation$update_event_by_id$update_business_event_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk(
+    Mutation$update_event_by_id$update_business_event_by_pk instance,
+    TRes Function(Mutation$update_event_by_id$update_business_event_by_pk) then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk;
+
+  TRes call({
+    Mutation$update_event_by_id$update_business_event_by_pk$business? business,
+    int? id,
+    dynamic? schedule,
+    String? schedule_type,
+    Geography? gps_location,
+    String? address,
+    String? starts_at,
+    String? ends_at,
+    Mutation$update_event_by_id$update_business_event_by_pk$details? details,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business<
+      TRes> get business;
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details<TRes>
+      get details;
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk<TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk _instance;
+
+  final TRes Function(Mutation$update_event_by_id$update_business_event_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business = _undefined,
+    Object? id = _undefined,
+    Object? schedule = _undefined,
+    Object? schedule_type = _undefined,
+    Object? gps_location = _undefined,
+    Object? address = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_event_by_id$update_business_event_by_pk(
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business
+                as Mutation$update_event_by_id$update_business_event_by_pk$business),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
+        schedule_type: schedule_type == _undefined || schedule_type == null
+            ? _instance.schedule_type
+            : (schedule_type as String),
+        gps_location: gps_location == _undefined
+            ? _instance.gps_location
+            : (gps_location as Geography?),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Mutation$update_event_by_id$update_business_event_by_pk$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business<
+      TRes> get business {
+    final local$business = _instance.business;
+    return CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business(
+        local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk<TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_event_by_id$update_business_event_by_pk$business? business,
+    int? id,
+    dynamic? schedule,
+    String? schedule_type,
+    Geography? gps_location,
+    String? address,
+    String? starts_at,
+    String? ends_at,
+    Mutation$update_event_by_id$update_business_event_by_pk$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business<
+          TRes>
+      get business =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business
+              .stub(_res);
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details<TRes>
+      get details =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details
+              .stub(_res);
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk$business {
+  Mutation$update_event_by_id$update_business_event_by_pk$business({
+    required this.id,
+    required this.details,
+    required this.reviews_aggregate,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$reviews_aggregate = json['reviews_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk$business(
+      id: (l$id as int),
+      details:
+          Mutation$update_event_by_id$update_business_event_by_pk$business$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      reviews_aggregate:
+          Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate
+              .fromJson((l$reviews_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$business$details
+      details;
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate
+      reviews_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$reviews_aggregate = reviews_aggregate;
+    _resultData['reviews_aggregate'] = l$reviews_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$reviews_aggregate = reviews_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$reviews_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_event_by_id$update_business_event_by_pk$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$reviews_aggregate = reviews_aggregate;
+    final lOther$reviews_aggregate = other.reviews_aggregate;
+    if (l$reviews_aggregate != lOther$reviews_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk$business
+    on Mutation$update_event_by_id$update_business_event_by_pk$business {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business<
+          Mutation$update_event_by_id$update_business_event_by_pk$business>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business(
+    Mutation$update_event_by_id$update_business_event_by_pk$business instance,
+    TRes Function(
+            Mutation$update_event_by_id$update_business_event_by_pk$business)
+        then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business;
+
+  TRes call({
+    int? id,
+    Mutation$update_event_by_id$update_business_event_by_pk$business$details?
+        details,
+    Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate?
+        reviews_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details<
+      TRes> get details;
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate<
+      TRes> get reviews_aggregate;
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business<
+            TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$business
+      _instance;
+
+  final TRes Function(
+      Mutation$update_event_by_id$update_business_event_by_pk$business) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? reviews_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_event_by_id$update_business_event_by_pk$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Mutation$update_event_by_id$update_business_event_by_pk$business$details),
+        reviews_aggregate: reviews_aggregate == _undefined ||
+                reviews_aggregate == null
+            ? _instance.reviews_aggregate
+            : (reviews_aggregate
+                as Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details(
+        local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate<
+      TRes> get reviews_aggregate {
+    final local$reviews_aggregate = _instance.reviews_aggregate;
+    return CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate(
+        local$reviews_aggregate, (e) => call(reviews_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Mutation$update_event_by_id$update_business_event_by_pk$business$details?
+        details,
+    Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate?
+        reviews_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details<
+          TRes>
+      get details =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details
+              .stub(_res);
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate<
+          TRes>
+      get reviews_aggregate =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate
+              .stub(_res);
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk$business$details {
+  Mutation$update_event_by_id$update_business_event_by_pk$business$details({
+    required this.id,
+    required this.accepted_payments,
+    required this.image,
+    required this.name,
+    required this.currency,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk$business$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$currency = json['currency'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk$business$details(
+      id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
+      name: (l$name as String),
+      currency: (l$currency as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
+
+  final String name;
+
+  final String currency;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
+    final l$name = name;
+    final l$currency = currency;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$accepted_payments,
+      l$image,
+      l$name,
+      l$currency,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_event_by_id$update_business_event_by_pk$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk$business$details
+    on Mutation$update_event_by_id$update_business_event_by_pk$business$details {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details<
+          Mutation$update_event_by_id$update_business_event_by_pk$business$details>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details(
+    Mutation$update_event_by_id$update_business_event_by_pk$business$details
+        instance,
+    TRes Function(
+            Mutation$update_event_by_id$update_business_event_by_pk$business$details)
+        then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$details;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$details;
+
+  TRes call({
+    int? id,
+    dynamic? accepted_payments,
+    String? image,
+    String? name,
+    String? currency,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details<
+            TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$business$details
+      _instance;
+
+  final TRes Function(
+          Mutation$update_event_by_id$update_business_event_by_pk$business$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? currency = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_event_by_id$update_business_event_by_pk$business$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$details<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? accepted_payments,
+    String? image,
+    String? name,
+    String? currency,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate {
+  Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate
+    on Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate<
+          Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate(
+    Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate
+        instance,
+    TRes Function(
+            Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate)
+        then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate;
+
+  TRes call({
+    Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate<
+            TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate
+      _instance;
+
+  final TRes Function(
+          Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate
+              .stub(_res);
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate {
+  Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate({
+    this.avg,
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$avg = json['avg'];
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate(
+      avg: l$avg == null
+          ? null
+          : Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg
+              .fromJson((l$avg as Map<String, dynamic>)),
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg?
+      avg;
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$avg = avg;
+    _resultData['avg'] = l$avg?.toJson();
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$avg = avg;
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$avg,
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$avg = avg;
+    final lOther$avg = other.avg;
+    if (l$avg != lOther$avg) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate
+    on Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate<
+          Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate(
+    Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate
+        instance,
+    TRes Function(
+            Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate;
+
+  TRes call({
+    Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg?
+        avg,
+    int? count,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg<
+      TRes> get avg;
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? avg = _undefined,
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate(
+        avg: avg == _undefined
+            ? _instance.avg
+            : (avg
+                as Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg?),
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg<
+      TRes> get avg {
+    final local$avg = _instance.avg;
+    return local$avg == null
+        ? CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg(
+            local$avg, (e) => call(avg: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg?
+        avg,
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg<
+          TRes>
+      get avg =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg
+              .stub(_res);
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg {
+  Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg({
+    this.rating,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg.fromJson(
+      Map<String, dynamic> json) {
+    final l$rating = json['rating'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg(
+      rating: (l$rating as num?)?.toDouble(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double? rating;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$rating = rating;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$rating,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg
+    on Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg<
+          Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg(
+    Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg
+        instance,
+    TRes Function(
+            Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg)
+        then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg;
+
+  TRes call({
+    double? rating,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg
+      _instance;
+
+  final TRes Function(
+          Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? rating = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg(
+        rating: rating == _undefined ? _instance.rating : (rating as double?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$business$reviews_aggregate$aggregate$avg(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? rating,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk$details {
+  Mutation$update_event_by_id$update_business_event_by_pk$details({
+    required this.name_id,
+    this.description_id,
+    this.additional_parameters,
+    required this.available,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    required this.tags,
+    this.description,
+    required this.id,
+    this.image,
+    required this.name,
+    required this.position,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$available = json['available'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$tags = json['tags'];
+    final l$description = json['description'];
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$position = json['position'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk$details(
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      available: (l$available as bool),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      tags: mapFromJson(l$tags),
+      description: l$description == null
+          ? null
+          : Mutation$update_event_by_id$update_business_event_by_pk$details$description
+              .fromJson((l$description as Map<String, dynamic>)),
+      id: (l$id as int),
+      image: l$image == null ? null : mapFromJson(l$image),
+      name: Mutation$update_event_by_id$update_business_event_by_pk$details$name
+          .fromJson((l$name as Map<String, dynamic>)),
+      position: (l$position as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int name_id;
+
+  final int? description_id;
+
+  final dynamic? additional_parameters;
+
+  final bool available;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic tags;
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$details$description?
+      description;
+
+  final int id;
+
+  final dynamic? image;
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$details$name
+      name;
+
+  final int position;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$available = available;
+    _resultData['available'] = l$available;
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name_id = name_id;
+    final l$description_id = description_id;
+    final l$additional_parameters = additional_parameters;
+    final l$available = available;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$tags = tags;
+    final l$description = description;
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$position = position;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name_id,
+      l$description_id,
+      l$additional_parameters,
+      l$available,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$tags,
+      l$description,
+      l$id,
+      l$image,
+      l$name,
+      l$position,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_event_by_id$update_business_event_by_pk$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk$details
+    on Mutation$update_event_by_id$update_business_event_by_pk$details {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details<
+          Mutation$update_event_by_id$update_business_event_by_pk$details>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details(
+    Mutation$update_event_by_id$update_business_event_by_pk$details instance,
+    TRes Function(
+            Mutation$update_event_by_id$update_business_event_by_pk$details)
+        then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details;
+
+  TRes call({
+    int? name_id,
+    int? description_id,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? tags,
+    Mutation$update_event_by_id$update_business_event_by_pk$details$description?
+        description,
+    int? id,
+    dynamic? image,
+    Mutation$update_event_by_id$update_business_event_by_pk$details$name? name,
+    int? position,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description<
+      TRes> get description;
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details<
+            TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$details
+      _instance;
+
+  final TRes Function(
+      Mutation$update_event_by_id$update_business_event_by_pk$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? available = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? tags = _undefined,
+    Object? description = _undefined,
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? position = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_event_by_id$update_business_event_by_pk$details(
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        available: available == _undefined || available == null
+            ? _instance.available
+            : (available as bool),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Mutation$update_event_by_id$update_business_event_by_pk$details$description?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Mutation$update_event_by_id$update_business_event_by_pk$details$name),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description<
+      TRes> get description {
+    final local$description = _instance.description;
+    return local$description == null
+        ? CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description(
+            local$description, (e) => call(description: e));
+  }
+
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? name_id,
+    int? description_id,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? tags,
+    Mutation$update_event_by_id$update_business_event_by_pk$details$description?
+        description,
+    int? id,
+    dynamic? image,
+    Mutation$update_event_by_id$update_business_event_by_pk$details$name? name,
+    int? position,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description<
+          TRes>
+      get description =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description
+              .stub(_res);
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name<
+          TRes>
+      get name =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name
+              .stub(_res);
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk$details$description {
+  Mutation$update_event_by_id$update_business_event_by_pk$details$description({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk$details$description.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk$details$description(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_event_by_id$update_business_event_by_pk$details$description) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk$details$description
+    on Mutation$update_event_by_id$update_business_event_by_pk$details$description {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description<
+          Mutation$update_event_by_id$update_business_event_by_pk$details$description>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description(
+    Mutation$update_event_by_id$update_business_event_by_pk$details$description
+        instance,
+    TRes Function(
+            Mutation$update_event_by_id$update_business_event_by_pk$details$description)
+        then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description;
+
+  TRes call({
+    List<Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations> Function(
+              Iterable<
+                  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations<
+                      Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description<
+            TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$details$description
+      _instance;
+
+  final TRes Function(
+          Mutation$update_event_by_id$update_business_event_by_pk$details$description)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_event_by_id$update_business_event_by_pk$details$description(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations> Function(
+                  Iterable<
+                      CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations<
+                          Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations {
+  Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations
+    on Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations<
+          Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations(
+    Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations
+        instance,
+    TRes Function(
+            Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations)
+        then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations<
+            TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations
+      _instance;
+
+  final TRes Function(
+          Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$description$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk$details$name {
+  Mutation$update_event_by_id$update_business_event_by_pk$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_event_by_id$update_business_event_by_pk$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk$details$name
+    on Mutation$update_event_by_id$update_business_event_by_pk$details$name {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name<
+          Mutation$update_event_by_id$update_business_event_by_pk$details$name>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name(
+    Mutation$update_event_by_id$update_business_event_by_pk$details$name
+        instance,
+    TRes Function(
+            Mutation$update_event_by_id$update_business_event_by_pk$details$name)
+        then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name;
+
+  TRes call({
+    List<Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations<
+                      Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name<
+            TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$details$name
+      _instance;
+
+  final TRes Function(
+          Mutation$update_event_by_id$update_business_event_by_pk$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_event_by_id$update_business_event_by_pk$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations<
+                          Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations {
+  Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations
+    on Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations {
+  CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations<
+          Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations>
+      get copyWith =>
+          CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations<
+    TRes> {
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations(
+    Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations
+        instance,
+    TRes Function(
+            Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations;
+
+  factory CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
     String? $__typename,
   }) =>
       _res;

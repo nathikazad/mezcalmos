@@ -62,7 +62,7 @@ class EventCard extends Event {
           details: event.details,
         );
 
-  bool isClass() {
+  bool get isClass {
     if (tags != null) {
       return tags!.contains(EventTag.Class);
     }
@@ -103,6 +103,8 @@ class RentalWithBusinessCard extends Rental {
     required this.business,
   }) : super(
           category1: rental.category1,
+          category2: rental.category2,
+          category3: rental.category3,
           details: rental.details,
           bathrooms: rental.bathrooms,
           bedrooms: rental.bedrooms,

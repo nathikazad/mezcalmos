@@ -12,10 +12,12 @@ class BsOpOfferingLocationCard extends StatelessWidget {
       {super.key,
       required this.onLocationSelected,
       required this.location,
+      this.validator,
       this.label = "Select Location"});
   final Function(Location) onLocationSelected;
   final Location? location;
   final String label;
+  final String? Function(Location?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -27,47 +29,71 @@ class BsOpOfferingLocationCard extends StatelessWidget {
           style: context.textTheme.bodyLarge,
         ),
         smallSepartor,
-        Card(
-          color: Colors.grey.shade200,
-          child: InkWell(
-            onTap: () async {
-              MezLocation? newLoc = await PickLocationView.navigate(
-                  initialLocation: (location != null)
-                      ? LatLng(
-                          location!.lat.toDouble(), location!.lng.toDouble())
-                      : null);
-              mezDbgPrint("Getting after await ==============>$newLoc");
-              if (newLoc != null) {
-                onLocationSelected.call(Location(
-                    lat: newLoc.latitude,
-                    lng: newLoc.longitude,
-                    address: newLoc.address));
-              }
-            },
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
-              child: Row(
+        FormField<Location?>(
+            validator: validator,
+            initialValue: location,
+            builder: (FormFieldState<Location?> state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.location_on,
-                    color: primaryBlueColor,
+                  Card(
+                    color: Colors.grey.shade200,
+                    child: InkWell(
+                      onTap: () async {
+                        MezLocation? newLoc = await PickLocationView.navigate(
+                            initialLocation: (location != null)
+                                ? LatLng(location!.lat.toDouble(),
+                                    location!.lng.toDouble())
+                                : null);
+                        mezDbgPrint(
+                            "Getting after await ==============>$newLoc");
+
+                        if (newLoc != null) {
+                          state.didChange(Location(
+                              lat: newLoc.latitude,
+                              lng: newLoc.longitude,
+                              address: newLoc.address));
+                          onLocationSelected.call(state.value!);
+                          // onLocationSelected.call(Location(
+                          //     lat: newLoc.latitude,
+                          //     lng: newLoc.longitude,
+                          //     address: newLoc.address));
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 10),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: primaryBlueColor,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Flexible(
+                                fit: FlexFit.tight,
+                                child: Text(
+                                  (location != null)
+                                      ? location!.address
+                                      : label,
+                                  maxLines: 1,
+                                )),
+                            Icon(Icons.chevron_right_rounded)
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                  SizedBox(
-                    width: 8,
+                  Container(
+                    padding: const EdgeInsets.only(top: 2, left: 12),
+                    child: Text(state.errorText ?? "",
+                        style: context.theme.inputDecorationTheme.errorStyle),
                   ),
-                  Flexible(
-                      fit: FlexFit.tight,
-                      child: Text(
-                        (location != null) ? location!.address : label,
-                        maxLines: 1,
-                      )),
-                  Icon(Icons.chevron_right_rounded)
                 ],
-              ),
-            ),
-          ),
-        ),
+              );
+            }),
       ],
     );
   }

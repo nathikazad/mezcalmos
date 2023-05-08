@@ -1,8 +1,37 @@
-query get_rental_by_category($distance: Float!, $from: geography!, $limit: Int, $offset: Int, $category1: String, $categories2: [String!], $tags: [String!]) {
-  business_rental(where: {_and: {details: {_and: {category1: {_eq: $category1}, category2: {_in: $categories2}, tags: {_has_keys_all: $tags}}}, business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}}, limit: $limit, offset: $offset) {
+query get_rental_by_category(
+  $distance: Float!
+  $from: geography!
+  $limit: Int
+  $offset: Int
+  $category1: String
+  $categories2: [String!]
+  $tags: [String!]
+) {
+  business_rental(
+    where: {
+      _and: {
+        details: {
+          _and: {
+            category1: { _eq: $category1 }
+            category2: { _in: $categories2 }
+            tags: { _has_keys_all: $tags }
+          }
+        }
+        business: {
+          details: {
+            location: {
+              gps: { _st_d_within: { distance: $distance, from: $from } }
+            }
+          }
+        }
+      }
+    }
+    limit: $limit
+    offset: $offset
+  ) {
     details {
-       name_id
-        description_id
+      name_id
+      description_id
       id
       name {
         translations {
@@ -80,8 +109,8 @@ query get_rental_by_id($id: Int!) {
           value
         }
       }
-       name_id
-        description_id
+      name_id
+      description_id
       id
       image
       name {
@@ -103,8 +132,19 @@ query get_rental_by_id($id: Int!) {
   }
 }
 
-query get_home_rentals($distance: Float!, $from: geography!, $limit: Int, $offset: Int) {
-  business_home_rental(where: {gps_location: {_st_d_within: {distance: $distance, from: $from}}}, limit: $limit, offset: $offset) {
+query get_home_rentals(
+  $distance: Float!
+  $from: geography!
+  $limit: Int
+  $offset: Int
+) {
+  business_home_rental(
+    where: {
+      gps_location: { _st_d_within: { distance: $distance, from: $from } }
+    }
+    limit: $limit
+    offset: $offset
+  ) {
     bathrooms
     bedrooms
     gps_location
@@ -118,14 +158,12 @@ query get_home_rentals($distance: Float!, $from: geography!, $limit: Int, $offse
         description_id
         id
         name {
-          
           translations {
             language_id
             value
           }
         }
         description {
-          
           translations {
             language_id
             value
@@ -152,7 +190,11 @@ query get_home_rentals($distance: Float!, $from: geography!, $limit: Int, $offse
   }
 }
 query get_business_home_rentals($businessId: Int!, $limit: Int, $offset: Int) {
-  business_home_rental(where: {rental: {business_id: {_eq: $businessId}}}, limit: $limit, offset: $offset) {
+  business_home_rental(
+    where: { rental: { business_id: { _eq: $businessId } } }
+    limit: $limit
+    offset: $offset
+  ) {
     bathrooms
     bedrooms
     gps_location
@@ -162,7 +204,7 @@ query get_business_home_rentals($businessId: Int!, $limit: Int, $offset: Int) {
       id
       category3
       details {
-         name_id
+        name_id
         description_id
         id
         name {
@@ -199,15 +241,40 @@ query get_business_home_rentals($businessId: Int!, $limit: Int, $offset: Int) {
 }
 
 query number_of_rentals($distance: Float!, $from: geography!) {
-  business_rental_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}) {
+  business_rental_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+        }
+      }
+    }
+  ) {
     aggregate {
       count
     }
   }
 }
 
-query number_of_rentals_by_category($distance: Float!, $from: geography!, $category1: String) {
-  business_rental_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: $category1}}}) {
+query number_of_rentals_by_category(
+  $distance: Float!
+  $from: geography!
+  $category1: String
+) {
+  business_rental_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+        }
+      }
+      details: { category1: { _eq: $category1 } }
+    }
+  ) {
     aggregate {
       count
     }
@@ -230,9 +297,15 @@ mutation add_home_rental($object: business_home_rental_insert_input!) {
     }
   }
 }
-mutation update_home_rental_by_id($id: Int!,$object: business_home_rental_set_input) {
-  update_business_home_rental_by_pk(pk_columns: {rental_id: $id}, _set: $object) {
-   bathrooms
+mutation update_home_rental_by_id(
+  $id: Int!
+  $object: business_home_rental_set_input
+) {
+  update_business_home_rental_by_pk(
+    pk_columns: { rental_id: $id }
+    _set: $object
+  ) {
+    bathrooms
     bedrooms
     gps_location
     home_type
@@ -245,14 +318,12 @@ mutation update_home_rental_by_id($id: Int!,$object: business_home_rental_set_in
         description_id
         id
         name {
-          
           translations {
             language_id
             value
           }
         }
         description {
-          
           translations {
             language_id
             value
@@ -278,8 +349,23 @@ mutation update_home_rental_by_id($id: Int!,$object: business_home_rental_set_in
   }
 }
 
-query get_business_rentals( $limit: Int, $offset: Int, $businessId: Int!) {
-  business_rental(where: {_and: {details: {_and: {category1: {_eq: "vehicle"}, category2: {_in: ["car", "motorcycle"]}, tags: {_has_keys_all: []}}}, business_id: {_eq: $businessId}}}, limit: $limit, offset: $offset) {
+query get_business_rentals($limit: Int, $offset: Int, $businessId: Int!) {
+  business_rental(
+    where: {
+      _and: [
+        {
+          _or: [
+            { details: { category1: { _eq: "surf" } } }
+            { details: { category1: { _eq: "vehicle" } } }
+          ]
+        }
+        { details: { tags: { _has_keys_all: [] } } }
+        { business_id: { _eq: $businessId } }
+      ]
+    }
+    limit: $limit
+    offset: $offset
+  ) {
     details {
       name_id
       description_id
@@ -301,7 +387,7 @@ query get_business_rentals( $limit: Int, $offset: Int, $businessId: Int!) {
     }
     id
     category3
-     business {
+    business {
       id
       details {
         id
@@ -314,8 +400,24 @@ query get_business_rentals( $limit: Int, $offset: Int, $businessId: Int!) {
         }
         accepted_payments
       }
-    
     }
   }
 }
 
+mutation update_rental_category2($id: Int!, $category2: String!) {
+  update_business_item_details(
+    where: { id: { _eq: $id } }
+    _set: { category2: $category2 }
+  ) {
+    affected_rows
+  }
+}
+
+mutation update_rental_category3($id: Int!, $category3: String!) {
+  update_business_rental(
+    where: { details_id: { _eq: $id } }
+    _set: { category3: $category3 }
+  ) {
+    affected_rows
+  }
+}

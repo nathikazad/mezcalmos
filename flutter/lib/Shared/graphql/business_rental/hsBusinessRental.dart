@@ -49,7 +49,7 @@ Future<List<RentalCard>> get_rental_by_category(
         rental: Rental(
             category1: data.details.category1.toRentalCategory1(),
             category2: data.details.category2.toRentalCategory2(),
-            category3: data.category3,
+            category3: data.category3.toRentalCategory3(),
             details: BusinessItemDetails(
               id: data.id,
               name: toLanguageMap(translations: data.details.name.translations),
@@ -99,12 +99,12 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
         response.parsedData?.business_rental_by_pk!;
 
     if (data != null) {
-      return RentalWithBusinessCard(
+      RentalWithBusinessCard returnedRental = RentalWithBusinessCard(
           rental: Rental(
               id: id,
               category1: data.details.category1.toRentalCategory1(),
               category2: data.details.category2.toRentalCategory2(),
-              category3: data.category3,
+              category3: data.category3.toRentalCategory3(),
               details: BusinessItemDetails(
                 nameId: data.details.name_id,
                 descriptionId: data.details.description_id,
@@ -147,6 +147,8 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
                     '0.0'),
             reviewCount: data.business.reviews_aggregate.aggregate?.count,
           ));
+      returnedRental.id = id;
+      return returnedRental;
     }
   } else
     return null;
@@ -343,7 +345,7 @@ Future<int?> add_one_rental({required Rental rental}) async {
           variables: Variables$Mutation$create_rental(
               object: Input$business_rental_insert_input(
                   business_id: rental.details.businessId.toInt(),
-                  category3: rental.category3,
+                  category3: rental.category3?.toFirebaseFormatString(),
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                           available: rental.details.available,
@@ -351,7 +353,10 @@ Future<int?> add_one_rental({required Rental rental}) async {
                           category2: rental.category2?.toFirebaseFormatString() ??
                               RentalCategory2.Uncategorized
                                   .toFirebaseFormatString(),
-                          cost: rental.details.cost,
+                          cost: rental.details.cost.map(
+                              (TimeUnit key, num value) => MapEntry(
+                                  key.toFirebaseFormatString(),
+                                  value.toDouble())),
                           image: rental.details.image,
                           name: Input$translation_obj_rel_insert_input(
                               data: Input$translation_insert_input(
@@ -425,7 +430,7 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
     rental: Input$business_rental_obj_rel_insert_input(
         data: Input$business_rental_insert_input(
             business_id: rental.details.businessId.toInt(),
-            category3: rental.category3,
+            category3: rental.category3?.toFirebaseFormatString(),
             details: Input$business_item_details_obj_rel_insert_input(
                 data: Input$business_item_details_insert_input(
                     available: rental.details.available,
@@ -522,7 +527,7 @@ Future<Rental?> update_business_home_rental(
         id: id,
         category1: data.rental.details.category1.toRentalCategory1(),
         category2: data.rental.details.category2.toRentalCategory2(),
-        category3: data.rental.category3,
+        category3: data.rental.category3.toRentalCategory3(),
         details: BusinessItemDetails(
           nameId: data.rental.details.name_id,
           descriptionId: data.rental.details.description_id,
@@ -554,4 +559,50 @@ Future<Rental?> update_business_home_rental(
   }
 
   return null;
+}
+
+Future<int?> update_rental_category2({
+  required int id,
+  required RentalCategory2 category2,
+}) async {
+  final QueryResult<Mutation$update_rental_category2> response =
+      await _db.graphQLClient.mutate$update_rental_category2(
+    Options$Mutation$update_rental_category2(
+      variables: Variables$Mutation$update_rental_category2(
+        id: id,
+        category2: category2.toFirebaseFormatString(),
+      ),
+    ),
+  );
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura update rental category2 mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura update rental category2 mutation success => ${response.data}");
+    return response.parsedData?.update_business_item_details!.affected_rows;
+  }
+}
+
+Future<int?> update_rental_category3({
+  required int id,
+  required RentalCategory3 category3,
+}) async {
+  final QueryResult<Mutation$update_rental_category3> response =
+      await _db.graphQLClient.mutate$update_rental_category3(
+    Options$Mutation$update_rental_category3(
+      variables: Variables$Mutation$update_rental_category3(
+        id: id,
+        category3: category3.toFirebaseFormatString(),
+      ),
+    ),
+  );
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura update rental category3 mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura update rental category3 mutation success => ${response.data}");
+    return response.parsedData?.update_business_rental!.affected_rows;
+  }
 }
