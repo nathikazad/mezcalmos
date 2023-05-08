@@ -29,8 +29,7 @@ class ServiceInfoEditViewController {
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<MezLocation> newLocation = Rxn();
 
-  final Rx<Language> primaryLang = Rx(Language.EN);
-  final Rx<Language> secondaryLang = Rx(Language.ES);
+  Rxn<ServiceProviderLanguage> languages = Rxn();
   final Rxn<Language> editablePrLang = Rxn();
   final Rxn<Language> editableScLang = Rxn();
   final Rxn<imPicker.XFile> newImageFile = Rxn();
@@ -75,10 +74,12 @@ class ServiceInfoEditViewController {
 
       newLocation.value = service.value!.location;
       newImageUrl.value = service.value?.image;
+      languages.value = service.value?.languages;
 
-      primaryServiceDesc.text = service.value?.description?[primaryLang] ?? '';
+      primaryServiceDesc.text =
+          service.value?.description?[languages.value!.primary] ?? '';
       secondayServiceDesc.text =
-          service.value?.description?[secondaryLang] ?? '';
+          service.value?.description?[languages.value!.secondary] ?? '';
     }
   }
 
@@ -208,10 +209,13 @@ class ServiceInfoEditViewController {
   // }
 
   LanguageMap _contructDesc() {
-    return {
-      primaryLang.value: primaryServiceDesc.text,
-      secondaryLang.value: secondayServiceDesc.text
+    final LanguageMap _desc = <Language, String>{
+      languages.value!.primary: primaryServiceDesc.text
     };
+    if (languages.value!.secondary != null) {
+      _desc[languages.value!.secondary!] = secondayServiceDesc.text;
+    }
+    return _desc;
   }
 
   void dispose() {

@@ -48,8 +48,10 @@ Map<Language, String> toLanguageMap({required List translations}) {
 
 ServiceProviderLanguage convertToLanguages(languages) {
   return ServiceProviderLanguage(
-    primary: languages.primary.toString().toLanguage(),
-    secondary: languages.secondary.toString().toLanguage(),
+    primary: languages["primary"].toString().toLanguage(),
+    secondary: languages["secondary"] != null
+        ? languages["secondary"].toString().toLanguage()
+        : null,
   );
 }
 

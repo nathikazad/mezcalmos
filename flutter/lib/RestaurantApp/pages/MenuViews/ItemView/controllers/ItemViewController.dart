@@ -134,14 +134,14 @@ class ROpItemViewController {
   }
 
   Item _contructItem() {
-    final Map<cModels.Language, String> name = {
+    final LanguageMap name = {
       languages.value!.primary: prItemNameController.text
     };
     if (languages.value!.secondary != null &&
         scItemNameController.text.isNotEmpty) {
       name[languages.value!.secondary!] = scItemNameController.text;
     }
-    Map<cModels.Language, String>? desc;
+    LanguageMap? desc;
     if (prItemDescController.text.isNotEmpty) {
       desc = {
         languages.value!.primary: prItemDescController.text,

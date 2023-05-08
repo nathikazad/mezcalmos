@@ -146,8 +146,8 @@ class AddCategoryController {
     }
   }
 
-  Map<Language, String> _contructName() {
-    final Map<Language, String> name = {
+  LanguageMap _contructName() {
+    final LanguageMap name = {
       languages.value!.primary: primaryCategoryNameController.text
     };
     if (languages.value!.secondary != null &&
@@ -157,8 +157,8 @@ class AddCategoryController {
     return name;
   }
 
-  Map<Language, String>? _contructDescription() {
-    final Map<Language, String> desc = {};
+  LanguageMap? _contructDescription() {
+    final LanguageMap desc = {};
     if (primaryCatDesc.text.isNotEmpty) {
       desc[languages.value!.primary] = primaryCatDesc.text;
     }

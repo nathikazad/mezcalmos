@@ -5146,6 +5146,13 @@ const documentNodeQuerygetServiceInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'language'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'service_provider_type'),
             alias: null,
             arguments: [],
@@ -5360,6 +5367,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     required this.image,
     required this.name,
     this.phone_number,
+    required this.language,
     required this.service_provider_type,
     required this.location,
     this.description,
@@ -5374,6 +5382,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$image = json['image'];
     final l$name = json['name'];
     final l$phone_number = json['phone_number'];
+    final l$language = json['language'];
     final l$service_provider_type = json['service_provider_type'];
     final l$location = json['location'];
     final l$description = json['description'];
@@ -5385,6 +5394,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
       image: (l$image as String),
       name: (l$name as String),
       phone_number: (l$phone_number as String?),
+      language: mapFromJson(l$language),
       service_provider_type: (l$service_provider_type as String),
       location:
           Query$getServiceInfo$service_provider_details_by_pk$location.fromJson(
@@ -5409,6 +5419,8 @@ class Query$getServiceInfo$service_provider_details_by_pk {
 
   final String? phone_number;
 
+  final dynamic language;
+
   final String service_provider_type;
 
   final Query$getServiceInfo$service_provider_details_by_pk$location location;
@@ -5432,6 +5444,8 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     _resultData['name'] = l$name;
     final l$phone_number = phone_number;
     _resultData['phone_number'] = l$phone_number;
+    final l$language = language;
+    _resultData['language'] = mapToJson(l$language);
     final l$service_provider_type = service_provider_type;
     _resultData['service_provider_type'] = l$service_provider_type;
     final l$location = location;
@@ -5451,6 +5465,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$image = image;
     final l$name = name;
     final l$phone_number = phone_number;
+    final l$language = language;
     final l$service_provider_type = service_provider_type;
     final l$location = location;
     final l$description = description;
@@ -5462,6 +5477,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
       l$image,
       l$name,
       l$phone_number,
+      l$language,
       l$service_provider_type,
       l$location,
       l$description,
@@ -5506,6 +5522,11 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$phone_number = phone_number;
     final lOther$phone_number = other.phone_number;
     if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
+    final l$language = language;
+    final lOther$language = other.language;
+    if (l$language != lOther$language) {
       return false;
     }
     final l$service_provider_type = service_provider_type;
@@ -5561,6 +5582,7 @@ abstract class CopyWith$Query$getServiceInfo$service_provider_details_by_pk<
     String? image,
     String? name,
     String? phone_number,
+    dynamic? language,
     String? service_provider_type,
     Query$getServiceInfo$service_provider_details_by_pk$location? location,
     Query$getServiceInfo$service_provider_details_by_pk$description?
@@ -5595,6 +5617,7 @@ class _CopyWithImpl$Query$getServiceInfo$service_provider_details_by_pk<TRes>
     Object? image = _undefined,
     Object? name = _undefined,
     Object? phone_number = _undefined,
+    Object? language = _undefined,
     Object? service_provider_type = _undefined,
     Object? location = _undefined,
     Object? description = _undefined,
@@ -5617,6 +5640,9 @@ class _CopyWithImpl$Query$getServiceInfo$service_provider_details_by_pk<TRes>
         phone_number: phone_number == _undefined
             ? _instance.phone_number
             : (phone_number as String?),
+        language: language == _undefined || language == null
+            ? _instance.language
+            : (language as dynamic),
         service_provider_type:
             service_provider_type == _undefined || service_provider_type == null
                 ? _instance.service_provider_type
@@ -5667,6 +5693,7 @@ class _CopyWithStubImpl$Query$getServiceInfo$service_provider_details_by_pk<
     String? image,
     String? name,
     String? phone_number,
+    dynamic? language,
     String? service_provider_type,
     Query$getServiceInfo$service_provider_details_by_pk$location? location,
     Query$getServiceInfo$service_provider_details_by_pk$description?

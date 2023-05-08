@@ -64,9 +64,7 @@ class ROpChoiceViewController {
   ///
   /// if the edit mode is false it will generate a random id
   Choice _contructChoice() {
-    final Map<cModels.Language, String> name = {
-      languages.value!.primary: prChoiceName.text
-    };
+    final LanguageMap name = {languages.value!.primary: prChoiceName.text};
     if (languages.value!.secondary != null && scChoiceName.text.isNotEmpty) {
       name[languages.value!.secondary!] = scChoiceName.text;
     }

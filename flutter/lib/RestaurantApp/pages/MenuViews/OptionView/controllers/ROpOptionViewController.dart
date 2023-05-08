@@ -169,9 +169,7 @@ class ROpOptionViewController {
   }
 
   Option _contructNormalOption() {
-    final Map<cModels.Language, String> name = {
-      languages.value!.primary: prOptionName.text
-    };
+    final LanguageMap name = {languages.value!.primary: prOptionName.text};
     if (languages.value!.secondary != null && scOptionName.text.isNotEmpty) {
       name[languages.value!.secondary!] = scOptionName.text;
     }
@@ -186,9 +184,7 @@ class ROpOptionViewController {
   }
 
   Option _constructCustomOption() {
-    final Map<cModels.Language, String> name = {
-      languages.value!.primary: prOptionName.text
-    };
+    final LanguageMap name = {languages.value!.primary: prOptionName.text};
     if (languages.value!.secondary != null && scOptionName.text.isNotEmpty) {
       name[languages.value!.secondary!] = scOptionName.text;
     }

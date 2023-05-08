@@ -149,7 +149,8 @@ Future<ServiceInfo?> get_service_info(
           MezLocation.fromHasura(data.location.gps, data.location.address),
       hasuraId: serviceId,
       image: data.image,
-      name: data.name);
+      name: data.name,
+      languages: convertToLanguages(data.language));
 }
 
 Future<PaymentInfo?> get_service_payment_info(
