@@ -24,6 +24,13 @@ class BsOpScheduleSelector extends StatelessWidget {
           if (value == null) {
             return "Please select a schedule";
           }
+
+          /// This condition checks if the schedule has any [isOpen=true] timing
+          else if (!(value.openHours.values
+              .toList()
+              .any((element) => element.isOpen))) {
+            return "Please select a schedule";
+          }
           return null;
         },
         builder: (FormFieldState<Schedule> state) {

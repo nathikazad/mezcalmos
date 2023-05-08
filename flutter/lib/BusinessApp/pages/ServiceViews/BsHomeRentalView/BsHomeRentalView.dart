@@ -110,12 +110,6 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             decoration: InputDecoration(
               hintText: "Add name",
             ),
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return "Please name";
-              }
-              return null;
-            },
           ),
           bigSeperator,
           Text(
@@ -146,75 +140,82 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
   Widget _primaryTab(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      child: Form(
-        key: viewController.formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Obx(
-              () => MezItemAvSwitcher(
-                value: viewController.detailsController.isAvailable.value,
-                onAvalableTap: () {
-                  viewController.detailsController.isAvailable.value = true;
-                },
-                onUnavalableTap: () {
-                  viewController.detailsController.isAvailable.value = false;
-                },
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Obx(
+            () => MezItemAvSwitcher(
+              value: viewController.detailsController.isAvailable.value,
+              onAvalableTap: () {
+                viewController.detailsController.isAvailable.value = true;
+              },
+              onUnavalableTap: () {
+                viewController.detailsController.isAvailable.value = false;
+              },
             ),
-            bigSeperator,
-            Text(
-              "Images",
-              style: context.textTheme.bodyLarge,
+          ),
+          bigSeperator,
+          Text(
+            "Images",
+            style: context.textTheme.bodyLarge,
+          ),
+          Text(
+            "You can only upload up to five images.",
+          ),
+          smallSepartor,
+          BsOpServiceImagesGrid(
+            detailsController: viewController.detailsController,
+          ),
+          bigSeperator,
+          Text(
+            "Name",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            controller: viewController.detailsController.nameController,
+            decoration: InputDecoration(
+              hintText: "Add item name",
             ),
-            Text(
-              "You can only upload up to five images.",
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter a name";
+              }
+              return null;
+            },
+          ),
+          bigSeperator,
+          Text(
+            "Description",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            maxLines: 7,
+            minLines: 5,
+            controller: viewController.detailsController.descriptionController,
+            decoration: InputDecoration(
+              hintText: "Enter a description for your item",
             ),
-            smallSepartor,
-            BsOpServiceImagesGrid(
-              detailsController: viewController.detailsController,
-            ),
-            bigSeperator,
-            Text(
-              "Name",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              controller: viewController.detailsController.nameController,
-              decoration: InputDecoration(
-                hintText: "Add item name",
-              ),
-            ),
-            bigSeperator,
-            Text(
-              "Description",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              maxLines: 7,
-              minLines: 5,
-              controller:
-                  viewController.detailsController.descriptionController,
-              decoration: InputDecoration(
-                hintText: "Enter a description for your item",
-              ),
-            ),
-            bigSeperator,
-            Obx(
-              () => BsOpOfferingPricesList(
-                availbleUnits: viewController.avalbleUnits,
-                onAddPrice: (TimeUnit unit) {
-                  viewController.detailsController
-                      .addPriceTimeUnit(timeUnit: unit);
-                },
-                onRemovePrice: (TimeUnit unit) {
-                  viewController.detailsController.removeTimeUnit(unit);
-                },
-                seletedPrices:
-                    viewController.detailsController.priceTimeUnitMap,
-              ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter description";
+              }
+              return null;
+            },
+          ),
+          bigSeperator,
+          Obx(
+            () => BsOpOfferingPricesList(
+              availbleUnits: viewController.avalbleUnits,
+              onAddPrice: (TimeUnit unit) {
+                viewController.detailsController
+                    .addPriceTimeUnit(timeUnit: unit);
+              },
+              onRemovePrice: (TimeUnit unit) {
+                viewController.detailsController.removeTimeUnit(unit);
+              },
+              seletedPrices: viewController.detailsController.priceTimeUnitMap,
             ),
           ),
           bigSeperator,
@@ -263,32 +264,44 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
                 return null;
               },
             ),
-            bigSeperator,
-            Text(
-              "Bedrooms",
-              style: context.textTheme.bodyLarge,
+          ),
+          bigSeperator,
+          Text(
+            "Bedrooms",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            controller: viewController.bedroomsController,
+            decoration: InputDecoration(
+              hintText: "how many bedrooms does your home have?",
             ),
-            smallSepartor,
-            TextFormField(
-              controller: viewController.bedroomsController,
-              decoration: InputDecoration(
-                hintText: "how many bedrooms does your home have?",
-              ),
+             validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter bedrooms";
+              }
+              return null;
+            },
+          ),
+          bigSeperator,
+          Text(
+            "Bathrooms",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            controller: viewController.bathroomsController,
+            decoration: InputDecoration(
+              hintText: "how many bathrooms does your home have?",
             ),
-            bigSeperator,
-            Text(
-              "Bathrooms",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              controller: viewController.bathroomsController,
-              decoration: InputDecoration(
-                hintText: "how many bathrooms does your home have?",
-              ),
-            ),
-          ],
-        ),
+             validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter bathrooms";
+              }
+              return null;
+            },
+          ),
+        ],
       ),
     );
   }
