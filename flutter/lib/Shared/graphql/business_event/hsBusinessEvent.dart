@@ -386,7 +386,7 @@ Future<int?> add_one_event({required Event event}) async {
                       : null,
                   address: event.gpsLocation?.address,
                   schedule_type: event.scheduleType.toFirebaseFormatString(),
-                  schedule: event.schedule?.toFirebaseFormat(),
+                  schedule: event.schedule?.toFirebaseFormattedJson(),
                   starts_at: event.startsAt,
                   ends_at: event.endsAt,
                   //    time: event.time,
@@ -524,7 +524,7 @@ Future<EventWithBusinessCard?> update_event_by_id(
       variables: Variables$Mutation$update_event_by_id(
         id: eventId,
         object: Input$business_event_set_input(
-          schedule: event.schedule?.toFirebaseFormat(),
+          schedule: event.schedule?.toFirebaseFormattedJson(),
           schedule_type: event.scheduleType.toFirebaseFormatString(),
           starts_at: event.startsAt,
           ends_at: event.endsAt,

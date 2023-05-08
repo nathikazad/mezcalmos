@@ -93,7 +93,7 @@ extension ScheduleFunctions on Schedule {
     return isOpen;
   }
 
-  Map<String, dynamic> toFirebaseFormat() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     // if (timezone[0] < 0) {
     //   timezone[1] = -timezone[1];
