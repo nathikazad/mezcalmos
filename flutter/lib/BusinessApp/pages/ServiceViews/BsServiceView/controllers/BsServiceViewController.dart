@@ -11,6 +11,10 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class BsServiceViewController {
   // instances //
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
+  bool firstFormValid = false;
+  bool secondFormValid = false;
 
   // streams //
 
@@ -21,7 +25,6 @@ class BsServiceViewController {
   // methods //
 
   // instances //
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
@@ -31,7 +34,7 @@ class BsServiceViewController {
   Rxn<ServiceWithBusinessCard> _service = Rxn<ServiceWithBusinessCard>();
   ServiceWithBusinessCard? get service => _service.value;
   bool get isEditing => _service.value != null;
-  Rx<Schedule?> serviceSchedule = Rx(null);
+  Rxn<Schedule?> serviceSchedule = Rxn();
 
   List<TimeUnit> get _possibleTimeUnits =>
       List.unmodifiable([TimeUnit.PerHour]);
@@ -42,7 +45,7 @@ class BsServiceViewController {
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
-    detailsController.addPriceTimeUnit(timeUnit:avalbleUnits.first);
+    detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -55,7 +58,11 @@ class BsServiceViewController {
   }
 
   Future<void> changeSchedule(Schedule? schedule) async {
-    serviceSchedule.value = schedule;
+    if (schedule != null &&
+        // This condition checks if the schedule has any [isOpen=true] timing
+        (schedule.openHours.values.toList().any((element) => element.isOpen))) {
+      serviceSchedule.value = schedule;
+    }
   }
 
   Future<void> saveItemDetails() async {
@@ -73,7 +80,7 @@ class BsServiceViewController {
   }
 
   Future<void> save() async {
-    if (formKey.currentState?.validate() == true) {
+    if (validate()) {
       if (isEditing) {
         await saveItemDetails();
         shouldRefetch = true;
@@ -103,5 +110,46 @@ class BsServiceViewController {
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
     }
+  }
+
+  bool validate() {
+    if (isOnFirstTab) {
+      // validate first tab
+      firstFormValid = _isFirstFormValid;
+      if (firstFormValid && !secondFormValid) {
+        tabController?.animateTo(1);
+      }
+    }
+    // second tab
+    else {
+      secondFormValid = _isSecondFormValid;
+      if (secondFormValid && !firstFormValid) {
+        tabController?.animateTo(0);
+      }
+    }
+    if (secondFormValid && firstFormValid) {
+      tabController?.animateTo(0);
+    }
+    return secondFormValid && firstFormValid;
+  }
+
+  bool get _isFirstFormValid {
+    return formKey.currentState?.validate() == true;
+  }
+
+  bool get _isSecondFormValid {
+    return scFormKey.currentState?.validate() == true;
+  }
+
+  bool get isBothFormValid {
+    return _isFirstFormValid && _isSecondFormValid;
+  }
+
+  bool get isOnFirstTab {
+    return tabController?.index == 0;
+  }
+
+  bool get isOnSecondTab {
+    return tabController?.index == 1;
   }
 }
