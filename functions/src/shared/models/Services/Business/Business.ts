@@ -59,6 +59,7 @@ export interface Event {
 export interface Service {
     id?: number;
     category1: ServiceCategory1;
+    schedule?: Schedule;
     details: BusinessItemDetails;
 }
 export interface Product {

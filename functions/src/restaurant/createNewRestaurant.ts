@@ -9,7 +9,7 @@ import { restaurantUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { DeliveryDetails } from "../shared/models/Generic/Delivery";
-import { ServiceProvider } from "../shared/models/Services/Service";
+import { ServiceProvider, ServiceProviderLanguage } from "../shared/models/Services/Service";
 import { Schedule } from "../shared/models/Generic/Schedule";
 
 export interface RestaurantDetails {
@@ -21,7 +21,7 @@ export interface RestaurantDetails {
   firebaseId?: string,
   deliveryPartnerId?: number,
   deliveryDetails: DeliveryDetails,
-  language: Record<Language, boolean>,
+  language: ServiceProviderLanguage,
   uniqueId?: string
 }
 export interface RestaurantResponse {

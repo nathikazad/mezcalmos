@@ -130,7 +130,11 @@ Future<Business?> get_business_by_id(
               image: data.details.image,
               location: constructLocation(
                   data.details.location.gps, data.details.location.address),
-              language: convertToLanguages(data.details.language),
+              language: ServiceProviderLanguage(
+                  primary:
+                      data.details.language.primary.toString().toLanguage(),
+                  secondary:
+                      data.details.language.secondary.toString().toLanguage()),
               currency: data.details.currency.toCurrency(),
               deliveryDetails: DeliveryDetails(
                   deliveryAvailable: false,

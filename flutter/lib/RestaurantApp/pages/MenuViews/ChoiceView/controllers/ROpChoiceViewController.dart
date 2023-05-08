@@ -30,8 +30,7 @@ class ROpChoiceViewController {
   RxBool editMode = RxBool(false);
   RxBool isAv = RxBool(false);
   RxBool needToFetch = RxBool(false);
-  Rx<cModels.Language> primaryLang = Rx(cModels.Language.ES);
-  Rx<cModels.Language> secondaryLang = Rx(cModels.Language.EN);
+  Rxn<cModels.ServiceProviderLanguage> languages = Rxn();
 
   // text inputs //
   TextEditingController prChoiceName = TextEditingController();
@@ -53,9 +52,7 @@ class ROpChoiceViewController {
   }
 
   Future<void> _assignLanguages() async {
-    primaryLang.value =
-        await get_restaurant_priamry_lang(restaurantId) ?? cModels.Language.ES;
-    secondaryLang.value = primaryLang.value.toOpLang();
+    languages.value = await get_restaurant_lang(restaurantId);
   }
 
   // dispose //
@@ -67,12 +64,15 @@ class ROpChoiceViewController {
   ///
   /// if the edit mode is false it will generate a random id
   Choice _contructChoice() {
+    final Map<cModels.Language, String> name = {
+      languages.value!.primary: prChoiceName.text
+    };
+    if (languages.value!.secondary != null && scChoiceName.text.isNotEmpty) {
+      name[languages.value!.secondary!] = scChoiceName.text;
+    }
     return Choice(
       id: editMode.isTrue ? choice.value!.id : Random().nextInt(5),
-      name: {
-        primaryLang.value: prChoiceName.text,
-        secondaryLang.value: scChoiceName.text,
-      },
+      name: name,
       cost: num.tryParse(choicePriceText.text) ?? 0,
       available: isAv.value,
     );
@@ -86,8 +86,8 @@ class ROpChoiceViewController {
     if (choice.value != null) {
       editMode.value = true;
       isAv.value = choice.value!.available;
-      prChoiceName.text = choice.value!.name[primaryLang.value] ?? "";
-      scChoiceName.text = choice.value!.name[secondaryLang.value] ?? "";
+      prChoiceName.text = choice.value!.name[languages.value!.primary]!;
+      scChoiceName.text = choice.value!.name[languages.value!.secondary] ?? "";
       choicePriceText.text = choice.value!.cost.toString();
     }
   }

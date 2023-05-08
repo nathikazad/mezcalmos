@@ -2,65 +2,23 @@ table:
   name: item_details
   schema: business
 object_relationships:
+  - name: business
+    using:
+      foreign_key_constraint_on: business_id
   - name: description
     using:
       foreign_key_constraint_on: description_id
-  - name: event
-    using:
-      foreign_key_constraint_on:
-        column: details_id
-        table:
-          name: event
-          schema: business
   - name: name
     using:
       foreign_key_constraint_on: name_id
-  - name: product
-    using:
-      foreign_key_constraint_on:
-        column: details_id
-        table:
-          name: product
-          schema: business
-  - name: rental
-    using:
-      foreign_key_constraint_on:
-        column: details_id
-        table:
-          name: rental
-          schema: business
-  - name: service
-    using:
-      foreign_key_constraint_on:
-        column: details_id
-        table:
-          name: service
-          schema: business
 insert_permissions:
   - role: business_operator
     permission:
       check:
-        _or:
-          - rental:
-              business:
-                operators:
-                  user_id:
-                    _eq: X-Hasura-User-Id
-          - event:
-              business:
-                operators:
-                  user_id:
-                    _eq: X-Hasura-User-Id
-          - service:
-              business:
-                operators:
-                  user_id:
-                    _eq: X-Hasura-User-Id
-          - product:
-              business:
-                operators:
-                  user_id:
-                    _eq: X-Hasura-User-Id
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
       columns:
         - additional_parameters
         - available
@@ -88,7 +46,11 @@ select_permissions:
         - tags
         - category1
         - category2
-      filter: {}
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
@@ -119,25 +81,8 @@ update_permissions:
         - position
         - tags
       filter:
-        _or:
-          - rental:
-              business:
-                operators:
-                  user_id:
-                    _eq: X-Hasura-User-Id
-          - event:
-              business:
-                operators:
-                  user_id:
-                    _eq: X-Hasura-User-Id
-          - service:
-              business:
-                operators:
-                  user_id:
-                    _eq: X-Hasura-User-Id
-          - product:
-              business:
-                operators:
-                  user_id:
-                    _eq: X-Hasura-User-Id
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
       check: null

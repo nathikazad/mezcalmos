@@ -54,8 +54,7 @@ class ROpItemViewController {
 
   final RxList<Category> categories = RxList.empty();
   final Rxn<Category> currentCategory = Rxn();
-  Rx<cModels.Language> prLang = Rx(cModels.Language.ES);
-  Rx<cModels.Language> scLang = Rx(cModels.Language.ES);
+  Rxn<cModels.ServiceProviderLanguage> languages = Rxn();
   final Rxn<imPicker.XFile> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
@@ -92,8 +91,7 @@ class ROpItemViewController {
       schedule.value = await get_restaurant_schedule(
           restaurantId: this.restaurantId, withCache: false);
     }
-    prLang.value = await get_restaurant_priamry_lang(4) ?? cModels.Language.ES;
-    scLang.value = prLang.value.toOpLang();
+    languages.value = await get_restaurant_lang(restaurantId);
     await _assignCategories();
     mezDbgPrint("Item id ===========>>>>> $itemId");
     if (itemId != null) {
@@ -108,11 +106,15 @@ class ROpItemViewController {
 
     editableItem.value = await get_one_item_by_id(itemId, withCache: false);
     mezDbgPrint(editableItem.value!.toJson());
-    prItemNameController.text = editableItem.value!.name[prLang]!;
+    prItemNameController.text =
+        editableItem.value!.name[languages.value!.primary]!;
     newImageUrl.value = editableItem.value!.image;
-    scItemNameController.text = editableItem.value!.name[scLang]!;
-    prItemDescController.text = editableItem.value?.description?[prLang]! ?? "";
-    scItemDescController.text = editableItem.value!.description?[scLang]! ?? "";
+    scItemNameController.text =
+        editableItem.value!.name[languages.value!.secondary] ?? "";
+    prItemDescController.text =
+        editableItem.value?.description?[languages.value!.primary] ?? "";
+    scItemDescController.text =
+        editableItem.value!.description?[languages.value!.secondary] ?? "";
     periodOfTime.value = editableItem.value!.getPeriod;
 
     itemPriceController.text = editableItem.value!.cost.toString();
@@ -132,6 +134,24 @@ class ROpItemViewController {
   }
 
   Item _contructItem() {
+    final Map<cModels.Language, String> name = {
+      languages.value!.primary: prItemNameController.text
+    };
+    if (languages.value!.secondary != null &&
+        scItemNameController.text.isNotEmpty) {
+      name[languages.value!.secondary!] = scItemNameController.text;
+    }
+    Map<cModels.Language, String>? desc;
+    if (prItemDescController.text.isNotEmpty) {
+      desc = {
+        languages.value!.primary: prItemDescController.text,
+      };
+      if (languages.value!.secondary != null &&
+          scItemDescController.text.isNotEmpty) {
+        desc[languages.value!.secondary!] = scItemDescController.text;
+      }
+    }
+
     final Item newItem = Item(
       image: newImageUrl.value,
       itemType: (specialMode.isTrue)
@@ -142,14 +162,8 @@ class ROpItemViewController {
       endsAt: specialMode.value ? periodOfTime.value?.end : null,
       available: editableItem.value?.available ?? false,
       categoryId: currentCategory.value?.id,
-      name: {
-        prLang.value: prItemNameController.text,
-        scLang.value: scItemNameController.text,
-      },
-      description: {
-        prLang.value: prItemDescController.text,
-        scLang.value: scItemDescController.text,
-      },
+      name: name,
+      description: desc,
       cost: num.parse(itemPriceController.text),
     );
     return newItem;

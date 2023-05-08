@@ -138,18 +138,18 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
-                  languageType: _viewController.primaryLang.value!,
+                  languageType: _viewController.languages.value!.primary,
                   controller: _viewController.primaryCategoryNameController),
               SizedBox(
                 height: 25,
               ),
               Text(
-                "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
+                "${_i18n()["categoryNameIn"]} ${_viewController.languages.value!.secondary?.toLanguageName() ?? ""} ",
                 style: context.txt.bodyLarge,
               ),
               const SizedBox(height: 10),
               _categoryNameComponent(
-                  languageType: _viewController.secondaryLang.value!,
+                  languageType: _viewController.languages.value!.secondary!,
                   controller: _viewController.secondaryCategoryNameController),
               SizedBox(
                 height: 25,
@@ -174,7 +174,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
                 height: 25,
               ),
               Text(
-                "${_i18n()["catDescIn"]} ${_viewController.secondaryLang.value!.toLanguageName()}",
+                "${_i18n()["catDescIn"]} ${_viewController.languages.value!.secondary?.toLanguageName() ?? ""}",
                 style: context.txt.bodyLarge,
               ),
               SizedBox(

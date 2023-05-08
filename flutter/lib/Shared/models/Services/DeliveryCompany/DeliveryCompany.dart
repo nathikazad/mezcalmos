@@ -27,7 +27,7 @@ class DeliveryCompany extends Service {
   DeliveryCompany copyWith({
     ServiceInfo? userInfo,
     ServiceState? state,
-    Map<cModels.Language, bool>? languages,
+    cModels.ServiceProviderLanguage? languages,
   }) {
     return DeliveryCompany(
       info: userInfo ?? info,

@@ -312,9 +312,7 @@ class CreateServiceViewController {
           customerPickup: false,
           selfDelivery: serviceInput.value.isSelfDelivery,
         ),
-        language: {
-          "en": true,
-        },
+        language: serviceInput.value.languages!,
       );
       if (res.success == false) {
         mezDbgPrint(res.error);
@@ -341,9 +339,7 @@ class CreateServiceViewController {
             lat: serviceInput.value.serviceInfo!.location.latitude,
             lng: serviceInput.value.serviceInfo!.location.longitude,
             address: serviceInput.value.serviceInfo!.location.address),
-        language: {
-          "en": true,
-        },
+        language: serviceInput.value.languages!,
         profile: businessProfile!,
         schedule: serviceInput.value.schedule!,
       );

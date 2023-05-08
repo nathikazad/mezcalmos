@@ -184,7 +184,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       Obx(
                         () => Text(
-                          "${_i18n()['choiceNameIn']} ${viewController.secondaryLang.value.toLanguageName() ?? ""}",
+                          "${_i18n()['choiceNameIn']} ${viewController.languages.value!.secondary?.toLanguageName() ?? ""}",
                           style: context.txt.bodyLarge,
                         ),
                       ),
@@ -227,12 +227,13 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
       },
       tabBar: TabBar(controller: tabController, tabs: [
         Tab(
-          child: Obx(() =>
-              Text(viewController.primaryLang.value.toLanguageName() ?? "")),
+          child: Obx(() => Text(
+              viewController.languages.value!.primary.toLanguageName() ?? "")),
         ),
         Tab(
-          child: Obx(() =>
-              Text(viewController.secondaryLang.value.toLanguageName() ?? "")),
+          child: Obx(() => Text(
+              viewController.languages.value!.secondary?.toLanguageName() ??
+                  "")),
         ),
       ]),
       titleWidget: Obx(() {

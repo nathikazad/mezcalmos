@@ -52,7 +52,7 @@ class Restaurant extends Service {
     required this.schedule,
     required this.paymentInfo,
     required ServiceState restaurantState,
-    required Map<cModels.Language, bool> languages,
+    required cModels.ServiceProviderLanguage languages,
     required super.serviceDetailsId,
     super.deliveryCost,
     super.reviews,
@@ -92,7 +92,7 @@ class Restaurant extends Service {
         scheduleFromData(restaurantData["details"]["schedule"]);
 
     final PaymentInfo paymentInfo =
-        // restaurantData["details"]["paymentInfo"] != null
+        // restaurantData["details"]["paymentInfo"] != servinull
         //     ? PaymentInfo.fromData(restaurantData["details"]["paymentInfo"])
         //     :
         PaymentInfo();
@@ -101,25 +101,25 @@ class Restaurant extends Service {
                 ?["language"]?["primary"]
             .toString()
             .toLanguage() ??
-        cModels.Language.ES;
+        cModels.Language.EN;
 
     final cModels.Language? secondaryLanguage = restaurantData["details"]
-                ?["language"]?["secondary"]
-            .toString()
-            .toLanguage() ??
-        cModels.Language.EN;
+            ?["language"]?["secondary"]
+        .toString()
+        .toLanguage();
 
     final num? rate = (restaurantData?["details"]?["rating"].toString() != null)
         ? num.tryParse(restaurantData["details"]?["rating"]?.toString() ?? "")
         : null;
-    primaryLanguage.toOpLang();
+    // primaryLanguage.toOpLang();
     final Restaurant restaurant = Restaurant(
         serviceDetailsId: 1,
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
         schedule: schedule,
         restaurantState: restaurantState,
         restaurantsView: restaurantsView,
-        languages: {},
+        languages: cModels.ServiceProviderLanguage(
+            primary: primaryLanguage, secondary: secondaryLanguage),
         rate: rate,
         paymentInfo: paymentInfo);
     // if (restaurantData["details"]["reviews"] != null) {
@@ -329,10 +329,9 @@ class Restaurant extends Service {
     ServiceState? state,
     bool? selfDelivery,
     PaymentInfo? paymentInfo,
-    cModels.Language? primaryLanguage,
     cModels.Schedule? schedule,
     int? deliveryDetailsId,
-    Map<cModels.Language, bool>? languages,
+    cModels.ServiceProviderLanguage? languages,
   }) {
     return Restaurant(
       serviceDetailsId: 1,
