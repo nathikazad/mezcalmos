@@ -139,8 +139,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                       (int index) => MezCard(
                           onClick: () {
                             BsOpRentalView.navigate(
-                                id: viewController.rentals[index].details.id
-                                    .toInt());
+                              id: viewController.rentals[index].details.id
+                                  .toInt(),
+                              rentalCategory:
+                                  viewController.rentals[index].category1,
+                            );
                           },
                           firstAvatarBgImage: NetworkImage(
                             viewController.rentals[index].details.firstImage ??

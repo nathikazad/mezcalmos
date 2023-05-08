@@ -17813,66 +17813,80 @@ const documentNodeQueryget_business_rentals = DocumentNode(definitions: [
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
                 name: NameNode(value: '_and'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: 'details'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: '_and'),
-                        value: ObjectValueNode(fields: [
+                value: ListValueNode(values: [
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: '_or'),
+                      value: ListValueNode(values: [
+                        ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: 'category1'),
+                            name: NameNode(value: 'details'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: '_eq'),
-                                value: StringValueNode(
-                                  value: 'vehicle',
-                                  isBlock: false,
-                                ),
-                              )
-                            ]),
-                          ),
-                          ObjectFieldNode(
-                            name: NameNode(value: 'category2'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: '_in'),
-                                value: ListValueNode(values: [
-                                  StringValueNode(
-                                    value: 'car',
-                                    isBlock: false,
-                                  ),
-                                  StringValueNode(
-                                    value: 'motorcycle',
-                                    isBlock: false,
-                                  ),
+                                name: NameNode(value: 'category1'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_eq'),
+                                    value: StringValueNode(
+                                      value: 'surf',
+                                      isBlock: false,
+                                    ),
+                                  )
                                 ]),
                               )
                             ]),
-                          ),
+                          )
+                        ]),
+                        ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: 'tags'),
+                            name: NameNode(value: 'details'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: '_has_keys_all'),
-                                value: ListValueNode(values: []),
+                                name: NameNode(value: 'category1'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_eq'),
+                                    value: StringValueNode(
+                                      value: 'vehicle',
+                                      isBlock: false,
+                                    ),
+                                  )
+                                ]),
                               )
                             ]),
-                          ),
+                          )
                         ]),
-                      )
-                    ]),
-                  ),
-                  ObjectFieldNode(
-                    name: NameNode(value: 'business_id'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: '_eq'),
-                        value:
-                            VariableNode(name: NameNode(value: 'businessId')),
-                      )
-                    ]),
-                  ),
+                      ]),
+                    )
+                  ]),
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'details'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: 'tags'),
+                          value: ObjectValueNode(fields: [
+                            ObjectFieldNode(
+                              name: NameNode(value: '_has_keys_all'),
+                              value: ListValueNode(values: []),
+                            )
+                          ]),
+                        )
+                      ]),
+                    )
+                  ]),
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'business_id'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: '_eq'),
+                          value:
+                              VariableNode(name: NameNode(value: 'businessId')),
+                        )
+                      ]),
+                    )
+                  ]),
                 ]),
               )
             ]),
@@ -19763,6 +19777,1188 @@ class _CopyWithStubImpl$Query$get_business_rentals$business_rental$business$deta
   call({
     Geography? gps,
     String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_rental_category2 {
+  factory Variables$Mutation$update_rental_category2({
+    required int id,
+    required String category2,
+  }) =>
+      Variables$Mutation$update_rental_category2._({
+        r'id': id,
+        r'category2': category2,
+      });
+
+  Variables$Mutation$update_rental_category2._(this._$data);
+
+  factory Variables$Mutation$update_rental_category2.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$category2 = data['category2'];
+    result$data['category2'] = (l$category2 as String);
+    return Variables$Mutation$update_rental_category2._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  String get category2 => (_$data['category2'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$category2 = category2;
+    result$data['category2'] = l$category2;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_rental_category2<
+          Variables$Mutation$update_rental_category2>
+      get copyWith => CopyWith$Variables$Mutation$update_rental_category2(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_rental_category2) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$category2 = category2;
+    return Object.hashAll([
+      l$id,
+      l$category2,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_rental_category2<TRes> {
+  factory CopyWith$Variables$Mutation$update_rental_category2(
+    Variables$Mutation$update_rental_category2 instance,
+    TRes Function(Variables$Mutation$update_rental_category2) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_rental_category2;
+
+  factory CopyWith$Variables$Mutation$update_rental_category2.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_rental_category2;
+
+  TRes call({
+    int? id,
+    String? category2,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_rental_category2<TRes>
+    implements CopyWith$Variables$Mutation$update_rental_category2<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_rental_category2(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_rental_category2 _instance;
+
+  final TRes Function(Variables$Mutation$update_rental_category2) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? category2 = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_rental_category2._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (category2 != _undefined && category2 != null)
+          'category2': (category2 as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_rental_category2<TRes>
+    implements CopyWith$Variables$Mutation$update_rental_category2<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_rental_category2(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? category2,
+  }) =>
+      _res;
+}
+
+class Mutation$update_rental_category2 {
+  Mutation$update_rental_category2({
+    this.update_business_item_details,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_rental_category2.fromJson(Map<String, dynamic> json) {
+    final l$update_business_item_details = json['update_business_item_details'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_rental_category2(
+      update_business_item_details: l$update_business_item_details == null
+          ? null
+          : Mutation$update_rental_category2$update_business_item_details
+              .fromJson(
+                  (l$update_business_item_details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_rental_category2$update_business_item_details?
+      update_business_item_details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_item_details = update_business_item_details;
+    _resultData['update_business_item_details'] =
+        l$update_business_item_details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_item_details = update_business_item_details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_item_details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_rental_category2) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_item_details = update_business_item_details;
+    final lOther$update_business_item_details =
+        other.update_business_item_details;
+    if (l$update_business_item_details != lOther$update_business_item_details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_rental_category2
+    on Mutation$update_rental_category2 {
+  CopyWith$Mutation$update_rental_category2<Mutation$update_rental_category2>
+      get copyWith => CopyWith$Mutation$update_rental_category2(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_rental_category2<TRes> {
+  factory CopyWith$Mutation$update_rental_category2(
+    Mutation$update_rental_category2 instance,
+    TRes Function(Mutation$update_rental_category2) then,
+  ) = _CopyWithImpl$Mutation$update_rental_category2;
+
+  factory CopyWith$Mutation$update_rental_category2.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_rental_category2;
+
+  TRes call({
+    Mutation$update_rental_category2$update_business_item_details?
+        update_business_item_details,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_rental_category2$update_business_item_details<TRes>
+      get update_business_item_details;
+}
+
+class _CopyWithImpl$Mutation$update_rental_category2<TRes>
+    implements CopyWith$Mutation$update_rental_category2<TRes> {
+  _CopyWithImpl$Mutation$update_rental_category2(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_rental_category2 _instance;
+
+  final TRes Function(Mutation$update_rental_category2) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_item_details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_rental_category2(
+        update_business_item_details: update_business_item_details == _undefined
+            ? _instance.update_business_item_details
+            : (update_business_item_details
+                as Mutation$update_rental_category2$update_business_item_details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_rental_category2$update_business_item_details<TRes>
+      get update_business_item_details {
+    final local$update_business_item_details =
+        _instance.update_business_item_details;
+    return local$update_business_item_details == null
+        ? CopyWith$Mutation$update_rental_category2$update_business_item_details
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_rental_category2$update_business_item_details(
+            local$update_business_item_details,
+            (e) => call(update_business_item_details: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_rental_category2<TRes>
+    implements CopyWith$Mutation$update_rental_category2<TRes> {
+  _CopyWithStubImpl$Mutation$update_rental_category2(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_rental_category2$update_business_item_details?
+        update_business_item_details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_rental_category2$update_business_item_details<TRes>
+      get update_business_item_details =>
+          CopyWith$Mutation$update_rental_category2$update_business_item_details
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_rental_category2 = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_rental_category2'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'category2')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_item_details'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'id')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'category2'),
+                value: VariableNode(name: NameNode(value: 'category2')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_rental_category2 _parserFn$Mutation$update_rental_category2(
+        Map<String, dynamic> data) =>
+    Mutation$update_rental_category2.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_rental_category2 = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_rental_category2?,
+);
+
+class Options$Mutation$update_rental_category2
+    extends graphql.MutationOptions<Mutation$update_rental_category2> {
+  Options$Mutation$update_rental_category2({
+    String? operationName,
+    required Variables$Mutation$update_rental_category2 variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_rental_category2? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_rental_category2>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_rental_category2(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_rental_category2,
+          parserFn: _parserFn$Mutation$update_rental_category2,
+        );
+
+  final OnMutationCompleted$Mutation$update_rental_category2?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_rental_category2
+    extends graphql.WatchQueryOptions<Mutation$update_rental_category2> {
+  WatchOptions$Mutation$update_rental_category2({
+    String? operationName,
+    required Variables$Mutation$update_rental_category2 variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_rental_category2,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_rental_category2,
+        );
+}
+
+extension ClientExtension$Mutation$update_rental_category2
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_rental_category2>>
+      mutate$update_rental_category2(
+              Options$Mutation$update_rental_category2 options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_rental_category2>
+      watchMutation$update_rental_category2(
+              WatchOptions$Mutation$update_rental_category2 options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_rental_category2$update_business_item_details {
+  Mutation$update_rental_category2$update_business_item_details({
+    required this.affected_rows,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_rental_category2$update_business_item_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_rental_category2$update_business_item_details(
+      affected_rows: (l$affected_rows as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_rental_category2$update_business_item_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_rental_category2$update_business_item_details
+    on Mutation$update_rental_category2$update_business_item_details {
+  CopyWith$Mutation$update_rental_category2$update_business_item_details<
+          Mutation$update_rental_category2$update_business_item_details>
+      get copyWith =>
+          CopyWith$Mutation$update_rental_category2$update_business_item_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_rental_category2$update_business_item_details<
+    TRes> {
+  factory CopyWith$Mutation$update_rental_category2$update_business_item_details(
+    Mutation$update_rental_category2$update_business_item_details instance,
+    TRes Function(Mutation$update_rental_category2$update_business_item_details)
+        then,
+  ) = _CopyWithImpl$Mutation$update_rental_category2$update_business_item_details;
+
+  factory CopyWith$Mutation$update_rental_category2$update_business_item_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_rental_category2$update_business_item_details;
+
+  TRes call({
+    int? affected_rows,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_rental_category2$update_business_item_details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_rental_category2$update_business_item_details<
+            TRes> {
+  _CopyWithImpl$Mutation$update_rental_category2$update_business_item_details(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_rental_category2$update_business_item_details _instance;
+
+  final TRes Function(
+      Mutation$update_rental_category2$update_business_item_details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_rental_category2$update_business_item_details(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_rental_category2$update_business_item_details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_rental_category2$update_business_item_details<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_rental_category2$update_business_item_details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_rental_category3 {
+  factory Variables$Mutation$update_rental_category3({
+    required int id,
+    required String category3,
+  }) =>
+      Variables$Mutation$update_rental_category3._({
+        r'id': id,
+        r'category3': category3,
+      });
+
+  Variables$Mutation$update_rental_category3._(this._$data);
+
+  factory Variables$Mutation$update_rental_category3.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$category3 = data['category3'];
+    result$data['category3'] = (l$category3 as String);
+    return Variables$Mutation$update_rental_category3._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  String get category3 => (_$data['category3'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$category3 = category3;
+    result$data['category3'] = l$category3;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_rental_category3<
+          Variables$Mutation$update_rental_category3>
+      get copyWith => CopyWith$Variables$Mutation$update_rental_category3(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_rental_category3) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$category3 = category3;
+    final lOther$category3 = other.category3;
+    if (l$category3 != lOther$category3) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$category3 = category3;
+    return Object.hashAll([
+      l$id,
+      l$category3,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_rental_category3<TRes> {
+  factory CopyWith$Variables$Mutation$update_rental_category3(
+    Variables$Mutation$update_rental_category3 instance,
+    TRes Function(Variables$Mutation$update_rental_category3) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_rental_category3;
+
+  factory CopyWith$Variables$Mutation$update_rental_category3.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_rental_category3;
+
+  TRes call({
+    int? id,
+    String? category3,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_rental_category3<TRes>
+    implements CopyWith$Variables$Mutation$update_rental_category3<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_rental_category3(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_rental_category3 _instance;
+
+  final TRes Function(Variables$Mutation$update_rental_category3) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? category3 = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_rental_category3._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (category3 != _undefined && category3 != null)
+          'category3': (category3 as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_rental_category3<TRes>
+    implements CopyWith$Variables$Mutation$update_rental_category3<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_rental_category3(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? category3,
+  }) =>
+      _res;
+}
+
+class Mutation$update_rental_category3 {
+  Mutation$update_rental_category3({
+    this.update_business_rental,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_rental_category3.fromJson(Map<String, dynamic> json) {
+    final l$update_business_rental = json['update_business_rental'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_rental_category3(
+      update_business_rental: l$update_business_rental == null
+          ? null
+          : Mutation$update_rental_category3$update_business_rental.fromJson(
+              (l$update_business_rental as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_rental_category3$update_business_rental?
+      update_business_rental;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_rental = update_business_rental;
+    _resultData['update_business_rental'] = l$update_business_rental?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_rental = update_business_rental;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_rental,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_rental_category3) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_rental = update_business_rental;
+    final lOther$update_business_rental = other.update_business_rental;
+    if (l$update_business_rental != lOther$update_business_rental) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_rental_category3
+    on Mutation$update_rental_category3 {
+  CopyWith$Mutation$update_rental_category3<Mutation$update_rental_category3>
+      get copyWith => CopyWith$Mutation$update_rental_category3(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_rental_category3<TRes> {
+  factory CopyWith$Mutation$update_rental_category3(
+    Mutation$update_rental_category3 instance,
+    TRes Function(Mutation$update_rental_category3) then,
+  ) = _CopyWithImpl$Mutation$update_rental_category3;
+
+  factory CopyWith$Mutation$update_rental_category3.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_rental_category3;
+
+  TRes call({
+    Mutation$update_rental_category3$update_business_rental?
+        update_business_rental,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_rental_category3$update_business_rental<TRes>
+      get update_business_rental;
+}
+
+class _CopyWithImpl$Mutation$update_rental_category3<TRes>
+    implements CopyWith$Mutation$update_rental_category3<TRes> {
+  _CopyWithImpl$Mutation$update_rental_category3(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_rental_category3 _instance;
+
+  final TRes Function(Mutation$update_rental_category3) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_rental = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_rental_category3(
+        update_business_rental: update_business_rental == _undefined
+            ? _instance.update_business_rental
+            : (update_business_rental
+                as Mutation$update_rental_category3$update_business_rental?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_rental_category3$update_business_rental<TRes>
+      get update_business_rental {
+    final local$update_business_rental = _instance.update_business_rental;
+    return local$update_business_rental == null
+        ? CopyWith$Mutation$update_rental_category3$update_business_rental.stub(
+            _then(_instance))
+        : CopyWith$Mutation$update_rental_category3$update_business_rental(
+            local$update_business_rental,
+            (e) => call(update_business_rental: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_rental_category3<TRes>
+    implements CopyWith$Mutation$update_rental_category3<TRes> {
+  _CopyWithStubImpl$Mutation$update_rental_category3(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_rental_category3$update_business_rental?
+        update_business_rental,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_rental_category3$update_business_rental<TRes>
+      get update_business_rental =>
+          CopyWith$Mutation$update_rental_category3$update_business_rental.stub(
+              _res);
+}
+
+const documentNodeMutationupdate_rental_category3 = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_rental_category3'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'category3')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_rental'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'id')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'category3'),
+                value: VariableNode(name: NameNode(value: 'category3')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_rental_category3 _parserFn$Mutation$update_rental_category3(
+        Map<String, dynamic> data) =>
+    Mutation$update_rental_category3.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_rental_category3 = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_rental_category3?,
+);
+
+class Options$Mutation$update_rental_category3
+    extends graphql.MutationOptions<Mutation$update_rental_category3> {
+  Options$Mutation$update_rental_category3({
+    String? operationName,
+    required Variables$Mutation$update_rental_category3 variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_rental_category3? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_rental_category3>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_rental_category3(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_rental_category3,
+          parserFn: _parserFn$Mutation$update_rental_category3,
+        );
+
+  final OnMutationCompleted$Mutation$update_rental_category3?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_rental_category3
+    extends graphql.WatchQueryOptions<Mutation$update_rental_category3> {
+  WatchOptions$Mutation$update_rental_category3({
+    String? operationName,
+    required Variables$Mutation$update_rental_category3 variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_rental_category3,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_rental_category3,
+        );
+}
+
+extension ClientExtension$Mutation$update_rental_category3
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_rental_category3>>
+      mutate$update_rental_category3(
+              Options$Mutation$update_rental_category3 options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_rental_category3>
+      watchMutation$update_rental_category3(
+              WatchOptions$Mutation$update_rental_category3 options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_rental_category3$update_business_rental {
+  Mutation$update_rental_category3$update_business_rental({
+    required this.affected_rows,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_rental_category3$update_business_rental.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_rental_category3$update_business_rental(
+      affected_rows: (l$affected_rows as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_rental_category3$update_business_rental) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_rental_category3$update_business_rental
+    on Mutation$update_rental_category3$update_business_rental {
+  CopyWith$Mutation$update_rental_category3$update_business_rental<
+          Mutation$update_rental_category3$update_business_rental>
+      get copyWith =>
+          CopyWith$Mutation$update_rental_category3$update_business_rental(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_rental_category3$update_business_rental<
+    TRes> {
+  factory CopyWith$Mutation$update_rental_category3$update_business_rental(
+    Mutation$update_rental_category3$update_business_rental instance,
+    TRes Function(Mutation$update_rental_category3$update_business_rental) then,
+  ) = _CopyWithImpl$Mutation$update_rental_category3$update_business_rental;
+
+  factory CopyWith$Mutation$update_rental_category3$update_business_rental.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_rental_category3$update_business_rental;
+
+  TRes call({
+    int? affected_rows,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_rental_category3$update_business_rental<
+        TRes>
+    implements
+        CopyWith$Mutation$update_rental_category3$update_business_rental<TRes> {
+  _CopyWithImpl$Mutation$update_rental_category3$update_business_rental(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_rental_category3$update_business_rental _instance;
+
+  final TRes Function(Mutation$update_rental_category3$update_business_rental)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_rental_category3$update_business_rental(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_rental_category3$update_business_rental<
+        TRes>
+    implements
+        CopyWith$Mutation$update_rental_category3$update_business_rental<TRes> {
+  _CopyWithStubImpl$Mutation$update_rental_category3$update_business_rental(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
     String? $__typename,
   }) =>
       _res;

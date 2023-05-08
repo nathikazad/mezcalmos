@@ -353,7 +353,10 @@ Future<int?> add_one_rental({required Rental rental}) async {
                           category2: rental.category2?.toFirebaseFormatString() ??
                               RentalCategory2.Uncategorized
                                   .toFirebaseFormatString(),
-                          cost: rental.details.cost,
+                          cost: rental.details.cost.map(
+                              (TimeUnit key, num value) => MapEntry(
+                                  key.toFirebaseFormatString(),
+                                  value.toDouble())),
                           image: rental.details.image,
                           name: Input$translation_obj_rel_insert_input(
                               data: Input$translation_insert_input(
@@ -556,4 +559,50 @@ Future<Rental?> update_business_home_rental(
   }
 
   return null;
+}
+
+Future<int?> update_rental_category2({
+  required int id,
+  required RentalCategory2 category2,
+}) async {
+  final QueryResult<Mutation$update_rental_category2> response =
+      await _db.graphQLClient.mutate$update_rental_category2(
+    Options$Mutation$update_rental_category2(
+      variables: Variables$Mutation$update_rental_category2(
+        id: id,
+        category2: category2.toFirebaseFormatString(),
+      ),
+    ),
+  );
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura update rental category2 mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura update rental category2 mutation success => ${response.data}");
+    return response.parsedData?.update_business_item_details!.affected_rows;
+  }
+}
+
+Future<int?> update_rental_category3({
+  required int id,
+  required RentalCategory3 category3,
+}) async {
+  final QueryResult<Mutation$update_rental_category3> response =
+      await _db.graphQLClient.mutate$update_rental_category3(
+    Options$Mutation$update_rental_category3(
+      variables: Variables$Mutation$update_rental_category3(
+        id: id,
+        category3: category3.toFirebaseFormatString(),
+      ),
+    ),
+  );
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura update rental category3 mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura update rental category3 mutation success => ${response.data}");
+    return response.parsedData?.update_business_rental!.affected_rows;
+  }
 }

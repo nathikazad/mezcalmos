@@ -22,6 +22,18 @@ enum BusinessServiceType {
   Product,
 }
 
+class BusinessProfileItem {
+  final String title;
+  final String subtitle;
+  final Function route;
+
+  BusinessProfileItem({
+    required this.title,
+    required this.subtitle,
+    required this.route,
+  });
+}
+
 class BsServicesListViewController {
   // instances //
   BusinessOpAuthController _businessOpAuthController =
@@ -77,7 +89,8 @@ class BsServicesListViewController {
           {
             "title": "surfRentalTitle",
             "subtitle": "surfRentalSubtitle",
-            "route": () => BsOpRentalView.navigate(id: null),
+            "route": () => BsOpRentalView.navigate(
+                id: null, rentalCategory: RentalCategory1.Surf),
           },
           {
             "title": "surfClassTitle",
@@ -95,7 +108,8 @@ class BsServicesListViewController {
           {
             "title": "vehilceRentalTitle",
             "subtitle": "vehilceRentalSubtitle",
-            "route": () => BsOpRentalView.navigate(id: null),
+            "route": () => BsOpRentalView.navigate(
+                id: null, rentalCategory: RentalCategory1.Vehicle),
           },
         ];
       case BusinessProfile.HomeRental:
