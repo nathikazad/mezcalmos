@@ -39,8 +39,10 @@ class BsServicesListViewController {
   BusinessOpAuthController _businessOpAuthController =
       Get.find<BusinessOpAuthController>();
 
-  late Rx<BusinessProfile> _businessProfile;
-  List<Map<String, Object>> currentBottomSheetData = [];
+  late Rx<BusinessProfile> businessProfile;
+  String get businessProfileFirebaseString =>
+      businessProfile.value.toFirebaseFormatString();
+  List<BusinessProfileItem> currentBottomSheetData = [];
 
   // streams //
 
@@ -56,7 +58,7 @@ class BsServicesListViewController {
   // methods //
   Future<void> init() async {
     // _businessProfile = _businessOpAuthController.businessProfile;
-    _businessProfile = BusinessProfile.values.first.obs;
+    businessProfile = BusinessProfile.values.first.obs;
     _setupBottomSheetValue();
     await fetchAllServices();
     mezDbgPrint(
@@ -66,14 +68,14 @@ class BsServicesListViewController {
   // TODO: bottom sheet switcher logic
   int _idx = 1;
   void changeBusiness() {
-    _businessProfile.value = BusinessProfile.values[_idx];
+    businessProfile.value = BusinessProfile.values[_idx];
     if (_idx == BusinessProfile.values.length - 1) {
       _idx = 0;
     } else {
       _idx++;
     }
     Get.find<BusinessOpAuthController>().setBusinessProfile =
-        _businessProfile.value;
+        businessProfile.value;
     _setupBottomSheetValue();
   }
   // --
@@ -82,125 +84,136 @@ class BsServicesListViewController {
     currentBottomSheetData = _returnSheetValues();
   }
 
-  List<Map<String, Object>> _returnSheetValues() {
-    switch (_businessProfile.value) {
+  List<BusinessProfileItem> _returnSheetValues() {
+    final String rentalTitleLangKey = "rentalTitle";
+    final String rentalSubtitleLangKey = "rentalSubtitle";
+    final String classTitleLangKey = "classTitle";
+    final String classSubtitleLangKey = "classSubtitle";
+    final String eventTitleLangKey = "eventTitle";
+    final String eventSubtitleLangKey = "eventSubtitle";
+    final String serviceTitleLangKey = "serviceTitle";
+    final String serviceSubtitleLangKey = "serviceSubtitle";
+    final String productTitleLangKey = "productTitle";
+    final String productSubTitleLangKey = "productSubtitle";
+
+    switch (businessProfile.value) {
       case BusinessProfile.SurfShop:
         return [
-          {
-            "title": "surfRentalTitle",
-            "subtitle": "surfRentalSubtitle",
-            "route": () => BsOpRentalView.navigate(
+          BusinessProfileItem(
+            title: rentalTitleLangKey,
+            subtitle: rentalSubtitleLangKey,
+            route: () => BsOpRentalView.navigate(
                 id: null, rentalCategory: RentalCategory1.Surf),
-          },
-          {
-            "title": "surfClassTitle",
-            "subtitle": "surfClassSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: true),
-          },
-          {
-            "title": "surfEventTitle",
-            "subtitle": "surfEventSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: false),
-          },
+          ),
+          BusinessProfileItem(
+            title: classTitleLangKey,
+            subtitle: classSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: true),
+          ),
+          BusinessProfileItem(
+            title: eventTitleLangKey,
+            subtitle: eventSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: false),
+          ),
         ];
       case BusinessProfile.VehicleRental:
         return [
-          {
-            "title": "vehilceRentalTitle",
-            "subtitle": "vehilceRentalSubtitle",
-            "route": () => BsOpRentalView.navigate(
+          BusinessProfileItem(
+            title: rentalTitleLangKey,
+            subtitle: rentalSubtitleLangKey,
+            route: () => BsOpRentalView.navigate(
                 id: null, rentalCategory: RentalCategory1.Vehicle),
-          },
+          ),
         ];
       case BusinessProfile.HomeRental:
         return [
-          {
-            "title": "homeRentalTitle",
-            "subtitle": "homeRentalSubtitle",
-            "route": () => BsOpHomeRentalView.navigate(id: null),
-          },
+          BusinessProfileItem(
+            title: rentalTitleLangKey,
+            subtitle: rentalSubtitleLangKey,
+            route: () => BsOpHomeRentalView.navigate(id: null),
+          ),
         ];
       case BusinessProfile.WellnessPractitioner:
         return [
-          {
-            "title": "wellnessEventTitle",
-            "subtitle": "wellnessEventSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: false),
-          },
+          BusinessProfileItem(
+            title: eventTitleLangKey,
+            subtitle: eventSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: false),
+          ),
         ];
       case BusinessProfile.Volunteer:
         return [
-          {
-            "title": "volunteerEventTitle",
-            "subtitle": "volunteerEventSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: false),
-          },
+          BusinessProfileItem(
+            title: eventTitleLangKey,
+            subtitle: eventSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: false),
+          ),
         ];
       case BusinessProfile.TourAgency:
         return [
-          {
-            "title": "tourAgencyEventTitle",
-            "subtitle": "tourAgencyEventSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: false),
-          },
+          BusinessProfileItem(
+            title: eventTitleLangKey,
+            subtitle: eventSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: false),
+          ),
         ];
       case BusinessProfile.YogaStudio:
         return [
-          {
-            "title": "yogaEventTitle",
-            "subtitle": "yogaEventSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: false),
-          },
-          {
-            "title": "yogaClassTitle",
-            "subtitle": "yogaClassSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: true),
-          },
+          BusinessProfileItem(
+            title: eventTitleLangKey,
+            subtitle: eventSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: false),
+          ),
+          BusinessProfileItem(
+            title: classTitleLangKey,
+            subtitle: classSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: true),
+          ),
         ];
       case BusinessProfile.LanguageSchool:
         return [
-          {
-            "title": "languageSchoolEventTitle",
-            "subtitle": "languageSchoolSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: false),
-          },
-          {
-            "title": "languageSchoolClassTitle",
-            "subtitle": "languageClassSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: true),
-          },
+          BusinessProfileItem(
+            title: eventTitleLangKey,
+            subtitle: eventSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: false),
+          ),
+          BusinessProfileItem(
+            title: classTitleLangKey,
+            subtitle: classSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: true),
+          ),
         ];
       case BusinessProfile.ArtisanalProduct:
         return [
-          {
-            "title": "itemTitle",
-            "subtitle": "itemSubtitle",
-            "route": () => BsOpProductView.navigate(id: null),
-          },
+          BusinessProfileItem(
+            title: productTitleLangKey,
+            subtitle: productSubTitleLangKey,
+            route: () => BsOpProductView.navigate(id: null),
+          ),
         ];
       case BusinessProfile.CleaningService:
         return [
-          {
-            "title": "cleaningServiceTitle",
-            "subtitle": "cleaningServiceSubtitle",
-            "route": () => BsOpServiceView.navigate(id: null),
-          },
+          BusinessProfileItem(
+            title: serviceTitleLangKey,
+            subtitle: serviceSubtitleLangKey,
+            route: () => BsOpServiceView.navigate(id: null),
+          ),
         ];
       case BusinessProfile.PetSitting:
         return [
-          {
-            "title": "petSittingServiceTitle",
-            "subtitle": "petSittingServiceSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: true),
-          },
+          BusinessProfileItem(
+            title: serviceTitleLangKey,
+            subtitle: serviceSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: true),
+          ),
         ];
       case BusinessProfile.Entertainment:
         return [
-          {
-            "title": "entertainmentEventTitle",
-            "subtitle": "entertainmentSubtitle",
-            "route": () => BsOpEventView.navigate(id: null, isClass: false),
-          },
+          BusinessProfileItem(
+            title: eventTitleLangKey,
+            subtitle: eventSubtitleLangKey,
+            route: () => BsOpEventView.navigate(id: null, isClass: false),
+          ),
         ];
     }
   }
