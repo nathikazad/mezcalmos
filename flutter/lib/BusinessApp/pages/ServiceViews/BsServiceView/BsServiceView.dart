@@ -63,7 +63,10 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
       ),
       body: TabBarView(
         controller: viewController.tabController,
-        children: [_primaryTab(context), _secondaryTab(context)],
+        children: [
+          Form(key: viewController.formKey, child: _primaryTab(context)),
+          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
+        ],
       ),
     );
   }
@@ -101,8 +104,14 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
           TextFormField(
             controller: viewController.detailsController.scNameController,
             decoration: InputDecoration(
-              hintText: "Add item name",
+              hintText: "Add service name",
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter name";
+              }
+              return null;
+            },
           ),
           bigSeperator,
           Text(
@@ -118,6 +127,12 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             decoration: InputDecoration(
               hintText: "Enter a description for your service",
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter description";
+              }
+              return null;
+            },
           ),
         ],
       ),
@@ -127,83 +142,97 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
   Widget _primaryTab(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      child: Form(
-        key: viewController.formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Obx(
-              () => MezItemAvSwitcher(
-                value: viewController.detailsController.isAvailable.value,
-                onAvalableTap: () {
-                  viewController.detailsController.isAvailable.value = true;
-                },
-                onUnavalableTap: () {
-                  viewController.detailsController.isAvailable.value = false;
-                },
-              ),
-            ),
-            bigSeperator,
-            Text(
-              "Images",
-              style: context.textTheme.bodyLarge,
-            ),
-            Text(
-              "You can only upload up to five images.",
-            ),
-            smallSepartor,
-            BsOpServiceImagesGrid(
-              detailsController: viewController.detailsController,
-            ),
-            bigSeperator,
-            Text(
-              "Name",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              controller: viewController.detailsController.nameController,
-              decoration: InputDecoration(
-                hintText: "Add service name",
-              ),
-            ),
-            bigSeperator,
-            Text(
-              "Description",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              maxLines: 7,
-              minLines: 5,
-              controller:
-                  viewController.detailsController.descriptionController,
-              decoration: InputDecoration(
-                hintText: "Enter a description for your service",
-              ),
-            ),
-            bigSeperator,
-            BsOpOfferingPricesList(
-              availbleUnits: viewController.avalbleUnits,
-              onAddPrice: (TimeUnit unit) {
-                viewController.detailsController.addPriceTimeUnit(timeUnit:unit);
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Obx(
+            () => MezItemAvSwitcher(
+              value: viewController.detailsController.isAvailable.value,
+              onAvalableTap: () {
+                viewController.detailsController.isAvailable.value = true;
               },
-              onRemovePrice: (TimeUnit unit) {
-                viewController.detailsController.removeTimeUnit(unit);
+              onUnavalableTap: () {
+                viewController.detailsController.isAvailable.value = false;
               },
-              seletedPrices: viewController.detailsController.priceTimeUnitMap,
             ),
-            smallSepartor,
-            Obx(
-              () => BsOpScheduleSelector(
-                onScheduleSelected: (schedule) {
-                  viewController.changeSchedule(schedule);
-                },
-                schedule: viewController.serviceSchedule.value,
-              ),
+          ),
+          bigSeperator,
+          Text(
+            "Images",
+            style: context.textTheme.bodyLarge,
+          ),
+          Text(
+            "You can only upload up to five images.",
+          ),
+          smallSepartor,
+          BsOpServiceImagesGrid(
+            detailsController: viewController.detailsController,
+          ),
+          bigSeperator,
+          Text(
+            "Name",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            controller: viewController.detailsController.nameController,
+            decoration: InputDecoration(
+              hintText: "Add service name",
             ),
-          ],
-        ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter name";
+              }
+              return null;
+            },
+          ),
+          bigSeperator,
+          Text(
+            "Description",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            maxLines: 7,
+            minLines: 5,
+            controller: viewController.detailsController.descriptionController,
+            decoration: InputDecoration(
+              hintText: "Enter a description for your service",
+            ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter description";
+              }
+              return null;
+            },
+          ),
+          bigSeperator,
+          BsOpOfferingPricesList(
+            availbleUnits: viewController.avalbleUnits,
+            onAddPrice: (TimeUnit unit) {
+              viewController.detailsController.addPriceTimeUnit(timeUnit: unit);
+            },
+            onRemovePrice: (TimeUnit unit) {
+              viewController.detailsController.removeTimeUnit(unit);
+            },
+            seletedPrices: viewController.detailsController.priceTimeUnitMap,
+          ),
+          smallSepartor,
+          Obx(
+            () => BsOpScheduleSelector(
+              validator: (p0) {
+                if (viewController.serviceSchedule.value == null) {
+                  return "Please add schedule";
+                }
+                return null;
+              },
+              onScheduleSelected: (schedule) {
+                viewController.changeSchedule(schedule);
+              },
+              schedule: viewController.serviceSchedule.value,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -63,7 +63,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
         controller: viewController.tabController,
         children: [
           Form(key: viewController.formKey, child: _primaryTab(context)),
-          Form(key: viewController.scFormKey, child: _secondaryTab(context))
+          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
         ],
       ),
     );
@@ -108,7 +108,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               return null;
             },
             decoration: InputDecoration(
-              hintText: "Add item name",
+              hintText: "Add name",
             ),
           ),
           bigSeperator,
@@ -125,6 +125,12 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             decoration: InputDecoration(
               hintText: "Enter a description for your item",
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter description";
+              }
+              return null;
+            },
           ),
         ],
       ),
@@ -168,15 +174,15 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           smallSepartor,
           TextFormField(
             controller: viewController.detailsController.nameController,
+            decoration: InputDecoration(
+              hintText: "Add item name",
+            ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
                 return "Please enter a name";
               }
               return null;
             },
-            decoration: InputDecoration(
-              hintText: "Add item name",
-            ),
           ),
           bigSeperator,
           Text(
@@ -191,6 +197,12 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             decoration: InputDecoration(
               hintText: "Enter a description for your item",
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter description";
+              }
+              return null;
+            },
           ),
           bigSeperator,
           Obx(
@@ -219,6 +231,12 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           smallSepartor,
           Obx(
             () => BsOpDropdown(
+              validator: (value) {
+                if (viewController.homeType.value == null) {
+                  return "Please select home type";
+                }
+                return null;
+              },
               items: HomeType.values
                   .map((HomeType e) => e.toFirebaseFormatString())
                   .toList(),
@@ -228,28 +246,22 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
                   viewController.homeType.value = newHomeType.toHomeType();
                 }
               },
-              labelText: 'your home type',
-              validator: (String? home) {
-                if (home == null || home.isEmpty) {
-                  return "Please select a home type";
-                }
-                return null;
-              },
+              labelText: "Your home type",
             ),
           ),
           bigSeperator,
           Obx(
             () => BsOpOfferingLocationCard(
               location: viewController.homeLocation.value,
+              label: "Pick house location",
+              onLocationSelected: (Location loc) {
+                viewController.homeLocation.value = loc;
+              },
               validator: (Location? loc) {
                 if (loc == null) {
                   return "Please select a location";
                 }
                 return null;
-              },
-              label: "Pick house location",
-              onLocationSelected: (Location loc) {
-                viewController.homeLocation.value = loc;
               },
             ),
           ),
@@ -261,15 +273,15 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           smallSepartor,
           TextFormField(
             controller: viewController.bedroomsController,
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return "Please enter a number";
-              }
-              return null;
-            },
             decoration: InputDecoration(
               hintText: "how many bedrooms does your home have?",
             ),
+             validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter bedrooms";
+              }
+              return null;
+            },
           ),
           bigSeperator,
           Text(
@@ -279,15 +291,15 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           smallSepartor,
           TextFormField(
             controller: viewController.bathroomsController,
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return "Please enter a number";
-              }
-              return null;
-            },
             decoration: InputDecoration(
               hintText: "how many bathrooms does your home have?",
             ),
+             validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter bathrooms";
+              }
+              return null;
+            },
           ),
         ],
       ),

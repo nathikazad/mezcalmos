@@ -38,6 +38,17 @@ query get_customer_chats_by_sp_type($customer_id: Int, $service_provider_type: S
     }
   }
 }
+query get_service_provider_chats($service_id: Int,) {
+  service_provider_customer_chat(where: {service_provider_id: {_eq: $service_id} }, order_by: {chat: {last_message_sent: desc}}) {
+    service_provider_id
+    chat {
+      id
+      chat_info
+      messages
+      creation_time
+    }
+  }
+}
 
 
 # Get chat infos

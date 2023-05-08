@@ -1,30 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustMessagesView/controllers/CustChatController.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewcontroller.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
 
-class CustMessagesView extends StatefulWidget {
-  const CustMessagesView({super.key});
+class MessagesListView extends StatefulWidget {
+  const MessagesListView({super.key, this.serviceProviderType});
+  final ServiceProviderType? serviceProviderType;
+
+  static Future<void> navigate(
+      {required ServiceProviderType serviceProviderType}) async {
+    return MezRouter.toPath(SharedRoutes.kHomeRoute,
+        arguments: {"serviceProviderType": serviceProviderType});
+  }
 
   @override
-  State<CustMessagesView> createState() => _CustMessagesViewState();
+  State<MessagesListView> createState() => _MessagesListViewState();
 }
 
-class _CustMessagesViewState extends State<CustMessagesView> {
-  final CustChatController custChatController = CustChatController();
+class _MessagesListViewState extends State<MessagesListView> {
+  late MessagesListViewController viewcontroller;
+  ServiceProviderType? serviceProvider;
 
   @override
   void initState() {
     super.initState();
-    custChatController.init();
+    _assignVariables();
+    if (serviceProvider != null) {
+      _initController();
+      viewcontroller.init();
+    }
+  }
+
+  void _initController() {
+    switch (serviceProvider) {
+      case ServiceProviderType.Customer:
+        viewcontroller = CustMessagesListViewController();
+
+        break;
+      default:
+        throw StateError(
+            "Service Provider Type not supported yet ${serviceProvider.toString()}");
+    }
+  }
+
+  void _assignVariables() {
+    serviceProvider = widget.serviceProviderType ??
+        MezRouter.bodyArguments?["serviceProviderType"] as ServiceProviderType?;
   }
 
   @override
@@ -38,27 +70,27 @@ class _CustMessagesViewState extends State<CustMessagesView> {
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Obx(() {
-          if (custChatController.isLoading.value) {
+          if (viewcontroller.isLoading.value) {
             return Center(
               child: CircularProgressIndicator(),
             );
           }
-          if (custChatController.allChats.isEmpty) {
+          if (viewcontroller.allChats.isEmpty) {
             return Center(
               child: Text("No Chats"),
             );
           }
           return Column(
             children: List.generate(
-              custChatController.allChats.length,
-              (index) {
+              viewcontroller.allChats.length,
+              (int index) {
                 return MezCard(
                   onClick: () {
                     if (Get.find<AuthController>().user == null) {
                       SignInView.navigateAtOrderTime();
                     } else {
-                      custChatController.navigateToChatScreen(
-                        chatid: custChatController.allChats[index].id,
+                      viewcontroller.navigateToChatScreen(
+                        chatid: viewcontroller.allChats[index].id,
                       );
                     }
                   },
@@ -66,7 +98,7 @@ class _CustMessagesViewState extends State<CustMessagesView> {
                     children: [
                       CircleAvatar(
                         backgroundImage: NetworkImage(
-                          custChatController.allChats[index].chatInfo.chatImg,
+                          viewcontroller.allChats[index].chatInfo.chatImg,
                         ),
                       ),
                       Expanded(
@@ -80,23 +112,21 @@ class _CustMessagesViewState extends State<CustMessagesView> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    custChatController
+                                    viewcontroller
                                         .allChats[index].chatInfo.chatTite,
                                     style: context.textTheme.bodyLarge,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                    custChatController
-                                        .allChats[index].creationTime
+                                    viewcontroller.allChats[index].creationTime
                                         .timeAgo(),
                                   ),
                                 ],
                               ),
                               Text(
-                                custChatController
-                                        .allChats[index].messages.isEmpty
+                                viewcontroller.allChats[index].messages.isEmpty
                                     ? ""
-                                    : custChatController
+                                    : viewcontroller
                                         .allChats[index].messages.last.message,
                               ),
                             ],

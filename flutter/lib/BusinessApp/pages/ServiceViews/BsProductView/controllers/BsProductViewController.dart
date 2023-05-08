@@ -10,6 +10,10 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class BsProductViewController {
   // instances //
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
+  bool firstFormValid = false;
+  bool secondFormValid = false;
 
   // streams //
 
@@ -20,7 +24,6 @@ class BsProductViewController {
   // methods //
 
   // instances //
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
@@ -40,7 +43,7 @@ class BsProductViewController {
 
   void init({required TickerProvider thickerProvider}) {
     tabController = TabController(length: 2, vsync: thickerProvider);
-    detailsController.addPriceTimeUnit(timeUnit:avalbleUnits.first);
+    detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -57,13 +60,6 @@ class BsProductViewController {
 
   Future<void> saveItemDetails() async {
     await detailsController.updateItemDetails();
-    if (productCategory.value != null) {
-      await update_product_category1(
-        id: product!.details.id.toInt(),
-        productCategory: productCategory.value!,
-      );
-      showSavedSnackBar();
-    }
   }
 
   Future<Product> _constructProduct() async {
@@ -77,9 +73,22 @@ class BsProductViewController {
   }
 
   Future<void> save() async {
-    if (formKey.currentState?.validate() == true) {
+    if (validate()) {
       if (isEditing) {
-        await saveItemDetails();
+        try {
+          await saveItemDetails();
+          if (productCategory.value != null) {
+            await update_product_category1(
+              id: product!.details.id.toInt(),
+              productCategory: productCategory.value!,
+            );
+            showSavedSnackBar();
+          }
+        } catch (e, stk) {
+          mezDbgPrint(
+              " 🛑 ${product?.id?.toInt()}  OperationException : ${e.toString()}");
+          mezDbgPrint(stk);
+        }
         shouldRefetch = true;
       } else {
         final Product _product = await _constructProduct();
@@ -107,5 +116,46 @@ class BsProductViewController {
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
     }
+  }
+
+  bool validate() {
+    if (isOnFirstTab) {
+      // validate first tab
+      firstFormValid = _isFirstFormValid;
+      if (firstFormValid && !secondFormValid) {
+        tabController?.animateTo(1);
+      }
+    }
+    // second tab
+    else {
+      secondFormValid = _isSecondFormValid;
+      if (secondFormValid && !firstFormValid) {
+        tabController?.animateTo(0);
+      }
+    }
+    if (secondFormValid && firstFormValid) {
+      tabController?.animateTo(0);
+    }
+    return secondFormValid && firstFormValid;
+  }
+
+  bool get _isFirstFormValid {
+    return formKey.currentState?.validate() == true;
+  }
+
+  bool get _isSecondFormValid {
+    return scFormKey.currentState?.validate() == true;
+  }
+
+  bool get isBothFormValid {
+    return _isFirstFormValid && _isSecondFormValid;
+  }
+
+  bool get isOnFirstTab {
+    return tabController?.index == 0;
+  }
+
+  bool get isOnSecondTab {
+    return tabController?.index == 1;
   }
 }
