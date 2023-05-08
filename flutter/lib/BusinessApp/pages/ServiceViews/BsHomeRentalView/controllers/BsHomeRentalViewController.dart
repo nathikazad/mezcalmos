@@ -12,6 +12,9 @@ typedef OfferingPricesMap = Map<TimeUnit, TextEditingController>;
 class BsHomeRentalViewController {
   // instances //
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
+  bool firstFormValid = false;
+  bool secondFormValid = false;
   TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
@@ -87,7 +90,7 @@ class BsHomeRentalViewController {
   }
 
   Future<void> save() async {
-    if (formKey.currentState?.validate() == true) {
+    if (validate()) {
       if (isEditing) {
         await saveItemDetails();
         await update_business_home_rental(
@@ -118,5 +121,46 @@ class BsHomeRentalViewController {
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
     }
+  }
+
+  bool validate() {
+    if (isOnFirstTab) {
+      // validate first tab
+      firstFormValid = _isFirstFormValid;
+      if (firstFormValid && !secondFormValid) {
+        tabController?.animateTo(1);
+      }
+    }
+    // second tab
+    else {
+      secondFormValid = _isSecondFormValid;
+      if (secondFormValid && !firstFormValid) {
+        tabController?.animateTo(0);
+      }
+    }
+    if (secondFormValid && firstFormValid) {
+      tabController?.animateTo(0);
+    }
+    return secondFormValid && firstFormValid;
+  }
+
+  bool get _isFirstFormValid {
+    return formKey.currentState?.validate() == true;
+  }
+
+  bool get _isSecondFormValid {
+    return scFormKey.currentState?.validate() == true;
+  }
+
+  bool get isBothFormValid {
+    return _isFirstFormValid && _isSecondFormValid;
+  }
+
+  bool get isOnFirstTab {
+    return tabController?.index == 0;
+  }
+
+  bool get isOnSecondTab {
+    return tabController?.index == 1;
   }
 }
