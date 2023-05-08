@@ -92,10 +92,16 @@ class BsHomeRentalViewController {
   Future<void> save() async {
     if (validate()) {
       if (isEditing) {
-        await saveItemDetails();
-        await update_business_home_rental(
-            id: rental!.id!.toInt(), rental: _constructRental());
-        showSavedSnackBar();
+        try {
+          await saveItemDetails();
+          await update_business_home_rental(
+              id: rental!.id!.toInt(), rental: _constructRental());
+          showSavedSnackBar();
+        } catch (e, stk) {
+          mezDbgPrint(
+              " 🛑 ${rental?.id?.toInt()}  OperationException : ${e.toString()}");
+          mezDbgPrint(stk);
+        }
         shouldRefetch = true;
       } else {
         Rental _rental = await _constructRentalWithDetails();
