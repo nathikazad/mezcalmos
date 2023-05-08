@@ -60,7 +60,10 @@ class _BsOpProductViewState extends State<BsOpProductView>
       ),
       body: TabBarView(
         controller: viewController.tabController,
-        children: [_primaryTab(context), _secondaryTab(context)],
+        children: [
+          Form(key: viewController.formKey, child: _primaryTab(context)),
+          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
+        ],
       ),
     );
   }
@@ -100,6 +103,12 @@ class _BsOpProductViewState extends State<BsOpProductView>
             decoration: InputDecoration(
               hintText: "Add item name",
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter item name";
+              }
+              return null;
+            },
           ),
           bigSeperator,
           Text(
@@ -115,6 +124,12 @@ class _BsOpProductViewState extends State<BsOpProductView>
             decoration: InputDecoration(
               hintText: "Enter a description for your product",
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter description";
+              }
+              return null;
+            },
           ),
         ],
       ),
@@ -124,96 +139,121 @@ class _BsOpProductViewState extends State<BsOpProductView>
   Widget _primaryTab(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      child: Form(
-        key: viewController.formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Obx(
-              () => MezItemAvSwitcher(
-                value: viewController.detailsController.isAvailable.value,
-                onAvalableTap: () {
-                  viewController.detailsController.isAvailable.value = true;
-                },
-                onUnavalableTap: () {
-                  viewController.detailsController.isAvailable.value = false;
-                },
-              ),
-            ),
-            bigSeperator,
-            Text(
-              "Images",
-              style: context.textTheme.bodyLarge,
-            ),
-            Text(
-              "You can only upload up to five images.",
-            ),
-            smallSepartor,
-            BsOpServiceImagesGrid(
-              detailsController: viewController.detailsController,
-            ),
-            bigSeperator,
-            Text(
-              "Name",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              controller: viewController.detailsController.nameController,
-              decoration: InputDecoration(
-                hintText: "Add product name",
-              ),
-            ),
-            bigSeperator,
-            Text(
-              "Description",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            TextFormField(
-              maxLines: 7,
-              minLines: 5,
-              controller:
-                  viewController.detailsController.descriptionController,
-              decoration: InputDecoration(
-                hintText: "Enter a description for your product",
-              ),
-            ),
-            bigSeperator,
-            Text(
-              "Category",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            Obx(() {
-              print(
-                  "productCategory ${viewController.productCategory.value?.toFirebaseFormatString()}");
-              return BsOpDropdown(
-                labelText: "Select category",
-                items: ProductCategory1.values
-                    .map((ProductCategory1 e) => e.toFirebaseFormatString())
-                    .toList(),
-                value: viewController.productCategory.value
-                    ?.toFirebaseFormatString(),
-                onChanged: (category) {
-                  viewController.productCategory.value =
-                      category.toString().toProductCategory1();
-                },
-              );
-            }),
-            smallSepartor,
-            BsOpOfferingPricesList(
-              availbleUnits: viewController.avalbleUnits,
-              onAddPrice: (TimeUnit unit) {
-                viewController.detailsController.addPriceTimeUnit(timeUnit:unit);
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Obx(
+            () => MezItemAvSwitcher(
+              value: viewController.detailsController.isAvailable.value,
+              onAvalableTap: () {
+                viewController.detailsController.isAvailable.value = true;
               },
-              onRemovePrice: (TimeUnit unit) {
-                viewController.detailsController.removeTimeUnit(unit);
+              onUnavalableTap: () {
+                viewController.detailsController.isAvailable.value = false;
               },
-              seletedPrices: viewController.detailsController.priceTimeUnitMap,
             ),
-          ],
-        ),
+          ),
+          bigSeperator,
+          Text(
+            "Images",
+            style: context.textTheme.bodyLarge,
+          ),
+          Text(
+            "You can only upload up to five images.",
+          ),
+          smallSepartor,
+          BsOpServiceImagesGrid(
+            detailsController: viewController.detailsController,
+          ),
+          bigSeperator,
+          Text(
+            "Name",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            controller: viewController.detailsController.nameController,
+            decoration: InputDecoration(
+              hintText: "Add item name",
+            ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter item name";
+              }
+              return null;
+            },
+          ),
+          bigSeperator,
+          Text(
+            "Description",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          TextFormField(
+            maxLines: 7,
+            minLines: 5,
+            controller: viewController.detailsController.descriptionController,
+            decoration: InputDecoration(
+              hintText: "Enter a description for your product",
+            ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter description";
+              }
+              return null;
+            },
+          ),
+          bigSeperator,
+          Text(
+            "Category",
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+          FormField(validator: (value) {
+            if (viewController.productCategory.value == null) {
+              return "Select category";
+            }
+            return null;
+          }, builder: (FormFieldState<Object?> state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Obx(() {
+                  print(
+                      "productCategory ${viewController.productCategory.value?.toFirebaseFormatString()}");
+                  return BsOpDropdown(
+                    labelText: "Select category",
+                    items: ProductCategory1.values
+                        .map((ProductCategory1 e) => e.toFirebaseFormatString())
+                        .toList(),
+                    value: viewController.productCategory.value
+                        ?.toFirebaseFormatString(),
+                    onChanged: (category) {
+                      viewController.productCategory.value =
+                          category.toString().toProductCategory1();
+                    },
+                  );
+                }),
+                Container(
+                  padding: const EdgeInsets.only(top: 5, left: 12),
+                  child: Text(state.errorText ?? "",
+                      style: context.theme.inputDecorationTheme.errorStyle),
+                ),
+              ],
+            );
+          }),
+          smallSepartor,
+          BsOpOfferingPricesList(
+            availbleUnits: viewController.avalbleUnits,
+            onAddPrice: (TimeUnit unit) {
+              viewController.detailsController.addPriceTimeUnit(timeUnit: unit);
+            },
+            onRemovePrice: (TimeUnit unit) {
+              viewController.detailsController.removeTimeUnit(unit);
+            },
+            seletedPrices: viewController.detailsController.priceTimeUnitMap,
+          ),
+        ],
       ),
     );
   }
