@@ -46,7 +46,9 @@ class _MessagesListViewState extends State<MessagesListView> {
     switch (serviceProvider) {
       case ServiceProviderType.Customer:
         viewcontroller = CustMessagesListViewController();
-
+        break;
+      case ServiceProviderType.Business:
+        viewcontroller = BsOpMessagesListViewController();
         break;
       default:
         throw StateError(

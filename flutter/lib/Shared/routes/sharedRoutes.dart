@@ -35,7 +35,7 @@ class SharedRoutes {
   static const String kWrapperRoute = '/';
   static const String kUserWelcomeRoute = '/welcome';
   static const String kHomeRoute = '/home';
-  static const String kMessagesList = '/messages';
+  static const String kMessagesList = '/messagesList';
   static const String kSplashRoute = '/splash';
   static const String kSignInRoute = '/sign_in';
   static const String kSignInAtOrderTimeRoute = '/sign_in_order_time';
