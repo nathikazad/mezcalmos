@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezImageslider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessImageScreen.dart';
 
 class CustBusinessItemAppbar extends StatelessWidget {
   const CustBusinessItemAppbar({super.key, required this.itemDetails});
@@ -66,7 +67,11 @@ class CustBusinessItemAppbar extends StatelessWidget {
                     iconColor: Colors.white,
                     backgroundColor: Colors.transparent,
                     materialColor: Colors.transparent,
-                    onTap: () {},
+                    onTap: () async {
+                      await CustBusinessImageScreen.navigate(
+                        images: itemDetails.image ?? [],
+                      );
+                    },
                   )),
             ],
           ),
