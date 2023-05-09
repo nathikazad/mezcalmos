@@ -349,6 +349,7 @@ Future<int?> add_one_rental({required Rental rental}) async {
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                           available: rental.details.available,
+                          business_id: rental.details.businessId.toInt(),
                           category1: rental.category1.toFirebaseFormatString(),
                           category2: rental.category2?.toFirebaseFormatString() ??
                               RentalCategory2.Uncategorized
@@ -362,45 +363,41 @@ Future<int?> add_one_rental({required Rental rental}) async {
                               data: Input$translation_insert_input(
                                   service_provider_id:
                                       rental.details.businessId.toInt(),
-                                  service_provider_type: ServiceProviderType
-                                      .Business.toFirebaseFormatString(),
+                                  service_provider_type: ServiceProviderType.Business
+                                      .toFirebaseFormatString(),
                                   translations:
-                                      Input$translation_value_arr_rel_insert_input(data: <
-                                          Input$translation_value_insert_input>[
-                                    Input$translation_value_insert_input(
-                                        language_id: Language.EN
-                                            .toFirebaseFormatString(),
-                                        value:
-                                            rental.details.name[Language.EN]),
-                                    Input$translation_value_insert_input(
-                                        language_id: Language.ES
-                                            .toFirebaseFormatString(),
-                                        value: rental.details.name[Language.ES])
-                                  ]))),
+                                      Input$translation_value_arr_rel_insert_input(
+                                          data: <Input$translation_value_insert_input>[
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.EN
+                                                .toFirebaseFormatString(),
+                                            value: rental
+                                                .details.name[Language.EN]),
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.ES
+                                                .toFirebaseFormatString(),
+                                            value: rental
+                                                .details.name[Language.ES])
+                                      ]))),
                           position: rental.details.position?.toInt(),
-                          additional_parameters:
-                              rental.details.additionalParameters,
+                          additional_parameters: rental.details.additionalParameters,
                           description: (rental.details.description != null)
                               ? Input$translation_obj_rel_insert_input(
                                   data: Input$translation_insert_input(
-                                      service_provider_id:
-                                          rental.details.businessId.toInt(),
-                                      service_provider_type: ServiceProviderType
-                                          .Business.toFirebaseFormatString(),
-                                      translations:
-                                          Input$translation_value_arr_rel_insert_input(
-                                              data: <Input$translation_value_insert_input>[
-                                            Input$translation_value_insert_input(
-                                                language_id: Language.EN
-                                                    .toFirebaseFormatString(),
-                                                value: rental.details
-                                                    .description?[Language.EN]),
-                                            Input$translation_value_insert_input(
-                                                language_id: Language.ES
-                                                    .toFirebaseFormatString(),
-                                                value: rental.details
-                                                    .description?[Language.ES])
-                                          ])))
+                                      service_provider_id: rental.details.businessId.toInt(),
+                                      service_provider_type: ServiceProviderType.Business.toFirebaseFormatString(),
+                                      translations: Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.EN
+                                                .toFirebaseFormatString(),
+                                            value: rental.details
+                                                .description?[Language.EN]),
+                                        Input$translation_value_insert_input(
+                                            language_id: Language.ES
+                                                .toFirebaseFormatString(),
+                                            value: rental.details
+                                                .description?[Language.ES])
+                                      ])))
                               : null))))));
   if (response.hasException) {
     mezDbgPrint(
@@ -434,6 +431,7 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
             details: Input$business_item_details_obj_rel_insert_input(
                 data: Input$business_item_details_insert_input(
                     available: rental.details.available,
+                    business_id: rental.details.businessId.toInt(),
                     category1: rental.category1.toFirebaseFormatString(),
                     category2: rental.category2?.toFirebaseFormatString() ??
                         RentalCategory2.Uncategorized.toFirebaseFormatString(),
@@ -582,6 +580,7 @@ Future<int?> update_rental_category2({
         "✅✅✅ Hasura update rental category2 mutation success => ${response.data}");
     return response.parsedData?.update_business_item_details!.affected_rows;
   }
+  return null;
 }
 
 Future<int?> update_rental_category3({
@@ -605,4 +604,5 @@ Future<int?> update_rental_category3({
         "✅✅✅ Hasura update rental category3 mutation success => ${response.data}");
     return response.parsedData?.update_business_rental!.affected_rows;
   }
+  return null;
 }

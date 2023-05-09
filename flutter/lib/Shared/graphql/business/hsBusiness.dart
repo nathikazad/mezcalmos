@@ -367,4 +367,5 @@ Future<int?> update_item_additional_params({
         "✅✅✅ Hasura update rental category3 mutation success => ${response.data}");
     return response.parsedData?.update_business_item_details!.affected_rows;
   }
+  return null;
 }

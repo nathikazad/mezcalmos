@@ -163,6 +163,7 @@ Future<int?> add_one_service({required Service service}) async {
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                           available: service.details.available,
+                          business_id: service.details.businessId.toInt(),
                           category1: service.category1.toFirebaseFormatString(),
                           // category2: service.category2?.toFirebaseFormatString(),
                           cost: service.details.cost.map(

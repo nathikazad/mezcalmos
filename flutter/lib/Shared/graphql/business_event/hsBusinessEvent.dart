@@ -370,7 +370,9 @@ Future<int?> get_number_of_adventure(
   }
 }
 
-Future<int?> add_one_event({required Event event}) async {
+Future<int?> add_one_event({
+  required Event event,
+}) async {
   // mezDbgPrint("Adding this rental 🇹🇳 ${rental.toJson()}");
   mezDbgPrint(
       "Event sent to db ::: ==============> ${event.startsAt} \n ${event.endsAt} \n ${event.tags} }");
@@ -393,6 +395,7 @@ Future<int?> add_one_event({required Event event}) async {
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                     available: event.details.available,
+                    business_id: event.details.businessId.toInt(),
                     tags: event.tags
                         ?.map((EventTag e) => e.toFirebaseFormatString())
                         .toList(),
