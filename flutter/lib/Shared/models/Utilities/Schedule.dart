@@ -24,8 +24,12 @@ extension OpenHoursFunctions on OpenHours {
     this.isOpen = isOpen;
   }
 
-  String toFirebaseFormattedString() {
-    return "$isOpen ${from.join(':')} ${to.join(':')} ";
+  Map<String, dynamic> toFirebaseFormattedString() {
+    return <String, dynamic>{
+      "isOpen": isOpen,
+      "from": from.join(":"),
+      "to": to.join(":"),
+    };
   }
 
   OpenHours clone() {
@@ -104,7 +108,7 @@ extension ScheduleFunctions on Schedule {
     // }
     Weekday.values.forEach((Weekday weekday) {
       json[weekday.toFirebaseFormatString()] =
-          openHours[weekday]?.toFirebaseFormattedJson();
+          openHours[weekday]?.toFirebaseFormattedString();
     });
     return json;
   }
