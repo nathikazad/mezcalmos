@@ -4,7 +4,6 @@ import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class ServiceScheduleViewController {
   // instances //
@@ -35,8 +34,10 @@ class ServiceScheduleViewController {
       oldSchedule.value = await get_service_schedule(
           serviceDetailsId: _detailsId, withCache: false);
 
-      newSchedule.value = oldSchedule.value!.clone();
-      schedulePreview.value = oldSchedule.value!.clone();
+      if (oldSchedule.value != null) {
+        newSchedule.value = oldSchedule.value!.clone();
+        schedulePreview.value = oldSchedule.value!.clone();
+      }
     }
   }
 

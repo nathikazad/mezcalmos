@@ -29,9 +29,9 @@ class AddCategoryController {
   late int restaurantId;
   Rxn<Category> category = Rxn<Category>();
 
-  Rxn<Language> primaryLang = Rxn();
+  Rxn<ServiceProviderLanguage> languages = Rxn();
 
-  Rxn<Language> secondaryLang = Rxn();
+  // Rxn<Language?> secondaryLang = Rxn();
 
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
@@ -41,7 +41,7 @@ class AddCategoryController {
     if (editMode.value) {
       return category.value != null;
     } else
-      return primaryLang.value != null && secondaryLang.value != null;
+      return languages.value != null && languages.value?.secondary != null;
   }
 
   /// LOGIC ///
@@ -60,8 +60,8 @@ class AddCategoryController {
   }
 
   Future<void> initLanguages() async {
-    primaryLang.value = await get_restaurant_priamry_lang(restaurantId);
-    secondaryLang.value = primaryLang.value!.toOpLang();
+    languages.value = await get_restaurant_lang(restaurantId);
+    // secondaryLang.value = primaryLang.value!.toOpLang();
   }
 
   Future<void> initEditMode(String categoryId) async {
@@ -71,11 +71,14 @@ class AddCategoryController {
     category.value = await get_category_by_id(
         categoryId: int.parse(categoryId), withCache: false);
     if (category.value != null) {
-      primaryCategoryNameController.text = category.value!.name![primaryLang]!;
+      primaryCategoryNameController.text =
+          category.value!.name![languages.value?.primary]!;
       secondaryCategoryNameController.text =
-          category.value!.name![secondaryLang]!;
-      primaryCatDesc.text = category.value!.dialog?[primaryLang] ?? "";
-      secondaryCatDesc.text = category.value!.dialog?[secondaryLang] ?? "";
+          category.value!.name![languages.value?.secondary] ?? "";
+      primaryCatDesc.text =
+          category.value!.dialog?[languages.value?.primary] ?? "";
+      secondaryCatDesc.text =
+          category.value!.dialog?[languages.value?.secondary] ?? "";
     }
   }
 
@@ -125,7 +128,7 @@ class AddCategoryController {
           (MapEntry<Language, String> element) async {
         await update_translation(
             langType: element.key,
-            translationId: category.value!.descriptionId!,
+            translationId: category.value!.nameId!,
             value: element.value);
       });
     }
@@ -143,19 +146,29 @@ class AddCategoryController {
     }
   }
 
-  Map<Language, String> _contructName() {
-    final Map<Language, String> name = {
-      primaryLang.value!: primaryCategoryNameController.text,
-      secondaryLang.value!: secondaryCategoryNameController.text,
+  LanguageMap _contructName() {
+    final LanguageMap name = {
+      languages.value!.primary: primaryCategoryNameController.text
     };
+    if (languages.value!.secondary != null &&
+        secondaryCategoryNameController.text.isNotEmpty) {
+      name[languages.value!.secondary!] = secondaryCategoryNameController.text;
+    }
     return name;
   }
 
-  Map<Language, String>? _contructDescription() {
-    final Map<Language, String>? desc = {
-      primaryLang.value!: primaryCatDesc.text,
-      secondaryLang.value!: secondaryCatDesc.text,
-    };
+  LanguageMap? _contructDescription() {
+    final LanguageMap desc = {};
+    if (primaryCatDesc.text.isNotEmpty) {
+      desc[languages.value!.primary] = primaryCatDesc.text;
+    }
+    if (languages.value!.secondary != null &&
+        secondaryCatDesc.text.isNotEmpty) {
+      desc[languages.value!.secondary!] = secondaryCategoryNameController.text;
+    }
+    if (desc.isEmpty) {
+      return null;
+    }
     return desc;
   }
 

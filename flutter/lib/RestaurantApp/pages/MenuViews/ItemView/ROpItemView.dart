@@ -160,12 +160,12 @@ class _ROpItemViewState extends State<ROpItemView>
         showNotifications: true,
         tabBar: TabBar(controller: _tabController, tabs: [
           Tab(
-            child: Obx(
-                () => Text("${viewController.prLang.value.toLanguageName()}")),
+            child: Obx(() => Text(
+                "${viewController.languages.value!.primary.toLanguageName()}")),
           ),
           Tab(
-            child: Obx(
-                () => Text("${viewController.scLang.value.toLanguageName()}")),
+            child: Obx(() => Text(
+                "${viewController.languages.value!.secondary?.toLanguageName() ?? ""}")),
           ),
         ]));
   }

@@ -22,7 +22,7 @@ export interface ServiceProvider {
   approved?: boolean;
   links?: ServiceLink;
   creationTime?: string;
-  language: Record<Language, boolean>;
+  language: ServiceProviderLanguage;
   schedule?: Schedule;
   deliveryPartnerId?: number;
   deliveryDetails: DeliveryDetails;
@@ -95,6 +95,11 @@ export interface OperatorApprovedNotification extends ForegroundNotification {
   serviceProviderName: string,
   serviceProviderId: number,
   participantType: ParticipantType,
+}
+
+export interface ServiceProviderLanguage {
+  primary: Language;
+  secondary?: Language;
 }
 
 export const ServiceProviderToAppType: Record<ServiceProviderType, AppType> = {

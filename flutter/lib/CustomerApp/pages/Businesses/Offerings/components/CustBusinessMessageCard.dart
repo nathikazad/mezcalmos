@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustMessagesView/controllers/CustChatController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 
 class CustBusinessMessageCard extends StatelessWidget {
   const CustBusinessMessageCard(
@@ -22,7 +22,8 @@ class CustBusinessMessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CustChatController custChatController = CustChatController();
+    final CustMessagesListViewController custChatController =
+        CustMessagesListViewController();
     final List<IconData> acceptedIconList = getAcceptedPaymentIcon();
     print("BUSINESS DATA ${business.id} ${business.detailsId}");
     return MezCard(
@@ -94,7 +95,7 @@ class CustBusinessMessageCard extends StatelessWidget {
   List<IconData> getAcceptedPaymentIcon() {
     final Map<PaymentType, bool> payments = business.acceptedPayments;
     final List<IconData> iconList = [];
-    payments.map((key, value) {
+    payments.map((PaymentType key, bool value) {
       if (value) {
         switch (key) {
           case PaymentType.Cash:

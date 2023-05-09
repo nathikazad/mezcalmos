@@ -28,7 +28,7 @@ class CustBusinessServiceCard extends StatelessWidget {
     return MezCard(
       onClick: () {
         CustServiceView.navigate(
-          serviceId: service.details.id.toInt(),
+          serviceId: service.id!.toInt(),
         );
       },
       firstAvatarBgImage:

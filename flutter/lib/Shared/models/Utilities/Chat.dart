@@ -59,6 +59,8 @@ extension AppTypeToParticipantType on AppType {
         return ParticipantType.RestaurantOperator;
       case AppType.MezAdmin:
         return ParticipantType.MezAdmin;
+      case AppType.Business:
+        return ParticipantType.BusinessOperator;
       default:
         throw Exception(
             "App type $this cannot be converted to participantType");

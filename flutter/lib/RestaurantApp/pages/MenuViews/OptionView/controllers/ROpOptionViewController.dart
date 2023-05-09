@@ -35,8 +35,7 @@ class ROpOptionViewController {
 
   Rx<OptionType> optionType = Rx(OptionType.ChooseOne);
   RxList<Choice> optionChoices = RxList([]);
-  Rx<cModels.Language> primaryLang = Rx(cModels.Language.ES);
-  Rx<cModels.Language> secondaryLang = Rx(cModels.Language.EN);
+  Rxn<cModels.ServiceProviderLanguage> languages = Rxn();
 
   RxnInt min = RxnInt();
   RxnInt max = RxnInt();
@@ -74,10 +73,7 @@ class ROpOptionViewController {
   /// Getting primary language and secondary language based on restuarant info
   Future<void> _assignLanguages(String restaurantId) async {
     if (int.tryParse(restaurantId) != null) {
-      primaryLang.value =
-          await get_restaurant_priamry_lang(int.parse(restaurantId)) ??
-              cModels.Language.ES;
-      secondaryLang.value = primaryLang.value.toOpLang();
+      languages.value = await get_restaurant_lang(int.parse(restaurantId));
     }
   }
 
@@ -89,8 +85,9 @@ class ROpOptionViewController {
     if (editableOption.value != null) {
       editMode.value = true;
       optionType.value = editableOption.value!.optionType;
-      prOptionName.text = editableOption.value!.name[primaryLang.value]!;
-      scOptionName.text = editableOption.value!.name[secondaryLang.value]!;
+      prOptionName.text = editableOption.value!.name[languages.value!.primary]!;
+      scOptionName.text =
+          editableOption.value!.name[languages.value!.secondary] ?? "";
       if (editableOption.value!.optionType == OptionType.Custom) {
         free.value = editableOption.value!.freeChoice as int;
         min.value = editableOption.value!.minimumChoice as int;
@@ -172,20 +169,25 @@ class ROpOptionViewController {
   }
 
   Option _contructNormalOption() {
+    final LanguageMap name = {languages.value!.primary: prOptionName.text};
+    if (languages.value!.secondary != null && scOptionName.text.isNotEmpty) {
+      name[languages.value!.secondary!] = scOptionName.text;
+    }
     final Option newOption = Option(
       id: editMode.value ? editableOption.value!.id : Random().nextInt(15),
       optionType: optionType.value,
       minimumChoice: 0,
       maximumChoice: _getMachChoices(),
-      name: {
-        primaryLang.value: prOptionName.text,
-        secondaryLang.value: scOptionName.text,
-      },
+      name: name,
     );
     return newOption;
   }
 
   Option _constructCustomOption() {
+    final LanguageMap name = {languages.value!.primary: prOptionName.text};
+    if (languages.value!.secondary != null && scOptionName.text.isNotEmpty) {
+      name[languages.value!.secondary!] = scOptionName.text;
+    }
     final Option newOption = Option(
       id: editMode.value ? editableOption.value!.id : Random().nextInt(15),
       optionType: optionType.value,
@@ -193,10 +195,7 @@ class ROpOptionViewController {
       minimumChoice: min.value!,
       costPerExtra: int.tryParse(costPerExtra.text) ?? 0,
       freeChoice: free.value!,
-      name: {
-        primaryLang.value: prOptionName.text,
-        secondaryLang.value: scOptionName.text,
-      },
+      name: name,
       // newChoices: _contructChoices(),
     );
     return newOption;

@@ -159,6 +159,7 @@ Future<int?> add_one_product({required Product product}) async {
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                           available: product.details.available,
+                           business_id: product.details.businessId.toInt(),
                           category1: product.category1.toFirebaseFormatString(),
                           // category2: product.category2?.toFirebaseFormatString(),
                           cost: product.details.cost.map(

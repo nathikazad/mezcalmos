@@ -3,7 +3,7 @@ import { MezAdmin } from "../shared/models/Generic/User";
 import { DeliveryDetails } from "../shared/models/Generic/Delivery";
 import { getUser } from "../shared/graphql/user/getUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
-import { ServiceProvider } from "../shared/models/Services/Service";
+import { ServiceProvider, ServiceProviderLanguage } from "../shared/models/Services/Service";
 import { createLaundryStore } from "../shared/graphql/laundry/createLaundry";
 import { NewLaundryNotification } from "../shared/models/Services/Laundry/Laundry";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -21,7 +21,7 @@ export interface LaundryDetails {
   firebaseId?: string,
   deliveryPartnerId?: number,
   deliveryDetails: DeliveryDetails,
-  language: Record<Language, boolean>,
+  language: ServiceProviderLanguage,
   uniqueId?: string
 }
 export interface LaundryResponse {

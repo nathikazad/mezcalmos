@@ -27,7 +27,7 @@ class Laundry extends Service {
     required super.serviceDetailsId,
     required this.selfDelivery,
     required this.laundryCosts,
-    required Map<cModels.Language, bool> languages,
+    required cModels.ServiceProviderLanguage languages,
   }) : super(
             info: userInfo,
             schedule: schedule,

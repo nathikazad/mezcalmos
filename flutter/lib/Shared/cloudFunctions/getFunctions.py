@@ -413,6 +413,9 @@ def getModels():
         # print(models[key]["values"][v])
         toWriteModel +=  printDartFormatDeclaration(v, models[key]["values"][v])+"\n"
       toWriteModel += printDartFormatClassInit(key, models[key]["values"])+"\n"
+      if key == "Schedule":
+        toWriteModel += "\n}\n"
+        continue
       toWriteModel +=   '''Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       '''
@@ -443,6 +446,7 @@ def getIndex():
   toWriteIndex = '''import 'package:cloud_functions/cloud_functions.dart';
 import 'dart:convert';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 class CloudFunctions {
   static Future<dynamic> callCloudFunction(

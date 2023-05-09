@@ -311,12 +311,12 @@ class _ROpOptionViewState extends State<ROpOptionView>
         ),
         tabBar: TabBar(controller: _tabController, tabs: [
           Tab(
-            child: Obx(() =>
-                Text("${_viewController.primaryLang.value.toLanguageName()}")),
+            child: Obx(() => Text(
+                "${_viewController.languages.value!.primary.toLanguageName()}")),
           ),
           Tab(
             child: Obx(() => Text(
-                "${_viewController.secondaryLang.value.toLanguageName()}")),
+                "${_viewController.languages.value!.secondary?.toLanguageName() ?? ""}")),
           ),
         ]));
   }

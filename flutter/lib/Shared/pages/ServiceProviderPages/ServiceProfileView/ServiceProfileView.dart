@@ -61,13 +61,11 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
   void initState() {
     mezDbgPrint(MezRouter.urlArguments);
     _assignVars();
-    if (serviceDetailsId != null &&
-        serviceId != null &&
-        deliveryDetailsId != null) {
+    if (serviceDetailsId != null && serviceId != null) {
       _viewController.assignVars(
           serviceDetailsId: serviceDetailsId!,
           serviceId: serviceId!,
-          deliveryDetailsId: deliveryDetailsId!);
+          deliveryDetailsId: deliveryDetailsId);
       _viewController.fetchService();
     }
     super.initState();
@@ -138,20 +136,21 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   },
                                   icon: Icons.support_agent,
                                   label: "${_i18n()['operators']}"),
-                              _navigationLink(
-                                onClick: () async {
-                                  DeliverySettingsView.navigate(
-                                      serviceProviderId:
-                                          _viewController.serviceId,
-                                      detailsId: _viewController.detailsId,
-                                      deliveryDetailsID:
-                                          _viewController.deliveryDetailsId,
-                                      serviceProviderType: _viewController
-                                          .service.serviceProviderType!);
-                                },
-                                label: "${_i18n()['delivery']}",
-                                icon: Icons.delivery_dining,
-                              ),
+                              if (_viewController.deliveryDetailsId != null)
+                                _navigationLink(
+                                  onClick: () async {
+                                    DeliverySettingsView.navigate(
+                                        serviceProviderId:
+                                            _viewController.serviceId,
+                                        detailsId: _viewController.detailsId,
+                                        deliveryDetailsID:
+                                            _viewController.deliveryDetailsId!,
+                                        serviceProviderType: _viewController
+                                            .service.serviceProviderType!);
+                                  },
+                                  label: "${_i18n()['delivery']}",
+                                  icon: Icons.delivery_dining,
+                                ),
                               if (_viewController.selfDelivery)
                                 _navigationLink(
                                     onClick: () async {

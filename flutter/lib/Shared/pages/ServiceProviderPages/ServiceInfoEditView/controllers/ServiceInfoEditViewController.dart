@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
@@ -13,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class ServiceInfoEditViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
@@ -29,8 +29,7 @@ class ServiceInfoEditViewController {
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<MezLocation> newLocation = Rxn();
 
-  final Rx<Language> primaryLang = Rx(Language.EN);
-  final Rx<Language> secondaryLang = Rx(Language.ES);
+  Rxn<ServiceProviderLanguage> languages = Rxn();
   final Rxn<Language> editablePrLang = Rxn();
   final Rxn<Language> editableScLang = Rxn();
   final Rxn<imPicker.XFile> newImageFile = Rxn();
@@ -75,29 +74,32 @@ class ServiceInfoEditViewController {
 
       newLocation.value = service.value!.location;
       newImageUrl.value = service.value?.image;
+      languages.value = service.value?.languages;
 
-      primaryServiceDesc.text = service.value?.description?[primaryLang] ?? '';
+      primaryServiceDesc.text =
+          service.value?.description?[languages.value!.primary] ?? '';
       secondayServiceDesc.text =
-          service.value?.description?[secondaryLang] ?? '';
+          service.value?.description?[languages.value!.secondary] ?? '';
     }
   }
 
-  Future<void> updateServiceDescriptionDescription() async {
-    // if (!fd.mapEquals(service.value!.description, _contructDesc())) {
-    if (service.value!.descriptionId != null) {
-      _contructDesc().forEach((Language key, String value) {
-        update_translation(
-            langType: key,
-            value: value,
-            translationId: service.value!.descriptionId!);
-      });
-    } else {
-      newDescId = await insert_translation(
-          translation: _contructDesc(),
-          serviceType: serviceType,
-          serviceId: serviceId);
-      service.value?.descriptionId = newDescId;
-      // }
+  Future<void> updateServiceDescription() async {
+    if (!fd.mapEquals(service.value!.description, _contructDesc())) {
+      if (service.value!.descriptionId != null) {
+        _contructDesc().forEach((Language key, String value) {
+          update_translation(
+              langType: key,
+              value: value,
+              translationId: service.value!.descriptionId!);
+        });
+      } else {
+        newDescId = await insert_translation(
+            translation: _contructDesc(),
+            serviceType: serviceType,
+            serviceId: serviceId);
+        mezDbgPrint("newDescId ==========>>>$newDescId");
+        service.value?.descriptionId = newDescId;
+      }
     }
   }
 
@@ -124,7 +126,7 @@ class ServiceInfoEditViewController {
   //
   Future<bool> saveInfo() async {
     try {
-      await updateServiceDescriptionDescription();
+      await updateServiceDescription();
       await updateServiceLocation();
       if (newImageFile.value != null) {
         final String path = "/services/${serviceType.name}/$serviceId/images";
@@ -196,21 +198,24 @@ class ServiceInfoEditViewController {
     }
   }
 
-  bool _updatePrDesc() {
-    return (primaryServiceDesc.text != '' &&
-        primaryServiceDesc.text != service.value?.description?[primaryLang]);
-  }
+  // bool _updatePrDesc() {
+  //   return (primaryServiceDesc.text != '' &&
+  //       primaryServiceDesc.text != service.value?.description?[primaryLang]);
+  // }
 
-  bool _updateScDesc() {
-    return (secondayServiceDesc.text != '' &&
-        secondayServiceDesc.text != service.value?.description?[secondaryLang]);
-  }
+  // bool _updateScDesc() {
+  //   return (secondayServiceDesc.text != '' &&
+  //       secondayServiceDesc.text != service.value?.description?[secondaryLang]);
+  // }
 
   LanguageMap _contructDesc() {
-    return {
-      primaryLang.value: primaryServiceDesc.text,
-      secondaryLang.value: secondayServiceDesc.text
+    final LanguageMap _desc = <Language, String>{
+      languages.value!.primary: primaryServiceDesc.text
     };
+    if (languages.value!.secondary != null) {
+      _desc[languages.value!.secondary!] = secondayServiceDesc.text;
+    }
+    return _desc;
   }
 
   void dispose() {

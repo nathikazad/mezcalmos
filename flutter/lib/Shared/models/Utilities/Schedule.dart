@@ -24,8 +24,12 @@ extension OpenHoursFunctions on OpenHours {
     this.isOpen = isOpen;
   }
 
-  String toFirebaseFormattedString() {
-    return "$isOpen ${from.join(':')} ${to.join(':')} ";
+  Map<String, dynamic> toFirebaseFormattedString() {
+    return <String, dynamic>{
+      "isOpen": isOpen,
+      "from": from.join(":"),
+      "to": to.join(":"),
+    };
   }
 
   OpenHours clone() {
@@ -40,7 +44,7 @@ extension OpenHoursFunctions on OpenHours {
 Schedule scheduleFromData(data) {
   final Map<Weekday, OpenHours> openHours = {};
 
-  data.forEach((day, openHour) {
+  data?.forEach((day, openHour) {
     try {
       final List<int> from = openHour["from"]
           .toString()
@@ -60,13 +64,7 @@ Schedule scheduleFromData(data) {
       mezDbgPrint(stk);
     }
   });
-  // final List<num> timezone = data.timezone.split(':').map((String val) {
-  //   return num.parse(val);
-  // }).toList();
-  // if (data.timezone.contains('-')) {
-  //   timezone[1] = -timezone[1];
-  // }
-  // return Schedule(openHours: openHours, timezone: timezone);
+
   return Schedule(openHours: openHours);
 }
 
@@ -99,7 +97,7 @@ extension ScheduleFunctions on Schedule {
     return isOpen;
   }
 
-  Map<String, dynamic> toFirebaseFormat() {
+  Map<String, dynamic> toFirebaseFormattedJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     // if (timezone[0] < 0) {
     //   timezone[1] = -timezone[1];
@@ -110,7 +108,7 @@ extension ScheduleFunctions on Schedule {
     // }
     Weekday.values.forEach((Weekday weekday) {
       json[weekday.toFirebaseFormatString()] =
-          openHours[weekday]?.toFirebaseFormattedJson();
+          openHours[weekday]?.toFirebaseFormattedString();
     });
     return json;
   }

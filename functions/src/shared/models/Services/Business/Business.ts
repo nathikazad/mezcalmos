@@ -58,9 +58,10 @@ export interface Event {
   tags?: Array<EventTag>;
 }
 export interface Service {
-  id?: number;
-  category1: ServiceCategory1;
-  details: BusinessItemDetails;
+    id?: number;
+    category1: ServiceCategory1;
+    schedule?: Schedule;
+    details: BusinessItemDetails;
 }
 export interface Product {
   id?: number;

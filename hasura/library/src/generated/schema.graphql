@@ -1564,16 +1564,6 @@ type business_event_mutation_response {
 }
 
 """
-input type for inserting object relation for remote table "business.event"
-"""
-input business_event_obj_rel_insert_input {
-  data: business_event_insert_input!
-
-  """upsert condition"""
-  on_conflict: business_event_on_conflict
-}
-
-"""
 on_conflict condition type for table "business.event"
 """
 input business_event_on_conflict {
@@ -2171,6 +2161,10 @@ type business_item_details {
     path: String
   ): jsonb
   available: Boolean!
+
+  """An object relationship"""
+  business: business_business!
+  business_id: Int!
   category1: String!
   category2: String!
   cost(
@@ -2181,9 +2175,6 @@ type business_item_details {
   """An object relationship"""
   description: translation
   description_id: Int
-
-  """An object relationship"""
-  event: business_event
   id: Int!
   image(
     """JSON select path"""
@@ -2194,15 +2185,6 @@ type business_item_details {
   name: translation!
   name_id: Int!
   position: Int!
-
-  """An object relationship"""
-  product: business_product
-
-  """An object relationship"""
-  rental: business_rental
-
-  """An object relationship"""
-  service: business_service
   tags(
     """JSON select path"""
     path: String
@@ -2244,6 +2226,7 @@ input business_item_details_append_input {
 
 """aggregate avg on columns"""
 type business_item_details_avg_fields {
+  business_id: Float
   description_id: Float
   id: Float
   name_id: Float
@@ -2259,20 +2242,18 @@ input business_item_details_bool_exp {
   _or: [business_item_details_bool_exp!]
   additional_parameters: jsonb_comparison_exp
   available: Boolean_comparison_exp
+  business: business_business_bool_exp
+  business_id: Int_comparison_exp
   category1: String_comparison_exp
   category2: String_comparison_exp
   cost: jsonb_comparison_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
-  event: business_event_bool_exp
   id: Int_comparison_exp
   image: jsonb_comparison_exp
   name: translation_bool_exp
   name_id: Int_comparison_exp
   position: Int_comparison_exp
-  product: business_product_bool_exp
-  rental: business_rental_bool_exp
-  service: business_service_bool_exp
   tags: jsonb_comparison_exp
 }
 
@@ -2321,6 +2302,7 @@ input business_item_details_delete_key_input {
 input type for incrementing numeric columns in table "business.item_details"
 """
 input business_item_details_inc_input {
+  business_id: Int
   description_id: Int
   id: Int
   name_id: Int
@@ -2333,25 +2315,24 @@ input type for inserting data into table "business.item_details"
 input business_item_details_insert_input {
   additional_parameters: jsonb
   available: Boolean
+  business: business_business_obj_rel_insert_input
+  business_id: Int
   category1: String
   category2: String
   cost: jsonb
   description: translation_obj_rel_insert_input
   description_id: Int
-  event: business_event_obj_rel_insert_input
   id: Int
   image: jsonb
   name: translation_obj_rel_insert_input
   name_id: Int
   position: Int
-  product: business_product_obj_rel_insert_input
-  rental: business_rental_obj_rel_insert_input
-  service: business_service_obj_rel_insert_input
   tags: jsonb
 }
 
 """aggregate max on columns"""
 type business_item_details_max_fields {
+  business_id: Int
   category1: String
   category2: String
   description_id: Int
@@ -2362,6 +2343,7 @@ type business_item_details_max_fields {
 
 """aggregate min on columns"""
 type business_item_details_min_fields {
+  business_id: Int
   category1: String
   category2: String
   description_id: Int
@@ -2404,20 +2386,18 @@ input business_item_details_on_conflict {
 input business_item_details_order_by {
   additional_parameters: order_by
   available: order_by
+  business: business_business_order_by
+  business_id: order_by
   category1: order_by
   category2: order_by
   cost: order_by
   description: translation_order_by
   description_id: order_by
-  event: business_event_order_by
   id: order_by
   image: order_by
   name: translation_order_by
   name_id: order_by
   position: order_by
-  product: business_product_order_by
-  rental: business_rental_order_by
-  service: business_service_order_by
   tags: order_by
 }
 
@@ -2443,6 +2423,9 @@ enum business_item_details_select_column {
 
   """column name"""
   available
+
+  """column name"""
+  business_id
 
   """column name"""
   category1
@@ -2478,6 +2461,7 @@ input type for updating data in table "business.item_details"
 input business_item_details_set_input {
   additional_parameters: jsonb
   available: Boolean
+  business_id: Int
   category1: String
   category2: String
   cost: jsonb
@@ -2491,6 +2475,7 @@ input business_item_details_set_input {
 
 """aggregate stddev on columns"""
 type business_item_details_stddev_fields {
+  business_id: Float
   description_id: Float
   id: Float
   name_id: Float
@@ -2499,6 +2484,7 @@ type business_item_details_stddev_fields {
 
 """aggregate stddev_pop on columns"""
 type business_item_details_stddev_pop_fields {
+  business_id: Float
   description_id: Float
   id: Float
   name_id: Float
@@ -2507,6 +2493,7 @@ type business_item_details_stddev_pop_fields {
 
 """aggregate stddev_samp on columns"""
 type business_item_details_stddev_samp_fields {
+  business_id: Float
   description_id: Float
   id: Float
   name_id: Float
@@ -2528,6 +2515,7 @@ input business_item_details_stream_cursor_input {
 input business_item_details_stream_cursor_value_input {
   additional_parameters: jsonb
   available: Boolean
+  business_id: Int
   category1: String
   category2: String
   cost: jsonb
@@ -2541,6 +2529,7 @@ input business_item_details_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type business_item_details_sum_fields {
+  business_id: Int
   description_id: Int
   id: Int
   name_id: Int
@@ -2556,6 +2545,9 @@ enum business_item_details_update_column {
 
   """column name"""
   available
+
+  """column name"""
+  business_id
 
   """column name"""
   category1
@@ -2620,6 +2612,7 @@ input business_item_details_updates {
 
 """aggregate var_pop on columns"""
 type business_item_details_var_pop_fields {
+  business_id: Float
   description_id: Float
   id: Float
   name_id: Float
@@ -2628,6 +2621,7 @@ type business_item_details_var_pop_fields {
 
 """aggregate var_samp on columns"""
 type business_item_details_var_samp_fields {
+  business_id: Float
   description_id: Float
   id: Float
   name_id: Float
@@ -2636,6 +2630,7 @@ type business_item_details_var_samp_fields {
 
 """aggregate variance on columns"""
 type business_item_details_variance_fields {
+  business_id: Float
   description_id: Float
   id: Float
   name_id: Float
@@ -4250,16 +4245,6 @@ type business_product_mutation_response {
 }
 
 """
-input type for inserting object relation for remote table "business.product"
-"""
-input business_product_obj_rel_insert_input {
-  data: business_product_insert_input!
-
-  """upsert condition"""
-  on_conflict: business_product_on_conflict
-}
-
-"""
 on_conflict condition type for table "business.product"
 """
 input business_product_on_conflict {
@@ -4890,6 +4875,10 @@ type business_service {
   details: business_item_details!
   details_id: Int!
   id: Int!
+  schedule(
+    """JSON select path"""
+    path: String
+  ): jsonb
 }
 
 """
@@ -4945,6 +4934,11 @@ input business_service_aggregate_order_by {
   variance: business_service_variance_order_by
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input business_service_append_input {
+  schedule: jsonb
+}
+
 """
 input type for inserting array relation for remote table "business.service"
 """
@@ -4983,6 +4977,7 @@ input business_service_bool_exp {
   details: business_item_details_bool_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
+  schedule: jsonb_comparison_exp
 }
 
 """
@@ -4998,6 +4993,28 @@ enum business_service_constraint {
   unique or primary key constraint on columns "id"
   """
   service_pkey1
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input business_service_delete_at_path_input {
+  schedule: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input business_service_delete_elem_input {
+  schedule: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input business_service_delete_key_input {
+  schedule: String
 }
 
 """
@@ -5018,6 +5035,7 @@ input business_service_insert_input {
   details: business_item_details_obj_rel_insert_input
   details_id: Int
   id: Int
+  schedule: jsonb
 }
 
 """aggregate max on columns"""
@@ -5064,16 +5082,6 @@ type business_service_mutation_response {
 }
 
 """
-input type for inserting object relation for remote table "business.service"
-"""
-input business_service_obj_rel_insert_input {
-  data: business_service_insert_input!
-
-  """upsert condition"""
-  on_conflict: business_service_on_conflict
-}
-
-"""
 on_conflict condition type for table "business.service"
 """
 input business_service_on_conflict {
@@ -5089,11 +5097,17 @@ input business_service_order_by {
   details: business_item_details_order_by
   details_id: order_by
   id: order_by
+  schedule: order_by
 }
 
 """primary key columns input for table: business.service"""
 input business_service_pk_columns_input {
   id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input business_service_prepend_input {
+  schedule: jsonb
 }
 
 """
@@ -5108,6 +5122,9 @@ enum business_service_select_column {
 
   """column name"""
   id
+
+  """column name"""
+  schedule
 }
 
 """
@@ -5117,6 +5134,7 @@ input business_service_set_input {
   business_id: Int
   details_id: Int
   id: Int
+  schedule: jsonb
 }
 
 """aggregate stddev on columns"""
@@ -5183,6 +5201,7 @@ input business_service_stream_cursor_value_input {
   business_id: Int
   details_id: Int
   id: Int
+  schedule: jsonb
 }
 
 """aggregate sum on columns"""
@@ -5213,11 +5232,36 @@ enum business_service_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  schedule
 }
 
 input business_service_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: business_service_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: business_service_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: business_service_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: business_service_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: business_service_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: business_service_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_service_set_input
@@ -20702,8 +20746,30 @@ type mutation_root {
   update data of the table: "business.service"
   """
   update_business_service(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_service_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_service_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_service_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_service_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: business_service_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_service_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: business_service_set_input
@@ -20716,8 +20782,30 @@ type mutation_root {
   update single row of the table: "business.service"
   """
   update_business_service_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_service_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_service_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_service_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_service_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: business_service_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_service_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: business_service_set_input

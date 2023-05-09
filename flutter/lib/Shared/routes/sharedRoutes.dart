@@ -9,6 +9,8 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart'
     deferred as unauthorizedScreen;
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart'
     deferred as locationPermissionScreen;
+import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListview.dart'
+    deferred as messagesList;
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart'
     deferred as noInternetConnectionScreen;
 import 'package:mezcalmos/Shared/pages/NoInternetScreen.dart'
@@ -33,6 +35,7 @@ class SharedRoutes {
   static const String kWrapperRoute = '/';
   static const String kUserWelcomeRoute = '/welcome';
   static const String kHomeRoute = '/home';
+  static const String kMessagesList = '/messagesList';
   static const String kSplashRoute = '/splash';
   static const String kSignInRoute = '/sign_in';
   static const String kSignInAtOrderTimeRoute = '/sign_in_order_time';
@@ -94,6 +97,11 @@ class SharedRoutes {
         middleware: <QMiddleware>[
           DefferedLoader(phoneNumberScreen.loadLibrary)
         ]),
+    QRoute(
+        path: kMessagesList,
+        name: kMessagesList,
+        builder: () => messagesList.MessagesListView(),
+        middleware: <QMiddleware>[DefferedLoader(messagesList.loadLibrary)]),
     QRoute(
         path: kOtpConfirmRoute,
         name: kOtpConfirmRoute,

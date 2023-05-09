@@ -186,7 +186,8 @@ Future<Restaurant?> get_restaurant_by_id(
   return null;
 }
 
-Future<cModels.Language?> get_restaurant_priamry_lang(int restaurantId) async {
+Future<cModels.ServiceProviderLanguage?> get_restaurant_lang(
+    int restaurantId) async {
   final QueryResult<Query$getRestaurantLang> response = await _db.graphQLClient
       .query$getRestaurantLang(Options$Query$getRestaurantLang(
           variables: Variables$Query$getRestaurantLang(id: restaurantId)));
@@ -195,7 +196,9 @@ Future<cModels.Language?> get_restaurant_priamry_lang(int restaurantId) async {
         "🚨🚨🚨 restuarnt primay lang query errors : ${response.exception}");
   } else if (response.parsedData?.restaurant_restaurant_by_pk != null) {
     mezDbgPrint("✅✅✅ restuarnt primay lang query success");
-    return cModels.Language.EN;
+
+    return convertToLanguages(
+        response.parsedData?.restaurant_restaurant_by_pk!.details!.language);
   }
   return null;
 }

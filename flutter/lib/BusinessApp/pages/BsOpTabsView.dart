@@ -5,7 +5,12 @@ import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListVie
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+
+enum BusinessOpTabView { Services, Feed, Messages, Profile }
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]['DvOpTabsView'];
@@ -22,7 +27,9 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
   BusinessOpAuthController opAuthController =
       Get.find<BusinessOpAuthController>();
 
-  RxInt _index = RxInt(0);
+  Rx<BusinessOpTabView> currentView = Rx(BusinessOpTabView.Services);
+  RxInt currentIndex = 0.obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,29 +47,19 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
   }
 
   Widget _getBody() {
-    switch (_index.value) {
-      case 0:
+    switch (currentView.value) {
+      case BusinessOpTabView.Services:
         return BsOpServicesListView();
-
-      // case 1:
-      //   return ServiceDriversListView(
-      //     serviceProviderId: opAuthController.companyId,
-      //     serviceProviderType: ServiceProviderType.DeliveryCompany,
-      //     serviceLinkId: opAuthController.operator.value!.state.serviceLinkId,
-      //   );
-      // case 2:
-      //   return DeliveryCostSettingView(
-      //     deliveryDetailsId:
-      //         opAuthController.operator.value!.state.deliveryDetailsId,
-      //   );
-      // case 3:
-      //   return ServiceProfileView(
-      //     serviceId: opAuthController.companyId,
-      //     serviceDetailsId:
-      //         opAuthController.operator.value!.state.serviceProviderDetailsId,
-      //     deliveryDetailsId:
-      //         opAuthController.operator.value!.state.deliveryDetailsId,
-      //   );
+      case BusinessOpTabView.Profile:
+        return ServiceProfileView(
+          serviceId: opAuthController.companyId,
+          serviceDetailsId: opAuthController.operator.value!.detailsId.toInt(),
+          deliveryDetailsId: null,
+        );
+      case BusinessOpTabView.Messages:
+        return MessagesListView(
+          serviceProviderType: ServiceProviderType.Business,
+        );
 
       default:
         return Scaffold(
@@ -79,9 +76,26 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
             selectedLabelStyle: context.txt.bodyLarge,
             unselectedLabelStyle: context.txt.bodyMedium,
             selectedItemColor: primaryBlueColor,
-            currentIndex: _index.value,
+            currentIndex: currentIndex.value,
             onTap: (int v) {
-              _index.value = v;
+              currentIndex.value = v;
+              switch (v) {
+                case 0:
+                  currentView.value = BusinessOpTabView.Services;
+                  break;
+                case 1:
+                  currentView.value = BusinessOpTabView.Feed;
+                  break;
+                case 2:
+                  currentView.value = BusinessOpTabView.Messages;
+
+                  break;
+                case 3:
+                  currentView.value = BusinessOpTabView.Profile;
+
+                  break;
+                default:
+              }
             },
             type: BottomNavigationBarType.fixed,
             items: [

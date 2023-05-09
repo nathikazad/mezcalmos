@@ -370,7 +370,9 @@ Future<int?> get_number_of_adventure(
   }
 }
 
-Future<int?> add_one_event({required Event event}) async {
+Future<int?> add_one_event({
+  required Event event,
+}) async {
   // mezDbgPrint("Adding this rental 🇹🇳 ${rental.toJson()}");
   mezDbgPrint(
       "Event sent to db ::: ==============> ${event.startsAt} \n ${event.endsAt} \n ${event.tags} }");
@@ -386,13 +388,14 @@ Future<int?> add_one_event({required Event event}) async {
                       : null,
                   address: event.gpsLocation?.address,
                   schedule_type: event.scheduleType.toFirebaseFormatString(),
-                  schedule: event.schedule?.toFirebaseFormat(),
+                  schedule: event.schedule?.toFirebaseFormattedJson(),
                   starts_at: event.startsAt,
                   ends_at: event.endsAt,
                   //    time: event.time,
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                     available: event.details.available,
+                    business_id: event.details.businessId.toInt(),
                     tags: event.tags
                         ?.map((EventTag e) => e.toFirebaseFormatString())
                         .toList(),
@@ -524,7 +527,7 @@ Future<EventWithBusinessCard?> update_event_by_id(
       variables: Variables$Mutation$update_event_by_id(
         id: eventId,
         object: Input$business_event_set_input(
-          schedule: event.schedule?.toFirebaseFormat(),
+          schedule: event.schedule?.toFirebaseFormattedJson(),
           schedule_type: event.scheduleType.toFirebaseFormatString(),
           starts_at: event.startsAt,
           ends_at: event.endsAt,

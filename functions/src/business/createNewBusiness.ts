@@ -7,6 +7,7 @@ import { Schedule } from "../shared/models/Generic/Schedule";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { Business, BusinessProfile, NewBusinessNotification } from "../shared/models/Services/Business/Business";
+import { ServiceProviderLanguage } from "../shared/models/Services/Service";
 import { businessUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 
@@ -16,7 +17,7 @@ export interface BusinessDetails {
     profile: BusinessProfile,
     location: Location,
     businessOperatorNotificationToken?: string,
-    language: Record<Language, boolean>,
+    language: ServiceProviderLanguage,
     schedule: Schedule
 }
 export interface BusinessResponse {

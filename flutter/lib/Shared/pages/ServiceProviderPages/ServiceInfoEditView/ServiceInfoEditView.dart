@@ -129,7 +129,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         height: 15,
                       ),
                       Text(
-                        '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}',
+                        '${_i18n()['description']} ${viewController.languages.value!.primary.toLanguageName()}',
                         style: context.textTheme.bodyLarge,
                       ),
                       SizedBox(
@@ -140,7 +140,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         height: 15,
                       ),
                       Text(
-                        '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}',
+                        '${_i18n()['description']} ${viewController.languages.value!.secondary?.toLanguageName() ?? ''}',
                         style: context.textTheme.bodyLarge,
                       ),
                       SizedBox(

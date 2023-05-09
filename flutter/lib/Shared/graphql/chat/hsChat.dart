@@ -6,8 +6,8 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/chat/__generated/hsChat.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/env.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/env.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -120,6 +120,7 @@ Future<HasuraChat?> get_service_provider_customer_chat(
         participants: []);
     return RetChat;
   }
+  return null;
 }
 
 Future<List<HasuraChat>> get_customer_chat_by_sp_type(
@@ -137,9 +138,57 @@ Future<List<HasuraChat>> get_customer_chat_by_sp_type(
     ),
   );
 
+  mezDbgPrint(
+      "chat response ${response} ${response.parsedData?.service_provider_customer_chat}");
+
   if (response.parsedData?.service_provider_customer_chat != null) {
     response.parsedData?.service_provider_customer_chat.forEach(
         (Query$get_customer_chats_by_sp_type$service_provider_customer_chat
+            data) async {
+      _chats.add(HasuraChat(
+          chatInfo: HasuraChatInfo(
+            chatTite:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['chatTitle'],
+            phoneNumber:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['phoneNumber'],
+            chatImg:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['chatImage'],
+            parentlink:
+                data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['parentLink'],
+          ),
+          creationTime: DateTime.parse(data.chat.creation_time).toLocal(),
+          id: data.chat.id,
+          messages: _get_messages(data.chat.messages),
+          participants: []));
+    });
+    return _chats;
+  } else {
+    return [];
+  }
+}
+
+Future<List<HasuraChat>> get_business_provider_chats({
+  required int serviceId,
+}) async {
+  final List<HasuraChat> _chats = <HasuraChat>[];
+
+  final QueryResult<Query$get_service_provider_chats> response =
+      await _hasuraDb.graphQLClient.query$get_service_provider_chats(
+    Options$Query$get_service_provider_chats(
+      variables: Variables$Query$get_service_provider_chats(
+        service_id: serviceId,
+      ),
+    ),
+  );
+  mezDbgPrint(
+      "chat response ${response} $serviceId ${response.parsedData?.service_provider_customer_chat}");
+  if (response.parsedData?.service_provider_customer_chat != null) {
+    response.parsedData?.service_provider_customer_chat.forEach(
+        (Query$get_service_provider_chats$service_provider_customer_chat
             data) async {
       _chats.add(HasuraChat(
           chatInfo: HasuraChatInfo(

@@ -104,7 +104,7 @@ query getServiceInfo($serviceDetailsId: Int!) {
     name
 
     phone_number
-
+    language
    
     service_provider_type
 

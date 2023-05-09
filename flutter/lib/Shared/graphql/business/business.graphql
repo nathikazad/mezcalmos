@@ -71,6 +71,60 @@ query get_business_by_id($id: Int!) {
         home_type
       }
     }
+    products {
+      id
+      details {
+        additional_parameters
+        available
+        category1
+        category2
+        name_id
+        description_id
+        cost
+        tags
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        id
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+    services {
+      id
+      details {
+        additional_parameters
+        available
+        category1
+        name_id
+        description_id
+        category2
+        cost
+        tags
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        id
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
   }
 }
 
@@ -158,8 +212,27 @@ query get_business_by_event_category1(
   }
 }
 
-query get_business_by_service_category1($distance: Float!, $from: geography!, $categories1: [String!], $offset: Int, $limit: Int) {
-  business_business(where: {_and: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}, services: {details: {category1: {_in: $categories1}}}}}, offset: $offset, limit: $limit) {
+query get_business_by_service_category1(
+  $distance: Float!
+  $from: geography!
+  $categories1: [String!]
+  $offset: Int
+  $limit: Int
+) {
+  business_business(
+    where: {
+      _and: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+        }
+        services: { details: { category1: { _in: $categories1 } } }
+      }
+    }
+    offset: $offset
+    limit: $limit
+  ) {
     id
     details {
       id
@@ -179,8 +252,27 @@ query get_business_by_service_category1($distance: Float!, $from: geography!, $c
   }
 }
 
-query get_business_by_product_category1($distance: Float!, $from: geography!, $categories1: [String!], $offset: Int, $limit: Int) {
-  business_business(where: {_and: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}, products: {details: {category1: {_in: $categories1}}}}}, offset: $offset, limit: $limit) {
+query get_business_by_product_category1(
+  $distance: Float!
+  $from: geography!
+  $categories1: [String!]
+  $offset: Int
+  $limit: Int
+) {
+  business_business(
+    where: {
+      _and: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+        }
+        products: { details: { category1: { _in: $categories1 } } }
+      }
+    }
+    offset: $offset
+    limit: $limit
+  ) {
     id
     details {
       id
@@ -199,39 +291,40 @@ query get_business_by_product_category1($distance: Float!, $from: geography!, $c
     }
   }
 }
-mutation update_business_item_details_by_id($id: Int!,$object: business_item_details_set_input) {
-  update_business_item_details_by_pk(pk_columns: {id: $id}, _set: $object) {
+mutation update_business_item_details_by_id(
+  $id: Int!
+  $object: business_item_details_set_input
+) {
+  update_business_item_details_by_pk(pk_columns: { id: $id }, _set: $object) {
     id
   }
 }
 query getBusinessItemDetailsById($id: Int!) {
   business_item_details_by_pk(id: $id) {
-       name_id
-       
-        description_id
-        id
-        name {
-          
-          translations {
-            language_id
-            value
-          }
-        }
-        description {
-          
-          translations {
-            language_id
-            value
-          }
-        }
-        tags
-        additional_parameters
-        available
-        category1
-        category2
-        cost
-        image
-        position
+    name_id
+
+    description_id
+    id
+    name {
+      translations {
+        language_id
+        value
+      }
+    }
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+    tags
+    additional_parameters
+    available
+    category1
+    category2
+    cost
+    image
+    position
   }
 }
 mutation update_business_item_additional_params(

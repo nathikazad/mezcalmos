@@ -11,13 +11,14 @@ class ServiceInput {
   ServiceDeliveryType? deliveryType;
   int? deliveryPartnerId;
   DeliveryCost? selfDeliveryCost;
-  ServiceInput({
-    this.serviceInfo,
-    this.schedule,
-    this.deliveryType = ServiceDeliveryType.Delivery_Partner,
-    this.deliveryPartnerId,
-    this.selfDeliveryCost,
-  });
+  ServiceProviderLanguage? languages;
+  ServiceInput(
+      {this.serviceInfo,
+      this.schedule,
+      this.deliveryType = ServiceDeliveryType.Delivery_Partner,
+      this.deliveryPartnerId,
+      this.selfDeliveryCost,
+      this.languages});
 
   ServiceInput copyWith({
     ServiceInfo? serviceInfo,
