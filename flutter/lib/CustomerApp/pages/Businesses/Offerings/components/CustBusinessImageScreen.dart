@@ -35,7 +35,7 @@ class _CustBusinessImageScreenState extends State<CustBusinessImageScreen> {
     _pageController = PageController(initialPage: _currentPage);
   }
 
-  void animate(){
+  void animate() {
     _pageController.animateToPage(
       _currentPage,
       duration: Duration(
@@ -82,7 +82,7 @@ class _CustBusinessImageScreenState extends State<CustBusinessImageScreen> {
                     decoration: BoxDecoration(
                       color:
                           _currentPage == 0 ? Colors.white : primaryBlueColor,
-                      borderRadius: BorderRadius.circular(10),
+                      shape: BoxShape.circle,
                     ),
                     child: InkWell(
                       child: Icon(
@@ -115,7 +115,7 @@ class _CustBusinessImageScreenState extends State<CustBusinessImageScreen> {
                       color: _currentPage == images.length - 1
                           ? Colors.white
                           : primaryBlueColor,
-                      borderRadius: BorderRadius.circular(10),
+                      shape: BoxShape.circle,
                     ),
                     child: InkWell(
                       child: Icon(
