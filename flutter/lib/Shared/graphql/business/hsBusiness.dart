@@ -121,28 +121,80 @@ Future<Business?> get_business_by_id(
                   [],
             )));
       });
+      final List<Product> _products = <Product>[];
+      data.products.forEach(
+          (Query$get_business_by_id$business_business_by_pk$products
+              product) async {
+        _products.add(Product(
+            id: product.id,
+            category1: product.details.category1.toProductCategory1(),
+            details: BusinessItemDetails(
+              id: product.details.id,
+              name: toLanguageMap(
+                  translations: product.details.name.translations),
+              businessId: data.id,
+              description: toLanguageMap(
+                  translations:
+                      product.details.description?.translations ?? []),
+              descriptionId: product.details.description_id,
+              available: product.details.available,
+              cost: constructBusinessServiceCost(product.details.cost),
+              image: product.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+            )));
+      });
+      final List<Service> _service = <Service>[];
+      data.services.forEach(
+          (Query$get_business_by_id$business_business_by_pk$services
+              service) async {
+        _service.add(Service(
+            id: service.id,
+            category1: service.details.category1.toServiceCategory1(),
+            details: BusinessItemDetails(
+              id: service.details.id,
+              name: toLanguageMap(
+                  translations: service.details.name.translations),
+              businessId: data.id,
+              additionalParameters: service.details.additional_parameters,
+              description: toLanguageMap(
+                  translations:
+                      service.details.description?.translations ?? []),
+              descriptionId: service.details.description_id,
+              available: service.details.available,
+              cost: constructBusinessServiceCost(service.details.cost),
+              image: service.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+            )));
+      });
       return Business(
-          profile: data.profile.toBusinessProfile(),
-          details: ServiceProvider(
-              id: data.id,
-              serviceProviderDetailsId: data.details.id,
-              name: data.details.name,
-              image: data.details.image,
-              location: constructLocation(
-                  data.details.location.gps, data.details.location.address),
-              language: ServiceProviderLanguage(
-                  primary:
-                      data.details.language.primary.toString().toLanguage(),
-                  secondary:
-                      data.details.language.secondary.toString().toLanguage()),
-              currency: data.details.currency.toCurrency(),
-              deliveryDetails: DeliveryDetails(
-                  deliveryAvailable: false,
-                  customerPickup: false,
-                  selfDelivery: false),
-              serviceProviderType: ServiceProviderType.Business),
-          rentals: _rentals,
-          events: _events);
+        profile: data.profile.toBusinessProfile(),
+        details: ServiceProvider(
+            id: data.id,
+            serviceProviderDetailsId: data.details.id,
+            name: data.details.name,
+            image: data.details.image,
+            location: constructLocation(
+                data.details.location.gps, data.details.location.address),
+            language: ServiceProviderLanguage(
+                primary:
+                    data.details.language["primary"].toString().toLanguage(),
+                secondary:
+                    data.details.language["secondary"].toString().toLanguage()),
+            currency: data.details.currency.toCurrency(),
+            deliveryDetails: DeliveryDetails(
+                deliveryAvailable: false,
+                customerPickup: false,
+                selfDelivery: false),
+            serviceProviderType: ServiceProviderType.Business),
+        rentals: _rentals,
+        events: _events,
+        products: _products,
+        services: _service,
+      );
     }
   } else
     return null;
