@@ -625,13 +625,13 @@
           },
           "surf": {
             "title": "Navegar",
-            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos.",
+            "description": "Coge la ola perfecta con nuestro alquiler de tablas de surf.",
             "board": "Junta",
             "store": "Almacenar"
           },
           "vehicle": {
             "title": "Vehículo",
-            "description": "Reserve y alquile su automóvil de proveedores locales con precios asequibles.",
+            "description": "Explore la ciudad sobre ruedas con nuestros asequibles vehículos de alquiler.",
             "vehicle": "Vehículo",
             "store": "Almacenar"
           },
@@ -643,7 +643,7 @@
           },
           "home": {
             "title": "Casas",
-            "description": "Obtenga la entrega de todo lo que desee a su ubicación.",
+            "description": "Encuentre el alquiler vacacional perfecto para su próxima escapada.",
             "home": "Hogar",
             "agency": "Agencia"
           }
@@ -711,40 +711,40 @@
           "subtitle": "Descubre los platillos más deliciosos de los restaurantes más cercanos"
         },
         "restaurants": {
-          "title": "Restaurants",
+          "title": "Restaurantes",
           "subtitle": "Discover most delicious dishes from the nearest restaurants."
         },
         "farmers": {
-          "title": "Farmers",
-          "subtitle": "Find and purchase locally grown fruits, vegetables, grains, and other produce directly from farmers."
+          "title": "Agricultores",
+          "subtitle": "Encuentre y compre frutas, verduras, cereales y otros productos cultivados localmente directamente a los agricultores."
         },
         "locallymade": {
-          "title": "Locally Made",
-          "subtitle": "Savor the taste of locally made treats."
+          "title": "Fabricación local",
+          "subtitle": "Saboree las delicias locales."
         },
         "mealplanning": {
-          "title": "Meal Planning",
-          "subtitle": "Plan your meals effortlessly with our meal planning service."
+          "title": "Planificación de comidas",
+          "subtitle": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
         },
         "art": {
-          "title": "Art",
-          "subtitle": "Obtain delivery of anything you desire to your location."
+          "title": "Arte",
+          "subtitle": "Añada un toque de belleza e inspiración a su hogar con nuestra colección de obras de arte."
         },
         "consumable": {
-          "title": "Consumable",
-          "subtitle": "Discover most delicious dishes from the nearest restaurants."
+          "title": "Consumibles",
+          "subtitle": "Saboree las delicias locales."
         },
         "personalcare": {
-          "title": "Personal Care",
-          "subtitle": "Get your clothes cleaned by your nearest laundry service."
+          "title": "Cuidado personal",
+          "subtitle": "Cuídate con productos de cuidado personal de alta calidad."
         },
         "cleaning": {
-          "title": "Cleaning",
-          "subtitle": "Get your clothes cleaned by your nearest laundry service."
+          "title": "Limpieza",
+          "subtitle": "Mantenga su espacio impecable con limpiadores profesionales."
         },
         "petsitting": {
-          "title": "Pet Sitting",
-          "subtitle": "Obtain delivery of anything you desire to your location."
+          "title": "Cuidado de mascotas",
+          "subtitle": "Asegúrese de que su mascota está bien cuidada mientras usted está fuera."
         },
         "laundry": {
           "title": "Lavandería",

@@ -628,13 +628,13 @@
           },
           "surf": {
             "title": "Surf",
-            "description": "Discover most delicious dishes from the nearest restaurants.",
+            "description": "Catch the perfect wave with our surfboard rentals.",
             "board": "Board",
             "store": "Store"
           },
           "vehicle": {
             "title": "Vehicle",
-            "description": "Book and rent your car from local suppliers with affordable prices.",
+            "description": "Explore the city on wheels with our affordable vehicle rentals.",
             "vehicle": "Vehicle",
             "store": "Store"
           },
@@ -646,7 +646,7 @@
           },
           "home": {
             "title": "Homes",
-            "description": "Obtain delivery of anything you desire to your location.",
+            "description": "Find the perfect vacation rental for your next getaway.",
             "home": "Home",
             "agency": "Agency"
           }
@@ -710,7 +710,7 @@
           "title": "Taxi"
         },
         "food": {
-          "subtitle": "Discover most delicious dishes from the nearest restaurants .",
+          "subtitle": "Discover most delicious dishes from the nearest restaurants.",
           "title": "Food"
         },
         "restaurants": {
@@ -731,19 +731,23 @@
         },
         "art": {
           "title": "Art",
-          "subtitle": "Obtain delivery of anything you desire to your location."
+          "subtitle": "Add a touch of beauty and inspiration to your home with our collection of fine art."
         },
         "consumable": {
           "title": "Consumable",
-          "subtitle": "Discover most delicious dishes from the nearest restaurants."
+          "subtitle": "Savor the taste of locally made treats."
         },
         "personalcare": {
           "title": "Personal Care",
-          "subtitle": "Get your clothes cleaned by your nearest laundry service."
+          "subtitle": "Take care of yourself with high-quality personal care products."
         },
         "cleaning": {
           "title": "Cleaning",
-          "subtitle": "Get your clothes cleaned by your nearest laundry service."
+          "subtitle": "Keep your space spotless with professional cleaners."
+        },
+        "petsitting": {
+          "title": "Pet Sitting",
+          "subtitle": "Ensuring your pet is well cared for while you’re away."
         },
         "laundry": {
           "subtitle": "Get your clothes cleaned by your nearest laundry service",
