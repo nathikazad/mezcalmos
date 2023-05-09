@@ -19,6 +19,22 @@ insert_permissions:
         - operator_deep_link
         - operator_qr_image_link
 select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - id
+        - customer_deep_link
+        - customer_qr_image_link
+        - driver_deep_link
+        - driver_qr_image_link
+        - operator_deep_link
+        - operator_qr_image_link
+      filter:
+        service_provider:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
   - role: delivery_operator
     permission:
       columns:
@@ -28,6 +44,22 @@ select_permissions:
         - operator_deep_link
         - operator_qr_image_link
       filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - id
+        - customer_deep_link
+        - customer_qr_image_link
+        - driver_deep_link
+        - driver_qr_image_link
+        - operator_deep_link
+        - operator_qr_image_link
+      filter:
+        service_provider:
+          laundry_store:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
@@ -50,11 +82,18 @@ select_permissions:
     permission:
       columns:
         - id
+        - customer_deep_link
+        - customer_qr_image_link
         - driver_deep_link
         - driver_qr_image_link
         - operator_deep_link
         - operator_qr_image_link
-      filter: {}
+      filter:
+        service_provider:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
 update_permissions:
   - role: restaurant_operator
     permission:

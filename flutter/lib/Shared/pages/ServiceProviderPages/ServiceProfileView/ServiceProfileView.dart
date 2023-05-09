@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
@@ -9,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/ServiceReviewsView.dart';
@@ -108,12 +110,14 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   },
                                   icon: Icons.person,
                                   label: "${_i18n()['info']}"),
-                              _navigationLink(
-                                  onClick: () async {
-                                    await _viewController.navigateToOperators();
-                                  },
-                                  icon: Icons.support_agent,
-                                  label: "${_i18n()['operators']}"),
+                              if (_viewController.serviceLink != null)
+                                _navigationLink(
+                                    onClick: () async {
+                                      await _viewController
+                                          .navigateToOperators();
+                                    },
+                                    icon: Icons.support_agent,
+                                    label: "${_i18n()['operators']}"),
                               if (_viewController.deliveryDetailsId != null &&
                                   !_viewController.isBusiness)
                                 _navigationLink(
@@ -157,13 +161,23 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                     ServiceReviewsView.navigate();
                                   },
                                   label: "${_i18n()['reviews']}"),
-                              _navigationLink(
-                                  icon: Icons.share,
-                                  label: "${_i18n()['share']}",
-                                  trailingWidget: MezIconButton(
-                                    icon: Icons.copy,
-                                    onTap: () {},
-                                  )),
+                              if (_viewController.serviceLink != null)
+                                _navigationLink(
+                                    icon: Icons.share,
+                                    label: "${_i18n()['share']}",
+                                    trailingWidget: MezIconButton(
+                                      icon: Icons.copy,
+                                      onTap: () {
+                                        String text = _viewController
+                                            .serviceLink!.customerDeepLink
+                                            .toString();
+                                        Clipboard.setData(
+                                                ClipboardData(text: text))
+                                            .then((value) => showSavedSnackBar(
+                                                title: "Copied",
+                                                subtitle: text));
+                                      },
+                                    )),
                               _navigationLink(
                                   onClick: () async {
                                     await launchUrlString(
@@ -255,11 +269,12 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
       asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
       onClick: (asTab) ? null : MezRouter.back,
       tabbarHeight: _viewController.getAppbarHeight,
-      title: "Dashboard",
+      title: "${_i18n()['profile']}",
       tabBar: (!_viewController.isApproved ||
               _viewController.service.state.isClosedIndef)
           ? PreferredSize(
-              preferredSize: Size(double.infinity, kToolbarHeight),
+              preferredSize:
+                  Size(double.infinity, _viewController.getAppbarHeight),
               child: Column(
                 children: [
                   if (_viewController.service.state.isClosedIndef)
@@ -279,7 +294,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                           ),
                           Flexible(
                             child: Text(
-                              "Service is closed indefinitely",
+                              "${_i18n()['serviceClosed']}",
                               textAlign: TextAlign.center,
                               style: context.txt.bodyLarge
                                   ?.copyWith(color: Colors.redAccent),
@@ -293,7 +308,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                       padding: const EdgeInsets.all(12),
                       color: secondaryLightBlueColor,
                       child: Text(
-                        "Your restaurant is under review, you’ll be notifiedonce it’s approved.",
+                        "${_i18n()['serviceUnderReview']}",
                         style: context.txt.bodyLarge
                             ?.copyWith(color: primaryBlueColor),
                       ),

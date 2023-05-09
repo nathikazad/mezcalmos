@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
@@ -22,11 +23,13 @@ class ServiceProfileController extends GetxController {
   int? deliveryDetailsId;
   // state vars //
   Rxn<Service> _service = Rxn();
+  Rxn<ServiceLink> _serviceLink = Rxn();
   Rxn<DeliveryCost> _serviceDeliveryCost = Rxn();
 
   RxBool _isAprroved = RxBool(true);
   // getters //
   Service get service => _service.value!;
+  ServiceLink? get serviceLink => _serviceLink.value;
   bool get isApproved => _isAprroved.value;
   bool get selfDelivery => (_serviceDeliveryCost.value?.selfDelivery ?? false);
   bool get hasData => _service.value != null;
@@ -57,18 +60,31 @@ class ServiceProfileController extends GetxController {
   }
 
   Future<void> fetchService() async {
+  
     _service.value = await get_service_details_by_id(
         serviceDetailsId: detailsId, serviceId: serviceId, withCache: false);
+    if (_service.value!.serviceLinkId != null) {
+      mezDbgPrint(
+          "👋 called get service link ===========>${_service.value!.serviceLinkId}");
+
+      unawaited(_fetchServiceLink());
+    }
     if (deliveryDetailsId != null) {
       _serviceDeliveryCost.value =
           await get_delivery_cost(deliveryDetailsId: deliveryDetailsId!);
       int? data = await get_service_delivery_partner(
           serviceId: serviceId, providerType: service.serviceProviderType!);
     }
+
     if (_service.value != null) {
       _isAprroved.value = _service.value!.state.approved;
       _service.refresh();
     }
+  }
+
+  Future<void> _fetchServiceLink() async {
+    _serviceLink.value = await get_service_link_by_id(
+        serviceLinkId: _service.value!.serviceLinkId!);
   }
 
   double get getAppbarHeight {

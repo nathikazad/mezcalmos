@@ -5,10 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:location/location.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
@@ -751,8 +749,8 @@ Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
 
 void showSavedSnackBar({String? title, String? subtitle}) {
   return customSnackBar(
-      title: _i18n()['saved'],
-      subTitle: _i18n()['savedTitle'],
+      title: title ?? _i18n()['saved'],
+      subTitle: subtitle ?? _i18n()['savedTitle'],
       icon: Icon(
         Icons.check_circle,
         size: 40,

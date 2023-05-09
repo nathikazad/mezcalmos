@@ -1056,7 +1056,7 @@
         "openService": "Servicio abierto",
         "closeService": "Servicio cerrado",
         "serviceClosed": "El servicio está cerrado indefinidamente",
-        "restaurantReview": "Su restaurante está bajo revisión, se le notificará, su aprobación."
+        "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación."
       },
       "CreateServiceView": {
         "pages": {
