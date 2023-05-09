@@ -123,18 +123,13 @@ Future<HasuraChat?> get_service_provider_customer_chat(
   return null;
 }
 
-Future<List<HasuraChat>> get_customer_chat_by_sp_type(
-    {required int customerId,
-    required ServiceProviderType serviceProviderType}) async {
+Future<List<HasuraChat>> get_customer_chats({required int customerId}) async {
   final List<HasuraChat> _chats = <HasuraChat>[];
 
-  final QueryResult<Query$get_customer_chats_by_sp_type> response =
-      await _hasuraDb.graphQLClient.query$get_customer_chats_by_sp_type(
-    Options$Query$get_customer_chats_by_sp_type(
-      variables: Variables$Query$get_customer_chats_by_sp_type(
-        customer_id: customerId,
-        service_provider_type: serviceProviderType.toFirebaseFormatString(),
-      ),
+  final QueryResult<Query$get_customer_chats> response =
+      await _hasuraDb.graphQLClient.query$get_customer_chats(
+    Options$Query$get_customer_chats(
+      variables: Variables$Query$get_customer_chats(customer_id: customerId),
     ),
   );
 
@@ -143,8 +138,7 @@ Future<List<HasuraChat>> get_customer_chat_by_sp_type(
 
   if (response.parsedData?.service_provider_customer_chat != null) {
     response.parsedData?.service_provider_customer_chat.forEach(
-        (Query$get_customer_chats_by_sp_type$service_provider_customer_chat
-            data) async {
+        (Query$get_customer_chats$service_provider_customer_chat data) async {
       _chats.add(HasuraChat(
           chatInfo: HasuraChatInfo(
             chatTite:
@@ -160,9 +154,13 @@ Future<List<HasuraChat>> get_customer_chat_by_sp_type(
                 data.chat.chat_info!['${MezEnv.appType.toChatInfoString()}']
                     ['parentLink'],
           ),
-          creationTime: DateTime.parse(data.chat.creation_time).toLocal(),
           id: data.chat.id,
-          messages: _get_messages(data.chat.messages),
+          messages: [],
+          lastMessage: Message(
+            message: data.chat.last_message['message'],
+            timestamp: DateTime.parse(data.chat.last_message_sent).toLocal(),
+            userId: data.chat.last_message['userId'],
+          ),
           participants: []));
     });
     return _chats;
@@ -181,6 +179,8 @@ Future<List<HasuraChat>> get_business_provider_chats({
     Options$Query$get_service_provider_chats(
       variables: Variables$Query$get_service_provider_chats(
         service_id: serviceId,
+        service_provider_type:
+            ServiceProviderType.Business.toFirebaseFormatString(),
       ),
     ),
   );

@@ -196,7 +196,8 @@ class HasuraChat {
   final int id;
   final List<Message> messages;
   final HasuraChatInfo chatInfo;
-  DateTime creationTime;
+  DateTime? creationTime;
+  Message? lastMessage;
   List<Participant> _participants = [];
   List<Participant> get participant => _participants;
 
@@ -204,7 +205,8 @@ class HasuraChat {
     required this.id,
     required this.messages,
     required this.chatInfo,
-    required this.creationTime,
+    this.creationTime,
+    this.lastMessage,
     required List<Participant> participants,
   }) {
     _participants = participants;

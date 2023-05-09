@@ -120,7 +120,8 @@ class _MessagesListViewState extends State<MessagesListView> {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                    viewcontroller.allChats[index].creationTime
+                                    viewcontroller
+                                        .allChats[index].lastMessage!.timestamp
                                         .timeAgo(),
                                   ),
                                 ],
