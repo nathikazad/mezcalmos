@@ -23,6 +23,19 @@ select_permissions:
         - status
         - stripe_id
       filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - id
+        - requirements
+        - email
+        - status
+        - stripe_id
+      filter: {}
   - role: customer
     permission:
       columns:

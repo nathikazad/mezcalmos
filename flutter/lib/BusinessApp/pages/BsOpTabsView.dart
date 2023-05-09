@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 enum BusinessOpTabView { Services, Feed, Messages, Profile }
 
@@ -53,7 +53,9 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
       case BusinessOpTabView.Profile:
         return ServiceProfileView(
           serviceId: opAuthController.companyId,
-          serviceDetailsId: opAuthController.operator.value!.detailsId.toInt(),
+          serviceDetailsId: opAuthController
+              .operator.value!.serviceProviderDetailsId
+              ?.toInt(),
           deliveryDetailsId: null,
         );
       case BusinessOpTabView.Messages:

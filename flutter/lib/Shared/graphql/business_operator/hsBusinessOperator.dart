@@ -23,6 +23,8 @@ Future<Operator?> get_business_operator({required int userId}) async {
     return Operator(
         detailsId: data.details_id,
         id: data.id,
+        serviceProviderDetailsId: data.business.details_id,
+        
         online: data.operator_details.online,
         serviceProviderId: data.business_id,
         status: data.operator_details.status.toAuthorizationStatus(),

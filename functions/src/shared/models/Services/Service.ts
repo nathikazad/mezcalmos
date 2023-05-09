@@ -35,6 +35,7 @@ export interface ServiceProvider {
 export interface Operator {
   id: number;
   detailsId: number;
+  serviceProviderDetailsId?: number;
   serviceProviderId: number;
   userId: number;
   status: AuthorizationStatus;
