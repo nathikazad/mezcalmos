@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -32,7 +33,8 @@ class ServiceScheduleViewController {
       // final Schedule? schedule = await get_restaurant_schedule(
       //     restaurantId: restaurant.value!.restaurantId, withCache: false);
       oldSchedule.value = await get_service_schedule(
-          serviceDetailsId: _detailsId, withCache: false);
+              serviceDetailsId: _detailsId, withCache: false) ??
+          scheduleFromData(defaultSchedule);
 
       if (oldSchedule.value != null) {
         newSchedule.value = oldSchedule.value!.clone();

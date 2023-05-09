@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_partner/hsDeliveryPartner.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
@@ -9,6 +10,10 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
 
 class ServiceProfileController extends GetxController {
   // constants //
@@ -23,8 +28,10 @@ class ServiceProfileController extends GetxController {
   // getters //
   Service get service => _service.value!;
   bool get isApproved => _isAprroved.value;
-  bool get selfDelivery => _serviceDeliveryCost.value?.selfDelivery ?? false;
+  bool get selfDelivery => (_serviceDeliveryCost.value?.selfDelivery ?? false);
   bool get hasData => _service.value != null;
+  bool get isBusiness =>
+      service.serviceProviderType == cm.ServiceProviderType.Business;
 
   bool get isAvailable => _service.value!.state.isOpen;
 
@@ -83,6 +90,44 @@ class ServiceProfileController extends GetxController {
         detailsId: detailsId);
     if (res) {
       unawaited(fetchService());
+    }
+  }
+
+  Future<void> navigateToEdit() async {
+    bool? refetch = await ServiceInfoEditView.navigate(
+        serviceDetailsId: detailsId,
+        serviceProviderId: serviceId,
+        serviceProviderType: service.serviceProviderType!);
+
+    if (refetch) {
+      unawaited(fetchService());
+    }
+  }
+
+  Future<void> navigateToOperators() async {
+    if (service.serviceLinkId != null) {
+      // ignore: unawaited_futures
+      OperatorsListView.navigate(
+          serviceProviderId: serviceId,
+          serviceLinkId: service.serviceLinkId!,
+          serviceProviderType: service.serviceProviderType!);
+    }
+  }
+
+  Future<void> navigateToDeliverySettings() async {
+    await DeliverySettingsView.navigate(
+        serviceProviderId: serviceId,
+        detailsId: detailsId,
+        deliveryDetailsID: deliveryDetailsId!,
+        serviceProviderType: service.serviceProviderType!);
+  }
+
+  Future<void> navigateToDrivers() async {
+    if (service.serviceLinkId != null) {
+      await ServiceDriversListView.navigateToDrivers(
+          serviceLinkId: service.serviceLinkId!,
+          serviceProviderId: serviceId,
+          controllerType: service.serviceProviderType!);
     }
   }
 }

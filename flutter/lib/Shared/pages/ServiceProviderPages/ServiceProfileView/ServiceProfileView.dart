@@ -10,17 +10,16 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/ServiceReviewsView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/env.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
     ["ServiceProfileView"];
@@ -105,68 +104,31 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                             children: [
                               _navigationLink(
                                   onClick: () async {
-                                    bool? refetch =
-                                        await ServiceInfoEditView.navigate(
-                                            serviceDetailsId:
-                                                _viewController.detailsId,
-                                            serviceProviderId:
-                                                _viewController.serviceId,
-                                            serviceProviderType: _viewController
-                                                .service.serviceProviderType!);
-
-                                    if (refetch) {
-                                      _viewController.fetchService();
-                                    }
+                                    await _viewController.navigateToEdit();
                                   },
                                   icon: Icons.person,
                                   label: "${_i18n()['info']}"),
                               _navigationLink(
                                   onClick: () async {
-                                    if (_viewController.service.serviceLinkId !=
-                                        null) {
-                                      // ignore: unawaited_futures
-                                      OperatorsListView.navigate(
-                                          serviceProviderId:
-                                              _viewController.serviceId,
-                                          serviceLinkId: _viewController
-                                              .service.serviceLinkId!,
-                                          serviceProviderType: _viewController
-                                              .service.serviceProviderType!);
-                                    }
+                                    await _viewController.navigateToOperators();
                                   },
                                   icon: Icons.support_agent,
                                   label: "${_i18n()['operators']}"),
-                              if (_viewController.deliveryDetailsId != null)
+                              if (_viewController.deliveryDetailsId != null &&
+                                  !_viewController.isBusiness)
                                 _navigationLink(
                                   onClick: () async {
-                                    DeliverySettingsView.navigate(
-                                        serviceProviderId:
-                                            _viewController.serviceId,
-                                        detailsId: _viewController.detailsId,
-                                        deliveryDetailsID:
-                                            _viewController.deliveryDetailsId!,
-                                        serviceProviderType: _viewController
-                                            .service.serviceProviderType!);
+                                    await _viewController
+                                        .navigateToDeliverySettings();
                                   },
                                   label: "${_i18n()['delivery']}",
                                   icon: Icons.delivery_dining,
                                 ),
-                              if (_viewController.selfDelivery)
+                              if (_viewController.selfDelivery &&
+                                  !_viewController.isBusiness)
                                 _navigationLink(
                                     onClick: () async {
-                                      if (_viewController
-                                              .service.serviceLinkId !=
-                                          null) {
-                                        ServiceDriversListView
-                                            .navigateToDrivers(
-                                                serviceLinkId: _viewController
-                                                    .service.serviceLinkId!,
-                                                serviceProviderId:
-                                                    _viewController.serviceId,
-                                                controllerType: _viewController
-                                                    .service
-                                                    .serviceProviderType!);
-                                      }
+                                      await _viewController.navigateToDrivers();
                                     },
                                     icon: Icons.people,
                                     label: "${_i18n()['drivers']}"),
@@ -178,22 +140,21 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   },
                                   icon: Icons.calendar_month_rounded,
                                   label: "${_i18n()['schedule']}"),
-                              _navigationLink(
-                                  onClick: () async {
-                                    ServicePaymentsView.navigate(
-                                        serviceProviderId:
-                                            _viewController.serviceId,
-                                        serviceProviderType: _viewController
-                                            .service.serviceProviderType!);
-                                  },
-                                  icon: Icons.credit_card,
-                                  label: "${_i18n()['payments']}"),
+                              if (!_viewController.isBusiness)
+                                _navigationLink(
+                                    onClick: () async {
+                                      ServicePaymentsView.navigate(
+                                          serviceProviderId:
+                                              _viewController.serviceId,
+                                          serviceProviderType: _viewController
+                                              .service.serviceProviderType!);
+                                    },
+                                    icon: Icons.credit_card,
+                                    label: "${_i18n()['payments']}"),
                               _navigationLink(
                                   icon: Icons.star_rate_rounded,
                                   onClick: () async {
-                                    await MezRouter.toNamed(
-                                        SharedServiceProviderRoutes
-                                            .kserviceReview);
+                                    ServiceReviewsView.navigate();
                                   },
                                   label: "${_i18n()['reviews']}"),
                               _navigationLink(
@@ -205,8 +166,8 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   )),
                               _navigationLink(
                                   onClick: () async {
-                                    // await launchUrlString(
-                                    //     MezEnv.appType.getPrivacyLink());
+                                    await launchUrlString(
+                                        MezEnv.appType.getPrivacyLink());
                                   },
                                   icon: Icons.privacy_tip,
                                   label: "${_i18n()['privacyPolicies']}"),

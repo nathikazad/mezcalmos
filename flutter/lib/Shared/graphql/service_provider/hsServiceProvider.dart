@@ -292,7 +292,7 @@ Future<ServiceInfo> update_service_info(
       ),
     ),
   );
-
+  mezDbgPrint("error $detailsId ==========>${res.data}");
   if (res.parsedData?.update_service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
