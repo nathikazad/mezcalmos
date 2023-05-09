@@ -27,7 +27,7 @@ class CustBusinessProductCard extends StatelessWidget {
     return MezCard(
       onClick: () {
         CustProductView.navigate(
-          productId: product.details.id.toInt(),
+          productId: product.id!.toInt(),
         );
       },
       firstAvatarBgImage:
