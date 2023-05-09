@@ -17,11 +17,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
 class ROpCategoryView extends StatefulWidget {
   const ROpCategoryView({Key? key}) : super(key: key);
 
-  static Future<void> navigate({required int restaurantId}) {
+  static Future<void> navigate(
+      {required int restaurantId, bool saveToDb = false}) {
     return MezRouter.toPath(
         RestaurantAppRoutes.restaurantCategoryRoute
             .replaceAll(":restaurantId", restaurantId.toString()),
-        arguments: <String, dynamic>{"shouldSave": false});
+        arguments: <String, dynamic>{"shouldSave": saveToDb});
   }
 
   static Future<void> navigateWithCategory(
@@ -50,7 +51,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   void initState() {
     _categoryId = MezRouter.urlArguments["categoryId"].toString();
     restaurantId = MezRouter.urlArguments["restaurantId"].toString();
-    mezDbgPrint("Restif =======>$restaurantId");
+    mezDbgPrint("Restif =======>${MezRouter.bodyArguments}");
     if (MezRouter.bodyArguments != null) {
       shouldSave = MezRouter.bodyArguments?["shouldSave"].toString() == 'true'
           ? true
@@ -95,7 +96,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
         borderRadius: 0,
         height: 70,
         onClick: () async {
-          if (_formKey.currentState?.validate() ?? false) {
+          if (_formKey.currentState?.validate() == true) {
             if (shouldSave) {
               final bool hasSaved = await _viewController.saveCategory();
               if (hasSaved) {

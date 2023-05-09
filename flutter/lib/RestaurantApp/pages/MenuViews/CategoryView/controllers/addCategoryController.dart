@@ -101,6 +101,7 @@ class AddCategoryController {
       // await restaurantInfoController.editCategory(
       //     category: constructCategory(), categoryId: editableCategoryId!);
     } else {
+      
       try {
         final String? newCatId = await add_category(
             category: constructCategory(), restaurantId: restaurantId);
