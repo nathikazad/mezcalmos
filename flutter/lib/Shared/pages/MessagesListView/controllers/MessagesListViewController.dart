@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -100,8 +101,12 @@ class BsOpMessagesListViewController extends MessagesListViewController {
   Future<void> getMessages() async {
     isLoading.value = true;
     // todo
-    //  List<HasuraChat> chatData =
-    // _allChats.value = chatData;
+    final int companyId = Get.find<BusinessOpAuthController>().companyId!;
+    final List<HasuraChat> chatData = await get_business_provider_chats(
+      serviceId: companyId,
+    );
+    _allChats.value = chatData;
+    mezDbgPrint("chats ${_allChats}");
     isLoading.value = false;
   }
 }
