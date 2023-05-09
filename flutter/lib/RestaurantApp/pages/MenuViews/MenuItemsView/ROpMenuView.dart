@@ -144,8 +144,9 @@ class _ROpMenuViewState extends State<ROpMenuView>
 
                     final bool? newCategoryAdded =
                         await ROpCategoryView.navigate(
+                            restaurantId: restaurantID!,
                             detailsId: viewController.detailsId!,
-                            restaurantId: restaurantID!) as bool?;
+                            saveToDb: true) as bool?;
                     if (newCategoryAdded == true) {
                       await viewController.fetchCategories();
                     }
