@@ -237,12 +237,18 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
     if (event.parsedData?.laundry_order_by_pk == null) {
       throwError(event.exception);
     } else {
-      Get.find<HasuraDb>().dataConsumption["listen_on_laundry_order_by_id"] =
-          event.data.toString().length +
-              (Get.find<HasuraDb>()
-                      .dataConsumption["listen_on_laundry_order_by_id"] ??
-                  0);
-
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_laundry_order_by_id")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_laundry_order_by_id"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_laundry_order_by_id"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_laundry_order_by_id"] =
+            <int>[event.data.toString().length, 1];
+      }
       mezDbgPrint(
           "✅✅✅✅✅listen_on_laundry_order_by_id: ${Get.find<HasuraDb>().dataConsumption["listen_on_laundry_order_by_id"]}");
       Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk orderData =

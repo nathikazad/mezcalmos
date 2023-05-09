@@ -7,12 +7,14 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
     String? name_of_subscription,
     int? user_id,
     int? total_size,
+    int? number_of_events,
   }) =>
       Variables$Mutation$updateSubscriptionDataConsumption._({
         if (name_of_subscription != null)
           r'name_of_subscription': name_of_subscription,
         if (user_id != null) r'user_id': user_id,
         if (total_size != null) r'total_size': total_size,
+        if (number_of_events != null) r'number_of_events': number_of_events,
       });
 
   Variables$Mutation$updateSubscriptionDataConsumption._(this._$data);
@@ -32,6 +34,10 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
       final l$total_size = data['total_size'];
       result$data['total_size'] = (l$total_size as int?);
     }
+    if (data.containsKey('number_of_events')) {
+      final l$number_of_events = data['number_of_events'];
+      result$data['number_of_events'] = (l$number_of_events as int?);
+    }
     return Variables$Mutation$updateSubscriptionDataConsumption._(result$data);
   }
 
@@ -41,6 +47,7 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
       (_$data['name_of_subscription'] as String?);
   int? get user_id => (_$data['user_id'] as int?);
   int? get total_size => (_$data['total_size'] as int?);
+  int? get number_of_events => (_$data['number_of_events'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('name_of_subscription')) {
@@ -54,6 +61,10 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
     if (_$data.containsKey('total_size')) {
       final l$total_size = total_size;
       result$data['total_size'] = l$total_size;
+    }
+    if (_$data.containsKey('number_of_events')) {
+      final l$number_of_events = number_of_events;
+      result$data['number_of_events'] = l$number_of_events;
     }
     return result$data;
   }
@@ -100,6 +111,15 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
     if (l$total_size != lOther$total_size) {
       return false;
     }
+    final l$number_of_events = number_of_events;
+    final lOther$number_of_events = other.number_of_events;
+    if (_$data.containsKey('number_of_events') !=
+        other._$data.containsKey('number_of_events')) {
+      return false;
+    }
+    if (l$number_of_events != lOther$number_of_events) {
+      return false;
+    }
     return true;
   }
 
@@ -108,12 +128,14 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
     final l$name_of_subscription = name_of_subscription;
     final l$user_id = user_id;
     final l$total_size = total_size;
+    final l$number_of_events = number_of_events;
     return Object.hashAll([
       _$data.containsKey('name_of_subscription')
           ? l$name_of_subscription
           : const {},
       _$data.containsKey('user_id') ? l$user_id : const {},
       _$data.containsKey('total_size') ? l$total_size : const {},
+      _$data.containsKey('number_of_events') ? l$number_of_events : const {},
     ]);
   }
 }
@@ -133,6 +155,7 @@ abstract class CopyWith$Variables$Mutation$updateSubscriptionDataConsumption<
     String? name_of_subscription,
     int? user_id,
     int? total_size,
+    int? number_of_events,
   });
 }
 
@@ -155,6 +178,7 @@ class _CopyWithImpl$Variables$Mutation$updateSubscriptionDataConsumption<TRes>
     Object? name_of_subscription = _undefined,
     Object? user_id = _undefined,
     Object? total_size = _undefined,
+    Object? number_of_events = _undefined,
   }) =>
       _then(Variables$Mutation$updateSubscriptionDataConsumption._({
         ..._instance._$data,
@@ -162,6 +186,8 @@ class _CopyWithImpl$Variables$Mutation$updateSubscriptionDataConsumption<TRes>
           'name_of_subscription': (name_of_subscription as String?),
         if (user_id != _undefined) 'user_id': (user_id as int?),
         if (total_size != _undefined) 'total_size': (total_size as int?),
+        if (number_of_events != _undefined)
+          'number_of_events': (number_of_events as int?),
       }));
 }
 
@@ -178,6 +204,7 @@ class _CopyWithStubImpl$Variables$Mutation$updateSubscriptionDataConsumption<
     String? name_of_subscription,
     int? user_id,
     int? total_size,
+    int? number_of_events,
   }) =>
       _res;
 }
@@ -367,6 +394,15 @@ const documentNodeMutationupdateSubscriptionDataConsumption =
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'number_of_events')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -419,7 +455,7 @@ const documentNodeMutationupdateSubscriptionDataConsumption =
               ),
               ObjectFieldNode(
                 name: NameNode(value: 'number_of_events'),
-                value: IntValueNode(value: '1'),
+                value: VariableNode(name: NameNode(value: 'number_of_events')),
               ),
             ]),
           ),

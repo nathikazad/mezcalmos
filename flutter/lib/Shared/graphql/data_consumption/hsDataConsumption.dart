@@ -11,6 +11,7 @@ HasuraDb _hasuraDb = Get.find<HasuraDb>();
 Future<void> updateSubscriptionDataConsumption(
     {required String nameOfSubscription,
     required int totalSize,
+    required int numberOfEvents,
     required int userId}) async {
   final QueryResult<Mutation$updateSubscriptionDataConsumption> res =
       await _hasuraDb.graphQLClient.mutate$updateSubscriptionDataConsumption(
@@ -18,6 +19,7 @@ Future<void> updateSubscriptionDataConsumption(
               variables: Variables$Mutation$updateSubscriptionDataConsumption(
                   name_of_subscription: nameOfSubscription,
                   total_size: totalSize,
+                  number_of_events: numberOfEvents,
                   user_id: userId)));
 
   if (res.parsedData?.update_data_consumption!.affected_rows == 0) {

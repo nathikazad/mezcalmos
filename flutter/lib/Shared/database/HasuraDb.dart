@@ -66,7 +66,7 @@ class HasuraDb {
 
   Map<String, HasuraSubscription> hasuraSubscriptions =
       <String, HasuraSubscription>{};
-  Map<String, int> dataConsumption = <String, int>{};
+  Map<String, List<int>> dataConsumption = <String, List<int>>{};
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
   Timer? expirationCheckTimer;
@@ -235,7 +235,8 @@ class HasuraDb {
         dataConsumption.forEach((key, value) {
           updateSubscriptionDataConsumption(
               nameOfSubscription: key,
-              totalSize: value,
+              totalSize: value[0],
+              numberOfEvents: value[1],
               userId: Get.find<AuthController>().hasuraUserId!);
         });
         dataConsumption.clear();

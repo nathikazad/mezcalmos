@@ -35,11 +35,21 @@ Stream<DeliveryOrderVariables?> listen_on_driver_order_variables(
     if (event.parsedData?.delivery_order_by_pk != null) {
       final Subscription$listen_on_driver_order_variables$delivery_order_by_pk
           orderData = event.parsedData!.delivery_order_by_pk!;
-      Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_variables"] =
-          event.data.toString().length +
-              (Get.find<HasuraDb>()
-                      .dataConsumption["listen_on_driver_order_variables"] ??
-                  0);
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_driver_order_variables")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_driver_order_variables"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_driver_order_variables"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_driver_order_variables"] = <int>[
+          event.data.toString().length,
+          1
+        ];
+      }
       return DeliveryOrderVariables(
         status: orderData.status.toDeliveryOrderStatus(),
         packageReady: orderData.package_ready,
@@ -82,11 +92,21 @@ Stream<List<MinimalOrder>?> listen_on_current_driver_orders(
     final List<Subscription$listen_on_inprocess_driver_orders$delivery_order>?
         ordersData = event.parsedData?.delivery_order;
     if (ordersData != null) {
-      Get.find<HasuraDb>().dataConsumption["listen_on_current_driver_orders"] =
-          event.data.toString().length +
-              (Get.find<HasuraDb>()
-                      .dataConsumption["listen_on_current_driver_orders"] ??
-                  0);
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_current_driver_orders")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_current_driver_orders"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_current_driver_orders"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_current_driver_orders"] = <int>[
+          event.data.toString().length,
+          1
+        ];
+      }
       mezDbgPrint(
           "listen_on_current_driver_orders: ${Get.find<HasuraDb>().dataConsumption["listen_on_current_driver_orders"]}");
       final List<MinimalOrder> orders = ordersData.map(
@@ -126,11 +146,18 @@ Stream<List<MinimalOrder>?> listen_on_open_driver_orders(
     List<Subscription$listen_open_driver_orders$delivery_order>? ordersData =
         event.parsedData?.delivery_order;
     if (ordersData != null) {
-      Get.find<HasuraDb>().dataConsumption["listen_on_open_driver_orders"] =
-          event.data.toString().length +
-              (Get.find<HasuraDb>()
-                      .dataConsumption["listen_on_open_driver_orders"] ??
-                  0);
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_open_driver_orders")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_open_driver_orders"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_open_driver_orders"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_open_driver_orders"] =
+            <int>[event.data.toString().length, 1];
+      }
       final List<MinimalOrder> orders = ordersData.map(
           (Subscription$listen_open_driver_orders$delivery_order orderData) {
         return MinimalOrder(
@@ -169,12 +196,21 @@ Stream<List<MinimalOrder>?> listen_on_current_dvcompany_orders(
             Subscription$listen_delivery_company_current_orders$delivery_order>?
         ordersData = event.parsedData?.delivery_order;
     if (ordersData != null) {
-      Get.find<HasuraDb>()
-              .dataConsumption["listen_on_current_dvcompany_orders"] =
-          event.data.toString().length +
-              (Get.find<HasuraDb>()
-                      .dataConsumption["listen_on_current_dvcompany_orders"] ??
-                  0);
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_current_dvcompany_orders")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_current_dvcompany_orders"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_current_dvcompany_orders"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_current_dvcompany_orders"] = <int>[
+          event.data.toString().length,
+          1
+        ];
+      }
       final List<MinimalOrder> orders = ordersData.map(
           (Subscription$listen_delivery_company_current_orders$delivery_order
               orderData) {
@@ -208,11 +244,18 @@ Stream<LatLng?> listen_order_driver_location({required int orderId}) {
     if (event.parsedData?.delivery_order_by_pk?.delivery_driver
             ?.current_location !=
         null) {
-      Get.find<HasuraDb>().dataConsumption["listen_order_driver_location"] =
-          event.data.toString().length +
-              (Get.find<HasuraDb>()
-                      .dataConsumption["listen_order_driver_location"] ??
-                  0);
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_order_driver_location")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_order_driver_location"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_order_driver_location"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_order_driver_location"] =
+            <int>[event.data.toString().length, 1];
+      }
       Geography data = event
           .parsedData!.delivery_order_by_pk!.delivery_driver!.current_location!;
       return LatLng(data.latitude, data.longitude);
@@ -270,11 +313,18 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
     // name_of_subscription, date, total_size, user_id
 
     if (event.parsedData?.delivery_order_by_pk != null) {
-      Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] =
-          event.data.toString().length +
-              (Get.find<HasuraDb>()
-                      .dataConsumption["listen_on_driver_order_costs"] ??
-                  0);
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_driver_order_costs")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_driver_order_costs"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_driver_order_costs"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] =
+            <int>[event.data.toString().length, 1];
+      }
       mezDbgPrint(
           "listen_on_driver_order_costs: ${Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"]}");
       Subscription$listen_driver_order_prices$delivery_order_by_pk data =
