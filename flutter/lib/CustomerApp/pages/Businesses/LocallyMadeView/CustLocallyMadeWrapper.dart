@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['locallyMade'];
+    ['pages']['Businesses']['LocallyMadeView']['CustLocallyMadeWrapper'];
 
 class CustLocallyMadeWrapper extends StatefulWidget {
   const CustLocallyMadeWrapper({super.key});
@@ -77,7 +77,7 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: _i18n()['title'],
+        title: _i18n()['locallyMade'],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -89,10 +89,11 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
                 navigateToListView(serviceTree[index].name);
               },
               url: getCardImage(serviceTree[index].name),
-              title: _i18n()[serviceTree[index].name.name.toLowerCase()]
+              title: _i18n()[serviceTree[index].name.toFirebaseFormatString()]
                   ['title'],
-              subtitle: _i18n()[serviceTree[index].name.name.toLowerCase()]
-                  ['description'],
+              subtitle:
+                  _i18n()[serviceTree[index].name.toFirebaseFormatString()]
+                      ['description'],
             ),
           ),
         ),

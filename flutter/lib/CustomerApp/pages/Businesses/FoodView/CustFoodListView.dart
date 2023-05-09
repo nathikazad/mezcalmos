@@ -18,7 +18,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['food']['locallyMade']['CustFoodListView'];
+    ['pages']['Businesses']['FoodView']['CustFoodListView'];
 
 class CustFoodListView extends StatefulWidget {
   const CustFoodListView({super.key});
@@ -56,7 +56,7 @@ class _CustFoodListViewState extends State<CustFoodListView> {
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
         titleWidget: Text(
-            '${_i18n()[viewController.serviceCategory.first.name.toLowerCase()]}'),
+            '${_i18n()[viewController.serviceCategory.first.toFirebaseFormatString()]}'),
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -102,7 +102,7 @@ class _CustFoodListViewState extends State<CustFoodListView> {
         Flexible(
           child: MezButton(
             label:
-                '${_i18n()[viewController.serviceCategory.first.name.toLowerCase()]}',
+                '${_i18n()[viewController.serviceCategory.first.toFirebaseFormatString()]}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;

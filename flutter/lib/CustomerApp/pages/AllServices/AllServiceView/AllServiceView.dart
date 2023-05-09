@@ -6,11 +6,10 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/AllServiceListView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper'];
+    ['pages']['AllServices']['AllServiceView']['AllServiceView'];
 
 class AllServiceView extends StatefulWidget {
   const AllServiceView({super.key});
@@ -115,7 +114,7 @@ class _AllServiceViewState extends State<AllServiceView> {
       margin: const EdgeInsets.all(5),
       child: Obx(
         () => Text(
-          "${_i18n()['service']}",
+          "${_i18n()['services']}",
           style: textStyle,
           textAlign: TextAlign.left,
         ),

@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['shared'];
+    ['pages']['Businesses']['components']['cusShowBusinessFilerSheet'];
 
 typedef FilterInput = Map<String, List<String>>;
 Future<FilterInput?> cusShowBusinessFilerSheet({

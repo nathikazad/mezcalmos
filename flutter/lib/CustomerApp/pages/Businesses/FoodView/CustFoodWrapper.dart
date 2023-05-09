@@ -13,7 +13,7 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRes
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['food'];
+    ['pages']['Businesses']['FoodView']['CustFoodWrapper'];
 
 class CustFoodWrapper extends StatefulWidget {
   const CustFoodWrapper({super.key});
@@ -81,7 +81,7 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: _i18n()['title'],
+        title: _i18n()['food'],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

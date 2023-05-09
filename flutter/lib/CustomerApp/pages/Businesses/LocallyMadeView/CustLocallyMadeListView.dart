@@ -8,9 +8,9 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -20,7 +20,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['locallyMade'];
+    ['pages']['Businesses']['LocallyMadeView']['CustLocallyMadeListView'];
 
 class CustLocallyMadeListView extends StatefulWidget {
   const CustLocallyMadeListView({super.key});
@@ -60,7 +60,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
         titleWidget: Text(
-            '${_i18n()[viewController.productsCategory.first.name.toLowerCase()]['title']}'),
+            '${_i18n()[viewController.productsCategory.first.toFirebaseFormatString()]}'),
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -105,7 +105,8 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: viewController.productsCategory.first.name,
+            label:
+                '${_i18n()[viewController.productsCategory.first.toFirebaseFormatString()]}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -125,7 +126,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
         ),
         Flexible(
           child: MezButton(
-            label: '${_i18n()['shared']['store']}',
+            label: '${_i18n()['store']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
@@ -208,7 +209,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text('${_i18n()['shared']['noBusinessFound']}'));
+          child: Text('${_i18n()['noBusinessFound']}'));
   }
 
   Widget _buildProducts() {
@@ -241,7 +242,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                             fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '\$${viewController.products[index].details.cost.values.first.toString()}',
+                        '${viewController.products[index].details.cost.values.first.toPriceString()}',
                         overflow: TextOverflow.ellipsis,
                         style: context.textTheme.bodyLarge?.copyWith(
                             height: 2,
@@ -275,7 +276,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text('${_i18n()['shared']['noServiceFound']}'));
+          child: Text('${_i18n()['noServiceFound']}'));
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

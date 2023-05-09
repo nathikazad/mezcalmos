@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
@@ -19,7 +20,7 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeRentalListView'];
+    ['pages']['Businesses']['RentalsView']['CustHomeRentalListView'];
 
 // todo @ChiragKr04 fix the cards ui and translations of this page
 class CustHomeRentalListView extends StatefulWidget {
@@ -240,7 +241,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                                 .length ==
                                             0
                                         ? '- / -'
-                                        : '\$${viewController.rentals[index].details.cost.values.first.toString()}/${'${_i18n()[viewController.rentals[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
+                                        : '${viewController.rentals[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.rentals[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
                                     overflow: TextOverflow.ellipsis,
                                     style: context.textTheme.bodyLarge
                                         ?.copyWith(

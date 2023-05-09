@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -19,7 +20,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['services'];
+    ['pages']['Businesses']['ServicesViews']['CustServicesListView'];
 
 class CustServicesListView extends StatefulWidget {
   const CustServicesListView({super.key});
@@ -58,7 +59,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
         titleWidget: Text(
-            '${_i18n()['shared'][viewController.serviceCategory.first.name.toLowerCase()]}'),
+            '${_i18n()[viewController.serviceCategory.first.toFirebaseFormatString()]}'),
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -103,7 +104,8 @@ class _CustServicesListViewState extends State<CustServicesListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: viewController.serviceCategory.first.name,
+            label:
+                '${_i18n()[viewController.serviceCategory.first.toFirebaseFormatString()]}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -123,7 +125,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
         ),
         Flexible(
           child: MezButton(
-            label: '${_i18n()['shared']['store']}',
+            label: '${_i18n()['store']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
@@ -206,7 +208,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text('${_i18n()['shared']['noBusinessFound']}'));
+          child: Text('${_i18n()['noBusinessFound']}'));
   }
 
   Widget _buildServices() {
@@ -214,6 +216,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
       return Column(
           children: List.generate(
               viewController.services.length,
+              // TO Fix
               (int index) => MezCard(
                     onClick: () {
                       CustServiceView.navigate(
@@ -242,7 +245,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                                           fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  '\$${viewController.services[index].details.cost.values.first.toString()}',
+                                  '${viewController.services[index].details.cost.values.first.toPriceString()}',
                                   overflow: TextOverflow.ellipsis,
                                   style: context.textTheme.bodyLarge?.copyWith(
                                       height: 2,
@@ -276,7 +279,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text(_i18n()['shared'][
+          child: Text(_i18n()[
               'no${viewController.serviceCategory.first.name.toLowerCase()}Found']));
   }
 

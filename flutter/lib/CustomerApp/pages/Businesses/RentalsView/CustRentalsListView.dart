@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -21,7 +22,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.da
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['rentals'];
+    ['pages']['Businesses']['RentalsView']['CustRentalsListView'];
 
 // todo @ChiragKr04 fix the cards and ui  of this page
 class CustRentalsListView extends StatefulWidget {
@@ -58,7 +59,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
         titleWidget: Text(
-            '${_i18n()[viewController.rentalCategory.name.toLowerCase()]['title']}'),
+            '${_i18n()[viewController.rentalCategory.toFirebaseFormatString()]}'),
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -122,7 +123,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
           Flexible(
             child: MezButton(
               label:
-                  '${_i18n()[viewController.rentalCategory.name.toLowerCase()]['title']}',
+                  '${_i18n()[viewController.rentalCategory.toFirebaseFormatString()]}',
               height: 35,
               onClick: () async {
                 viewController.showBusiness.value = false;
@@ -142,7 +143,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
           ),
           Flexible(
             child: MezButton(
-              label: '${_i18n()['shared']['store']}',
+              label: '${_i18n()['store']}',
               height: 35,
               onClick: () async {
                 viewController.showBusiness.value = true;
@@ -184,7 +185,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                 width: 5,
               ),
               Text(
-                '${_i18n()['shared']['filter']}:',
+                '${_i18n()['filter']}:',
               ),
               SizedBox(
                 width: 3,
@@ -218,7 +219,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '${_i18n()['shared']['filter']}',
+                  '${_i18n()['filter']}',
                   style:
                       context.textTheme.bodyLarge?.copyWith(fontSize: 15.mezSp),
                 ),
@@ -234,7 +235,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                         //    checkColor: primaryBlueColor,
                         activeColor: primaryBlueColor,
                         title: Text(
-                          '${_i18n()['shared'][viewController.filterCategories[index].name.toLowerCase()]}',
+                          '${_i18n()[viewController.filterCategories[index].name.toLowerCase()]}',
                           style: context.textTheme.bodyLarge,
                         ),
                         value: viewController.selectedCategories
@@ -258,7 +259,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                             textStyle: context.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: redAccentColor),
-                            label: '${_i18n()['shared']['cancel']}',
+                            label: '${_i18n()['cancel']}',
                             backgroundColor: Colors.transparent,
                             textColor: redAccentColor,
                             onClick: () async {
@@ -273,7 +274,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                         child: MezButton(
                             height: 45,
                             withGradient: true,
-                            label: '${_i18n()['shared']['confirm']}',
+                            label: '${_i18n()['confirm']}',
                             onClick: () async {
                               viewController.filter();
                               Navigator.pop(
@@ -353,7 +354,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text('${_i18n()['shared']['noBusinessFound']}'));
+          child: Text('${_i18n()['noBusinessFound']}'));
   }
 
   Widget _buildRentals() {
@@ -386,7 +387,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                             fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '\$${viewController.rentals[index].details.cost.values.first.toString()}/${'${_i18n()['shared'][viewController.rentals[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
+                        '${viewController.rentals[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.rentals[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
                         overflow: TextOverflow.ellipsis,
                         style: context.textTheme.bodyLarge?.copyWith(
                             height: 2,
@@ -407,10 +408,8 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                     )
                 ],
               ),
-              Divider(),
-              Text(viewController.rentals[index].details.description
-                      ?.getTranslation(userLanguage) ??
-                  '${_i18n()['shared']['none']}')
+              Divider(), // TO FIx
+              Text(viewController.rentals[index].businessName)
             ],
           ),
           // action: (viewController.rentals[index].details.firstImage != null)
@@ -425,7 +424,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text('${_i18n()['shared']['noRentalsFound']}'));
+          child: Text('${_i18n()['noRentalsFound']}'));
   }
 
 //Should be shared

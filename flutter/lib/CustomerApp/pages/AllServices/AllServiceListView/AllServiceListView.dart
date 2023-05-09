@@ -17,7 +17,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocal
 import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodWrapper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper'];
+    ['pages']['AllServices']['AllServiceListView']['AllServiceListView'];
 
 class AllServiceListView extends StatefulWidget {
   const AllServiceListView({super.key});
@@ -152,7 +152,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                           child: Obx(
                             () => FittedBox(
                               child: Text(
-                                '${_i18n()[cServiceController.deliveryServiceListData[currentMezService]!['title']]['title']}',
+                                '${_i18n()[cServiceController.deliveryServiceListData[currentMezService]!['title']]}',
                                 style: txt.headlineSmall,
                               ),
                             ),

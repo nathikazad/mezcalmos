@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
@@ -292,7 +293,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                       ),
                     ),
                     Text(
-                      '\$${viewController.classes[index].details.cost.values.first.toString()}/${'${_i18n()['shared'][viewController.classes[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
+                      '${viewController.classes[index].details.cost.values.first.toPriceString()}/${'${_i18n()['shared'][viewController.classes[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyLarge?.copyWith(
                           fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),

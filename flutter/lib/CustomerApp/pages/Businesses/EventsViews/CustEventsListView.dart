@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
@@ -19,7 +20,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['events'];
+    ['pages']['Businesses']['EventsViews']['CustEventsListView'];
 
 class CustEventsListView extends StatefulWidget {
   const CustEventsListView({super.key});
@@ -47,7 +48,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: '${_i18n()['title']}',
+        title: '${_i18n()['events']}',
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -89,7 +90,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: '${_i18n()['shared']['events']}',
+            label: '${_i18n()['events']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -109,7 +110,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
         ),
         Flexible(
           child: MezButton(
-            label: '${_i18n()['shared']['organizers']}',
+            label: '${_i18n()['organizers']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
@@ -157,7 +158,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                 width: 5,
               ),
               Text(
-                '${_i18n()['shared']['filter']}:',
+                '${_i18n()['filter']}:',
               ),
               SizedBox(
                 width: 3,
@@ -242,7 +243,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text('${_i18n()['shared']['noBusinessesFound']}'));
+          child: Text('${_i18n()['noBusinessesFound']}'));
   }
 
   Widget _buildEvents() {
@@ -289,7 +290,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                       ),
                     ),
                     Text(
-                      '\$${viewController.events[index].details.cost.values.first.toString()}/${'${_i18n()['shared'][viewController.events[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
+                      '${viewController.events[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.events[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyLarge?.copyWith(
                           fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
@@ -307,7 +308,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text('${_i18n()['shared']['noEventsFound']}'));
+          child: Text('${_i18n()['noEventsFound']}'));
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['rentals'];
+    ['pages']['Businesses']['components']['CustBusinessRentalCost'];
 
 class CustBusinessRentalCost extends StatelessWidget {
   const CustBusinessRentalCost({super.key, required this.cost});
@@ -87,7 +87,7 @@ class CustBusinessRentalCost extends StatelessWidget {
                           costData[index]["icon"],
                         ),
                         Text(
-                            '\$${(costData[index]['cost'] as double).toStringAsFixed(0)}/${_i18n()['shared'][costData[index]['unit']]}')
+                            '\$${(costData[index]['cost'] as double).toStringAsFixed(0)}/${_i18n()[costData[index]['unit']]}')
                       ],
                     )
                   : Column(
@@ -97,7 +97,7 @@ class CustBusinessRentalCost extends StatelessWidget {
                           costData[index]["icon"],
                         ),
                         Text(
-                            '\$${(costData[index]['cost'] as double).toStringAsFixed(0)}/${_i18n()['shared'][costData[index]['unit']]}')
+                            '\$${(costData[index]['cost'] as double).toStringAsFixed(0)}/${_i18n()[costData[index]['unit']]}')
                       ],
                     ),
           ],

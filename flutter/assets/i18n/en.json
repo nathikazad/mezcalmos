@@ -591,79 +591,11 @@
           "car": "Car",
           "bicycle": "Bicycle"
         },
+
         "service": "Services",
         "deliveries": { "title": "Deliveries", "shared": {} },
-        "food": {
-          "title": "Food",
-          "shared": {},
-          "restaurants": {
-            "title": "Restaurants",
-            "description": "Discover most delicious dishes from the nearest restaurants."
-          },
-          "locallyMade": {
-            "title": "Locally Made",
-            "description": "Savor the taste of locally made treats.",
-            "CustFoodListView": {
-              "store": "Store",
-              "uncategorized": "Uncategorized",
-              "cleaning": "Cleaning",
-              "mealplanning": "Meal planning",
-              "petsitting": "Pet sitting",
-              "noUncategorizedFound": "No uncategorized found",
-              "noCleaningFound": "No cleaning found",
-              "noMealPlanningFound": "No meal planning found",
-              "noPetSittingFound": "No pet sitting found",
-              "noBusinessesFound": "No businesses found"
-            }
-          }
-        },
-        "rentals": {
-          "title": "Rentals",
-          "shared": {
-            "store": "Store",
-            "filter": "Filter",
-            "cancel": "Cancel",
-            "confirm": "Confirm",
-            "hour": "Hour",
-            "day": "Day",
-            "week": "Week",
-            "month": "Month",
-            "person": "Person",
-            "total": "Total",
-            "none": "None",
-            "unit": "Unit",
-            "son": "Son",
-            "motorcycle": "Motorcycle",
-            "car": "Car",
-            "bicycle": "Bicycle"
-          },
-          "surf": {
-            "title": "Surf",
-            "description": "Find the best surfboards around you.",
-            "board": "Board",
-            "store": "Store"
-          },
-          "vehicle": {
-            "title": "Vehicle",
-            "description": "Book and rent your car from local suppliers with affordable prices.",
-            "vehicle": "Vehicle",
-            "store": "Store"
-          },
-          "car": {
-            "title": "Car",
-            "description": "Book and rent your car from local suppliers with affordable prices.",
-            "car": "Car",
-            "store": "Store"
-          },
-          "home": {
-            "title": "Homes",
-            "description": "Discover the best homes in your city.",
-            "home": "Home",
-            "agency": "Agency"
-          }
-        },
+
         "classes": {
-          "title": "Classes",
           "shared": {
             "filter": "Filter",
             "class": "Class",
@@ -677,7 +609,6 @@
             "person": "Person",
             "total": "Total",
             "unit": "Unit",
-            "son": "Son",
             "none": "None"
           },
           "classes": {
@@ -687,7 +618,6 @@
           }
         },
         "therapy": {
-          "title": "Therapies",
           "shared": {
             "filter": "Filter",
             "therapy": "Therapy",
@@ -701,32 +631,11 @@
             "person": "Person",
             "total": "Total",
             "unit": "Unit",
-            "son": "Son",
             "none": "None",
             "noBusinessesFound": "No businesses found",
             "noTherapyFound": "No therapy found"
-          }
-        },
-        "events": {
-          "title": "Events",
-          "shared": {
-            "filter": "Filter",
-            "events": "Events",
-            "organizers": "Organizers",
-            "cancel": "Cancel",
-            "confirm": "Confirm",
-            "hour": "Hour",
-            "day": "Day",
-            "week": "Week",
-            "month": "Month",
-            "person": "Person",
-            "total": "Total",
-            "unit": "Unit",
-            "son": "Son",
-            "none": "None",
-            "noBusinessesFound": "No businesses found",
-            "noEventsFound": "No event found"
           },
+
           "parties": {
             "title": "Parties",
             "description": "Discover most delicious dishes from the nearest restaurants."
@@ -738,41 +647,6 @@
           "getTogether": {
             "title": "Get Together",
             "description": "Obtain delivery of anything you desire to your location."
-          }
-        },
-        "locallyMade": {
-          "title": "Locally Made",
-          "shared": {
-            "store": "Store",
-            "noBusinessesFound": "No businesses found",
-            "noServiceFound": "No service found"
-          },
-          "consumable": {
-            "title": "Consumable",
-            "description": "Discover most delicious dishes from the nearest restaurants."
-          },
-          "personalcare": {
-            "title": "Personal Care",
-            "description": "Get your clothes cleaned by your nearest laundry service."
-          }
-        },
-        "services": {
-          "title": "Services",
-          "cleaning": {
-            "title": "Cleaning",
-            "desctiption": "Get your clothes cleaned by your nearest laundry service."
-          },
-          "shared": {
-            "store": "Store",
-            "uncategorized": "Uncategorized",
-            "cleaning": "Cleaning",
-            "mealplanning": "Meal planning",
-            "petsitting": "Pet sitting",
-            "noUncategorizedFound": "No uncategorized found",
-            "noCleaningFound": "No cleaning found",
-            "noMealPlanningFound": "No meal planning found",
-            "noPetSittingFound": "No pet sitting found",
-            "noBusinessesFound": "No businesses found"
           }
         },
         "volunteer": "Volunteer",
@@ -791,6 +665,218 @@
         "search": "Search",
         "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services."
       },
+      "AllServices": {
+        "AllServiceListView": {
+          "AllServiceListView": {
+            "deliveries": "Deliveries",
+            "food": "Food",
+            "rentals": "Rentals",
+            "events": "Events",
+            "classes": "Classes",
+            "services": "Services",
+            "locallyMade": "Locally made",
+            "therapy": "Therapies"
+          }
+        },
+        "AllServiceView": {
+          "AllServiceView": {
+            "welcomeText": "Welcome to MEZCALMOS 👋",
+            "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
+            "services": "Services"
+          }
+        }
+      },
+      "Businesses": {
+        "components": {
+          "CustBusinessRentalCard": {
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "Total"
+          },
+          "CustBusinessEventCard": {
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "Total"
+          },
+          "CustBusinessRentalCost": {
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "Total"
+          },
+          "cusShowBusinessFilerSheet": {
+            "confirm": "Confirm",
+            "cancel": "Cancel",
+            "filter": "Filter",
+            "categories": "Categories",
+            "schedule": "Schedule",
+            "dance": "Dance",
+            "party": "Party",
+            "social": "Social",
+            "therapy": "Therapy",
+            "scheduled": "Scheduled",
+            "oneTime": "One time",
+            "onDemand": "On demand"
+          }
+        },
+        "RentalsView": {
+          "CustHomeRentalListView": {
+            "homes": "Homes",
+            "home": "Home",
+            "agency": "Agency",
+            "noBusinessesFound": "No businesses found",
+            "noRentalsFound": "No Rentals Found",
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "Total",
+            "bedrooms": "Bedrooms",
+            "bathrooms": "Bathrooms"
+          },
+          "CustRentalWrapper": {
+            "surf": {
+              "title": "Surf",
+              "description": "Find the best surfboards around you."
+            },
+            "vehicle": {
+              "title": "Vehicle",
+              "description": "Book and rent your car from local suppliers with affordable prices."
+            },
+            "home": {
+              "title": "Homes",
+              "description": "Discover the best homes in your city."
+            }
+          },
+          "CustRentalsListView": {
+            "uncategorized": "Uncategorized",
+            "surf": "Surf",
+            "homes": "Homes",
+            "vehicle": "Vehicles",
+            "noRentalsFound": "No rentals found",
+            "none": "None",
+            "noBusinessFound": "No buisinesses found",
+            "confirm": "Confirm",
+            "cancel": "Cancel",
+            "filter": "Filter",
+            "store": "Store",
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "Total",
+            "unit": "unit",
+            "motorcycle": "Motorcycle",
+            "car": "Car",
+            "bicycle": "Bicycle"
+          }
+        },
+        "EventsViews": {
+          "CustEventsListView": {
+            "homes": "Homes",
+            "events": "Events",
+            "organizers": "Organizers",
+            "noBusinessesFound": "No businesses found",
+            "noEventsFound": "No events found",
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "unit": "unit",
+            "total": "Total",
+            "filter": "Filter"
+          }
+        },
+        "ServicesViews": {
+          "CustServicesListView": {
+            "noUncategorizedFound": "No uncategorized found",
+            "noCleaningFound": "No cleaning found",
+            "noMealPlanningFound": "No meal planning found",
+            "noPetSittingFound": "No pet sitting found",
+            "noBusinessesFound": "No businesses found",
+            "store": "Store",
+            "services": "Services",
+            "mealplanning": "Meal planning",
+            "petSitting": "Pet sitting",
+            "uncategorized": "Uncategorized",
+            "cleaning": "Cleaning"
+          },
+          "CustServicesWrapper": {
+            "services": "Services",
+
+            "cleaning": {
+              "title": "Cleaning",
+              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+            },
+            "mealplanning": {
+              "title": "Meal planning",
+              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+            },
+            "petSitting": {
+              "title": "Pet sitting",
+              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+            },
+            "uncategorized": {
+              "title": "Uncategorized",
+              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+            }
+          }
+        },
+        "LocallyMadeView": {
+          "CustLocallyMadeListView": {
+            "consumable": "Consumable",
+            "personalCare": "Personal care",
+            "noPetServiceFound": "No services found",
+            "noBusinessesFound": "No businesses found",
+            "store": "Store",
+            "services": "Services"
+          },
+          "CustLocallyMadeWrapper": {
+            "locallyMade": "Locally made",
+            "consumable": {
+              "title": "Consumable",
+              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+            },
+            "personalCare": {
+              "title": "Personal Care",
+              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+            }
+          }
+        },
+        "FoodView": {
+          "CustFoodWrapper": {
+            "food": "Food",
+            "restaurants": {
+              "title": "Restaurants",
+              "description": "Discover most delicious dishes from the nearest restaurants."
+            },
+            "locallyMade": {
+              "title": "Locally Made",
+              "description": "Savor the taste of locally made treats."
+            }
+          },
+          "CustFoodListView": {
+            "store": "Store",
+            "noUncategorizedFound": "No uncategorized found",
+            "noCleaningFound": "No cleaning found",
+            "noMealPlanningFound": "No meal planning found",
+            "noPetSittingFound": "No pet sitting found",
+            "noBusinessesFound": "No businesses found",
+            "uncategorized": "Uncategorized"
+          }
+        }
+      },
       "CustBusinessView": {
         "rentals": "Rentals",
         "events": "Events",
@@ -801,21 +887,6 @@
         "reviews": "Reviews",
         "viewAll": "View All",
         "loading": "Loading"
-      },
-      "CustHomeRentalListView": {
-        "homes": "Homes",
-        "home": "Home",
-        "agency": "Agency",
-        "noBusinessesFound": "No businesses found",
-        "noRentalsFound": "No Rentals Found",
-        "hour": "Hour",
-        "day": "Day",
-        "week": "Week",
-        "month": "Month",
-        "person": "Person",
-        "total": "Total",
-        "bedrooms": "Bedrooms",
-        "bathrooms": "Bathrooms"
       },
       "CustomerWrapper": {
         "orders": "Orders",

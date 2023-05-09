@@ -614,51 +614,6 @@
             }
           }
         },
-        "rentals": {
-          "title": "Alquileres",
-          "shared": {
-            "store": "Almacenar",
-            "filter": "Filtrar",
-            "cancel": "Cancelar",
-            "confirm": "Confirmar",
-            "hour": "Hora",
-            "day": "Día",
-            "week": "Semana",
-            "month": "Mes",
-            "person": "Persona",
-            "total": "Total",
-            "none": "Ninguna",
-            "unit": "Unidad",
-            "son": "Son",
-            "motorcycle": "Motocicleta",
-            "car": "Auto",
-            "bicycle": "Bicicleta"
-          },
-          "surf": {
-            "title": "Surf",
-            "description": "Encuentra las mejores tablas de surf a tu alrededor.",
-            "board": "Junta",
-            "store": "Tienda"
-          },
-          "vehicle": {
-            "title": "Vehículo",
-            "description": "Reserve y alquile su automóvil de proveedores locales con precios asequibles.",
-            "vehicle": "Vehículo",
-            "store": "Tienda"
-          },
-          "car": {
-            "title": "Auto",
-            "description": "Reserve y alquile su automóvil de proveedores locales con precios asequibles.",
-            "car": "Auto",
-            "store": "Tienda"
-          },
-          "home": {
-            "title": "Casas",
-            "description": "Descubre las mejores casas de su ciudad.",
-            "home": "Hogar",
-            "agency": "Agencia"
-          }
-        },
         "classes": {
           "title": "Clases",
           "shared": {
@@ -674,7 +629,6 @@
             "person": "Persona",
             "total": "Total",
             "unit": "Unidad",
-            "son": "Son",
             "none": "Ninguna"
           },
           "classes": {
@@ -698,7 +652,6 @@
             "person": "Persona",
             "total": "total",
             "unit": "Unidad",
-            "son": "Son",
             "none": "Ninguna",
             "noBusinessesFound": "No se encontraron negocios",
             "noTherapyFound": "No se encontró terapia"
@@ -719,7 +672,6 @@
             "person": "Persona",
             "total": "total",
             "unit": "Unidad",
-            "son": "Hijo",
             "none": "Ninguna",
             "noBusinessesFound": "No se encontraron negocios",
             "noEventsFound": "No se encuentra ningún evento"
@@ -788,6 +740,217 @@
         "search": "Buscar",
         "appDescription": "Su único lugar de parada para encontrar todos sus servicios locales necesarios y dónde puede disfrutar de servicios rápidos y de alta calidad."
       },
+      "AllServices": {
+        "AllServiceListView": {
+          "AllServiceListView": {
+            "deliveries": "Entregas",
+            "food": "Alimento",
+            "rentals": "Alquileres",
+            "events": "Eventos",
+            "classes": "Clases",
+            "services": "Servicios",
+            "locallyMade": "Hecho localmente",
+            "therapy": "Terapias"
+          }
+        },
+        "AllServiceView": {
+          "AllServiceView": {
+            "welcomeText": "Bienvenido a MEZCALMOS 👋",
+            "appDescription": "Su único lugar de parada para encontrar todos sus servicios locales necesarios y dónde puede disfrutar de servicios rápidos y de alta calidad.",
+            "services": "Servicios"
+          }
+        }
+      },
+      "Businesses": {
+        "components": {
+          "CustBusinessRentalCard": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total"
+          },
+          "CustBusinessEventCard": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total"
+          },
+          "CustBusinessRentalCost": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total"
+          },
+          "cusShowBusinessFilerSheet": {
+            "confirm": "Confirmar",
+            "cancel": "Cancelar",
+            "filter": "Filtrar",
+            "categories": "Categories",
+            "schedule": "Cronograma",
+            "dance": "Bailar",
+            "party": "Fiesta",
+            "social": "Social",
+            "therapy": "Terapia",
+            "scheduled": "Programada",
+            "oneTime": "Una vez",
+            "onDemand": "On demand"
+          }
+        },
+        "RentalsView": {
+          "CustHomeRentalListView": {
+            "homes": "Casas",
+            "home": "Hogar",
+            "agency": "Agencia",
+            "noBusinessesFound": "No businesses found",
+            "noRentalsFound": "No Rentals Found",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "Total",
+            "bedrooms": "Dormitorios",
+            "bathrooms": "Baños"
+          },
+          "CustRentalWrapper": {
+            "surf": {
+              "title": "Surf",
+              "description": "Encuentra las mejores tablas de surf a tu alrededor."
+            },
+            "vehicle": {
+              "title": "Vehículo",
+              "description": "Reserve y alquile su automóvil de proveedores locales con precios asequibles."
+            },
+            "home": {
+              "title": "Casas",
+              "description": "Descubre las mejores casas de su ciudad."
+            }
+          },
+          "CustRentalsListView": {
+            "uncategorized": "Sin categoría",
+            "surf": "Surf",
+            "homes": "Casas",
+            "vehicle": "Vehicles",
+            "noRentalsFound": "No se encontraron alquileres",
+            "none": "Ninguna",
+            "noBusinessFound": "No se encontraron Buisinesses",
+            "confirm": "Confirmar",
+            "cancel": "Cancelar",
+            "filter": "Filtrar",
+            "store": "Tienda",
+            "hour": "hour",
+            "day": "day",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "motorcycle": "Motocicleta",
+            "car": "Auto",
+            "bicycle": "Bicicleta"
+          }
+        },
+        "EventsViews": {
+          "CustEventsListView": {
+            "events": "Eventos",
+            "organizers": "Organizadoras",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noEventsFound": "No se encuentran eventos",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "unit": "unidad",
+            "total": "total",
+            "filter": "Filtrar"
+          }
+        },
+        "ServicesViews": {
+          "CustServicesListView": {
+            "noUncategorizedFound": "No se encontró sin categoría",
+            "noCleaningFound": "No se encontró limpieza",
+            "noMealPlanningFound": "No se encontró la planificación de comidas",
+            "noPetSittingFound": "No se encontró una mascota sentada",
+            "noBusinessesFound": "No businesses found",
+            "store": "Tienda",
+            "services": "Servicios",
+            "mealplanning": "Planificación de comidas",
+            "petSitting": "Pet sitting",
+            "uncategorized": "Sin categoría",
+            "cleaning": "Limpieza"
+          },
+          "CustServicesWrapper": {
+            "services": "Servicios",
+
+            "cleaning": {
+              "title": "Limpieza",
+              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            },
+            "mealplanning": {
+              "title": "Planificación de comidas",
+              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            },
+            "petSitting": {
+              "title": "Cuidado de mascotas",
+              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            },
+            "uncategorized": {
+              "title": "Uncategorized",
+              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            }
+          }
+        },
+        "LocallyMadeView": {
+          "CustLocallyMadeListView": {
+            "consumable": "Consumible",
+            "personalCare": "Cuidado personal",
+            "noPetServiceFound": "No se encontraron servicios",
+            "noBusinessesFound": "No se encontraron negocios",
+            "store": "Tienda",
+            "services": "Servicios"
+          },
+          "CustLocallyMadeWrapper": {
+            "locallyMade": "Hecho localmente",
+            "consumable": {
+              "title": "Consumible",
+              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            },
+            "personalCare": {
+              "title": "Cuidado personal",
+              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            }
+          }
+        },
+        "FoodView": {
+          "CustFoodWrapper": {
+            "food": "Alimento",
+            "restaurants": {
+              "title": "Restaurants",
+              "description": "Discover most delicious dishes from the nearest restaurants."
+            },
+            "locallyMade": {
+              "title": "Hecho localmente",
+              "description": "Saborea el sabor de las golosinas locales."
+            }
+          },
+          "CustFoodListView": {
+            "store": "Tienda",
+            "noUncategorizedFound": "No se encontró sin categoría",
+            "noCleaningFound": "No cleaning found",
+            "noMealPlanningFound": "No se encontró la planificación de comidas",
+            "noPetSittingFound": "No pet sitting found",
+            "noBusinessesFound": "No se encontraron negocios",
+            "uncategorized": "Sin categoría"
+          }
+        }
+      },
       "CustBusinessView": {
         "rentals": "Alquileres",
         "events": "Eventos",
@@ -799,21 +962,7 @@
         "viewAll": "Ver todo",
         "loading": "Cargando"
       },
-      "CustHomeRentalListView": {
-        "homes": "Casas",
-        "home": "Hogar",
-        "agency": "Agencia",
-        "noBusinessesFound": "No se encontraron negocios",
-        "noRentalsFound": "No se encontraron alquileres",
-        "hour": "Hora",
-        "day": "Día",
-        "week": "Semana",
-        "month": "Mes",
-        "person": "Persona",
-        "total": "Total",
-        "bedrooms": "Dormitorios",
-        "bathrooms": "Baños"
-      },
+
       "CustomerWrapper": {
         "orders": "Pedidos",
         "profile": "Perfil",

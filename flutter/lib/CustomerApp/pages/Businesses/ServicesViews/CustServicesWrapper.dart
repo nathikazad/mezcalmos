@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['services'];
+    ['pages']['Businesses']['ServicesViews']['CustServicesWrapper'];
 
 class CustServicesWrapper extends StatefulWidget {
   const CustServicesWrapper({super.key});
@@ -76,7 +76,7 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: _i18n()['title'],
+        title: _i18n()['services'],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -88,10 +88,11 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
                 navigateToListView(serviceTree[index].name);
               },
               url: getCardImage(serviceTree[index].name),
-              title: _i18n()[serviceTree[index].name.name.toLowerCase()]
+              title: _i18n()[serviceTree[index].name.toFirebaseFormatString()]
                   ['title'],
-              subtitle: _i18n()[serviceTree[index].name.name.toLowerCase()]
-                  ['description'],
+              subtitle:
+                  _i18n()[serviceTree[index].name.toFirebaseFormatString()]
+                      ['description'],
             ),
           ),
         ),

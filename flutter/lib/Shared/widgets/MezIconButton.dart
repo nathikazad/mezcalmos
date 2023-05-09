@@ -9,6 +9,7 @@ class MezIconButton extends StatelessWidget {
       this.child,
       this.padding,
       this.backgroundColor,
+      this.shadowColor,
       this.materialColor,
       this.shape,
       this.borderRadius,
@@ -21,6 +22,7 @@ class MezIconButton extends StatelessWidget {
   final double? iconSize;
   final double? elevation;
   final Color? backgroundColor;
+  final Color? shadowColor;
   final Color? materialColor;
   final Color? iconColor;
   final BoxShape? shape;
@@ -30,6 +32,7 @@ class MezIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      shadowColor: shadowColor,
       color: materialColor,
       elevation: elevation ?? 1,
       borderRadius: borderRadius,

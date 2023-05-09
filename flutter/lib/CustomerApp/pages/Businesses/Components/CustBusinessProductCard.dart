@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -40,7 +41,7 @@ class CustBusinessProductCard extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       action: Text(
-        '\$${product.details.cost.values.first.toString()}/${product.details.cost.keys.first.toStringDuration()}',
+        '${product.details.cost.values.first.toPriceString()}/${product.details.cost.keys.first.toStringDuration()}',
         style: context.textTheme.bodyLarge,
       ),
     );

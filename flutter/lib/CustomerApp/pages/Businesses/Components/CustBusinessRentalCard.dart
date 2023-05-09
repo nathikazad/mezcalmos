@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalV
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -13,7 +14,7 @@ import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['rentals'];
+    ['pages']['Businesses']['components']['CustBusinessRentalCard'];
 
 class CustBusinessRentalCard extends StatelessWidget {
   final EdgeInsets margin;
@@ -54,7 +55,7 @@ class CustBusinessRentalCard extends StatelessWidget {
       action: Text(
         rental.details.cost.length == 0
             ? '- / -'
-            : '\$${rental.details.cost.values.first.toString()}/${_i18n()['shared'][rental.details.cost.keys.first.toStringDuration().toLowerCase()]}',
+            : '${rental.details.cost.values.first.toPriceString()}/${_i18n()[rental.details.cost.keys.first.toStringDuration().toLowerCase()]}',
         style:
             context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
