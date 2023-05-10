@@ -211,21 +211,31 @@ class _SignInViewState extends State<SignInView> {
   }
 
   Widget smsLoginBtn() {
-    return TextButton(
-        onPressed: () => MezRouter.toNamed(SharedRoutes.kOtpRoute),
-        style: TextButton.styleFrom(
-            backgroundColor: Colors.blue, fixedSize: Size(double.infinity, 50)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Ionicons.chatbox),
-            SizedBox(width: 9.mezW),
-            Text(
-              _i18n()["loginWithSms"],
-              style: TextStyle(fontWeight: FontWeight.bold),
+    return Container(
+      width: double.infinity,
+      child: TextButton(
+          onPressed: () => MezRouter.toNamed(SharedRoutes.kOtpRoute),
+          style: TextButton.styleFrom(
+              backgroundColor: Colors.blue,
+              fixedSize: Size(double.infinity, 50)),
+          child: Container(
+            alignment: Alignment.center,
+            child: Row(
+              children: [
+                Container(
+                    padding: EdgeInsets.only(
+                        left: Get.width * 0.05, right: Get.width * 0.05),
+                    child: Icon(Ionicons.log_in)),
+                Spacer(),
+                Text(
+                  _i18n()["loginWithSms"],
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Spacer()
+              ],
             ),
-          ],
-        ));
+          )),
+    );
   }
 
   Widget facebookLoginBtn(AppLaunchMode lmode) {

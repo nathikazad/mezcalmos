@@ -63,13 +63,8 @@ class _CustBusinessScheduleBuilderState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          _i18n()[scheduleTypeHeading()],
-          style: context.textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
+        Text(_i18n()[scheduleTypeHeading()],
+            style: context.textTheme.bodyLarge),
         for (int index = 0; index < widget.schedule!.openHours.length; index++)
           Builder(
             builder: (context) {
@@ -82,24 +77,28 @@ class _CustBusinessScheduleBuilderState
 
               final String toHour = data.to[0].toString();
               final String toMinute = data.to[1].toString();
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    child: Row(
-                      children: [
-                        Icon(Icons.access_time_outlined),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(day),
-                        ),
-                      ],
+              return Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Icon(Icons.access_time_outlined),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(day),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Text(
-                    "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
-                  ),
-                ],
+                    Text(
+                      "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
+                    ),
+                  ],
+                ),
               );
             },
           ),

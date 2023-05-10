@@ -92,9 +92,8 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
             },
             icon: Icons.hiking,
             borderRadius: 35,
-            backgroundColor: viewController.showBusiness.isTrue
-                ? Colors.grey.shade300
-                : null,
+            backgroundColor:
+                viewController.showBusiness.isTrue ? Color(0xFFF0F0F0) : null,
             textColor: viewController.showBusiness.isTrue
                 ? Colors.grey.shade800
                 : null,
@@ -112,9 +111,8 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
             },
             icon: Icons.local_activity,
             borderRadius: 35,
-            backgroundColor: viewController.showBusiness.isFalse
-                ? Colors.grey.shade300
-                : null,
+            backgroundColor:
+                viewController.showBusiness.isFalse ? Color(0xFFF0F0F0) : null,
             textColor: viewController.showBusiness.isFalse
                 ? Colors.grey.shade800
                 : null,
