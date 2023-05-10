@@ -37,10 +37,8 @@ class CustMessagesListViewController extends MessagesListViewController {
   @override
   Future<void> getMessages() async {
     isLoading.value = true;
-    List<HasuraChat> chatData = await get_customer_chat_by_sp_type(
-      customerId: _authController.user!.hasuraId,
-      serviceProviderType: ServiceProviderType.Business,
-    );
+    List<HasuraChat> chatData =
+        await get_customer_chats(customerId: _authController.user!.hasuraId);
     _allChats.value = chatData;
     isLoading.value = false;
   }

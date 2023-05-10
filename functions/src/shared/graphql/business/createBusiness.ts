@@ -1,5 +1,6 @@
 import { BusinessDetails, BusinessError } from "../../../business/createNewBusiness";
 import { getHasura } from "../../../utilities/hasura";
+import { DeepLinkType, IDeepLink, generateDeepLinks } from "../../../utilities/links/deeplink";
 import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { Business } from "../../models/Services/Business/Business";
 import { ServiceProviderType } from "../../models/Services/Service";
@@ -7,6 +8,10 @@ import { ServiceProviderType } from "../../models/Services/Service";
 
 export async function createBusiness(businessDetails: BusinessDetails, businessOperatorUserId: number): Promise<Business> {
     let chain = getHasura();
+
+    let uniqueId: string = businessDetails.uniqueId ?? generateString();
+
+    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Business)
 
     let response = await chain.mutation({
         insert_business_business_one: [{
@@ -18,6 +23,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                         image: businessDetails.image,
                         language: JSON.stringify(businessDetails.language),
                         service_provider_type: ServiceProviderType.Business,
+                        firebase_id: businessDetails.firebaseId ?? undefined,
                         schedule: JSON.stringify(businessDetails.schedule),
                         location: {
                             data: {
@@ -28,6 +34,16 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                                 address: businessDetails.location.address
                             }
                         },
+                        service_link: {
+                            data: {
+                                customer_deep_link: linksResponse[DeepLinkType.Customer].url,
+                                customer_qr_image_link: linksResponse[DeepLinkType.Customer].urlQrImage,
+                                operator_deep_link: linksResponse[DeepLinkType.AddOperator].url,
+                                operator_qr_image_link: linksResponse[DeepLinkType.AddOperator].urlQrImage,
+                                driver_deep_link: linksResponse[DeepLinkType.AddDriver].url,
+                                driver_qr_image_link: linksResponse[DeepLinkType.AddDriver].urlQrImage,
+                              }
+                        }
                     }
                 },
                 operators: {
@@ -89,3 +105,16 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
      }
     return business
 }
+
+function generateString(): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < 8) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
+  }
+  

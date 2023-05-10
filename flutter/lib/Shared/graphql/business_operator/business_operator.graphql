@@ -6,7 +6,9 @@ query getBusinessOperatorByUserId($userId: Int!) {
     status
     online
     }
-  
+  business{
+    details_id
+  }
     user_id
     user {
       firebase_id
@@ -28,6 +30,7 @@ query getOperatorBusinessProfile($userId: Int!) {
   business_operator(where: {user_id: {_eq: $userId}}) {
 business{
   profile
+  
 }
    
    

@@ -1,5 +1,4 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class ServiceLink {
   int id;
@@ -8,12 +7,16 @@ class ServiceLink {
   String? operatorQrImageLink;
   String? driverDeepLink;
   String? driverQrImageLink;
+  String? customerDeepLink;
+  String? customerQrImageLink;
   ServiceLink({
     required this.id,
     this.operatorDeepLink,
     this.operatorQrImageLink,
     this.driverDeepLink,
     this.driverQrImageLink,
+    this.customerDeepLink,
+    this.customerQrImageLink,
   });
 
   ServiceLink copyWith({

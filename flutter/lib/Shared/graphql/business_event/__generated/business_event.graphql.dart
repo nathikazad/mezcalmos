@@ -18483,3 +18483,1217 @@ class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$
   }) =>
       _res;
 }
+
+class Variables$Mutation$add_class {
+  factory Variables$Mutation$add_class({
+    required int business_id,
+    Geography? gps_location,
+    String? address,
+    String? schedule_type,
+    dynamic? schedule,
+    String? starts_at,
+    String? ends_at,
+    bool? available,
+    dynamic? tags,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    Input$translation_obj_rel_insert_input? name,
+    int? position,
+    dynamic? additional_parameters,
+    Input$translation_obj_rel_insert_input? description,
+  }) =>
+      Variables$Mutation$add_class._({
+        r'business_id': business_id,
+        if (gps_location != null) r'gps_location': gps_location,
+        if (address != null) r'address': address,
+        if (schedule_type != null) r'schedule_type': schedule_type,
+        if (schedule != null) r'schedule': schedule,
+        if (starts_at != null) r'starts_at': starts_at,
+        if (ends_at != null) r'ends_at': ends_at,
+        if (available != null) r'available': available,
+        if (tags != null) r'tags': tags,
+        if (category1 != null) r'category1': category1,
+        if (category2 != null) r'category2': category2,
+        if (cost != null) r'cost': cost,
+        if (image != null) r'image': image,
+        if (name != null) r'name': name,
+        if (position != null) r'position': position,
+        if (additional_parameters != null)
+          r'additional_parameters': additional_parameters,
+        if (description != null) r'description': description,
+      });
+
+  Variables$Mutation$add_class._(this._$data);
+
+  factory Variables$Mutation$add_class.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$business_id = data['business_id'];
+    result$data['business_id'] = (l$business_id as int);
+    if (data.containsKey('gps_location')) {
+      final l$gps_location = data['gps_location'];
+      result$data['gps_location'] =
+          l$gps_location == null ? null : geographyFromJson(l$gps_location);
+    }
+    if (data.containsKey('address')) {
+      final l$address = data['address'];
+      result$data['address'] = (l$address as String?);
+    }
+    if (data.containsKey('schedule_type')) {
+      final l$schedule_type = data['schedule_type'];
+      result$data['schedule_type'] = (l$schedule_type as String?);
+    }
+    if (data.containsKey('schedule')) {
+      final l$schedule = data['schedule'];
+      result$data['schedule'] =
+          l$schedule == null ? null : mapFromJson(l$schedule);
+    }
+    if (data.containsKey('starts_at')) {
+      final l$starts_at = data['starts_at'];
+      result$data['starts_at'] = (l$starts_at as String?);
+    }
+    if (data.containsKey('ends_at')) {
+      final l$ends_at = data['ends_at'];
+      result$data['ends_at'] = (l$ends_at as String?);
+    }
+    if (data.containsKey('available')) {
+      final l$available = data['available'];
+      result$data['available'] = (l$available as bool?);
+    }
+    if (data.containsKey('tags')) {
+      final l$tags = data['tags'];
+      result$data['tags'] = l$tags == null ? null : mapFromJson(l$tags);
+    }
+    if (data.containsKey('category1')) {
+      final l$category1 = data['category1'];
+      result$data['category1'] = (l$category1 as String?);
+    }
+    if (data.containsKey('category2')) {
+      final l$category2 = data['category2'];
+      result$data['category2'] = (l$category2 as String?);
+    }
+    if (data.containsKey('cost')) {
+      final l$cost = data['cost'];
+      result$data['cost'] = l$cost == null ? null : mapFromJson(l$cost);
+    }
+    if (data.containsKey('image')) {
+      final l$image = data['image'];
+      result$data['image'] = l$image == null ? null : mapFromJson(l$image);
+    }
+    if (data.containsKey('name')) {
+      final l$name = data['name'];
+      result$data['name'] = l$name == null
+          ? null
+          : Input$translation_obj_rel_insert_input.fromJson(
+              (l$name as Map<String, dynamic>));
+    }
+    if (data.containsKey('position')) {
+      final l$position = data['position'];
+      result$data['position'] = (l$position as int?);
+    }
+    if (data.containsKey('additional_parameters')) {
+      final l$additional_parameters = data['additional_parameters'];
+      result$data['additional_parameters'] = l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters);
+    }
+    if (data.containsKey('description')) {
+      final l$description = data['description'];
+      result$data['description'] = l$description == null
+          ? null
+          : Input$translation_obj_rel_insert_input.fromJson(
+              (l$description as Map<String, dynamic>));
+    }
+    return Variables$Mutation$add_class._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get business_id => (_$data['business_id'] as int);
+  Geography? get gps_location => (_$data['gps_location'] as Geography?);
+  String? get address => (_$data['address'] as String?);
+  String? get schedule_type => (_$data['schedule_type'] as String?);
+  dynamic? get schedule => (_$data['schedule'] as dynamic?);
+  String? get starts_at => (_$data['starts_at'] as String?);
+  String? get ends_at => (_$data['ends_at'] as String?);
+  bool? get available => (_$data['available'] as bool?);
+  dynamic? get tags => (_$data['tags'] as dynamic?);
+  String? get category1 => (_$data['category1'] as String?);
+  String? get category2 => (_$data['category2'] as String?);
+  dynamic? get cost => (_$data['cost'] as dynamic?);
+  dynamic? get image => (_$data['image'] as dynamic?);
+  Input$translation_obj_rel_insert_input? get name =>
+      (_$data['name'] as Input$translation_obj_rel_insert_input?);
+  int? get position => (_$data['position'] as int?);
+  dynamic? get additional_parameters =>
+      (_$data['additional_parameters'] as dynamic?);
+  Input$translation_obj_rel_insert_input? get description =>
+      (_$data['description'] as Input$translation_obj_rel_insert_input?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$business_id = business_id;
+    result$data['business_id'] = l$business_id;
+    if (_$data.containsKey('gps_location')) {
+      final l$gps_location = gps_location;
+      result$data['gps_location'] =
+          l$gps_location == null ? null : geographyToJson(l$gps_location);
+    }
+    if (_$data.containsKey('address')) {
+      final l$address = address;
+      result$data['address'] = l$address;
+    }
+    if (_$data.containsKey('schedule_type')) {
+      final l$schedule_type = schedule_type;
+      result$data['schedule_type'] = l$schedule_type;
+    }
+    if (_$data.containsKey('schedule')) {
+      final l$schedule = schedule;
+      result$data['schedule'] =
+          l$schedule == null ? null : mapToJson(l$schedule);
+    }
+    if (_$data.containsKey('starts_at')) {
+      final l$starts_at = starts_at;
+      result$data['starts_at'] = l$starts_at;
+    }
+    if (_$data.containsKey('ends_at')) {
+      final l$ends_at = ends_at;
+      result$data['ends_at'] = l$ends_at;
+    }
+    if (_$data.containsKey('available')) {
+      final l$available = available;
+      result$data['available'] = l$available;
+    }
+    if (_$data.containsKey('tags')) {
+      final l$tags = tags;
+      result$data['tags'] = l$tags == null ? null : mapToJson(l$tags);
+    }
+    if (_$data.containsKey('category1')) {
+      final l$category1 = category1;
+      result$data['category1'] = l$category1;
+    }
+    if (_$data.containsKey('category2')) {
+      final l$category2 = category2;
+      result$data['category2'] = l$category2;
+    }
+    if (_$data.containsKey('cost')) {
+      final l$cost = cost;
+      result$data['cost'] = l$cost == null ? null : mapToJson(l$cost);
+    }
+    if (_$data.containsKey('image')) {
+      final l$image = image;
+      result$data['image'] = l$image == null ? null : mapToJson(l$image);
+    }
+    if (_$data.containsKey('name')) {
+      final l$name = name;
+      result$data['name'] = l$name?.toJson();
+    }
+    if (_$data.containsKey('position')) {
+      final l$position = position;
+      result$data['position'] = l$position;
+    }
+    if (_$data.containsKey('additional_parameters')) {
+      final l$additional_parameters = additional_parameters;
+      result$data['additional_parameters'] = l$additional_parameters == null
+          ? null
+          : mapToJson(l$additional_parameters);
+    }
+    if (_$data.containsKey('description')) {
+      final l$description = description;
+      result$data['description'] = l$description?.toJson();
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$add_class<Variables$Mutation$add_class>
+      get copyWith => CopyWith$Variables$Mutation$add_class(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$add_class) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_id = business_id;
+    final lOther$business_id = other.business_id;
+    if (l$business_id != lOther$business_id) {
+      return false;
+    }
+    final l$gps_location = gps_location;
+    final lOther$gps_location = other.gps_location;
+    if (_$data.containsKey('gps_location') !=
+        other._$data.containsKey('gps_location')) {
+      return false;
+    }
+    if (l$gps_location != lOther$gps_location) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (_$data.containsKey('address') != other._$data.containsKey('address')) {
+      return false;
+    }
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$schedule_type = schedule_type;
+    final lOther$schedule_type = other.schedule_type;
+    if (_$data.containsKey('schedule_type') !=
+        other._$data.containsKey('schedule_type')) {
+      return false;
+    }
+    if (l$schedule_type != lOther$schedule_type) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (_$data.containsKey('schedule') !=
+        other._$data.containsKey('schedule')) {
+      return false;
+    }
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (_$data.containsKey('starts_at') !=
+        other._$data.containsKey('starts_at')) {
+      return false;
+    }
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (_$data.containsKey('ends_at') != other._$data.containsKey('ends_at')) {
+      return false;
+    }
+    if (l$ends_at != lOther$ends_at) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (_$data.containsKey('available') !=
+        other._$data.containsKey('available')) {
+      return false;
+    }
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (_$data.containsKey('tags') != other._$data.containsKey('tags')) {
+      return false;
+    }
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (_$data.containsKey('category1') !=
+        other._$data.containsKey('category1')) {
+      return false;
+    }
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (_$data.containsKey('category2') !=
+        other._$data.containsKey('category2')) {
+      return false;
+    }
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (_$data.containsKey('cost') != other._$data.containsKey('cost')) {
+      return false;
+    }
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (_$data.containsKey('image') != other._$data.containsKey('image')) {
+      return false;
+    }
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (_$data.containsKey('name') != other._$data.containsKey('name')) {
+      return false;
+    }
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (_$data.containsKey('position') !=
+        other._$data.containsKey('position')) {
+      return false;
+    }
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (_$data.containsKey('additional_parameters') !=
+        other._$data.containsKey('additional_parameters')) {
+      return false;
+    }
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (_$data.containsKey('description') !=
+        other._$data.containsKey('description')) {
+      return false;
+    }
+    if (l$description != lOther$description) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_id = business_id;
+    final l$gps_location = gps_location;
+    final l$address = address;
+    final l$schedule_type = schedule_type;
+    final l$schedule = schedule;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
+    final l$available = available;
+    final l$tags = tags;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$name = name;
+    final l$position = position;
+    final l$additional_parameters = additional_parameters;
+    final l$description = description;
+    return Object.hashAll([
+      l$business_id,
+      _$data.containsKey('gps_location') ? l$gps_location : const {},
+      _$data.containsKey('address') ? l$address : const {},
+      _$data.containsKey('schedule_type') ? l$schedule_type : const {},
+      _$data.containsKey('schedule') ? l$schedule : const {},
+      _$data.containsKey('starts_at') ? l$starts_at : const {},
+      _$data.containsKey('ends_at') ? l$ends_at : const {},
+      _$data.containsKey('available') ? l$available : const {},
+      _$data.containsKey('tags') ? l$tags : const {},
+      _$data.containsKey('category1') ? l$category1 : const {},
+      _$data.containsKey('category2') ? l$category2 : const {},
+      _$data.containsKey('cost') ? l$cost : const {},
+      _$data.containsKey('image') ? l$image : const {},
+      _$data.containsKey('name') ? l$name : const {},
+      _$data.containsKey('position') ? l$position : const {},
+      _$data.containsKey('additional_parameters')
+          ? l$additional_parameters
+          : const {},
+      _$data.containsKey('description') ? l$description : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$add_class<TRes> {
+  factory CopyWith$Variables$Mutation$add_class(
+    Variables$Mutation$add_class instance,
+    TRes Function(Variables$Mutation$add_class) then,
+  ) = _CopyWithImpl$Variables$Mutation$add_class;
+
+  factory CopyWith$Variables$Mutation$add_class.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$add_class;
+
+  TRes call({
+    int? business_id,
+    Geography? gps_location,
+    String? address,
+    String? schedule_type,
+    dynamic? schedule,
+    String? starts_at,
+    String? ends_at,
+    bool? available,
+    dynamic? tags,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    Input$translation_obj_rel_insert_input? name,
+    int? position,
+    dynamic? additional_parameters,
+    Input$translation_obj_rel_insert_input? description,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$add_class<TRes>
+    implements CopyWith$Variables$Mutation$add_class<TRes> {
+  _CopyWithImpl$Variables$Mutation$add_class(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$add_class _instance;
+
+  final TRes Function(Variables$Mutation$add_class) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_id = _undefined,
+    Object? gps_location = _undefined,
+    Object? address = _undefined,
+    Object? schedule_type = _undefined,
+    Object? schedule = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
+    Object? available = _undefined,
+    Object? tags = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? position = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? description = _undefined,
+  }) =>
+      _then(Variables$Mutation$add_class._({
+        ..._instance._$data,
+        if (business_id != _undefined && business_id != null)
+          'business_id': (business_id as int),
+        if (gps_location != _undefined)
+          'gps_location': (gps_location as Geography?),
+        if (address != _undefined) 'address': (address as String?),
+        if (schedule_type != _undefined)
+          'schedule_type': (schedule_type as String?),
+        if (schedule != _undefined) 'schedule': (schedule as dynamic?),
+        if (starts_at != _undefined) 'starts_at': (starts_at as String?),
+        if (ends_at != _undefined) 'ends_at': (ends_at as String?),
+        if (available != _undefined) 'available': (available as bool?),
+        if (tags != _undefined) 'tags': (tags as dynamic?),
+        if (category1 != _undefined) 'category1': (category1 as String?),
+        if (category2 != _undefined) 'category2': (category2 as String?),
+        if (cost != _undefined) 'cost': (cost as dynamic?),
+        if (image != _undefined) 'image': (image as dynamic?),
+        if (name != _undefined)
+          'name': (name as Input$translation_obj_rel_insert_input?),
+        if (position != _undefined) 'position': (position as int?),
+        if (additional_parameters != _undefined)
+          'additional_parameters': (additional_parameters as dynamic?),
+        if (description != _undefined)
+          'description':
+              (description as Input$translation_obj_rel_insert_input?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$add_class<TRes>
+    implements CopyWith$Variables$Mutation$add_class<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$add_class(this._res);
+
+  TRes _res;
+
+  call({
+    int? business_id,
+    Geography? gps_location,
+    String? address,
+    String? schedule_type,
+    dynamic? schedule,
+    String? starts_at,
+    String? ends_at,
+    bool? available,
+    dynamic? tags,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    Input$translation_obj_rel_insert_input? name,
+    int? position,
+    dynamic? additional_parameters,
+    Input$translation_obj_rel_insert_input? description,
+  }) =>
+      _res;
+}
+
+class Mutation$add_class {
+  Mutation$add_class({
+    this.insert_business_event_one,
+    required this.$__typename,
+  });
+
+  factory Mutation$add_class.fromJson(Map<String, dynamic> json) {
+    final l$insert_business_event_one = json['insert_business_event_one'];
+    final l$$__typename = json['__typename'];
+    return Mutation$add_class(
+      insert_business_event_one: l$insert_business_event_one == null
+          ? null
+          : Mutation$add_class$insert_business_event_one.fromJson(
+              (l$insert_business_event_one as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$add_class$insert_business_event_one? insert_business_event_one;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$insert_business_event_one = insert_business_event_one;
+    _resultData['insert_business_event_one'] =
+        l$insert_business_event_one?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$insert_business_event_one = insert_business_event_one;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$insert_business_event_one,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$add_class) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$insert_business_event_one = insert_business_event_one;
+    final lOther$insert_business_event_one = other.insert_business_event_one;
+    if (l$insert_business_event_one != lOther$insert_business_event_one) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$add_class on Mutation$add_class {
+  CopyWith$Mutation$add_class<Mutation$add_class> get copyWith =>
+      CopyWith$Mutation$add_class(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$add_class<TRes> {
+  factory CopyWith$Mutation$add_class(
+    Mutation$add_class instance,
+    TRes Function(Mutation$add_class) then,
+  ) = _CopyWithImpl$Mutation$add_class;
+
+  factory CopyWith$Mutation$add_class.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$add_class;
+
+  TRes call({
+    Mutation$add_class$insert_business_event_one? insert_business_event_one,
+    String? $__typename,
+  });
+  CopyWith$Mutation$add_class$insert_business_event_one<TRes>
+      get insert_business_event_one;
+}
+
+class _CopyWithImpl$Mutation$add_class<TRes>
+    implements CopyWith$Mutation$add_class<TRes> {
+  _CopyWithImpl$Mutation$add_class(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$add_class _instance;
+
+  final TRes Function(Mutation$add_class) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? insert_business_event_one = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$add_class(
+        insert_business_event_one: insert_business_event_one == _undefined
+            ? _instance.insert_business_event_one
+            : (insert_business_event_one
+                as Mutation$add_class$insert_business_event_one?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$add_class$insert_business_event_one<TRes>
+      get insert_business_event_one {
+    final local$insert_business_event_one = _instance.insert_business_event_one;
+    return local$insert_business_event_one == null
+        ? CopyWith$Mutation$add_class$insert_business_event_one.stub(
+            _then(_instance))
+        : CopyWith$Mutation$add_class$insert_business_event_one(
+            local$insert_business_event_one,
+            (e) => call(insert_business_event_one: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$add_class<TRes>
+    implements CopyWith$Mutation$add_class<TRes> {
+  _CopyWithStubImpl$Mutation$add_class(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$add_class$insert_business_event_one? insert_business_event_one,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$add_class$insert_business_event_one<TRes>
+      get insert_business_event_one =>
+          CopyWith$Mutation$add_class$insert_business_event_one.stub(_res);
+}
+
+const documentNodeMutationadd_class = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'add_class'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'business_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'gps_location')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'address')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'schedule_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'schedule')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'jsonb'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'starts_at')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'timestamptz'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'ends_at')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'timestamptz'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'available')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'tags')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'jsonb'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(
+            value: ListValueNode(values: [
+          StringValueNode(
+            value: 'class',
+            isBlock: false,
+          )
+        ])),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'category1')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'category2')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'cost')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'jsonb'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'image')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'jsonb'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'name')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'translation_obj_rel_insert_input'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'position')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'additional_parameters')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'jsonb'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'description')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'translation_obj_rel_insert_input'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'insert_business_event_one'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'object'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business_id'),
+                value: VariableNode(name: NameNode(value: 'business_id')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'data'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'business_id'),
+                        value:
+                            VariableNode(name: NameNode(value: 'business_id')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'available'),
+                        value: VariableNode(name: NameNode(value: 'available')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'tags'),
+                        value: VariableNode(name: NameNode(value: 'tags')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'category1'),
+                        value: VariableNode(name: NameNode(value: 'category1')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'category2'),
+                        value: VariableNode(name: NameNode(value: 'category2')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'cost'),
+                        value: VariableNode(name: NameNode(value: 'cost')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'image'),
+                        value: VariableNode(name: NameNode(value: 'image')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'name'),
+                        value: VariableNode(name: NameNode(value: 'name')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'position'),
+                        value: VariableNode(name: NameNode(value: 'position')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        value: VariableNode(
+                            name: NameNode(value: 'additional_parameters')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'description'),
+                        value:
+                            VariableNode(name: NameNode(value: 'description')),
+                      ),
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'gps_location'),
+                value: VariableNode(name: NameNode(value: 'gps_location')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'address'),
+                value: VariableNode(name: NameNode(value: 'address')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'schedule_type'),
+                value: VariableNode(name: NameNode(value: 'schedule_type')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'schedule'),
+                value: VariableNode(name: NameNode(value: 'schedule')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'starts_at'),
+                value: VariableNode(name: NameNode(value: 'starts_at')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'ends_at'),
+                value: VariableNode(name: NameNode(value: 'ends_at')),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'details_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$add_class _parserFn$Mutation$add_class(Map<String, dynamic> data) =>
+    Mutation$add_class.fromJson(data);
+typedef OnMutationCompleted$Mutation$add_class = FutureOr<void> Function(
+  dynamic,
+  Mutation$add_class?,
+);
+
+class Options$Mutation$add_class
+    extends graphql.MutationOptions<Mutation$add_class> {
+  Options$Mutation$add_class({
+    String? operationName,
+    required Variables$Mutation$add_class variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$add_class? onCompleted,
+    graphql.OnMutationUpdate<Mutation$add_class>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null ? null : _parserFn$Mutation$add_class(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationadd_class,
+          parserFn: _parserFn$Mutation$add_class,
+        );
+
+  final OnMutationCompleted$Mutation$add_class? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$add_class
+    extends graphql.WatchQueryOptions<Mutation$add_class> {
+  WatchOptions$Mutation$add_class({
+    String? operationName,
+    required Variables$Mutation$add_class variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationadd_class,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$add_class,
+        );
+}
+
+extension ClientExtension$Mutation$add_class on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$add_class>> mutate$add_class(
+          Options$Mutation$add_class options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$add_class> watchMutation$add_class(
+          WatchOptions$Mutation$add_class options) =>
+      this.watchMutation(options);
+}
+
+class Mutation$add_class$insert_business_event_one {
+  Mutation$add_class$insert_business_event_one({
+    required this.details_id,
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$add_class$insert_business_event_one.fromJson(
+      Map<String, dynamic> json) {
+    final l$details_id = json['details_id'];
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$add_class$insert_business_event_one(
+      details_id: (l$details_id as int),
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int details_id;
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details_id = details_id;
+    _resultData['details_id'] = l$details_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details_id = details_id;
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details_id,
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$add_class$insert_business_event_one) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details_id = details_id;
+    final lOther$details_id = other.details_id;
+    if (l$details_id != lOther$details_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$add_class$insert_business_event_one
+    on Mutation$add_class$insert_business_event_one {
+  CopyWith$Mutation$add_class$insert_business_event_one<
+          Mutation$add_class$insert_business_event_one>
+      get copyWith => CopyWith$Mutation$add_class$insert_business_event_one(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$add_class$insert_business_event_one<TRes> {
+  factory CopyWith$Mutation$add_class$insert_business_event_one(
+    Mutation$add_class$insert_business_event_one instance,
+    TRes Function(Mutation$add_class$insert_business_event_one) then,
+  ) = _CopyWithImpl$Mutation$add_class$insert_business_event_one;
+
+  factory CopyWith$Mutation$add_class$insert_business_event_one.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$add_class$insert_business_event_one;
+
+  TRes call({
+    int? details_id,
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$add_class$insert_business_event_one<TRes>
+    implements CopyWith$Mutation$add_class$insert_business_event_one<TRes> {
+  _CopyWithImpl$Mutation$add_class$insert_business_event_one(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$add_class$insert_business_event_one _instance;
+
+  final TRes Function(Mutation$add_class$insert_business_event_one) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details_id = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$add_class$insert_business_event_one(
+        details_id: details_id == _undefined || details_id == null
+            ? _instance.details_id
+            : (details_id as int),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$add_class$insert_business_event_one<TRes>
+    implements CopyWith$Mutation$add_class$insert_business_event_one<TRes> {
+  _CopyWithStubImpl$Mutation$add_class$insert_business_event_one(this._res);
+
+  TRes _res;
+
+  call({
+    int? details_id,
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}

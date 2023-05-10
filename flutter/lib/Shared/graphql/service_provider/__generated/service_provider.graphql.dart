@@ -327,6 +327,20 @@ const documentNodeQuerygetServiceProviderLinks = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'customer_deep_link'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer_qr_image_link'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -460,6 +474,8 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     this.driver_qr_image_link,
     this.operator_deep_link,
     this.operator_qr_image_link,
+    this.customer_deep_link,
+    this.customer_qr_image_link,
     required this.$__typename,
   });
 
@@ -470,6 +486,8 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     final l$driver_qr_image_link = json['driver_qr_image_link'];
     final l$operator_deep_link = json['operator_deep_link'];
     final l$operator_qr_image_link = json['operator_qr_image_link'];
+    final l$customer_deep_link = json['customer_deep_link'];
+    final l$customer_qr_image_link = json['customer_qr_image_link'];
     final l$$__typename = json['__typename'];
     return Query$getServiceProviderLinks$service_provider_service_link_by_pk(
       id: (l$id as int),
@@ -477,6 +495,8 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
       driver_qr_image_link: (l$driver_qr_image_link as String?),
       operator_deep_link: (l$operator_deep_link as String?),
       operator_qr_image_link: (l$operator_qr_image_link as String?),
+      customer_deep_link: (l$customer_deep_link as String?),
+      customer_qr_image_link: (l$customer_qr_image_link as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -490,6 +510,10 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
   final String? operator_deep_link;
 
   final String? operator_qr_image_link;
+
+  final String? customer_deep_link;
+
+  final String? customer_qr_image_link;
 
   final String $__typename;
 
@@ -505,6 +529,10 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     _resultData['operator_deep_link'] = l$operator_deep_link;
     final l$operator_qr_image_link = operator_qr_image_link;
     _resultData['operator_qr_image_link'] = l$operator_qr_image_link;
+    final l$customer_deep_link = customer_deep_link;
+    _resultData['customer_deep_link'] = l$customer_deep_link;
+    final l$customer_qr_image_link = customer_qr_image_link;
+    _resultData['customer_qr_image_link'] = l$customer_qr_image_link;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -517,6 +545,8 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     final l$driver_qr_image_link = driver_qr_image_link;
     final l$operator_deep_link = operator_deep_link;
     final l$operator_qr_image_link = operator_qr_image_link;
+    final l$customer_deep_link = customer_deep_link;
+    final l$customer_qr_image_link = customer_qr_image_link;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -524,6 +554,8 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
       l$driver_qr_image_link,
       l$operator_deep_link,
       l$operator_qr_image_link,
+      l$customer_deep_link,
+      l$customer_qr_image_link,
       l$$__typename,
     ]);
   }
@@ -561,6 +593,16 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     final l$operator_qr_image_link = operator_qr_image_link;
     final lOther$operator_qr_image_link = other.operator_qr_image_link;
     if (l$operator_qr_image_link != lOther$operator_qr_image_link) {
+      return false;
+    }
+    final l$customer_deep_link = customer_deep_link;
+    final lOther$customer_deep_link = other.customer_deep_link;
+    if (l$customer_deep_link != lOther$customer_deep_link) {
+      return false;
+    }
+    final l$customer_qr_image_link = customer_qr_image_link;
+    final lOther$customer_qr_image_link = other.customer_qr_image_link;
+    if (l$customer_qr_image_link != lOther$customer_qr_image_link) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -602,6 +644,8 @@ abstract class CopyWith$Query$getServiceProviderLinks$service_provider_service_l
     String? driver_qr_image_link,
     String? operator_deep_link,
     String? operator_qr_image_link,
+    String? customer_deep_link,
+    String? customer_qr_image_link,
     String? $__typename,
   });
 }
@@ -630,6 +674,8 @@ class _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link_
     Object? driver_qr_image_link = _undefined,
     Object? operator_deep_link = _undefined,
     Object? operator_qr_image_link = _undefined,
+    Object? customer_deep_link = _undefined,
+    Object? customer_qr_image_link = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getServiceProviderLinks$service_provider_service_link_by_pk(
@@ -646,6 +692,12 @@ class _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link_
         operator_qr_image_link: operator_qr_image_link == _undefined
             ? _instance.operator_qr_image_link
             : (operator_qr_image_link as String?),
+        customer_deep_link: customer_deep_link == _undefined
+            ? _instance.customer_deep_link
+            : (customer_deep_link as String?),
+        customer_qr_image_link: customer_qr_image_link == _undefined
+            ? _instance.customer_qr_image_link
+            : (customer_qr_image_link as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -668,6 +720,8 @@ class _CopyWithStubImpl$Query$getServiceProviderLinks$service_provider_service_l
     String? driver_qr_image_link,
     String? operator_deep_link,
     String? operator_qr_image_link,
+    String? customer_deep_link,
+    String? customer_qr_image_link,
     String? $__typename,
   }) =>
       _res;

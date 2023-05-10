@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/components/ServiceNoReviews.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/components/ServiceReviewCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/components/ServiceReviewsFilters.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/controllers/ServiceReviewsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -19,6 +21,9 @@ class ServiceReviewsView extends StatefulWidget {
   const ServiceReviewsView({
     Key? key,
   }) : super(key: key);
+  static Future<void> navigate() {
+    return MezRouter.toPath(SharedServiceProviderRoutes.kServiceReviews);
+  }
 
   @override
   State<ServiceReviewsView> createState() => _ServiceReviewsViewState();
@@ -115,7 +120,7 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
             height: 10,
           ),
           Text(
-              "${_i18n()["base"]} ${viewController.reviews.length} ${_i18n()["review"].toPlural(isPlural: viewController.reviews.length == 1).toLowerCase()}")
+              "${_i18n()["base"]} ${viewController.reviews.length} ${_i18n()["review"].toString().toPlural(isPlural: viewController.reviews.length == 1).toLowerCase()}")
         ],
       ),
     );

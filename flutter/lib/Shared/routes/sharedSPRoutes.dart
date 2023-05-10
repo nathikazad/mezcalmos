@@ -1,4 +1,3 @@
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
@@ -7,6 +6,8 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/S
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/ServiceReviewsView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleView/ServiceScheduleView.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -28,7 +29,7 @@ class SharedServiceProviderRoutes {
   static const String kserviceScheduleEditRoute = "/schedule";
   static const String kDeliveryCostSettingRoute =
       "/costDeliverySettingScreen/:providerId/:providerType";
-  static const String kserviceReview = "/reviews";
+  static const String kServiceReviews = "/reviews";
   static const String kServiceProfileRoute =
       '/service/:serviceId/:serviceDetailsId/:deliveryDetailsId';
 
@@ -47,6 +48,11 @@ class SharedServiceProviderRoutes {
       path: kDriversRoute,
       name: kDriversRoute,
       builder: () => ServiceDriversListView(),
+    ),
+    QRoute(
+      path: kServiceReviews,
+      name: kServiceReviews,
+      builder: () => ServiceReviewsView(),
     ),
     QRoute(
       path: kOperatorsListRoute,

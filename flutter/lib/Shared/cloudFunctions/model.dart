@@ -1447,6 +1447,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 class Operator {
   num id;
   num detailsId;
+  num? serviceProviderDetailsId;
   num serviceProviderId;
   num userId;
   AuthorizationStatus status;
@@ -1457,11 +1458,12 @@ class Operator {
   NotificationInfo? notificationInfo;
   UserInfo? user;
   Operator({
-    required this.id, required this.detailsId, required this.serviceProviderId, required this.userId, required this.status, required this.online, this.owner, this.appVersion, this.currentGps, this.notificationInfo, this.user});
+    required this.id, required this.detailsId, this.serviceProviderDetailsId, required this.serviceProviderId, required this.userId, required this.status, required this.online, this.owner, this.appVersion, this.currentGps, this.notificationInfo, this.user});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
       "detailsId": detailsId,
+      "serviceProviderDetailsId": serviceProviderDetailsId,
       "serviceProviderId": serviceProviderId,
       "userId": userId,
       "status": status,

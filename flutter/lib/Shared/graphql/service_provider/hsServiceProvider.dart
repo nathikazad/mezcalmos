@@ -32,7 +32,7 @@ Future<ServiceLink?> get_service_link_by_id(
           Variables$Query$getServiceProviderLinks(serviceLinkId: serviceLinkId),
     ),
   );
-
+  mezDbgPrint("👋 called get service link ===========>${response.data}");
   if (response.parsedData == null) {
     mezDbgPrint(
         "🚨🚨🚨 hasura query service links faild \n  Data from response \n ${response.data} \n Exceptions from hasura \n ${response.exception}");
@@ -44,6 +44,8 @@ Future<ServiceLink?> get_service_link_by_id(
         id: data.id,
         driverDeepLink: data.driver_deep_link,
         driverQrImageLink: data.driver_qr_image_link,
+        customerDeepLink: data.customer_deep_link,
+        customerQrImageLink: data.customer_qr_image_link,
         operatorDeepLink: data.operator_deep_link,
         operatorQrImageLink: data.operator_qr_image_link);
   }
@@ -89,6 +91,7 @@ Future<Service?> get_service_details_by_id(
       variables: Variables$Query$getServiceDetails(id: serviceDetailsId),
     ),
   );
+  mezDbgPrint("👋 called get service details ===========>${res.data}");
   if (res.parsedData?.service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
@@ -292,7 +295,7 @@ Future<ServiceInfo> update_service_info(
       ),
     ),
   );
-
+  mezDbgPrint("error $detailsId ==========>${res.data}");
   if (res.parsedData?.update_service_provider_details_by_pk == null) {
     throwError(res.exception);
   }

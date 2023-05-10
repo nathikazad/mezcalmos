@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewcontroller.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/components/CustomerPastOrdersList.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -133,8 +132,9 @@ class _MessagesListViewState extends State<MessagesListView> {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                    viewcontroller.allChats[index].creationTime
-                                        .getOrderTime(),
+                                    viewcontroller
+                                        .allChats[index].lastMessage!.timestamp
+                                        .timeAgo(),
                                   ),
                                 ],
                               ),

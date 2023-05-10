@@ -357,3 +357,10 @@ mutation update_event_by_id($id: Int!,$object: business_event_set_input) {
     }
   }
 }
+
+mutation add_class($business_id: Int!, $gps_location: geography, $address: String, $schedule_type: String, $schedule: jsonb, $starts_at: timestamptz, $ends_at: timestamptz, $available: Boolean, $tags: jsonb = ["class"], $category1: String, $category2: String, $cost: jsonb, $image: jsonb, $name: translation_obj_rel_insert_input, $position: Int, $additional_parameters: jsonb, $description: translation_obj_rel_insert_input) {
+  insert_business_event_one(object: {business_id: $business_id, details: {data: {business_id: $business_id, available: $available, tags: $tags, category1: $category1, category2: $category2, cost: $cost, image: $image, name: $name, position: $position, additional_parameters: $additional_parameters, description: $description}}, gps_location: $gps_location, address: $address, schedule_type: $schedule_type, schedule: $schedule, starts_at: $starts_at, ends_at: $ends_at}) {
+    details_id
+    id
+  }
+}

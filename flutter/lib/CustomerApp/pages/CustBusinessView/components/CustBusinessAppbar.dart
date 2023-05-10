@@ -86,8 +86,8 @@ class CustBusinessViewAppbar extends StatelessWidget {
             indicatorColor: primaryBlueColor,
             indicatorPadding: EdgeInsets.zero,
             controller: viewController.tabController,
-            labelColor: primaryBlueColor,
             unselectedLabelColor: unselectedIconColor,
+            labelColor: primaryBlueColor,
             tabs: [
               Tab(
                 icon: Icon(Icons.store_outlined),
