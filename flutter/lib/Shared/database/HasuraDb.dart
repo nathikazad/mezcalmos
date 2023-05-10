@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/graphql/data_consumption/hsDataConsumption.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart' as gqClient;
@@ -65,9 +66,11 @@ class HasuraDb {
 
   Map<String, HasuraSubscription> hasuraSubscriptions =
       <String, HasuraSubscription>{};
+  Map<String, List<int>> dataConsumption = <String, List<int>>{};
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
   Timer? expirationCheckTimer;
+  Timer? dataConsumptionTimer;
   num? expirationTime;
 
   Future<void> initializeHasura() async {
@@ -129,9 +132,11 @@ class HasuraDb {
 
       expirationTime = JwtDecoder.decode(hasuraAuthToken)["exp"];
       startJWTExpirationCheckTimer();
+      startDataConsumptionTimer();
     } else {
       expirationTime = null;
       cancelJWTExpirationCheckTimer();
+      cancelDataConsumptionTimer();
     }
 
     if (_wsLink == null) {
@@ -219,6 +224,32 @@ class HasuraDb {
   void cancelJWTExpirationCheckTimer() {
     expirationCheckTimer?.cancel();
     expirationCheckTimer = null;
+  }
+
+  void startDataConsumptionTimer() {
+    dataConsumptionTimer?.cancel();
+    dataConsumptionTimer =
+        Timer.periodic(new Duration(seconds: 300), (Timer timer) async {
+      if (dataConsumption.isNotEmpty &&
+          Get.find<AuthController>().hasuraUserId != null) {
+        dataConsumption.forEach((key, value) {
+          updateSubscriptionDataConsumption(
+              nameOfSubscription: key,
+              totalSize: value[0],
+              numberOfEvents: value[1],
+              userId: Get.find<AuthController>().hasuraUserId!);
+        });
+        dataConsumption.clear();
+      }
+      // check if dataConsumption data structure is not empty
+      //      write key,values to db
+      //      clear data afterwards
+    });
+  }
+
+  void cancelDataConsumptionTimer() {
+    dataConsumptionTimer?.cancel();
+    dataConsumptionTimer = null;
   }
 
   bool checkIfJWTExpired() {

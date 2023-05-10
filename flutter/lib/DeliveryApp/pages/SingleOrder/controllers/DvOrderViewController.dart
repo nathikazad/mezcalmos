@@ -66,7 +66,7 @@ class DvOrderViewcontroller {
   DateTime? get dropoffTime => _order.value?.estimatedArrivalAtDropoff;
 
   // streams //
-  StreamSubscription<DeliveryOrder?>? orderStream;
+  StreamSubscription<DeliveryOrderVariables?>? orderStream;
   String? subscriptionId;
   // map vars //
 
@@ -86,11 +86,21 @@ class DvOrderViewcontroller {
           "🚨 Can't get order $orderId 🚨 DvRestaurantOrderViewController");
     } else {
       subscriptionId = hasuraDb.createSubscription(start: () {
-        orderStream = listen_on_driver_order_by_id(orderId: orderId)
-            .listen((DeliveryOrder? event) {
+        orderStream = listen_on_driver_order_variables(orderId: orderId)
+            .listen((DeliveryOrderVariables? event) {
           if (event != null) {
-            _order.value = null;
-            _order.value = event;
+            _order.value!.estimatedArrivalAtDropoff =
+                event.estimatedArrivalAtDropoff;
+            _order.value!.estimatedArrivalAtPickup =
+                event.estimatedArrivalAtPickup;
+            _order.value!.estimatedPackageReadyTime =
+                event.estimatedPackageReadyTime;
+            _order.value!.scheduleTime = event.scheduleTime;
+            _order.value!.cancellationTime = event.cancellationTime;
+            _order.value!.status = event.status;
+            _order.value!.packageReady = event.packageReady;
+            // _order.value = null;
+            // _order.value = event;
 
             _order.refresh();
           }

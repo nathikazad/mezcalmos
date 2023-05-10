@@ -2246,6 +2246,227 @@ count?: [{	columns?:ValueTypes["customer_stripe_sp_id_select_column"][],	distinc
 	id?:ValueTypes["order_by"],
 	sp_id?:ValueTypes["order_by"]
 };
+	/** columns and relationships of "data_consumption" */
+["data_consumption"]: AliasType<{
+	date?:true,
+	id?:true,
+	name_of_subscription?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "data_consumption" */
+["data_consumption_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["data_consumption_aggregate_fields"],
+	nodes?:ValueTypes["data_consumption"],
+		__typename?: true
+}>;
+	/** aggregate fields of "data_consumption" */
+["data_consumption_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["data_consumption_avg_fields"],
+count?: [{	columns?:ValueTypes["data_consumption_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["data_consumption_max_fields"],
+	min?:ValueTypes["data_consumption_min_fields"],
+	stddev?:ValueTypes["data_consumption_stddev_fields"],
+	stddev_pop?:ValueTypes["data_consumption_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["data_consumption_stddev_samp_fields"],
+	sum?:ValueTypes["data_consumption_sum_fields"],
+	var_pop?:ValueTypes["data_consumption_var_pop_fields"],
+	var_samp?:ValueTypes["data_consumption_var_samp_fields"],
+	variance?:ValueTypes["data_consumption_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["data_consumption_avg_fields"]: AliasType<{
+	id?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "data_consumption". All fields are combined with a logical 'AND'. */
+["data_consumption_bool_exp"]: {
+	_and?:ValueTypes["data_consumption_bool_exp"][],
+	_not?:ValueTypes["data_consumption_bool_exp"],
+	_or?:ValueTypes["data_consumption_bool_exp"][],
+	date?:ValueTypes["date_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
+	name_of_subscription?:ValueTypes["String_comparison_exp"],
+	number_of_events?:ValueTypes["Int_comparison_exp"],
+	total_size?:ValueTypes["Int_comparison_exp"],
+	user_id?:ValueTypes["Int_comparison_exp"]
+};
+	/** unique or primary key constraints on table "data_consumption" */
+["data_consumption_constraint"]:data_consumption_constraint;
+	/** input type for incrementing numeric columns in table "data_consumption" */
+["data_consumption_inc_input"]: {
+	id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+};
+	/** input type for inserting data into table "data_consumption" */
+["data_consumption_insert_input"]: {
+	date?:ValueTypes["date"],
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+};
+	/** aggregate max on columns */
+["data_consumption_max_fields"]: AliasType<{
+	date?:true,
+	id?:true,
+	name_of_subscription?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["data_consumption_min_fields"]: AliasType<{
+	date?:true,
+	id?:true,
+	name_of_subscription?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "data_consumption" */
+["data_consumption_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["data_consumption"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "data_consumption" */
+["data_consumption_on_conflict"]: {
+	constraint:ValueTypes["data_consumption_constraint"],
+	update_columns:ValueTypes["data_consumption_update_column"][],
+	where?:ValueTypes["data_consumption_bool_exp"]
+};
+	/** Ordering options when selecting data from "data_consumption". */
+["data_consumption_order_by"]: {
+	date?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	name_of_subscription?:ValueTypes["order_by"],
+	number_of_events?:ValueTypes["order_by"],
+	total_size?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: data_consumption */
+["data_consumption_pk_columns_input"]: {
+	id:number
+};
+	/** select columns of table "data_consumption" */
+["data_consumption_select_column"]:data_consumption_select_column;
+	/** input type for updating data in table "data_consumption" */
+["data_consumption_set_input"]: {
+	date?:ValueTypes["date"],
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+};
+	/** aggregate stddev on columns */
+["data_consumption_stddev_fields"]: AliasType<{
+	id?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["data_consumption_stddev_pop_fields"]: AliasType<{
+	id?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["data_consumption_stddev_samp_fields"]: AliasType<{
+	id?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "data_consumption" */
+["data_consumption_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["data_consumption_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["data_consumption_stream_cursor_value_input"]: {
+	date?:ValueTypes["date"],
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+};
+	/** aggregate sum on columns */
+["data_consumption_sum_fields"]: AliasType<{
+	id?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "data_consumption" */
+["data_consumption_update_column"]:data_consumption_update_column;
+	["data_consumption_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["data_consumption_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["data_consumption_set_input"],
+	where:ValueTypes["data_consumption_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["data_consumption_var_pop_fields"]: AliasType<{
+	id?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["data_consumption_var_samp_fields"]: AliasType<{
+	id?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["data_consumption_variance_fields"]: AliasType<{
+	id?:true,
+	number_of_events?:true,
+	total_size?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	["date"]:unknown;
+	/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
+["date_comparison_exp"]: {
+	_eq?:ValueTypes["date"],
+	_gt?:ValueTypes["date"],
+	_gte?:ValueTypes["date"],
+	_in?:ValueTypes["date"][],
+	_is_null?:boolean,
+	_lt?:ValueTypes["date"],
+	_lte?:ValueTypes["date"],
+	_neq?:ValueTypes["date"],
+	_nin?:ValueTypes["date"][]
+};
 	/** columns and relationships of "delivery.company" */
 ["delivery_company"]: AliasType<{
 	/** An object relationship */
@@ -8434,6 +8655,9 @@ delete_customer_stripe_cards_by_pk?: [{	id:number},ValueTypes["customer_stripe_c
 delete_customer_stripe_sp_id?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id_mutation_response"]],
 delete_customer_stripe_sp_id_by_pk?: [{	id:number},ValueTypes["customer_stripe_sp_id"]],
+delete_data_consumption?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["data_consumption_bool_exp"]},ValueTypes["data_consumption_mutation_response"]],
+delete_data_consumption_by_pk?: [{	id:number},ValueTypes["data_consumption"]],
 delete_delivery_company?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["delivery_company_bool_exp"]},ValueTypes["delivery_company_mutation_response"]],
 delete_delivery_company_by_pk?: [{	id:number},ValueTypes["delivery_company"]],
@@ -8622,6 +8846,12 @@ insert_customer_stripe_sp_id?: [{	/** the rows to be inserted */
 insert_customer_stripe_sp_id_one?: [{	/** the row to be inserted */
 	object:ValueTypes["customer_stripe_sp_id_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["customer_stripe_sp_id_on_conflict"]},ValueTypes["customer_stripe_sp_id"]],
+insert_data_consumption?: [{	/** the rows to be inserted */
+	objects:ValueTypes["data_consumption_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["data_consumption_on_conflict"]},ValueTypes["data_consumption_mutation_response"]],
+insert_data_consumption_one?: [{	/** the row to be inserted */
+	object:ValueTypes["data_consumption_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["data_consumption_on_conflict"]},ValueTypes["data_consumption"]],
 insert_delivery_company?: [{	/** the rows to be inserted */
 	objects:ValueTypes["delivery_company_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["delivery_company_on_conflict"]},ValueTypes["delivery_company_mutation_response"]],
@@ -8996,6 +9226,15 @@ update_customer_stripe_sp_id_by_pk?: [{	/** increments the numeric columns with 
 	_set?:ValueTypes["customer_stripe_sp_id_set_input"],	pk_columns:ValueTypes["customer_stripe_sp_id_pk_columns_input"]},ValueTypes["customer_stripe_sp_id"]],
 update_customer_stripe_sp_id_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["customer_stripe_sp_id_updates"][]},ValueTypes["customer_stripe_sp_id_mutation_response"]],
+update_data_consumption?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["data_consumption_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["data_consumption_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["data_consumption_bool_exp"]},ValueTypes["data_consumption_mutation_response"]],
+update_data_consumption_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["data_consumption_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["data_consumption_set_input"],	pk_columns:ValueTypes["data_consumption_pk_columns_input"]},ValueTypes["data_consumption"]],
+update_data_consumption_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["data_consumption_updates"][]},ValueTypes["data_consumption_mutation_response"]],
 update_delivery_company?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["delivery_company_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_company_set_input"],	/** filter the rows which have to be updated */
@@ -9810,6 +10049,19 @@ customer_stripe_sp_id_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["customer_stripe_sp_id_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id_aggregate"]],
 customer_stripe_sp_id_by_pk?: [{	id:number},ValueTypes["customer_stripe_sp_id"]],
+data_consumption?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["data_consumption_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["data_consumption_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["data_consumption_bool_exp"]},ValueTypes["data_consumption"]],
+data_consumption_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["data_consumption_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["data_consumption_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["data_consumption_bool_exp"]},ValueTypes["data_consumption_aggregate"]],
+data_consumption_by_pk?: [{	id:number},ValueTypes["data_consumption"]],
 delivery_company?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_company_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -17998,6 +18250,23 @@ customer_stripe_sp_id_stream?: [{	/** maximum number of rows returned in a singl
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["customer_stripe_sp_id_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id"]],
+data_consumption?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["data_consumption_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["data_consumption_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["data_consumption_bool_exp"]},ValueTypes["data_consumption"]],
+data_consumption_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["data_consumption_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["data_consumption_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["data_consumption_bool_exp"]},ValueTypes["data_consumption_aggregate"]],
+data_consumption_by_pk?: [{	id:number},ValueTypes["data_consumption"]],
+data_consumption_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["data_consumption_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["data_consumption_bool_exp"]},ValueTypes["data_consumption"]],
 delivery_company?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_company_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -21932,6 +22201,227 @@ the end). throws an error if top level container is not an array */
 	customer_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	sp_id?:PartialObjects["order_by"]
+},
+	/** columns and relationships of "data_consumption" */
+["data_consumption"]: {
+		__typename?: "data_consumption";
+			date?:PartialObjects["date"],
+			id?:number,
+			name_of_subscription?:string,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	/** aggregated selection of "data_consumption" */
+["data_consumption_aggregate"]: {
+		__typename?: "data_consumption_aggregate";
+			aggregate?:PartialObjects["data_consumption_aggregate_fields"],
+			nodes?:PartialObjects["data_consumption"][]
+	},
+	/** aggregate fields of "data_consumption" */
+["data_consumption_aggregate_fields"]: {
+		__typename?: "data_consumption_aggregate_fields";
+			avg?:PartialObjects["data_consumption_avg_fields"],
+			count?:number,
+			max?:PartialObjects["data_consumption_max_fields"],
+			min?:PartialObjects["data_consumption_min_fields"],
+			stddev?:PartialObjects["data_consumption_stddev_fields"],
+			stddev_pop?:PartialObjects["data_consumption_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["data_consumption_stddev_samp_fields"],
+			sum?:PartialObjects["data_consumption_sum_fields"],
+			var_pop?:PartialObjects["data_consumption_var_pop_fields"],
+			var_samp?:PartialObjects["data_consumption_var_samp_fields"],
+			variance?:PartialObjects["data_consumption_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["data_consumption_avg_fields"]: {
+		__typename?: "data_consumption_avg_fields";
+			id?:number,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	/** Boolean expression to filter rows from the table "data_consumption". All fields are combined with a logical 'AND'. */
+["data_consumption_bool_exp"]: {
+	_and?:PartialObjects["data_consumption_bool_exp"][],
+	_not?:PartialObjects["data_consumption_bool_exp"],
+	_or?:PartialObjects["data_consumption_bool_exp"][],
+	date?:PartialObjects["date_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
+	name_of_subscription?:PartialObjects["String_comparison_exp"],
+	number_of_events?:PartialObjects["Int_comparison_exp"],
+	total_size?:PartialObjects["Int_comparison_exp"],
+	user_id?:PartialObjects["Int_comparison_exp"]
+},
+	/** unique or primary key constraints on table "data_consumption" */
+["data_consumption_constraint"]:data_consumption_constraint,
+	/** input type for incrementing numeric columns in table "data_consumption" */
+["data_consumption_inc_input"]: {
+	id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+},
+	/** input type for inserting data into table "data_consumption" */
+["data_consumption_insert_input"]: {
+	date?:PartialObjects["date"],
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+},
+	/** aggregate max on columns */
+["data_consumption_max_fields"]: {
+		__typename?: "data_consumption_max_fields";
+			date?:PartialObjects["date"],
+			id?:number,
+			name_of_subscription?:string,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	/** aggregate min on columns */
+["data_consumption_min_fields"]: {
+		__typename?: "data_consumption_min_fields";
+			date?:PartialObjects["date"],
+			id?:number,
+			name_of_subscription?:string,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	/** response of any mutation on the table "data_consumption" */
+["data_consumption_mutation_response"]: {
+		__typename?: "data_consumption_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["data_consumption"][]
+	},
+	/** on_conflict condition type for table "data_consumption" */
+["data_consumption_on_conflict"]: {
+	constraint:PartialObjects["data_consumption_constraint"],
+	update_columns:PartialObjects["data_consumption_update_column"][],
+	where?:PartialObjects["data_consumption_bool_exp"]
+},
+	/** Ordering options when selecting data from "data_consumption". */
+["data_consumption_order_by"]: {
+	date?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	name_of_subscription?:PartialObjects["order_by"],
+	number_of_events?:PartialObjects["order_by"],
+	total_size?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: data_consumption */
+["data_consumption_pk_columns_input"]: {
+	id:number
+},
+	/** select columns of table "data_consumption" */
+["data_consumption_select_column"]:data_consumption_select_column,
+	/** input type for updating data in table "data_consumption" */
+["data_consumption_set_input"]: {
+	date?:PartialObjects["date"],
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+},
+	/** aggregate stddev on columns */
+["data_consumption_stddev_fields"]: {
+		__typename?: "data_consumption_stddev_fields";
+			id?:number,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["data_consumption_stddev_pop_fields"]: {
+		__typename?: "data_consumption_stddev_pop_fields";
+			id?:number,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["data_consumption_stddev_samp_fields"]: {
+		__typename?: "data_consumption_stddev_samp_fields";
+			id?:number,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	/** Streaming cursor of the table "data_consumption" */
+["data_consumption_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["data_consumption_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["data_consumption_stream_cursor_value_input"]: {
+	date?:PartialObjects["date"],
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+},
+	/** aggregate sum on columns */
+["data_consumption_sum_fields"]: {
+		__typename?: "data_consumption_sum_fields";
+			id?:number,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	/** update columns of table "data_consumption" */
+["data_consumption_update_column"]:data_consumption_update_column,
+	["data_consumption_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["data_consumption_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["data_consumption_set_input"],
+	where:PartialObjects["data_consumption_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["data_consumption_var_pop_fields"]: {
+		__typename?: "data_consumption_var_pop_fields";
+			id?:number,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	/** aggregate var_samp on columns */
+["data_consumption_var_samp_fields"]: {
+		__typename?: "data_consumption_var_samp_fields";
+			id?:number,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	/** aggregate variance on columns */
+["data_consumption_variance_fields"]: {
+		__typename?: "data_consumption_variance_fields";
+			id?:number,
+			number_of_events?:number,
+			total_size?:number,
+			user_id?:number
+	},
+	["date"]:any,
+	/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
+["date_comparison_exp"]: {
+	_eq?:PartialObjects["date"],
+	_gt?:PartialObjects["date"],
+	_gte?:PartialObjects["date"],
+	_in?:PartialObjects["date"][],
+	_is_null?:boolean,
+	_lt?:PartialObjects["date"],
+	_lte?:PartialObjects["date"],
+	_neq?:PartialObjects["date"],
+	_nin?:PartialObjects["date"][]
 },
 	/** columns and relationships of "delivery.company" */
 ["delivery_company"]: {
@@ -28047,6 +28537,10 @@ the end). throws an error if top level container is not an array */
 	delete_customer_stripe_sp_id?:PartialObjects["customer_stripe_sp_id_mutation_response"],
 			/** delete single row from the table: "customer.stripe_sp_id" */
 	delete_customer_stripe_sp_id_by_pk?:PartialObjects["customer_stripe_sp_id"],
+			/** delete data from the table: "data_consumption" */
+	delete_data_consumption?:PartialObjects["data_consumption_mutation_response"],
+			/** delete single row from the table: "data_consumption" */
+	delete_data_consumption_by_pk?:PartialObjects["data_consumption"],
 			/** delete data from the table: "delivery.company" */
 	delete_delivery_company?:PartialObjects["delivery_company_mutation_response"],
 			/** delete single row from the table: "delivery.company" */
@@ -28263,6 +28757,10 @@ the end). throws an error if top level container is not an array */
 	insert_customer_stripe_sp_id?:PartialObjects["customer_stripe_sp_id_mutation_response"],
 			/** insert a single row into the table: "customer.stripe_sp_id" */
 	insert_customer_stripe_sp_id_one?:PartialObjects["customer_stripe_sp_id"],
+			/** insert data into the table: "data_consumption" */
+	insert_data_consumption?:PartialObjects["data_consumption_mutation_response"],
+			/** insert a single row into the table: "data_consumption" */
+	insert_data_consumption_one?:PartialObjects["data_consumption"],
 			/** insert data into the table: "delivery.company" */
 	insert_delivery_company?:PartialObjects["delivery_company_mutation_response"],
 			/** insert a single row into the table: "delivery.company" */
@@ -28499,6 +28997,12 @@ the end). throws an error if top level container is not an array */
 	update_customer_stripe_sp_id_by_pk?:PartialObjects["customer_stripe_sp_id"],
 			/** update multiples rows of table: "customer.stripe_sp_id" */
 	update_customer_stripe_sp_id_many?:(PartialObjects["customer_stripe_sp_id_mutation_response"] | undefined)[],
+			/** update data of the table: "data_consumption" */
+	update_data_consumption?:PartialObjects["data_consumption_mutation_response"],
+			/** update single row of the table: "data_consumption" */
+	update_data_consumption_by_pk?:PartialObjects["data_consumption"],
+			/** update multiples rows of table: "data_consumption" */
+	update_data_consumption_many?:(PartialObjects["data_consumption_mutation_response"] | undefined)[],
 			/** update data of the table: "delivery.company" */
 	update_delivery_company?:PartialObjects["delivery_company_mutation_response"],
 			/** update single row of the table: "delivery.company" */
@@ -29020,6 +29524,12 @@ the end). throws an error if top level container is not an array */
 	customer_stripe_sp_id_aggregate?:PartialObjects["customer_stripe_sp_id_aggregate"],
 			/** fetch data from the table: "customer.stripe_sp_id" using primary key columns */
 	customer_stripe_sp_id_by_pk?:PartialObjects["customer_stripe_sp_id"],
+			/** fetch data from the table: "data_consumption" */
+	data_consumption?:PartialObjects["data_consumption"][],
+			/** fetch aggregated fields from the table: "data_consumption" */
+	data_consumption_aggregate?:PartialObjects["data_consumption_aggregate"],
+			/** fetch data from the table: "data_consumption" using primary key columns */
+	data_consumption_by_pk?:PartialObjects["data_consumption"],
 			/** fetch data from the table: "delivery.company" */
 	delivery_company?:PartialObjects["delivery_company"][],
 			/** fetch aggregated fields from the table: "delivery.company" */
@@ -36617,6 +37127,14 @@ All fields are combined with a logical 'AND'. */
 	customer_stripe_sp_id_by_pk?:PartialObjects["customer_stripe_sp_id"],
 			/** fetch data from the table in a streaming manner: "customer.stripe_sp_id" */
 	customer_stripe_sp_id_stream?:PartialObjects["customer_stripe_sp_id"][],
+			/** fetch data from the table: "data_consumption" */
+	data_consumption?:PartialObjects["data_consumption"][],
+			/** fetch aggregated fields from the table: "data_consumption" */
+	data_consumption_aggregate?:PartialObjects["data_consumption_aggregate"],
+			/** fetch data from the table: "data_consumption" using primary key columns */
+	data_consumption_by_pk?:PartialObjects["data_consumption"],
+			/** fetch data from the table in a streaming manner: "data_consumption" */
+	data_consumption_stream?:PartialObjects["data_consumption"][],
 			/** fetch data from the table: "delivery.company" */
 	delivery_company?:PartialObjects["delivery_company"][],
 			/** fetch aggregated fields from the table: "delivery.company" */
@@ -40515,6 +41033,272 @@ export type customer_stripe_sp_id_variance_order_by = {
 		customer_id?:order_by,
 	id?:order_by,
 	sp_id?:order_by
+}
+
+/** columns and relationships of "data_consumption" */
+export type data_consumption = {
+	__typename?: "data_consumption",
+	date:date,
+	id:number,
+	name_of_subscription:string,
+	number_of_events:number,
+	total_size:number,
+	user_id:number
+}
+
+/** aggregated selection of "data_consumption" */
+export type data_consumption_aggregate = {
+	__typename?: "data_consumption_aggregate",
+	aggregate?:data_consumption_aggregate_fields,
+	nodes:data_consumption[]
+}
+
+/** aggregate fields of "data_consumption" */
+export type data_consumption_aggregate_fields = {
+	__typename?: "data_consumption_aggregate_fields",
+	avg?:data_consumption_avg_fields,
+	count:number,
+	max?:data_consumption_max_fields,
+	min?:data_consumption_min_fields,
+	stddev?:data_consumption_stddev_fields,
+	stddev_pop?:data_consumption_stddev_pop_fields,
+	stddev_samp?:data_consumption_stddev_samp_fields,
+	sum?:data_consumption_sum_fields,
+	var_pop?:data_consumption_var_pop_fields,
+	var_samp?:data_consumption_var_samp_fields,
+	variance?:data_consumption_variance_fields
+}
+
+/** aggregate avg on columns */
+export type data_consumption_avg_fields = {
+	__typename?: "data_consumption_avg_fields",
+	id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** Boolean expression to filter rows from the table "data_consumption". All fields are combined with a logical 'AND'. */
+export type data_consumption_bool_exp = {
+		_and?:data_consumption_bool_exp[],
+	_not?:data_consumption_bool_exp,
+	_or?:data_consumption_bool_exp[],
+	date?:date_comparison_exp,
+	id?:Int_comparison_exp,
+	name_of_subscription?:String_comparison_exp,
+	number_of_events?:Int_comparison_exp,
+	total_size?:Int_comparison_exp,
+	user_id?:Int_comparison_exp
+}
+
+/** unique or primary key constraints on table "data_consumption" */
+export enum data_consumption_constraint {
+	data_consumption_pkey = "data_consumption_pkey"
+}
+
+/** input type for incrementing numeric columns in table "data_consumption" */
+export type data_consumption_inc_input = {
+		id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** input type for inserting data into table "data_consumption" */
+export type data_consumption_insert_input = {
+		date?:date,
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** aggregate max on columns */
+export type data_consumption_max_fields = {
+	__typename?: "data_consumption_max_fields",
+	date?:date,
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** aggregate min on columns */
+export type data_consumption_min_fields = {
+	__typename?: "data_consumption_min_fields",
+	date?:date,
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** response of any mutation on the table "data_consumption" */
+export type data_consumption_mutation_response = {
+	__typename?: "data_consumption_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:data_consumption[]
+}
+
+/** on_conflict condition type for table "data_consumption" */
+export type data_consumption_on_conflict = {
+		constraint:data_consumption_constraint,
+	update_columns:data_consumption_update_column[],
+	where?:data_consumption_bool_exp
+}
+
+/** Ordering options when selecting data from "data_consumption". */
+export type data_consumption_order_by = {
+		date?:order_by,
+	id?:order_by,
+	name_of_subscription?:order_by,
+	number_of_events?:order_by,
+	total_size?:order_by,
+	user_id?:order_by
+}
+
+/** primary key columns input for table: data_consumption */
+export type data_consumption_pk_columns_input = {
+		id:number
+}
+
+/** select columns of table "data_consumption" */
+export enum data_consumption_select_column {
+	date = "date",
+	id = "id",
+	name_of_subscription = "name_of_subscription",
+	number_of_events = "number_of_events",
+	total_size = "total_size",
+	user_id = "user_id"
+}
+
+/** input type for updating data in table "data_consumption" */
+export type data_consumption_set_input = {
+		date?:date,
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** aggregate stddev on columns */
+export type data_consumption_stddev_fields = {
+	__typename?: "data_consumption_stddev_fields",
+	id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type data_consumption_stddev_pop_fields = {
+	__typename?: "data_consumption_stddev_pop_fields",
+	id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type data_consumption_stddev_samp_fields = {
+	__typename?: "data_consumption_stddev_samp_fields",
+	id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** Streaming cursor of the table "data_consumption" */
+export type data_consumption_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:data_consumption_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type data_consumption_stream_cursor_value_input = {
+		date?:date,
+	id?:number,
+	name_of_subscription?:string,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** aggregate sum on columns */
+export type data_consumption_sum_fields = {
+	__typename?: "data_consumption_sum_fields",
+	id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** update columns of table "data_consumption" */
+export enum data_consumption_update_column {
+	date = "date",
+	id = "id",
+	name_of_subscription = "name_of_subscription",
+	number_of_events = "number_of_events",
+	total_size = "total_size",
+	user_id = "user_id"
+}
+
+export type data_consumption_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:data_consumption_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:data_consumption_set_input,
+	where:data_consumption_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type data_consumption_var_pop_fields = {
+	__typename?: "data_consumption_var_pop_fields",
+	id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type data_consumption_var_samp_fields = {
+	__typename?: "data_consumption_var_samp_fields",
+	id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+/** aggregate variance on columns */
+export type data_consumption_variance_fields = {
+	__typename?: "data_consumption_variance_fields",
+	id?:number,
+	number_of_events?:number,
+	total_size?:number,
+	user_id?:number
+}
+
+export type date = any
+
+/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
+export type date_comparison_exp = {
+		_eq?:date,
+	_gt?:date,
+	_gte?:date,
+	_in?:date[],
+	_is_null?:boolean,
+	_lt?:date,
+	_lte?:date,
+	_neq?:date,
+	_nin?:date[]
 }
 
 /** columns and relationships of "delivery.company" */
@@ -47691,6 +48475,10 @@ export type mutation_root = {
 	delete_customer_stripe_sp_id?:customer_stripe_sp_id_mutation_response,
 	/** delete single row from the table: "customer.stripe_sp_id" */
 	delete_customer_stripe_sp_id_by_pk?:customer_stripe_sp_id,
+	/** delete data from the table: "data_consumption" */
+	delete_data_consumption?:data_consumption_mutation_response,
+	/** delete single row from the table: "data_consumption" */
+	delete_data_consumption_by_pk?:data_consumption,
 	/** delete data from the table: "delivery.company" */
 	delete_delivery_company?:delivery_company_mutation_response,
 	/** delete single row from the table: "delivery.company" */
@@ -47907,6 +48695,10 @@ export type mutation_root = {
 	insert_customer_stripe_sp_id?:customer_stripe_sp_id_mutation_response,
 	/** insert a single row into the table: "customer.stripe_sp_id" */
 	insert_customer_stripe_sp_id_one?:customer_stripe_sp_id,
+	/** insert data into the table: "data_consumption" */
+	insert_data_consumption?:data_consumption_mutation_response,
+	/** insert a single row into the table: "data_consumption" */
+	insert_data_consumption_one?:data_consumption,
 	/** insert data into the table: "delivery.company" */
 	insert_delivery_company?:delivery_company_mutation_response,
 	/** insert a single row into the table: "delivery.company" */
@@ -48143,6 +48935,12 @@ export type mutation_root = {
 	update_customer_stripe_sp_id_by_pk?:customer_stripe_sp_id,
 	/** update multiples rows of table: "customer.stripe_sp_id" */
 	update_customer_stripe_sp_id_many?:(customer_stripe_sp_id_mutation_response | undefined)[],
+	/** update data of the table: "data_consumption" */
+	update_data_consumption?:data_consumption_mutation_response,
+	/** update single row of the table: "data_consumption" */
+	update_data_consumption_by_pk?:data_consumption,
+	/** update multiples rows of table: "data_consumption" */
+	update_data_consumption_many?:(data_consumption_mutation_response | undefined)[],
 	/** update data of the table: "delivery.company" */
 	update_delivery_company?:delivery_company_mutation_response,
 	/** update single row of the table: "delivery.company" */
@@ -48716,6 +49514,12 @@ export type query_root = {
 	customer_stripe_sp_id_aggregate:customer_stripe_sp_id_aggregate,
 	/** fetch data from the table: "customer.stripe_sp_id" using primary key columns */
 	customer_stripe_sp_id_by_pk?:customer_stripe_sp_id,
+	/** fetch data from the table: "data_consumption" */
+	data_consumption:data_consumption[],
+	/** fetch aggregated fields from the table: "data_consumption" */
+	data_consumption_aggregate:data_consumption_aggregate,
+	/** fetch data from the table: "data_consumption" using primary key columns */
+	data_consumption_by_pk?:data_consumption,
 	/** fetch data from the table: "delivery.company" */
 	delivery_company:delivery_company[],
 	/** fetch aggregated fields from the table: "delivery.company" */
@@ -57604,6 +58408,14 @@ export type subscription_root = {
 	customer_stripe_sp_id_by_pk?:customer_stripe_sp_id,
 	/** fetch data from the table in a streaming manner: "customer.stripe_sp_id" */
 	customer_stripe_sp_id_stream:customer_stripe_sp_id[],
+	/** fetch data from the table: "data_consumption" */
+	data_consumption:data_consumption[],
+	/** fetch aggregated fields from the table: "data_consumption" */
+	data_consumption_aggregate:data_consumption_aggregate,
+	/** fetch data from the table: "data_consumption" using primary key columns */
+	data_consumption_by_pk?:data_consumption,
+	/** fetch data from the table in a streaming manner: "data_consumption" */
+	data_consumption_stream:data_consumption[],
 	/** fetch data from the table: "delivery.company" */
 	delivery_company:delivery_company[],
 	/** fetch aggregated fields from the table: "delivery.company" */
@@ -63989,6 +64801,378 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		}
+	},
+	data_consumption_aggregate_fields:{
+		count:{
+			columns:{
+				type:"data_consumption_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	data_consumption_bool_exp:{
+		_and:{
+			type:"data_consumption_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"data_consumption_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"data_consumption_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		date:{
+			type:"date_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_of_subscription:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_events:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_size:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	data_consumption_constraint: "enum",
+	data_consumption_inc_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_events:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_size:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	data_consumption_insert_input:{
+		date:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_of_subscription:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_events:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_size:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	data_consumption_on_conflict:{
+		constraint:{
+			type:"data_consumption_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"data_consumption_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"data_consumption_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	data_consumption_order_by:{
+		date:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_of_subscription:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_events:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_size:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	data_consumption_pk_columns_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	data_consumption_select_column: "enum",
+	data_consumption_set_input:{
+		date:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_of_subscription:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_events:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_size:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	data_consumption_stream_cursor_input:{
+		initial_value:{
+			type:"data_consumption_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	data_consumption_stream_cursor_value_input:{
+		date:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_of_subscription:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		number_of_events:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_size:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	data_consumption_update_column: "enum",
+	data_consumption_updates:{
+		_inc:{
+			type:"data_consumption_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"data_consumption_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"data_consumption_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	date: "String",
+	date_comparison_exp:{
+		_eq:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_gt:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_gte:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_in:{
+			type:"date",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_is_null:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_lt:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_lte:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_neq:{
+			type:"date",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_nin:{
+			type:"date",
+			array:true,
+			arrayRequired:false,
+			required:true
 		}
 	},
 	delivery_company:{
@@ -78852,6 +80036,22 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		delete_data_consumption:{
+			where:{
+				type:"data_consumption_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_data_consumption_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		delete_delivery_company:{
 			where:{
 				type:"delivery_company_bool_exp",
@@ -79813,6 +81013,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"customer_stripe_sp_id_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_data_consumption:{
+			objects:{
+				type:"data_consumption_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"data_consumption_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_data_consumption_one:{
+			object:{
+				type:"data_consumption_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"data_consumption_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -81609,6 +82837,54 @@ export const AllTypesProps: Record<string,any> = {
 		update_customer_stripe_sp_id_many:{
 			updates:{
 				type:"customer_stripe_sp_id_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_data_consumption:{
+			_inc:{
+				type:"data_consumption_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"data_consumption_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"data_consumption_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_data_consumption_by_pk:{
+			_inc:{
+				type:"data_consumption_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"data_consumption_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"data_consumption_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_data_consumption_many:{
+			updates:{
+				type:"data_consumption_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -85203,6 +86479,78 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		customer_stripe_sp_id_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		data_consumption:{
+			distinct_on:{
+				type:"data_consumption_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"data_consumption_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"data_consumption_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		data_consumption_aggregate:{
+			distinct_on:{
+				type:"data_consumption_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"data_consumption_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"data_consumption_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		data_consumption_by_pk:{
 			id:{
 				type:"Int",
 				array:false,
@@ -107273,6 +108621,98 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		data_consumption:{
+			distinct_on:{
+				type:"data_consumption_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"data_consumption_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"data_consumption_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		data_consumption_aggregate:{
+			distinct_on:{
+				type:"data_consumption_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"data_consumption_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"data_consumption_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		data_consumption_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		data_consumption_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"data_consumption_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"data_consumption_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		delivery_company:{
 			distinct_on:{
 				type:"delivery_company_select_column",
@@ -114265,6 +115705,99 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float",
 		sp_id:"Float"
 	},
+	data_consumption:{
+		date:"date",
+		id:"Int",
+		name_of_subscription:"String",
+		number_of_events:"Int",
+		total_size:"Int",
+		user_id:"Int"
+	},
+	data_consumption_aggregate:{
+		aggregate:"data_consumption_aggregate_fields",
+		nodes:"data_consumption"
+	},
+	data_consumption_aggregate_fields:{
+		avg:"data_consumption_avg_fields",
+		count:"Int",
+		max:"data_consumption_max_fields",
+		min:"data_consumption_min_fields",
+		stddev:"data_consumption_stddev_fields",
+		stddev_pop:"data_consumption_stddev_pop_fields",
+		stddev_samp:"data_consumption_stddev_samp_fields",
+		sum:"data_consumption_sum_fields",
+		var_pop:"data_consumption_var_pop_fields",
+		var_samp:"data_consumption_var_samp_fields",
+		variance:"data_consumption_variance_fields"
+	},
+	data_consumption_avg_fields:{
+		id:"Float",
+		number_of_events:"Float",
+		total_size:"Float",
+		user_id:"Float"
+	},
+	data_consumption_max_fields:{
+		date:"date",
+		id:"Int",
+		name_of_subscription:"String",
+		number_of_events:"Int",
+		total_size:"Int",
+		user_id:"Int"
+	},
+	data_consumption_min_fields:{
+		date:"date",
+		id:"Int",
+		name_of_subscription:"String",
+		number_of_events:"Int",
+		total_size:"Int",
+		user_id:"Int"
+	},
+	data_consumption_mutation_response:{
+		affected_rows:"Int",
+		returning:"data_consumption"
+	},
+	data_consumption_stddev_fields:{
+		id:"Float",
+		number_of_events:"Float",
+		total_size:"Float",
+		user_id:"Float"
+	},
+	data_consumption_stddev_pop_fields:{
+		id:"Float",
+		number_of_events:"Float",
+		total_size:"Float",
+		user_id:"Float"
+	},
+	data_consumption_stddev_samp_fields:{
+		id:"Float",
+		number_of_events:"Float",
+		total_size:"Float",
+		user_id:"Float"
+	},
+	data_consumption_sum_fields:{
+		id:"Int",
+		number_of_events:"Int",
+		total_size:"Int",
+		user_id:"Int"
+	},
+	data_consumption_var_pop_fields:{
+		id:"Float",
+		number_of_events:"Float",
+		total_size:"Float",
+		user_id:"Float"
+	},
+	data_consumption_var_samp_fields:{
+		id:"Float",
+		number_of_events:"Float",
+		total_size:"Float",
+		user_id:"Float"
+	},
+	data_consumption_variance_fields:{
+		id:"Float",
+		number_of_events:"Float",
+		total_size:"Float",
+		user_id:"Float"
+	},
 	delivery_company:{
 		delivery_details:"delivery_details",
 		delivery_details_id:"Int",
@@ -116169,6 +117702,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_customer_stripe_cards_by_pk:"customer_stripe_cards",
 		delete_customer_stripe_sp_id:"customer_stripe_sp_id_mutation_response",
 		delete_customer_stripe_sp_id_by_pk:"customer_stripe_sp_id",
+		delete_data_consumption:"data_consumption_mutation_response",
+		delete_data_consumption_by_pk:"data_consumption",
 		delete_delivery_company:"delivery_company_mutation_response",
 		delete_delivery_company_by_pk:"delivery_company",
 		delete_delivery_courier_order:"delivery_courier_order_mutation_response",
@@ -116277,6 +117812,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_customer_stripe_cards_one:"customer_stripe_cards",
 		insert_customer_stripe_sp_id:"customer_stripe_sp_id_mutation_response",
 		insert_customer_stripe_sp_id_one:"customer_stripe_sp_id",
+		insert_data_consumption:"data_consumption_mutation_response",
+		insert_data_consumption_one:"data_consumption",
 		insert_delivery_company:"delivery_company_mutation_response",
 		insert_delivery_company_one:"delivery_company",
 		insert_delivery_courier_order:"delivery_courier_order_mutation_response",
@@ -116395,6 +117932,9 @@ export const ReturnTypes: Record<string,any> = {
 		update_customer_stripe_sp_id:"customer_stripe_sp_id_mutation_response",
 		update_customer_stripe_sp_id_by_pk:"customer_stripe_sp_id",
 		update_customer_stripe_sp_id_many:"customer_stripe_sp_id_mutation_response",
+		update_data_consumption:"data_consumption_mutation_response",
+		update_data_consumption_by_pk:"data_consumption",
+		update_data_consumption_many:"data_consumption_mutation_response",
 		update_delivery_company:"delivery_company_mutation_response",
 		update_delivery_company_by_pk:"delivery_company",
 		update_delivery_company_many:"delivery_company_mutation_response",
@@ -116634,6 +118174,9 @@ export const ReturnTypes: Record<string,any> = {
 		customer_stripe_sp_id:"customer_stripe_sp_id",
 		customer_stripe_sp_id_aggregate:"customer_stripe_sp_id_aggregate",
 		customer_stripe_sp_id_by_pk:"customer_stripe_sp_id",
+		data_consumption:"data_consumption",
+		data_consumption_aggregate:"data_consumption_aggregate",
+		data_consumption_by_pk:"data_consumption",
 		delivery_company:"delivery_company",
 		delivery_company_aggregate:"delivery_company_aggregate",
 		delivery_company_by_pk:"delivery_company",
@@ -119105,6 +120648,10 @@ export const ReturnTypes: Record<string,any> = {
 		customer_stripe_sp_id_aggregate:"customer_stripe_sp_id_aggregate",
 		customer_stripe_sp_id_by_pk:"customer_stripe_sp_id",
 		customer_stripe_sp_id_stream:"customer_stripe_sp_id",
+		data_consumption:"data_consumption",
+		data_consumption_aggregate:"data_consumption_aggregate",
+		data_consumption_by_pk:"data_consumption",
+		data_consumption_stream:"data_consumption",
 		delivery_company:"delivery_company",
 		delivery_company_aggregate:"delivery_company_aggregate",
 		delivery_company_by_pk:"delivery_company",

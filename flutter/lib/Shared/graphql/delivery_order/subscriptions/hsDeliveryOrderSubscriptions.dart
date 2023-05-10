@@ -21,142 +21,56 @@ import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
-Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
+
+Stream<DeliveryOrderVariables?> listen_on_driver_order_variables(
+    {required int orderId}) {
   return _hasuraDb.graphQLClient
-      .subscribe$listen_on_driver_order(
-    Options$Subscription$listen_on_driver_order(
-      fetchPolicy: FetchPolicy.noCache,
-      variables: Variables$Subscription$listen_on_driver_order(
-        orderId: orderId,
-      ),
-    ),
-  )
-      .map<DeliveryOrder?>(
-          (QueryResult<Subscription$listen_on_driver_order> event) {
+      .subscribe$listen_on_driver_order_variables(
+          Options$Subscription$listen_on_driver_order_variables(
+              variables:
+                  Variables$Subscription$listen_on_driver_order_variables(
+                      orderId: orderId)))
+      .map<DeliveryOrderVariables?>(
+          (QueryResult<Subscription$listen_on_driver_order_variables> event) {
     if (event.parsedData?.delivery_order_by_pk != null) {
-      final Subscription$listen_on_driver_order$delivery_order_by_pk orderData =
-          event.parsedData!.delivery_order_by_pk!;
-
-      StripeOrderPaymentInfo? _paymentInfo;
-      if (orderData.restaurant_order?.stripe_info != null) {
-        _paymentInfo = StripeOrderPaymentInfo.fromJson(
-            orderData.restaurant_order!.stripe_info);
+      final Subscription$listen_on_driver_order_variables$delivery_order_by_pk
+          orderData = event.parsedData!.delivery_order_by_pk!;
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_driver_order_variables")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_driver_order_variables"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_driver_order_variables"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_driver_order_variables"] = <int>[
+          event.data.toString().length,
+          1
+        ];
       }
-      if (orderData.laundry_pickup_order?.stripe_info != null) {
-        _paymentInfo = StripeOrderPaymentInfo.fromJson(
-            orderData.restaurant_order!.stripe_info);
-      }
-      if (orderData.laundry_delivery_order?.stripe_info != null) {
-        _paymentInfo = StripeOrderPaymentInfo.fromJson(
-            orderData.restaurant_order!.stripe_info);
-      }
-      return DeliveryOrder(
-        orderId: orderData.id,
-        scheduleTime: (orderData.schedule_time != null)
-            ? DateTime.tryParse(orderData.schedule_time!)
-            : null,
+      return DeliveryOrderVariables(
+        status: orderData.status.toDeliveryOrderStatus(),
         packageReady: orderData.package_ready,
-
-        orderType: orderData.order_type.toOrderType(),
-        stripePaymentInfo: _paymentInfo,
-        serviceOrderId: orderData.restaurant_order?.id,
-        deliveryCompany: _getDeliveryCompany(orderData)!,
-        serviceProvider: _getServiceInfo(orderData)!,
-        customer: UserInfo(
-            hasuraId: orderData.customer.user.id,
-            image: orderData.customer.user.image,
-            name: orderData.customer.user.name),
-        deliveryDirection: orderData.direction.toDeliveryDirection(),
-        routeInformation: (orderData.trip_duration != null &&
-                orderData.trip_distance != null &&
-                orderData.trip_polyline != null)
-            ? RouteInformation(
-                duration: RideDuration(orderData.trip_duration.toString(),
-                    orderData.trip_duration!),
-                distance: RideDistance(orderData.trip_distance.toString(),
-                    orderData.trip_distance!),
-                polyline: orderData.trip_polyline!)
-            : null,
-        orderTime: DateTime.parse(orderData.order_time),
-        driverInfo: (orderData.delivery_driver != null)
-            ? UserInfo(
-                hasuraId: orderData.delivery_driver!.user.id,
-                name: orderData.delivery_driver!.user.name,
-                image: orderData.delivery_driver!.user.image,
-                language: null)
-            : null,
         estimatedArrivalAtDropoff:
             (orderData.estimated_arrival_at_dropoff_time != null)
                 ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
                 : null,
-
         estimatedArrivalAtPickup:
             (orderData.estimated_arrival_at_pickup_time != null)
                 ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
                 : null,
+        cancellationTime: (orderData.cancellation_time != null)
+            ? DateTime.parse(orderData.cancellation_time!)
+            : null,
         estimatedPackageReadyTime:
             (orderData.estimated_package_ready_time != null)
                 ? DateTime.parse(orderData.estimated_package_ready_time!)
                 : null,
-        status: orderData.status.toDeliveryOrderStatus(),
-        deliveryProviderType:
-            orderData.service_provider_type.toServiceProviderType(),
-        // deliveryCost: orderData.delivery_cost,
-        // packageCost: orderData.package_cost_comp ?? 0,
-        driverLocation: null,
-        pickupLocation: (orderData.pickup_address != null)
-            ? MezLocation(
-                orderData.pickup_address!,
-                orderData.pickup_gps?.toLocationData() ??
-                    MezLocation.buildLocationData(0, 0))
+        scheduleTime: (orderData.schedule_time != null)
+            ? DateTime.tryParse(orderData.schedule_time!)
             : null,
-        customerReviewByDriver: (orderData.customer_review_by_driver != null)
-            ? Review(
-                comment: orderData.customer_review_by_driver!.note,
-                rating: orderData.customer_review_by_driver!.rating,
-                toEntityId: orderData.customer_review_by_driver!.to_entity_id,
-                toEntityType: orderData
-                    .customer_review_by_driver!.to_entity_type
-                    .toServiceProviderType(),
-                fromEntityId:
-                    orderData.customer_review_by_driver!.from_entity_id,
-                fromEntityType: orderData
-                    .customer_review_by_driver!.from_entity_type
-                    .toServiceProviderType(),
-                reviewTime: DateTime.parse(
-                  orderData.customer_review_by_driver!.created_at,
-                ))
-            : null,
-        serviceReviewByDriver: (orderData.service_provider_review_by_driver != null)
-            ? Review(
-                comment: orderData.service_provider_review_by_driver!.note,
-                rating: orderData.service_provider_review_by_driver!.rating,
-                toEntityId: orderData.service_provider_review_by_driver!.to_entity_id,
-                toEntityType: orderData
-                    .service_provider_review_by_driver!.to_entity_type
-                    .toServiceProviderType(),
-                fromEntityId:
-                    orderData.service_provider_review_by_driver!.from_entity_id,
-                fromEntityType: orderData
-                    .service_provider_review_by_driver!.from_entity_type
-                    .toServiceProviderType(),
-                reviewTime: DateTime.parse(
-                  orderData.service_provider_review_by_driver!.created_at,
-                ))
-            : null,
-        dropOffLocation: MezLocation(
-            orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
-        customerDriverChatId: orderData.chat_with_customer_id,
-        serviceProviderDriverChatId: orderData.chat_with_service_provider_id,
-        paymentType: orderData.payment_type.toPaymentType(),
-        chatId: orderData.chat_with_customer_id,
-        costs: OrderCosts(
-            deliveryCost: orderData.delivery_cost,
-            refundAmmount: null,
-            tax: null,
-            orderItemsCost: orderData.package_cost_comp,
-            totalCost: orderData.total_cost),
-        deliveryOrderId: orderData.id,
       );
     }
     return null;
@@ -178,6 +92,23 @@ Stream<List<MinimalOrder>?> listen_on_current_driver_orders(
     final List<Subscription$listen_on_inprocess_driver_orders$delivery_order>?
         ordersData = event.parsedData?.delivery_order;
     if (ordersData != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_current_driver_orders")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_current_driver_orders"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_current_driver_orders"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_current_driver_orders"] = <int>[
+          event.data.toString().length,
+          1
+        ];
+      }
+      mezDbgPrint(
+          "listen_on_current_driver_orders: ${Get.find<HasuraDb>().dataConsumption["listen_on_current_driver_orders"]}");
       final List<MinimalOrder> orders = ordersData.map(
           (Subscription$listen_on_inprocess_driver_orders$delivery_order
               orderData) {
@@ -215,6 +146,18 @@ Stream<List<MinimalOrder>?> listen_on_open_driver_orders(
     List<Subscription$listen_open_driver_orders$delivery_order>? ordersData =
         event.parsedData?.delivery_order;
     if (ordersData != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_open_driver_orders")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_open_driver_orders"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_open_driver_orders"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_open_driver_orders"] =
+            <int>[event.data.toString().length, 1];
+      }
       final List<MinimalOrder> orders = ordersData.map(
           (Subscription$listen_open_driver_orders$delivery_order orderData) {
         return MinimalOrder(
@@ -253,6 +196,21 @@ Stream<List<MinimalOrder>?> listen_on_current_dvcompany_orders(
             Subscription$listen_delivery_company_current_orders$delivery_order>?
         ordersData = event.parsedData?.delivery_order;
     if (ordersData != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_current_dvcompany_orders")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_current_dvcompany_orders"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_current_dvcompany_orders"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_current_dvcompany_orders"] = <int>[
+          event.data.toString().length,
+          1
+        ];
+      }
       final List<MinimalOrder> orders = ordersData.map(
           (Subscription$listen_delivery_company_current_orders$delivery_order
               orderData) {
@@ -286,40 +244,24 @@ Stream<LatLng?> listen_order_driver_location({required int orderId}) {
     if (event.parsedData?.delivery_order_by_pk?.delivery_driver
             ?.current_location !=
         null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_order_driver_location")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_order_driver_location"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_order_driver_location"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_order_driver_location"] =
+            <int>[event.data.toString().length, 1];
+      }
       Geography data = event
           .parsedData!.delivery_order_by_pk!.delivery_driver!.current_location!;
       return LatLng(data.latitude, data.longitude);
     }
     return null;
   });
-}
-
-UserInfo? _getDeliveryCompany<T>(
-    Subscription$listen_on_driver_order$delivery_order_by_pk orderData) {
-  mezDbgPrint(
-      "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData.service_provider_type.toString()}");
-  final ServiceProviderType serviceProviderType =
-      orderData.service_provider_type.toString().toServiceProviderType();
-  switch (serviceProviderType) {
-    case ServiceProviderType.DeliveryCompany:
-      return UserInfo(
-          hasuraId: orderData.delivery_company!.id,
-          name: orderData.delivery_company!.details!.name,
-          image: orderData.delivery_company!.details!.image);
-    case ServiceProviderType.Restaurant:
-      return UserInfo(
-          hasuraId: orderData.restaurant!.id,
-          name: orderData.restaurant!.details!.name,
-          image: orderData.restaurant!.details!.image);
-    case ServiceProviderType.Laundry:
-      return UserInfo(
-          hasuraId: orderData.laundry!.id,
-          name: orderData.laundry!.details!.name,
-          image: orderData.laundry!.details!.image);
-
-    default:
-  }
-  return null;
 }
 
 ServiceInfo? _getServiceInfo(orderData) {
@@ -366,7 +308,25 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
                   orderId: orderId)))
       .map((QueryResult<Subscription$listen_driver_order_prices> event) {
     mezDbgPrint("Event =======>$event");
+
+    // table
+    // name_of_subscription, date, total_size, user_id
+
     if (event.parsedData?.delivery_order_by_pk != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_driver_order_costs")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_driver_order_costs"]![0] +=
+            event.data.toString().length;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_driver_order_costs"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] =
+            <int>[event.data.toString().length, 1];
+      }
+      mezDbgPrint(
+          "listen_on_driver_order_costs: ${Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"]}");
       Subscription$listen_driver_order_prices$delivery_order_by_pk data =
           event.parsedData!.delivery_order_by_pk!;
       return OrderCosts(
