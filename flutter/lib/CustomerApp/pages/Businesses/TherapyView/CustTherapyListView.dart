@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['TherapyView']['CustTherapyListView'];
@@ -302,7 +303,10 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                         ],
                       ),
                       Divider(),
-                      Text('Date schedule here...'),
+                      CustBusinessScheduleBuilder(
+                          schedule: viewController.therapy[index].schedule,
+                          scheduleType:
+                              viewController.therapy[index].scheduleType),
                       Divider(),
                       Text(viewController.therapy[index].businessName)
                     ],

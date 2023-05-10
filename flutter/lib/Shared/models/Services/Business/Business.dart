@@ -58,6 +58,7 @@ class EventCard extends Event {
     required this.currency,
   }) : super(
           scheduleType: event.scheduleType,
+          schedule: event.schedule,
           category1: event.category1,
           details: event.details,
         );

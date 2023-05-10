@@ -77,29 +77,33 @@ class _CustBusinessScheduleBuilderState
 
               final String toHour = data.to[0].toString();
               final String toMinute = data.to[1].toString();
-              return Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
+              return ScheduleType.OneTime == widget.scheduleType
+
+                  /// TODO: Show only one schedule
+                  ? SizedBox.shrink()
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 5),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.access_time_outlined),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(day),
+                          SizedBox(
+                            child: Row(
+                              children: [
+                                Icon(Icons.access_time_outlined),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Text(day),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
                           ),
                         ],
                       ),
-                    ),
-                    Text(
-                      "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
-                    ),
-                  ],
-                ),
-              );
+                    );
             },
           ),
       ],

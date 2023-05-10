@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/controllers/CustEventsListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -299,7 +300,9 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                   ],
                 ),
                 Divider(),
-                Text('Date schedule here...'),
+                CustBusinessScheduleBuilder(
+                    schedule: viewController.events[index].schedule,
+                    scheduleType: viewController.events[index].scheduleType),
                 Divider(),
                 Text(viewController.events[index].businessName)
               ],
