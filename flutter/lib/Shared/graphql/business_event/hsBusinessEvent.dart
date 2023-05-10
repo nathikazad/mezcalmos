@@ -460,6 +460,75 @@ Future<int?> add_one_event({
   return null;
 }
 
+Future<int?> add_one_class({
+  required Event event,
+}) async {
+  mezDbgPrint(
+      "Event sent to db ::: ==============> ${event.startsAt} \n ${event.endsAt} \n ${event.tags} }");
+
+  final QueryResult<Mutation$add_class> response =
+      await _db.graphQLClient.mutate$add_class(Options$Mutation$add_class(
+          variables: Variables$Mutation$add_class(
+    business_id: event.details.businessId.toInt(),
+    gps_location: (event.gpsLocation != null)
+        ? Geography(event.gpsLocation!.lat.toDouble(),
+            event.gpsLocation!.lng.toDouble())
+        : null,
+    address: event.gpsLocation?.address,
+    schedule_type: event.scheduleType.toFirebaseFormatString(),
+    schedule: event.schedule?.toFirebaseFormattedJson(),
+    starts_at: event.startsAt,
+    ends_at: event.endsAt,
+    available: event.details.available,
+    category1: event.category1.toFirebaseFormatString(),
+    category2: event.category2?.toFirebaseFormatString() ??
+        EventCategory2.Uncategorized.toFirebaseFormatString(),
+    cost: event.details.cost.map((TimeUnit key, num value) =>
+        MapEntry(key.toFirebaseFormatString(), value)),
+    image: event.details.image,
+    name: Input$translation_obj_rel_insert_input(
+        data: Input$translation_insert_input(
+            service_provider_id: event.details.businessId.toInt(),
+            service_provider_type:
+                ServiceProviderType.Business.toFirebaseFormatString(),
+            translations: Input$translation_value_arr_rel_insert_input(
+                data: <Input$translation_value_insert_input>[
+                  Input$translation_value_insert_input(
+                      language_id: Language.EN.toFirebaseFormatString(),
+                      value: event.details.name[Language.EN]),
+                  Input$translation_value_insert_input(
+                      language_id: Language.ES.toFirebaseFormatString(),
+                      value: event.details.name[Language.ES])
+                ]))),
+    position: event.details.position?.toInt(),
+    additional_parameters: event.details.additionalParameters,
+    description: (event.details.description != null)
+        ? Input$translation_obj_rel_insert_input(
+            data: Input$translation_insert_input(
+                service_provider_id: event.details.businessId.toInt(),
+                service_provider_type:
+                    ServiceProviderType.Business.toFirebaseFormatString(),
+                translations: Input$translation_value_arr_rel_insert_input(
+                    data: <Input$translation_value_insert_input>[
+                      Input$translation_value_insert_input(
+                          language_id: Language.EN.toFirebaseFormatString(),
+                          value: event.details.description?[Language.EN]),
+                      Input$translation_value_insert_input(
+                          language_id: Language.ES.toFirebaseFormatString(),
+                          value: event.details.description?[Language.ES])
+                    ])))
+        : null,
+  )));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura add class mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint("✅✅✅ Hasura add class mutation success => ${response.data}");
+    return response.parsedData?.insert_business_event_one?.id;
+  }
+  return null;
+}
+
 Future<List<EventCard>> get_business_events(
     {required int businessId,
     int? offset,

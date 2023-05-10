@@ -18,6 +18,8 @@ export interface BusinessDetails {
     location: Location,
     businessOperatorNotificationToken?: string,
     language: ServiceProviderLanguage,
+    uniqueId?: string,
+    firebaseId?: string,
     schedule: Schedule
 }
 export interface BusinessResponse {

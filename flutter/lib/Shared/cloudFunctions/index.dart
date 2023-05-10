@@ -315,6 +315,8 @@ class CloudFunctions {
       required Location location,
       String? businessOperatorNotificationToken,
       required ServiceProviderLanguage language,
+      String? uniqueId,
+      String? firebaseId,
       required Schedule schedule}  ) async {
     return BusinessResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "business-createBusiness",
@@ -325,6 +327,8 @@ class CloudFunctions {
         "location":location.toFirebaseFormattedJson(),
         "businessOperatorNotificationToken": businessOperatorNotificationToken,
         "language":language.toFirebaseFormattedJson(),
+        "uniqueId": uniqueId,
+        "firebaseId": firebaseId,
         "schedule":schedule.toFirebaseFormattedJson(),
       }));
   }
