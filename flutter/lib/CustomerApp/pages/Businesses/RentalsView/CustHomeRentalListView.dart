@@ -142,7 +142,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
             viewController.businesses.length,
             (int index) => MezCard(
                 elevation: 0,
-                margin: EdgeInsets.only(bottom: 5),
+                margin: EdgeInsets.only(bottom: 15),
                 onClick: () {
                   CustBusinessView.navigate(
                     businessId: viewController.businesses[index].id,
@@ -164,6 +164,9 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                       children: [
                         _getAcceptedPaymentIcons(
                             viewController.businesses[index].acceptedPayments),
+                        SizedBox(
+                          width: 15,
+                        ),
                         Flexible(
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,

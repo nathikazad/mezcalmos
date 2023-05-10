@@ -69,7 +69,7 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: '${_i18n()['title']}',
+        title: '${_i18n()['rentals']}',
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

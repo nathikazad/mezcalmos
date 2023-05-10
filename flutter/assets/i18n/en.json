@@ -779,6 +779,7 @@
             "bathrooms": "Bathrooms"
           },
           "CustRentalWrapper": {
+            "rentals": "Rentals",
             "surf": {
               "title": "Surf",
               "description": "Find the best surfboards around you."
@@ -1497,7 +1498,16 @@
         "deleteTitle": "Confirm account deletion !",
         "deletePrBtn": "Yes, delete !",
         "deleteScBtn": "Cancel",
-        "deleteHelper": "Clicking yes will permanently delete you account, are you sure?"
+        "deleteHelper": "Clicking yes will permanently delete you account, are you sure?",
+        "memberSince": "Member since",
+        "settings": "Settings",
+        "userInfo": "User Information",
+        "savedCards": "Saved cards",
+        "savedLocations": "Saved locations",
+        "shortcuts": "Shortcuts",
+        "privacyPolicy": "Privacy policy",
+        "accountWillBeDeleted": "Your account will be deleted definitely.",
+        "logOut": "Log out"
       },
       "UserProfileScreen": {
         "UserProfileScreen": {

@@ -854,6 +854,7 @@
             "bathrooms": "Baños"
           },
           "CustRentalWrapper": {
+            "rentals": "Alquileres",
             "surf": {
               "title": "Surf",
               "description": "Encuentra las mejores tablas de surf a tu alrededor."
@@ -1575,7 +1576,16 @@
         "deleteTitle": "¡Confirme la eliminación de la cuenta!",
         "deletePrBtn": "¡Sí, eliminar!",
         "deleteScBtn": "Cancelar",
-        "deleteHelper": "Haga clic en SÍ Eliminará permanentemente su cuenta, ¿está seguro?"
+        "deleteHelper": "Haga clic en SÍ Eliminará permanentemente su cuenta, ¿está seguro?",
+        "memberSince": "Miembro desde",
+        "settings": "Ajustes",
+        "userInfo": "Informacion del usuario",
+        "savedCards": "Tarjetas guardadas",
+        "savedLocations": "Ubicaciones guardadas",
+        "shortcuts": "Atajos",
+        "privacyPolicy": "Política de privacidad",
+        "accountWillBeDeleted": "Su cuenta se eliminará definitivamente.",
+        "logOut": "Cerrar sesión"
       },
       "UserProfileScreen": {
         "UserProfileScreen": {

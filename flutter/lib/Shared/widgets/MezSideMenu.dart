@@ -262,13 +262,17 @@ class SideMenuItem extends StatelessWidget {
       this.shouldBeAuthorized = false,
       this.isI18nPath = false,
       this.title,
+      this.backgroundColor,
+      this.contentPadding,
       this.titleWidget})
       : super(key: key);
   final IconData icon;
+  final Color? backgroundColor;
   final Widget? titleWidget;
   final String? title;
   final bool isI18nPath;
   final bool shouldBeAuthorized;
+  final EdgeInsetsGeometry? contentPadding;
   final Function()? onClick;
 
   @override
@@ -276,6 +280,8 @@ class SideMenuItem extends StatelessWidget {
     return InkWell(
       onTap: onClick,
       child: Container(
+        padding: contentPadding,
+        color: backgroundColor,
         margin: EdgeInsets.symmetric(vertical: 1.h),
         child: Row(
           children: [

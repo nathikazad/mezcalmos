@@ -6,6 +6,8 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/components/UserProfileImage.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
@@ -15,6 +17,8 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/env.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileView"];
@@ -53,32 +57,66 @@ class _UserProfileViewState extends State<UserProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      key: Get.find<SideMenuDrawerController>().getNewKey(),
-      drawer: MezSideMenu(),
-      appBar: MezcalmosAppBar(
-          widget.asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
-          onClick: widget.asTab
-              ? null
-              : () {
-                  _handleBackClick();
-                },
-          title: "${_i18n()["profile"]}"),
-      bottomSheet: Obx(
-        () => (viewController.isEditingInfo)
-            ? MezButton(
-                enabled: viewController.isInfoSet,
-                borderRadius: 0,
-                height: 80,
-                label: "${_i18n()["save"]}",
-                onClick: () async {
-                  await viewController.setInfo();
-                },
-              )
-            : SizedBox(),
-      ),
-      body: Obx(
-        () => Container(
+        resizeToAvoidBottomInset: false,
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
+        drawer: MezSideMenu(),
+        appBar: MezcalmosAppBar(
+            widget.asTab
+                ? AppBarLeftButtonType.Menu
+                : AppBarLeftButtonType.Back,
+            onClick: widget.asTab
+                ? null
+                : () {
+                    _handleBackClick();
+                  },
+            title: "${_i18n()["profile"]}"),
+        bottomSheet: Obx(
+          () => (viewController.isEditingInfo)
+              ? MezButton(
+                  enabled: viewController.isInfoSet,
+                  borderRadius: 0,
+                  height: 80,
+                  label: "${_i18n()["save"]}",
+                  onClick: () async {
+                    await viewController.setInfo();
+                  },
+                )
+              : SizedBox(),
+        ),
+        body: SingleChildScrollView(
+          child: Obx(() => Container(
+                padding: const EdgeInsets.only(top: 22, bottom: 22),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    UserProfileImage(
+                      viewController: viewController,
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Center(
+                      child: Text(
+                        viewController.user?.name ?? "",
+                        style: context.textTheme.displayLarge?.copyWith(),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        '${_i18n()['memberSince']} 12/04/2022',
+                        style: TextStyle(
+                            fontSize: 8.mezSp, color: offLightShadeGreyColor),
+                      ),
+                    ),
+                    _settingsItems(),
+                    _shortcutsItems()
+                  ],
+                ),
+              )),
+        )
+        //),
+        /* Obx(
+        () =>Container(
           padding: const EdgeInsets.all(22),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -101,9 +139,9 @@ class _UserProfileViewState extends State<UserProfileView> {
               if (viewController.isEditingInfo) _userNameInput()
             ],
           ),
-        ),
-      ),
-    );
+        ),*/
+        //),
+        );
   }
 
   void _handleBackClick() {
@@ -179,5 +217,226 @@ class _UserProfileViewState extends State<UserProfileView> {
         ),
       ],
     );
+  }
+
+  Widget _settingsItems() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      SizedBox(
+        height: 25,
+      ),
+      Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: Text(
+          '${_i18n()['settings']}',
+          style: context.textTheme.displayLarge
+              ?.copyWith(fontSize: 14.mezSp, fontWeight: FontWeight.w600),
+        ),
+      ),
+      Container(
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 15,
+            ),
+            InkWell(
+              onTap: () {},
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: Colors.grey.shade400,
+                    size: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    '${_i18n()['userInfo']}',
+                    style: context.textTheme.bodyLarge,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Divider(
+              color: Colors.grey.shade400,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () {},
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.credit_card,
+                    color: Colors.grey.shade400,
+                    size: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    '${_i18n()['savedCards']}',
+                    style: context.textTheme.bodyLarge,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Divider(
+              color: Colors.grey.shade400,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () {},
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.near_me,
+                    color: Colors.grey.shade400,
+                    size: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    '${_i18n()['savedLocations']}',
+                    style: context.textTheme.bodyLarge,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
+      ),
+    ]);
+  }
+
+  Widget _shortcutsItems() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      SizedBox(
+        height: 25,
+      ),
+      Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: Text(
+          '${_i18n()['shortcuts']}',
+          style: context.textTheme.displayLarge
+              ?.copyWith(fontSize: 14.mezSp, fontWeight: FontWeight.w600),
+        ),
+      ),
+      Container(
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 15,
+            ),
+            InkWell(
+              onTap: () => launchUrlString(MezEnv.appType.getPrivacyLink()),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.privacy_tip,
+                    color: Colors.grey.shade400,
+                    size: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    '${_i18n()['privacyPolicy']}',
+                    style: context.textTheme.bodyLarge,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Divider(
+              color: Colors.grey.shade400,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () async => signOut(),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.person_off,
+                    color: Colors.grey.shade400,
+                    size: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${_i18n()['deleteAccount']}',
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      Text(
+                        '${_i18n()['accountWillBeDeleted']}',
+                        style: TextStyle(fontSize: 12.5),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Divider(
+              color: Colors.grey.shade400,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () {},
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.logout,
+                    color: redAccentColor,
+                    size: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    '${_i18n()['logOut']}',
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(color: redAccentColor),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
+      ),
+    ]);
   }
 }

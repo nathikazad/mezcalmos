@@ -214,6 +214,9 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                   children: [
                     _getAcceptedPaymentIcons(
                         viewController.businesses[index].acceptedPayments),
+                    SizedBox(
+                      width: 15,
+                    ),
                     Flexible(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

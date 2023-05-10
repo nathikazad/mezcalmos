@@ -99,7 +99,7 @@ class CustBusinessMessageCard extends StatelessWidget {
       if (value) {
         switch (key) {
           case PaymentType.Cash:
-            iconList.add(Icons.payments);
+            iconList.add(Icons.payments_outlined);
             break;
           case PaymentType.Card:
             iconList.add(Icons.credit_card);

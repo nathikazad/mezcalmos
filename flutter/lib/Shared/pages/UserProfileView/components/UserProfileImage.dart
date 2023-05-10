@@ -36,28 +36,24 @@ class UserProfileImage extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      radius: 94,
-                      backgroundColor: primaryBlueColor,
-                      child: CircleAvatar(
-                        backgroundColor: secondaryLightBlueColor,
-                        backgroundImage: viewController.getRightImage,
-                        radius: 90,
-                        child: (viewController.imageLoading.isTrue)
-                            ? CircularProgressIndicator(
-                                color: primaryBlueColor,
-                              )
-                            : (viewController.newImageFile.value == null &&
-                                    viewController.newImageUrl.value == null)
-                                ? Container(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Text(
-                                      'Your face, your profile',
-                                      style: context.txt.bodyMedium,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  )
-                                : null,
-                      ),
+                      backgroundColor: secondaryLightBlueColor,
+                      backgroundImage: viewController.getRightImage,
+                      radius: 75,
+                      child: (viewController.imageLoading.isTrue)
+                          ? CircularProgressIndicator(
+                              color: primaryBlueColor,
+                            )
+                          : (viewController.newImageFile.value == null &&
+                                  viewController.newImageUrl.value == null)
+                              ? Container(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text(
+                                    'Your face, your profile',
+                                    style: context.txt.bodyMedium,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              : null,
                     ),
                     if (viewController.showImageSetter)
                       Positioned(
