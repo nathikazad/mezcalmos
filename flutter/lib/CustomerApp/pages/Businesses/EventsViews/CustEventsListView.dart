@@ -165,7 +165,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                 child: Text(
                   (viewController.selectedCategories.length == 1)
                       ? "${viewController.selectedCategories.first.name}"
-                      : "${viewController.selectedCategories.length}",
+                      : "${viewController.selectedCategoriesText}",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),

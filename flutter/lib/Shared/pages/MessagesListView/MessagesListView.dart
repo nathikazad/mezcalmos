@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewcontroller.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/components/CustomerPastOrdersList.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -71,7 +72,7 @@ class _MessagesListViewState extends State<MessagesListView> {
         showNotifications: true,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(10),
         child: Obx(() {
           if (viewcontroller.isLoading.value) {
             return Center(
@@ -87,6 +88,13 @@ class _MessagesListViewState extends State<MessagesListView> {
             children: List.generate(
               viewcontroller.allChats.length,
               (int index) {
+                /// This is special case
+                /// This condition means user has created the chat
+                /// but did not send any message. In that case,
+                /// we just skip the message list card to being build
+                if (viewcontroller.allChats[index].messages.isEmpty) {
+                  return SizedBox.shrink();
+                }
                 return MezCard(
                   margin: EdgeInsets.only(bottom: 10),
                   contentPadding: EdgeInsets.symmetric(vertical: 15),
@@ -126,7 +134,7 @@ class _MessagesListViewState extends State<MessagesListView> {
                                   ),
                                   Text(
                                     viewcontroller.allChats[index].creationTime
-                                        .timeAgo(),
+                                        .getOrderTime(),
                                   ),
                                 ],
                               ),

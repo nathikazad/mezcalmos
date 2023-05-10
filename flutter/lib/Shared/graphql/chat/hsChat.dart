@@ -27,6 +27,13 @@ List<Message> _get_messages(List<Object?>? msgs) {
           message: msg['message'],
           timestamp: DateTime.parse(msg['timestamp']).toLocal(),
           userId: msg['userId'],
+          link: msg.containsKey("link")
+              ? ChatLink(
+                  url: msg['link']['url'],
+                  name: convertToLanguageMap(msg['link']['name']),
+                  image: msg['link']['image'],
+                )
+              : null,
         ),
       );
     }

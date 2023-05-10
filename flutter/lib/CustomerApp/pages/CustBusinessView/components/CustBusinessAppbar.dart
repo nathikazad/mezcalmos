@@ -86,6 +86,8 @@ class CustBusinessViewAppbar extends StatelessWidget {
             indicatorColor: primaryBlueColor,
             indicatorPadding: EdgeInsets.zero,
             controller: viewController.tabController,
+            labelColor: primaryBlueColor,
+            unselectedLabelColor: unselectedIconColor,
             tabs: [
               Tab(
                 icon: Icon(Icons.store_outlined),
@@ -276,7 +278,7 @@ class CustBusinessViewAppbar extends StatelessWidget {
         if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
         if (Get.find<AuthController>().isUserSignedIn)
           _notificationAppBarIcon(),
-        if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+        // if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
       ],
     );
   }

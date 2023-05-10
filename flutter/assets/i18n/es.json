@@ -744,7 +744,7 @@
           "title": "Servicios",
           "cleaning": {
             "title": "Limpieza",
-            "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            "description": "Haga que su ropa limpie su servicio de lavandería más cercano."
           },
           "shared": {
             "store": "Almacenar",
@@ -834,10 +834,7 @@
             "therapy": "Terapia",
             "scheduled": "Programada",
             "oneTime": "Una vez",
-            "onDemand": "On demand",
-            "surf": "Surf",
-            "fitness": "Aptitud física",
-            "yoga": "Yoga"
+            "onDemand": "On demand"
           }
         },
         "RentalsView": {
@@ -980,19 +977,19 @@
 
             "cleaning": {
               "title": "Limpieza",
-              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+              "description": "Mantenga su espacio impecable con limpiadores profesionales."
             },
             "mealplanning": {
               "title": "Planificación de comidas",
-              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+              "description": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
             },
             "petSitting": {
               "title": "Cuidado de mascotas",
-              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+              "description": "Asegúrese de que su mascota está bien cuidada mientras usted está fuera."
             },
             "uncategorized": {
-              "title": "Uncategorized",
-              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+              "title": "Sin categoría",
+              "description": "Obtener todos los demás servicios."
             }
           }
         },
@@ -1010,15 +1007,11 @@
             "locallyMade": "Hecho localmente",
             "consumable": {
               "title": "Consumible",
-              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+              "description": "Saboree las delicias locales."
             },
             "personalCare": {
               "title": "Cuidado personal",
               "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
-            },
-            "art": {
-              "title": "Arte",
-              "subtitle": "Obtenga la entrega de todo lo que desee a su ubicación."
             }
           }
         },
@@ -1687,7 +1680,8 @@
         "writeMsgPlaceholder": "Escribe tu mensaje aqui ...",
         "cancel": "Cancelar",
         "callApp": "Llamar a través de la aplicación",
-        "callPhone": "Llame con el número de teléfono"
+        "callPhone": "Llame con el número de teléfono",
+        "view": "Ver"
       },
       "ViewNotifications": {
         "title": "Notificaciones",

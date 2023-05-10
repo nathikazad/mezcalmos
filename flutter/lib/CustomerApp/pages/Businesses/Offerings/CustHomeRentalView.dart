@@ -151,7 +151,7 @@ class _CustBusinessAdditionalData extends StatelessWidget {
       final Map<String, String> additionalValues = {
         "bedRooms": "Bedrooms ${homeRental?.bedrooms ?? 0}",
         "bathRooms": "Bathrooms ${homeRental?.bathrooms ?? 0}",
-        "houseType": "${homeRental?.homeType ?? ""}",
+        "houseType": "${homeRental?.homeType!.name ?? ""}",
       };
       final Map<String, String> moreAdditionalValues = homeRental
               ?.details.additionalParameters

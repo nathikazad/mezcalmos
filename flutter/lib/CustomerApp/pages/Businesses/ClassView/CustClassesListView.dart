@@ -170,7 +170,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 child: Text(
                   (viewController.selectedCategories.length == 1)
                       ? "${viewController.selectedCategories.first.name}"
-                      : "${viewController.selectedCategories.length}",
+                      : "${viewController.selectedCategoriesText}",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),

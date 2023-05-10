@@ -52,7 +52,8 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
           widget.asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
           onClick: widget.asTab ? null : MezRouter.back,
           title: '${_i18n()["title"]}',
-          ordersRoute: CustomerRoutes.customerOrdersRoute),
+          ordersRoute:
+              widget.asTab ? CustomerRoutes.customerOrdersRoute : null),
       body: Obx(
         () => viewController.hasOrders
             ? SingleChildScrollView(

@@ -259,6 +259,7 @@ const Color cancelledBackgroundColor = Color(0XFFFDECEF);
 const Color deliveredBackgroundColor = Color(0xFFEAECFF);
 const Color pickLocationTextFieldColor = Color(0xFFF5F5F5);
 const Color pickLocationHintTextFieldColor = Color(0xFFC4C4C4);
+const Color unselectedIconColor = Color(0xFFC4C4C4);
 const Color waitingBackgroundColor = Color(0xFFFFF0CB);
 const Color onGoingBackgroundColor = Color(0xFFE4F2E5);
 const Color backgroundShadeColor = Color(0xFFEDEDED);

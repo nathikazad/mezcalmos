@@ -22,8 +22,9 @@ class CustClassesListViewController {
   String searchQuery = "";
 
   /* SCROLL CONTROLLER */
-  ScrollController get scrollController =>
-      showBusiness.isTrue ? _businessScrollController : _classesScrollController;
+  ScrollController get scrollController => showBusiness.isTrue
+      ? _businessScrollController
+      : _classesScrollController;
   ScrollController _classesScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
   final int eventFetchSize = 10;
@@ -48,6 +49,26 @@ class CustClassesListViewController {
   ];
 
   RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
+  RxString selectedCategoriesText = "All".obs;
+
+  void _categoryStringGen() {
+    selectedCategoriesText.value = "";
+    var data = filterInput["categories"]!
+        .map((String e) => e.toEventCategory1())
+        .toList();
+    if (data.length == _filterCategories.length) {
+      selectedCategoriesText.value = "All";
+      return;
+    }
+
+    for (int idx = 0; idx < data.length; idx++) {
+      if (idx == data.length - 1) {
+        selectedCategoriesText.value += data[idx].name;
+      } else {
+        selectedCategoriesText.value += "${data[idx].name}, ";
+      }
+    }
+  }
 
   late FilterInput _filterInput;
 
@@ -178,6 +199,7 @@ class CustClassesListViewController {
     mezDbgPrint("new data :::::::::=====>_filterInput $_filterInput");
     _resetEvents();
     _fetchClasses();
+    _categoryStringGen();
   }
 
   void _resetEvents() {

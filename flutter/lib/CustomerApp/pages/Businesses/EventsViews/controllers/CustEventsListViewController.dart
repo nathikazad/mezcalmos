@@ -47,6 +47,26 @@ class CustEventsListViewController {
   ];
 
   RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
+  RxString selectedCategoriesText = "All".obs;
+
+  void _categoryStringGen() {
+    selectedCategoriesText.value = "";
+    var data = filterInput["categories"]!
+        .map((String e) => e.toEventCategory1())
+        .toList();
+    if (data.length == _filterCategories.length) {
+      selectedCategoriesText.value = "All";
+      return;
+    }
+
+    for (int idx = 0; idx < data.length; idx++) {
+      if (idx == data.length - 1) {
+        selectedCategoriesText.value += data[idx].name;
+      } else {
+        selectedCategoriesText.value += "${data[idx].name}, ";
+      }
+    }
+  }
 
   late FilterInput _filterInput;
 
@@ -177,6 +197,7 @@ class CustEventsListViewController {
     mezDbgPrint("new data :::::::::=====>_filterInput $_filterInput");
     _resetEvents();
     _fetchEvents();
+    _categoryStringGen();
   }
 
   void _resetEvents() {

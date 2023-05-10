@@ -49,9 +49,7 @@ class CustBusinessEventCard extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       action: Text(
-        event.details.cost.length == 0
-            ? '- / -'
-            : '${event.details.cost.values.first.toPriceString()}/${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}',
+        '${event.details.cost.values.first.toPriceString()}/${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}',
         style:
             context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
       ),

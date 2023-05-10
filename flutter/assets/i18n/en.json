@@ -631,6 +631,7 @@
         "deliveries": { "title": "Deliveries", "shared": {} },
 
         "classes": {
+          "title": "Class",
           "shared": {
             "filter": "Filter",
             "class": "Class",
@@ -653,22 +654,25 @@
           }
         },
         "therapy": {
-          "filter": "Filter",
-          "therapy": "Therapy",
-          "therapies": "therapies",
-          "therapist": "Therapist",
-          "cancel": "Cancel",
-          "confirm": "Confirm",
-          "hour": "Hour",
-          "day": "Day",
-          "week": "Week",
-          "month": "Month",
-          "person": "Person",
-          "total": "Total",
-          "unit": "Unit",
-          "none": "None",
-          "noBusinessesFound": "No businesses found",
-          "noTherapyFound": "No therapy found",
+          "title": "Therapy",
+          "shared": {
+            "filter": "Filter",
+            "therapy": "Therapy",
+            "therapist": "Therapist",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "hour": "Hour",
+            "day": "Day",
+            "week": "Week",
+            "month": "Month",
+            "person": "Person",
+            "total": "Total",
+            "unit": "Unit",
+            "none": "None",
+            "noBusinessesFound": "No businesses found",
+            "noTherapyFound": "No therapy found"
+          },
+
           "parties": {
             "title": "Parties",
             "description": "Discover most delicious dishes from the nearest restaurants."
@@ -906,22 +910,21 @@
           },
           "CustServicesWrapper": {
             "services": "Services",
-
             "cleaning": {
               "title": "Cleaning",
-              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+              "description": "Keep your space spotless with professional cleaners."
             },
             "mealplanning": {
               "title": "Meal planning",
-              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+              "description": "Plan your meals effortlessly with our meal planning service."
             },
             "petSitting": {
               "title": "Pet sitting",
-              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+              "description": "Ensuring your pet is well cared for while you’re away."
             },
             "uncategorized": {
               "title": "Uncategorized",
-              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+              "description": "Get all other services."
             }
           }
         },
@@ -939,15 +942,15 @@
             "locallyMade": "Locally made",
             "consumable": {
               "title": "Consumable",
-              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+              "description": "Savor the taste of locally made treats."
             },
             "personalCare": {
               "title": "Personal Care",
-              "desctiption": "Get your clothes cleaned by your nearest laundry service."
+              "description": "Take care of yourself with high-quality personal care products."
             },
             "art": {
               "title": "Art",
-              "subtitle": "Obtain delivery of anything you desire to your location."
+              "description": "Add a touch of beauty and inspiration to your home with our collection of fine art."
             }
           }
         },
@@ -1606,7 +1609,8 @@
         "writeMsgPlaceholder": "Write your message here ...",
         "cancel": "Cancel",
         "callApp": "Call through app",
-        "callPhone": "Call with phone number"
+        "callPhone": "Call with phone number",
+        "view": "View"
       },
       "ViewNotifications": {
         "title": "Notifications",
