@@ -62,7 +62,7 @@ class CustBusinessItemAppbar extends StatelessWidget {
                   opacity: isCollapsed ? 1.0 : 0.0,
                   // opacity: 1.0,
                   child: MezIconButton(
-                    icon: Icons.search,
+                    icon: Icons.zoom_in,
                     iconSize: 15.sp,
                     iconColor: Colors.white,
                     backgroundColor: Colors.transparent,

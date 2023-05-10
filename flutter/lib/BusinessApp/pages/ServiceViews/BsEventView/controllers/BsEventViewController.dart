@@ -225,7 +225,47 @@ class BsEventViewController {
                   "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat",
               type: ScheduleType.OneTime),
         ];
-
+      case BusinessProfile.PetSitting:
+        return [
+          ScheduleTypeInput(
+              title: "Weekly Event",
+              subtitle: "An event that reoccurs on a weekly basis",
+              type: ScheduleType.Scheduled),
+          ScheduleTypeInput(
+              title: "One time",
+              subtitle: "One time event",
+              type: ScheduleType.OneTime),
+        ];
+      case BusinessProfile.LanguageSchool:
+        return [
+          ScheduleTypeInput(
+              title: "Weekly",
+              subtitle: "Weekly event",
+              type: ScheduleType.Scheduled),
+          ScheduleTypeInput(
+              title: "Workshop",
+              subtitle: "Workshop event",
+              type: ScheduleType.OneTime),
+          ScheduleTypeInput(
+              title: "One time",
+              subtitle: "One time event",
+              type: ScheduleType.OneTime),
+        ];
+      case BusinessProfile.SurfShop:
+        return [
+          ScheduleTypeInput(
+              title: "Weekly",
+              subtitle: "Weekly event",
+              type: ScheduleType.Scheduled),
+          ScheduleTypeInput(
+              title: "Workshop",
+              subtitle: "Workshop event",
+              type: ScheduleType.OneTime),
+          ScheduleTypeInput(
+              title: "One time",
+              subtitle: "One time event",
+              type: ScheduleType.OneTime),
+        ];
       default:
         throw StateError(
             "BusinessProfile ${businessProfile.name} not supported");

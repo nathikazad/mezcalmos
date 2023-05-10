@@ -359,7 +359,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
                   Container(
                     padding: const EdgeInsets.only(bottom: 1),
                     child: Text(
-                      _viewController.reviews.length.toString(),
+                      "(${_viewController.reviews.length})",
                       style: context.txt.titleSmall
                           ?.copyWith(color: offLightShadeGreyColor),
                     ),
