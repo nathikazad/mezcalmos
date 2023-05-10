@@ -834,7 +834,10 @@
             "therapy": "Terapia",
             "scheduled": "Programada",
             "oneTime": "Una vez",
-            "onDemand": "On demand"
+            "onDemand": "On demand",
+            "surf": "Surf",
+            "fitness": "Aptitud física",
+            "yoga": "Yoga"
           }
         },
         "RentalsView": {
@@ -908,6 +911,56 @@
             "filter": "Filtrar"
           }
         },
+        "ClassView": {
+          "CustEventsListView": {
+            "classes": "Clases",
+            "events": "Eventos",
+            "studio": "Estudio",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noClassesFound": "No se encontraron clases",
+            "noEventsFound": "No se encuentran eventos",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "unit": "unidadad",
+            "total": "total",
+            "filter": "filtrar"
+          }
+        },
+        "TherapyView": {
+          "CustTherapyListView": {
+            "filter": "Filtrar",
+            "therapy": "Terapia",
+            "therapies": "Terapias",
+            "therapist": "Terapeuta",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "none": "Ninguna",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noTherapyFound": "No se encontró terapia",
+            "parties": {
+              "title": "Fiestas",
+              "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
+            },
+            "dance": {
+              "title": "Bailar",
+              "description": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            },
+            "getTogether": {
+              "title": "Reunirse",
+              "description": "Obtenga la entrega de todo lo que desee a su ubicación."
+            }
+          }
+        },
         "ServicesViews": {
           "CustServicesListView": {
             "noUncategorizedFound": "No se encontró sin categoría",
@@ -947,6 +1000,7 @@
           "CustLocallyMadeListView": {
             "consumable": "Consumible",
             "personalCare": "Cuidado personal",
+            "art": "Arte",
             "noPetServiceFound": "No se encontraron servicios",
             "noBusinessesFound": "No se encontraron negocios",
             "store": "Tienda",
@@ -961,6 +1015,10 @@
             "personalCare": {
               "title": "Cuidado personal",
               "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            },
+            "art": {
+              "title": "Arte",
+              "subtitle": "Obtenga la entrega de todo lo que desee a su ubicación."
             }
           }
         },

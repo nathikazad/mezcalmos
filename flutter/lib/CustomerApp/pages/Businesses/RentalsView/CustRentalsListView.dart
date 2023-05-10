@@ -229,20 +229,13 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                   () => Column(
                     children: List.generate(
                         viewController.filterCategories.length, (int index) {
-                      return CheckboxListTile(
-                        contentPadding: EdgeInsets.zero,
-                        //    checkColor: primaryBlueColor,
-                        activeColor: primaryBlueColor,
-                        title: Text(
+                      return _checkBoxTile(
                           '${_i18n()[viewController.filterCategories[index].name.toLowerCase()]}',
-                          style: context.textTheme.bodyLarge,
-                        ),
-                        value: viewController.selectedCategories
-                            .contains(viewController.filterCategories[index]),
-                        onChanged: (bool? v) {
-                          viewController.switchFilterCategory(v, index);
-                        },
-                      );
+                          viewController.selectedCategories
+                              .contains(viewController.filterCategories[index]),
+                          (bool? v) {
+                        viewController.switchFilterCategory(v, index);
+                      });
                     }),
                   ),
                 ),
@@ -286,6 +279,14 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
             ),
           );
         });
+  }
+
+  Widget _checkBoxTile(String title, bool value, Function(bool?)? onChanged) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Text(title),
+      Checkbox(
+          value: value, onChanged: onChanged, activeColor: primaryBlueColor)
+    ]);
   }
 
   Widget _buildBusinesses() {

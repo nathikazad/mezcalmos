@@ -653,24 +653,22 @@
           }
         },
         "therapy": {
-          "shared": {
-            "filter": "Filter",
-            "therapy": "Therapy",
-            "therapist": "Therapist",
-            "cancel": "Cancel",
-            "confirm": "Confirm",
-            "hour": "Hour",
-            "day": "Day",
-            "week": "Week",
-            "month": "Month",
-            "person": "Person",
-            "total": "Total",
-            "unit": "Unit",
-            "none": "None",
-            "noBusinessesFound": "No businesses found",
-            "noTherapyFound": "No therapy found"
-          },
-
+          "filter": "Filter",
+          "therapy": "Therapy",
+          "therapies": "therapies",
+          "therapist": "Therapist",
+          "cancel": "Cancel",
+          "confirm": "Confirm",
+          "hour": "Hour",
+          "day": "Day",
+          "week": "Week",
+          "month": "Month",
+          "person": "Person",
+          "total": "Total",
+          "unit": "Unit",
+          "none": "None",
+          "noBusinessesFound": "No businesses found",
+          "noTherapyFound": "No therapy found",
           "parties": {
             "title": "Parties",
             "description": "Discover most delicious dishes from the nearest restaurants."
@@ -759,7 +757,10 @@
             "therapy": "Therapy",
             "scheduled": "Scheduled",
             "oneTime": "One time",
-            "onDemand": "On demand"
+            "onDemand": "On demand",
+            "surf": "Surf",
+            "fitness": "Fitness",
+            "yoga": "Yoga"
           }
         },
         "RentalsView": {
@@ -831,7 +832,62 @@
             "person": "person",
             "unit": "unit",
             "total": "Total",
+            "filter": "Filter",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "none": "None",
+            "class": "Class",
+            "studio": "Studio"
+          }
+        },
+        "ClassView": {
+          "CustEventsListView": {
+            "classes": "Classes",
+            "events": "Events",
+            "studio": "Studio",
+            "noBusinessesFound": "No businesses found",
+            "noClassesFound": "No Classes found",
+            "noEventsFound": "No events found",
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "unit": "unit",
+            "total": "Total",
             "filter": "Filter"
+          }
+        },
+        "TherapyView": {
+          "CustTherapyListView": {
+            "filter": "Filter",
+            "therapy": "Therapy",
+            "therapies": "Therapies",
+            "therapist": "Therapist",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "total",
+            "unit": "unit",
+            "none": "None",
+            "noBusinessesFound": "No businesses found",
+            "noTherapyFound": "No therapy found",
+            "parties": {
+              "title": "Parties",
+              "description": "Discover most delicious dishes from the nearest restaurants."
+            },
+            "dance": {
+              "title": "Dance",
+              "description": "Get your clothes cleaned by your nearest laundry service."
+            },
+            "getTogether": {
+              "title": "Get Together",
+              "description": "Obtain delivery of anything you desire to your location."
+            }
           }
         },
         "ServicesViews": {
@@ -874,6 +930,7 @@
             "consumable": "Consumable",
             "personalCare": "Personal care",
             "noPetServiceFound": "No services found",
+            "art": "Art",
             "noBusinessesFound": "No businesses found",
             "store": "Store",
             "services": "Services"
@@ -887,6 +944,10 @@
             "personalCare": {
               "title": "Personal Care",
               "desctiption": "Get your clothes cleaned by your nearest laundry service."
+            },
+            "art": {
+              "title": "Art",
+              "subtitle": "Obtain delivery of anything you desire to your location."
             }
           }
         },

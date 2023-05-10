@@ -20,7 +20,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFi
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['therapy'];
+    ['pages']['Businesses']['TherapyView']['CustTherapyListView'];
 
 // todo @ChiragKr04 fix the cards and ui  of this page
 class CustTherapyListView extends StatefulWidget {
@@ -50,7 +50,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: '${_i18n()['title']}',
+        title: '${_i18n()['therapies']}',
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -92,7 +92,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: '${_i18n()['shared']['therapy']}',
+            label: '${_i18n()['therapies']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -111,7 +111,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
         ),
         Flexible(
           child: MezButton(
-            label: '${_i18n()['shared']['therapist']}',
+            label: '${_i18n()['therapist']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
@@ -158,7 +158,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                 width: 5,
               ),
               Text(
-                '${_i18n()['shared']['filter']}:',
+                '${_i18n()['filter']}:',
               ),
               SizedBox(
                 width: 3,
@@ -246,7 +246,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text('${_i18n()['shared']['noBusinessesFound']}'));
+          child: Text('${_i18n()['noBusinessesFound']}'));
   }
 
   Widget _buildTherapy() {
@@ -293,7 +293,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                             ),
                           ),
                           Text(
-                            '${viewController.therapy[index].details.cost.values.first.toPriceString()}/${'${_i18n()['shared'][viewController.therapy[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
+                            '${viewController.therapy[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.therapy[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
                             overflow: TextOverflow.ellipsis,
                             style: context.textTheme.bodyLarge?.copyWith(
                                 fontSize: 12.5.mezSp,
@@ -311,7 +311,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text('${_i18n()['shared']['noTherapyFound']}'));
+          child: Text('${_i18n()['noTherapyFound']}'));
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

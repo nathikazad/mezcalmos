@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
@@ -90,9 +91,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
           serviceProviderType: ServiceProviderType.Customer,
         );
       case 3:
-        return UserProfileView(
-          asTab: true,
-        );
+        return CustProfileView();
 
       default:
         return Scaffold(

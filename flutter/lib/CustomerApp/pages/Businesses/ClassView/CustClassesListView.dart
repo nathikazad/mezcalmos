@@ -23,7 +23,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.d
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['classes'];
+    ['pages']['Businesses']['ClassView']['CustEventsListView'];
 
 // todo @ChiragKr04 fix the cards and ui  of this page
 class CustClassesListView extends StatefulWidget {
@@ -53,7 +53,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: '${_i18n()['title']}',
+        title: '${_i18n()['classes']}',
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -95,7 +95,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: '${_i18n()['shared']['class']}',
+            label: '${_i18n()['classes']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -114,7 +114,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
         ),
         Flexible(
           child: MezButton(
-            label: '${_i18n()['shared']['studio']}',
+            label: '${_i18n()['studio']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
@@ -161,7 +161,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 width: 5,
               ),
               Text(
-                '${_i18n()['shared']['filter']}:',
+                '${_i18n()['filter']}:',
               ),
               SizedBox(
                 width: 3,
@@ -249,7 +249,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No businesses found"));
+          child: Text('${_i18n()['noBusinessesFound']}'));
   }
 
   Widget _buildClasses() {
@@ -294,7 +294,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                       ),
                     ),
                     Text(
-                      '${viewController.classes[index].details.cost.values.first.toPriceString()}/${'${_i18n()['shared'][viewController.classes[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
+                      '${viewController.classes[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.classes[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyLarge?.copyWith(
                           fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
@@ -314,7 +314,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No events found"));
+          child: Text('${_i18n()['noEventsFound']}'));
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
