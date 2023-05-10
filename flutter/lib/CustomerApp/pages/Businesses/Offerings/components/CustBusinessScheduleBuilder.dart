@@ -8,12 +8,15 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Offerings']['components'];
 
 class CustBusinessScheduleBuilder extends StatefulWidget {
-  const CustBusinessScheduleBuilder({
-    super.key,
-    required this.schedule,
-    required this.scheduleType,
-  });
+  const CustBusinessScheduleBuilder(
+      {super.key,
+      required this.schedule,
+      required this.scheduleType,
+      this.showTitle = true,
+      this.showIcons = true});
 
+  final bool showTitle;
+  final bool showIcons;
   final Schedule? schedule;
   final ScheduleType scheduleType;
 
@@ -63,49 +66,85 @@ class _CustBusinessScheduleBuilderState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(_i18n()[scheduleTypeHeading()],
-            style: context.textTheme.bodyLarge),
-        for (int index = 0; index < widget.schedule!.openHours.length; index++)
+        if (widget.showTitle)
+          Text(_i18n()[scheduleTypeHeading()],
+              style: context.textTheme.bodyLarge),
+        if (ScheduleType.OneTime == widget.scheduleType)
           Builder(
             builder: (context) {
               final String day =
-                  widget.schedule!.openHours.keys.elementAt(index).name;
+                  widget.schedule!.openHours.keys.elementAt(0).name;
               final OpenHours data =
-                  widget.schedule!.openHours.values.elementAt(index);
+                  widget.schedule!.openHours.values.elementAt(0);
               final String fromHour = data.from[0].toString();
               final String fromMinute = data.from[1].toString();
 
               final String toHour = data.to[0].toString();
               final String toMinute = data.to[1].toString();
-              return ScheduleType.OneTime == widget.scheduleType
 
-                  /// TODO: Show only one schedule
-                  ? SizedBox.shrink()
-                  : Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            child: Row(
-                              children: [
-                                Icon(Icons.access_time_outlined),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Text(day),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Text(
-                            "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
-                          ),
-                        ],
-                      ),
-                    );
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    day,
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
+                  ),
+                ],
+              );
             },
           ),
+        if (ScheduleType.OneTime != widget.scheduleType)
+          for (int index = 0;
+              index < widget.schedule!.openHours.length;
+              index++)
+            Builder(
+              builder: (context) {
+                final String day =
+                    widget.schedule!.openHours.keys.elementAt(index).name;
+                final OpenHours data =
+                    widget.schedule!.openHours.values.elementAt(index);
+                final String fromHour = data.from[0].toString();
+                final String fromMinute = data.from[1].toString();
+
+                final String toHour = data.to[0].toString();
+                final String toMinute = data.to[1].toString();
+                return //ScheduleType.OneTime == widget.scheduleType
+
+                    Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      !widget.showIcons
+                          ? Text(
+                              day,
+                              style: context.textTheme.bodyLarge
+                                  ?.copyWith(fontWeight: FontWeight.w500),
+                            )
+                          : SizedBox(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.access_time_outlined),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text(day),
+                                  ),
+                                ],
+                              ),
+                            ),
+                      Text(
+                        "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
       ],
     );
   }

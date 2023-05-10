@@ -304,6 +304,8 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                       ),
                       Divider(),
                       CustBusinessScheduleBuilder(
+                          showTitle: false,
+                          showIcons: false,
                           schedule: viewController.therapy[index].schedule,
                           scheduleType:
                               viewController.therapy[index].scheduleType),

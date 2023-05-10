@@ -301,6 +301,8 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                 ),
                 Divider(),
                 CustBusinessScheduleBuilder(
+                    showTitle: false,
+                    showIcons: false,
                     schedule: viewController.events[index].schedule,
                     scheduleType: viewController.events[index].scheduleType),
                 Divider(),
