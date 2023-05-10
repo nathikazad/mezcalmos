@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezImageslider.dart';
-import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessImageScreen.dart';
 
 class CustBusinessItemAppbar extends StatelessWidget {
   const CustBusinessItemAppbar({super.key, required this.itemDetails});
@@ -41,63 +41,66 @@ class CustBusinessItemAppbar extends StatelessWidget {
         return FlexibleSpaceBar(
           centerTitle: true,
           title: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 1),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                AnimatedOpacity(
-                    duration: Duration(milliseconds: 300),
-                    opacity: isCollapsed ? 1.0 : 0.0,
-                    // opacity: 1.0,
-                    child: MezIconButton(
-                      shadowColor: Colors.transparent,
-                      icon: null,
-                      iconColor: Colors.white,
-                      backgroundColor: Colors.transparent,
-                      materialColor: Colors.transparent,
-                      child: Container(
-                          padding: EdgeInsets.all(5.5),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.white,
-                              )),
-                          child: Icon(
-                            Icons.favorite,
-                            size: 7.mezSp,
-                            color: Colors.white,
-                          )),
-                      onTap: () {},
-                    )),
-                AnimatedOpacity(
-                    duration: Duration(milliseconds: 300),
-                    opacity: isCollapsed ? 1.0 : 0.0,
-                    // opacity: 1.0,
-                    child: MezIconButton(
-                      shadowColor: Colors.transparent,
-                      icon: null,
-                      iconColor: Colors.white,
-                      backgroundColor: Colors.transparent,
-                      materialColor: Colors.transparent,
-                      child: Container(
-                          padding: EdgeInsets.all(3.75),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.white,
-                              )),
-                          child: Icon(
-                            Icons.zoom_in,
-                            size: 9.mezSp,
-                            color: Colors.white,
-                          )),
-                      onTap: () {},
-                    )),
-              ],
-            ),
-          ),
+              padding: const EdgeInsets.symmetric(horizontal: 1),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  AnimatedOpacity(
+                      duration: Duration(milliseconds: 300),
+                      opacity: isCollapsed ? 1.0 : 0.0,
+                      // opacity: 1.0,
+                      child: MezIconButton(
+                        shadowColor: Colors.transparent,
+                        icon: null,
+                        iconColor: Colors.white,
+                        backgroundColor: Colors.transparent,
+                        materialColor: Colors.transparent,
+                        child: Container(
+                            padding: EdgeInsets.all(5.5),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                )),
+                            child: Icon(
+                              Icons.favorite,
+                              size: 7.mezSp,
+                              color: Colors.white,
+                            )),
+                        onTap: () {},
+                      )),
+                  AnimatedOpacity(
+                      duration: Duration(milliseconds: 300),
+                      opacity: isCollapsed ? 1.0 : 0.0,
+                      // opacity: 1.0,
+                      child: MezIconButton(
+                        shadowColor: Colors.transparent,
+                        icon: null,
+                        iconColor: Colors.white,
+                        backgroundColor: Colors.transparent,
+                        materialColor: Colors.transparent,
+                        child: Container(
+                            padding: EdgeInsets.all(3.75),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                )),
+                            child: Icon(
+                              Icons.zoom_in,
+                              size: 9.mezSp,
+                              color: Colors.white,
+                            )),
+                        onTap: () async {
+                          await CustBusinessImageScreen.navigate(
+                            images: itemDetails.image ?? [],
+                          );
+                        },
+                      )),
+                ],
+              )),
           background: MezImageSlider(
             images: itemDetails.image ?? [],
           ),

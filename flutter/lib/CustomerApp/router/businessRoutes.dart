@@ -36,6 +36,8 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodWrapper.
     deferred as custFoodWrapperView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodListView.dart'
     deferred as custFoodView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessImageScreen.dart'
+    deferred as custImageView;
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -55,6 +57,7 @@ class CustBusinessRoutes {
   static String custAdventureListRoute = "/customer/adventure";
   static String custLocallyMadeRoute = "/customer/locallyMade";
   static String custFoodRoute = "/customer/food";
+  static String custImageViewRoute = "/customer/imageView";
 
   // wrappers //
   static String custRentalsWrapperRoute = "/rentalsWrapper";
@@ -209,6 +212,14 @@ class CustBusinessRoutes {
       builder: () => custFoodView.CustFoodListView(),
       middleware: <QMiddleware>[
         DefferedLoader(custFoodView.loadLibrary),
+      ],
+    ),
+    QRoute(
+      name: custImageViewRoute,
+      path: custImageViewRoute,
+      builder: () => custImageView.CustBusinessImageScreen(),
+      middleware: <QMiddleware>[
+        DefferedLoader(custImageView.loadLibrary),
       ],
     ),
   ];
