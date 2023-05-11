@@ -22,7 +22,9 @@
         "imageInfo": "Sólo puedes subir hasta cinco imágenes.",
         "imageError": "Añada al menos una imagen",
         "location": "Ubicación",
-        "categoryError": "Seleccione una categoría",
+        "category": "Categoría",
+        "categoryHint": "Seleccione una categoría",
+        "categoryError": "Por favor, seleccione una categoría",
         "price": {
           "prices": "Precios",
           "price": "Precio",
@@ -105,6 +107,7 @@
         },
         "artisanalProduct": {
           "productTitle": "Item",
+          "product": "Producto",
           "productSubtitle": "Advertise an item that can be bought.",
           "consumable": "Consumibles",
           "personalCare": "Cuidado personal",

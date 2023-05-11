@@ -22,6 +22,8 @@
         "imageInfo": "You can only upload up to five images.",
         "imageError": "Please add at least one image",
         "location": "Location",
+        "category": "Category",
+        "categoryHint": "Select a category",
         "categoryError": "Please select a category",
         "price": {
           "prices": "Prices",
@@ -105,6 +107,7 @@
         },
         "artisanalProduct": {
           "productTitle": "Item",
+          "product": "Product",
           "productSubtitle": "Advertise an item that can be bought.",
           "consumable": "Consumable",
           "personalCare": "PersonalCare",
