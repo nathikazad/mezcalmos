@@ -14,7 +14,7 @@ export const restaurantOrderStatusChangeMessages:
       body: "El restaurante ha recibido su pedido y ha comenzado a prepararlo."
     }
   },
-  [RestaurantOrderStatus.PreparingOrder]: {
+  [RestaurantOrderStatus.Preparing]: {
     [Language.EN]: {
       title: "Your order is being prepared",
       body: "Restaurant has recieved your order and has begun preparation."
@@ -24,7 +24,7 @@ export const restaurantOrderStatusChangeMessages:
       body: "El restaurante ha recibido su pedido y ha comenzado a prepararlo."
     }
   },
-  [RestaurantOrderStatus.ReadyForPickup]: {
+  [RestaurantOrderStatus.Ready]: {
     [Language.EN]: {
       title: "Your order is ready for pickup",
       body: "Restaurant has finished preparing your order is awaiting pickup."

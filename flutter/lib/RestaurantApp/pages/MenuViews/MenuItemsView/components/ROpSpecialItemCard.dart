@@ -34,6 +34,7 @@ class ROpSpecialItemCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
           final bool? shouldRefresh = await ROpItemView.navigate(
+              detailsId: viewController.detailsId!,
               itemId: item.id!,
               restaurantId: viewController.restaurnatId,
               arguments: <String, dynamic>{"specials": true}) as bool;

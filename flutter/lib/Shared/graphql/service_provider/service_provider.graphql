@@ -175,3 +175,10 @@ query getServiceProviderId($uniqueId: String) {
     }
   }
 }
+
+
+query getServiceLanguage($serviceDetailsId: Int!) {
+  service_provider_details_by_pk(id: $serviceDetailsId) {
+    language
+  }
+}

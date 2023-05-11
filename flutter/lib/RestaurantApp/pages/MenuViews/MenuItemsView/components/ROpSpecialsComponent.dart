@@ -56,6 +56,7 @@ class _ROpSpecialsComponentState extends State<ROpSpecialsComponent> {
                   onClick: () async {
                     final bool? newItemAdded = await ROpItemView.navigate(
                         itemId: null,
+                        detailsId: widget.viewController.detailsId!,
                         restaurantId: widget.viewController.restaurnatId,
                         arguments: <String, dynamic>{"specials": true});
                     if (newItemAdded == true) {

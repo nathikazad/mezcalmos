@@ -144,7 +144,9 @@ class _ROpMenuViewState extends State<ROpMenuView>
 
                     final bool? newCategoryAdded =
                         await ROpCategoryView.navigate(
-                            restaurantId: restaurantID!) as bool?;
+                            restaurantId: restaurantID!,
+                            detailsId: viewController.detailsId!,
+                            saveToDb: true) as bool?;
                     if (newCategoryAdded == true) {
                       await viewController.fetchCategories();
                     }
@@ -158,6 +160,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                   onClick: () async {
                     final bool? newItemAdded = await ROpItemView.navigate(
                         restaurantId: restaurantID!,
+                        detailsId: viewController.detailsId!,
                         itemId: null,
                         arguments: <String, dynamic>{"specials": false});
                     if (newItemAdded == true) {

@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 
 class ROpMenuViewController {
   /// Handles ui logic of the menu view inside the restaurant app
@@ -21,6 +21,8 @@ class ROpMenuViewController {
   // state variables
   RxBool reOrderMode = RxBool(false);
   RxBool fetching = RxBool(false);
+  int? detailsId;
+
   //main categories //
   RxList<Category> mainCategories = RxList<Category>([]);
   RxList<Item> currentSpec = RxList<Item>([]);
@@ -34,11 +36,16 @@ class ROpMenuViewController {
   // This method needs to be called on the initState method of the view
   Future<void> init({required int restId}) async {
     restaurnatId = restId;
+    await _fetchDetailsId(restId);
     // assigning restaurant data and start the stream subscription //
     mezDbgPrint("INIT MENU VIEW FROM CONTROLLER =======>$restaurnatId");
     await fetchCategories();
     pageLoaded.value = true;
     mezDbgPrint("Main Categories length ====>${mainCategories.length}");
+  }
+
+  Future<void> _fetchDetailsId(int restId) async {
+    detailsId = await get_restaurant_details_id(restaurantId: restId);
   }
 
   Future<void> fetchCategories() async {

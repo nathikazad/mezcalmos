@@ -109,14 +109,14 @@ Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {
 Map<String, dynamic>? getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
   switch (restaurantOrderStatus) {
-    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.Preparing:
       return <String, dynamic>{
         "title": "${_i18n()["preparingOrderTitle"]}",
         "body": "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
-    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.Ready:
       return <String, dynamic>{
         "title": "${_i18n()["readyForPickupTitle"]}",
         "body": "${_i18n()["readyForPickupBody"]}",

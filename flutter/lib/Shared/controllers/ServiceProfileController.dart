@@ -39,7 +39,7 @@ class ServiceProfileController extends GetxController {
   bool get isAvailable => _service.value!.state.isOpen;
 
   @override
-  Future<void> onInit() async {
+  void onInit() {
     super.onInit();
   }
 
@@ -60,7 +60,6 @@ class ServiceProfileController extends GetxController {
   }
 
   Future<void> fetchService() async {
-  
     _service.value = await get_service_details_by_id(
         serviceDetailsId: detailsId, serviceId: serviceId, withCache: false);
     if (_service.value!.serviceLinkId != null) {

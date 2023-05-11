@@ -92,8 +92,8 @@ class RestaurantOrder extends DeliverableOrder {
   @override
   bool inProcess() {
     return status == cModels.RestaurantOrderStatus.OrderReceived ||
-        status == cModels.RestaurantOrderStatus.PreparingOrder ||
-        status == cModels.RestaurantOrderStatus.ReadyForPickup ||
+        status == cModels.RestaurantOrderStatus.Preparing ||
+        status == cModels.RestaurantOrderStatus.Ready ||
         status == cModels.RestaurantOrderStatus.OnTheWay;
   }
 

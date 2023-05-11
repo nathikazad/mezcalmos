@@ -22,6 +22,7 @@ insert_permissions:
       columns:
         - additional_parameters
         - available
+        - business_id
         - category1
         - category2
         - cost

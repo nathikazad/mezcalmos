@@ -10213,3 +10213,550 @@ class _CopyWithStubImpl$Query$getServiceProviderId$service_provider_details$rest
   }) =>
       _res;
 }
+
+class Variables$Query$getServiceLanguage {
+  factory Variables$Query$getServiceLanguage({required int serviceDetailsId}) =>
+      Variables$Query$getServiceLanguage._({
+        r'serviceDetailsId': serviceDetailsId,
+      });
+
+  Variables$Query$getServiceLanguage._(this._$data);
+
+  factory Variables$Query$getServiceLanguage.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$serviceDetailsId = data['serviceDetailsId'];
+    result$data['serviceDetailsId'] = (l$serviceDetailsId as int);
+    return Variables$Query$getServiceLanguage._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get serviceDetailsId => (_$data['serviceDetailsId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$serviceDetailsId = serviceDetailsId;
+    result$data['serviceDetailsId'] = l$serviceDetailsId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getServiceLanguage<
+          Variables$Query$getServiceLanguage>
+      get copyWith => CopyWith$Variables$Query$getServiceLanguage(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getServiceLanguage) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$serviceDetailsId = serviceDetailsId;
+    final lOther$serviceDetailsId = other.serviceDetailsId;
+    if (l$serviceDetailsId != lOther$serviceDetailsId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$serviceDetailsId = serviceDetailsId;
+    return Object.hashAll([l$serviceDetailsId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getServiceLanguage<TRes> {
+  factory CopyWith$Variables$Query$getServiceLanguage(
+    Variables$Query$getServiceLanguage instance,
+    TRes Function(Variables$Query$getServiceLanguage) then,
+  ) = _CopyWithImpl$Variables$Query$getServiceLanguage;
+
+  factory CopyWith$Variables$Query$getServiceLanguage.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getServiceLanguage;
+
+  TRes call({int? serviceDetailsId});
+}
+
+class _CopyWithImpl$Variables$Query$getServiceLanguage<TRes>
+    implements CopyWith$Variables$Query$getServiceLanguage<TRes> {
+  _CopyWithImpl$Variables$Query$getServiceLanguage(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getServiceLanguage _instance;
+
+  final TRes Function(Variables$Query$getServiceLanguage) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? serviceDetailsId = _undefined}) =>
+      _then(Variables$Query$getServiceLanguage._({
+        ..._instance._$data,
+        if (serviceDetailsId != _undefined && serviceDetailsId != null)
+          'serviceDetailsId': (serviceDetailsId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getServiceLanguage<TRes>
+    implements CopyWith$Variables$Query$getServiceLanguage<TRes> {
+  _CopyWithStubImpl$Variables$Query$getServiceLanguage(this._res);
+
+  TRes _res;
+
+  call({int? serviceDetailsId}) => _res;
+}
+
+class Query$getServiceLanguage {
+  Query$getServiceLanguage({
+    this.service_provider_details_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceLanguage.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_details_by_pk =
+        json['service_provider_details_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceLanguage(
+      service_provider_details_by_pk: l$service_provider_details_by_pk == null
+          ? null
+          : Query$getServiceLanguage$service_provider_details_by_pk.fromJson(
+              (l$service_provider_details_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getServiceLanguage$service_provider_details_by_pk?
+      service_provider_details_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    _resultData['service_provider_details_by_pk'] =
+        l$service_provider_details_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_provider_details_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getServiceLanguage) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    final lOther$service_provider_details_by_pk =
+        other.service_provider_details_by_pk;
+    if (l$service_provider_details_by_pk !=
+        lOther$service_provider_details_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceLanguage
+    on Query$getServiceLanguage {
+  CopyWith$Query$getServiceLanguage<Query$getServiceLanguage> get copyWith =>
+      CopyWith$Query$getServiceLanguage(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getServiceLanguage<TRes> {
+  factory CopyWith$Query$getServiceLanguage(
+    Query$getServiceLanguage instance,
+    TRes Function(Query$getServiceLanguage) then,
+  ) = _CopyWithImpl$Query$getServiceLanguage;
+
+  factory CopyWith$Query$getServiceLanguage.stub(TRes res) =
+      _CopyWithStubImpl$Query$getServiceLanguage;
+
+  TRes call({
+    Query$getServiceLanguage$service_provider_details_by_pk?
+        service_provider_details_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$getServiceLanguage$service_provider_details_by_pk<TRes>
+      get service_provider_details_by_pk;
+}
+
+class _CopyWithImpl$Query$getServiceLanguage<TRes>
+    implements CopyWith$Query$getServiceLanguage<TRes> {
+  _CopyWithImpl$Query$getServiceLanguage(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceLanguage _instance;
+
+  final TRes Function(Query$getServiceLanguage) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_details_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getServiceLanguage(
+        service_provider_details_by_pk: service_provider_details_by_pk ==
+                _undefined
+            ? _instance.service_provider_details_by_pk
+            : (service_provider_details_by_pk
+                as Query$getServiceLanguage$service_provider_details_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getServiceLanguage$service_provider_details_by_pk<TRes>
+      get service_provider_details_by_pk {
+    final local$service_provider_details_by_pk =
+        _instance.service_provider_details_by_pk;
+    return local$service_provider_details_by_pk == null
+        ? CopyWith$Query$getServiceLanguage$service_provider_details_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$getServiceLanguage$service_provider_details_by_pk(
+            local$service_provider_details_by_pk,
+            (e) => call(service_provider_details_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getServiceLanguage<TRes>
+    implements CopyWith$Query$getServiceLanguage<TRes> {
+  _CopyWithStubImpl$Query$getServiceLanguage(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getServiceLanguage$service_provider_details_by_pk?
+        service_provider_details_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getServiceLanguage$service_provider_details_by_pk<TRes>
+      get service_provider_details_by_pk =>
+          CopyWith$Query$getServiceLanguage$service_provider_details_by_pk.stub(
+              _res);
+}
+
+const documentNodeQuerygetServiceLanguage = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getServiceLanguage'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'serviceDetailsId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_details_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'serviceDetailsId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'language'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getServiceLanguage _parserFn$Query$getServiceLanguage(
+        Map<String, dynamic> data) =>
+    Query$getServiceLanguage.fromJson(data);
+
+class Options$Query$getServiceLanguage
+    extends graphql.QueryOptions<Query$getServiceLanguage> {
+  Options$Query$getServiceLanguage({
+    String? operationName,
+    required Variables$Query$getServiceLanguage variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetServiceLanguage,
+          parserFn: _parserFn$Query$getServiceLanguage,
+        );
+}
+
+class WatchOptions$Query$getServiceLanguage
+    extends graphql.WatchQueryOptions<Query$getServiceLanguage> {
+  WatchOptions$Query$getServiceLanguage({
+    String? operationName,
+    required Variables$Query$getServiceLanguage variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetServiceLanguage,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getServiceLanguage,
+        );
+}
+
+class FetchMoreOptions$Query$getServiceLanguage
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getServiceLanguage({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getServiceLanguage variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetServiceLanguage,
+        );
+}
+
+extension ClientExtension$Query$getServiceLanguage on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getServiceLanguage>>
+      query$getServiceLanguage(
+              Options$Query$getServiceLanguage options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getServiceLanguage>
+      watchQuery$getServiceLanguage(
+              WatchOptions$Query$getServiceLanguage options) =>
+          this.watchQuery(options);
+  void writeQuery$getServiceLanguage({
+    required Query$getServiceLanguage data,
+    required Variables$Query$getServiceLanguage variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetServiceLanguage),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getServiceLanguage? readQuery$getServiceLanguage({
+    required Variables$Query$getServiceLanguage variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetServiceLanguage),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getServiceLanguage.fromJson(result);
+  }
+}
+
+class Query$getServiceLanguage$service_provider_details_by_pk {
+  Query$getServiceLanguage$service_provider_details_by_pk({
+    required this.language,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceLanguage$service_provider_details_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$language = json['language'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceLanguage$service_provider_details_by_pk(
+      language: mapFromJson(l$language),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic language;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language = language;
+    _resultData['language'] = mapToJson(l$language);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language = language;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getServiceLanguage$service_provider_details_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language = language;
+    final lOther$language = other.language;
+    if (l$language != lOther$language) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceLanguage$service_provider_details_by_pk
+    on Query$getServiceLanguage$service_provider_details_by_pk {
+  CopyWith$Query$getServiceLanguage$service_provider_details_by_pk<
+          Query$getServiceLanguage$service_provider_details_by_pk>
+      get copyWith =>
+          CopyWith$Query$getServiceLanguage$service_provider_details_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getServiceLanguage$service_provider_details_by_pk<
+    TRes> {
+  factory CopyWith$Query$getServiceLanguage$service_provider_details_by_pk(
+    Query$getServiceLanguage$service_provider_details_by_pk instance,
+    TRes Function(Query$getServiceLanguage$service_provider_details_by_pk) then,
+  ) = _CopyWithImpl$Query$getServiceLanguage$service_provider_details_by_pk;
+
+  factory CopyWith$Query$getServiceLanguage$service_provider_details_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getServiceLanguage$service_provider_details_by_pk;
+
+  TRes call({
+    dynamic? language,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getServiceLanguage$service_provider_details_by_pk<
+        TRes>
+    implements
+        CopyWith$Query$getServiceLanguage$service_provider_details_by_pk<TRes> {
+  _CopyWithImpl$Query$getServiceLanguage$service_provider_details_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceLanguage$service_provider_details_by_pk _instance;
+
+  final TRes Function(Query$getServiceLanguage$service_provider_details_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getServiceLanguage$service_provider_details_by_pk(
+        language: language == _undefined || language == null
+            ? _instance.language
+            : (language as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getServiceLanguage$service_provider_details_by_pk<
+        TRes>
+    implements
+        CopyWith$Query$getServiceLanguage$service_provider_details_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getServiceLanguage$service_provider_details_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? language,
+    String? $__typename,
+  }) =>
+      _res;
+}

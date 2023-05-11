@@ -2,11 +2,6 @@ import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-// import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-// import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -235,14 +230,14 @@ Map<String, dynamic> _getCourierOrderStatusFields(DeliveryOrderStatus status) {
 Map<String, dynamic>? getRestaurantOrderStatusFields(
     RestaurantOrderStatus restaurantOrderStatus) {
   switch (restaurantOrderStatus) {
-    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.Preparing:
       return <String, dynamic>{
         "title": "${_i18n()["preparingOrderTitle"]}",
         "body": "${_i18n()["preparingOrderBody"]}",
         "imgUrl":
             "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
       };
-    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.Ready:
       return <String, dynamic>{
         "title": "${_i18n()["readyForPickUpTitle"]}",
         "body": "${_i18n()["readyForPickUpBody"]}",
