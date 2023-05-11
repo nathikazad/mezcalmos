@@ -152,6 +152,7 @@ class ServiceInfoEditViewController {
     return ServiceInfo(
         location: newLocation.value!,
         hasuraId: 1,
+        languages: languages.value!,
         phoneNumber: phoneNumber.text,
         descriptionId: newDescId,
         image: newImageUrl.value,

@@ -114,7 +114,7 @@ class ServiceProfileController extends GetxController {
         serviceProviderId: serviceId,
         serviceProviderType: service.serviceProviderType!);
 
-    if (refetch) {
+    if (refetch == true) {
       unawaited(fetchService());
     }
   }

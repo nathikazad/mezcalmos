@@ -290,6 +290,7 @@ Future<ServiceInfo> update_service_info(
             name: serviceInfo.name,
             image: serviceInfo.image,
             phone_number: serviceInfo.phoneNumber,
+            language: serviceInfo.languages?.toFirebaseFormattedString(),
             description_id: serviceInfo.descriptionId,
             currency: serviceInfo.currency?.toFirebaseFormatString()),
       ),

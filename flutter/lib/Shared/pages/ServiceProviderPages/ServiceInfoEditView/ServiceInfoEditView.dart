@@ -24,7 +24,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
 class ServiceInfoEditView extends StatefulWidget {
   const ServiceInfoEditView({super.key});
 
-  static Future<bool> navigate(
+  static Future<bool?> navigate(
       {required int serviceDetailsId,
       required int serviceProviderId,
       required ServiceProviderType serviceProviderType}) async {
@@ -241,7 +241,8 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                                   v.toLanguage();
                             }
                           }),
-                      bigSeperator
+                      bigSeperator,
+                      bigSeperator,
                     ],
                   ),
                 ));

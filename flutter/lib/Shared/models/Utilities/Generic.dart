@@ -20,6 +20,15 @@ extension ParseStringToServiceStatusStatus on String {
   }
 }
 
+extension LanguageHelper on ServiceProviderLanguage {
+  Map<String, dynamic> toFirebaseFormattedString() {
+    return <String, dynamic>{
+      "primary": primary.toFirebaseFormatString(),
+      "secondary": secondary?.toFirebaseFormatString(),
+    };
+  }
+}
+
 extension ParseLangaugeToString on Language {
   String toLanguageCode() {
     String str = toString().split('.').last;
@@ -55,7 +64,6 @@ extension ParseLangaugeToString on Language {
         return null;
     }
   }
-  
 }
 
 extension ParseStringToLangauge on String {
