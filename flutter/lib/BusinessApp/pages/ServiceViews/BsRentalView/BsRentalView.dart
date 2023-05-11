@@ -13,6 +13,10 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpRentalView extends StatefulWidget {
   const BsOpRentalView({Key? key}) : super(key: key);
@@ -66,7 +70,8 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
     return Scaffold(
       appBar: _appbar(),
       bottomNavigationBar: MezButton(
-        label: "Save",
+        label: _i18n()["save"],
+        withGradient: true,
         borderRadius: 0,
         onClick: () async {
           await viewController.save();
@@ -90,15 +95,15 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
             preferredSize: Size.fromHeight(50),
             child: TabBar(tabs: [
               Tab(
-                text: "English",
+                text: _i18n()["english"],
               ),
               Tab(
-                text: "Spanish",
+                text: _i18n()["spanish"],
               )
             ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.rental != null
             ? "${viewController.rental!.details.name.getTranslation(userLanguage)}"
-            : "Rental")));
+            : _i18n()["vehicleRental"]["rentalTitle"])));
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -108,25 +113,25 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Name",
+            _i18n()["name"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           TextFormField(
             controller: viewController.detailsController.scNameController,
             decoration: InputDecoration(
-              hintText: "Add rental name",
+              hintText: _i18n()["nameHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter name";
+                return _i18n()["nameError"];
               }
               return null;
             },
           ),
           bigSeperator,
           Text(
-            "Description",
+            _i18n()["description"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -136,11 +141,11 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
             controller:
                 viewController.detailsController.scDescriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your rental",
+              hintText: _i18n()["descriptionHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter description";
+                return _i18n()["descriptionError"];
               }
               return null;
             },
@@ -173,19 +178,20 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Types of vehicle",
+                      _i18n()["vehicleRental"]["vehicleType"],
                       style: context.textTheme.bodyLarge,
                     ),
                     smallSepartor,
                     Obx(
                       () => MezStringDropDown(
+                        langPath: _i18n()["vehicleRental"],
                         validator: (p0) {
                           if (viewController.rentalCategory2.value == null) {
-                            return "Please select category";
+                            return _i18n()["categoryError"];
                           }
                           return null;
                         },
-                        labelText: "Select your vehicle type",
+                        labelText: _i18n()["vehicleRental"]["vehicleTypeHint"],
                         value: viewController.rentalCategory2.value
                             ?.toFirebaseFormatString(),
                         items: RentalCategory2.values
@@ -202,11 +208,11 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                 )
               : SizedBox.shrink(),
           Text(
-            "Images",
+            _i18n()["image"],
             style: context.textTheme.bodyLarge,
           ),
           Text(
-            "You can only upload up to five images.",
+            _i18n()["imageInfo"],
           ),
           smallSepartor,
           BsOpServiceImagesGrid(
@@ -214,25 +220,25 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
           ),
           bigSeperator,
           Text(
-            "Name",
+            _i18n()["name"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           TextFormField(
             controller: viewController.detailsController.nameController,
             decoration: InputDecoration(
-              hintText: "Add rental name",
+              hintText: _i18n()["nameHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter name";
+                return _i18n()["nameError"];
               }
               return null;
             },
           ),
           bigSeperator,
           Text(
-            "Description",
+            _i18n()["description"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -241,11 +247,11 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
             minLines: 5,
             controller: viewController.detailsController.descriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your rental",
+              hintText: _i18n()["descriptionHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter description";
+                return _i18n()["descriptionError"];
               }
               return null;
             },
@@ -273,23 +279,25 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                     children: [
                       bigSeperator,
                       Text(
-                        "Rental Details",
+                        _i18n()["vehicleRental"]["rentalDetails"],
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
                       Text(
-                        "Motorcycle Type",
+                        _i18n()["vehicleRental"]["motorcycleType"],
                         style: context.textTheme.bodySmall,
                       ),
                       smallSepartor,
                       MezStringDropDown(
+                        langPath: _i18n()["vehicleRental"],
                         validator: (value) {
                           if (viewController.rentalCategory3.value == null) {
-                            return "Please select category";
+                            return _i18n()["categoryError"];
                           }
                           return null;
                         },
-                        labelText: "Select your motorcycle type",
+                        labelText:
+                            "${_i18n()["vehicleRental"]["motorcycleTypeHint"]}",
                         value: viewController.rentalCategory3.value
                             ?.toFirebaseFormatString(),
                         items: RentalCategory3.values
@@ -313,12 +321,12 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                   children: [
                     bigSeperator,
                     Text(
-                      "Rental Details",
+                      _i18n()["vehicleRental"]["rentalDetails"],
                       style: context.textTheme.bodyLarge,
                     ),
                     smallSepartor,
                     Text(
-                      "Length",
+                      _i18n()["vehicleRental"]["length"],
                       style: context.textTheme.bodySmall,
                     ),
                     smallSepartor,
@@ -326,7 +334,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                       controller: viewController.surfBoardLengthController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        hintText: "Surf board Length",
+                        hintText: _i18n()["vehicleRental"]["surfLength"],
                         suffixIconConstraints: BoxConstraints(
                           minWidth: 0,
                           minHeight: 0,
@@ -338,7 +346,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return "Please board length";
+                          return _i18n()["vehicleRental"]["surfLengthError"];
                         }
                         return null;
                       },

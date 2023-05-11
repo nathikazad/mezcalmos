@@ -3,12 +3,48 @@
     "pages": {
       "services": {
         "services": "Servicios",
+        "service": "Servicio",
         "serviceType": "What type of service will you add?",
         "addService": "Add Service",
         "reorder": "Reordenar",
         "event": "Eventos",
         "rental": "Alquileres",
         "product": "Products",
+        "save": "Guardar",
+        "english": "Inglés",
+        "spanish": "Español",
+        "name": "Nombre",
+        "nameHint": "Añadir nombre de artículo",
+        "nameError": "Por favor, añada el nombre del artículo",
+        "description": "Descripción",
+        "descriptionHint": "Introduzca una descripción para su artículo",
+        "descriptionError": "Por favor, introduzca una descripción para su artículo",
+        "image": "Imagen",
+        "imageInfo": "Sólo puedes subir hasta cinco imágenes.",
+        "imageError": "Añada al menos una imagen",
+        "location": "Ubicación",
+        "category": "Categoría",
+        "categoryHint": "Seleccione una categoría",
+        "schedule": "Horario",
+        "scheduleHint": "Añadir horario",
+        "scheduleError": "Por favor, añada el horario",
+        "categoryError": "Por favor, seleccione una categoría",
+        "price": {
+          "prices": "Precios",
+          "price": "Precio",
+          "addPrice": "Añadir precio adicional",
+          "priceError": "Por favor, añada el precio",
+          "validPriceError": "Introduzca un precio válido",
+          "perHour": "Hora",
+          "perDay": "Día",
+          "perWeek": "Semana",
+          "perMonth": "Mes",
+          "perPerson": "Persona",
+          "unit": "Unidad",
+          "priceType": "Tipo de precio",
+          "add": "Añada",
+          "cancel": "Cancelar"
+        },
         "surfShop": {
           "rentalTitle": "Surfboard rental",
           "rentalSubtitle": "Using a surfboard rental service, you can advertise a surfboard for rent.",
@@ -18,8 +54,24 @@
           "eventSubtitle": "Event service is used to plan events for your business."
         },
         "vehicleRental": {
-          "rentalTitle": "Rental",
-          "rentalSubtitle": "Using a rental service, you can advertise a vehicle for rent."
+          "rentalTitle": "Alquiler",
+          "rentalSubtitle": "A través de un servicio de alquiler, puede anunciar un vehículo en alquiler.",
+          "motorcycle": "Motocicleta",
+          "car": "Coche",
+          "aTB": "ATB",
+          "bicycle": "Bicicleta",
+          "retro": "Retro",
+          "scooter": "Scooter",
+          "threeWheeler": "3 Ruedas",
+          "uncategorized": "Sin categoría",
+          "vehicleType": "Tipo de vehículo",
+          "vehicleTypeHint": "Seleccione su tipo de vehículo",
+          "rentalDetails": "Detalles de alquiler",
+          "motorcycleType": "Tipo de motocicleta",
+          "motorcycleTypeHint": "Seleccione su tipo de motocicleta",
+          "length": "Longitud",
+          "surfLength": "Longitud de la tabla de surf",
+          "surfLengthError": "Introduzca la longitud de la tabla de surf"
         },
         "yogaStudio": {
           "eventTitle": "Event",
@@ -28,8 +80,24 @@
           "classSubtitle": "A class service is when you instruct a class for a student."
         },
         "homeRental": {
-          "rentalTitle": "Home rental",
-          "rentalSubtitle": "Using a home rental service, you can advertise a home for rent."
+          "rentalTitle": "Alquiler de viviendas",
+          "rentalSubtitle": "A través de un servicio de alquiler de viviendas, puede anunciar una casa en alquiler.",
+          "rentalDetails": "Detalles de alquiler",
+          "homeType": "Tipo de vivienda",
+          "homeTypeError": "Seleccione el tipo de vivienda",
+          "homeLocation": "Elegir ubicación de la casa",
+          "homeLocationError": "Seleccione una ubicación",
+          "bedrooms": "Dormitorios",
+          "bedroomsHint": "¿Cuántas habitaciones tiene su casa?",
+          "bedroomsError": "Por favor, introduzca los dormitorios",
+          "bathrooms": "Baños",
+          "bathroomsHint": "¿Cuántos cuartos de baño tiene su casa?",
+          "bathroomsError": "Por favor, introduzca los baños",
+          "apartment": "Apartamento",
+          "villa": "Villa",
+          "condo": "Condominio",
+          "bungalow": "Bungalow",
+          "hotel": "Hotel"
         },
         "languageSchool": {
           "eventTitle": "Event",
@@ -43,7 +111,12 @@
         },
         "artisanalProduct": {
           "productTitle": "Item",
-          "productSubtitle": "Advertise an item that can be bought."
+          "product": "Producto",
+          "productSubtitle": "Advertise an item that can be bought.",
+          "consumable": "Consumibles",
+          "personalCare": "Cuidado personal",
+          "art": "Arte",
+          "uncategorized": "Sin categoría"
         },
         "cleaningService": {
           "serviceTitle": "Service",
@@ -1180,14 +1253,14 @@
         "saved": "Guardado",
         "error": "error",
         "savedSuccess": "Su información ha sido guardada con éxito",
-        "prLang" : "Idioma predeterminado",
+        "prLang": "Idioma predeterminado",
         "prLangError": "Por favor seleccione un idioma predeterminado",
-        "scLang" : "Idioma secundario",
+        "scLang": "Idioma secundario",
         "scLangError": "Por favor seleccione un idioma secundario",
-        "sameLangErrorText" : "Se utiliza este idioma, ingrese un idioma diferente.",
-        "none" : "Ninguna",
-        "en" : "Inglesa",
-        "es" : "Español"
+        "sameLangErrorText": "Se utiliza este idioma, ingrese un idioma diferente.",
+        "none": "Ninguna",
+        "en": "Inglesa",
+        "es": "Español"
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",

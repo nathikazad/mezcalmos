@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/BsOpSchedulePickerView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/controllers/BsServiceViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -16,6 +13,10 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpServiceView extends StatefulWidget {
   const BsOpServiceView({Key? key}) : super(key: key);
@@ -55,7 +56,8 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
     return Scaffold(
       appBar: _appbar(),
       bottomNavigationBar: MezButton(
-        label: "Save",
+        label: _i18n()["save"],
+        withGradient: true,
         borderRadius: 0,
         onClick: () async {
           await viewController.save();
@@ -79,15 +81,15 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             preferredSize: Size.fromHeight(50),
             child: TabBar(tabs: [
               Tab(
-                text: "English",
+                text: _i18n()["english"],
               ),
               Tab(
-                text: "Spanish",
+                text: _i18n()["spanish"],
               )
             ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.service != null
             ? "${viewController.service!.details.name.getTranslation(userLanguage)}"
-            : "Service")));
+            : _i18n()["service"])));
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -97,25 +99,25 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Name",
+            _i18n()["name"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           TextFormField(
             controller: viewController.detailsController.scNameController,
             decoration: InputDecoration(
-              hintText: "Add service name",
+              hintText: _i18n()["nameHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter name";
+                return _i18n()["nameError"];
               }
               return null;
             },
           ),
           bigSeperator,
           Text(
-            "Description",
+            _i18n()["description"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -125,11 +127,11 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             controller:
                 viewController.detailsController.scDescriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your service",
+              hintText: _i18n()["descriptionHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter description";
+                return _i18n()["descriptionError"];
               }
               return null;
             },
@@ -158,11 +160,11 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
           ),
           bigSeperator,
           Text(
-            "Images",
+            _i18n()["image"],
             style: context.textTheme.bodyLarge,
           ),
           Text(
-            "You can only upload up to five images.",
+            _i18n()["imageInfo"],
           ),
           smallSepartor,
           BsOpServiceImagesGrid(
@@ -170,25 +172,25 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
           ),
           bigSeperator,
           Text(
-            "Name",
+            _i18n()["name"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           TextFormField(
             controller: viewController.detailsController.nameController,
             decoration: InputDecoration(
-              hintText: "Add service name",
+              hintText: _i18n()["nameHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter name";
+                return _i18n()["nameError"];
               }
               return null;
             },
           ),
           bigSeperator,
           Text(
-            "Description",
+            _i18n()["description"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -197,11 +199,11 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             minLines: 5,
             controller: viewController.detailsController.descriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your service",
+              hintText: _i18n()["descriptionHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter description";
+                return _i18n()["descriptionError"];
               }
               return null;
             },
@@ -222,7 +224,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             () => BsOpScheduleSelector(
               validator: (p0) {
                 if (viewController.serviceSchedule.value == null) {
-                  return "Please add schedule";
+                  return _i18n()["scheduleError"];
                 }
                 return null;
               },
