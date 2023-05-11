@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpServiceImagesGrid extends StatelessWidget {
   final BusinessItemDetailsController detailsController;
@@ -12,7 +16,7 @@ class BsOpServiceImagesGrid extends StatelessWidget {
     return FormField(validator: (Object? v) {
       mezDbgPrint("images validator called");
       if (!detailsController.hasOneImage) {
-        return "Please add at least one image";
+        return _i18n()["imageError"];
       }
       return null;
     }, builder: (FormFieldState<Object?> state) {

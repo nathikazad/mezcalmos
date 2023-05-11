@@ -6,6 +6,10 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpOfferingLocationCard extends StatelessWidget {
   const BsOpOfferingLocationCard(
@@ -25,7 +29,7 @@ class BsOpOfferingLocationCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Location",
+          _i18n()["location"],
           style: context.textTheme.bodyLarge,
         ),
         smallSepartor,

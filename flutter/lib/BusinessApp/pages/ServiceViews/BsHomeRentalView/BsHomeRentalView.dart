@@ -13,7 +13,11 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpHomeRentalView extends StatefulWidget {
   const BsOpHomeRentalView({Key? key}) : super(key: key);
@@ -50,21 +54,23 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appbar(),
-      bottomNavigationBar: MezButton(
-        label: "Save",
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.save();
-        },
-      ),
-      body: TabBarView(
-        controller: viewController.tabController,
-        children: [
-          Form(key: viewController.formKey, child: _primaryTab(context)),
-          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
-        ],
+    return Obx(
+      () => Scaffold(
+        appBar: _appbar(),
+        bottomNavigationBar: MezButton(
+          label: _i18n()["save"],
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.save();
+          },
+        ),
+        body: TabBarView(
+          controller: viewController.tabController,
+          children: [
+            Form(key: viewController.formKey, child: _primaryTab(context)),
+            Form(key: viewController.scFormKey, child: _secondaryTab(context)),
+          ],
+        ),
       ),
     );
   }
@@ -77,15 +83,15 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             preferredSize: Size.fromHeight(50),
             child: TabBar(tabs: [
               Tab(
-                text: "English",
+                text: _i18n()["english"],
               ),
               Tab(
-                text: "Spanish",
+                text: _i18n()["spanish"],
               )
             ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.rental != null
             ? "${viewController.rental!.details.name.getTranslation(userLanguage)}"
-            : "Home rental")));
+            : _i18n()["homeRental"]["rentalTitle"])));
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -95,7 +101,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Name",
+            _i18n()["name"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -103,17 +109,17 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             controller: viewController.detailsController.scNameController,
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter a name";
+                return _i18n()["nameError"];
               }
               return null;
             },
             decoration: InputDecoration(
-              hintText: "Add name",
+              hintText: _i18n()["nameHint"],
             ),
           ),
           bigSeperator,
           Text(
-            "Description",
+            _i18n()["description"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -123,11 +129,11 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             controller:
                 viewController.detailsController.scDescriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your item",
+              hintText: _i18n()["descriptionHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter description";
+                return _i18n()["descriptionError"];
               }
               return null;
             },
@@ -156,11 +162,11 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           bigSeperator,
           Text(
-            "Images",
+            _i18n()["image"],
             style: context.textTheme.bodyLarge,
           ),
           Text(
-            "You can only upload up to five images.",
+            _i18n()["imageInfo"],
           ),
           smallSepartor,
           BsOpServiceImagesGrid(
@@ -168,25 +174,25 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           bigSeperator,
           Text(
-            "Name",
+            _i18n()["name"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           TextFormField(
             controller: viewController.detailsController.nameController,
             decoration: InputDecoration(
-              hintText: "Add item name",
+              hintText: _i18n()["nameHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter a name";
+                return _i18n()["nameError"];
               }
               return null;
             },
           ),
           bigSeperator,
           Text(
-            "Description",
+            _i18n()["description"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -195,11 +201,11 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             minLines: 5,
             controller: viewController.detailsController.descriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your item",
+              hintText: _i18n()["descriptionHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter description";
+                return _i18n()["descriptionError"];
               }
               return null;
             },
@@ -220,7 +226,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           bigSeperator,
           Text(
-            "Rental details",
+            _i18n()["homeRental"]["rentalDetails"],
             style: context.textTheme.bodyLarge,
           ),
           meduimSeperator,
@@ -233,7 +239,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             () => MezStringDropDown(
               validator: (value) {
                 if (viewController.homeType.value == null) {
-                  return "Please select home type";
+                  return _i18n()["homeRental"]["homeTypeError"];
                 }
                 return null;
               },
@@ -246,20 +252,20 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
                   viewController.homeType.value = newHomeType.toHomeType();
                 }
               },
-              labelText: "Your home type",
+              labelText: _i18n()["homeRental"]["homeType"],
             ),
           ),
           bigSeperator,
           Obx(
             () => BsOpOfferingLocationCard(
               location: viewController.homeLocation.value,
-              label: "Pick house location",
+              label: _i18n()["homeRental"]["homeLocation"],
               onLocationSelected: (Location loc) {
                 viewController.homeLocation.value = loc;
               },
               validator: (Location? loc) {
                 if (loc == null) {
-                  return "Please select a location";
+                  return _i18n()["homeRental"]["homeLocationError"];
                 }
                 return null;
               },
@@ -267,36 +273,36 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           bigSeperator,
           Text(
-            "Bedrooms",
+            _i18n()["homeRental"]["bedrooms"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           TextFormField(
             controller: viewController.bedroomsController,
             decoration: InputDecoration(
-              hintText: "how many bedrooms does your home have?",
+              hintText: _i18n()["homeRental"]["bedroomsHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter bedrooms";
+                return _i18n()["homeRental"]["bedroomsError"];
               }
               return null;
             },
           ),
           bigSeperator,
           Text(
-            "Bathrooms",
+            _i18n()["homeRental"]["bathrooms"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           TextFormField(
             controller: viewController.bathroomsController,
             decoration: InputDecoration(
-              hintText: "how many bathrooms does your home have?",
+              hintText: _i18n()["homeRental"]["bathroomsHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter bathrooms";
+                return _i18n()["homeRental"]["bathroomsError"];
               }
               return null;
             },
