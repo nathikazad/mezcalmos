@@ -22,6 +22,7 @@
         "imageInfo": "Sólo puedes subir hasta cinco imágenes.",
         "imageError": "Añada al menos una imagen",
         "location": "Ubicación",
+        "categoryError": "Seleccione una categoría",
         "price": {
           "prices": "Precios",
           "price": "Precio",
@@ -56,7 +57,15 @@
           "retro": "Retro",
           "scooter": "Scooter",
           "threeWheeler": "3 Ruedas",
-          "uncategorized": "Sin categoría"
+          "uncategorized": "Sin categoría",
+          "vehicleType": "Tipo de vehículo",
+          "vehicleTypeHint": "Seleccione su tipo de vehículo",
+          "rentalDetails": "Detalles de alquiler",
+          "motorcycleType": "Tipo de motocicleta",
+          "motorcycleTypeHint": "Seleccione su tipo de motocicleta",
+          "length": "Longitud",
+          "surfLength": "Longitud de la tabla de surf",
+          "surfLengthError": "Introduzca la longitud de la tabla de surf"
         },
         "yogaStudio": {
           "eventTitle": "Event",

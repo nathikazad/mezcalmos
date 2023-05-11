@@ -24,7 +24,8 @@ class BusinessOpAuthController extends GetxController {
   /// this getter should be used only after the operator is set
   /// otherwise it will throw an exception
   BusinessProfile? get businessProfile {
-    return _businessProfile;
+    return BusinessProfile.SurfShop;
+    // return _businessProfile;
   }
 
   set setBusinessProfile(BusinessProfile? value) {
