@@ -1179,11 +1179,19 @@
         "phoneErrorText": "Please enter a valid phone number",
         "location": "Location",
         "description": "Description in",
+        "prLang" : "Primary language",
+        "sameLangErrorText" : "This language is used, please enter a different language",
+        "prLangErrorText": "Please enter a valid primary language",
+        "scLang" : "Secondary language",
+        "scLangErrorText": "Please enter a valid secondary language",
+"none" : "None",
         "info": "Info",
         "save": "Save",
         "saved": "Saved",
         "error": "Error",
-        "savedSuccess": "Your information has been successfully saved "
+        "savedSuccess": "Your information has been successfully saved ",
+        "en" : "English",
+        "es" : "Spanish"
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No restaurant found on your operator",

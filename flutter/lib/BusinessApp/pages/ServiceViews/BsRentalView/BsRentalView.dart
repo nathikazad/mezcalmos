@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/controllers/BsRentalViewController.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpDropDown.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 
 class BsOpRentalView extends StatefulWidget {
   const BsOpRentalView({Key? key}) : super(key: key);
@@ -178,7 +178,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                     ),
                     smallSepartor,
                     Obx(
-                      () => BsOpDropdown(
+                      () => MezStringDropDown(
                         validator: (p0) {
                           if (viewController.rentalCategory2.value == null) {
                             return "Please select category";
@@ -282,7 +282,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                         style: context.textTheme.bodySmall,
                       ),
                       smallSepartor,
-                      BsOpDropdown(
+                      MezStringDropDown(
                         validator: (value) {
                           if (viewController.rentalCategory3.value == null) {
                             return "Please select category";

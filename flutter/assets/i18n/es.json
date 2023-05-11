@@ -1179,7 +1179,15 @@
         "save": "Guardar",
         "saved": "Guardado",
         "error": "error",
-        "savedSuccess": "Su información ha sido guardada con éxito"
+        "savedSuccess": "Su información ha sido guardada con éxito",
+        "prLang" : "Idioma predeterminado",
+        "prLangError": "Por favor seleccione un idioma predeterminado",
+        "scLang" : "Idioma secundario",
+        "scLangError": "Por favor seleccione un idioma secundario",
+        "sameLangErrorText" : "Se utiliza este idioma, ingrese un idioma diferente.",
+        "none" : "Ninguna",
+        "en" : "Inglesa",
+        "es" : "Español"
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",

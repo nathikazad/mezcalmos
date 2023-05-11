@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/controllers/BsHomeRentalViewController.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpDropDown.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingLocationCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
@@ -14,6 +13,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
+import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 
 class BsOpHomeRentalView extends StatefulWidget {
   const BsOpHomeRentalView({Key? key}) : super(key: key);
@@ -230,7 +230,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           smallSepartor,
           Obx(
-            () => BsOpDropdown(
+            () => MezStringDropDown(
               validator: (value) {
                 if (viewController.homeType.value == null) {
                   return "Please select home type";
@@ -276,7 +276,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             decoration: InputDecoration(
               hintText: "how many bedrooms does your home have?",
             ),
-             validator: (String? value) {
+            validator: (String? value) {
               if (value == null || value.isEmpty) {
                 return "Please enter bedrooms";
               }
@@ -294,7 +294,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             decoration: InputDecoration(
               hintText: "how many bathrooms does your home have?",
             ),
-             validator: (String? value) {
+            validator: (String? value) {
               if (value == null || value.isEmpty) {
                 return "Please enter bathrooms";
               }

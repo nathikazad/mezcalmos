@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-class BsOpDropdown extends StatefulWidget {
+class MezStringDropDown extends StatefulWidget {
   final String labelText;
   final String? value;
   final List<String> items;
   final void Function(String?) onChanged;
   final String? Function(String?)? validator;
+  final Map<String, dynamic>? langPath;
 
-  const BsOpDropdown({
+  const MezStringDropDown({
     required this.labelText,
+    this.langPath,
     this.value,
     required this.items,
     required this.onChanged,
@@ -16,21 +19,21 @@ class BsOpDropdown extends StatefulWidget {
   });
 
   @override
-  _BsOpDropdownState createState() => _BsOpDropdownState();
+  _MezStringDropDownState createState() => _MezStringDropDownState();
 }
 
-class _BsOpDropdownState extends State<BsOpDropdown> {
+class _MezStringDropDownState extends State<MezStringDropDown> {
   String? _selectedValue;
 
   @override
   void initState() {
     super.initState();
-    print("widget.value ${widget.value}");
+    mezDbgPrint("widget.value =================>>>>>${widget.value}");
     _selectedValue = widget.value;
   }
 
   @override
-  void didUpdateWidget(covariant BsOpDropdown oldWidget) {
+  void didUpdateWidget(covariant MezStringDropDown oldWidget) {
     super.didUpdateWidget(oldWidget);
     setState(() {
       _selectedValue = widget.value;
@@ -43,12 +46,15 @@ class _BsOpDropdownState extends State<BsOpDropdown> {
       value: _selectedValue,
       decoration: InputDecoration(
         labelText: widget.labelText,
+        errorMaxLines: 2,
+        alignLabelWithHint: false,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
         //  border: OutlineInputBorder(),
       ),
       items: widget.items
           .map((String item) => DropdownMenuItem(
                 value: item,
-                child: Text(item),
+                child: Text("${widget.langPath!['$item']}"),
               ))
           .toList(),
       onChanged: (String? value) {

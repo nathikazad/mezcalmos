@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/controllers/BsProductViewController.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpDropDown.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
+import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 
 class BsOpProductView extends StatefulWidget {
   const BsOpProductView({Key? key}) : super(key: key);
@@ -212,7 +212,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
           Obx(() {
             print(
                 "productCategory ${viewController.productCategory.value?.toFirebaseFormatString()}");
-            return BsOpDropdown(
+            return MezStringDropDown(
               validator: (p0) {
                 if (viewController.productCategory.value == null) {
                   return "Select category";
