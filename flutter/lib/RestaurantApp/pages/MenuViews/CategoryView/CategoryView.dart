@@ -20,14 +20,24 @@ class ROpCategoryView extends StatefulWidget {
   const ROpCategoryView({Key? key}) : super(key: key);
 
   static Future<void> navigate(
-      {required int restaurantId, required int detailsId,bool saveToDb = false}) {
+      {required int restaurantId,
+      required int detailsId,
+      bool saveToDb = false}) {
     return MezRouter.toPath(
         RestaurantAppRoutes.restaurantCategoryRoute
             .replaceAll(":restaurantId", restaurantId.toString()),
-        arguments: <String, dynamic>{"shouldSave": saveToDb,"detailsId" : detailsId});
+        arguments: <String, dynamic>{
+          "shouldSave": saveToDb,
+          "detailsId": detailsId
+        });
   }
 
-
+  static Future<void> navigateWithCategory(
+      {required int categoryId, required int restaurantId}) {
+    return MezRouter.toPath(RestaurantAppRoutes.restaurantEditCategoryRoute
+        .replaceAll(":categoryId", categoryId.toString())
+        .replaceAll(":restaurantId", restaurantId.toString()));
+  }
 
   @override
   State<ROpCategoryView> createState() => _ROpCategoryViewState();
@@ -49,12 +59,6 @@ class _ROpCategoryViewState extends State<ROpCategoryView>
   void initState() {
     _categoryId = MezRouter.urlArguments["categoryId"].toString();
     restaurantId = MezRouter.urlArguments["restaurantId"].toString();
-    mezDbgPrint("Restif =======>${MezRouter.bodyArguments}");
-    if (MezRouter.bodyArguments != null) {
-      shouldSave = MezRouter.bodyArguments?["shouldSave"].toString() == 'true'
-          ? true
-          : false;
-    }
 
     shouldSave = MezRouter.bodyArguments!["shouldSave"] as bool;
     detailsId = int.tryParse(MezRouter.bodyArguments!["detailsId"].toString());

@@ -59,8 +59,8 @@ export interface SelectedOption {
 
 export enum RestaurantOrderStatus {
   OrderReceived = "orderReceived",
-  PreparingOrder = "preparing",
-  ReadyForPickup = "ready",
+  Preparing = "preparing",
+  Ready = "ready",
   OnTheWay = "onTheWay",
   Delivered = "delivered",
   CancelledByAdmin = "cancelledByAdmin",
