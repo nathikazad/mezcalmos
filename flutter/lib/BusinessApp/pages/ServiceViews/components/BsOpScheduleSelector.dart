@@ -4,6 +4,10 @@ import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/BsOpScheduleP
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpScheduleSelector extends StatelessWidget {
   const BsOpScheduleSelector({
@@ -22,14 +26,14 @@ class BsOpScheduleSelector extends StatelessWidget {
         initialValue: schedule,
         validator: (Schedule? value) {
           if (value == null) {
-            return "Please select a schedule";
+            return _i18n()["scheduleError"];
           }
 
           /// This condition checks if the schedule has any [isOpen=true] timing
           else if (!(value.openHours.values
               .toList()
               .any((element) => element.isOpen))) {
-            return "Please select a schedule";
+            return _i18n()["scheduleError"];
           }
           return null;
         },
@@ -38,7 +42,7 @@ class BsOpScheduleSelector extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Schedule",
+                _i18n()["schedule"],
                 style: context.textTheme.bodyLarge,
               ),
               smallSepartor,
@@ -97,7 +101,7 @@ class BsOpScheduleSelector extends StatelessWidget {
                               Flexible(
                                 fit: FlexFit.tight,
                                 child: Text(
-                                  "Add schedule",
+                                  _i18n()["scheduleHint"],
                                   style: context.textTheme.bodyLarge,
                                 ),
                               ),

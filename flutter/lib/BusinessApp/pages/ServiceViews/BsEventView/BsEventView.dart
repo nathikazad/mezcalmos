@@ -60,6 +60,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
       appBar: _appbar(),
       bottomNavigationBar: MezButton(
         label: "Save",
+        withGradient: true,
         borderRadius: 0,
         onClick: () async {
           await viewController.save();

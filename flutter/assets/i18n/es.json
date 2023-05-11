@@ -3,6 +3,7 @@
     "pages": {
       "services": {
         "services": "Servicios",
+        "service": "Servicio",
         "serviceType": "What type of service will you add?",
         "addService": "Add Service",
         "reorder": "Reordenar",
@@ -24,6 +25,9 @@
         "location": "Ubicación",
         "category": "Categoría",
         "categoryHint": "Seleccione una categoría",
+        "schedule": "Horario",
+        "scheduleHint": "Añadir horario",
+        "scheduleError": "Por favor, añada el horario",
         "categoryError": "Por favor, seleccione una categoría",
         "price": {
           "prices": "Precios",

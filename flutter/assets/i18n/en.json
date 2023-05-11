@@ -3,6 +3,7 @@
     "pages": {
       "services": {
         "services": "Services",
+        "service": "Service",
         "serviceType": "What type of service will you add?",
         "addService": "Add Service",
         "reorder": "Reorder",
@@ -25,6 +26,9 @@
         "category": "Category",
         "categoryHint": "Select a category",
         "categoryError": "Please select a category",
+        "schedule": "Schedule",
+        "scheduleHint": "Add schedule",
+        "scheduleError": "Please add schedule",
         "price": {
           "prices": "Prices",
           "price": "Price",

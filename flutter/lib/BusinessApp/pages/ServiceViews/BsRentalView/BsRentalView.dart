@@ -71,6 +71,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
       appBar: _appbar(),
       bottomNavigationBar: MezButton(
         label: _i18n()["save"],
+        withGradient: true,
         borderRadius: 0,
         onClick: () async {
           await viewController.save();

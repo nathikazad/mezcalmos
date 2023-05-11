@@ -57,6 +57,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
       appBar: _appbar(),
       bottomNavigationBar: MezButton(
         label: _i18n()["save"],
+        withGradient: true,
         borderRadius: 0,
         onClick: () async {
           await viewController.save();
@@ -223,7 +224,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
                 }
                 return null;
               },
-              labelText:  _i18n()["categoryHint"],
+              labelText: _i18n()["categoryHint"],
               langPath: _i18n()["artisanalProduct"],
               items: ProductCategory1.values
                   .map((ProductCategory1 e) => e.toFirebaseFormatString())
