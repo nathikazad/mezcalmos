@@ -13,6 +13,10 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpRentalView extends StatefulWidget {
   const BsOpRentalView({Key? key}) : super(key: key);
@@ -179,6 +183,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                     smallSepartor,
                     Obx(
                       () => MezStringDropDown(
+                        langPath: _i18n()["vehicleRental"],
                         validator: (p0) {
                           if (viewController.rentalCategory2.value == null) {
                             return "Please select category";
@@ -283,6 +288,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                       ),
                       smallSepartor,
                       MezStringDropDown(
+                        langPath: _i18n()["vehicleRental"],
                         validator: (value) {
                           if (viewController.rentalCategory3.value == null) {
                             return "Please select category";

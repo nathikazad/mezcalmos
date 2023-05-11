@@ -7,11 +7,11 @@ class MezStringDropDown extends StatefulWidget {
   final List<String> items;
   final void Function(String?) onChanged;
   final String? Function(String?)? validator;
-  final Map<String, dynamic>? langPath;
+  final Map<String, dynamic> langPath;
 
   const MezStringDropDown({
     required this.labelText,
-    this.langPath,
+    required this.langPath,
     this.value,
     required this.items,
     required this.onChanged,
@@ -54,7 +54,7 @@ class _MezStringDropDownState extends State<MezStringDropDown> {
       items: widget.items
           .map((String item) => DropdownMenuItem(
                 value: item,
-                child: Text("${widget.langPath!['$item']}"),
+                child: Text("${widget.langPath['$item']}"),
               ))
           .toList(),
       onChanged: (String? value) {

@@ -13,6 +13,10 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpProductView extends StatefulWidget {
   const BsOpProductView({Key? key}) : super(key: key);
@@ -220,6 +224,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
                 return null;
               },
               labelText: "Select category",
+              langPath: _i18n()["artisanalProduct"],
               items: ProductCategory1.values
                   .map((ProductCategory1 e) => e.toFirebaseFormatString())
                   .toList(),

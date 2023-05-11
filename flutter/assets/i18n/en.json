@@ -48,7 +48,15 @@
         },
         "vehicleRental": {
           "rentalTitle": "Rental",
-          "rentalSubtitle": "Using a rental service, you can advertise a vehicle for rent."
+          "rentalSubtitle": "Using a rental service, you can advertise a vehicle for rent.",
+          "motorcycle": "Motorcycle",
+          "car": "Car",
+          "aTB": "ATB",
+          "bicycle": "Bicycle",
+          "retro": "Retro",
+          "scooter": "Scooter",
+          "threeWheeler": "Three Wheeler",
+          "uncategorized": "Uncategorized"
         },
         "yogaStudio": {
           "eventTitle": "Event",
@@ -88,7 +96,11 @@
         },
         "artisanalProduct": {
           "productTitle": "Item",
-          "productSubtitle": "Advertise an item that can be bought."
+          "productSubtitle": "Advertise an item that can be bought.",
+          "consumable": "Consumable",
+          "personalCare": "PersonalCare",
+          "art": "Art",
+          "uncategorized": "Uncategorized"
         },
         "cleaningService": {
           "serviceTitle": "Service",
@@ -1224,19 +1236,19 @@
         "phoneErrorText": "Please enter a valid phone number",
         "location": "Location",
         "description": "Description in",
-        "prLang" : "Primary language",
-        "sameLangErrorText" : "This language is used, please enter a different language",
+        "prLang": "Primary language",
+        "sameLangErrorText": "This language is used, please enter a different language",
         "prLangErrorText": "Please enter a valid primary language",
-        "scLang" : "Secondary language",
+        "scLang": "Secondary language",
         "scLangErrorText": "Please enter a valid secondary language",
-"none" : "None",
+        "none": "None",
         "info": "Info",
         "save": "Save",
         "saved": "Saved",
         "error": "Error",
         "savedSuccess": "Your information has been successfully saved ",
-        "en" : "English",
-        "es" : "Spanish"
+        "en": "English",
+        "es": "Spanish"
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No restaurant found on your operator",

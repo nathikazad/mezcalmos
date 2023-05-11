@@ -47,8 +47,16 @@
           "eventSubtitle": "Event service is used to plan events for your business."
         },
         "vehicleRental": {
-          "rentalTitle": "Rental",
-          "rentalSubtitle": "Using a rental service, you can advertise a vehicle for rent."
+          "rentalTitle": "Alquiler",
+          "rentalSubtitle": "A través de un servicio de alquiler, puede anunciar un vehículo en alquiler.",
+          "motorcycle": "Motocicleta",
+          "car": "Coche",
+          "aTB": "ATB",
+          "bicycle": "Bicicleta",
+          "retro": "Retro",
+          "scooter": "Scooter",
+          "threeWheeler": "3 Ruedas",
+          "uncategorized": "Sin categoría"
         },
         "yogaStudio": {
           "eventTitle": "Event",
@@ -72,7 +80,7 @@
           "bathroomsError": "Por favor, introduzca los baños",
           "apartment": "Apartamento",
           "villa": "Villa",
-          "condo": "Condo",
+          "condo": "Condominio",
           "bungalow": "Bungalow",
           "hotel": "Hotel"
         },
@@ -88,7 +96,11 @@
         },
         "artisanalProduct": {
           "productTitle": "Item",
-          "productSubtitle": "Advertise an item that can be bought."
+          "productSubtitle": "Advertise an item that can be bought.",
+          "consumable": "Consumibles",
+          "personalCare": "Cuidado personal",
+          "art": "Arte",
+          "uncategorized": "Sin categoría"
         },
         "cleaningService": {
           "serviceTitle": "Service",
@@ -1225,14 +1237,14 @@
         "saved": "Guardado",
         "error": "error",
         "savedSuccess": "Su información ha sido guardada con éxito",
-        "prLang" : "Idioma predeterminado",
+        "prLang": "Idioma predeterminado",
         "prLangError": "Por favor seleccione un idioma predeterminado",
-        "scLang" : "Idioma secundario",
+        "scLang": "Idioma secundario",
         "scLangError": "Por favor seleccione un idioma secundario",
-        "sameLangErrorText" : "Se utiliza este idioma, ingrese un idioma diferente.",
-        "none" : "Ninguna",
-        "en" : "Inglesa",
-        "es" : "Español"
+        "sameLangErrorText": "Se utiliza este idioma, ingrese un idioma diferente.",
+        "none": "Ninguna",
+        "en": "Inglesa",
+        "es": "Español"
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",
