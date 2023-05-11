@@ -31,8 +31,7 @@ class LaundrOpCategoryViewController {
   final Rxn<LaundryCosts> laundryCosts = Rxn();
   final Rxn<LaundryCostLineItem> copyOfCategory = Rxn();
 
-  final Rxn<Language> primaryLang = Rxn();
-  final Rxn<Language> secondaryLang = Rxn();
+  final Rxn<ServiceProviderLanguage> languages = Rxn();
 
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
@@ -62,8 +61,7 @@ class LaundrOpCategoryViewController {
   }
 
   void initLanguages() {
-    primaryLang.value = laundry.value!.primaryLanguage;
-    secondaryLang.value = laundry.value!.secondaryLanguage;
+    languages.value = laundry.value!.languages;
   }
 
   void assignCategories() {
@@ -76,13 +74,13 @@ class LaundrOpCategoryViewController {
 
   Future<void> _initEditMode() async {
     if (copyOfCategory.value != null) {
-      if (copyOfCategory.value!.name[primaryLang.value] != null) {
+      if (copyOfCategory.value!.name[languages.value!.primary] != null) {
         primaryCategoryNameController.text =
-            copyOfCategory.value!.name[primaryLang.value]!;
+            copyOfCategory.value!.name[languages.value!.primary]!;
       }
-      if (copyOfCategory.value!.name[secondaryLang.value] != null) {
+      if (copyOfCategory.value!.name[languages.value!.secondary] != null) {
         secondaryCategoryNameController.text =
-            copyOfCategory.value!.name[secondaryLang.value]!;
+            copyOfCategory.value!.name[languages.value!.secondary]!;
       }
 
       categoryPricingController.text =
@@ -104,9 +102,9 @@ class LaundrOpCategoryViewController {
     final LaundryCostLineItem newCategory = LaundryCostLineItem(
         id: editMode.isTrue ? copyOfCategory.value!.id : Random().nextInt(5),
         name: {
-          primaryLang.value!: primaryCategoryNameController.text,
-          if (secondaryLang.value != null)
-            secondaryLang.value!: secondaryCategoryNameController.text,
+          languages.value!.primary: primaryCategoryNameController.text,
+          if (languages.value!.secondary != null)
+            languages.value!.secondary!: secondaryCategoryNameController.text,
         },
         cost: num.parse(categoryPricingController.text));
     return newCategory;

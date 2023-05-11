@@ -122,7 +122,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
                     _categoryNameComponent(
                         controller:
                             _viewController.primaryCategoryNameController),
-                    if (_viewController.secondaryLang.value != null)
+                    if (_viewController.languages.value!.secondary != null)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -130,7 +130,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
                             height: 20,
                           ),
                           Text(
-                            "${_i18n()["categoryNameIn"]} ${_viewController.secondaryLang.value!.toLanguageName() ?? ""} ",
+                            "${_i18n()["categoryNameIn"]} ${_viewController.languages.value!.secondary!.toLanguageName() ?? ""} ",
                             style: context.txt.bodyLarge,
                           ),
                           const SizedBox(height: 15),

@@ -368,7 +368,7 @@ Future<int?> update_business_item_details(
   return res.parsedData?.update_business_item_details_by_pk?.id;
 }
 
-Future<BusinessItemDetails?> get_business_details_by_id(
+Future<BusinessItemDetails?> get_business_item_details_by_id(
     {required int detailsId, required int businessId}) async {
   final QueryResult<Query$getBusinessItemDetailsById> res =
       await _db.graphQLClient.query$getBusinessItemDetailsById(
@@ -418,6 +418,23 @@ Future<int?> update_item_additional_params({
     mezDbgPrint(
         "✅✅✅ Hasura update rental category3 mutation success => ${response.data}");
     return response.parsedData?.update_business_item_details!.affected_rows;
+  }
+  return null;
+}
+
+Future<ServiceProviderLanguage?> get_business_lang(
+    {required int businessId}) async {
+  final QueryResult<Query$get_business_lang> res = await _db.graphQLClient
+      .query$get_business_lang(Options$Query$get_business_lang(
+          variables: Variables$Query$get_business_lang(id: businessId)));
+  if (res.hasException) {
+    throw Exception("🛑 Error getting business lang ${res.exception}");
+  } else if (res.parsedData?.business_business_by_pk != null) {
+    Query$get_business_lang$business_business_by_pk data =
+        res.parsedData!.business_business_by_pk!;
+    return ServiceProviderLanguage(
+        primary: data.details.language["primary"].toString().toLanguage(),
+        secondary: data.details.language["secondary"].toString().toLanguage());
   }
   return null;
 }
