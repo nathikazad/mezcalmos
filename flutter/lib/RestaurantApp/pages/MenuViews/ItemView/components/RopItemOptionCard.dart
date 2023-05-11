@@ -110,6 +110,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
       onTap: () async {
         final bool? result = await ROpOptionView.navigate(
             restaurantId: widget.restaurantID,
+            restaurantDetailsId: widget.viewController.detailsId,
             optionId: option.id,
             itemId: widget.itemId!);
         if (result == true) {

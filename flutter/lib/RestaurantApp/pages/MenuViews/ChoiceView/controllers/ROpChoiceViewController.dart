@@ -2,25 +2,26 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/choice/hsChoice.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpChoiceView"];
 
 class ROpChoiceViewController {
+  LanguageTabsController languageTabsController = LanguageTabsController();
   // vars //
   late int restaurantId;
+  late int detailsId;
   int? optionId;
 
   // form//
@@ -30,33 +31,42 @@ class ROpChoiceViewController {
   RxBool editMode = RxBool(false);
   RxBool isAv = RxBool(false);
   RxBool needToFetch = RxBool(false);
-  Rxn<cModels.ServiceProviderLanguage> languages = Rxn();
+  RxBool _hasData = RxBool(false);
 
   // text inputs //
   TextEditingController prChoiceName = TextEditingController();
   TextEditingController scChoiceName = TextEditingController();
   TextEditingController choicePriceText = TextEditingController();
 
+  // getters //
+  cModels.ServiceProviderLanguage? get languages =>
+      languageTabsController.language;
+  bool get hasSecondaryLang => languages?.secondary != null;
+  bool get hasData =>
+      _hasData.value && languageTabsController.tabController != null;
+
   // init //
   Future<void> init(
       {required int? choiceId,
       required int optionId,
+      required int detailsId,
+      required TickerProvider vsync,
       required int restaurantId}) async {
     this.optionId = optionId;
     this.restaurantId = restaurantId;
-    await _assignLanguages();
+    this.detailsId = detailsId;
+    await languageTabsController.init(vsync: vsync, detailsId: detailsId);
 
     if (choiceId != null) {
       await _initEditMode(choiceId);
     }
-  }
-
-  Future<void> _assignLanguages() async {
-    languages.value = await get_restaurant_lang(restaurantId);
+    _hasData.value = true;
   }
 
   // dispose //
-  void dispose() {}
+  void dispose() {
+    languageTabsController.dispose();
+  }
 
   /// construct a choice instance from the view inputs
   ///
@@ -64,9 +74,9 @@ class ROpChoiceViewController {
   ///
   /// if the edit mode is false it will generate a random id
   Choice _contructChoice() {
-    final LanguageMap name = {languages.value!.primary: prChoiceName.text};
-    if (languages.value!.secondary != null && scChoiceName.text.isNotEmpty) {
-      name[languages.value!.secondary!] = scChoiceName.text;
+    final LanguageMap name = {languages!.primary: prChoiceName.text};
+    if (languages?.secondary != null && scChoiceName.text.isNotEmpty) {
+      name[languages!.secondary!] = scChoiceName.text;
     }
     return Choice(
       id: editMode.isTrue ? choice.value!.id : Random().nextInt(5),
@@ -84,8 +94,8 @@ class ROpChoiceViewController {
     if (choice.value != null) {
       editMode.value = true;
       isAv.value = choice.value!.available;
-      prChoiceName.text = choice.value!.name[languages.value!.primary]!;
-      scChoiceName.text = choice.value!.name[languages.value!.secondary] ?? "";
+      prChoiceName.text = choice.value!.name[languages!.primary]!;
+      scChoiceName.text = choice.value!.name[languages!.secondary] ?? "";
       choicePriceText.text = choice.value!.cost.toString();
     }
   }
@@ -97,10 +107,12 @@ class ROpChoiceViewController {
   }
 
   Future<void> saveChoice() async {
-    if (editMode.isTrue && choice.value != null) {
-      await _editChoice();
-    } else {
-      await _addNewChoice();
+    if (languageTabsController.validate()) {
+      if (editMode.isTrue && choice.value != null) {
+        await _editChoice();
+      } else {
+        await _addNewChoice();
+      }
     }
   }
 
@@ -155,7 +167,7 @@ class ROpChoiceViewController {
 
   Future<bool?> deleteChoice() async {
     final bool result = await delete_choice_by_id(choiceId: choice.value!.id);
-    result ? MezRouter.back() : null;
+    await result ? MezRouter.back() : null;
     return result;
   }
 

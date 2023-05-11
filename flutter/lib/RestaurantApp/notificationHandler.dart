@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -106,7 +105,7 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
     //     "imgUrl":
     //         "assets/images/shared/notifications/prepareOrderNotificationIcon.png",
     //   };
-    case RestaurantOrderStatus.ReadyForPickup:
+    case RestaurantOrderStatus.Ready:
       return <String, dynamic>{
         "title": "${_i18n()["atPickupTitle"]}",
         "body": "${_i18n()["atPickupBody"]}",

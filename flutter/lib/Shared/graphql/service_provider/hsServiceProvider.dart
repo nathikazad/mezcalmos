@@ -397,3 +397,21 @@ Future<bool> update_service_charge_fees_fro_customer(
       res.parsedData!.update_service_provider_details_by_pk;
   return data != null;
 }
+
+Future<cModels.ServiceProviderLanguage?> get_service_lang(
+    {required int detailsId}) async {
+  final QueryResult<Query$getServiceLanguage> response = await _db.graphQLClient
+      .query$getServiceLanguage(Options$Query$getServiceLanguage(
+          fetchPolicy: FetchPolicy.cacheFirst,
+          variables:
+              Variables$Query$getServiceLanguage(serviceDetailsId: detailsId)));
+  if (response.hasException) {
+    mezDbgPrint("🚨🚨🚨 service lang query errors : ${response.exception}");
+  } else if (response.parsedData?.service_provider_details_by_pk != null) {
+    mezDbgPrint("✅✅✅ restuarnt primay lang query success");
+
+    return convertToLanguages(
+        response.parsedData?.service_provider_details_by_pk!.language);
+  }
+  return null;
+}
