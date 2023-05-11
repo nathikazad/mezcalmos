@@ -120,8 +120,41 @@ class BsEventViewController {
 
   Future<Event> _constructEventWithDetails() async {
     BusinessItemDetails details = await detailsController.contructDetails();
+    EventCategory1 category1 = EventCategory1.Uncategorized;
+    switch (businessProfile) {
+      case BusinessProfile.YogaStudio:
+        category1 = EventCategory1.Yoga;
+        break;
+      case BusinessProfile.SurfShop:
+        category1 = EventCategory1.Surf;
+        break;
+      // case BusinessProfile.MartialArt:
+      //   category1 = EventCategory1.MartialArt;
+      //   break;
+      // case BusinessProfile.:
+      //   category1 = EventCategory1.Party;
+      //   break;
+      // case BusinessProfile.:
+      //   category1 = EventCategory1.Dance;
+      //   break;
+      case BusinessProfile.Entertainment:
+        category1 = EventCategory1.Social;
+        break;
+      case BusinessProfile.WellnessPractitioner:
+        category1 = EventCategory1.Therapy;
+        break;
+      // case BusinessProfile.:
+      //   category1 = EventCategory1.Fitness;
+      //   break;
+      case BusinessProfile.TourAgency:
+        category1 = EventCategory1.Adventure;
+        break;
+      case BusinessProfile.Volunteer:
+        category1 = EventCategory1.Volunteer;
+        break;
+    }
     Event event = Event(
-        category1: EventCategory1.Party,
+        category1: category1,
         scheduleType: scheduleType.value!,
         startsAt: oneTimePeriod.value?.start.toUtc().toString(),
         endsAt: oneTimePeriod.value?.end.toUtc().toString(),
@@ -135,7 +168,7 @@ class BsEventViewController {
 
   Event _constructEvent() {
     Event event = Event(
-        category1: EventCategory1.Party,
+        category1: EventCategory1.Uncategorized,
         scheduleType: scheduleType.value!,
         startsAt: oneTimePeriod.value?.start.toUtc().toString(),
         endsAt: oneTimePeriod.value?.end.toUtc().toString(),

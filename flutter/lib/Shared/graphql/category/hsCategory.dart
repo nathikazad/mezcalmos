@@ -105,16 +105,23 @@ Future<String?> add_category(
                   cModels.OrderType.Restaurant.toFirebaseFormatString(),
               // service_provider_type = OrderType.restaurant,
               translations: Input$translation_value_arr_rel_insert_input(
-                  data: <Input$translation_value_insert_input>[
-                    Input$translation_value_insert_input(
-                        language_id:
-                            cModels.Language.EN.toFirebaseFormatString(),
-                        value: category.name?[cModels.Language.EN]),
-                    Input$translation_value_insert_input(
-                        language_id:
-                            cModels.Language.ES.toFirebaseFormatString(),
-                        value: category.name?[cModels.Language.ES]),
-                  ]),
+                  data: category.name?.entries
+                          .map((MapEntry<cModels.Language, String> e) =>
+                              Input$translation_value_insert_input(
+                                  language_id: e.key.toFirebaseFormatString(),
+                                  value: e.value))
+                          .toList() ??
+                      []),
+              // <Input$translation_value_insert_input>[
+              //   Input$translation_value_insert_input(
+              //       language_id:
+              //           cModels.Language.EN.toFirebaseFormatString(),
+              //       value: category.name?[cModels.Language.EN]),
+              //   Input$translation_value_insert_input(
+              //       language_id:
+              //           cModels.Language.ES.toFirebaseFormatString(),
+              //       value: category.name?[cModels.Language.ES]),
+              // ]),
             ),
           ),
           // description //
@@ -124,16 +131,13 @@ Future<String?> add_category(
               service_provider_type:
                   cModels.OrderType.Restaurant.toFirebaseFormatString(),
               translations: Input$translation_value_arr_rel_insert_input(
-                  data: <Input$translation_value_insert_input>[
-                    Input$translation_value_insert_input(
-                        language_id:
-                            cModels.Language.EN.toFirebaseFormatString(),
-                        value: category.dialog?[cModels.Language.EN]),
-                    Input$translation_value_insert_input(
-                        language_id:
-                            cModels.Language.ES.toFirebaseFormatString(),
-                        value: category.dialog?[cModels.Language.ES]),
-                  ]),
+                  data: category.dialog?.entries
+                          .map((MapEntry<cModels.Language, String> e) =>
+                              Input$translation_value_insert_input(
+                                  language_id: e.key.toFirebaseFormatString(),
+                                  value: e.value))
+                          .toList() ??
+                      []),
             ),
           ),
         ),

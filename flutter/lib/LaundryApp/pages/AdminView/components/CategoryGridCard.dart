@@ -33,14 +33,13 @@ class CategoryGridCard extends StatefulWidget {
 class _CategoryGridCardState extends State<CategoryGridCard> {
   final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
 
-  late Language primaryLang;
   RxBool nameMissing = RxBool(false);
-  late Language? secondaryLang;
+  late ServiceProviderLanguage languages;
 
   @override
   void initState() {
-    primaryLang = widget.laundry.primaryLanguage;
-    secondaryLang = widget.laundry.secondaryLanguage;
+    languages.primary = widget.laundry.primaryLanguage;
+    languages.secondary = widget.laundry.secondaryLanguage;
     _getRightName();
     super.initState();
   }
@@ -152,9 +151,9 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
 
   String _getRightName() {
     final String availableName = widget.item.name[widget.item.name.keys.first]!;
-    if (widget.item.name[primaryLang] != null) {
+    if (widget.item.name[languages.primary] != null) {
       nameMissing.value = false;
-      return widget.item.name[primaryLang]!;
+      return widget.item.name[languages.primary]!;
     } else {
       nameMissing.value = true;
       return availableName;

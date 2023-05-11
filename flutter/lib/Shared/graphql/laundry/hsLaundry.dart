@@ -270,14 +270,12 @@ Future<int?> add_laundry_category(
                 service_provider_type:
                     ServiceProviderType.Laundry.toFirebaseFormatString(),
                 translations: Input$translation_value_arr_rel_insert_input(
-                    data: <Input$translation_value_insert_input>[
-                      Input$translation_value_insert_input(
-                          language_id: Language.EN.toFirebaseFormatString(),
-                          value: category.name[Language.EN]),
-                      Input$translation_value_insert_input(
-                          language_id: Language.ES.toFirebaseFormatString(),
-                          value: category.name[Language.ES]),
-                    ]),
+                    data: category.name.entries
+                        .map((MapEntry<Language, String> e) =>
+                            Input$translation_value_insert_input(
+                                language_id: e.key.toFirebaseFormatString(),
+                                value: e.value))
+                        .toList()),
               ),
             ),
             cost_by_kilo: category.cost.toDouble(),
