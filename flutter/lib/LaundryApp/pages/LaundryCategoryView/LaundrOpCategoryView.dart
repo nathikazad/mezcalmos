@@ -31,7 +31,8 @@ class LaundrOpCategoryView extends StatefulWidget {
   State<LaundrOpCategoryView> createState() => _LaundrOpCategoryViewState();
 }
 
-class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
+class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView>
+    with TickerProviderStateMixin {
   /// AddCategoryController
   ///
   LaundrOpCategoryViewController _viewController =
@@ -50,7 +51,8 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
     }
 
     if (laundryId != null) {
-      _viewController.init(categoryId: categoryId, laundryID: laundryId!);
+      _viewController.init(
+          categoryId: categoryId, laundryID: laundryId!, vsync: this);
     } else {
       MezRouter.back();
     }
@@ -122,7 +124,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
                     _categoryNameComponent(
                         controller:
                             _viewController.primaryCategoryNameController),
-                    if (_viewController.languages.value!.secondary != null)
+                    if (_viewController.languages!.secondary != null)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -130,7 +132,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
                             height: 20,
                           ),
                           Text(
-                            "${_i18n()["categoryNameIn"]} ${_viewController.languages.value!.secondary!.toLanguageName() ?? ""} ",
+                            "${_i18n()["categoryNameIn"]} ${_viewController.languages!.secondary!.toLanguageName() ?? ""} ",
                             style: context.txt.bodyLarge,
                           ),
                           const SizedBox(height: 15),

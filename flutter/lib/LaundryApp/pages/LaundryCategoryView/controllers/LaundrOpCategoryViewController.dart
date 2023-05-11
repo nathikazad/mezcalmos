@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
@@ -15,6 +16,8 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 enum SelectedTab { Primary, Secondary }
 
 class LaundrOpCategoryViewController {
+  LanguageTabsController languageTabsController = LanguageTabsController();
+
   /// TextEditingController Primary
   final TextEditingController primaryCategoryNameController =
       TextEditingController();
@@ -31,24 +34,29 @@ class LaundrOpCategoryViewController {
   final Rxn<LaundryCosts> laundryCosts = Rxn();
   final Rxn<LaundryCostLineItem> copyOfCategory = Rxn();
 
-  final Rxn<ServiceProviderLanguage> languages = Rxn();
-
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
   int? editableCategoryId;
   late int laundryId;
   bool shouldRefetch = false;
   // getters //
+  RxBool _hasData = RxBool(false);
+  bool get hasData => _hasData.value;
 
-  bool get hasData => editMode.isTrue ? copyOfCategory.value != null : true;
+  ServiceProviderLanguage? get languages => languageTabsController.language;
 
+  bool get hasSecondaryLang => languageTabsController.hasSecondaryLang;
   // INIT STATE ///
-  Future<void> init({required int laundryID, int? categoryId}) async {
+  Future<void> init(
+      {required int laundryID,
+      int? categoryId,
+      required TickerProvider vsync}) async {
     laundryId = laundryID;
 // todo
     laundry.value = await get_laundry_store_by_id(id: laundryID);
     if (laundry.value != null) {
-      initLanguages();
+      await languageTabsController.init(
+          vsync: vsync, language: laundry.value!.languages);
       assignCategories();
       if (categoryId != null && categoryId != ":categoryId") {
         editMode.value = true;
@@ -58,10 +66,7 @@ class LaundrOpCategoryViewController {
         await _initEditMode();
       }
     }
-  }
-
-  void initLanguages() {
-    languages.value = laundry.value!.languages;
+    _hasData.value = true;
   }
 
   void assignCategories() {
@@ -74,13 +79,13 @@ class LaundrOpCategoryViewController {
 
   Future<void> _initEditMode() async {
     if (copyOfCategory.value != null) {
-      if (copyOfCategory.value!.name[languages.value!.primary] != null) {
+      if (copyOfCategory.value!.name[languages!.primary] != null) {
         primaryCategoryNameController.text =
-            copyOfCategory.value!.name[languages.value!.primary]!;
+            copyOfCategory.value!.name[languages!.primary]!;
       }
-      if (copyOfCategory.value!.name[languages.value!.secondary] != null) {
+      if (copyOfCategory.value!.name[languages!.secondary] != null) {
         secondaryCategoryNameController.text =
-            copyOfCategory.value!.name[languages.value!.secondary]!;
+            copyOfCategory.value!.name[languages!.secondary]!;
       }
 
       categoryPricingController.text =
@@ -102,9 +107,9 @@ class LaundrOpCategoryViewController {
     final LaundryCostLineItem newCategory = LaundryCostLineItem(
         id: editMode.isTrue ? copyOfCategory.value!.id : Random().nextInt(5),
         name: {
-          languages.value!.primary: primaryCategoryNameController.text,
-          if (languages.value!.secondary != null)
-            languages.value!.secondary!: secondaryCategoryNameController.text,
+          languages!.primary: primaryCategoryNameController.text,
+          if (languages!.secondary != null)
+            languages!.secondary!: secondaryCategoryNameController.text,
         },
         cost: num.parse(categoryPricingController.text));
     return newCategory;

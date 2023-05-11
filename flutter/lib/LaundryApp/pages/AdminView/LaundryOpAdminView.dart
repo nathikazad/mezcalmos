@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/CategoryGridCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/LaundryOpNormalDeliveryTime.dart';
-import 'package:mezcalmos/LaundryApp/pages/AdminView/components/MinmumCostCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
@@ -11,10 +10,14 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["AdminView"]["LaundryOpAdminView"];
@@ -121,9 +124,9 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                       SizedBox(
                         height: 25,
                       ),
-                      LaundryOpMinimumCost(
-                        viewController: viewController,
-                      )
+                      // LaundryOpMinimumCost(
+                      //   viewController: viewController,
+                      // )
                     ],
                   )
                 ],
@@ -164,7 +167,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                     borderRadius: BorderRadius.circular(10),
                     onTap: () async {
                       bool? shouldRefetch = await LaundrOpCategoryView.navigate(
-                          laundryId: laundryId!, categoryId: null) as bool?;
+                          laundryId: laundryId!, categoryId: null);
                       if (shouldRefetch == true) {
                         await viewController.fetchCategories();
                       }
@@ -179,6 +182,86 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                   ),
                 )
               ],
+    );
+  }
+
+  Widget _categoryCard(LaundryCostLineItem item) {
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              item.name.getTranslation(userLanguage),
+              style: context.txt.displaySmall?.copyWith(fontSize: 12.sp),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+            ),
+            Text("\$${item.cost}/Kg"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  customBorder: CircleBorder(),
+                  onTap: () async {
+                    // bool? refetch = await LaundrOpCategoryView.navigate(
+                    //     laundryId: widget.laundry.info.hasuraId,
+                    //     categoryId: widget.item.id);
+
+                    // mezDbgPrint("RESULT ======>$refetch");
+                    // if (refetch == true) {
+                    //   await widget.viewController.fetchCategories();
+                    // }
+                  },
+                  child: Ink(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade100, shape: BoxShape.circle),
+                    child: Center(
+                      child: Icon(
+                        Icons.edit_outlined,
+                        size: 22,
+                        color: Color(0xFF5B5A5A),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                InkWell(
+                  customBorder: CircleBorder(),
+                  onTap: () {
+                    // showConfirmationDialog(context,
+                    //     title: "${_i18n()["deleteTitle"]}",
+                    //     helperText: "${_i18n()["deleteHelperText"]}",
+                    //     primaryButtonText: "${_i18n()["yesDelete"]}",
+                    //     onYesClick: () async {
+                    //   await deleteCategory(item: widget.item)
+                    //       .then((value) => MezRouter.back());
+                    // });
+                  },
+                  child: Ink(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        color: Colors.red.shade100, shape: BoxShape.circle),
+                    child: Center(
+                      child: Icon(
+                        Icons.delete_outline,
+                        size: 22,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

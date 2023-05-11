@@ -26,9 +26,13 @@ class LanguageTabsController {
   bool secondFormValid = false;
   // methods //
   Future<void> init(
-      {required TickerProvider vsync, required int detailsId}) async {
-    serviceDetailsId = detailsId;
-    _language = await get_service_lang(detailsId: serviceDetailsId);
+      {required TickerProvider vsync,
+      int? detailsId,
+      ServiceProviderLanguage? language}) async {
+    assert((detailsId ?? language) != null,
+        'Either Details id or language must be not null.');
+    serviceDetailsId = detailsId ?? 0;
+    _language = language ?? await get_service_lang(detailsId: serviceDetailsId);
     if (_language != null) {
       _tabController = TabController(length: _length, vsync: vsync);
       secondaryLangFormKey =
