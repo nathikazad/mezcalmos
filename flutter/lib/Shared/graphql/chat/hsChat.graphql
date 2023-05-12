@@ -46,6 +46,8 @@ query get_service_provider_chats($service_id: Int, $service_provider_type: Strin
       chat_info
       messages
       creation_time
+      last_message
+      last_message_sent
     }
   }
 }
