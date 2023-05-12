@@ -72,7 +72,7 @@ class MessageController extends GetxController {
       }, cancel: () {
         chatListener?.cancel();
         chatListener = null;
-      });
+      }); 
     });
   }
 

@@ -99,6 +99,7 @@ update_permissions:
     permission:
       columns:
         - last_message_sent
+        - last_message
         - messages
       filter:
         chat_participants:
