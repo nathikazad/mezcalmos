@@ -115,9 +115,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                   viewController.company.value!.info.name,
                   style: context.txt.bodyLarge,
                 )),
-          SizedBox(
-            height: 5,
-          ),
+
           Form(
             key: viewController.secondFormKey,
             child: DeliveryTimePicker(
@@ -139,14 +137,13 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               schedule: viewController.company.value!.schedule,
             ),
           ),
-          SizedBox(
-            height: 5,
-          ),
+
           // Text(
           //   'Payment method',
           //   style: context.txt.bodyLarge,
           // ),
           OrderSummaryCard(
+              margin: EdgeInsets.only(top: 20),
               costs: OrderCosts(
                   deliveryCost: viewController.shippingCost.value,
                   refundAmmount: null,

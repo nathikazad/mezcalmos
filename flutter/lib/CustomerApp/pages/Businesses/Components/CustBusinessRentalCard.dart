@@ -52,12 +52,15 @@ class CustBusinessRentalCard extends StatelessWidget {
         style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.sp),
         overflow: TextOverflow.ellipsis,
       ),
-      action: Text(
-        rental.details.cost.length == 0
-            ? '- / -'
-            : '${rental.details.cost.values.first.toPriceString()}/${_i18n()[rental.details.cost.keys.first.toStringDuration().toLowerCase()]}',
-        style:
-            context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+      action: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        child: Text(
+          rental.details.cost.length == 0
+              ? '- / -'
+              : '${rental.details.cost.values.first.toPriceString()}/${_i18n()[rental.details.cost.keys.first.toStringDuration().toLowerCase()]}',
+          style: context.textTheme.bodyLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
       ),
     );
     /*return Card(

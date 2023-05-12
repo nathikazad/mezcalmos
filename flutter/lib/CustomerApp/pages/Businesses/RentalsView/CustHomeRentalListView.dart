@@ -237,50 +237,61 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                 spacing: 10,
                                 runSpacing: 5,
                                 children: [
-                                  Text(
-                                    '${viewController.rentals[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.rentals[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: context.textTheme.bodyLarge
-                                        ?.copyWith(
-                                            fontSize: 12.5.mezSp,
-                                            fontWeight: FontWeight.w600),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.price_check),
+                                      Text(
+                                        '${viewController.rentals[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.rentals[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: context.textTheme.bodyLarge
+                                            ?.copyWith(
+                                                fontSize: 12.5.mezSp,
+                                                fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
                                   ),
                                   if (viewController.rentals[0].bedrooms !=
                                       null)
                                     Row(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                          CrossAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Icon(Icons.bed, size: 15.mezSp),
+                                        Icon(Icons.single_bed_outlined,
+                                            size: 15.mezSp),
                                         Text(
                                             ' ${viewController.rentals[0].bedrooms} ${_i18n()['bedrooms']}',
                                             style: context.textTheme.bodyLarge
                                                 ?.copyWith(
                                                     fontSize: 12.5.mezSp,
                                                     fontWeight:
-                                                        FontWeight.w600)),
+                                                        FontWeight.w500)),
                                       ],
                                     ),
-                                  if (viewController.rentals[0].bathrooms !=
-                                      null)
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(Icons.bed, size: 15.mezSp),
-                                        Text(
-                                            ' ${viewController.rentals[0].bathrooms} ${_i18n()['bathrooms']}',
-                                            style: context.textTheme.bodyLarge
-                                                ?.copyWith(
-                                                    fontSize: 12.5.mezSp,
-                                                    fontWeight:
-                                                        FontWeight.w600)),
-                                      ],
-                                    ),
+                                  // if (viewController.rentals[0].bathrooms !=
+                                  //     null)
+                                  //   Row(
+                                  //     mainAxisSize: MainAxisSize.min,
+                                  //     children: [
+                                  //       Icon(Icons.bed, size: 15.mezSp),
+                                  //       Text(
+                                  //           ' ${viewController.rentals[0].bathrooms} ${_i18n()['bathrooms']}',
+                                  //           style: context.textTheme.bodyLarge
+                                  //               ?.copyWith(
+                                  //                   fontSize: 12.5.mezSp,
+                                  //                   fontWeight:
+                                  //                       FontWeight.w600)),
+                                  //     ],
+                                  //   ),
                                   if (viewController.rentals[index].details
                                           .additionalParameters?['area'] !=
                                       null)
                                     Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Icon(Icons.house_siding,
@@ -291,7 +302,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                                 ?.copyWith(
                                                     fontSize: 12.5.mezSp,
                                                     fontWeight:
-                                                        FontWeight.w600)),
+                                                        FontWeight.w500)),
                                       ],
                                     )
                                 ],

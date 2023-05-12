@@ -45,13 +45,13 @@ class MezSideMenu extends GetWidget<AuthController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Flexible(flex: 1, child: _drawerHeader()),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 1.5.h),
-                      child: Divider(
-                        color: Color.fromRGBO(196, 196, 196, 0.29),
-                      ),
+
+                    // padding: EdgeInsets.symmetric(vertical: 1.5.h),
+                    Divider(
+                      color: Color.fromRGBO(196, 196, 196, 0.29),
                     ),
-                    _buildSideMenuItem(),
+
+                    // _buildSideMenuItem(),
                     _basicSideMenuItems(context),
                   ],
                 ),
@@ -73,30 +73,30 @@ class MezSideMenu extends GetWidget<AuthController> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SideMenuItem(
-          icon: Icons.person,
+        // SideMenuItem(
+        //   icon: Icons.person,
 
-          title: (controller.isUserSignedIn)
-              ? "${_i18n()["profile"]}"
-              : "${_i18n()["login"]}", // _i18n()["userInfo"],
-          onClick: () {
-            _drawerController.closeMenu();
-            if (controller.isUserSignedIn) {
-              UserProfileView.navigate();
-            } else
-              SignInView.navigateAtOrderTime();
-          },
-        ),
-        if (_drawerController.pastOrdersRoute != null)
-          SideMenuItem(
-            icon: Icons.restore,
+        //   title: (controller.isUserSignedIn)
+        //       ? "${_i18n()["profile"]}"
+        //       : "${_i18n()["login"]}", // _i18n()["userInfo"],
+        //   onClick: () {
+        //     _drawerController.closeMenu();
+        //     if (controller.isUserSignedIn) {
+        //       UserProfileView.navigate();
+        //     } else
+        //       SignInView.navigateAtOrderTime();
+        //   },
+        // ),
+        // if (_drawerController.pastOrdersRoute != null)
+        //   SideMenuItem(
+        //     icon: Icons.restore,
 
-            title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
-            onClick: () {
-              _drawerController.closeMenu();
-              MezRouter.toPath(_drawerController.pastOrdersRoute!);
-            },
-          ),
+        //     title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
+        //     onClick: () {
+        //       _drawerController.closeMenu();
+        //       MezRouter.toPath(_drawerController.pastOrdersRoute!);
+        //     },
+        //   ),
         SideMenuItem(
           onClick: () {
             _drawerController.closeMenu();
@@ -150,25 +150,25 @@ class MezSideMenu extends GetWidget<AuthController> {
                 );
           },
         ),
-        Obx(
-          () => SideMenuItem(
-            icon: Icons.privacy_tip,
+        // Obx(
+        //   () => SideMenuItem(
+        //     icon: Icons.privacy_tip,
 
-            title: _i18n()["legal"], // _i18n()["userInfo"],
-            onClick: () => launchUrlString(MezEnv.appType.getPrivacyLink()),
-          ),
-        ),
-        if (controller.isUserSignedIn)
-          Obx(
-            () => SideMenuItem(
-              icon: Icons.logout,
-              title: _i18n()["logout"],
-              onClick: () async {
-                _drawerController.closeMenu();
-                await signOut();
-              },
-            ),
-          ),
+        //     title: _i18n()["legal"], // _i18n()["userInfo"],
+        //     onClick: () => launchUrlString(MezEnv.appType.getPrivacyLink()),
+        //   ),
+        // ),
+        // if (controller.isUserSignedIn)
+        //   Obx(
+        //     () => SideMenuItem(
+        //       icon: Icons.logout,
+        //       title: _i18n()["logout"],
+        //       onClick: () async {
+        //         _drawerController.closeMenu();
+        //         await signOut();
+        //       },
+        //     ),
+        //   ),
       ],
     );
   }

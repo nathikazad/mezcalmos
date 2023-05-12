@@ -33,9 +33,11 @@ class SavedLocationComponent extends StatelessWidget {
       elevation: 1.0,
       margin: const EdgeInsets.all(8),
       child: Container(
-        padding: const EdgeInsets.only(top: 12, bottom: 5, left: 12, right: 12),
+        padding:
+            const EdgeInsets.only(top: 15, bottom: 10, left: 12, right: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -175,7 +177,7 @@ class SavedLocationComponent extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 9,
+              height: 12,
             ),
             Container(
               child: Text(

@@ -1,6 +1,58 @@
 {
   "BusinessApp": {
     "pages": {
+      "Components": {
+        "BsRentalCard": {
+          "hour": "hora",
+          "day": "día",
+          "week": "semana",
+          "month": "mes",
+          "person": "persona",
+          "total": "total",
+          "unit": "unidad",
+          "none": "ninguna"
+        },
+        "BsHomeRentalCard": {
+          "hour": "hora",
+          "day": "día",
+          "week": "semana",
+          "month": "mes",
+          "person": "persona",
+          "total": "total",
+          "unit": "unidad",
+          "none": "ningunauna"
+        },
+        "BsServiceCard": {
+          "hour": "hora",
+          "day": "día",
+          "week": "semana",
+          "month": "mes",
+          "person": "persona",
+          "total": "total",
+          "unit": "unidad",
+          "none": "ninguna"
+        },
+        "BsProductCard": {
+          "hour": "hora",
+          "day": "día",
+          "week": "semana",
+          "month": "mes",
+          "person": "persona",
+          "total": "total",
+          "unit": "unidad",
+          "none": "ninguna"
+        },
+        "BsEventCard": {
+          "hour": "hora",
+          "day": "día",
+          "week": "semana",
+          "month": "mes",
+          "person": "persona",
+          "total": "total",
+          "unit": "unidad",
+          "none": "ninguna"
+        }
+      },
       "services": {
         "services": "Servicios",
         "serviceType": "What type of service will you add?",
@@ -143,7 +195,8 @@
           "title": "Empresas de entrega a su alrededor",
           "courier": "Mensajera",
           "min": "Min",
-          "showOnlyOpenCompanies": "Mostrar solo compañías abiertas"
+          "showOnlyOpenCompanies": "Mostrar solo compañías abiertas",
+          "search": "Buscar"
         },
         "CustCourierServiceView": {
           "orderNow": "Ordenar ahora",
@@ -790,7 +843,7 @@
         },
         "AllServiceView": {
           "AllServiceView": {
-            "welcomeText": "Bienvenido a MEZCALMOS 👋",
+            "welcomeText": "Bienvenido a MEZKALA 👋",
             "appDescription": "Su único lugar de parada para encontrar todos sus servicios locales necesarios y dónde puede disfrutar de servicios rápidos y de alta calidad.",
             "services": "Servicios"
           }
@@ -804,7 +857,8 @@
             "week": "semana",
             "month": "mes",
             "person": "persona",
-            "total": "total"
+            "total": "total",
+            "unit": "unidad"
           },
           "CustBusinessEventCard": {
             "hour": "hora",
@@ -812,7 +866,8 @@
             "week": "semana",
             "month": "mes",
             "person": "persona",
-            "total": "total"
+            "total": "total",
+            "unit": "unidad"
           },
           "CustBusinessRentalCost": {
             "hour": "hora",
@@ -820,7 +875,26 @@
             "week": "semana",
             "month": "mes",
             "person": "persona",
-            "total": "total"
+            "total": "total",
+            "unit": "unidad"
+          },
+          "CustBusinessServiceCard": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad"
+          },
+          "CustBusinessProductCard": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad"
           },
           "cusShowBusinessFilerSheet": {
             "confirm": "Confirmar",
@@ -1220,6 +1294,7 @@
         },
         "LaundriesListView": {
           "laundries": "Lavanderías",
+          "search": "Buscar",
           "title": "Lavanderías a tu alrededor",
           "noLaundaryFound": "No se encontró lavandería",
           "showOnlyOpenLaundries": "Mostrar solo lavas abiertas",

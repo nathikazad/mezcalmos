@@ -162,12 +162,11 @@ class _SignInViewState extends State<SignInView> {
                       padding: EdgeInsets.only(
                           left: Get.width * 0.05, right: Get.width * 0.05),
                       child: Icon(Ionicons.log_in)),
-                  Spacer(),
+                  SizedBox(width: 30),
                   Text(
                     "${_i18n()['loginAs']} ${_i18n()[credential.identifier.toLowerCase()]}",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Spacer()
                 ],
               ),
             )),
@@ -198,12 +197,11 @@ class _SignInViewState extends State<SignInView> {
                     padding: EdgeInsets.only(
                         left: Get.width * 0.05, right: Get.width * 0.05),
                     child: Icon(Ionicons.logo_apple)),
-                Spacer(),
+                SizedBox(width: 30),
                 Text(
                   _i18n()["loginWithApple"],
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Spacer()
               ],
             ),
           )),
@@ -226,12 +224,11 @@ class _SignInViewState extends State<SignInView> {
                     padding: EdgeInsets.only(
                         left: Get.width * 0.05, right: Get.width * 0.05),
                     child: Icon(Ionicons.log_in)),
-                Spacer(),
+                SizedBox(width: 30),
                 Text(
                   _i18n()["loginWithSms"],
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Spacer()
               ],
             ),
           )),

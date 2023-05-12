@@ -1,6 +1,58 @@
 {
   "BusinessApp": {
     "pages": {
+      "Components": {
+        "BsRentalCard": {
+          "hour": "hour",
+          "day": "day",
+          "week": "week",
+          "month": "month",
+          "person": "person",
+          "total": "total",
+          "unit": "unit",
+          "none": "none"
+        },
+        "BsHomeRentalCard": {
+          "hour": "hour",
+          "day": "day",
+          "week": "week",
+          "month": "month",
+          "person": "person",
+          "total": "total",
+          "unit": "unit",
+          "none": "none"
+        },
+        "BsServiceCard": {
+          "hour": "hour",
+          "day": "day",
+          "week": "week",
+          "month": "month",
+          "person": "person",
+          "total": "total",
+          "unit": "unit",
+          "none": "none"
+        },
+        "BsProductCard": {
+          "hour": "hour",
+          "day": "day",
+          "week": "week",
+          "month": "month",
+          "person": "person",
+          "total": "total",
+          "unit": "unit",
+          "none": "none"
+        },
+        "BsEventCard": {
+          "hour": "hour",
+          "day": "day",
+          "week": "week",
+          "month": "month",
+          "person": "person",
+          "total": "total",
+          "unit": "unit",
+          "none": "none"
+        }
+      },
       "services": {
         "services": "Services",
         "serviceType": "What type of service will you add?",
@@ -144,7 +196,8 @@
           "title": "Delivery companies arround you",
           "courier": "Courier",
           "min": "Min",
-          "showOnlyOpenCompanies": "Show only open companies"
+          "showOnlyOpenCompanies": "Show only open companies",
+          "search": "Search"
         },
 
         "CustCourierServiceView": {
@@ -717,7 +770,7 @@
         },
         "AllServiceView": {
           "AllServiceView": {
-            "welcomeText": "Welcome to MEZCALMOS 👋",
+            "welcomeText": "Welcome to MEZKALA 👋",
             "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
             "services": "Services"
           }
@@ -731,7 +784,8 @@
             "week": "week",
             "month": "month",
             "person": "person",
-            "total": "Total"
+            "total": "total",
+            "unit": "unit"
           },
           "CustBusinessEventCard": {
             "hour": "hour",
@@ -739,7 +793,8 @@
             "week": "week",
             "month": "month",
             "person": "person",
-            "total": "Total"
+            "total": "total",
+            "unit": "unit"
           },
           "CustBusinessRentalCost": {
             "hour": "hour",
@@ -747,7 +802,26 @@
             "week": "week",
             "month": "month",
             "person": "person",
-            "total": "Total"
+            "total": "total",
+            "unit": "unit"
+          },
+          "CustBusinessServiceCard": {
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "total",
+            "unit": "unit"
+          },
+          "CustBusinessProductCard": {
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "total",
+            "unit": "unit"
           },
           "cusShowBusinessFilerSheet": {
             "confirm": "Confirm",
@@ -1159,7 +1233,8 @@
           "laundries": "Laundries",
           "title": "Laundries arround you ",
           "noLaundaryFound": "No laundry found",
-          "showOnlyOpenLaundries": "Show only open laundries"
+          "showOnlyOpenLaundries": "Show only open laundries",
+          "search": "Search"
         },
         "SingleLaundryScreen": {
           "startingFrom": "Starting from ",
@@ -1569,7 +1644,7 @@
         "deleteHelper": "Clicking yes will permanently delete you account, are you sure?",
         "memberSince": "Member since",
         "settings": "Settings",
-        "userInfo": "User Information",
+        "userInfo": "User info",
         "savedCards": "Saved cards",
         "savedLocations": "Saved locations",
         "shortcuts": "Shortcuts",

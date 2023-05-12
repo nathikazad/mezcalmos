@@ -130,8 +130,9 @@ class _CustEventsListViewState extends State<CustEventsListView> {
 
   Widget _filterButton(BuildContext context) {
     return Card(
+      elevation: 0,
       margin: EdgeInsets.only(top: 15),
-      color: Colors.grey.shade300,
+      color: Color(0xFFF0F0F0),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
@@ -285,9 +286,9 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                       child: Text(
                         viewController.events[index].details.name
                             .getTranslation(userLanguage),
-                        style: context.textTheme.displaySmall?.copyWith(
-                            fontSize: 11.75.mezSp,
-                            fontWeight: FontWeight.bold,
+                        style: context.textTheme.bodyLarge?.copyWith(
+                            fontSize: 12.5.mezSp,
+                            fontWeight: FontWeight.w600,
                             overflow: TextOverflow.ellipsis),
                       ),
                     ),
@@ -295,7 +296,9 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                       '${viewController.events[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.events[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyLarge?.copyWith(
-                          fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                          fontSize: 12.5.mezSp,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis),
                     )
                   ],
                 ),

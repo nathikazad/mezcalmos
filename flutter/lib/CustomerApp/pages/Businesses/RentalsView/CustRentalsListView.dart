@@ -164,8 +164,9 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
 
   Widget _filterButton(BuildContext context) {
     return Card(
+      elevation: 0,
       margin: EdgeInsets.only(top: 15),
-      color: Colors.grey.shade300,
+      color: Color(0xFFF0F0F0),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
@@ -285,7 +286,10 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Text(title),
       Checkbox(
-          value: value, onChanged: onChanged, activeColor: primaryBlueColor)
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          value: value,
+          onChanged: onChanged,
+          activeColor: primaryBlueColor)
     ]);
   }
 

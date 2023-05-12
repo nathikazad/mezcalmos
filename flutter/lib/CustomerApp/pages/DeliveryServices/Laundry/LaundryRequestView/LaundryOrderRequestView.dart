@@ -140,25 +140,34 @@ class _CustLaundryOrderRequestViewState
                             () => viewController.authController.user != null
                                 ? Form(
                                     key: viewController.formKey,
-                                    child: DropDownLocationList(
-                                      ensureVisible: false,
-                                      onValueChangeCallback:
-                                          (MezLocation location) {
-                                        mezDbgPrint(
-                                            "Loctaion ::::::::====>$location");
-                                        if (viewController.formKey.currentState
-                                                ?.validate() ==
-                                            true) {
-                                          viewController
-                                              .switchLocation(location);
+                                    child: Container(
+                                      decoration: BoxDecoration(boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey.shade300,
+                                            blurRadius: 1,
+                                            offset: Offset(0, .5))
+                                      ]),
+                                      child: DropDownLocationList(
+                                        ensureVisible: false,
+                                        onValueChangeCallback:
+                                            (MezLocation location) {
+                                          mezDbgPrint(
+                                              "Loctaion ::::::::====>$location");
+                                          if (viewController
+                                                  .formKey.currentState
+                                                  ?.validate() ==
+                                              true) {
+                                            viewController
+                                                .switchLocation(location);
 
-                                          // ignore: unawaited_futures
-                                        }
-                                      },
-                                      bgColor: Colors.white,
-                                      checkDistance: true,
-                                      serviceProviderLocation: viewController
-                                          .laundry.value!.info.location,
+                                            // ignore: unawaited_futures
+                                          }
+                                        },
+                                        bgColor: Colors.white,
+                                        checkDistance: true,
+                                        serviceProviderLocation: viewController
+                                            .laundry.value!.info.location,
+                                      ),
                                     ),
                                   )
                                 : pickFromMapComponent(context),

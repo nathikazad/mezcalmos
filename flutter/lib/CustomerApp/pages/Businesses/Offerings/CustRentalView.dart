@@ -161,7 +161,11 @@ class _CustBusinessAdditionalData extends StatelessWidget {
       final StringBuffer wholeString = StringBuffer();
       additionalValues.map(
         (key, value) {
-          wholeString.write("$circle $value ");
+          if (additionalValues.keys.toList().indexOf(key) == 0) {
+            wholeString.write("$value ");
+          } else {
+            wholeString.write("$circle $value ");
+          }
           if (key == "length") {
             wholeString.write("inch ");
           }

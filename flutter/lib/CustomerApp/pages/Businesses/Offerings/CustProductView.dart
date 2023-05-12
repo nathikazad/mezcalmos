@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -65,7 +66,7 @@ class _CustProductViewState extends State<CustProductView> {
                         style: context.textTheme.displayMedium,
                       ),
                       Text(
-                        "\$${viewController.product!.details.cost.entries.first.value}",
+                        "${viewController.product!.details.cost.entries.first.value.toPriceString()}",
                         style: context.textTheme.bodyLarge!.copyWith(
                           color: primaryBlueColor,
                           fontWeight: FontWeight.w600,
@@ -91,9 +92,6 @@ class _CustProductViewState extends State<CustProductView> {
                         contentPadding: EdgeInsets.symmetric(vertical: 15),
                         business: viewController.product!.business,
                         offeringName: viewController.product!.details.name,
-                      ),
-                      SizedBox(
-                        height: 12.5,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

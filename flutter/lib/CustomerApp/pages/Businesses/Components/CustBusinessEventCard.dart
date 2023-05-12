@@ -45,13 +45,17 @@ class CustBusinessEventCard extends StatelessWidget {
               : null,
       content: Text(
         event.details.name.getTranslation(userLanguage),
-        style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.sp),
+        style: context.textTheme.bodyLarge
+            ?.copyWith(fontSize: 11.5.sp, fontWeight: FontWeight.bold),
         overflow: TextOverflow.ellipsis,
       ),
-      action: Text(
-        '${event.details.cost.values.first.toPriceString()}/${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}',
-        style:
-            context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+      action: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        child: Text(
+          '${event.details.cost.values.first.toPriceString()}/${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}',
+          style: context.textTheme.bodyLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }

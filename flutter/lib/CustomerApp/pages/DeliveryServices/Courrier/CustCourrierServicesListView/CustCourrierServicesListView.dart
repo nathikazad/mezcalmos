@@ -6,11 +6,9 @@ import 'package:mezcalmos/CustomerApp/components/NoOpenServiceComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierServiceView/CustCourierServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourrierServicesListView/controllers/CustCourierServicesListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -102,42 +100,23 @@ class _CustCourierServicesListViewState
   }
 
   Widget _searchCoomponent(BuildContext context) {
-    return Row(
-      children: [
-        Flexible(
-          fit: FlexFit.tight,
-          child: Material(
-            elevation: 0.5,
-            borderRadius: BorderRadius.circular(5),
-            child: TextFormField(
-              style: context.txt.bodyLarge,
-              onChanged: (String value) {
-                _controller.searchQuery.value = value;
-                _controller.filter();
-                mezDbgPrint(_controller.searchQuery);
-              },
-              decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  hintText: "Search...",
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: primaryBlueColor,
-                  )),
-            ),
+    return TextFormField(
+      textAlignVertical: TextAlignVertical.center,
+      style: context.textTheme.bodyLarge,
+      onChanged: (String value) {
+        _controller.searchQuery.value = value;
+        _controller.filter();
+      },
+      decoration: InputDecoration(
+          fillColor: Colors.white,
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.grey.shade300,
           ),
-        ),
-        // SizedBox(
-        //   width: 5,
-        // ),
-        // MezIconButton(
-        //   icon: Icons.place,
-        //   padding: const EdgeInsets.all(12),
-        //   backgroundColor: Colors.white,
-        //   shape: BoxShape.rectangle,
-        //   borderRadius: BorderRadius.circular(5),
-        //   onTap: () {},
-        // )
-      ],
+          hintStyle: TextStyle(
+            color: Colors.grey.shade300,
+          ),
+          hintText: '${_i18n()['search']}...'),
     );
   }
 

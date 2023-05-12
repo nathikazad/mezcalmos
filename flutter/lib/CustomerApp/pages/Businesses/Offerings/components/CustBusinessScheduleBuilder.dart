@@ -87,8 +87,7 @@ class _CustBusinessScheduleBuilderState
                 children: [
                   Text(
                     day,
-                    style: context.textTheme.bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.w500),
+                    style: context.textTheme.titleLarge,
                   ),
                   Text(
                     "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
@@ -121,11 +120,7 @@ class _CustBusinessScheduleBuilderState
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       !widget.showIcons
-                          ? Text(
-                              day,
-                              style: context.textTheme.bodyLarge
-                                  ?.copyWith(fontWeight: FontWeight.w500),
-                            )
+                          ? Text(day)
                           : SizedBox(
                               child: Row(
                                 children: [

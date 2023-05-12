@@ -134,8 +134,9 @@ class _CustClassesListViewState extends State<CustClassesListView> {
 
   Widget _filterButton(BuildContext context) {
     return Card(
+      elevation: 0,
       margin: EdgeInsets.only(top: 15),
-      color: Colors.grey.shade300,
+      color: Color(0xFFF0F0F0),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
@@ -287,17 +288,15 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                       child: Text(
                         viewController.classes[index].details.name
                             .getTranslation(userLanguage),
-                        style: context.textTheme.displaySmall?.copyWith(
-                            fontSize: 11.75.mezSp,
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.ellipsis),
+                        style: context.textTheme.bodyLarge?.copyWith(
+                            fontSize: 12.5.mezSp, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Text(
                       '${viewController.classes[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.classes[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyLarge?.copyWith(
-                          fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                          fontSize: 12.5.mezSp, fontWeight: FontWeight.w600),
                     )
                   ],
                 ),

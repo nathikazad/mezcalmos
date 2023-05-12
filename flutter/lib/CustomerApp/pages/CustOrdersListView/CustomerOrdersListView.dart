@@ -49,11 +49,10 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
       appBar: MezcalmosAppBar(
-          widget.asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
-          onClick: widget.asTab ? null : MezRouter.back,
-          title: '${_i18n()["title"]}',
-          ordersRoute:
-              widget.asTab ? CustomerRoutes.customerOrdersRoute : null),
+        widget.asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+        onClick: widget.asTab ? null : MezRouter.back,
+        title: '${_i18n()["title"]}',
+      ),
       body: Obx(
         () => viewController.hasOrders
             ? SingleChildScrollView(

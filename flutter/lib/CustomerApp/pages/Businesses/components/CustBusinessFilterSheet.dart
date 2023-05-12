@@ -29,7 +29,10 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
         title,
       ),
       Checkbox(
-          value: value, onChanged: onChanged, activeColor: primaryBlueColor)
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          value: value,
+          onChanged: onChanged,
+          activeColor: primaryBlueColor)
     ]);
   }
 
@@ -70,7 +73,7 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                         defaultFilterInput.values.elementAt(index).length == 1
                             ? SizedBox.shrink()
                             : SizedBox(
-                                height: 15,
+                                height: 5,
                               ),
                         defaultFilterInput.values.elementAt(index).length == 1
                             ? SizedBox.shrink()
@@ -84,53 +87,6 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                                       .elementAt(index)[subIndex];
                                   return _checkBoxTile(
                                     title: '${_i18n()[actualSubItem]}',
-                                    value: selectedFilters[defaultFilterInput
-                                                .keys
-                                                .elementAt(index)]
-                                            ?.contains(actualSubItem) ??
-                                        false,
-                                    onChanged: (bool? v) {
-                                      mezDbgPrint(
-                                          "selected ==> $selectedFilters");
-                                      mezDbgPrint("main one ===>$filterInput");
-                                      if (v == true) {
-                                        selectedFilters.update(
-                                            defaultFilterInput.keys
-                                                .elementAt(index),
-                                            (List<String> value) {
-                                          value.add(actualSubItem);
-                                          return value;
-                                        });
-                                      } else {
-                                        mezDbgPrint("false");
-                                        selectedFilters.update(
-                                            defaultFilterInput.keys
-                                                .elementAt(index),
-                                            (List<String> value) {
-                                          value.remove(actualSubItem);
-                                          return value;
-                                        });
-                                        // selectedFilters.values
-                                        //     .elementAt(index)
-                                        //     .remove(actualSubItem);
-                                      }
-                                      mezDbgPrint(
-                                          "selected ==> $selectedFilters");
-                                      mezDbgPrint("main one ===>$filterInput");
-                                      mezDbgPrint(selectedFilters[
-                                              defaultFilterInput.keys
-                                                  .elementAt(index)]
-                                          ?.contains(actualSubItem));
-                                      selectedFilters.refresh();
-                                    },
-                                  );
-
-                                  return CheckboxListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    //    checkColor: primaryBlueColor,
-                                    activeColor: primaryBlueColor,
-                                    title: Text('${_i18n()[actualSubItem]}'),
-
                                     value: selectedFilters[defaultFilterInput
                                                 .keys
                                                 .elementAt(index)]

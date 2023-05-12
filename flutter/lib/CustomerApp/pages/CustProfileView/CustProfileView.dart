@@ -53,12 +53,12 @@ class _CustProfileViewState extends State<CustProfileView> {
                       ),
                     ),
                     SizedBox(
-                      height: 25,
+                      height: 15,
                     ),
                     Center(
                       child: Text(
                         _authController.user?.name ?? "",
-                        style: context.textTheme.displayLarge?.copyWith(),
+                        style: context.textTheme.displaySmall,
                       ),
                     ),
                     Center(
@@ -82,7 +82,7 @@ class _CustProfileViewState extends State<CustProfileView> {
         height: 25,
       ),
       Padding(
-        padding: const EdgeInsets.only(left: 20),
+        padding: const EdgeInsets.only(left: 20, bottom: 5),
         child: Text(
           '${_i18n()['settings']}',
           style: context.textTheme.displayLarge
@@ -187,7 +187,7 @@ class _CustProfileViewState extends State<CustProfileView> {
         height: 25,
       ),
       Padding(
-        padding: const EdgeInsets.only(left: 20),
+        padding: const EdgeInsets.only(left: 20, bottom: 5),
         child: Text(
           '${_i18n()['shortcuts']}',
           style: context.textTheme.displayLarge

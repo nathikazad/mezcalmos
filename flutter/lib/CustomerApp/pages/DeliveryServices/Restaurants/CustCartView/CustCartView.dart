@@ -148,16 +148,24 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           ),
         ),
         const SizedBox(height: 9),
-        DropDownLocationList(
-          elevation: 1,
-          onValueChangeCallback: (MezLocation location) {
-            viewController.switchLocation(location);
-          },
-          bgColor: Colors.white,
-          checkDistance: true,
-          ensureVisible: false,
-          serviceProviderLocation:
-              viewController.cart.restaurant?.info.location,
+        Container(
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+                color: Colors.grey.shade300,
+                blurRadius: 1,
+                offset: Offset(0, .5))
+          ]),
+          child: DropDownLocationList(
+            elevation: 1,
+            onValueChangeCallback: (MezLocation location) {
+              viewController.switchLocation(location);
+            },
+            bgColor: Colors.white,
+            checkDistance: true,
+            ensureVisible: false,
+            serviceProviderLocation:
+                viewController.cart.restaurant?.info.location,
+          ),
         ),
       ],
     );

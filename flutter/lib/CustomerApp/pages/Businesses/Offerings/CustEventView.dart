@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -61,13 +62,13 @@ class _CustEventViewState extends State<CustEventView> {
     final Map<TimeUnit, num> singleCost = viewController.event!.details.cost;
     switch (viewController.event!.scheduleType) {
       case ScheduleType.Scheduled:
-        return "\$${singleCost.entries.first.value}";
+        return "${singleCost.entries.first.value.toPriceString()}";
 
       case ScheduleType.OnDemand:
-        return "\$${singleCost.entries.first.value}${removePerFromTime(singleCost.entries.first.key)}";
+        return "${singleCost.entries.first.value.toPriceString()}${removePerFromTime(singleCost.entries.first.key)}";
 
       case ScheduleType.OneTime:
-        return "\$${singleCost.entries.first.value}${removePerFromTime(singleCost.entries.first.key)}";
+        return "${singleCost.entries.first.value.toPriceString()}${removePerFromTime(singleCost.entries.first.key)}";
     }
   }
 

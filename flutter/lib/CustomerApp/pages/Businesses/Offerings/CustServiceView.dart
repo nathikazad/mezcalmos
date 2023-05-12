@@ -8,7 +8,9 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -67,11 +69,12 @@ class _CustServiceViewState extends State<CustServiceView> {
                       Text(
                         viewController.service!.details.name
                             .getTranslation(userLanguage),
-                        style: context.textTheme.displayMedium,
+                        style: context.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w700, fontSize: 18.mezSp),
                       ),
                       viewController.service!.details.cost.length == 1
                           ? Text(
-                              "\$${costData.entries.first.value}/${costData.entries.first.key.name.toString().toLowerCase().replaceAll("per", "")}",
+                              "${costData.entries.first.value.toPriceString()}/${costData.entries.first.key.name.toString().toLowerCase().replaceAll("per", "")}",
                               style: context.textTheme.bodyLarge!.copyWith(
                                 color: primaryBlueColor,
                                 fontWeight: FontWeight.w600,
@@ -80,7 +83,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                           : CustBusinessRentalCost(
                               cost: viewController.service!.details.cost,
                             ),
-                      SizedBox(height: 12.5),
+                      SizedBox(height: 15),
                       Text(
                         _i18n()['description'],
                         style: context.textTheme.bodyLarge,
@@ -91,13 +94,13 @@ class _CustServiceViewState extends State<CustServiceView> {
                             _i18n()['noDescription'],
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      SizedBox(height: 12.5),
+                      SizedBox(height: 15),
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.zero,
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.service!.business,
                         offeringName: viewController.service!.details.name,
                       ),
-                      SizedBox(height: 12.5),
                       CustBusinessNoOrderBanner(),
                     ],
                   ),

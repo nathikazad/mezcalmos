@@ -132,8 +132,9 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
 
   Widget _filterButton(BuildContext context) {
     return Card(
+      elevation: 0,
       margin: EdgeInsets.only(top: 15),
-      color: Colors.grey.shade300,
+      color: Color(0xFFF0F0F0),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
@@ -298,7 +299,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                             overflow: TextOverflow.ellipsis,
                             style: context.textTheme.bodyLarge?.copyWith(
                                 fontSize: 12.5.mezSp,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.w600),
                           )
                         ],
                       ),
