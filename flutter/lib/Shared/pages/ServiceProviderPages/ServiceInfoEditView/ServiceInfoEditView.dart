@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceEditLocationCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceImageEditComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/controllers/ServiceInfoEditViewController.dart';
@@ -15,6 +14,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
@@ -24,7 +24,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
 class ServiceInfoEditView extends StatefulWidget {
   const ServiceInfoEditView({super.key});
 
-  static Future<bool> navigate(
+  static Future<bool?> navigate(
       {required int serviceDetailsId,
       required int serviceProviderId,
       required ServiceProviderType serviceProviderType}) async {
@@ -53,6 +53,8 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
 
   @override
   void initState() {
+    mezDbgPrint(
+        "runtimeType ===================================>${_i18n().runtimeType}");
     detailsId =
         int.tryParse(MezRouter.urlArguments["serviceDetailsId"].toString());
     serviceId =
@@ -129,7 +131,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         height: 15,
                       ),
                       Text(
-                        '${_i18n()['description']} ${viewController.languages.value!.primary.toLanguageName()}',
+                        '${_i18n()['description']} ${viewController.languages.value!.primary.toFirebaseFormatString()}',
                         style: context.textTheme.bodyLarge,
                       ),
                       SizedBox(
@@ -140,7 +142,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         height: 15,
                       ),
                       Text(
-                        '${_i18n()['description']} ${viewController.languages.value!.secondary?.toLanguageName() ?? ''}',
+                        '${_i18n()['description']} ${viewController.languages.value!.secondary?.toFirebaseFormatString() ?? ''}',
                         style: context.textTheme.bodyLarge,
                       ),
                       SizedBox(
@@ -183,12 +185,64 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       ServiceEditLocationCard(
                         editInfoController: viewController,
                       ),
-                      SizedBox(
-                        height: 15,
+                      meduimSeperator,
+                      Text(
+                        "${_i18n()['prLang']}",
+                        style: context.textTheme.bodyLarge,
                       ),
-                      SizedBox(
-                        height: 15,
+                      smallSepartor,
+                      MezStringDropDown(
+                        labelText: "${_i18n()['none']}",
+                        value: viewController.languages.value!.primary
+                            .toFirebaseFormatString(),
+                        langPath: _i18n(),
+                        items: Language.values
+                            .map((Language e) => e.toFirebaseFormatString())
+                            .toList(),
+                        onChanged: (String? v) {
+                          if (v != null) {
+                            viewController.languages.value!.primary =
+                                v.toLanguage();
+                          }
+                        },
+                        validator: (String? p0) {
+                          if (p0 == null || p0.isEmpty) {
+                            return "${_i18n()['prLangErrorText']}";
+                          }
+                          return null;
+                        },
                       ),
+                      meduimSeperator,
+                      Text(
+                        "${_i18n()['scLang']}",
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      smallSepartor,
+                      MezStringDropDown(
+                          labelText: "${_i18n()['none']}",
+                          value: viewController.languages.value!.secondary
+                              ?.toFirebaseFormatString(),
+                          langPath: _i18n(),
+                          validator: (String? v) {
+                            if (v == null || v.isEmpty) {
+                              return "${_i18n()['scLangErrorText']}";
+                            } else if (v.toLanguage() ==
+                                viewController.languages.value!.primary) {
+                              return "${_i18n()['sameLangErrorText']}";
+                            }
+                            return null;
+                          },
+                          items: Language.values
+                              .map((Language e) => e.toFirebaseFormatString())
+                              .toList(),
+                          onChanged: (String? v) {
+                            if (v != null) {
+                              viewController.languages.value!.secondary =
+                                  v.toLanguage();
+                            }
+                          }),
+                      bigSeperator,
+                      bigSeperator,
                     ],
                   ),
                 ));

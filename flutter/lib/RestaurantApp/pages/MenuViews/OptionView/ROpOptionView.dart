@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -26,6 +25,7 @@ class ROpOptionView extends StatefulWidget {
 
   static Future<bool?> navigate(
       {required int restaurantId,
+      required int restaurantDetailsId,
       required int? optionId,
       required int itemId}) async {
     String route = RestaurantAppRoutes.restaurantOptionRoute
@@ -35,7 +35,8 @@ class ROpOptionView extends StatefulWidget {
       route = route.replaceFirst(":optionId", "$optionId");
     }
 
-    await MezRouter.toPath(route);
+    await MezRouter.toPath(route,
+        arguments: {"detailsId": restaurantDetailsId});
     return MezRouter.backResult;
   }
 
@@ -45,12 +46,10 @@ class ROpOptionView extends StatefulWidget {
 
 class _ROpOptionViewState extends State<ROpOptionView>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
   ROpOptionViewController _viewController = ROpOptionViewController();
-  final GlobalKey<FormState> _prFormKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _scFormKey = GlobalKey<FormState>();
 
   String? itemId;
+  int? detailsId;
 
   String? restaurantId;
   String? optionId;
@@ -60,12 +59,15 @@ class _ROpOptionViewState extends State<ROpOptionView>
     restaurantId = MezRouter.urlArguments["restaurantId"].toString();
     optionId = MezRouter.urlArguments["optionId"].toString();
     itemId = MezRouter.urlArguments["itemId"].toString();
+    detailsId = MezRouter.bodyArguments?["detailsId"] as int?;
 
-    if (restaurantId != null && itemId != null) {
-      _tabController = TabController(length: 2, vsync: this);
-
+    if (restaurantId != null && itemId != null && detailsId != null) {
       _viewController.init(
-          optionId: optionId, restaurantId: restaurantId!, itemID: itemId!);
+          vsync: this,
+          detailsId: detailsId!,
+          optionId: optionId,
+          restaurantId: restaurantId!,
+          itemID: itemId!);
     } else {
       MezRouter.back();
     }
@@ -74,34 +76,35 @@ class _ROpOptionViewState extends State<ROpOptionView>
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _viewController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(),
-      bottomNavigationBar: _saveBtn(),
-      body: Obx(() {
-        if (_viewController.initDone.isTrue) {
-          return TabBarView(
-            controller: _tabController,
-            children: [
-              _primaryTab(),
-              _secondarTab(),
-            ],
-          );
-        } else {
-          return Container(
-            alignment: Alignment.center,
-            child: MezLogoAnimation(
-              centered: true,
-            ),
-          );
-        }
-      }),
-    );
+    return Obx(() {
+      if (_viewController.initDone) {
+        return Scaffold(
+            appBar: _appBar(),
+            bottomNavigationBar: _saveBtn(),
+            body: TabBarView(
+              controller: _viewController.languageTabsController.tabController,
+              children: [
+                _primaryTab(),
+                if (_viewController.languageTabsController.hasSecondaryLang)
+                  _secondarTab(),
+              ],
+            ));
+      } else {
+        return Container(
+          alignment: Alignment.center,
+          color: Colors.white,
+          child: MezLogoAnimation(
+            centered: true,
+          ),
+        );
+      }
+    });
   }
 
   Widget _saveBtn() {
@@ -110,7 +113,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
       borderRadius: 0,
       withGradient: true,
       onClick: () async {
-        await _handleSaveBtn();
+        await _viewController.saveOption();
       },
       label: (_viewController.editMode.isTrue)
           ? '${_i18n()["editOption"]}'
@@ -122,17 +125,18 @@ class _ROpOptionViewState extends State<ROpOptionView>
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12),
       child: Form(
-        key: _scFormKey,
+        key: _viewController.languageTabsController.secondaryLangFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${_i18n()["optionName"]}', style: context.txt.bodyLarge),
+            Text('${_i18n()["optionName"]}',
+                style: context.textTheme.bodyLarge),
             SizedBox(
               height: 8,
             ),
             TextFormField(
                 controller: _viewController.scOptionName,
-                style: context.txt.bodyLarge,
+                style: context.textTheme.bodyLarge,
                 validator: (String? v) {
                   if (v == null || v.isEmpty) {
                     return '${_i18n()["required"]}';
@@ -186,7 +190,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12),
       child: Form(
-        key: _prFormKey,
+        key: _viewController.languageTabsController.primaryLangFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -247,6 +251,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
                     MezAddButton(onClick: () async {
                       final bool? refetch = await ROpChoiceView.navigate(
                           choiceId: null,
+                          detailsId: detailsId!,
                           restaurantId: restaurantId!,
                           optionId: _viewController
                               .editableOption.value!.id) as bool?;
@@ -309,73 +314,18 @@ class _ROpOptionViewState extends State<ROpOptionView>
               ? "${_viewController.editableOption.value!.name.getTranslation(userLanguage)}"
               : '${_i18n()["addOption"]}'),
         ),
-        tabBar: TabBar(controller: _tabController, tabs: [
-          Tab(
-            child: Obx(() => Text(
-                "${_viewController.languages.value!.primary.toLanguageName()}")),
-          ),
-          Tab(
-            child: Obx(() => Text(
-                "${_viewController.languages.value!.secondary?.toLanguageName() ?? ""}")),
-          ),
-        ]));
-  }
-
-  Future<void> _handleSaveBtn() async {
-    if (!_viewController.isFirstValid || !_viewController.isSecondValid) {
-      _prFormKey.currentState?.validate();
-      _scFormKey.currentState?.validate();
-      mezDbgPrint("switch to second $switchToSecond");
-      mezDbgPrint("switch to first $switchToFirst");
-      if (switchToSecond) {
-        _tabController.animateTo(1);
-        mezDbgPrint("Animate to second tab");
-      } else if (switchToFirst) {
-        _tabController.animateTo(0);
-        mezDbgPrint("Animate to First tab");
-      }
-    } else {
-      await _viewController.saveOption();
-      _tabController.animateTo(0);
-    }
-  }
-
-  bool get switchToFirst {
-    return !_viewController.isFirstValid &&
-        _tabController.index != 0 &&
-        _viewController.isSecondValid;
-  }
-
-  bool get switchToSecond {
-    return !_viewController.isSecondValid &&
-        _tabController.index != 1 &&
-        _viewController.isFirstValid;
-  }
-
-  Future<void> _handleSecondTab() async {
-    if (_viewController.firstTabValid == true &&
-        _scFormKey.currentState?.validate() == true) {
-      //  MezRouter.back(backResult:
-      await _viewController.saveOption();
-    } else if (_scFormKey.currentState?.validate() == true &&
-        _prFormKey.currentState?.validate() != true) {
-      _viewController.secondTabValid = true;
-      _tabController.animateTo(0);
-    }
-  }
-
-  Future<void> _handleFirstTab() async {
-    if (_prFormKey.currentState?.validate() == true &&
-        (_scFormKey.currentState?.validate() == true ||
-            _viewController.secondTabValid)) {
-      await _viewController.saveOption();
-      // MezRouter.back(backResult:
-      await _viewController.saveOption();
-    } else if (_prFormKey.currentState?.validate() == true &&
-        _scFormKey.currentState?.validate() != true) {
-      _viewController.firstTabValid = true;
-
-      _tabController.animateTo(1);
-    }
+        tabBar: (_viewController.languageTabsController.hasSecondaryLang)
+            ? TabBar(
+                controller:
+                    _viewController.languageTabsController.tabController,
+                tabs: [
+                    Tab(
+                        child: Text(
+                            "${_viewController.languages!.primary.toLanguageName()}")),
+                    Tab(
+                        child: Text(
+                            "${_viewController.languages!.secondary?.toLanguageName() ?? ""}")),
+                  ])
+            : null);
   }
 }

@@ -1,5 +1,6 @@
 query get_service_by_id($id: Int!) {
   business_service_by_pk(id: $id) {
+    schedule
     business {
       id
       details {
@@ -127,6 +128,15 @@ mutation add_service($object: business_service_insert_input!) {
   insert_business_service_one(object: $object) {
     details_id
     id
+  }
+}
+
+mutation update_business_service_schedule($id: Int!, $schedule: jsonb!) {
+  update_business_service(
+    where: { details_id: { _eq: $id } }
+    _set: { schedule: $schedule }
+  ) {
+    affected_rows
   }
 }
 

@@ -165,7 +165,8 @@ Future<List<HasuraChat>> get_customer_chats({required int customerId}) async {
           messages: [],
           lastMessage: Message(
             message: data.chat.last_message['message'],
-            timestamp: DateTime.parse(data.chat.last_message_sent).toLocal(),
+            timestamp:
+                DateTime.parse(data.chat.last_message['timestamp']).toLocal(),
             userId: data.chat.last_message['userId'],
           ),
           participants: []));
@@ -215,6 +216,14 @@ Future<List<HasuraChat>> get_business_provider_chats({
           creationTime: DateTime.parse(data.chat.creation_time).toLocal(),
           id: data.chat.id,
           messages: _get_messages(data.chat.messages),
+          lastMessage: data.chat.last_message != null
+              ? Message(
+                  message: data.chat.last_message['message'],
+                  timestamp: DateTime.parse(data.chat.last_message['timestamp'])
+                      .toLocal(),
+                  userId: data.chat.last_message['userId'],
+                )
+              : null,
           participants: []));
     });
     return _chats;

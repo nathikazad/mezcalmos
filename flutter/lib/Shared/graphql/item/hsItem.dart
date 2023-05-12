@@ -56,14 +56,12 @@ Future<int?> add_one_item(
         service_provider_type:
             cModels.OrderType.Restaurant.toFirebaseFormatString(),
         translations: Input$translation_value_arr_rel_insert_input(
-            data: <Input$translation_value_insert_input>[
-              Input$translation_value_insert_input(
-                  language_id: cModels.Language.EN.toFirebaseFormatString(),
-                  value: item.name[cModels.Language.EN]),
-              Input$translation_value_insert_input(
-                  language_id: cModels.Language.ES.toFirebaseFormatString(),
-                  value: item.name[cModels.Language.ES]),
-            ]),
+            data: item.name.entries
+                .map((MapEntry<cModels.Language, String> e) =>
+                    Input$translation_value_insert_input(
+                        language_id: e.key.toFirebaseFormatString(),
+                        value: e.value))
+                .toList()),
       ),
     ),
     special_period_end: item.endsAt?.toUtc().toString(),
@@ -76,14 +74,13 @@ Future<int?> add_one_item(
         service_provider_type:
             cModels.OrderType.Restaurant.toFirebaseFormatString(),
         translations: Input$translation_value_arr_rel_insert_input(
-            data: <Input$translation_value_insert_input>[
-              Input$translation_value_insert_input(
-                  language_id: cModels.Language.EN.toFirebaseFormatString(),
-                  value: item.description?[cModels.Language.EN]),
-              Input$translation_value_insert_input(
-                  language_id: cModels.Language.ES.toFirebaseFormatString(),
-                  value: item.description?[cModels.Language.ES]),
-            ]),
+            data: item.description?.entries
+                    .map((MapEntry<cModels.Language, String> e) =>
+                        Input$translation_value_insert_input(
+                            language_id: e.key.toFirebaseFormatString(),
+                            value: e.value))
+                    .toList() ??
+                []),
       ),
     ),
     restaurant_id: restaurantId,

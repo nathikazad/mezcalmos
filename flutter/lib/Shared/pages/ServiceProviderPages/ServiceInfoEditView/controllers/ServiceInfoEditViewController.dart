@@ -30,8 +30,7 @@ class ServiceInfoEditViewController {
   final Rxn<MezLocation> newLocation = Rxn();
 
   Rxn<ServiceProviderLanguage> languages = Rxn();
-  final Rxn<Language> editablePrLang = Rxn();
-  final Rxn<Language> editableScLang = Rxn();
+
   final Rxn<imPicker.XFile> newImageFile = Rxn();
 
   final RxBool imageLoading = RxBool(false);
@@ -67,7 +66,8 @@ class ServiceInfoEditViewController {
 
   void _setServiceInfo() {
     if (service.value != null) {
-      mezDbgPrint("Description id ========>>>${service.value?.descriptionId}");
+      mezDbgPrint(
+          "Description id ========>>>${service.value?.languages?.toFirebaseFormattedJson()}");
       mezDbgPrint("Description id ========>>>${service.value?.description}");
       serviceNameTxt.text = service.value?.name ?? '';
       phoneNumber.text = service.value?.phoneNumber ?? '';
@@ -152,6 +152,7 @@ class ServiceInfoEditViewController {
     return ServiceInfo(
         location: newLocation.value!,
         hasuraId: 1,
+        languages: languages.value!,
         phoneNumber: phoneNumber.text,
         descriptionId: newDescId,
         image: newImageUrl.value,

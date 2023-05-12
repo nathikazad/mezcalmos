@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
+import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 
 class BsRentalViewController {
   // instances //
+  LanguageTabsController languageTabsController = LanguageTabsController();
+  BusinessOpAuthController _opAuthController =
+      Get.find<BusinessOpAuthController>();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
   bool firstFormValid = false;
@@ -25,7 +30,6 @@ class BsRentalViewController {
   // methods //
 
   // instances //
-  TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
   // vars //
@@ -49,12 +53,23 @@ class BsRentalViewController {
   Rxn<RentalCategory2> rentalCategory2 = Rxn();
   Rxn<RentalCategory3> rentalCategory3 = Rxn();
   TextEditingController surfBoardLengthController = TextEditingController();
+  ServiceProviderLanguage? get languages => languageTabsController.language;
+  bool get hasSecondaryLang => languages?.secondary != null;
+  bool get hasData {
+    if (isEditing) {
+      return _rental.value != null &&
+          languageTabsController.tabController != null;
+    } else
+      return languageTabsController.tabController != null;
+  }
 
-  void init({
+  Future<void> init({
     required TickerProvider thickerProvider,
     required RentalCategory1 category1,
-  }) {
-    tabController = TabController(length: 2, vsync: thickerProvider);
+  }) async {
+    await languageTabsController.init(
+        vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
+    detailsController.setLanguage(language: languages!);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
     rentalCategory1 = category1;
   }
@@ -97,7 +112,7 @@ class BsRentalViewController {
   }
 
   Future<void> save() async {
-    if (validate()) {
+    if (languageTabsController.validate()) {
       if (isEditing) {
         try {
           await saveItemDetails();
@@ -129,16 +144,19 @@ class BsRentalViewController {
               },
             );
           }
+          showSavedSnackBar();
         } catch (e, stk) {
           mezDbgPrint(
               " 🛑 ${rental?.id?.toInt()}  OperationException : ${e.toString()}");
           mezDbgPrint(stk);
+          showErrorSnackBar();
         }
         shouldRefetch = true;
       } else {
         final Rental _rental = await _constructRental();
         mezDbgPrint("busniess id : ${_rental.details.businessId}");
         await createItem(_rental);
+        showSavedSnackBar();
       }
     }
   }
@@ -160,46 +178,5 @@ class BsRentalViewController {
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
     }
-  }
-
-  bool validate() {
-    if (isOnFirstTab) {
-      // validate first tab
-      firstFormValid = _isFirstFormValid;
-      if (firstFormValid && !secondFormValid) {
-        tabController?.animateTo(1);
-      }
-    }
-    // second tab
-    else {
-      secondFormValid = _isSecondFormValid;
-      if (secondFormValid && !firstFormValid) {
-        tabController?.animateTo(0);
-      }
-    }
-    if (secondFormValid && firstFormValid) {
-      tabController?.animateTo(0);
-    }
-    return secondFormValid && firstFormValid;
-  }
-
-  bool get _isFirstFormValid {
-    return formKey.currentState?.validate() == true;
-  }
-
-  bool get _isSecondFormValid {
-    return scFormKey.currentState?.validate() == true;
-  }
-
-  bool get isBothFormValid {
-    return _isFirstFormValid && _isSecondFormValid;
-  }
-
-  bool get isOnFirstTab {
-    return tabController?.index == 0;
-  }
-
-  bool get isOnSecondTab {
-    return tabController?.index == 1;
   }
 }

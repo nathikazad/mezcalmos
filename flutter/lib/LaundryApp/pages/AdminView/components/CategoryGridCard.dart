@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:sizer/sizer.dart';
 
@@ -31,17 +31,8 @@ class CategoryGridCard extends StatefulWidget {
 }
 
 class _CategoryGridCardState extends State<CategoryGridCard> {
-  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
-
-  late Language primaryLang;
-  RxBool nameMissing = RxBool(false);
-  late Language? secondaryLang;
-
   @override
   void initState() {
-    primaryLang = widget.laundry.primaryLanguage;
-    secondaryLang = widget.laundry.secondaryLanguage;
-    _getRightName();
     super.initState();
   }
 
@@ -55,7 +46,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              _getRightName().inCaps,
+              widget.item.name.getTranslation(userLanguage),
               style: context.txt.displaySmall?.copyWith(fontSize: 12.sp),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
@@ -148,16 +139,5 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
     //     laundryId: widget.laundry.info.hasuraId.toString());
 
     // await Get.delete<OpLaundryInfoController>(force: true);
-  }
-
-  String _getRightName() {
-    final String availableName = widget.item.name[widget.item.name.keys.first]!;
-    if (widget.item.name[primaryLang] != null) {
-      nameMissing.value = false;
-      return widget.item.name[primaryLang]!;
-    } else {
-      nameMissing.value = true;
-      return availableName;
-    }
   }
 }

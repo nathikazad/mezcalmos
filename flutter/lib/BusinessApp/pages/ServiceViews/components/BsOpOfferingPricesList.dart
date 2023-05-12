@@ -6,6 +6,10 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
+    ['pages']['services']["price"];
 
 class BsOpOfferingPricesList extends StatelessWidget {
   const BsOpOfferingPricesList(
@@ -28,7 +32,7 @@ class BsOpOfferingPricesList extends StatelessWidget {
             Flexible(
               fit: FlexFit.tight,
               child: Text(
-                "Prices",
+                _i18n()["prices"],
                 style: context.textTheme.bodyLarge,
               ),
             ),
@@ -55,7 +59,7 @@ class BsOpOfferingPricesList extends StatelessWidget {
                           width: 8,
                         ),
                         Text(
-                          "Add price",
+                          _i18n()["addPrice"],
                           style: context.textTheme.bodyLarge
                               ?.copyWith(color: primaryBlueColor),
                         ),
@@ -103,21 +107,21 @@ class BsOpOfferingPricesList extends StatelessWidget {
               validator: (String? value) {
                 // validate this value it should be double and not null or emtpy
                 if (value == null || value.isEmpty) {
-                  return "Please enter price";
+                  return _i18n()["priceError"];
                 } else if (double.tryParse(value) == null) {
-                  return "Please enter a valid price";
+                  return _i18n()["validPriceError"];
                 }
                 return null;
               },
               decoration: InputDecoration(
-                hintText: "Price",
+                hintText: _i18n()["price"],
                 suffixIconConstraints: BoxConstraints(
                   minWidth: 0,
                   minHeight: 0,
                 ).tighten(width: 80),
                 prefixIcon: const Icon(Icons.attach_money),
                 suffixIcon: Text(
-                  "${timeUnit.toFirebaseFormatString()}",
+                  _i18n()[timeUnit.toFirebaseFormatString()],
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),

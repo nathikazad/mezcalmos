@@ -149,5 +149,6 @@ class ServiceWithBusinessCard extends Service {
   }) : super(
           category1: service.category1,
           details: service.details,
+          schedule: service.schedule,
         );
 }

@@ -48,7 +48,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu, title: "Services"),
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
+          title: '${_i18n()["services"]}'),
       drawer: MezSideMenu(),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       body: RefreshIndicator(
@@ -180,7 +181,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   height: 30,
                 ),
                 Text(
-                  _i18n()["event"],
+                  _i18n()["events"],
                   style: context.textTheme.bodyLarge,
                 ),
                 smallSepartor,
@@ -324,7 +325,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           children: [
                             Flexible(
                                 child: MezButton(
-                              label: "Cancel",
+                              label: '${_i18n()["cancel"]}',
                               backgroundColor: offRedColor,
                               textColor: redAccentColor,
                               onClick: () async {
@@ -336,7 +337,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             ),
                             Flexible(
                                 child: MezButton(
-                              label: "Add",
+                              label: '${_i18n()["add"]}',
                               onClick: () async {
                                 mezDbgPrint(
                                     "added service: $currentSelectedService");

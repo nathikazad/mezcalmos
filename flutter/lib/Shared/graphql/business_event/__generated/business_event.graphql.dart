@@ -19313,7 +19313,7 @@ const documentNodeMutationadd_class = DocumentNode(definitions: [
           name: NameNode(value: 'Int'),
           isNonNull: false,
         ),
-        defaultValue: DefaultValueNode(value: null),
+        defaultValue: DefaultValueNode(value: IntValueNode(value: '1')),
         directives: [],
       ),
       VariableDefinitionNode(

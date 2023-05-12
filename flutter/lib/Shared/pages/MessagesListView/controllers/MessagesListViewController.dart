@@ -103,8 +103,10 @@ class BsOpMessagesListViewController extends MessagesListViewController {
     final List<HasuraChat> chatData = await get_business_provider_chats(
       serviceId: companyId,
     );
+    _allChats.value = [];
     _allChats.value = chatData;
-    mezDbgPrint("chats ${_allChats}");
+    mezDbgPrint(
+        "BsOpMessagesListViewController chats ${_allChats.map((element) => element.messages.isEmpty ? null : element.messages.last.message)}");
     isLoading.value = false;
   }
 }

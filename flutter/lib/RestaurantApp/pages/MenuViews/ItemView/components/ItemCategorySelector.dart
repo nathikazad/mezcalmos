@@ -54,6 +54,7 @@ class _ROpItemCategorySelectorState extends State<ROpItemCategorySelector> {
               if (newValue.id == "addNew") {
                 // ignore: unawaited_futures
                 final Category? newCat = await ROpCategoryView.navigate(
+                        detailsId: widget.viewController.detailsId,
                         restaurantId: widget.viewController.restaurantId)
                     as Category?;
 

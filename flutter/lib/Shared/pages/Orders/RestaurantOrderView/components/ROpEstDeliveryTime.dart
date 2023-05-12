@@ -377,6 +377,6 @@ class _ROpEstDeliveryTimeState extends State<ROpEstDeliveryTime> {
 
   bool get _showBtn {
     return widget.order.status == cModels.RestaurantOrderStatus.OrderReceived ||
-        widget.order.status == cModels.RestaurantOrderStatus.PreparingOrder;
+        widget.order.status == cModels.RestaurantOrderStatus.Preparing;
   }
 }

@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/controllers/BsProductViewController.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpDropDown.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
+import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpProductView extends StatefulWidget {
   const BsOpProductView({Key? key}) : super(key: key);
@@ -52,18 +56,58 @@ class _BsOpProductViewState extends State<BsOpProductView>
     return Scaffold(
       appBar: _appbar(),
       bottomNavigationBar: MezButton(
-        label: "Save",
+        label: _i18n()["save"],
+        withGradient: true,
         borderRadius: 0,
         onClick: () async {
           await viewController.save();
         },
       ),
-      body: TabBarView(
-        controller: viewController.tabController,
-        children: [
-          Form(key: viewController.formKey, child: _primaryTab(context)),
-          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
-        ],
+      body: Obx(
+        () => viewController.hasData
+            ? Column(
+                children: [
+                  if (viewController.hasSecondaryLang)
+                    PreferredSize(
+                        preferredSize: Size.fromHeight(50),
+                        child: Material(
+                          color: Colors.white,
+                          child: TabBar(
+                              tabs: [
+                                Tab(
+                                  text: viewController.languages!.primary
+                                      .toLanguageName(),
+                                ),
+                                Tab(
+                                  text: viewController.languages!.secondary!
+                                      .toLanguageName(),
+                                )
+                              ],
+                              controller: viewController
+                                  .languageTabsController.tabController),
+                        )),
+                  Expanded(
+                    child: TabBarView(
+                      controller:
+                          viewController.languageTabsController.tabController,
+                      children: [
+                        Form(
+                            key: viewController
+                                .languageTabsController.primaryLangFormKey,
+                            child: _primaryTab(context)),
+                        Form(
+                            key: viewController
+                                .languageTabsController.secondaryLangFormKey,
+                            child: _secondaryTab(context)),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              ),
       ),
     );
   }
@@ -72,19 +116,9 @@ class _BsOpProductViewState extends State<BsOpProductView>
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
       MezRouter.back(backResult: viewController.shouldRefetch);
     },
-        tabBar: PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: TabBar(tabs: [
-              Tab(
-                text: "English",
-              ),
-              Tab(
-                text: "Spanish",
-              )
-            ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.product != null
             ? "${viewController.product!.details.name.getTranslation(userLanguage)}"
-            : "Product")));
+            : _i18n()["artisanalProduct"]["product"])));
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -94,25 +128,25 @@ class _BsOpProductViewState extends State<BsOpProductView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Name",
+            _i18n()["name"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           TextFormField(
             controller: viewController.detailsController.scNameController,
             decoration: InputDecoration(
-              hintText: "Add item name",
+              hintText: _i18n()["nameHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter item name";
+                return _i18n()["nameError"];
               }
               return null;
             },
           ),
           bigSeperator,
           Text(
-            "Description",
+            _i18n()["description"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -122,11 +156,11 @@ class _BsOpProductViewState extends State<BsOpProductView>
             controller:
                 viewController.detailsController.scDescriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your product",
+              hintText: _i18n()["descriptionHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter description";
+                return _i18n()["descriptionError"];
               }
               return null;
             },
@@ -155,37 +189,37 @@ class _BsOpProductViewState extends State<BsOpProductView>
           ),
           bigSeperator,
           Text(
-            "Images",
+            _i18n()["image"],
             style: context.textTheme.bodyLarge,
           ),
           Text(
-            "You can only upload up to five images.",
+            _i18n()["imageInfo"],
           ),
           smallSepartor,
           BsOpServiceImagesGrid(
             detailsController: viewController.detailsController,
           ),
-          bigSeperator,
+          // bigSeperator,
           Text(
-            "Name",
+            _i18n()["name"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           TextFormField(
             controller: viewController.detailsController.nameController,
             decoration: InputDecoration(
-              hintText: "Add item name",
+              hintText: _i18n()["nameHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter item name";
+                return _i18n()["nameError"];
               }
               return null;
             },
           ),
           bigSeperator,
           Text(
-            "Description",
+            _i18n()["description"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -194,38 +228,39 @@ class _BsOpProductViewState extends State<BsOpProductView>
             minLines: 5,
             controller: viewController.detailsController.descriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your product",
+              hintText: _i18n()["descriptionHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter description";
+                return _i18n()["descriptionError"];
               }
               return null;
             },
           ),
           bigSeperator,
           Text(
-            "Category",
+            _i18n()["category"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           Obx(() {
             print(
                 "productCategory ${viewController.productCategory.value?.toFirebaseFormatString()}");
-            return BsOpDropdown(
-              validator: (p0) {
+            return MezStringDropDown(
+              validator: (String? p0) {
                 if (viewController.productCategory.value == null) {
-                  return "Select category";
+                  return _i18n()["categoryError"];
                 }
                 return null;
               },
-              labelText: "Select category",
+              labelText: _i18n()["categoryHint"],
+              langPath: _i18n()["artisanalProduct"],
               items: ProductCategory1.values
                   .map((ProductCategory1 e) => e.toFirebaseFormatString())
                   .toList(),
               value: viewController.productCategory.value
                   ?.toFirebaseFormatString(),
-              onChanged: (category) {
+              onChanged: (String? category) {
                 viewController.productCategory.value =
                     category.toString().toProductCategory1();
               },

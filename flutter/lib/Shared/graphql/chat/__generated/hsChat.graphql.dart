@@ -3293,6 +3293,20 @@ const documentNodeQueryget_service_provider_chats = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'last_message'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'last_message_sent'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -3615,6 +3629,8 @@ class Query$get_service_provider_chats$service_provider_customer_chat$chat {
     this.chat_info,
     required this.messages,
     required this.creation_time,
+    this.last_message,
+    required this.last_message_sent,
     required this.$__typename,
   });
 
@@ -3624,12 +3640,16 @@ class Query$get_service_provider_chats$service_provider_customer_chat$chat {
     final l$chat_info = json['chat_info'];
     final l$messages = json['messages'];
     final l$creation_time = json['creation_time'];
+    final l$last_message = json['last_message'];
+    final l$last_message_sent = json['last_message_sent'];
     final l$$__typename = json['__typename'];
     return Query$get_service_provider_chats$service_provider_customer_chat$chat(
       id: (l$id as int),
       chat_info: l$chat_info == null ? null : mapFromJson(l$chat_info),
       messages: mapFromJson(l$messages),
       creation_time: (l$creation_time as String),
+      last_message: l$last_message == null ? null : mapFromJson(l$last_message),
+      last_message_sent: (l$last_message_sent as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -3641,6 +3661,10 @@ class Query$get_service_provider_chats$service_provider_customer_chat$chat {
   final dynamic messages;
 
   final String creation_time;
+
+  final dynamic? last_message;
+
+  final String last_message_sent;
 
   final String $__typename;
 
@@ -3655,6 +3679,11 @@ class Query$get_service_provider_chats$service_provider_customer_chat$chat {
     _resultData['messages'] = mapToJson(l$messages);
     final l$creation_time = creation_time;
     _resultData['creation_time'] = l$creation_time;
+    final l$last_message = last_message;
+    _resultData['last_message'] =
+        l$last_message == null ? null : mapToJson(l$last_message);
+    final l$last_message_sent = last_message_sent;
+    _resultData['last_message_sent'] = l$last_message_sent;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3666,12 +3695,16 @@ class Query$get_service_provider_chats$service_provider_customer_chat$chat {
     final l$chat_info = chat_info;
     final l$messages = messages;
     final l$creation_time = creation_time;
+    final l$last_message = last_message;
+    final l$last_message_sent = last_message_sent;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$chat_info,
       l$messages,
       l$creation_time,
+      l$last_message,
+      l$last_message_sent,
       l$$__typename,
     ]);
   }
@@ -3704,6 +3737,16 @@ class Query$get_service_provider_chats$service_provider_customer_chat$chat {
     final l$creation_time = creation_time;
     final lOther$creation_time = other.creation_time;
     if (l$creation_time != lOther$creation_time) {
+      return false;
+    }
+    final l$last_message = last_message;
+    final lOther$last_message = other.last_message;
+    if (l$last_message != lOther$last_message) {
+      return false;
+    }
+    final l$last_message_sent = last_message_sent;
+    final lOther$last_message_sent = other.last_message_sent;
+    if (l$last_message_sent != lOther$last_message_sent) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3745,6 +3788,8 @@ abstract class CopyWith$Query$get_service_provider_chats$service_provider_custom
     dynamic? chat_info,
     dynamic? messages,
     String? creation_time,
+    dynamic? last_message,
+    String? last_message_sent,
     String? $__typename,
   });
 }
@@ -3773,6 +3818,8 @@ class _CopyWithImpl$Query$get_service_provider_chats$service_provider_customer_c
     Object? chat_info = _undefined,
     Object? messages = _undefined,
     Object? creation_time = _undefined,
+    Object? last_message = _undefined,
+    Object? last_message_sent = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -3787,6 +3834,13 @@ class _CopyWithImpl$Query$get_service_provider_chats$service_provider_customer_c
         creation_time: creation_time == _undefined || creation_time == null
             ? _instance.creation_time
             : (creation_time as String),
+        last_message: last_message == _undefined
+            ? _instance.last_message
+            : (last_message as dynamic?),
+        last_message_sent:
+            last_message_sent == _undefined || last_message_sent == null
+                ? _instance.last_message_sent
+                : (last_message_sent as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3808,6 +3862,8 @@ class _CopyWithStubImpl$Query$get_service_provider_chats$service_provider_custom
     dynamic? chat_info,
     dynamic? messages,
     String? creation_time,
+    dynamic? last_message,
+    String? last_message_sent,
     String? $__typename,
   }) =>
       _res;

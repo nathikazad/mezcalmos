@@ -16890,3 +16890,694 @@ class _CopyWithStubImpl$Mutation$update_business_item_additional_params$update_b
   }) =>
       _res;
 }
+
+class Variables$Query$get_business_lang {
+  factory Variables$Query$get_business_lang({required int id}) =>
+      Variables$Query$get_business_lang._({
+        r'id': id,
+      });
+
+  Variables$Query$get_business_lang._(this._$data);
+
+  factory Variables$Query$get_business_lang.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Query$get_business_lang._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_business_lang<Variables$Query$get_business_lang>
+      get copyWith => CopyWith$Variables$Query$get_business_lang(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_business_lang) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_business_lang<TRes> {
+  factory CopyWith$Variables$Query$get_business_lang(
+    Variables$Query$get_business_lang instance,
+    TRes Function(Variables$Query$get_business_lang) then,
+  ) = _CopyWithImpl$Variables$Query$get_business_lang;
+
+  factory CopyWith$Variables$Query$get_business_lang.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_business_lang;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Query$get_business_lang<TRes>
+    implements CopyWith$Variables$Query$get_business_lang<TRes> {
+  _CopyWithImpl$Variables$Query$get_business_lang(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_business_lang _instance;
+
+  final TRes Function(Variables$Query$get_business_lang) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Query$get_business_lang._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_business_lang<TRes>
+    implements CopyWith$Variables$Query$get_business_lang<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_business_lang(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Query$get_business_lang {
+  Query$get_business_lang({
+    this.business_business_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_lang.fromJson(Map<String, dynamic> json) {
+    final l$business_business_by_pk = json['business_business_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_lang(
+      business_business_by_pk: l$business_business_by_pk == null
+          ? null
+          : Query$get_business_lang$business_business_by_pk.fromJson(
+              (l$business_business_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_business_lang$business_business_by_pk?
+      business_business_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_business_by_pk = business_business_by_pk;
+    _resultData['business_business_by_pk'] =
+        l$business_business_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_business_by_pk = business_business_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_business_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_business_lang) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_business_by_pk = business_business_by_pk;
+    final lOther$business_business_by_pk = other.business_business_by_pk;
+    if (l$business_business_by_pk != lOther$business_business_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_lang on Query$get_business_lang {
+  CopyWith$Query$get_business_lang<Query$get_business_lang> get copyWith =>
+      CopyWith$Query$get_business_lang(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$get_business_lang<TRes> {
+  factory CopyWith$Query$get_business_lang(
+    Query$get_business_lang instance,
+    TRes Function(Query$get_business_lang) then,
+  ) = _CopyWithImpl$Query$get_business_lang;
+
+  factory CopyWith$Query$get_business_lang.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_business_lang;
+
+  TRes call({
+    Query$get_business_lang$business_business_by_pk? business_business_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_lang$business_business_by_pk<TRes>
+      get business_business_by_pk;
+}
+
+class _CopyWithImpl$Query$get_business_lang<TRes>
+    implements CopyWith$Query$get_business_lang<TRes> {
+  _CopyWithImpl$Query$get_business_lang(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_lang _instance;
+
+  final TRes Function(Query$get_business_lang) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_business_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_lang(
+        business_business_by_pk: business_business_by_pk == _undefined
+            ? _instance.business_business_by_pk
+            : (business_business_by_pk
+                as Query$get_business_lang$business_business_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_lang$business_business_by_pk<TRes>
+      get business_business_by_pk {
+    final local$business_business_by_pk = _instance.business_business_by_pk;
+    return local$business_business_by_pk == null
+        ? CopyWith$Query$get_business_lang$business_business_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$get_business_lang$business_business_by_pk(
+            local$business_business_by_pk,
+            (e) => call(business_business_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_lang<TRes>
+    implements CopyWith$Query$get_business_lang<TRes> {
+  _CopyWithStubImpl$Query$get_business_lang(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_business_lang$business_business_by_pk? business_business_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_lang$business_business_by_pk<TRes>
+      get business_business_by_pk =>
+          CopyWith$Query$get_business_lang$business_business_by_pk.stub(_res);
+}
+
+const documentNodeQueryget_business_lang = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_business_lang'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_business_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'language'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_business_lang _parserFn$Query$get_business_lang(
+        Map<String, dynamic> data) =>
+    Query$get_business_lang.fromJson(data);
+
+class Options$Query$get_business_lang
+    extends graphql.QueryOptions<Query$get_business_lang> {
+  Options$Query$get_business_lang({
+    String? operationName,
+    required Variables$Query$get_business_lang variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_business_lang,
+          parserFn: _parserFn$Query$get_business_lang,
+        );
+}
+
+class WatchOptions$Query$get_business_lang
+    extends graphql.WatchQueryOptions<Query$get_business_lang> {
+  WatchOptions$Query$get_business_lang({
+    String? operationName,
+    required Variables$Query$get_business_lang variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_business_lang,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_business_lang,
+        );
+}
+
+class FetchMoreOptions$Query$get_business_lang
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_business_lang({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$get_business_lang variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryget_business_lang,
+        );
+}
+
+extension ClientExtension$Query$get_business_lang on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_business_lang>> query$get_business_lang(
+          Options$Query$get_business_lang options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$get_business_lang> watchQuery$get_business_lang(
+          WatchOptions$Query$get_business_lang options) =>
+      this.watchQuery(options);
+  void writeQuery$get_business_lang({
+    required Query$get_business_lang data,
+    required Variables$Query$get_business_lang variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQueryget_business_lang),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_business_lang? readQuery$get_business_lang({
+    required Variables$Query$get_business_lang variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQueryget_business_lang),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$get_business_lang.fromJson(result);
+  }
+}
+
+class Query$get_business_lang$business_business_by_pk {
+  Query$get_business_lang$business_business_by_pk({
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_lang$business_business_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_lang$business_business_by_pk(
+      details: Query$get_business_lang$business_business_by_pk$details.fromJson(
+          (l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_business_lang$business_business_by_pk$details details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_business_lang$business_business_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_lang$business_business_by_pk
+    on Query$get_business_lang$business_business_by_pk {
+  CopyWith$Query$get_business_lang$business_business_by_pk<
+          Query$get_business_lang$business_business_by_pk>
+      get copyWith => CopyWith$Query$get_business_lang$business_business_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_lang$business_business_by_pk<TRes> {
+  factory CopyWith$Query$get_business_lang$business_business_by_pk(
+    Query$get_business_lang$business_business_by_pk instance,
+    TRes Function(Query$get_business_lang$business_business_by_pk) then,
+  ) = _CopyWithImpl$Query$get_business_lang$business_business_by_pk;
+
+  factory CopyWith$Query$get_business_lang$business_business_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_lang$business_business_by_pk;
+
+  TRes call({
+    Query$get_business_lang$business_business_by_pk$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_lang$business_business_by_pk$details<TRes>
+      get details;
+}
+
+class _CopyWithImpl$Query$get_business_lang$business_business_by_pk<TRes>
+    implements CopyWith$Query$get_business_lang$business_business_by_pk<TRes> {
+  _CopyWithImpl$Query$get_business_lang$business_business_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_lang$business_business_by_pk _instance;
+
+  final TRes Function(Query$get_business_lang$business_business_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_lang$business_business_by_pk(
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_business_lang$business_business_by_pk$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_lang$business_business_by_pk$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_business_lang$business_business_by_pk$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_lang$business_business_by_pk<TRes>
+    implements CopyWith$Query$get_business_lang$business_business_by_pk<TRes> {
+  _CopyWithStubImpl$Query$get_business_lang$business_business_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_business_lang$business_business_by_pk$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_lang$business_business_by_pk$details<TRes>
+      get details =>
+          CopyWith$Query$get_business_lang$business_business_by_pk$details.stub(
+              _res);
+}
+
+class Query$get_business_lang$business_business_by_pk$details {
+  Query$get_business_lang$business_business_by_pk$details({
+    required this.language,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_lang$business_business_by_pk$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$language = json['language'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_lang$business_business_by_pk$details(
+      language: mapFromJson(l$language),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic language;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language = language;
+    _resultData['language'] = mapToJson(l$language);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language = language;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_business_lang$business_business_by_pk$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language = language;
+    final lOther$language = other.language;
+    if (l$language != lOther$language) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_lang$business_business_by_pk$details
+    on Query$get_business_lang$business_business_by_pk$details {
+  CopyWith$Query$get_business_lang$business_business_by_pk$details<
+          Query$get_business_lang$business_business_by_pk$details>
+      get copyWith =>
+          CopyWith$Query$get_business_lang$business_business_by_pk$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_lang$business_business_by_pk$details<
+    TRes> {
+  factory CopyWith$Query$get_business_lang$business_business_by_pk$details(
+    Query$get_business_lang$business_business_by_pk$details instance,
+    TRes Function(Query$get_business_lang$business_business_by_pk$details) then,
+  ) = _CopyWithImpl$Query$get_business_lang$business_business_by_pk$details;
+
+  factory CopyWith$Query$get_business_lang$business_business_by_pk$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_lang$business_business_by_pk$details;
+
+  TRes call({
+    dynamic? language,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_lang$business_business_by_pk$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_lang$business_business_by_pk$details<TRes> {
+  _CopyWithImpl$Query$get_business_lang$business_business_by_pk$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_lang$business_business_by_pk$details _instance;
+
+  final TRes Function(Query$get_business_lang$business_business_by_pk$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_lang$business_business_by_pk$details(
+        language: language == _undefined || language == null
+            ? _instance.language
+            : (language as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_lang$business_business_by_pk$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_lang$business_business_by_pk$details<TRes> {
+  _CopyWithStubImpl$Query$get_business_lang$business_business_by_pk$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? language,
+    String? $__typename,
+  }) =>
+      _res;
+}

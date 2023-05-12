@@ -14,6 +14,10 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpEventView extends StatefulWidget {
   const BsOpEventView({Key? key}) : super(key: key);
@@ -59,45 +63,76 @@ class _BsOpEventViewState extends State<BsOpEventView>
     return Scaffold(
       appBar: _appbar(),
       bottomNavigationBar: MezButton(
-        label: "Save",
+        label: _i18n()["save"],
+        withGradient: true,
         borderRadius: 0,
         onClick: () async {
           await viewController.save();
         },
       ),
-      body: TabBarView(
-        controller: viewController.tabController,
-        children: [
-          Form(key: viewController.formKey, child: _primaryTab(context)),
-          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
-        ],
-      ),
+      body: Obx(() {
+        if (viewController.hasData) {
+          return Column(
+            children: [
+              if (viewController.hasSecondaryLang)
+                PreferredSize(
+                    preferredSize: Size.fromHeight(50),
+                    child: Material(
+                      color: Colors.white,
+                      child: TabBar(
+                          tabs: [
+                            Tab(
+                              text: viewController.languages!.primary
+                                  .toLanguageName(),
+                            ),
+                            Tab(
+                              text: viewController.languages!.secondary!
+                                  .toLanguageName(),
+                            )
+                          ],
+                          controller: viewController
+                              .languageTabsController.tabController),
+                    )),
+              Expanded(
+                child: TabBarView(
+                  controller:
+                      viewController.languageTabsController.tabController,
+                  children: [
+                    Form(
+                        key: viewController
+                            .languageTabsController.primaryLangFormKey,
+                        child: _primaryTab(context)),
+                    if (viewController.hasSecondaryLang)
+                      Form(
+                          key: viewController
+                              .languageTabsController.secondaryLangFormKey,
+                          child: _secondaryTab(context)),
+                  ],
+                ),
+              ),
+            ],
+          );
+        } else
+          return Container(
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
+          );
+      }),
     );
   }
 
   AppBar _appbar() {
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
       MezRouter.back(backResult: viewController.shouldRefetch);
-    },
-        tabBar: PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: TabBar(tabs: [
-              Tab(
-                text: "English",
-              ),
-              Tab(
-                text: "Spanish",
-              )
-            ], controller: viewController.tabController)),
-        titleWidget: Obx(() => Text(getAppbartitle())));
+    }, titleWidget: Obx(() => Text(getAppbartitle())));
   }
 
   String getAppbartitle() {
     return viewController.event != null
         ? "${viewController.event!.details.name.getTranslation(userLanguage)}"
         : (viewController.isClass == false)
-            ? "Event"
-            : "Class";
+            ? _i18n()["event"]["event"]
+            : _i18n()["class"];
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -107,7 +142,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Name",
+            _i18n()["name"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -115,17 +150,17 @@ class _BsOpEventViewState extends State<BsOpEventView>
             controller: viewController.detailsController.scNameController,
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter a name";
+                return _i18n()["nameError"];
               }
               return null;
             },
             decoration: InputDecoration(
-              hintText: "Add item name",
+              hintText: _i18n()["nameHint"],
             ),
           ),
           bigSeperator,
           Text(
-            "Description",
+            _i18n()["description"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -135,8 +170,14 @@ class _BsOpEventViewState extends State<BsOpEventView>
             controller:
                 viewController.detailsController.scDescriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your event",
+              hintText: _i18n()["descriptionHint"],
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return _i18n()["descriptionError"];
+              }
+              return null;
+            },
           ),
         ],
       ),
@@ -164,13 +205,13 @@ class _BsOpEventViewState extends State<BsOpEventView>
           Obx(
             () => BsOpScheduleTypeSelector(
               items: viewController.getScheduleType(),
-              label: "Select event type",
+              label: _i18n()["event"]["eventType"],
               value: viewController.getScheduleType().firstWhereOrNull(
                   (ScheduleTypeInput element) =>
                       element.type == viewController.scheduleType.value),
               validator: (ScheduleTypeInput? v) {
                 if (v == null) {
-                  return "Please select a schedule type";
+                  return _i18n()["event"]["scheduleTypeError"];
                 }
                 return null;
               },
@@ -183,19 +224,19 @@ class _BsOpEventViewState extends State<BsOpEventView>
           ),
           bigSeperator,
           Text(
-            "Images",
+            _i18n()["image"],
             style: context.textTheme.bodyLarge,
           ),
           Text(
-            "You can only upload up to five images.",
+            _i18n()["imageInfo"],
           ),
           smallSepartor,
           BsOpServiceImagesGrid(
             detailsController: viewController.detailsController,
           ),
-          bigSeperator,
+          // bigSeperator,
           Text(
-            "Name",
+            _i18n()["name"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -203,17 +244,17 @@ class _BsOpEventViewState extends State<BsOpEventView>
             controller: viewController.detailsController.nameController,
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter a name";
+                return _i18n()["nameError"];
               }
               return null;
             },
             decoration: InputDecoration(
-              hintText: "Add event name",
+              hintText: _i18n()["nameHint"],
             ),
           ),
           bigSeperator,
           Text(
-            "Description",
+            _i18n()["description"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
@@ -222,8 +263,14 @@ class _BsOpEventViewState extends State<BsOpEventView>
             minLines: 5,
             controller: viewController.detailsController.descriptionController,
             decoration: InputDecoration(
-              hintText: "Enter a description for your event",
+              hintText: _i18n()["descriptionHint"],
             ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return _i18n()["descriptionError"];
+              }
+              return null;
+            },
           ),
           bigSeperator,
           BsOpOfferingPricesList(
@@ -239,19 +286,20 @@ class _BsOpEventViewState extends State<BsOpEventView>
           bigSeperator,
           Obx(
             () => BsOpOfferingLocationCard(
+              label: _i18n()["locationLabel"],
               onLocationSelected: (Location v) {
                 viewController.setLocation(v);
               },
               location: viewController.location.value,
               validator: (Location? loc) {
                 if (loc == null) {
-                  return "Please select a location";
+                  return _i18n()["locationError"];
                 }
                 return null;
               },
             ),
           ),
-          bigSeperator,
+          // bigSeperator,
           Obx(() => viewController.getScheduleWidget()),
         ],
       ),

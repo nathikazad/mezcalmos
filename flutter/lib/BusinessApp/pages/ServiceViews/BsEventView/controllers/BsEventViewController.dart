@@ -7,25 +7,30 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsEventViewController {
   // instances //
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
+  BusinessOpAuthController _opAuthController =
+      Get.find<BusinessOpAuthController>();
+  LanguageTabsController languageTabsController = LanguageTabsController();
   bool firstFormValid = false;
   bool secondFormValid = false;
-  TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
   // vars //
   bool shouldRefetch = false;
-  late bool isClass;
+  bool isClass = false;
   // state variables //
   Rxn<EventWithBusinessCard> _event = Rxn<EventWithBusinessCard>();
   Rxn<ScheduleType> scheduleType = Rxn<ScheduleType>();
@@ -33,6 +38,16 @@ class BsEventViewController {
   Rxn<PeriodOfTime> oneTimePeriod = Rxn<PeriodOfTime>();
   Rxn<Location> location = Rxn<Location>();
   // getters //
+  ServiceProviderLanguage? get languages => languageTabsController.language;
+  bool get hasSecondaryLang => languages?.secondary != null;
+  bool get hasData {
+    if (isEditing) {
+      return _event.value != null &&
+          languageTabsController.tabController != null;
+    } else
+      return languageTabsController.tabController != null;
+  }
+
   BusinessProfile get businessProfile =>
       Get.find<BusinessOpAuthController>().businessProfile!;
   EventWithBusinessCard? get event => _event.value;
@@ -49,11 +64,15 @@ class BsEventViewController {
       businessProfile == BusinessProfile.TourAgency ||
       businessProfile == BusinessProfile.Entertainment ||
       businessProfile == BusinessProfile.Volunteer;
+  // RxBool _hasData = RxBool(false);
 
 // methods //
 
-  void init({required TickerProvider thickerProvider, required bool isClass}) {
-    tabController = TabController(length: 2, vsync: thickerProvider);
+  Future<void> init(
+      {required TickerProvider thickerProvider, required bool isClass}) async {
+    await languageTabsController.init(
+        vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
+    detailsController.setLanguage(language: languages!);
     this.isClass = isClass;
     setPrices();
   }
@@ -76,21 +95,24 @@ class BsEventViewController {
   }
 
   Future<void> save() async {
-    if (validate()) {
+    if (languageTabsController.validate()) {
       if (isEditing) {
         try {
           await saveItemDetails();
           await update_event_by_id(
               eventId: event!.id!.toInt(), event: _constructEvent());
+          showSavedSnackBar();
         } catch (e, stk) {
           mezDbgPrint(
               " 🛑 ${event?.id?.toInt()}  OperationException : ${e.toString()}");
           mezDbgPrint(stk);
+          showErrorSnackBar();
         }
         shouldRefetch = true;
       } else {
         Event _event = await _constructEventWithDetails();
         await createItem(_event);
+        showSavedSnackBar();
       }
     }
   }
@@ -120,8 +142,41 @@ class BsEventViewController {
 
   Future<Event> _constructEventWithDetails() async {
     BusinessItemDetails details = await detailsController.contructDetails();
+    EventCategory1 category1 = EventCategory1.Uncategorized;
+    switch (businessProfile) {
+      case BusinessProfile.YogaStudio:
+        category1 = EventCategory1.Yoga;
+        break;
+      case BusinessProfile.SurfShop:
+        category1 = EventCategory1.Surf;
+        break;
+      // case BusinessProfile.MartialArt:
+      //   category1 = EventCategory1.MartialArt;
+      //   break;
+      // case BusinessProfile.:
+      //   category1 = EventCategory1.Party;
+      //   break;
+      // case BusinessProfile.:
+      //   category1 = EventCategory1.Dance;
+      //   break;
+      case BusinessProfile.Entertainment:
+        category1 = EventCategory1.Social;
+        break;
+      case BusinessProfile.WellnessPractitioner:
+        category1 = EventCategory1.Therapy;
+        break;
+      // case BusinessProfile.:
+      //   category1 = EventCategory1.Fitness;
+      //   break;
+      case BusinessProfile.TourAgency:
+        category1 = EventCategory1.Adventure;
+        break;
+      case BusinessProfile.Volunteer:
+        category1 = EventCategory1.Volunteer;
+        break;
+    }
     Event event = Event(
-        category1: EventCategory1.Party,
+        category1: category1,
         scheduleType: scheduleType.value!,
         startsAt: oneTimePeriod.value?.start.toUtc().toString(),
         endsAt: oneTimePeriod.value?.end.toUtc().toString(),
@@ -135,7 +190,7 @@ class BsEventViewController {
 
   Event _constructEvent() {
     Event event = Event(
-        category1: EventCategory1.Party,
+        category1: EventCategory1.Uncategorized,
         scheduleType: scheduleType.value!,
         startsAt: oneTimePeriod.value?.start.toUtc().toString(),
         endsAt: oneTimePeriod.value?.end.toUtc().toString(),
@@ -154,118 +209,149 @@ class BsEventViewController {
   }
 
   List<ScheduleTypeInput> getScheduleType() {
+    final String businessFB = businessProfile.toFirebaseFormatString();
     switch (businessProfile) {
       case BusinessProfile.Entertainment:
         return [
           ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "Weekly event",
+              title: _i18n()[businessFB]["weeklyEvent"],
+              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Workshop",
-              subtitle: "Workshop event",
+              title: _i18n()[businessFB]["oneTimeEvent"],
+              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.Volunteer:
         return [
           ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "Weekly event",
+              title: _i18n()[businessFB]["weeklyEvent"],
+              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "One time",
-              subtitle: "One time event",
+              title: _i18n()[businessFB]["oneTimeEvent"],
+              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.WellnessPractitioner:
         return [
           ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "An event that reoccurs on a weekly basis",
+              title: _i18n()[businessFB]["onDemand"],
+              subtitle: _i18n()[businessFB]["onDemandLabel"],
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Private session",
-              subtitle: "A one on one event that clients can book with you.",
-              type: ScheduleType.OnDemand),
+              title: _i18n()[businessFB]["weeklyEvent"],
+              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+              type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Retreat",
-              subtitle:
-                  "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat",
+              title: _i18n()[businessFB]["oneTimeEvent"],
+              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.TourAgency:
         return [
           ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "An event that reoccurs on a weekly basis",
+              title: _i18n()[businessFB]["onDemand"],
+              subtitle: _i18n()[businessFB]["onDemandLabel"],
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Private session",
-              subtitle: "A one on one event that clients can book with you.",
-              type: ScheduleType.OnDemand),
+              title: _i18n()[businessFB]["weeklyEvent"],
+              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+              type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Retreat",
-              subtitle:
-                  "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat",
+              title: _i18n()[businessFB]["oneTimeEvent"],
+              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.YogaStudio:
-        return [
-          ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "An event that reoccurs on a weekly basis",
-              type: ScheduleType.Scheduled),
-          ScheduleTypeInput(
-              title: "Private session",
-              subtitle: "A one on one event that clients can book with you.",
-              type: ScheduleType.OnDemand),
-          ScheduleTypeInput(
-              title: "Retreat",
-              subtitle:
-                  "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat",
-              type: ScheduleType.OneTime),
-        ];
+        return isClass
+            ? [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["onDemandClass"],
+                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyClass"],
+                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeClass"],
+                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    type: ScheduleType.OneTime),
+              ]
+            : [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyEvent"],
+                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeEvent"],
+                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    type: ScheduleType.OneTime),
+              ];
       case BusinessProfile.PetSitting:
         return [
           ScheduleTypeInput(
-              title: "Weekly Event",
-              subtitle: "An event that reoccurs on a weekly basis",
+              title: _i18n()[businessFB]["weeklyEvent"],
+              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "One time",
-              subtitle: "One time event",
+              title: _i18n()[businessFB]["oneTimeEvent"],
+              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.LanguageSchool:
-        return [
-          ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "Weekly event",
-              type: ScheduleType.Scheduled),
-          ScheduleTypeInput(
-              title: "Workshop",
-              subtitle: "Workshop event",
-              type: ScheduleType.OneTime),
-          ScheduleTypeInput(
-              title: "One time",
-              subtitle: "One time event",
-              type: ScheduleType.OneTime),
-        ];
+        return isClass
+            ? [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["onDemandClass"],
+                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyClass"],
+                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeClass"],
+                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    type: ScheduleType.OneTime),
+              ]
+            : [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyEvent"],
+                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeEvent"],
+                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    type: ScheduleType.OneTime),
+              ];
       case BusinessProfile.SurfShop:
-        return [
-          ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "Weekly event",
-              type: ScheduleType.Scheduled),
-          ScheduleTypeInput(
-              title: "Workshop",
-              subtitle: "Workshop event",
-              type: ScheduleType.OneTime),
-          ScheduleTypeInput(
-              title: "One time",
-              subtitle: "One time event",
-              type: ScheduleType.OneTime),
-        ];
+        return isClass
+            ? [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["onDemandClass"],
+                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyClass"],
+                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeClass"],
+                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    type: ScheduleType.OneTime),
+              ]
+            : [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyEvent"],
+                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeEvent"],
+                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    type: ScheduleType.OneTime),
+              ];
       default:
         throw StateError(
             "BusinessProfile ${businessProfile.name} not supported");
@@ -315,47 +401,6 @@ class BsEventViewController {
 
   void setLocation(Location v) {
     location.value = v;
-  }
-
-  bool validate() {
-    if (isOnFirstTab) {
-      // validate first tab
-      firstFormValid = _isFirstFormValid;
-      if (firstFormValid && !secondFormValid) {
-        tabController?.animateTo(1);
-      }
-    }
-    // second tab
-    else {
-      secondFormValid = _isSecondFormValid;
-      if (secondFormValid && !firstFormValid) {
-        tabController?.animateTo(0);
-      }
-    }
-    if (secondFormValid && firstFormValid) {
-      tabController?.animateTo(0);
-    }
-    return secondFormValid && firstFormValid;
-  }
-
-  bool get _isFirstFormValid {
-    return formKey.currentState?.validate() == true;
-  }
-
-  bool get _isSecondFormValid {
-    return scFormKey.currentState?.validate() == true;
-  }
-
-  bool get isBothFormValid {
-    return _isFirstFormValid && _isSecondFormValid;
-  }
-
-  bool get isOnFirstTab {
-    return tabController?.index == 0;
-  }
-
-  bool get isOnSecondTab {
-    return tabController?.index == 1;
   }
 }
 

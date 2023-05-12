@@ -4,6 +4,10 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
+    ['pages']['services']["price"];
 
 Future<TimeUnit?> bsOpTimeUnitSelectorSheet({
   required BuildContext context,
@@ -22,7 +26,7 @@ Future<TimeUnit?> bsOpTimeUnitSelectorSheet({
               Container(
                 alignment: Alignment.center,
                 child: Text(
-                  "Price type",
+                  _i18n()["priceType"],
                   style: context.textTheme.bodyLarge,
                 ),
               ),
@@ -38,7 +42,7 @@ Future<TimeUnit?> bsOpTimeUnitSelectorSheet({
                         Flexible(
                           fit: FlexFit.tight,
                           child: Text(
-                            timeUnit.toFirebaseFormatString(),
+                            _i18n()[timeUnit.toFirebaseFormatString()],
                             style: context.textTheme.bodyLarge,
                           ),
                         ),
@@ -63,7 +67,7 @@ Future<TimeUnit?> bsOpTimeUnitSelectorSheet({
                 children: [
                   Flexible(
                       child: MezButton(
-                    label: "Cancel",
+                    label:  _i18n()["cancel"],
                     backgroundColor: offRedColor,
                     textColor: redAccentColor,
                     onClick: () async {
@@ -75,7 +79,7 @@ Future<TimeUnit?> bsOpTimeUnitSelectorSheet({
                   ),
                   Flexible(
                       child: MezButton(
-                    label: "Add",
+                    label:  _i18n()["add"],
                     onClick: () async {
                       if (selected.value != null) {
                         Navigator.pop(context, selected.value);

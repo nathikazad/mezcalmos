@@ -55,47 +55,169 @@
       },
       "services": {
         "services": "Services",
+        "service": "Service",
         "serviceType": "What type of service will you add?",
         "addService": "Add Service",
         "reorder": "Reorder",
-        "event": "Events",
+        "event": {
+          "event": "Event",
+          "eventType": "Select an event type",
+          "scheduleTypeError": "Please select a schedule type"
+        },
+        "profile": "Profile",
+        "feed": "Feed",
+        "messages": "Messages",
+        "events": "Events",
+        "class": "Class",
+        "classes": "Classes",
         "rental": "Rentals",
         "product": "Products",
+        "save": "Save",
+        "english": "English",
+        "spanish": "Spanish",
+        "name": "Name",
+        "nameHint": "Add item name",
+        "nameError": "Please add item name",
+        "description": "Description",
+        "descriptionHint": "Enter a description for your item",
+        "descriptionError": "Please enter a description for your item",
+        "image": "Image",
+        "imageInfo": "You can only upload up to five images.",
+        "imageError": "Please add at least one image",
+        "location": "Location",
+        "category": "Category",
+        "categoryHint": "Select a category",
+        "categoryError": "Please select a category",
+        "schedule": "Schedule",
+        "scheduleHint": "Add schedule",
+        "scheduleError": "Please add schedule",
+        "locationLabel": "Select a location",
+        "locationError": "Please select a location",
+        "add": "Add",
+        "cancel": "Cancel",
+        "price": {
+          "prices": "Prices",
+          "price": "Price",
+          "addPrice": "Add additional price",
+          "priceError": "Please add price",
+          "validPriceError": "Please enter a valid price",
+          "perHour": "Hour",
+          "perDay": "Day",
+          "perWeek": "Week",
+          "perMonth": "Month",
+          "perPerson": "Person",
+          "unit": "Unit",
+          "priceType": "Price Type",
+          "add": "Add",
+          "cancel": "Cancel"
+        },
         "surfShop": {
           "rentalTitle": "Surfboard rental",
           "rentalSubtitle": "Using a surfboard rental service, you can advertise a surfboard for rent.",
           "classTitle": "Surf class",
           "classSubtitle": "A surf class service is when you instruct a class for a student.",
           "eventTitle": "Surf event",
-          "eventSubtitle": "Event service is used to plan events for your business."
+          "eventSubtitle": "Event service is used to plan events for your business.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco.",
+          "onDemandClass": "Private lesson",
+          "onDemandClassLabel": "Unscheduled class that a student can book with you based on your availability",
+          "weeklyClass": "Weekly scheduled class",
+          "weeklyClassLabel": "Scheduled class that happens every week that happens in group.",
+          "oneTimeClass": "Workshop",
+          "oneTimeClassLabel": "A one time class that happens on a particular day."
         },
         "vehicleRental": {
           "rentalTitle": "Rental",
-          "rentalSubtitle": "Using a rental service, you can advertise a vehicle for rent."
+          "rentalSubtitle": "Using a rental service, you can advertise a vehicle for rent.",
+          "motorcycle": "Motorcycle",
+          "car": "Car",
+          "aTB": "ATB",
+          "bicycle": "Bicycle",
+          "retro": "Retro",
+          "scooter": "Scooter",
+          "threeWheeler": "3 Wheeler",
+          "uncategorized": "Uncategorized",
+          "vehicleType": "Type of vehicle",
+          "vehicleTypeHint": "Select your vehicle type",
+          "rentalDetails": "Rental details",
+          "motorcycleType": "Motorcycle Type",
+          "motorcycleTypeHint": "Select your motorcycle type",
+          "length": "Length",
+          "surfLength": "Surf board length",
+          "surfLengthError": "Please enter surf board length"
         },
         "yogaStudio": {
           "eventTitle": "Event",
           "eventSubtitle": "Event service is used to plan events for your business.",
           "classTitle": "Class",
-          "classSubtitle": "A class service is when you instruct a class for a student."
+          "classSubtitle": "A class service is when you instruct a class for a student.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco.",
+          "onDemandClass": "Private lesson",
+          "onDemandClassLabel": "Unscheduled class that a student can book with you based on your availability",
+          "weeklyClass": "Weekly scheduled class",
+          "weeklyClassLabel": "Scheduled class that happens every week that happens in group.",
+          "oneTimeClass": "Workshop",
+          "oneTimeClassLabel": "A one time class that happens on a particular day."
         },
         "homeRental": {
           "rentalTitle": "Home rental",
-          "rentalSubtitle": "Using a home rental service, you can advertise a home for rent."
+          "rentalSubtitle": "Using a home rental service, you can advertise a home for rent.",
+          "rentalDetails": "Rental details",
+          "homeType": "Home type",
+          "homeTypeError": "Please select home type",
+          "homeLocation": "Pick house location",
+          "bedrooms": "Bedrooms",
+          "bedroomsHint": "How many bedrooms does your home have?",
+          "bedroomsError": "Please enter bedrooms",
+          "bathrooms": "Bathrooms",
+          "bathroomsHint": "How many bathrooms does your home have?",
+          "bathroomsError": "Please enter bathrooms",
+          "apartment": "Apartment",
+          "villa": "Villa",
+          "condo": "Condo",
+          "bungalow": "Bungalow",
+          "hotel": "Hotel"
         },
         "languageSchool": {
           "eventTitle": "Event",
           "eventSubtitle": "Event service is used to plan events for your business.",
           "classTitle": "Class",
-          "classSubtitle": "A class service is when you instruct a class for a student."
+          "classSubtitle": "A class service is when you instruct a class for a student.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco.",
+          "onDemandClass": "Private lesson",
+          "onDemandClassLabel": "Unscheduled class that a student can book with you based on your availability",
+          "weeklyClass": "Weekly scheduled class",
+          "weeklyClassLabel": "Scheduled class that happens every week that happens in group.",
+          "oneTimeClass": "Workshop",
+          "oneTimeClassLabel": "A one time class that happens on a particular day."
         },
         "tourAgency": {
           "eventTitle": "Event",
-          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event."
+          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event.",
+          "weeklyEvent": "Weekly trips",
+          "weeklyEventLabel": "Scheduled trips that happen on a weekly basis at the same time. For example Sunday morning hikes.",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Event that is scheduled for a certain date & time where people need to book. For example, jungle cruise party.",
+          "onDemand": "On demand event",
+          "onDemandLabel": "Events that can be booked on demand. For example dolphin tour."
         },
         "artisanalProduct": {
           "productTitle": "Item",
-          "productSubtitle": "Advertise an item that can be bought."
+          "product": "Product",
+          "productSubtitle": "Advertise an item that can be bought.",
+          "consumable": "Consumable",
+          "personalCare": "PersonalCare",
+          "art": "Art",
+          "uncategorized": "Uncategorized"
         },
         "cleaningService": {
           "serviceTitle": "Service",
@@ -103,19 +225,37 @@
         },
         "petSitting": {
           "serviceTitle": "Pet sitting service",
-          "serviceSubtitle": "Advertise your pet sitting service."
+          "serviceSubtitle": "Advertise your pet sitting service.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco."
         },
         "wellnessPractitioner": {
           "eventTitle": "Event",
-          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event."
+          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "An event that reoccurs on a weekly basis.",
+          "oneTimeEvent": "Retreat",
+          "oneTimeEventLabel": "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat.",
+          "onDemand": "Private session",
+          "onDemandLabel": "A one on one event that clients can book with you."
         },
         "volunteer": {
           "eventTitle": "Event",
-          "eventSubtitle": "Advertise weekly or one time events."
+          "eventSubtitle": "Advertise weekly or one time event.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "An event that repeats on a weekly basis. For example, ocean clean Wednesdays.",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "An event that is scheduled for a certain date and time. For example, Pet shelter camp."
         },
         "entertainment": {
           "eventTitle": "Event",
-          "eventSubtitle": "Advertise one time or repeat events."
+          "eventSubtitle": "Advertise one time or repeat events.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco."
         }
       }
     }
@@ -1546,11 +1686,19 @@
         "phoneErrorText": "Please enter a valid phone number",
         "location": "Location",
         "description": "Description in",
+        "prLang": "Primary language",
+        "sameLangErrorText": "This language is used, please enter a different language",
+        "prLangErrorText": "Please enter a valid primary language",
+        "scLang": "Secondary language",
+        "scLangErrorText": "Please enter a valid secondary language",
+        "none": "None",
         "info": "Info",
         "save": "Save",
         "saved": "Saved",
         "error": "Error",
-        "savedSuccess": "Your information has been successfully saved "
+        "savedSuccess": "Your information has been successfully saved ",
+        "en": "English",
+        "es": "Spanish"
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No restaurant found on your operator",

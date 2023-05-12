@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/__generated/cart.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
@@ -20,7 +19,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 final HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -129,14 +127,8 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                     cartitem.restaurant_item.special_period_end!)
                 : null,
             id: cartitem.restaurant_item.id,
-            name: {
-              cartitem.restaurant_item.name.translations.first.language_id
-                      .toLanguage():
-                  cartitem.restaurant_item.name.translations.first.value,
-              cartitem.restaurant_item.name.translations[1].language_id
-                      .toLanguage():
-                  cartitem.restaurant_item.name.translations[1].value,
-            },
+            name: toLanguageMap(
+                translations: cartitem.restaurant_item.name.translations),
             itemType: cartitem.restaurant_item.item_type.toItemType(),
             image: cartitem.restaurant_item.image,
             cost: cartitem.restaurant_item.cost),
@@ -150,15 +142,15 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
             .forEach((String key, value) {
           final List<Choice> choices = [];
           value['choices'].forEach((key, value) {
+            mezDbgPrint("Choice map ================>$value");
             choices.add(
               Choice(
                 id: value['id'],
-                name: {
-                  cModels.Language.EN: value['name']
-                      [userLanguage.toFirebaseFormatString()],
-                  cModels.Language.ES: value['name']
-                      [userLanguage.toFirebaseFormatString()]
-                },
+                name: value["name"]
+                    .map<cModels.Language, String>((String key, value) {
+                  return MapEntry(
+                      key.toString().toLanguage(), value.toString());
+                }),
                 cost: value['cost'],
               ),
             );
@@ -344,14 +336,8 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
                       cartitem.restaurant_item.special_period_end!)
                   : null,
               id: cartitem.restaurant_item.id,
-              name: {
-                cartitem.restaurant_item.name.translations.first.language_id
-                        .toLanguage():
-                    cartitem.restaurant_item.name.translations.first.value,
-                cartitem.restaurant_item.name.translations[1].language_id
-                        .toLanguage():
-                    cartitem.restaurant_item.name.translations[1].value,
-              },
+              name: toLanguageMap(
+                  translations: cartitem.restaurant_item.name.translations),
               itemType: cartitem.restaurant_item.item_type.toItemType(),
               image: cartitem.restaurant_item.image,
               cost: cartitem.restaurant_item.cost),
@@ -368,10 +354,11 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
               choices.add(
                 Choice(
                   id: value['id'],
-                  name: {
-                    cModels.Language.EN: value['name']["en"],
-                    cModels.Language.ES: value['name']["es"]
-                  },
+                  name: value["name"]
+                      .map<cModels.Language, String>((String key, value) {
+                    return MapEntry(
+                        key.toString().toLanguage(), value.toString());
+                  }),
                   cost: value['cost'],
                 ),
               );

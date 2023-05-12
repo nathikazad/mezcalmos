@@ -32,20 +32,28 @@ class BusinessItemDetailsController {
   RxBool isAvailable = false.obs;
   RxBool isEditing = false.obs;
   Rxn<BusinessItemDetails> _details = Rxn<BusinessItemDetails>();
+  Rxn<ServiceProviderLanguage> languages = Rxn();
   // getters //
 
   BusinessItemDetails? get details => _details.value;
   // methods //
+  void setLanguage({required ServiceProviderLanguage language}) {
+    languages.value = language;
+  }
+
   Future<void> initEditMode({required int detalsId}) async {
     mezDbgPrint(" 🟢  initEditMode : $detalsId");
-    _details.value = await get_business_details_by_id(
+    _details.value = await get_business_item_details_by_id(
         detailsId: detalsId,
         businessId: Get.find<BusinessOpAuthController>().companyId!);
+
     if (details != null) {
-      nameController.text = details!.name[Language.EN] ?? "";
-      descriptionController.text = details!.description?[Language.EN] ?? "";
-      scNameController.text = details!.name[Language.ES] ?? "";
-      scDescriptionController.text = details!.description?[Language.ES] ?? "";
+      nameController.text = details!.name[languages.value!.primary] ?? "";
+      descriptionController.text =
+          details!.description?[languages.value!.primary] ?? "";
+      scNameController.text = details!.name[languages.value!.secondary] ?? "";
+      scDescriptionController.text =
+          details!.description?[languages.value!.secondary] ?? "";
       isAvailable.value = details!.available;
 
       if (details!.image != null) {
@@ -65,16 +73,11 @@ class BusinessItemDetailsController {
 
   Future<BusinessItemDetails> contructDetails() async {
     List<String> images = await uploadItemsImages();
+    // final LanguageMap _name = constructName();
     return BusinessItemDetails(
         id: details?.id ?? 0,
-        name: {
-          Language.EN: nameController.text,
-          Language.ES: scNameController.text
-        },
-        description: {
-          Language.EN: descriptionController.text,
-          Language.ES: scDescriptionController.text
-        },
+        name: constructName(),
+        description: constructDesc(),
         image: images,
         businessId: Get.find<BusinessOpAuthController>().companyId!,
         available: isAvailable.value,
@@ -194,17 +197,21 @@ class BusinessItemDetailsController {
   }
 
   LanguageMap constructDesc() {
-    return {
-      Language.EN: descriptionController.text,
-      Language.ES: scDescriptionController.text
+    final LanguageMap _desc = {
+      languages.value!.primary: descriptionController.text
     };
+    if (languages.value!.secondary != null) {
+      _desc[languages.value!.secondary!] = scDescriptionController.text;
+    }
+    return _desc;
   }
 
   LanguageMap constructName() {
-    return {
-      Language.EN: nameController.text,
-      Language.ES: scNameController.text
-    };
+    final LanguageMap _name = {languages.value!.primary: nameController.text};
+    if (languages.value!.secondary != null) {
+      _name[languages.value!.secondary!] = scNameController.text;
+    }
+    return _name;
   }
 
   bool get hasOneImage {

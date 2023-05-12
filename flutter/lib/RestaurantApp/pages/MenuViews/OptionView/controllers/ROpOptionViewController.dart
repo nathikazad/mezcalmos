@@ -2,13 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/choice/hsChoice.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/hsOption.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
@@ -21,28 +19,23 @@ enum FormValid { Valid, PrimaryNotValid, SecondaryNotValid }
 
 class ROpOptionViewController {
   // instances //
-
+  LanguageTabsController languageTabsController = LanguageTabsController();
   // Text inputs //
   TextEditingController prOptionName = TextEditingController();
   TextEditingController scOptionName = TextEditingController();
   TextEditingController costPerExtra = TextEditingController();
 
-  // form//
-  bool firstTabValid = false;
-  bool secondTabValid = false;
-
   // variables //
 
   Rx<OptionType> optionType = Rx(OptionType.ChooseOne);
   RxList<Choice> optionChoices = RxList([]);
-  Rxn<cModels.ServiceProviderLanguage> languages = Rxn();
 
   RxnInt min = RxnInt();
   RxnInt max = RxnInt();
   RxnInt free = RxnInt();
   Rxn<Option> editableOption = Rxn<Option>();
   RxBool editMode = RxBool(false);
-  RxBool initDone = RxBool(false);
+  RxBool _initDone = RxBool(false);
   RxBool needToFetch = RxBool(false);
 
   // constants //
@@ -50,32 +43,34 @@ class ROpOptionViewController {
 
   // getters //
   bool get isEditing => editMode.value && editableOption.value != null;
-
+  cModels.ServiceProviderLanguage? get languages =>
+      languageTabsController.language;
+  bool get initDone =>
+      _initDone.value && languageTabsController.tabController != null;
   late int restaurantId;
+  late int detailsId;
 
 // init //
   Future<void> init(
       {String? optionId,
+      required int detailsId,
       required String restaurantId,
+      required TickerProvider vsync,
       required String itemID}) async {
     this.restaurantId = int.parse(restaurantId);
+    this.detailsId = detailsId;
     itemId = int.tryParse(itemID);
-    await _assignLanguages(restaurantId);
+    await languageTabsController.init(vsync: vsync, detailsId: detailsId);
     if (optionId != null && int.tryParse(optionId) != null) {
       // launch edit mode //
       await _initEditMode(int.parse(optionId));
     } else {
       // add new option mode //
     }
-    initDone.value = true;
+    _initDone.value = true;
   }
 
   /// Getting primary language and secondary language based on restuarant info
-  Future<void> _assignLanguages(String restaurantId) async {
-    if (int.tryParse(restaurantId) != null) {
-      languages.value = await get_restaurant_lang(int.parse(restaurantId));
-    }
-  }
 
   /// When editing an existing option
   ///
@@ -85,9 +80,9 @@ class ROpOptionViewController {
     if (editableOption.value != null) {
       editMode.value = true;
       optionType.value = editableOption.value!.optionType;
-      prOptionName.text = editableOption.value!.name[languages.value!.primary]!;
+      prOptionName.text = editableOption.value!.name[languages!.primary]!;
       scOptionName.text =
-          editableOption.value!.name[languages.value!.secondary] ?? "";
+          editableOption.value!.name[languages!.secondary] ?? "";
       if (editableOption.value!.optionType == OptionType.Custom) {
         free.value = editableOption.value!.freeChoice as int;
         min.value = editableOption.value!.minimumChoice as int;
@@ -112,10 +107,12 @@ class ROpOptionViewController {
   }
 
   Future<void> saveOption() async {
-    if (isEditing == false) {
-      await _addNewOption();
-    } else {
-      await _updateOption();
+    if (languageTabsController.validate()) {
+      if (isEditing == false) {
+        await _addNewOption();
+      } else {
+        await _updateOption();
+      }
     }
   }
 
@@ -169,9 +166,9 @@ class ROpOptionViewController {
   }
 
   Option _contructNormalOption() {
-    final LanguageMap name = {languages.value!.primary: prOptionName.text};
-    if (languages.value!.secondary != null && scOptionName.text.isNotEmpty) {
-      name[languages.value!.secondary!] = scOptionName.text;
+    final LanguageMap name = {languages!.primary: prOptionName.text};
+    if (languages!.secondary != null && scOptionName.text.isNotEmpty) {
+      name[languages!.secondary!] = scOptionName.text;
     }
     final Option newOption = Option(
       id: editMode.value ? editableOption.value!.id : Random().nextInt(15),
@@ -184,9 +181,9 @@ class ROpOptionViewController {
   }
 
   Option _constructCustomOption() {
-    final LanguageMap name = {languages.value!.primary: prOptionName.text};
-    if (languages.value!.secondary != null && scOptionName.text.isNotEmpty) {
-      name[languages.value!.secondary!] = scOptionName.text;
+    final LanguageMap name = {languages!.primary: prOptionName.text};
+    if (languages!.secondary != null && scOptionName.text.isNotEmpty) {
+      name[languages!.secondary!] = scOptionName.text;
     }
     final Option newOption = Option(
       id: editMode.value ? editableOption.value!.id : Random().nextInt(15),
@@ -204,7 +201,7 @@ class ROpOptionViewController {
   Future<bool?> deleteOption() async {
     final bool result =
         await delete_option_by_id(optionId: editableOption.value!.id);
-    result ? MezRouter.back() : null;
+    await result ? MezRouter.back() : null;
     return result;
   }
 
@@ -262,5 +259,9 @@ class ROpOptionViewController {
     update_choice_by_id(
             choice: choice.copyWith(available: value), choiceId: choice.id)
         .then((bool value) => fetchOption());
+  }
+
+  void dispose() {
+    languageTabsController.dispose();
   }
 }

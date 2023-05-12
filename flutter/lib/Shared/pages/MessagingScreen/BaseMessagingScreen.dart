@@ -121,19 +121,23 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                   action: InkWell(
                     onTap: () {
                       if (MezRouter.isRouteInStack(
-                        controller.incomingViewLink!.url,
+                        message.link!.url,
                       )) {
                         MezRouter.toPath(message.link!.url);
                       }
                     },
-                    child: Obx(
-                      () => Text(
-                        _i18n()["view"],
-                        style: context.textTheme.titleLarge!.copyWith(
-                          color: primaryBlueColor,
-                        ),
-                      ),
-                    ),
+                    child: MezRouter.isRouteInStack(
+                      message.link!.url,
+                    )
+                        ? Obx(
+                            () => Text(
+                              _i18n()["view"],
+                              style: context.textTheme.titleLarge!.copyWith(
+                                color: primaryBlueColor,
+                              ),
+                            ),
+                          )
+                        : SizedBox.shrink(),
                   ),
                   content: Text(
                     message.link!.name.getTranslation(userLanguage),

@@ -247,8 +247,10 @@ update_permissions:
       columns:
         - accepted_payments
         - currency
+        - description_id
         - image
         - language
+        - location_id
         - name
         - open_status
         - phone_number
@@ -267,6 +269,7 @@ update_permissions:
         - description_id
         - image
         - language
+        - location_id
         - name
         - open_status
         - phone_number
@@ -280,8 +283,10 @@ update_permissions:
   - role: mez_admin
     permission:
       columns:
+        - accepted_payments
         - approved
         - currency
+        - description_id
         - image
         - language
         - location_id
@@ -313,6 +318,7 @@ update_permissions:
         - description_id
         - image
         - language
+        - location_id
         - name
         - open_status
         - phone_number

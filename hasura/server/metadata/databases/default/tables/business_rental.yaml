@@ -27,6 +27,7 @@ insert_permissions:
         - business_id
         - category3
         - details_id
+        - id
 select_permissions:
   - role: business_operator
     permission:

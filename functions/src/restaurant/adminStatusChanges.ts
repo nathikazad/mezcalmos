@@ -18,8 +18,8 @@ import { MezError } from "../shared/models/Generic/Generic";
 
 let statusArrayInSeq: Array<RestaurantOrderStatus> =
   [RestaurantOrderStatus.OrderReceived,
-  RestaurantOrderStatus.PreparingOrder,
-  RestaurantOrderStatus.ReadyForPickup,
+  RestaurantOrderStatus.Preparing,
+  RestaurantOrderStatus.Ready,
   RestaurantOrderStatus.OnTheWay,
   RestaurantOrderStatus.Delivered
   ]
@@ -46,7 +46,7 @@ export enum ChangeRestaurantStatusError {
   UpdateOrderStripeError = "updateOrderStripeError",
 }
 export async function prepareOrder(userId: number, data: ChangeStatusDetails): Promise<ChangeRestaurantStatusResponse> {
-  return await changeStatus(data.orderId, RestaurantOrderStatus.PreparingOrder, userId)
+  return await changeStatus(data.orderId, RestaurantOrderStatus.Preparing, userId)
 }
 
 export async function cancelOrder(userId: number, data: ChangeStatusDetails): Promise<ChangeRestaurantStatusResponse> {
@@ -54,7 +54,7 @@ export async function cancelOrder(userId: number, data: ChangeStatusDetails): Pr
 }
 
 export async function readyForPickupOrder(userId: number, data: ChangeStatusDetails): Promise<ChangeRestaurantStatusResponse> {
-  return await changeStatus(data.orderId, RestaurantOrderStatus.ReadyForPickup, userId)
+  return await changeStatus(data.orderId, RestaurantOrderStatus.Ready, userId)
 }
 
 export async function orderPickedUpByCustomer(userId: number, data: ChangeStatusDetails): Promise<ChangeRestaurantStatusResponse> {
@@ -124,7 +124,7 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
         deliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
         updateDeliveryOrderStatus(deliveryOrder);
       }
-      if(order.status == RestaurantOrderStatus.ReadyForPickup) {
+      if(order.status == RestaurantOrderStatus.Ready) {
         deliveryOrder.packageReady = true;
         updateDeliveryOrderStatus(deliveryOrder);
       } 

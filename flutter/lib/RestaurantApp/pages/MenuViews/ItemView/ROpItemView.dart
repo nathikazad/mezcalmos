@@ -16,8 +16,8 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -31,6 +31,7 @@ class ROpItemView extends StatefulWidget {
 
   static Future<bool?> navigate(
       {required int restaurantId,
+      required int detailsId,
       required int? itemId,
       int? categoryId,
       required Map<String, dynamic> arguments}) async {
@@ -42,7 +43,7 @@ class ROpItemView extends StatefulWidget {
     if (itemId != null) {
       route = route.replaceFirst(":itemId", "$itemId");
     }
-    await MezRouter.toPath(route);
+    await MezRouter.toPath(route, arguments: {"detailsId": detailsId});
     return MezRouter.backResult;
   }
 
@@ -60,42 +61,40 @@ class ROpItemView extends StatefulWidget {
 
 class _ROpItemViewState extends State<ROpItemView>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+  // late TabController _tabController;
   int? restuarantID;
+  int? detailsId;
   int? itemId;
   int? categoryId;
   bool? specials;
   ROpItemViewController viewController = ROpItemViewController();
-  final GlobalKey<FormState> _prformKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _scformKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     itemId = int.tryParse(MezRouter.urlArguments["itemId"].toString());
     categoryId = int.tryParse(MezRouter.urlArguments["categoryId"].toString());
+    detailsId = int.tryParse(MezRouter.bodyArguments!["detailsId"].toString());
+
     restuarantID =
         int.tryParse(MezRouter.urlArguments["restaurantId"].toString());
     mezDbgPrint("Restuarnt id in item view ============> $restuarantID");
-    if (restuarantID != null) {
-      // specials = MezRouter.bodyArguments?["specials"].toString() == 'true'
-      //     ? true
-      //     : false ?? false;
-
-      _tabController = TabController(length: 2, vsync: this);
+    if (restuarantID != null && detailsId != null) {
       viewController.init(
           itemId: itemId,
           categoryId: categoryId,
+          detailsId: detailsId!,
+          vsync: this,
           specials: specials,
           restaurantId: restuarantID!);
     } else
-      MezRouter.back();
+      showErrorSnackBar();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    // _tabController.dispose();
     viewController.dispose();
 
     super.dispose();
@@ -105,26 +104,18 @@ class _ROpItemViewState extends State<ROpItemView>
   Widget build(BuildContext context) {
     return Obx(
       () {
-        if (viewController.isInitalized.isTrue) {
+        if (viewController.isInitalized.isTrue &&
+            viewController.tabController != null) {
           return Scaffold(
-            appBar: _appBar(),
-            bottomNavigationBar: _saveBtn(),
-            body: Obx(
-              () {
-                if (viewController.isInitalized.isTrue) {
-                  return TabBarView(
-                    controller: _tabController,
-                    children: [
-                      _primaryTab(),
-                      _secondaryTab(),
-                    ],
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              },
-            ),
-          );
+              appBar: _appBar(),
+              bottomNavigationBar: _saveBtn(),
+              body: TabBarView(
+                controller: viewController.tabController,
+                children: [
+                  _primaryTab(),
+                  if (viewController.hasSecondaryLang) _secondaryTab(),
+                ],
+              ));
         } else {
           return Container(
             color: Colors.white,
@@ -158,23 +149,23 @@ class _ROpItemViewState extends State<ROpItemView>
     },
         title: '${_i18n()["item"]}',
         showNotifications: true,
-        tabBar: TabBar(controller: _tabController, tabs: [
-          Tab(
-            child: Obx(() => Text(
-                "${viewController.languages.value!.primary.toLanguageName()}")),
-          ),
-          Tab(
-            child: Obx(() => Text(
-                "${viewController.languages.value!.secondary?.toLanguageName() ?? ""}")),
-          ),
-        ]));
+        tabBar: viewController.hasSecondaryLang
+            ? TabBar(controller: viewController.tabController, tabs: [
+                Tab(
+                    child: Text(
+                        "${viewController.languages!.primary.toLanguageName()}")),
+                Tab(
+                    child: Text(
+                        "${viewController.languages!.secondary?.toLanguageName() ?? ""}")),
+              ])
+            : null);
   }
 
   Widget _secondaryTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(8),
       child: Form(
-        key: _scformKey,
+        key: viewController.secondaryFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -194,13 +185,9 @@ class _ROpItemViewState extends State<ROpItemView>
               controller: viewController.scItemNameController,
               validator: (String? value) {
                 // TODO validations
-                // if (value == null || value.isEmpty) {
-                //   return '${_i18n()["required"]}';
-                // } else if (viewController
-                //     .getItemsNames(viewController.scLang.value)
-                //     .contains(value.replaceAll(" ", "").toLowerCase())) {
-                //   return '${_i18n()["nameExist"]}';
-                // }
+                if (value == null || value.isEmpty) {
+                  return '${_i18n()["required"]}';
+                }
                 return null;
               },
             ),
@@ -230,7 +217,7 @@ class _ROpItemViewState extends State<ROpItemView>
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12),
       child: Form(
-        key: _prformKey,
+        key: viewController.primaryFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -259,13 +246,9 @@ class _ROpItemViewState extends State<ROpItemView>
               controller: viewController.prItemNameController,
               validator: (String? value) {
                 // TODO validations
-                // if (value == null || value.isEmpty) {
-                //   return '${_i18n()["required"]}';
-                // } else if (viewController
-                //     .getItemsNames(viewController.prLang.value)
-                //     .contains(value.replaceAll(" ", "").toLowerCase())) {
-                //   return '${_i18n()["nameExist"]}';
-                // }
+                if (value == null || value.isEmpty) {
+                  return '${_i18n()["required"]}';
+                }
                 return null;
               },
             ),
@@ -355,6 +338,7 @@ class _ROpItemViewState extends State<ROpItemView>
                       onClick: () async {
                         final bool? result = await ROpOptionView.navigate(
                             restaurantId: restuarantID!,
+                            restaurantDetailsId: detailsId!,
                             optionId: null,
                             itemId: viewController.editableItem.value!.id!);
                         if (result == true) {
@@ -425,43 +409,8 @@ class _ROpItemViewState extends State<ROpItemView>
   }
 
   Future<void> _handleSaveBtn() async {
-    if (_tabController.index == 0) {
-      await _handleFirstTab();
-    } else {
-      await _handleSecondTab();
-    }
-  }
-
-  Future<void> _handleSecondTab() async {
-    if (isSecValid && isPrValid) {
+    if (viewController.validate) {
       await viewController.saveItem();
-      _tabController.animateTo(1);
-    } else if (!isSecValid) {
-      _tabController.animateTo(1);
-    } else if (!isPrValid) {
-      viewController.secondFormValid = true;
-      _tabController.animateTo(0);
     }
-  }
-
-  Future<void> _handleFirstTab() async {
-    if (isPrValid && isSecValid) {
-      await viewController.saveItem();
-    } else if (!isPrValid) {
-      _tabController.animateTo(0);
-    } else if (!isSecValid) {
-      viewController.firstFormValid = true;
-      _tabController.animateTo(1);
-    }
-  }
-
-  bool get isPrValid {
-    return _prformKey.currentState?.validate() == true ||
-        viewController.firstFormValid;
-  }
-
-  bool get isSecValid {
-    return _scformKey.currentState?.validate() == true ||
-        viewController.secondFormValid;
   }
 }

@@ -8,12 +8,12 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -26,6 +26,7 @@ class ROpChoiceView extends StatefulWidget {
   static Future<void> navigate(
       {required int? choiceId,
       required String restaurantId,
+      required int detailsId,
       required int optionId}) {
     String route = RestaurantAppRoutes.restaurantChoiceRoute
         .replaceAll(":restaurantId", restaurantId)
@@ -34,7 +35,7 @@ class ROpChoiceView extends StatefulWidget {
     if (choiceId != null) {
       route = route.replaceFirst(":choiceId", "$choiceId");
     }
-    return MezRouter.toPath(route);
+    return MezRouter.toPath(route, arguments: {"detailsId": detailsId});
   }
 
   @override
@@ -43,12 +44,10 @@ class ROpChoiceView extends StatefulWidget {
 
 class _ROpChoiceViewState extends State<ROpChoiceView>
     with SingleTickerProviderStateMixin {
-  final GlobalKey<FormState> _prFormKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _scFormKey = GlobalKey<FormState>();
   ROpChoiceViewController viewController = ROpChoiceViewController();
-  late TabController tabController;
   String? choiceId;
   String? optionId;
+  int? detailsId;
   String? restaurantId;
 
   @override
@@ -56,9 +55,11 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
     choiceId = MezRouter.urlArguments["choiceId"].toString();
     optionId = MezRouter.urlArguments["optionId"].toString();
     restaurantId = MezRouter.urlArguments["restaurantId"].toString();
-    if (restaurantId != null && optionId != null) {
-      tabController = TabController(length: 2, vsync: this);
+    detailsId = int.tryParse(MezRouter.bodyArguments!["detailsId"].toString());
+    if (detailsId != null && restaurantId != null && optionId != null) {
       viewController.init(
+          detailsId: detailsId!,
+          vsync: this,
           choiceId: (choiceId != null) ? int.tryParse(choiceId!) : null,
           optionId: int.parse(optionId!),
           restaurantId: int.parse(restaurantId!));
@@ -70,142 +71,161 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: _choiceAppBar(),
-        bottomNavigationBar: _choiceSaveBtn(),
-        body: TabBarView(
-          controller: tabController,
-          children: [
-            // primary language tab //
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(13),
-              child: Form(
-                  key: _prFormKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Obx(
-                        () => ROpAvailableChips(
-                            isAvailable: viewController.isAv.value,
-                            marging: EdgeInsets.symmetric(vertical: 10),
-                            onAvailableTap: (bool? v) {
-                              viewController.switchChoiceAv(true);
-                            },
-                            onUnavailableTap: (bool? v) {
-                              viewController.switchChoiceAv(false);
-                            }),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "${_i18n()['choiceName']}",
-                        style: context.txt.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: viewController.prChoiceName,
-                        style: context.txt.bodyLarge,
-                        validator: (String? v) {
-                          if (v == null || v.isEmpty) {
-                            return "${_i18n()['required']}";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "${_i18n()['choicePrice']}",
-                        style: context.txt.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: viewController.choicePriceText,
-                        style: context.txt.bodyLarge,
-                        validator: (String? v) {
-                          if (v == null || v.isEmpty) {
-                            return "${_i18n()['required']}";
-                          }
-                          return null;
-                        },
-                        textAlignVertical: TextAlignVertical.center,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))
-                        ],
-                        decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.attach_money_rounded)),
-                      ),
-                      SizedBox(
-                        height: 35,
-                      ),
-                      MezButton(
-                        label: "${_i18n()['deleteChoice']}",
-                        backgroundColor: offRedColor,
-                        textColor: Colors.red,
-                        onClick: () async {
-                          await showConfirmationDialog(
-                            context,
-                            onYesClick: () async {
-                              await viewController
-                                  .deleteChoice()
-                                  .then((bool? hasBennDeleted) {
-                                if (hasBennDeleted == true) {
-                                  MezRouter.back(backResult: true);
-                                }
-                              });
-                            },
-                            primaryButtonText: "${_i18n()['yDeleteChoice']}",
-                            title: "${_i18n()['deleteChoice']}",
-                            helperText: "${_i18n()['helperText']}",
-                          );
-                        },
-                      )
-                    ],
-                  )),
-            ),
-            // secondary language tab//
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(13),
-              child: Form(
-                  key: _scFormKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Obx(
-                        () => Text(
-                          "${_i18n()['choiceNameIn']} ${viewController.languages.value!.secondary?.toLanguageName() ?? ""}",
-                          style: context.txt.bodyLarge,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        controller: viewController.scChoiceName,
-                        style: context.txt.bodyLarge,
-                        validator: (String? v) {
-                          if (v == null || v.isEmpty) {
-                            return "${_i18n()['required']}";
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
-                  )),
-            ),
-          ],
-        ));
+    return Obx(() {
+      if (viewController.hasData) {
+        return Scaffold(
+            appBar: _choiceAppBar(),
+            bottomNavigationBar: _choiceSaveBtn(),
+            body: TabBarView(
+              controller: viewController.languageTabsController.tabController,
+              children: [
+                // primary language tab //
+                _primaryTab(context),
+                // secondary language tab//
+                if (viewController.hasSecondaryLang) _secondaryTab(context),
+              ],
+            ));
+      } else {
+        return Container(
+          color: Colors.white,
+          alignment: Alignment.center,
+          child: MezLogoAnimation(
+            centered: true,
+          ),
+        );
+      }
+    });
+  }
+
+  SingleChildScrollView _secondaryTab(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(13),
+      child: Form(
+          key: viewController.languageTabsController.secondaryLangFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 8,
+              ),
+              Obx(
+                () => Text(
+                  "${_i18n()['choiceNameIn']} ${viewController.languages!.secondary?.toLanguageName() ?? ""}",
+                  style: context.txt.bodyLarge,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                controller: viewController.scChoiceName,
+                style: context.txt.bodyLarge,
+                validator: (String? v) {
+                  if (v == null || v.isEmpty) {
+                    return "${_i18n()['required']}";
+                  }
+                  return null;
+                },
+              ),
+            ],
+          )),
+    );
+  }
+
+  SingleChildScrollView _primaryTab(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(13),
+      child: Form(
+          key: viewController.languageTabsController.primaryLangFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Obx(
+                () => ROpAvailableChips(
+                    isAvailable: viewController.isAv.value,
+                    marging: EdgeInsets.symmetric(vertical: 10),
+                    onAvailableTap: (bool? v) {
+                      viewController.switchChoiceAv(true);
+                    },
+                    onUnavailableTap: (bool? v) {
+                      viewController.switchChoiceAv(false);
+                    }),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "${_i18n()['choiceName']}",
+                style: context.txt.bodyLarge,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: viewController.prChoiceName,
+                style: context.txt.bodyLarge,
+                validator: (String? v) {
+                  if (v == null || v.isEmpty) {
+                    return "${_i18n()['required']}";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "${_i18n()['choicePrice']}",
+                style: context.txt.bodyLarge,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: viewController.choicePriceText,
+                style: context.txt.bodyLarge,
+                validator: (String? v) {
+                  if (v == null || v.isEmpty) {
+                    return "${_i18n()['required']}";
+                  }
+                  return null;
+                },
+                textAlignVertical: TextAlignVertical.center,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))
+                ],
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.attach_money_rounded)),
+              ),
+              SizedBox(
+                height: 35,
+              ),
+              MezButton(
+                label: "${_i18n()['deleteChoice']}",
+                backgroundColor: offRedColor,
+                textColor: Colors.red,
+                onClick: () async {
+                  await showConfirmationDialog(
+                    context,
+                    onYesClick: () async {
+                      await viewController
+                          .deleteChoice()
+                          .then((bool? hasBennDeleted) {
+                        if (hasBennDeleted == true) {
+                          MezRouter.back(backResult: true);
+                        }
+                      });
+                    },
+                    primaryButtonText: "${_i18n()['yDeleteChoice']}",
+                    title: "${_i18n()['deleteChoice']}",
+                    helperText: "${_i18n()['helperText']}",
+                  );
+                },
+              )
+            ],
+          )),
+    );
   }
 
   Widget _choiceSaveBtn() {
@@ -214,7 +234,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
       withGradient: true,
       borderRadius: 0,
       onClick: () async {
-        await _handleSaveBtn();
+        await viewController.saveChoice();
       },
     );
   }
@@ -225,17 +245,21 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
       onClick: () {
         MezRouter.back(backResult: viewController.needToFetch.value);
       },
-      tabBar: TabBar(controller: tabController, tabs: [
-        Tab(
-          child: Obx(() => Text(
-              viewController.languages.value!.primary.toLanguageName() ?? "")),
-        ),
-        Tab(
-          child: Obx(() => Text(
-              viewController.languages.value!.secondary?.toLanguageName() ??
-                  "")),
-        ),
-      ]),
+      tabBar: (viewController.hasSecondaryLang)
+          ? TabBar(
+              controller: viewController.languageTabsController.tabController,
+              tabs: [
+                  Tab(
+                    child: Text(
+                        viewController.languages!.primary.toLanguageName() ??
+                            ""),
+                  ),
+                  Tab(
+                      child: Text(viewController.languages!.secondary
+                              ?.toLanguageName() ??
+                          "")),
+                ])
+          : null,
       titleWidget: Obx(() {
         if (viewController.editMode.isTrue) {
           return Text(
@@ -247,61 +271,5 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
         }
       }),
     );
-  }
-
-  Future<void> _handleSaveBtn() async {
-    if (!viewController.isFirstValid || !viewController.isSecondValid) {
-      _prFormKey.currentState?.validate();
-      _scFormKey.currentState?.validate();
-      mezDbgPrint("switch to second $switchToSecond");
-      mezDbgPrint("switch to first $switchToFirst");
-      if (switchToSecond) {
-        tabController.animateTo(1);
-        mezDbgPrint("Animate to second tab");
-      } else if (switchToFirst) {
-        tabController.animateTo(0);
-        mezDbgPrint("Animate to First tab");
-      }
-    } else {
-      await viewController.saveChoice();
-      tabController.animateTo(0);
-    }
-  }
-
-  bool get switchToFirst {
-    return !viewController.isFirstValid &&
-        tabController.index != 0 &&
-        viewController.isSecondValid;
-  }
-
-  bool get switchToSecond {
-    return !viewController.isSecondValid &&
-        tabController.index != 1 &&
-        viewController.isFirstValid;
-  }
-
-  Future<void> _handleSecondTab() async {
-    if (viewController.firstTabValid == true &&
-        _scFormKey.currentState?.validate() == true) {
-      //  MezRouter.back(result: viewController.saveOption());
-    } else if (_scFormKey.currentState?.validate() == true &&
-        _prFormKey.currentState?.validate() != true) {
-      viewController.secondTabValid = true;
-      tabController.animateTo(0);
-    }
-  }
-
-  Future<void> _handleFirstTab() async {
-    if (_prFormKey.currentState?.validate() == true &&
-        (_scFormKey.currentState?.validate() == true ||
-            viewController.secondTabValid)) {
-      await viewController.saveChoice();
-      // MezRouter.back(result: viewController.saveOption());
-    } else if (_prFormKey.currentState?.validate() == true &&
-        _scFormKey.currentState?.validate() != true) {
-      viewController.firstTabValid = true;
-
-      tabController.animateTo(1);
-    }
   }
 }

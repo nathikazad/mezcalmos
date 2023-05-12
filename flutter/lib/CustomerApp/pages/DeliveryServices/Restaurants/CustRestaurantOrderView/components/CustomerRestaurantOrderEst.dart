@@ -148,7 +148,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
 
   bool _showFoodReadyTime() {
     return (order.status == cModels.RestaurantOrderStatus.OrderReceived ||
-            order.status == cModels.RestaurantOrderStatus.PreparingOrder) &&
+            order.status == cModels.RestaurantOrderStatus.Preparing) &&
         _getFoodReadyTime() != null;
   }
 

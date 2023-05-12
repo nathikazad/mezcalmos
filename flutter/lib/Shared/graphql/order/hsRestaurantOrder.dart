@@ -15,11 +15,9 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -424,6 +422,7 @@ Future<List<MinimalOrder>?> get_current_restaurant_orders(
 
     final List<MinimalOrder> orders = ordersData
         .map((Query$get_restaurant_current_orders$restaurant_order orderData) {
+     
       return MinimalOrder(
           id: orderData.id,
           orderType: cModels.OrderType.Restaurant,
