@@ -17,18 +17,21 @@ class BusinessOpAuthController extends GetxController {
 
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
-  BusinessProfile? _businessProfile;
+
+  /// TODO: Just for testing
+  BusinessProfile? _businessProfile = BusinessProfile.SurfShop;
   String? _appLifeCyclePauseCallbackId;
   String? _appLifeCycleResumeCallbackId;
 
   /// this getter should be used only after the operator is set
   /// otherwise it will throw an exception
   BusinessProfile? get businessProfile {
-    return BusinessProfile.SurfShop;
-    // return _businessProfile;
+    // return BusinessProfile.SurfShop;
+    return _businessProfile;
   }
 
-  int get businessDetailsId => operator.value!.serviceProviderDetailsId!.toInt();
+  int get businessDetailsId =>
+      operator.value!.serviceProviderDetailsId!.toInt();
   set setBusinessProfile(BusinessProfile? value) {
     _businessProfile = value;
   }
@@ -54,6 +57,11 @@ class BusinessOpAuthController extends GetxController {
         _companyId.value = operator.value!.serviceProviderId.toInt();
         _businessProfile =
             await get_operator_business_profile(userId: operatorUserId);
+
+        /// TODO: Just for testing
+        _businessProfile = BusinessProfile.SurfShop;
+      } else {
+        await Get.find<AuthController>().signOut();
       }
     } catch (e, stk) {
       mezDbgPrint(e);

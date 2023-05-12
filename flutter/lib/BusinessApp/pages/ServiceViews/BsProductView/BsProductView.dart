@@ -116,19 +116,6 @@ class _BsOpProductViewState extends State<BsOpProductView>
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
       MezRouter.back(backResult: viewController.shouldRefetch);
     },
-        tabBar: PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: TabBar(
-                tabs: [
-                  Tab(
-                    text: _i18n()["english"],
-                  ),
-                  Tab(
-                    text: _i18n()["spanish"],
-                  )
-                ],
-                controller:
-                    viewController.languageTabsController.tabController)),
         titleWidget: Obx(() => Text(viewController.product != null
             ? "${viewController.product!.details.name.getTranslation(userLanguage)}"
             : _i18n()["artisanalProduct"]["product"])));
@@ -212,7 +199,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
           BsOpServiceImagesGrid(
             detailsController: viewController.detailsController,
           ),
-          bigSeperator,
+          // bigSeperator,
           Text(
             _i18n()["name"],
             style: context.textTheme.bodyLarge,

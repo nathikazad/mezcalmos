@@ -246,7 +246,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
           BsOpServiceImagesGrid(
             detailsController: viewController.detailsController,
           ),
-          bigSeperator,
+          // bigSeperator,
           Text(
             _i18n()["name"],
             style: context.textTheme.bodyLarge,

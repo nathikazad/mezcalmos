@@ -204,7 +204,7 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: serviceTitleLangKey,
             subtitle: serviceSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: true),
+            route: () => BsOpEventView.navigate(id: null, isClass: false),
           ),
         ];
       case BusinessProfile.Entertainment:

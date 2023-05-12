@@ -116,19 +116,6 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
       MezRouter.back(backResult: viewController.shouldRefetch);
     },
-        tabBar: PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: TabBar(
-                tabs: [
-                  Tab(
-                    text: viewController.languages!.primary.toLanguageName(),
-                  ),
-                  Tab(
-                    text: viewController.languages!.secondary!.toLanguageName(),
-                  )
-                ],
-                controller:
-                    viewController.languageTabsController.tabController)),
         titleWidget: Obx(() => Text(viewController.service != null
             ? "${viewController.service!.details.name.getTranslation(userLanguage)}"
             : _i18n()["service"])));
@@ -212,7 +199,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
           BsOpServiceImagesGrid(
             detailsController: viewController.detailsController,
           ),
-          bigSeperator,
+          // bigSeperator,
           Text(
             _i18n()["name"],
             style: context.textTheme.bodyLarge,

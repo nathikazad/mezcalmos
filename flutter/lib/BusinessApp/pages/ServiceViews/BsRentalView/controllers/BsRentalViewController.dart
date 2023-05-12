@@ -144,16 +144,19 @@ class BsRentalViewController {
               },
             );
           }
+          showSavedSnackBar();
         } catch (e, stk) {
           mezDbgPrint(
               " 🛑 ${rental?.id?.toInt()}  OperationException : ${e.toString()}");
           mezDbgPrint(stk);
+          showErrorSnackBar();
         }
         shouldRefetch = true;
       } else {
         final Rental _rental = await _constructRental();
         mezDbgPrint("busniess id : ${_rental.details.businessId}");
         await createItem(_rental);
+        showSavedSnackBar();
       }
     }
   }

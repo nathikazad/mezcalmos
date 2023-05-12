@@ -4,10 +4,20 @@
       "services": {
         "services": "Servicios",
         "service": "Servicio",
-        "serviceType": "What type of service will you add?",
-        "addService": "Add Service",
+        "serviceType": "¿Qué tipo de servicio agregarás?",
+        "addService": "Agregar servicio",
         "reorder": "Reordenar",
-        "event": "Eventos",
+        "events": "Eventos",
+        "event": {
+          "event": "Evento",
+          "eventType": "Seleccione un tipo de evento",
+          "scheduleTypeError": "Seleccione un tipo de horario"
+        },
+        "profile": "Perfil",
+        "feed": "Alimentar",
+        "messages": "Mensajes",
+        "class": "Clase",
+        "classes": "Clases",
         "rental": "Alquileres",
         "product": "Products",
         "save": "Guardar",
@@ -29,6 +39,10 @@
         "scheduleHint": "Añadir horario",
         "scheduleError": "Por favor, añada el horario",
         "categoryError": "Por favor, seleccione una categoría",
+        "locationLabel": "Seleccione una ubicación",
+        "locationError": "Por favor, seleccione una ubicación",
+        "add": "Agregar",
+        "cancel": "Cancelar",
         "price": {
           "prices": "Precios",
           "price": "Precio",
@@ -46,12 +60,22 @@
           "cancel": "Cancelar"
         },
         "surfShop": {
-          "rentalTitle": "Surfboard rental",
-          "rentalSubtitle": "Using a surfboard rental service, you can advertise a surfboard for rent.",
-          "classTitle": "Surf class",
-          "classSubtitle": "A surf class service is when you instruct a class for a student.",
-          "eventTitle": "Surf event",
-          "eventSubtitle": "Event service is used to plan events for your business."
+          "rentalTitle": "Alquiler de tableros de surf",
+          "rentalSubtitle": "Usando un servicio de alquiler de tablas de surf, puede anunciar una tabla de surf para alquiler.",
+          "classTitle": "Clase de surf",
+          "classSubtitle": "Un servicio de clase de surf es cuando instruye una clase para un estudiante.",
+          "eventTitle": "Evento de surf",
+          "eventSubtitle": "El servicio de eventos se utiliza para planificar eventos para su negocio.",
+          "weeklyEvent": "Evento semanal",
+          "weeklyEventLabel": "Evento programado que ocurre en una base de repetición semanal. Por ejemplo, los martes latinos por la noche",
+          "oneTimeEvent": "Evento de una vez",
+          "oneTimeEventLabel": "Evento programado que ocurre en una cierta fecha y hora en la que varias personas pueden ingresar. Por ejemplo, el Año Nuevo Bash con DJ Rocco.",
+          "onDemandClass": "Lección privada",
+          "onDemandClassLabel": "Clase no programada que un estudiante puede reservar con usted en función de su disponibilidad",
+          "weeklyClass": "Clase semanal programada",
+          "weeklyClassLabel": "Clase programada que ocurre cada semana que ocurre en el grupo.",
+          "oneTimeClass": "Taller",
+          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular."
         },
         "vehicleRental": {
           "rentalTitle": "Alquiler",
@@ -74,10 +98,20 @@
           "surfLengthError": "Introduzca la longitud de la tabla de surf"
         },
         "yogaStudio": {
-          "eventTitle": "Event",
-          "eventSubtitle": "Event service is used to plan events for your business.",
-          "classTitle": "Class",
-          "classSubtitle": "A class service is when you instruct a class for a student."
+          "eventTitle": "Evento",
+          "eventSubtitle": "El servicio de eventos se utiliza para planificar eventos para su negocio.",
+          "classTitle": "Clase",
+          "classSubtitle": "Un servicio de clase es cuando instruye a una clase para un estudiante.",
+          "weeklyEvent": "Evento semanal",
+          "weeklyEventLabel": "Evento programado que ocurre en una base de repetición semanal. Por ejemplo, los martes latinos por la noche.",
+          "oneTimeEvent": "Evento de una vez",
+          "oneTimeEventLabel": "Evento programado que ocurre en una cierta fecha y hora en la que varias personas pueden ingresar. Por ejemplo, el Año Nuevo Bash con DJ Rocco.",
+          "onDemandClass": "Lección privada",
+          "onDemandClassLabel": "Clase no programada que un estudiante puede reservar con usted en función de su disponibilidad",
+          "weeklyClass": "Clase semanal programada",
+          "weeklyClassLabel": "Clase programada que ocurre cada semana que ocurre en el grupo.",
+          "oneTimeClass": "Taller",
+          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular."
         },
         "homeRental": {
           "rentalTitle": "Alquiler de viviendas",
@@ -86,7 +120,6 @@
           "homeType": "Tipo de vivienda",
           "homeTypeError": "Seleccione el tipo de vivienda",
           "homeLocation": "Elegir ubicación de la casa",
-          "homeLocationError": "Seleccione una ubicación",
           "bedrooms": "Dormitorios",
           "bedroomsHint": "¿Cuántas habitaciones tiene su casa?",
           "bedroomsError": "Por favor, introduzca los dormitorios",
@@ -100,43 +133,73 @@
           "hotel": "Hotel"
         },
         "languageSchool": {
-          "eventTitle": "Event",
-          "eventSubtitle": "Event service is used to plan events for your business.",
-          "classTitle": "Class",
-          "classSubtitle": "A class service is when you instruct a class for a student."
+          "eventTitle": "Evento",
+          "eventSubtitle": "El servicio de eventos se utiliza para planificar eventos para su negocio.",
+          "classTitle": "Clase",
+          "classSubtitle": "Un servicio de clase es cuando instruye a una clase para un estudiante.",
+          "weeklyEvent": "Evento semanal",
+          "weeklyEventLabel": "Evento programado que ocurre en una base de repetición semanal. Por ejemplo, los martes latinos por la noche",
+          "oneTimeEvent": "Evento de una vez",
+          "oneTimeEventLabel": "Evento programado que ocurre en una cierta fecha y hora en la que varias personas pueden ingresar. Por ejemplo, el Año Nuevo Bash con DJ Rocco.",
+          "onDemandClass": "Lección privada",
+          "onDemandClassLabel": "Clase no programada que un estudiante puede reservar con usted en función de su disponibilidad",
+          "weeklyClass": "Clase semanal programada",
+          "weeklyClassLabel": "Clase programada que ocurre cada semana que ocurre en el grupo.",
+          "oneTimeClass": "Taller",
+          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular."
         },
         "tourAgency": {
-          "eventTitle": "Event",
-          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event."
+          "eventTitle": "Evento",
+          "eventSubtitle": "Anuncie un evento, ya sea una sesión privada, un evento de repetición semanal o un evento único.",
+          "weeklyEvent": "Viajes semanales",
+          "weeklyEventLabel": "Viajes programados que ocurren semanalmente al mismo tiempo. Por ejemplo, las caminatas del domingo por la mañana.",
+          "oneTimeEvent": "Eventos únicos",
+          "oneTimeEventLabel": "Evento que está programado para una cierta fecha y hora donde las personas necesitan reservar. Por ejemplo, Jungle Cruise Party.",
+          "onDemand": "Evento a pedido",
+          "onDemandLabel": "Eventos que se pueden reservar a pedido. Por ejemplo, Dolphin Tour."
         },
         "artisanalProduct": {
-          "productTitle": "Item",
+          "productTitle": "Artículo",
           "product": "Producto",
-          "productSubtitle": "Advertise an item that can be bought.",
+          "productSubtitle": "Anuncie un artículo que se puede comprar.",
           "consumable": "Consumibles",
           "personalCare": "Cuidado personal",
           "art": "Arte",
           "uncategorized": "Sin categoría"
         },
         "cleaningService": {
-          "serviceTitle": "Service",
-          "serviceSubtitle": "Advertise a service that clients can book."
+          "serviceTitle": "Servicio",
+          "serviceSubtitle": "Anuncie un servicio que los clientes puedan reservar."
         },
         "petSitting": {
-          "serviceTitle": "Pet sitting service",
-          "serviceSubtitle": "Advertise your pet sitting service."
+          "serviceTitle": "Servicio de mascotas",
+          "serviceSubtitle": "Anuncie su servicio de sentado para mascotas."
         },
         "wellnessPractitioner": {
-          "eventTitle": "Event",
-          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event."
+          "eventTitle": "Evento",
+          "eventSubtitle": "Anuncie un evento, ya sea una sesión privada, un evento de repetición semanal o un evento único.",
+          "weeklyEvent": "Evento semanal",
+          "weeklyEventLabel": "Un evento que vuelve a ocurrir semanalmente.",
+          "oneTimeEvent": "Retiro",
+          "oneTimeEventLabel": "Un evento programado que ocurre en una hora y un día en particular donde varias personas pueden participar. Por ejemplo, retirada de yoga de montaña.",
+          "onDemand": "Sesión privada",
+          "onDemandLabel": "Un evento único que los clientes pueden reservar con usted."
         },
         "volunteer": {
-          "eventTitle": "Event",
-          "eventSubtitle": "Advertise weekly or one time events."
+          "eventTitle": "Evento",
+          "eventSubtitle": "Anuncie los eventos semanales o únicos.",
+          "weeklyEvent": "Evento semanal",
+          "weeklyEventLabel": "Un evento que se repite semanalmente. Por ejemplo, Ocean Clean los miércoles.",
+          "oneTimeEvent": "Evento de una vez",
+          "oneTimeEventLabel": "Un evento que está programado para una cierta fecha y hora. Por ejemplo, el campamento de refugio para mascotas."
         },
         "entertainment": {
-          "eventTitle": "Event",
-          "eventSubtitle": "Advertise one time or repeat events."
+          "eventTitle": "Evento",
+          "eventSubtitle": "Anunciar una vez o repetir eventos.",
+          "weeklyEvent": "Evento semanal",
+          "weeklyEventLabel": "Evento programado que ocurre en una base de repetición semanal. Por ejemplo, los martes latinos por la noche",
+          "oneTimeEvent": "Evento de una vez",
+          "oneTimeEventLabel": "Evento programado que ocurre en una cierta fecha y hora en la que varias personas pueden ingresar. Por ejemplo, el Año Nuevo Bash con DJ Rocco."
         }
       }
     }
