@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -23,7 +24,6 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);

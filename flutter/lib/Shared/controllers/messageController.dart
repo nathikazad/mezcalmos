@@ -65,7 +65,8 @@ class MessageController extends GetxController {
           if (msgs.isNotEmpty && msgs.length > chat.value!.messages.length) {
             chat.value!.messages.clear();
             chat.value!.messages.addAll(msgs);
-            if (onValueCallBack != null) onValueCallBack();
+            if (onValueCallBack != null && chat.value != null)
+              onValueCallBack();
           }
         });
       }, cancel: () {
