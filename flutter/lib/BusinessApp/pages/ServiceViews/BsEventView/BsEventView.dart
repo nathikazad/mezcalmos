@@ -234,7 +234,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
           BsOpServiceImagesGrid(
             detailsController: viewController.detailsController,
           ),
-          bigSeperator,
+          // bigSeperator,
           Text(
             _i18n()["name"],
             style: context.textTheme.bodyLarge,
@@ -299,7 +299,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
               },
             ),
           ),
-          bigSeperator,
+          // bigSeperator,
           Obx(() => viewController.getScheduleWidget()),
         ],
       ),

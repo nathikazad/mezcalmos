@@ -203,7 +203,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           BsOpServiceImagesGrid(
             detailsController: viewController.detailsController,
           ),
-          bigSeperator,
+          // bigSeperator,
           Text(
             _i18n()["name"],
             style: context.textTheme.bodyLarge,
@@ -303,7 +303,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               },
             ),
           ),
-          bigSeperator,
+          // bigSeperator,
           Text(
             _i18n()["homeRental"]["bedrooms"],
             style: context.textTheme.bodyLarge,
