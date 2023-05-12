@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -10,10 +12,9 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class BsProductViewController {
   // instances //
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
-  bool firstFormValid = false;
-  bool secondFormValid = false;
+  BusinessOpAuthController _opAuthController =
+      Get.find<BusinessOpAuthController>();
+  LanguageTabsController languageTabsController = LanguageTabsController();
 
   // streams //
 
@@ -24,7 +25,6 @@ class BsProductViewController {
   // methods //
 
   // instances //
-  TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
   // vars //
@@ -40,9 +40,19 @@ class BsProductViewController {
       .where((TimeUnit element) =>
           detailsController.priceTimeUnitMap.keys.contains(element) == false)
       .toList();
+  ServiceProviderLanguage? get languages => languageTabsController.language;
+  bool get hasSecondaryLang => languages?.secondary != null;
+  bool get hasData {
+    if (isEditing) {
+      return _product.value != null &&
+          languageTabsController.tabController != null;
+    } else
+      return languageTabsController.tabController != null;
+  }
 
   void init({required TickerProvider thickerProvider}) {
-    tabController = TabController(length: 2, vsync: thickerProvider);
+    languageTabsController.init(
+        vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
 
@@ -73,7 +83,7 @@ class BsProductViewController {
   }
 
   Future<void> save() async {
-    if (validate()) {
+    if (languageTabsController.validate()) {
       if (isEditing) {
         try {
           await saveItemDetails();
@@ -116,46 +126,5 @@ class BsProductViewController {
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
     }
-  }
-
-  bool validate() {
-    if (isOnFirstTab) {
-      // validate first tab
-      firstFormValid = _isFirstFormValid;
-      if (firstFormValid && !secondFormValid) {
-        tabController?.animateTo(1);
-      }
-    }
-    // second tab
-    else {
-      secondFormValid = _isSecondFormValid;
-      if (secondFormValid && !firstFormValid) {
-        tabController?.animateTo(0);
-      }
-    }
-    if (secondFormValid && firstFormValid) {
-      tabController?.animateTo(0);
-    }
-    return secondFormValid && firstFormValid;
-  }
-
-  bool get _isFirstFormValid {
-    return formKey.currentState?.validate() == true;
-  }
-
-  bool get _isSecondFormValid {
-    return scFormKey.currentState?.validate() == true;
-  }
-
-  bool get isBothFormValid {
-    return _isFirstFormValid && _isSecondFormValid;
-  }
-
-  bool get isOnFirstTab {
-    return tabController?.index == 0;
-  }
-
-  bool get isOnSecondTab {
-    return tabController?.index == 1;
   }
 }

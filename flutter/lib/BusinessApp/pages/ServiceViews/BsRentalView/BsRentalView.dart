@@ -6,6 +6,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceI
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -13,7 +14,6 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -77,12 +77,49 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
           await viewController.save();
         },
       ),
-      body: TabBarView(
-        controller: viewController.tabController,
-        children: [
-          Form(key: viewController.formKey, child: _primaryTab(context)),
-          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
-        ],
+      body: Obx(
+        () => viewController.hasData
+            ? Column(
+                children: [
+                  if (viewController.hasSecondaryLang)
+                    PreferredSize(
+                        preferredSize: Size.fromHeight(50),
+                        child: Material(
+                          color: Colors.white,
+                          child: TabBar(
+                              tabs: [
+                                Tab(
+                                  text: viewController.languages!.primary
+                                      .toLanguageName(),
+                                ),
+                                Tab(
+                                  text: viewController.languages!.secondary!
+                                      .toLanguageName(),
+                                )
+                              ],
+                              controller: viewController
+                                  .languageTabsController.tabController),
+                        )),
+                  Expanded(
+                    child: TabBarView(
+                      controller:
+                          viewController.languageTabsController.tabController,
+                      children: [
+                        Form(
+                            key: viewController.formKey,
+                            child: _primaryTab(context)),
+                        Form(
+                            key: viewController.scFormKey,
+                            child: _secondaryTab(context)),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              ),
       ),
     );
   }
@@ -91,16 +128,6 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
       MezRouter.back(backResult: viewController.shouldRefetch);
     },
-        tabBar: PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: TabBar(tabs: [
-              Tab(
-                text: _i18n()["english"],
-              ),
-              Tab(
-                text: _i18n()["spanish"],
-              )
-            ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.rental != null
             ? "${viewController.rental!.details.name.getTranslation(userLanguage)}"
             : _i18n()["vehicleRental"]["rentalTitle"])));
@@ -185,7 +212,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                     Obx(
                       () => MezStringDropDown(
                         langPath: _i18n()["vehicleRental"],
-                        validator: (p0) {
+                        validator: (String? p0) {
                           if (viewController.rentalCategory2.value == null) {
                             return _i18n()["categoryError"];
                           }
@@ -195,9 +222,10 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                         value: viewController.rentalCategory2.value
                             ?.toFirebaseFormatString(),
                         items: RentalCategory2.values
-                            .map((e) => e.toFirebaseFormatString())
+                            .map((RentalCategory2 e) =>
+                                e.toFirebaseFormatString())
                             .toList(),
-                        onChanged: (value) {
+                        onChanged: (String? value) {
                           viewController.rentalCategory2.value =
                               value.toString().toRentalCategory2();
                         },
@@ -290,7 +318,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                       smallSepartor,
                       MezStringDropDown(
                         langPath: _i18n()["vehicleRental"],
-                        validator: (value) {
+                        validator: (String? value) {
                           if (viewController.rentalCategory3.value == null) {
                             return _i18n()["categoryError"];
                           }
@@ -301,9 +329,10 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                         value: viewController.rentalCategory3.value
                             ?.toFirebaseFormatString(),
                         items: RentalCategory3.values
-                            .map((e) => e.toFirebaseFormatString())
+                            .map((RentalCategory3 e) =>
+                                e.toFirebaseFormatString())
                             .toList(),
-                        onChanged: (value) {
+                        onChanged: (String? value) {
                           viewController.rentalCategory3.value =
                               value.toString().toRentalCategory3();
                         },

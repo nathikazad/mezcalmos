@@ -66,31 +66,61 @@ class _BsOpEventViewState extends State<BsOpEventView>
           await viewController.save();
         },
       ),
-      body: TabBarView(
-        controller: viewController.tabController,
-        children: [
-          Form(key: viewController.formKey, child: _primaryTab(context)),
-          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
-        ],
-      ),
+      body: Obx(() {
+        if (viewController.hasData) {
+          return Column(
+            children: [
+              if (viewController.hasSecondaryLang)
+                PreferredSize(
+                    preferredSize: Size.fromHeight(50),
+                    child: Material(
+                      color: Colors.white,
+                      child: TabBar(
+                          tabs: [
+                            Tab(
+                              text: viewController.languages!.primary
+                                  .toLanguageName(),
+                            ),
+                            Tab(
+                              text: viewController.languages!.secondary!
+                                  .toLanguageName(),
+                            )
+                          ],
+                          controller: viewController
+                              .languageTabsController.tabController),
+                    )),
+              Expanded(
+                child: TabBarView(
+                  controller:
+                      viewController.languageTabsController.tabController,
+                  children: [
+                    Form(
+                        key: viewController
+                            .languageTabsController.primaryLangFormKey,
+                        child: _primaryTab(context)),
+                    if (viewController.hasSecondaryLang)
+                      Form(
+                          key: viewController
+                              .languageTabsController.secondaryLangFormKey,
+                          child: _secondaryTab(context)),
+                  ],
+                ),
+              ),
+            ],
+          );
+        } else
+          return Container(
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
+          );
+      }),
     );
   }
 
   AppBar _appbar() {
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
       MezRouter.back(backResult: viewController.shouldRefetch);
-    },
-        tabBar: PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: TabBar(tabs: [
-              Tab(
-                text: "English",
-              ),
-              Tab(
-                text: "Spanish",
-              )
-            ], controller: viewController.tabController)),
-        titleWidget: Obx(() => Text(getAppbartitle())));
+    }, titleWidget: Obx(() => Text(getAppbartitle())));
   }
 
   String getAppbartitle() {

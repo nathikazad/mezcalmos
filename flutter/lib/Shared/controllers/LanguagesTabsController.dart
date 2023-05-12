@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 
@@ -7,7 +8,7 @@ class LanguageTabsController {
   // LanguageTabsController({});
 
   ServiceProviderLanguage? _language;
-  TabController? _tabController;
+  Rxn<TabController> _tabController = Rxn();
 
   Language? get primaryLang => _language?.primary;
   Language? get secondaryLang => _language?.secondary;
@@ -15,7 +16,7 @@ class LanguageTabsController {
   GlobalKey<FormState>? secondaryLangFormKey;
   // getters //
   ServiceProviderLanguage? get language => _language;
-  TabController? get tabController => _tabController;
+  TabController? get tabController => _tabController.value;
   bool get hasSecondaryLang => _language?.secondary != null;
   bool get isOnFirstTab => tabController?.index == 0;
 
@@ -34,7 +35,8 @@ class LanguageTabsController {
     serviceDetailsId = detailsId ?? 0;
     _language = language ?? await get_service_lang(detailsId: serviceDetailsId);
     if (_language != null) {
-      _tabController = TabController(length: _length, vsync: vsync);
+      _tabController.value = TabController(length: _length, vsync: vsync);
+      _tabController.refresh();
       secondaryLangFormKey =
           (_language!.secondary != null) ? GlobalKey<FormState>() : null;
     } else

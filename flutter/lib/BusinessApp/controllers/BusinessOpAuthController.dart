@@ -28,6 +28,7 @@ class BusinessOpAuthController extends GetxController {
     // return _businessProfile;
   }
 
+  int get businessDetailsId => operator.value!.serviceProviderDetailsId!.toInt();
   set setBusinessProfile(BusinessProfile? value) {
     _businessProfile = value;
   }

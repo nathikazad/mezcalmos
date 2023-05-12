@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/controllers/BsServiceViewController.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -63,12 +63,51 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
           await viewController.save();
         },
       ),
-      body: TabBarView(
-        controller: viewController.tabController,
-        children: [
-          Form(key: viewController.formKey, child: _primaryTab(context)),
-          Form(key: viewController.scFormKey, child: _secondaryTab(context)),
-        ],
+      body: Obx(
+        () => viewController.hasData
+            ? Column(
+                children: [
+                  if (viewController.hasSecondaryLang)
+                    PreferredSize(
+                        preferredSize: Size.fromHeight(50),
+                        child: Material(
+                          color: Colors.white,
+                          child: TabBar(
+                              tabs: [
+                                Tab(
+                                  text: viewController.languages!.primary
+                                      .toLanguageName(),
+                                ),
+                                Tab(
+                                  text: viewController.languages!.secondary!
+                                      .toLanguageName(),
+                                )
+                              ],
+                              controller: viewController
+                                  .languageTabsController.tabController),
+                        )),
+                  Expanded(
+                    child: TabBarView(
+                      controller:
+                          viewController.languageTabsController.tabController,
+                      children: [
+                        Form(
+                            key: viewController
+                                .languageTabsController.primaryLangFormKey,
+                            child: _primaryTab(context)),
+                        Form(
+                            key: viewController
+                                .languageTabsController.secondaryLangFormKey,
+                            child: _secondaryTab(context)),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              ),
       ),
     );
   }
@@ -79,14 +118,17 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
     },
         tabBar: PreferredSize(
             preferredSize: Size.fromHeight(50),
-            child: TabBar(tabs: [
-              Tab(
-                text: _i18n()["english"],
-              ),
-              Tab(
-                text: _i18n()["spanish"],
-              )
-            ], controller: viewController.tabController)),
+            child: TabBar(
+                tabs: [
+                  Tab(
+                    text: viewController.languages!.primary.toLanguageName(),
+                  ),
+                  Tab(
+                    text: viewController.languages!.secondary!.toLanguageName(),
+                  )
+                ],
+                controller:
+                    viewController.languageTabsController.tabController)),
         titleWidget: Obx(() => Text(viewController.service != null
             ? "${viewController.service!.details.name.getTranslation(userLanguage)}"
             : _i18n()["service"])));
@@ -222,13 +264,13 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
           smallSepartor,
           Obx(
             () => BsOpScheduleSelector(
-              validator: (p0) {
+              validator: (String? p0) {
                 if (viewController.serviceSchedule.value == null) {
                   return _i18n()["scheduleError"];
                 }
                 return null;
               },
-              onScheduleSelected: (schedule) {
+              onScheduleSelected: (Schedule? schedule) {
                 viewController.changeSchedule(schedule);
               },
               schedule: viewController.serviceSchedule.value,

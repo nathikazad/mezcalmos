@@ -7,6 +7,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceI
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -14,7 +15,6 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -54,24 +54,64 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        appBar: _appbar(),
-        bottomNavigationBar: MezButton(
-          label: _i18n()["save"],
-          withGradient: true,
-          borderRadius: 0,
-          onClick: () async {
-            await viewController.save();
-          },
-        ),
-        body: TabBarView(
-          controller: viewController.tabController,
-          children: [
-            Form(key: viewController.formKey, child: _primaryTab(context)),
-            Form(key: viewController.scFormKey, child: _secondaryTab(context)),
-          ],
-        ),
+    return Scaffold(
+      appBar: _appbar(),
+      bottomNavigationBar: MezButton(
+        label: _i18n()["save"],
+        withGradient: true,
+        borderRadius: 0,
+        onClick: () async {
+          await viewController.save();
+        },
+      ),
+      body: Obx(
+        () {
+          if (viewController.hasData) {
+            return Column(
+              children: [
+                if (viewController.hasSecondaryLang)
+                  PreferredSize(
+                      preferredSize: Size.fromHeight(50),
+                      child: Material(
+                        color: Colors.white,
+                        child: TabBar(
+                            tabs: [
+                              Tab(
+                                text: viewController.languages!.primary
+                                    .toLanguageName(),
+                              ),
+                              Tab(
+                                text: viewController.languages!.secondary!
+                                    .toLanguageName(),
+                              )
+                            ],
+                            controller: viewController
+                                .languageTabsController.tabController),
+                      )),
+                Expanded(
+                  child: TabBarView(
+                    controller:
+                        viewController.languageTabsController.tabController,
+                    children: [
+                      Form(
+                          key: viewController
+                              .languageTabsController.primaryLangFormKey,
+                          child: _primaryTab(context)),
+                      Form(
+                          key: viewController
+                              .languageTabsController.secondaryLangFormKey,
+                          child: _secondaryTab(context)),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          } else
+            return Container(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            );
+        },
       ),
     );
   }
@@ -80,16 +120,6 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
     return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
       MezRouter.back(backResult: viewController.shouldRefetch);
     },
-        tabBar: PreferredSize(
-            preferredSize: Size.fromHeight(50),
-            child: TabBar(tabs: [
-              Tab(
-                text: _i18n()["english"],
-              ),
-              Tab(
-                text: _i18n()["spanish"],
-              )
-            ], controller: viewController.tabController)),
         titleWidget: Obx(() => Text(viewController.rental != null
             ? "${viewController.rental!.details.name.getTranslation(userLanguage)}"
             : _i18n()["homeRental"]["rentalTitle"])));
@@ -238,7 +268,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           smallSepartor,
           Obx(
             () => MezStringDropDown(
-              validator: (value) {
+              validator: (String? value) {
                 if (viewController.homeType.value == null) {
                   return _i18n()["homeRental"]["homeTypeError"];
                 }

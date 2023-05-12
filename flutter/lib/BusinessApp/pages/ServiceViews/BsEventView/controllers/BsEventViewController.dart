@@ -7,6 +7,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -16,11 +17,11 @@ import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 class BsEventViewController {
   // instances //
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
+  BusinessOpAuthController _opAuthController =
+      Get.find<BusinessOpAuthController>();
+  LanguageTabsController languageTabsController = LanguageTabsController();
   bool firstFormValid = false;
   bool secondFormValid = false;
-  TabController? tabController;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
   // vars //
@@ -33,6 +34,15 @@ class BsEventViewController {
   Rxn<PeriodOfTime> oneTimePeriod = Rxn<PeriodOfTime>();
   Rxn<Location> location = Rxn<Location>();
   // getters //
+  ServiceProviderLanguage? get languages => languageTabsController.language;
+  bool get hasSecondaryLang => languages?.secondary != null;
+    bool get hasData {
+    if (isEditing) {
+      return _event.value != null &&
+          languageTabsController.tabController != null;
+    } else
+      return languageTabsController.tabController != null;
+  }
   BusinessProfile get businessProfile =>
       Get.find<BusinessOpAuthController>().businessProfile!;
   EventWithBusinessCard? get event => _event.value;
@@ -49,11 +59,14 @@ class BsEventViewController {
       businessProfile == BusinessProfile.TourAgency ||
       businessProfile == BusinessProfile.Entertainment ||
       businessProfile == BusinessProfile.Volunteer;
+  // RxBool _hasData = RxBool(false);
 
 // methods //
 
   void init({required TickerProvider thickerProvider, required bool isClass}) {
-    tabController = TabController(length: 2, vsync: thickerProvider);
+    languageTabsController.init(
+        vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
+
     this.isClass = isClass;
     setPrices();
   }
@@ -76,7 +89,7 @@ class BsEventViewController {
   }
 
   Future<void> save() async {
-    if (validate()) {
+    if (languageTabsController.validate()) {
       if (isEditing) {
         try {
           await saveItemDetails();
@@ -348,47 +361,6 @@ class BsEventViewController {
 
   void setLocation(Location v) {
     location.value = v;
-  }
-
-  bool validate() {
-    if (isOnFirstTab) {
-      // validate first tab
-      firstFormValid = _isFirstFormValid;
-      if (firstFormValid && !secondFormValid) {
-        tabController?.animateTo(1);
-      }
-    }
-    // second tab
-    else {
-      secondFormValid = _isSecondFormValid;
-      if (secondFormValid && !firstFormValid) {
-        tabController?.animateTo(0);
-      }
-    }
-    if (secondFormValid && firstFormValid) {
-      tabController?.animateTo(0);
-    }
-    return secondFormValid && firstFormValid;
-  }
-
-  bool get _isFirstFormValid {
-    return formKey.currentState?.validate() == true;
-  }
-
-  bool get _isSecondFormValid {
-    return scFormKey.currentState?.validate() == true;
-  }
-
-  bool get isBothFormValid {
-    return _isFirstFormValid && _isSecondFormValid;
-  }
-
-  bool get isOnFirstTab {
-    return tabController?.index == 0;
-  }
-
-  bool get isOnSecondTab {
-    return tabController?.index == 1;
   }
 }
 
