@@ -164,7 +164,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   height: 30,
                 ),
                 Text(
-                  _i18n()["event"],
+                  _i18n()["events"],
                   style: context.textTheme.bodyLarge,
                 ),
                 smallSepartor,

@@ -17,18 +17,19 @@ class BusinessOpAuthController extends GetxController {
 
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
-  BusinessProfile? _businessProfile;
+  BusinessProfile? _businessProfile = BusinessProfile.SurfShop;
   String? _appLifeCyclePauseCallbackId;
   String? _appLifeCycleResumeCallbackId;
 
   /// this getter should be used only after the operator is set
   /// otherwise it will throw an exception
   BusinessProfile? get businessProfile {
-    return BusinessProfile.SurfShop;
-    // return _businessProfile;
+    // return BusinessProfile.SurfShop;
+    return _businessProfile;
   }
 
-  int get businessDetailsId => operator.value!.serviceProviderDetailsId!.toInt();
+  int get businessDetailsId =>
+      operator.value!.serviceProviderDetailsId!.toInt();
   set setBusinessProfile(BusinessProfile? value) {
     _businessProfile = value;
   }

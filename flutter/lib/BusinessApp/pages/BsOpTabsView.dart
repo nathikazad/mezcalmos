@@ -67,7 +67,7 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
         return Scaffold(
           body: Container(
             alignment: Alignment.center,
-            child: Text("Error"),
+            child: Text("Screen not needed"),
           ),
         );
     }

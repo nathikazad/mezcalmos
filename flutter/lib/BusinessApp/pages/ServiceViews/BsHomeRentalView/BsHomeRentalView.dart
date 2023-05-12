@@ -297,7 +297,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               },
               validator: (Location? loc) {
                 if (loc == null) {
-                  return _i18n()["homeRental"]["homeLocationError"];
+                  return _i18n()["locationError"];
                 }
                 return null;
               },

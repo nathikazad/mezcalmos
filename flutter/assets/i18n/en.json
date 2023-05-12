@@ -7,7 +7,14 @@
         "serviceType": "What type of service will you add?",
         "addService": "Add Service",
         "reorder": "Reorder",
-        "event": "Events",
+        "event": {
+          "event": "Event",
+          "eventType": "Select an event type",
+          "scheduleTypeError": "Please select a schedule type"
+        },
+        "events": "Events",
+        "class": "Class",
+        "classes": "Classes",
         "rental": "Rentals",
         "product": "Products",
         "save": "Save",
@@ -29,6 +36,8 @@
         "schedule": "Schedule",
         "scheduleHint": "Add schedule",
         "scheduleError": "Please add schedule",
+        "locationLabel": "Select a location",
+        "locationError": "Please select a location",
         "price": {
           "prices": "Prices",
           "price": "Price",
@@ -51,7 +60,17 @@
           "classTitle": "Surf class",
           "classSubtitle": "A surf class service is when you instruct a class for a student.",
           "eventTitle": "Surf event",
-          "eventSubtitle": "Event service is used to plan events for your business."
+          "eventSubtitle": "Event service is used to plan events for your business.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco.",
+          "onDemandClass": "Private lesson",
+          "onDemandClassLabel": "Unscheduled class that a student can book with you based on your availability",
+          "weeklyClass": "Weekly scheduled class",
+          "weeklyClassLabel": "Scheduled class that happens every week that happens in group.",
+          "oneTimeClass": "Workshop",
+          "oneTimeClassLabel": "A one time class that happens on a particular day."
         },
         "vehicleRental": {
           "rentalTitle": "Rental",
@@ -77,7 +96,17 @@
           "eventTitle": "Event",
           "eventSubtitle": "Event service is used to plan events for your business.",
           "classTitle": "Class",
-          "classSubtitle": "A class service is when you instruct a class for a student."
+          "classSubtitle": "A class service is when you instruct a class for a student.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco.",
+          "onDemandClass": "Private lesson",
+          "onDemandClassLabel": "Unscheduled class that a student can book with you based on your availability",
+          "weeklyClass": "Weekly scheduled class",
+          "weeklyClassLabel": "Scheduled class that happens every week that happens in group.",
+          "oneTimeClass": "Workshop",
+          "oneTimeClassLabel": "A one time class that happens on a particular day."
         },
         "homeRental": {
           "rentalTitle": "Home rental",
@@ -86,7 +115,6 @@
           "homeType": "Home type",
           "homeTypeError": "Please select home type",
           "homeLocation": "Pick house location",
-          "homeLocationError": "Please select a location",
           "bedrooms": "Bedrooms",
           "bedroomsHint": "How many bedrooms does your home have?",
           "bedroomsError": "Please enter bedrooms",
@@ -103,11 +131,27 @@
           "eventTitle": "Event",
           "eventSubtitle": "Event service is used to plan events for your business.",
           "classTitle": "Class",
-          "classSubtitle": "A class service is when you instruct a class for a student."
+          "classSubtitle": "A class service is when you instruct a class for a student.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco.",
+          "onDemandClass": "Private lesson",
+          "onDemandClassLabel": "Unscheduled class that a student can book with you based on your availability",
+          "weeklyClass": "Weekly scheduled class",
+          "weeklyClassLabel": "Scheduled class that happens every week that happens in group.",
+          "oneTimeClass": "Workshop",
+          "oneTimeClassLabel": "A one time class that happens on a particular day."
         },
         "tourAgency": {
           "eventTitle": "Event",
-          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event."
+          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event.",
+          "weeklyEvent": "Weekly trips",
+          "weeklyEventLabel": "Scheduled trips that happen on a weekly basis at the same time. For example Sunday morning hikes.",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Event that is scheduled for a certain date & time where people need to book. For example, jungle cruise party.",
+          "onDemand": "On demand event",
+          "onDemandLabel": "Events that can be booked on demand. For example dolphin tour."
         },
         "artisanalProduct": {
           "productTitle": "Item",
@@ -124,19 +168,37 @@
         },
         "petSitting": {
           "serviceTitle": "Pet sitting service",
-          "serviceSubtitle": "Advertise your pet sitting service."
+          "serviceSubtitle": "Advertise your pet sitting service.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco."
         },
         "wellnessPractitioner": {
           "eventTitle": "Event",
-          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event."
+          "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "An event that reoccurs on a weekly basis.",
+          "oneTimeEvent": "Retreat",
+          "oneTimeEventLabel": "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat.",
+          "onDemand": "Private session",
+          "onDemandLabel": "A one on one event that clients can book with you."
         },
         "volunteer": {
           "eventTitle": "Event",
-          "eventSubtitle": "Advertise weekly or one time events."
+          "eventSubtitle": "Advertise weekly or one time event.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "An event that repeats on a weekly basis. For example, ocean clean Wednesdays.",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "An event that is scheduled for a certain date and time. For example, Pet shelter camp."
         },
         "entertainment": {
           "eventTitle": "Event",
-          "eventSubtitle": "Advertise one time or repeat events."
+          "eventSubtitle": "Advertise one time or repeat events.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco."
         }
       }
     }

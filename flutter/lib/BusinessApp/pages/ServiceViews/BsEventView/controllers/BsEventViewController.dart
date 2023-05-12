@@ -14,6 +14,10 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsEventViewController {
   // instances //
@@ -36,13 +40,14 @@ class BsEventViewController {
   // getters //
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
-    bool get hasData {
+  bool get hasData {
     if (isEditing) {
       return _event.value != null &&
           languageTabsController.tabController != null;
     } else
       return languageTabsController.tabController != null;
   }
+
   BusinessProfile get businessProfile =>
       Get.find<BusinessOpAuthController>().businessProfile!;
   EventWithBusinessCard? get event => _event.value;
@@ -200,118 +205,149 @@ class BsEventViewController {
   }
 
   List<ScheduleTypeInput> getScheduleType() {
+    final String businessFB = businessProfile.toFirebaseFormatString();
     switch (businessProfile) {
       case BusinessProfile.Entertainment:
         return [
           ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "Weekly event",
+              title: _i18n()[businessFB]["weeklyEvent"],
+              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Workshop",
-              subtitle: "Workshop event",
+              title: _i18n()[businessFB]["oneTimeEvent"],
+              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.Volunteer:
         return [
           ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "Weekly event",
+              title: _i18n()[businessFB]["weeklyEvent"],
+              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "One time",
-              subtitle: "One time event",
+              title: _i18n()[businessFB]["oneTimeEvent"],
+              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.WellnessPractitioner:
         return [
           ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "An event that reoccurs on a weekly basis",
+              title: _i18n()[businessFB]["onDemand"],
+              subtitle: _i18n()[businessFB]["onDemandLabel"],
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Private session",
-              subtitle: "A one on one event that clients can book with you.",
-              type: ScheduleType.OnDemand),
+              title: _i18n()[businessFB]["weeklyEvent"],
+              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+              type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Retreat",
-              subtitle:
-                  "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat",
+              title: _i18n()[businessFB]["oneTimeEvent"],
+              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.TourAgency:
         return [
           ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "An event that reoccurs on a weekly basis",
+              title: _i18n()[businessFB]["onDemand"],
+              subtitle: _i18n()[businessFB]["onDemandLabel"],
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Private session",
-              subtitle: "A one on one event that clients can book with you.",
-              type: ScheduleType.OnDemand),
+              title: _i18n()[businessFB]["weeklyEvent"],
+              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+              type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "Retreat",
-              subtitle:
-                  "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat",
+              title: _i18n()[businessFB]["oneTimeEvent"],
+              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.YogaStudio:
-        return [
-          ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "An event that reoccurs on a weekly basis",
-              type: ScheduleType.Scheduled),
-          ScheduleTypeInput(
-              title: "Private session",
-              subtitle: "A one on one event that clients can book with you.",
-              type: ScheduleType.OnDemand),
-          ScheduleTypeInput(
-              title: "Retreat",
-              subtitle:
-                  "A scheduled event that happens on a particular time and day where multiple people can participate. For example, Mountain top yoga retreat",
-              type: ScheduleType.OneTime),
-        ];
+        return isClass
+            ? [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["onDemandClass"],
+                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyClass"],
+                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeClass"],
+                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    type: ScheduleType.OneTime),
+              ]
+            : [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyEvent"],
+                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeEvent"],
+                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    type: ScheduleType.OneTime),
+              ];
       case BusinessProfile.PetSitting:
         return [
           ScheduleTypeInput(
-              title: "Weekly Event",
-              subtitle: "An event that reoccurs on a weekly basis",
+              title: _i18n()[businessFB]["weeklyEvent"],
+              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: "One time",
-              subtitle: "One time event",
+              title: _i18n()[businessFB]["oneTimeEvent"],
+              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.LanguageSchool:
-        return [
-          ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "Weekly event",
-              type: ScheduleType.Scheduled),
-          ScheduleTypeInput(
-              title: "Workshop",
-              subtitle: "Workshop event",
-              type: ScheduleType.OneTime),
-          ScheduleTypeInput(
-              title: "One time",
-              subtitle: "One time event",
-              type: ScheduleType.OneTime),
-        ];
+        return isClass
+            ? [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["onDemandClass"],
+                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyClass"],
+                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeClass"],
+                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    type: ScheduleType.OneTime),
+              ]
+            : [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyEvent"],
+                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeEvent"],
+                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    type: ScheduleType.OneTime),
+              ];
       case BusinessProfile.SurfShop:
-        return [
-          ScheduleTypeInput(
-              title: "Weekly",
-              subtitle: "Weekly event",
-              type: ScheduleType.Scheduled),
-          ScheduleTypeInput(
-              title: "Workshop",
-              subtitle: "Workshop event",
-              type: ScheduleType.OneTime),
-          ScheduleTypeInput(
-              title: "One time",
-              subtitle: "One time event",
-              type: ScheduleType.OneTime),
-        ];
+         return isClass
+            ? [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["onDemandClass"],
+                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyClass"],
+                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeClass"],
+                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    type: ScheduleType.OneTime),
+              ]
+            : [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyEvent"],
+                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeEvent"],
+                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    type: ScheduleType.OneTime),
+              ];
       default:
         throw StateError(
             "BusinessProfile ${businessProfile.name} not supported");
