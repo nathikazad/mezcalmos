@@ -29,11 +29,10 @@ class ROpOptionView extends StatefulWidget {
       required int? optionId,
       required int itemId}) async {
     String route = RestaurantAppRoutes.restaurantOptionRoute
-        .replaceAll(":restaurantId", "$restaurantId")
-        .replaceAll(":itemId", "$itemId");
-    if (optionId != null) {
-      route = route.replaceFirst(":optionId", "$optionId");
-    }
+        .replaceFirst(":restaurantId", "$restaurantId")
+        .replaceFirst(":itemId", "$itemId");
+
+    route = route.replaceFirst(":optionId", optionId?.toString() ?? "add");
 
     await MezRouter.toPath(route);
     return MezRouter.backResult;

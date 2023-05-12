@@ -17,12 +17,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
 class ROpCategoryView extends StatefulWidget {
   const ROpCategoryView({Key? key}) : super(key: key);
 
-  static Future<void> navigate(
-      {required int restaurantId, bool saveToDb = false}) {
-    return MezRouter.toPath(
+  static Future<bool?> navigate(
+      {required int restaurantId, bool saveToDb = false}) async {
+    await MezRouter.toPath(
         RestaurantAppRoutes.restaurantCategoryRoute
             .replaceAll(":restaurantId", restaurantId.toString()),
         arguments: <String, dynamic>{"shouldSave": saveToDb});
+    return MezRouter.backResult;
   }
 
   static Future<void> navigateWithCategory(
@@ -116,7 +117,9 @@ class _ROpCategoryViewState extends State<ROpCategoryView> {
   PreferredSizeWidget _addCategoryAppBar() {
     return MezcalmosAppBar(
       AppBarLeftButtonType.Back,
-      onClick: MezRouter.back,
+      onClick: () {
+        MezRouter.back(backResult: _viewController.refetch);
+      },
       title: (_viewController.editMode.value)
           ? _viewController.category.value?.name![userLanguage]
           : "${_i18n()["addCategory"]}",

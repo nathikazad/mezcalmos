@@ -2334,8 +2334,8 @@
         }
       },
       "ROpOptionView": {
-        "addOption": "Opción Guardar",
-        "editOption": "Opción Guardar",
+        "addOption": "Añadir opción",
+        "editOption": "Opción de edición",
         "optionName": "Nombre de opción",
         "required": "Requeridaa",
         "optionChoices": "Opciones de opcionesciones",

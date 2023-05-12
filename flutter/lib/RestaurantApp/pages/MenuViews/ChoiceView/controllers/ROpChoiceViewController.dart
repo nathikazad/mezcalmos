@@ -2,9 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/choice/hsChoice.dart';
@@ -12,6 +10,7 @@ import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -100,8 +99,10 @@ class ROpChoiceViewController {
   Future<void> saveChoice() async {
     if (editMode.isTrue && choice.value != null) {
       await _editChoice();
+      needToFetch.value = true;
     } else {
       await _addNewChoice();
+      needToFetch.value = true;
     }
   }
 
@@ -154,7 +155,7 @@ class ROpChoiceViewController {
 
   Future<bool?> deleteChoice() async {
     final bool result = await delete_choice_by_id(choiceId: choice.value!.id);
-    result ? MezRouter.back() : null;
+    await result ? MezRouter.back() : null;
     return result;
   }
 

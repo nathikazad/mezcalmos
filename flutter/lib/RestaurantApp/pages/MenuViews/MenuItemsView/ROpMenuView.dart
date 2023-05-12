@@ -146,6 +146,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
                         await ROpCategoryView.navigate(
                             restaurantId: restaurantID!,
                             saveToDb: true) as bool?;
+                    mezDbgPrint(
+                        "👉👉👉 After await ====================>$newCategoryAdded");
                     if (newCategoryAdded == true) {
                       await viewController.fetchCategories();
                     }

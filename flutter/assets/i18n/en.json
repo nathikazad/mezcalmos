@@ -2345,8 +2345,8 @@
         }
       },
       "ROpOptionView": {
-        "addOption": "Save option",
-        "editOption": "Save option",
+        "addOption": "Add option",
+        "editOption": "Edit option",
         "optionName": "Option name",
         "required": "Required",
         "optionChoices": "Option choices",

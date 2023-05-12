@@ -44,6 +44,8 @@ class AddCategoryController {
       return primaryLang.value != null && secondaryLang.value != null;
   }
 
+  bool refetch = false;
+
   /// LOGIC ///
 
   // INIT STATE ///
@@ -92,6 +94,7 @@ class AddCategoryController {
       try {
         await _updateName();
         await _updateDescription();
+        refetch = true;
         return true;
       } on Exception catch (e, stk) {
         mezDbgPrint(e);
@@ -101,10 +104,10 @@ class AddCategoryController {
       // await restaurantInfoController.editCategory(
       //     category: constructCategory(), categoryId: editableCategoryId!);
     } else {
-      
       try {
         final String? newCatId = await add_category(
             category: constructCategory(), restaurantId: restaurantId);
+        refetch = true;
         return true;
       } on Exception catch (e, stk) {
         mezDbgPrint(e);
