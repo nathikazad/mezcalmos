@@ -4,8 +4,8 @@
       "services": {
         "services": "Servicios",
         "service": "Servicio",
-        "serviceType": "What type of service will you add?",
-        "addService": "Add Service",
+        "serviceType": "¿Qué tipo de servicio agregarás?",
+        "addService": "Agregar servicio",
         "reorder": "Reordenar",
         "events": "Eventos",
         "event": {
@@ -13,6 +13,9 @@
           "eventType": "Seleccione un tipo de evento",
           "scheduleTypeError": "Seleccione un tipo de horario"
         },
+        "profile": "Perfil",
+        "feed": "Alimentar",
+        "messages": "Mensajes",
         "class": "Clase",
         "classes": "Clases",
         "rental": "Alquileres",
@@ -38,6 +41,8 @@
         "categoryError": "Por favor, seleccione una categoría",
         "locationLabel": "Seleccione una ubicación",
         "locationError": "Por favor, seleccione una ubicación",
+        "add": "Agregar",
+        "cancel": "Cancelar",
         "price": {
           "prices": "Precios",
           "price": "Precio",

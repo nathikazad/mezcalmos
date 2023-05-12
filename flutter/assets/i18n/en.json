@@ -12,6 +12,9 @@
           "eventType": "Select an event type",
           "scheduleTypeError": "Please select a schedule type"
         },
+        "profile": "Profile",
+        "feed": "Feed",
+        "messages": "Messages",
         "events": "Events",
         "class": "Class",
         "classes": "Classes",
@@ -38,6 +41,8 @@
         "scheduleError": "Please add schedule",
         "locationLabel": "Select a location",
         "locationError": "Please select a location",
+        "add": "Add",
+        "cancel": "Cancel",
         "price": {
           "prices": "Prices",
           "price": "Price",

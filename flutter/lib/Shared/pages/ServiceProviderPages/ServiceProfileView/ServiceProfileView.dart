@@ -305,7 +305,10 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                     ),
                   if (!_viewController.isApproved)
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
                       color: secondaryLightBlueColor,
                       child: Text(
                         "${_i18n()['serviceUnderReview']}",

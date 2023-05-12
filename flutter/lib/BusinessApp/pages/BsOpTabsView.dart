@@ -12,8 +12,8 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 enum BusinessOpTabView { Services, Feed, Messages, Profile }
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-    ["pages"]['DvOpTabsView'];
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpTabsView extends StatefulWidget {
   const BsOpTabsView({super.key});
@@ -103,15 +103,15 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.business_center),
-                label: 'Services',
+                label: '${_i18n()["services"]}',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.feed),
-                label: 'Feed',
+                label: '${_i18n()["feed"]}',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.textsms),
-                label: 'Messages',
+                label: '${_i18n()["messages"]}',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
