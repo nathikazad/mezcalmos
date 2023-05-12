@@ -87,6 +87,7 @@ class BsServiceViewController {
     final Service service = Service(
       category1: ServiceCategory1.Cleaning,
       details: details,
+      schedule: serviceSchedule.value,
     );
     return service;
   }
@@ -96,6 +97,10 @@ class BsServiceViewController {
       if (isEditing) {
         try {
           await saveItemDetails();
+          await update_service_schedule(
+            id: service!.details.id.toInt(),
+            schedule: serviceSchedule.value,
+          );
           shouldRefetch = true;
           showSavedSnackBar();
         } catch (e, stk) {

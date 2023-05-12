@@ -7447,6 +7447,615 @@ class _CopyWithStubImpl$Mutation$add_service$insert_business_service_one<TRes>
       _res;
 }
 
+class Variables$Mutation$update_business_service_schedule {
+  factory Variables$Mutation$update_business_service_schedule({
+    required int id,
+    required dynamic schedule,
+  }) =>
+      Variables$Mutation$update_business_service_schedule._({
+        r'id': id,
+        r'schedule': schedule,
+      });
+
+  Variables$Mutation$update_business_service_schedule._(this._$data);
+
+  factory Variables$Mutation$update_business_service_schedule.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$schedule = data['schedule'];
+    result$data['schedule'] = mapFromJson(l$schedule);
+    return Variables$Mutation$update_business_service_schedule._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  dynamic get schedule => (_$data['schedule'] as dynamic);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$schedule = schedule;
+    result$data['schedule'] = mapToJson(l$schedule);
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_business_service_schedule<
+          Variables$Mutation$update_business_service_schedule>
+      get copyWith =>
+          CopyWith$Variables$Mutation$update_business_service_schedule(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_business_service_schedule) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$schedule = schedule;
+    return Object.hashAll([
+      l$id,
+      l$schedule,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_business_service_schedule<
+    TRes> {
+  factory CopyWith$Variables$Mutation$update_business_service_schedule(
+    Variables$Mutation$update_business_service_schedule instance,
+    TRes Function(Variables$Mutation$update_business_service_schedule) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_business_service_schedule;
+
+  factory CopyWith$Variables$Mutation$update_business_service_schedule.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_business_service_schedule;
+
+  TRes call({
+    int? id,
+    dynamic? schedule,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_business_service_schedule<TRes>
+    implements
+        CopyWith$Variables$Mutation$update_business_service_schedule<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_business_service_schedule(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_business_service_schedule _instance;
+
+  final TRes Function(Variables$Mutation$update_business_service_schedule)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? schedule = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_business_service_schedule._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (schedule != _undefined && schedule != null)
+          'schedule': (schedule as dynamic),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_business_service_schedule<
+        TRes>
+    implements
+        CopyWith$Variables$Mutation$update_business_service_schedule<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_business_service_schedule(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? schedule,
+  }) =>
+      _res;
+}
+
+class Mutation$update_business_service_schedule {
+  Mutation$update_business_service_schedule({
+    this.update_business_service,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_business_service_schedule.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_business_service = json['update_business_service'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_business_service_schedule(
+      update_business_service: l$update_business_service == null
+          ? null
+          : Mutation$update_business_service_schedule$update_business_service
+              .fromJson((l$update_business_service as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_business_service_schedule$update_business_service?
+      update_business_service;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_service = update_business_service;
+    _resultData['update_business_service'] =
+        l$update_business_service?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_service = update_business_service;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_service,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_business_service_schedule) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_service = update_business_service;
+    final lOther$update_business_service = other.update_business_service;
+    if (l$update_business_service != lOther$update_business_service) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_business_service_schedule
+    on Mutation$update_business_service_schedule {
+  CopyWith$Mutation$update_business_service_schedule<
+          Mutation$update_business_service_schedule>
+      get copyWith => CopyWith$Mutation$update_business_service_schedule(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_business_service_schedule<TRes> {
+  factory CopyWith$Mutation$update_business_service_schedule(
+    Mutation$update_business_service_schedule instance,
+    TRes Function(Mutation$update_business_service_schedule) then,
+  ) = _CopyWithImpl$Mutation$update_business_service_schedule;
+
+  factory CopyWith$Mutation$update_business_service_schedule.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_business_service_schedule;
+
+  TRes call({
+    Mutation$update_business_service_schedule$update_business_service?
+        update_business_service,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_business_service_schedule$update_business_service<
+      TRes> get update_business_service;
+}
+
+class _CopyWithImpl$Mutation$update_business_service_schedule<TRes>
+    implements CopyWith$Mutation$update_business_service_schedule<TRes> {
+  _CopyWithImpl$Mutation$update_business_service_schedule(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_business_service_schedule _instance;
+
+  final TRes Function(Mutation$update_business_service_schedule) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_service = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_business_service_schedule(
+        update_business_service: update_business_service == _undefined
+            ? _instance.update_business_service
+            : (update_business_service
+                as Mutation$update_business_service_schedule$update_business_service?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_business_service_schedule$update_business_service<
+      TRes> get update_business_service {
+    final local$update_business_service = _instance.update_business_service;
+    return local$update_business_service == null
+        ? CopyWith$Mutation$update_business_service_schedule$update_business_service
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_business_service_schedule$update_business_service(
+            local$update_business_service,
+            (e) => call(update_business_service: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_business_service_schedule<TRes>
+    implements CopyWith$Mutation$update_business_service_schedule<TRes> {
+  _CopyWithStubImpl$Mutation$update_business_service_schedule(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_business_service_schedule$update_business_service?
+        update_business_service,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_business_service_schedule$update_business_service<
+          TRes>
+      get update_business_service =>
+          CopyWith$Mutation$update_business_service_schedule$update_business_service
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_business_service_schedule =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_business_service_schedule'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'schedule')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'jsonb'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_service'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'id')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'schedule'),
+                value: VariableNode(name: NameNode(value: 'schedule')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_business_service_schedule
+    _parserFn$Mutation$update_business_service_schedule(
+            Map<String, dynamic> data) =>
+        Mutation$update_business_service_schedule.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_business_service_schedule
+    = FutureOr<void> Function(
+  dynamic,
+  Mutation$update_business_service_schedule?,
+);
+
+class Options$Mutation$update_business_service_schedule
+    extends graphql.MutationOptions<Mutation$update_business_service_schedule> {
+  Options$Mutation$update_business_service_schedule({
+    String? operationName,
+    required Variables$Mutation$update_business_service_schedule variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_business_service_schedule? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_business_service_schedule>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_business_service_schedule(
+                            data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_business_service_schedule,
+          parserFn: _parserFn$Mutation$update_business_service_schedule,
+        );
+
+  final OnMutationCompleted$Mutation$update_business_service_schedule?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_business_service_schedule extends graphql
+    .WatchQueryOptions<Mutation$update_business_service_schedule> {
+  WatchOptions$Mutation$update_business_service_schedule({
+    String? operationName,
+    required Variables$Mutation$update_business_service_schedule variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_business_service_schedule,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_business_service_schedule,
+        );
+}
+
+extension ClientExtension$Mutation$update_business_service_schedule
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_business_service_schedule>>
+      mutate$update_business_service_schedule(
+              Options$Mutation$update_business_service_schedule
+                  options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_business_service_schedule>
+      watchMutation$update_business_service_schedule(
+              WatchOptions$Mutation$update_business_service_schedule options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_business_service_schedule$update_business_service {
+  Mutation$update_business_service_schedule$update_business_service({
+    required this.affected_rows,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_business_service_schedule$update_business_service.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_business_service_schedule$update_business_service(
+      affected_rows: (l$affected_rows as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_business_service_schedule$update_business_service) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_business_service_schedule$update_business_service
+    on Mutation$update_business_service_schedule$update_business_service {
+  CopyWith$Mutation$update_business_service_schedule$update_business_service<
+          Mutation$update_business_service_schedule$update_business_service>
+      get copyWith =>
+          CopyWith$Mutation$update_business_service_schedule$update_business_service(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_business_service_schedule$update_business_service<
+    TRes> {
+  factory CopyWith$Mutation$update_business_service_schedule$update_business_service(
+    Mutation$update_business_service_schedule$update_business_service instance,
+    TRes Function(
+            Mutation$update_business_service_schedule$update_business_service)
+        then,
+  ) = _CopyWithImpl$Mutation$update_business_service_schedule$update_business_service;
+
+  factory CopyWith$Mutation$update_business_service_schedule$update_business_service.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_business_service_schedule$update_business_service;
+
+  TRes call({
+    int? affected_rows,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_business_service_schedule$update_business_service<
+        TRes>
+    implements
+        CopyWith$Mutation$update_business_service_schedule$update_business_service<
+            TRes> {
+  _CopyWithImpl$Mutation$update_business_service_schedule$update_business_service(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_business_service_schedule$update_business_service
+      _instance;
+
+  final TRes Function(
+      Mutation$update_business_service_schedule$update_business_service) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_business_service_schedule$update_business_service(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_business_service_schedule$update_business_service<
+        TRes>
+    implements
+        CopyWith$Mutation$update_business_service_schedule$update_business_service<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_business_service_schedule$update_business_service(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$get_business_services {
   factory Variables$Query$get_business_services({
     required int businessId,

@@ -223,6 +223,24 @@ Future<int?> add_one_service({required Service service}) async {
   return null;
 }
 
+Future<int?> update_service_schedule({
+  required int id,
+  required Schedule? schedule,
+}) async {
+  final QueryResult<Mutation$update_business_service_schedule> response =
+      await _db.graphQLClient.mutate$update_business_service_schedule(
+          Options$Mutation$update_business_service_schedule(
+              variables: Variables$Mutation$update_business_service_schedule(
+                  id: id, schedule: schedule)));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura add service mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint("✅✅✅ Hasura service schedule mutation success => ${response.data}");
+    return response.parsedData?.update_business_service?.affected_rows;
+  }
+}
+
 Future<List<ServiceCard>> get_business_services(
     {required int businessId,
     int? offset,

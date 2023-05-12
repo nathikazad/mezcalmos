@@ -130,6 +130,15 @@ mutation add_service($object: business_service_insert_input!) {
   }
 }
 
+mutation update_business_service_schedule($id: Int!, $schedule: jsonb!) {
+  update_business_service(
+    where: { id: { _eq: $id } }
+    _set: { schedule: $schedule }
+  ) {
+    affected_rows
+  }
+}
+
 query get_business_services($businessId: Int!, $limit: Int, $offset: Int) {
   business_service(where:  {business_id: {_eq: $businessId}}, limit: $limit, offset: $offset) {
     
