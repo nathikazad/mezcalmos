@@ -100,15 +100,18 @@ class BsEventViewController {
           await saveItemDetails();
           await update_event_by_id(
               eventId: event!.id!.toInt(), event: _constructEvent());
+          showSavedSnackBar();
         } catch (e, stk) {
           mezDbgPrint(
               " 🛑 ${event?.id?.toInt()}  OperationException : ${e.toString()}");
           mezDbgPrint(stk);
+          showErrorSnackBar();
         }
         shouldRefetch = true;
       } else {
         Event _event = await _constructEventWithDetails();
         await createItem(_event);
+        showSavedSnackBar();
       }
     }
   }
@@ -323,7 +326,7 @@ class BsEventViewController {
                     type: ScheduleType.OneTime),
               ];
       case BusinessProfile.SurfShop:
-         return isClass
+        return isClass
             ? [
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["onDemandClass"],

@@ -116,11 +116,13 @@ class BsHomeRentalViewController {
           mezDbgPrint(
               " 🛑 ${rental?.id?.toInt()}  OperationException : ${e.toString()}");
           mezDbgPrint(stk);
+          showErrorSnackBar();
         }
         shouldRefetch = true;
       } else {
         Rental _rental = await _constructRentalWithDetails();
         await createItem(_rental);
+        showSavedSnackBar();
       }
     }
   }

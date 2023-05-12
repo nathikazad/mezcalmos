@@ -93,13 +93,21 @@ class BsServiceViewController {
   Future<void> save() async {
     if (languageTabsController.validate()) {
       if (isEditing) {
-        await saveItemDetails();
-        shouldRefetch = true;
+        try {
+          await saveItemDetails();
+          shouldRefetch = true;
+          showSavedSnackBar();
+        } catch (e, stk) {
+          mezDbgPrint(
+              " 🛑 ${service?.id?.toInt()}  OperationException : ${e.toString()}");
+          mezDbgPrint(stk);
+          showErrorSnackBar();
+        }
       } else {
         final Service _service = await _constructService();
         mezDbgPrint("busniess id : ${_service.details.businessId}");
-
         await createItem(_service);
+        showSavedSnackBar();
       }
     }
   }
