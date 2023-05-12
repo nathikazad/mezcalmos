@@ -27,6 +27,13 @@ List<Message> _get_messages(List<Object?>? msgs) {
           message: msg['message'],
           timestamp: DateTime.parse(msg['timestamp']).toLocal(),
           userId: msg['userId'],
+          link: msg.containsKey("link")
+              ? ChatLink(
+                  url: msg['link']['url'],
+                  name: convertToLanguageMap(msg['link']['name']),
+                  image: msg['link']['image'],
+                )
+              : null,
         ),
       );
     }
@@ -158,7 +165,7 @@ Future<List<HasuraChat>> get_customer_chats({required int customerId}) async {
           messages: [],
           lastMessage: Message(
             message: data.chat.last_message['message'],
-            timestamp: DateTime.parse(data.chat.last_message_sent).toLocal(),
+            timestamp: DateTime.parse(data.chat.last_message['timestamp']).toLocal(),
             userId: data.chat.last_message['userId'],
           ),
           participants: []));
