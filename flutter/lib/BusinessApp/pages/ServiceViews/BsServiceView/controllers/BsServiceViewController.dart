@@ -64,6 +64,7 @@ class BsServiceViewController {
     if (service != null) {
       await detailsController.initEditMode(
           detalsId: service!.details.id.toInt());
+      serviceSchedule.value = service?.schedule;
     }
   }
 
@@ -99,7 +100,7 @@ class BsServiceViewController {
           await saveItemDetails();
           await update_service_schedule(
             id: service!.details.id.toInt(),
-            schedule: serviceSchedule.value,
+            schedule: serviceSchedule.value!,
           );
           shouldRefetch = true;
           showSavedSnackBar();

@@ -272,6 +272,13 @@ const documentNodeQueryget_service_by_id = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'schedule'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'business'),
             alias: null,
             arguments: [],
@@ -699,6 +706,7 @@ extension ClientExtension$Query$get_service_by_id on graphql.GraphQLClient {
 
 class Query$get_service_by_id$business_service_by_pk {
   Query$get_service_by_id$business_service_by_pk({
+    this.schedule,
     required this.business,
     required this.details,
     required this.$__typename,
@@ -706,10 +714,12 @@ class Query$get_service_by_id$business_service_by_pk {
 
   factory Query$get_service_by_id$business_service_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$schedule = json['schedule'];
     final l$business = json['business'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$get_service_by_id$business_service_by_pk(
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       business:
           Query$get_service_by_id$business_service_by_pk$business.fromJson(
               (l$business as Map<String, dynamic>)),
@@ -719,6 +729,8 @@ class Query$get_service_by_id$business_service_by_pk {
     );
   }
 
+  final dynamic? schedule;
+
   final Query$get_service_by_id$business_service_by_pk$business business;
 
   final Query$get_service_by_id$business_service_by_pk$details details;
@@ -727,6 +739,8 @@ class Query$get_service_by_id$business_service_by_pk {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$details = details;
@@ -738,10 +752,12 @@ class Query$get_service_by_id$business_service_by_pk {
 
   @override
   int get hashCode {
+    final l$schedule = schedule;
     final l$business = business;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$schedule,
       l$business,
       l$details,
       l$$__typename,
@@ -755,6 +771,11 @@ class Query$get_service_by_id$business_service_by_pk {
     }
     if (!(other is Query$get_service_by_id$business_service_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$business = business;
@@ -797,6 +818,7 @@ abstract class CopyWith$Query$get_service_by_id$business_service_by_pk<TRes> {
       _CopyWithStubImpl$Query$get_service_by_id$business_service_by_pk;
 
   TRes call({
+    dynamic? schedule,
     Query$get_service_by_id$business_service_by_pk$business? business,
     Query$get_service_by_id$business_service_by_pk$details? details,
     String? $__typename,
@@ -821,11 +843,15 @@ class _CopyWithImpl$Query$get_service_by_id$business_service_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? schedule = _undefined,
     Object? business = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_service_by_id$business_service_by_pk(
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         business: business == _undefined || business == null
             ? _instance.business
             : (business
@@ -860,6 +886,7 @@ class _CopyWithStubImpl$Query$get_service_by_id$business_service_by_pk<TRes>
   TRes _res;
 
   call({
+    dynamic? schedule,
     Query$get_service_by_id$business_service_by_pk$business? business,
     Query$get_service_by_id$business_service_by_pk$details? details,
     String? $__typename,
@@ -7769,7 +7796,7 @@ const documentNodeMutationupdate_business_service_schedule =
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'id'),
+                name: NameNode(value: 'details_id'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
                     name: NameNode(value: '_eq'),

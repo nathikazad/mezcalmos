@@ -30,7 +30,7 @@ class BsEventViewController {
       BusinessItemDetailsController();
   // vars //
   bool shouldRefetch = false;
-  late bool isClass;
+  bool isClass = false;
   // state variables //
   Rxn<EventWithBusinessCard> _event = Rxn<EventWithBusinessCard>();
   Rxn<ScheduleType> scheduleType = Rxn<ScheduleType>();

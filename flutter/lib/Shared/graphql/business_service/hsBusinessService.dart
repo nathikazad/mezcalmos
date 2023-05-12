@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -93,6 +94,9 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
     return ServiceWithBusinessCard(
         service: Service(
             category1: data.details.category1.toServiceCategory1(),
+            schedule: (data.schedule != null)
+                ? scheduleFromData(data.schedule)
+                : null,
             details: BusinessItemDetails(
               id: data.details.id,
               nameId: data.details.name_id,
@@ -159,6 +163,7 @@ Future<int?> add_one_service({required Service service}) async {
       .mutate$add_service(Options$Mutation$add_service(
           variables: Variables$Mutation$add_service(
               object: Input$business_service_insert_input(
+                  schedule: service.schedule?.toFirebaseFormattedJson(),
                   business_id: service.details.businessId.toInt(),
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
@@ -225,18 +230,19 @@ Future<int?> add_one_service({required Service service}) async {
 
 Future<int?> update_service_schedule({
   required int id,
-  required Schedule? schedule,
+  required Schedule schedule,
 }) async {
   final QueryResult<Mutation$update_business_service_schedule> response =
       await _db.graphQLClient.mutate$update_business_service_schedule(
           Options$Mutation$update_business_service_schedule(
               variables: Variables$Mutation$update_business_service_schedule(
-                  id: id, schedule: schedule)));
+                  id: id, schedule: schedule.toFirebaseFormattedJson())));
   if (response.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura add service mutation exception =>${response.exception}");
   } else {
-    mezDbgPrint("✅✅✅ Hasura service schedule mutation success => ${response.data}");
+    mezDbgPrint(
+        "✅✅✅ Hasura service schedule mutation success => ${response.data}");
     return response.parsedData?.update_business_service?.affected_rows;
   }
 }
