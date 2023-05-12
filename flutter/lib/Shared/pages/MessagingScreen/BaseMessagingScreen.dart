@@ -111,27 +111,37 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
         if (message.link != null) {
           return Column(
             children: [
-              MezCard(
-                firstAvatarBgImage:
-                    NetworkImage(controller.incomingViewLink!.image),
-                action: InkWell(
-                  onTap: () {
-                    if (MezRouter.isRouteInStack(
-                      controller.incomingViewLink!.url,
-                    )) {
-                      MezRouter.toPath(controller.incomingViewLink!.url);
-                    }
-                  },
-                  child: Text(
-                    "View",
-                    style: context.textTheme.titleLarge!.copyWith(
-                      color: primaryBlueColor,
-                    ),
-                  ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12.0,
+                  vertical: 4.0,
                 ),
-                content: Text(
-                  controller.incomingViewLink!.name
-                      .getTranslation(userLanguage),
+                child: MezCard(
+                  firstAvatarBgImage: NetworkImage(message.link!.image),
+                  action: InkWell(
+                    onTap: () {
+                      if (MezRouter.isRouteInStack(
+                        message.link!.url,
+                      )) {
+                        MezRouter.toPath(message.link!.url);
+                      }
+                    },
+                    child: MezRouter.isRouteInStack(
+                      message.link!.url,
+                    )
+                        ? Obx(
+                            () => Text(
+                              _i18n()["view"],
+                              style: context.textTheme.titleLarge!.copyWith(
+                                color: primaryBlueColor,
+                              ),
+                            ),
+                          )
+                        : SizedBox.shrink(),
+                  ),
+                  content: Text(
+                    message.link!.name.getTranslation(userLanguage),
+                  ),
                 ),
               ),
               singleChatComponent(
@@ -437,7 +447,10 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   }) =>
       Container(
         alignment: !isMe ? Alignment.centerLeft : Alignment.centerRight,
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.symmetric(
+          vertical: 5.0,
+          horizontal: 12,
+        ),
         child: Wrap(
             alignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
             runAlignment: !isMe ? WrapAlignment.start : WrapAlignment.end,
@@ -477,14 +490,14 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                               : Color.fromRGBO(103, 121, 254, 1),
                           borderRadius: !isMe
                               ? BorderRadius.only(
-                                  topLeft: Radius.zero,
+                                  topLeft: Radius.circular(20),
                                   topRight: Radius.circular(30),
                                   bottomRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(20))
+                                  bottomLeft: Radius.zero)
                               : BorderRadius.only(
                                   topLeft: Radius.circular(30),
-                                  topRight: Radius.zero,
-                                  bottomRight: Radius.circular(20),
+                                  topRight: Radius.circular(20),
+                                  bottomRight: Radius.zero,
                                   bottomLeft: Radius.circular(30))),
                       child: InkWell(
                         onLongPress: () {

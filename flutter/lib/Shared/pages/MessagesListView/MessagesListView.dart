@@ -70,7 +70,7 @@ class _MessagesListViewState extends State<MessagesListView> {
         showNotifications: true,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(10),
         child: Obx(() {
           if (viewcontroller.isLoading.value) {
             return Center(
@@ -86,6 +86,13 @@ class _MessagesListViewState extends State<MessagesListView> {
             children: List.generate(
               viewcontroller.allChats.length,
               (int index) {
+                /// This is special case
+                /// This condition means user has created the chat
+                /// but did not send any message. In that case,
+                /// we just skip the message list card to being build
+                if (viewcontroller.allChats[index].messages.isEmpty) {
+                  return SizedBox.shrink();
+                }
                 return MezCard(
                   onClick: () {
                     if (Get.find<AuthController>().user == null) {
@@ -122,15 +129,18 @@ class _MessagesListViewState extends State<MessagesListView> {
                                   Text(
                                     viewcontroller
                                         .allChats[index].lastMessage!.timestamp
-                                        .timeAgo(),
+                                        .getOrderTime(),
                                   ),
                                 ],
                               ),
-                              Text(
-                                viewcontroller.allChats[index].messages.isEmpty
-                                    ? ""
-                                    : viewcontroller
-                                        .allChats[index].messages.last.message,
+                              Obx(
+                                () => Text(
+                                  viewcontroller
+                                          .allChats[index].messages.isEmpty
+                                      ? ""
+                                      : viewcontroller
+                                          .allChats[index].lastMessage!.message,
+                                ),
                               ),
                             ],
                           ),

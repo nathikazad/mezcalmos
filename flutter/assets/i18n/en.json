@@ -1460,7 +1460,8 @@
         "writeMsgPlaceholder": "Write your message here ...",
         "cancel": "Cancel",
         "callApp": "Call through app",
-        "callPhone": "Call with phone number"
+        "callPhone": "Call with phone number",
+        "view": "View"
       },
       "ViewNotifications": {
         "title": "Notifications",

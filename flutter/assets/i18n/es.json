@@ -1458,7 +1458,8 @@
         "writeMsgPlaceholder": "Escribe tu mensaje aqui ...",
         "cancel": "Cancelar",
         "callApp": "Llamar a través de la aplicación",
-        "callPhone": "Llame con el número de teléfono"
+        "callPhone": "Llame con el número de teléfono",
+        "view": "Vista"
       },
       "ViewNotifications": {
         "title": "Notificaciones",

@@ -106,10 +106,12 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                           viewController.languageTabsController.tabController,
                       children: [
                         Form(
-                            key: viewController.formKey,
+                            key: viewController
+                                .languageTabsController.primaryLangFormKey,
                             child: _primaryTab(context)),
                         Form(
-                            key: viewController.scFormKey,
+                            key: viewController
+                                .languageTabsController.secondaryLangFormKey,
                             child: _secondaryTab(context)),
                       ],
                     ),
