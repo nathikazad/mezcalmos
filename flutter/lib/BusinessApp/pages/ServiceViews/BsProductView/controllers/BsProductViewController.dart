@@ -50,9 +50,10 @@ class BsProductViewController {
       return languageTabsController.tabController != null;
   }
 
-  void init({required TickerProvider thickerProvider}) {
-    languageTabsController.init(
+  Future<void> init({required TickerProvider thickerProvider}) async {
+    await languageTabsController.init(
         vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
+    detailsController.setLanguage(language: languages!);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
 

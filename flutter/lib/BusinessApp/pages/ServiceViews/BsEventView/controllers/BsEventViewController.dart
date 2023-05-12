@@ -36,13 +36,14 @@ class BsEventViewController {
   // getters //
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
-    bool get hasData {
+  bool get hasData {
     if (isEditing) {
       return _event.value != null &&
           languageTabsController.tabController != null;
     } else
       return languageTabsController.tabController != null;
   }
+
   BusinessProfile get businessProfile =>
       Get.find<BusinessOpAuthController>().businessProfile!;
   EventWithBusinessCard? get event => _event.value;
@@ -63,10 +64,11 @@ class BsEventViewController {
 
 // methods //
 
-  void init({required TickerProvider thickerProvider, required bool isClass}) {
-    languageTabsController.init(
+  Future<void> init(
+      {required TickerProvider thickerProvider, required bool isClass}) async {
+    await languageTabsController.init(
         vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
-
+    detailsController.setLanguage(language: languages!);
     this.isClass = isClass;
     setPrices();
   }

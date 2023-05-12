@@ -63,12 +63,13 @@ class BsRentalViewController {
       return languageTabsController.tabController != null;
   }
 
-  void init({
+  Future<void> init({
     required TickerProvider thickerProvider,
     required RentalCategory1 category1,
-  }) {
-    languageTabsController.init(
+  }) async {
+    await languageTabsController.init(
         vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
+    detailsController.setLanguage(language: languages!);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
     rentalCategory1 = category1;
   }

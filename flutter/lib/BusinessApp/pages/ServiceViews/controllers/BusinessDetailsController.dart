@@ -37,13 +37,16 @@ class BusinessItemDetailsController {
 
   BusinessItemDetails? get details => _details.value;
   // methods //
+  void setLanguage({required ServiceProviderLanguage language}) {
+    languages.value = language;
+  }
+
   Future<void> initEditMode({required int detalsId}) async {
     mezDbgPrint(" 🟢  initEditMode : $detalsId");
     _details.value = await get_business_item_details_by_id(
         detailsId: detalsId,
         businessId: Get.find<BusinessOpAuthController>().companyId!);
-    languages.value =
-        await get_business_lang(businessId: _details.value!.businessId.toInt());
+
     if (details != null) {
       nameController.text = details!.name[languages.value!.primary] ?? "";
       descriptionController.text =
