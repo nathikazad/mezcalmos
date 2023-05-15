@@ -24,13 +24,16 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class CustItemView extends StatefulWidget {
   const CustItemView({Key? key}) : super(key: key);
   static Future<void> navigateToRestaurantItem(
-      {required int itemId, required int restaurantId}) {
+      {required int itemId,
+      required int restaurantId,
+      bool fromMealPage = false}) {
     return MezRouter.toPath(
         RestaurantRoutes.restaurantItemViewRoute
             .replaceAll(":restaurantId", restaurantId.toString())
             .replaceAll(":itemId", itemId.toString()),
         arguments: <String, dynamic>{
-          "viewItemScreenMode": ViewItemScreenMode.AddItemMode
+          "viewItemScreenMode": ViewItemScreenMode.AddItemMode,
+          "fromMealPage": fromMealPage,
         });
   }
 
@@ -49,6 +52,7 @@ class CustItemView extends StatefulWidget {
 
 class _CustItemViewState extends State<CustItemView> {
   CustItemViewController viewController = CustItemViewController();
+  late bool fromMealPage;
 
   @override
   void dispose() {
@@ -64,6 +68,7 @@ class _CustItemViewState extends State<CustItemView> {
         int.tryParse(MezRouter.urlArguments['itemId'].toString());
     final int? cartItemId =
         int.tryParse(MezRouter.urlArguments["cartItemId"].toString());
+    fromMealPage = MezRouter.bodyArguments!['fromMealPage'] as bool;
     viewController.init(
         itemId: itemId,
         restaurantId: restaurantId,
@@ -198,24 +203,29 @@ class _CustItemViewState extends State<CustItemView> {
             ),
           ),
           // if (viewController.showRestaurant())
-          InkWell(
-            borderRadius: BorderRadius.circular(18),
-            onTap: () {
-              CustomerRestaurantView.navigate(
-                restaurantId: viewController.restaurant.value!.restaurantId,
-              );
-            },
-            child: Ink(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-              decoration: BoxDecoration(
-                  color: secondaryLightBlueColor,
-                  borderRadius: BorderRadius.circular(18)),
-              child: Text(
-                '${_i18n()["viewRestaurant"]}',
-                style: context.txt.bodyLarge?.copyWith(color: primaryBlueColor),
-              ),
-            ),
-          )
+          fromMealPage
+              ? InkWell(
+                  borderRadius: BorderRadius.circular(18),
+                  onTap: () {
+                    CustomerRestaurantView.navigate(
+                      restaurantId:
+                          viewController.restaurant.value!.restaurantId,
+                    );
+                  },
+                  child: Ink(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+                    decoration: BoxDecoration(
+                        color: secondaryLightBlueColor,
+                        borderRadius: BorderRadius.circular(18)),
+                    child: Text(
+                      '${_i18n()["viewRestaurant"]}',
+                      style: context.txt.bodyLarge
+                          ?.copyWith(color: primaryBlueColor),
+                    ),
+                  ),
+                )
+              : SizedBox.shrink()
         ],
       ),
     );
@@ -223,7 +233,10 @@ class _CustItemViewState extends State<CustItemView> {
 
   Container _itemDescription(BuildContext context, Item item) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 15),
+      margin: const EdgeInsets.only(
+        bottom: 15,
+        top: 12,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
