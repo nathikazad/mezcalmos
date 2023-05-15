@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 
 abstract class MessagesListViewController {
   AuthController _authController = Get.find<AuthController>();
@@ -17,6 +18,12 @@ abstract class MessagesListViewController {
   RxBool isLoading = false.obs;
 
   void init() {
+    MezRouter.registerReturnToViewCallback(
+      MessagesListView.constructPath(),
+      () {
+        getMessages();
+      },
+    );
     getMessages();
   }
 

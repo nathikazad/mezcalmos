@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotifications/nativeBackgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -16,7 +16,7 @@ class DeliveryDeepLinkHandler {
   static Future<void> _addDriver(String uniqueId) async {
     try {
       String? token =
-          await Get.find<BackgroundNotificationsController>().getToken();
+          await Get.find<NativeBackgroundNotificationsController>().getToken();
       await CloudFunctions.serviceProvider_addDriver(
           uniqueId: uniqueId, notificationToken: token);
     } catch (e, stk) {

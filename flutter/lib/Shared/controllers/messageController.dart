@@ -26,7 +26,6 @@ class MessageController extends GetxController {
   IncomingViewLink? incomingViewLink;
   AuthController _authController = Get.find<AuthController>();
   StreamSubscription? chatListener;
-  bool firstMessageSent = false;
   late AppType appType;
 
   @override
@@ -94,7 +93,7 @@ class MessageController extends GetxController {
       "message": message,
       "userId": _authController.user!.hasuraId,
     };
-    if (firstMessageSent != true && incomingViewLink != null) {
+    if (incomingViewLink != null) {
       // make sure that the last message with the link does not have the same url
       messageMap["link"] = incomingViewLink!.toJson();
     }
@@ -112,7 +111,6 @@ class MessageController extends GetxController {
           participantType: MezEnv.appType.convertParticipantTypefromAppType(),
         ).toFirebaseFormatJson());
 
-    firstMessageSent = true;
     incomingViewLink = null;
   }
 

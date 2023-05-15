@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
@@ -53,9 +54,9 @@ class ItemChosenChoiceComponent extends StatelessWidget {
                         ),
                         if (choices[index].cost > 0)
                           Text(
-                            "\$${choices[index].cost}",
+                            "\$${choices[index].cost.toStringAsFixed(0)}",
                             style: context.txt.bodyMedium!
-                                .copyWith(color: Get.theme.primaryColorLight),
+                                .copyWith(color: primaryBlueColor),
                           ),
                       ],
                     ),

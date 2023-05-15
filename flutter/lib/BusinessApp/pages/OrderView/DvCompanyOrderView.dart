@@ -31,8 +31,7 @@ class DvCompanyOrderView extends StatefulWidget {
   const DvCompanyOrderView({Key? key}) : super(key: key);
 
   static Future<void> navigate({required int orderId}) {
-    return MezRouter.toPath(DeliveryAdminRoutes.kOrderViewRoute
-        .replaceAll(":orderId", orderId.toString()));
+    return MezRouter.toPath(constructPath(orderId));
   }
 
   static String constructPath(int orderId) {

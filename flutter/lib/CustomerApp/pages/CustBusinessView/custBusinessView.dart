@@ -347,7 +347,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
           ? SizedBox.shrink()
           : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(
-                height: 5,
+                height: 10,
               ),
               Row(
                 children: [
@@ -383,18 +383,18 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     ),
                   ),
                   Spacer(),
-                  InkWell(
-                    onTap: () {},
-                    child: Ink(
-                      color: Colors.transparent,
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        '${_i18n()['viewAll']}',
-                        style: context.txt.bodyLarge
-                            ?.copyWith(color: primaryBlueColor),
-                      ),
-                    ),
-                  )
+                  // InkWell(
+                  //   onTap: () {},
+                  //   child: Ink(
+                  //     color: Colors.transparent,
+                  //     padding: const EdgeInsets.all(10),
+                  //     child: Text(
+                  //       '${_i18n()['viewAll']}',
+                  //       style: context.txt.bodyLarge
+                  //           ?.copyWith(color: primaryBlueColor),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
               for (review.Review rev in _viewController.reviews)

@@ -1044,7 +1044,8 @@
             "therapy": "Terapia",
             "scheduled": "Programada",
             "oneTime": "Una vez",
-            "onDemand": "On demand"
+            "onDemand": "On demand",
+            "all": "Alle"
           }
         },
         "RentalsView": {

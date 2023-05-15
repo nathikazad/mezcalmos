@@ -162,4 +162,9 @@ class ForegroundNotificationsController extends GetxController {
         .toList()
         .isNotEmpty;
   }
+
+  /// TODO: Temp logic only
+  bool hasNewSPMessageNotification() {
+    return true;
+  }
 }

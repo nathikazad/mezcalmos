@@ -978,7 +978,8 @@
             "onDemand": "On demand",
             "surf": "Surf",
             "fitness": "Fitness",
-            "yoga": "Yoga"
+            "yoga": "Yoga",
+            "all": "All"
           }
         },
         "RentalsView": {

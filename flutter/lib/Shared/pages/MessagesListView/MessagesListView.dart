@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewcontroller.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -21,8 +23,12 @@ class MessagesListView extends StatefulWidget {
 
   static Future<void> navigate(
       {required ServiceProviderType serviceProviderType}) async {
-    return MezRouter.toPath(SharedRoutes.kHomeRoute,
+    return MezRouter.toPath(constructPath(),
         arguments: {"serviceProviderType": serviceProviderType});
+  }
+
+  static String constructPath() {
+    return SharedRoutes.kHomeRoute;
   }
 
   @override
@@ -132,17 +138,59 @@ class _MessagesListViewState extends State<MessagesListView> {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                    viewcontroller
-                                        .allChats[index].lastMessage!.timestamp
-                                        .getOrderTime(),
+                                    viewcontroller.allChats[index].lastMessage!
+                                            .timestamp.isToday
+                                        ? viewcontroller.allChats[index]
+                                            .lastMessage!.timestamp
+                                            .timeAgo()
+                                        : viewcontroller.allChats[index]
+                                            .lastMessage!.timestamp
+                                            .getOrderTime(),
                                   ),
                                 ],
                               ),
-                              Obx(
-                                () => Text(
-                                  viewcontroller
-                                      .allChats[index].lastMessage!.message,
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Obx(
+                                    () => Expanded(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 4.0),
+                                        child: Text(
+                                          viewcontroller.allChats[index]
+                                              .lastMessage!.message,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Get.find<ForegroundNotificationsController>()
+                                          .hasNewMessageNotification(
+                                              viewcontroller.allChats[index].id)
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(
+                                            right: 2.0,
+                                            top: 4.0,
+                                          ),
+                                          child: CircleAvatar(
+                                            radius: 10,
+                                            backgroundColor: Colors.red,
+                                            child: Text(
+                                              // TODO: How to get length of new message
+                                              "1",
+                                              style: context
+                                                  .textTheme.labelSmall!
+                                                  .copyWith(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : SizedBox.shrink(),
+                                ],
                               ),
                             ],
                           ),

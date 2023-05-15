@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksBase.dart';
+import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksWeb.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocationsView.dart';
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
@@ -16,8 +16,8 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
-Function signInCallback = CustomerAuthHooksBase.onSignInHook;
-Function signOutCallback = CustomerAuthHooksBase.onSignOutHook;
+Function signInCallback = CustomerAuthHooksWeb.onSignInHook;
+Function signOutCallback = CustomerAuthHooksWeb.onSignOutHook;
 List<QRoute> routes = XRouter.mainRoutes +
     SharedRoutes.qRoutes +
     [

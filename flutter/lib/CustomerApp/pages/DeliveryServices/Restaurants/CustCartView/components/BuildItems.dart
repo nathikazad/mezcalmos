@@ -54,6 +54,7 @@ class CartItemsBuilder extends StatelessWidget {
                     itemsPrice: cartItem.totalCost().toStringAsFixed(0),
                     viewController: viewController,
                   )),
+                  itemPrice: cartItem.totalCost().toStringAsFixed(0),
                   children: [
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 9),
