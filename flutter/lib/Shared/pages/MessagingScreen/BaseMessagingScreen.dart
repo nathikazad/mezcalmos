@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -24,7 +25,6 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -140,6 +140,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   }
 
   void _fillCallBack() {
+    mezDbgPrint("Fill Calback has been called ...... 👋");
     chatLines.assignAll(controller.chat.value!.messages.map(
       (Message message) {
         /// This condition display offering card on top of chat
@@ -290,9 +291,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                       Obx(() {
                         mezDbgPrint("Linkkkkkkkk ⏰");
                         mezDbgPrint(
-                            "${controller.chat.value?.chatInfo.parentlink}");
-                        mezDbgPrint(
-                            "${controller.chat.value?.chatInfo.parentlink}");
+                            "${controller.chat.value?.messages.last.message}");
+
                         if (controller.chat.value?.chatInfo.parentlink ==
                                 null ||
                             (MezRouter.isRouteInStack(
@@ -657,6 +657,7 @@ class SendMessageBox extends StatelessWidget {
                 if (msgReady2Send) {
                   controller.sendMessage(
                     message: _typedMsg.value,
+
                     chatId: chatId,
                     // orderId: orderId,
                     // orderType: orderType,
