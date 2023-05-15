@@ -28,6 +28,7 @@ class MessageController extends GetxController {
   StreamSubscription? chatListener;
   bool firstMessageSent = false;
   late AppType appType;
+  material.VoidCallback? _onValueCallBack;
 
   @override
   void onInit() {
@@ -49,7 +50,10 @@ class MessageController extends GetxController {
         mezDbgPrint("[77] Got Chat !");
         chat.value = value;
 
-        if (onValueCallBack != null) onValueCallBack();
+        if (onValueCallBack != null) {
+          _onValueCallBack = onValueCallBack;
+          _onValueCallBack?.call();
+        }
       }
 
       if (subscriptionId != null) {
@@ -61,8 +65,8 @@ class MessageController extends GetxController {
         chatListener = listen_on_chat_messages(chatId: chatId)
             .listen((List<Message> msgs) {
           mezDbgPrint(
-              "[+] Chat :: new messages :: trigger :: listener! =====>> ${chat.value.toString()}");
-          if (msgs.isNotEmpty && msgs.length > chat.value!.messages.length) {
+              "[+] Chat :: new messages :: trigger :: listener! =====>> ${chat.value?.messages.length} ::::::: ${msgs.length}");
+          if (msgs.isNotEmpty) {
             chat.value!.messages.clear();
             chat.value!.messages.addAll(msgs);
             if (onValueCallBack != null && chat.value != null)
@@ -72,7 +76,7 @@ class MessageController extends GetxController {
       }, cancel: () {
         chatListener?.cancel();
         chatListener = null;
-      }); 
+      });
     });
   }
 
@@ -85,6 +89,12 @@ class MessageController extends GetxController {
     required String message,
     required int chatId,
   }) async {
+    chat.value?.messages.add(Message(
+        message: message,
+        timestamp: DateTime.now(),
+        userId: _authController.hasuraUserId!));
+    _onValueCallBack?.call();
+    mezDbgPrint(chat.value?.messages.last.message);
     final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .ref()
         .child(messagesNode(chatId.toString()))

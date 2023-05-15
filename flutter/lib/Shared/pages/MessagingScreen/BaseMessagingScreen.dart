@@ -106,6 +106,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   }
 
   void _fillCallBack() {
+    mezDbgPrint("Fill Calback has been called ...... 👋");
     chatLines.assignAll(controller.chat.value!.messages.map(
       (Message message) {
         if (message.link != null) {
@@ -251,9 +252,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                       Obx(() {
                         mezDbgPrint("Linkkkkkkkk ⏰");
                         mezDbgPrint(
-                            "${controller.chat.value?.chatInfo.parentlink}");
-                        mezDbgPrint(
-                            "${controller.chat.value?.chatInfo.parentlink}");
+                            "${controller.chat.value?.messages.last.message}");
+
                         if (controller.chat.value?.chatInfo.parentlink ==
                                 null ||
                             (MezRouter.isRouteInStack(
@@ -618,6 +618,7 @@ class SendMessageBox extends StatelessWidget {
                 if (msgReady2Send) {
                   controller.sendMessage(
                     message: _typedMsg.value,
+
                     chatId: chatId,
                     // orderId: orderId,
                     // orderType: orderType,
