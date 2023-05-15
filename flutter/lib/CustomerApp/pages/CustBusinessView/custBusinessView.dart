@@ -481,6 +481,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
                         toEntityType: rev.toEntityType,
                         toImage: rev.toImage,
                         toName: rev.toName,
+                        fromName: rev.fromName,
                         reviewTime: rev.reviewTime,
                         fromEntityType: rev.fromEntityType),
                     showUserImage: false)
