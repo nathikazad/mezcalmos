@@ -159,7 +159,7 @@ Future<int?> add_one_product({required Product product}) async {
                   details: Input$business_item_details_obj_rel_insert_input(
                       data: Input$business_item_details_insert_input(
                           available: product.details.available,
-                           business_id: product.details.businessId.toInt(),
+                          business_id: product.details.businessId.toInt(),
                           category1: product.category1.toFirebaseFormatString(),
                           // category2: product.category2?.toFirebaseFormatString(),
                           cost: product.details.cost.map(
@@ -169,45 +169,42 @@ Future<int?> add_one_product({required Product product}) async {
                           image: product.details.image,
                           name: Input$translation_obj_rel_insert_input(
                               data: Input$translation_insert_input(
-                                  service_provider_id:
-                                      product.details.businessId.toInt(),
-                                  service_provider_type: ServiceProviderType
-                                      .Business.toFirebaseFormatString(),
-                                  translations:
-                                      Input$translation_value_arr_rel_insert_input(
-                                          data: <
-                                              Input$translation_value_insert_input>[
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.EN
-                                                .toFirebaseFormatString(),
-                                            value: product
-                                                .details.name[Language.EN]),
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.ES
-                                                .toFirebaseFormatString(),
-                                            value: product
-                                                .details.name[Language.ES])
-                                      ]))),
+                            service_provider_id:
+                                product.details.businessId.toInt(),
+                            service_provider_type: ServiceProviderType.Business
+                                .toFirebaseFormatString(),
+                            translations:
+                                Input$translation_value_arr_rel_insert_input(
+                              data: product.details.name.entries
+                                  .map((MapEntry<Language, String> e) =>
+                                      Input$translation_value_insert_input(
+                                          language_id:
+                                              e.key.toFirebaseFormatString(),
+                                          value: e.value))
+                                  .toList(),
+                            ),
+                          )),
                           position: product.details.position?.toInt(),
                           additional_parameters:
                               product.details.additionalParameters,
                           description: (product.details.description != null)
                               ? Input$translation_obj_rel_insert_input(
                                   data: Input$translation_insert_input(
-                                      service_provider_id: product.details.businessId.toInt(),
-                                      service_provider_type: ServiceProviderType.Business.toFirebaseFormatString(),
-                                      translations: Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.EN
-                                                .toFirebaseFormatString(),
-                                            value: product.details
-                                                .description?[Language.EN]),
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.ES
-                                                .toFirebaseFormatString(),
-                                            value: product.details
-                                                .description?[Language.ES])
-                                      ])))
+                                  service_provider_id:
+                                      product.details.businessId.toInt(),
+                                  service_provider_type: ServiceProviderType
+                                      .Business.toFirebaseFormatString(),
+                                  translations:
+                                      Input$translation_value_arr_rel_insert_input(
+                                    data: product.details.description!.entries
+                                        .map((MapEntry<Language, String> e) =>
+                                            Input$translation_value_insert_input(
+                                                language_id: e.key
+                                                    .toFirebaseFormatString(),
+                                                value: e.value))
+                                        .toList(),
+                                  ),
+                                ))
                               : null))))));
   if (response.hasException) {
     mezDbgPrint(
@@ -236,7 +233,8 @@ Future<int?> update_product_category1({
     mezDbgPrint(
         "🚨🚨🚨 Hasura update product category mutation exception =>${response.exception}");
   } else {
-    mezDbgPrint("✅✅✅ Hasura update product category mutation success => ${response.data}");
+    mezDbgPrint(
+        "✅✅✅ Hasura update product category mutation success => ${response.data}");
     return response.parsedData?.update_business_item_details!.affected_rows;
   }
   return null;
