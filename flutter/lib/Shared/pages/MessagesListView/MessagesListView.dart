@@ -91,7 +91,7 @@ class _MessagesListViewState extends State<MessagesListView> {
                 /// This condition means user has created the chat
                 /// but did not send any message. In that case,
                 /// we just skip the message list card to being build
-                if (viewcontroller.allChats[index].messages.isEmpty) {
+                if (viewcontroller.allChats[index].lastMessage == null) {
                   return SizedBox.shrink();
                 }
                 return MezCard(
@@ -141,10 +141,7 @@ class _MessagesListViewState extends State<MessagesListView> {
                               Obx(
                                 () => Text(
                                   viewcontroller
-                                          .allChats[index].messages.isEmpty
-                                      ? ""
-                                      : viewcontroller
-                                          .allChats[index].lastMessage!.message,
+                                      .allChats[index].lastMessage!.message,
                                 ),
                               ),
                             ],

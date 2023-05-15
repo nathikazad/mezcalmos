@@ -113,6 +113,7 @@ class MessageController extends GetxController {
         ).toFirebaseFormatJson());
 
     firstMessageSent = true;
+    incomingViewLink = null;
   }
 
   void clearMessageNotifications({required int chatId}) {

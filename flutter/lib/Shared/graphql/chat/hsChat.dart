@@ -137,6 +137,7 @@ Future<List<HasuraChat>> get_customer_chats({required int customerId}) async {
       await _hasuraDb.graphQLClient.query$get_customer_chats(
     Options$Query$get_customer_chats(
       variables: Variables$Query$get_customer_chats(customer_id: customerId),
+      fetchPolicy: FetchPolicy.networkOnly,
     ),
   );
 
@@ -163,12 +164,14 @@ Future<List<HasuraChat>> get_customer_chats({required int customerId}) async {
           ),
           id: data.chat.id,
           messages: [],
-          lastMessage: Message(
-            message: data.chat.last_message['message'],
-            timestamp:
-                DateTime.parse(data.chat.last_message['timestamp']).toLocal(),
-            userId: data.chat.last_message['userId'],
-          ),
+          lastMessage: data.chat.last_message != null
+              ? Message(
+                  message: data.chat.last_message['message'],
+                  timestamp: DateTime.parse(data.chat.last_message['timestamp'])
+                      .toLocal(),
+                  userId: data.chat.last_message['userId'],
+                )
+              : null,
           participants: []));
     });
     return _chats;
