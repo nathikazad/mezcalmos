@@ -29,6 +29,7 @@ class SearchItemCard extends StatelessWidget {
             CustItemView.navigateToRestaurantItem(
               restaurantId: item.restaurantId!,
               itemId: item.id!,
+              fromMealPage: true,
             );
           }
         },
