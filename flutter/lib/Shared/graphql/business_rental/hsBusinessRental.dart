@@ -351,9 +351,10 @@ Future<int?> add_one_rental({required Rental rental}) async {
                           available: rental.details.available,
                           business_id: rental.details.businessId.toInt(),
                           category1: rental.category1.toFirebaseFormatString(),
-                          category2: rental.category2?.toFirebaseFormatString() ??
-                              RentalCategory2.Uncategorized
-                                  .toFirebaseFormatString(),
+                          category2:
+                              rental.category2?.toFirebaseFormatString() ??
+                                  RentalCategory2.Uncategorized
+                                      .toFirebaseFormatString(),
                           cost: rental.details.cost.map(
                               (TimeUnit key, num value) => MapEntry(
                                   key.toFirebaseFormatString(),
@@ -361,43 +362,43 @@ Future<int?> add_one_rental({required Rental rental}) async {
                           image: rental.details.image,
                           name: Input$translation_obj_rel_insert_input(
                               data: Input$translation_insert_input(
-                                  service_provider_id:
-                                      rental.details.businessId.toInt(),
-                                  service_provider_type: ServiceProviderType.Business
-                                      .toFirebaseFormatString(),
-                                  translations:
-                                      Input$translation_value_arr_rel_insert_input(
-                                          data: <Input$translation_value_insert_input>[
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.EN
-                                                .toFirebaseFormatString(),
-                                            value: rental
-                                                .details.name[Language.EN]),
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.ES
-                                                .toFirebaseFormatString(),
-                                            value: rental
-                                                .details.name[Language.ES])
-                                      ]))),
+                            service_provider_id:
+                                rental.details.businessId.toInt(),
+                            service_provider_type: ServiceProviderType.Business
+                                .toFirebaseFormatString(),
+                            translations:
+                                Input$translation_value_arr_rel_insert_input(
+                              data: rental.details.name.entries
+                                  .map((MapEntry<Language, String> e) =>
+                                      Input$translation_value_insert_input(
+                                          language_id:
+                                              e.key.toFirebaseFormatString(),
+                                          value: e.value))
+                                  .toList(),
+                            ),
+                          )),
                           position: rental.details.position?.toInt(),
-                          additional_parameters: rental.details.additionalParameters,
+                          additional_parameters:
+                              rental.details.additionalParameters,
                           description: (rental.details.description != null)
                               ? Input$translation_obj_rel_insert_input(
                                   data: Input$translation_insert_input(
-                                      service_provider_id: rental.details.businessId.toInt(),
-                                      service_provider_type: ServiceProviderType.Business.toFirebaseFormatString(),
-                                      translations: Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.EN
-                                                .toFirebaseFormatString(),
-                                            value: rental.details
-                                                .description?[Language.EN]),
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.ES
-                                                .toFirebaseFormatString(),
-                                            value: rental.details
-                                                .description?[Language.ES])
-                                      ])))
+                                    service_provider_id:
+                                        rental.details.businessId.toInt(),
+                                    service_provider_type: ServiceProviderType
+                                        .Business.toFirebaseFormatString(),
+                                    translations:
+                                        Input$translation_value_arr_rel_insert_input(
+                                      data: rental.details.description!.entries
+                                          .map((MapEntry<Language, String> e) =>
+                                              Input$translation_value_insert_input(
+                                                  language_id: e.key
+                                                      .toFirebaseFormatString(),
+                                                  value: e.value))
+                                          .toList(),
+                                    ),
+                                  ),
+                                )
                               : null))))));
   if (response.hasException) {
     mezDbgPrint(
