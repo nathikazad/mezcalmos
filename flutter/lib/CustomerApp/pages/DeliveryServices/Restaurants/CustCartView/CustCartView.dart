@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCar
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/CartIsEmptyScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/OrderSummaryCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/PaymentMethodPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -102,9 +103,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 //     viewCartController: viewController,
                 //   ),
                 // ),
-                // SizedBox(
-                //   height: 9,
-                // ),
                 Container(
                   //alignment: Alignment.centerLeft,
                   child: Text("${_i18n()['notesTitle']}",
@@ -148,23 +146,26 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           ),
         ),
         const SizedBox(height: 9),
-        Container(
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-                color: Colors.grey.shade300,
-                blurRadius: 1,
-                offset: Offset(0, .5))
-          ]),
-          child: DropDownLocationList(
-            elevation: 1,
-            onValueChangeCallback: (MezLocation location) {
-              viewController.switchLocation(location);
-            },
-            bgColor: Colors.white,
-            checkDistance: true,
-            ensureVisible: false,
-            serviceProviderLocation:
-                viewController.cart.restaurant?.info.location,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.shade300,
+                  blurRadius: 1,
+                  offset: Offset(0, .5))
+            ]),
+            child: DropDownLocationList(
+              elevation: 1,
+              onValueChangeCallback: (MezLocation location) {
+                viewController.switchLocation(location);
+              },
+              bgColor: Colors.white,
+              checkDistance: true,
+              ensureVisible: false,
+              serviceProviderLocation:
+                  viewController.cart.restaurant?.info.location,
+            ),
           ),
         ),
       ],

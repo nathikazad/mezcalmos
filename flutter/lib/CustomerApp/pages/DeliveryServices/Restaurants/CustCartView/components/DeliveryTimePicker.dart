@@ -82,7 +82,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
               child: Text(
                   "(${widget.periodOfTime!.toNormalString(format: DateFormat.MMMd(userLangCode))})"),
             ),
-          if (widget.isServiceOpen == false)
+          if (widget.isServiceOpen != false)
             Container(
               margin: const EdgeInsets.only(
                 top: 5,
@@ -90,10 +90,13 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.info_outline,
-                    size: 14.sp,
-                    color: Color(0xFF494949),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: Icon(
+                      Icons.info_outline,
+                      size: 14.sp,
+                      color: Color(0xFF494949),
+                    ),
                   ),
                   SizedBox(
                     width: 3,
@@ -176,42 +179,36 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                     onTap: () {
                                       _pickDeliveryTime(context, field);
                                     },
-                                    customBorder: CircleBorder(),
-                                    child: Ink(
-                                      padding: const EdgeInsets.all(3),
-                                      decoration: BoxDecoration(
-                                          color: secondaryLightBlueColor,
-                                          shape: BoxShape.circle),
-                                      child: Icon(
-                                        Icons.edit,
-                                        size: 20,
-                                        color: primaryBlueColor,
-                                      ),
+                                    child: Icon(
+                                      Icons.chevron_right,
+                                      size: 20,
+                                      color: Colors.black,
+                                      // color: primaryBlueColor,
                                     ),
                                   ),
-                                if (widget.deliveryTime != null &&
-                                    widget.shoudSchedule == false)
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8),
-                                    child: InkWell(
-                                      customBorder: CircleBorder(),
-                                      onTap: () {
-                                        widget.onClear.call();
-                                        field.setValue(null);
-                                      },
-                                      child: Ink(
-                                        padding: const EdgeInsets.all(3),
-                                        decoration: BoxDecoration(
-                                            color: offRedColor,
-                                            shape: BoxShape.circle),
-                                        child: Icon(
-                                          Icons.close,
-                                          size: 20,
-                                          color: redAccentColor,
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                // if (widget.deliveryTime != null &&
+                                //     widget.shoudSchedule == false)
+                                //   Padding(
+                                //     padding: const EdgeInsets.only(left: 8),
+                                //     child: InkWell(
+                                //       customBorder: CircleBorder(),
+                                //       onTap: () {
+                                //         widget.onClear.call();
+                                //         field.setValue(null);
+                                //       },
+                                //       child: Ink(
+                                //         padding: const EdgeInsets.all(3),
+                                //         decoration: BoxDecoration(
+                                //             color: offRedColor,
+                                //             shape: BoxShape.circle),
+                                //         child: Icon(
+                                //           Icons.close,
+                                //           size: 20,
+                                //           color: redAccentColor,
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   )
                               ],
                             ),
                           ),

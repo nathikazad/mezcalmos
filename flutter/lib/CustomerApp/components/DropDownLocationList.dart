@@ -201,7 +201,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         SavedLocation? newSavedLoc;
 
         newSavedLoc =
-            await savedLocationDailog(context: context, loc: location!);
+            await savedLocationDailog(context: context, loc: location!, skippable: false);
 
         if (newSavedLoc != null) {
           setState(() {

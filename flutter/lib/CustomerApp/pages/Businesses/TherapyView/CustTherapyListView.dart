@@ -167,9 +167,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
               ),
               Container(
                 child: Text(
-                  (viewController.selectedCategories.length == 1)
-                      ? "${viewController.selectedCategories.first.name}"
-                      : "${viewController.selectedCategoriesText}",
+                  "${viewController.selectedCategoriesText.value}",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),

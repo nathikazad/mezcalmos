@@ -4,11 +4,15 @@ import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Businesses']['components']['cusShowBusinessFilerSheet'];
 
 class CustTherapyListViewController {
   // variables //
@@ -46,23 +50,24 @@ class CustTherapyListViewController {
   ];
 
   RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
-  RxString selectedCategoriesText = "Therapy".obs;
+  RxString selectedCategoriesText = _i18n()["all"].toString().obs;
 
   void _categoryStringGen() {
     selectedCategoriesText.value = "";
-    var data = filterInput["categories"]!
-        .map((String e) => e.toEventCategory1())
-        .toList();
-    if (data.length == _filterCategories.length) {
-      selectedCategoriesText.value = "All";
+    var data =
+        filterInput["schedule"]!.map((String e) => e.toScheduleType()).toList();
+    if (data.length == 3) {
+      selectedCategoriesText.value = _i18n()["all"];
       return;
     }
 
     for (int idx = 0; idx < data.length; idx++) {
       if (idx == data.length - 1) {
-        selectedCategoriesText.value += data[idx].name;
+        selectedCategoriesText.value +=
+            _i18n()[data[idx].toFirebaseFormatString()];
       } else {
-        selectedCategoriesText.value += "${data[idx].name}, ";
+        selectedCategoriesText.value +=
+            "${_i18n()[data[idx].toFirebaseFormatString()]}, ";
       }
     }
   }

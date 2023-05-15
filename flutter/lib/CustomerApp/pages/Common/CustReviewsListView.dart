@@ -141,7 +141,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
             height: 4,
           ),
           Text(
-              "${_i18n()["base"]} ${reviews.value?.length} ${_i18n()["review"].toString().toPlural(isPlural: reviews.value?.length == 1)}")
+              "${_i18n()["base"]} ${reviews.value?.length} ${_i18n()["review"].toString().toPlural(isPlural: reviews.value?.length != 1)}")
         ],
       ),
     );
