@@ -60,8 +60,6 @@ class BusinessOpAuthController extends GetxController {
 
         /// TODO: Just for testing
         _businessProfile = BusinessProfile.SurfShop;
-      } else {
-        await Get.find<AuthController>().signOut();
       }
     } catch (e, stk) {
       mezDbgPrint(e);

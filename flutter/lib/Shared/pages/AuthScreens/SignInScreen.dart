@@ -1,6 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -119,17 +118,17 @@ class _SignInViewState extends State<SignInView> {
       ];
     } else {
       return <Widget>[
-        SizedBox(
-          height: 20,
-        ),
-        if (!kIsWeb) facebookLoginBtn(lmode),
-        SizedBox(
-          height: 10,
-        ),
-        smsLoginBtn(),
-        SizedBox(
-          height: 10,
-        ),
+        // SizedBox(
+        //   height: 20,
+        // ),
+        // if (!kIsWeb) facebookLoginBtn(lmode),
+        // SizedBox(
+        //   height: 10,
+        // ),
+        // smsLoginBtn(),
+        // SizedBox(
+        //   height: 10,
+        // ),
         // if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
         //   appleLoginBtn(),
         if (MezEnv.appLaunchMode == AppLaunchMode.stage)

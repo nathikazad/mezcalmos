@@ -724,6 +724,7 @@
                 "assets": [
                     "assets/images/",
                     "assets/images/shared/",
+                    "assets/images/businessApp/",
                     
                     "assets/fonts/",
                     "assets/i18n/",

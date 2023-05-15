@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/components/CreateServiceImageComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
@@ -123,9 +124,64 @@ class CreateServiceInfoPage extends StatelessWidget {
               height: 10,
             ),
             _locationCard(context),
-            SizedBox(
-              height: 75,
+            meduimSeperator,
+            Text(
+              "${_i18n()['prLang']}",
+              style: context.textTheme.bodyLarge,
             ),
+            smallSepartor,
+            MezStringDropDown(
+              labelText: "${_i18n()['none']}",
+              value: viewController.languages.value.primary
+                  .toFirebaseFormatString(),
+              langPath: _i18n(),
+              items: Language.values
+                  .map((Language e) => e.toFirebaseFormatString())
+                  .toList(),
+              onChanged: (String? v) {
+                if (v != null) {
+                  viewController.languages.value.primary = v.toLanguage();
+                }
+              },
+              validator: (String? p0) {
+                if (p0 == null || p0.isEmpty) {
+                  return "${_i18n()['prLangErrorText']}";
+                }
+                return null;
+              },
+            ),
+            meduimSeperator,
+            Text(
+              "${_i18n()['scLang']}",
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            MezStringDropDown(
+                labelText: "${_i18n()['none']}",
+                withNoneItem: true,
+                value: viewController.languages.value.secondary
+                    ?.toFirebaseFormatString(),
+                langPath: _i18n(),
+                validator: (String? v) {
+                  if (v != null &&
+                      v != "none" &&
+                      v.toLanguage() ==
+                          viewController.languages.value.primary) {
+                    return "${_i18n()['sameLangErrorText']}";
+                  }
+                  return null;
+                },
+                items: Language.values
+                    .map((Language e) => e.toFirebaseFormatString())
+                    .toList(),
+                onChanged: (String? v) {
+                  if (v != null) {
+                    viewController.languages.value.secondary = v.toLanguage();
+                  }
+                }),
+            SizedBox(
+              height: 100,
+            )
           ],
         ),
       ),
