@@ -10,12 +10,29 @@ array_relationships:
           name: chat_participant
           schema: public
 select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - id
+        - chat_info
+        - last_message
+        - messages
+        - creation_time
+        - last_message_sent
+        - chat_type
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
         - chat_info
+        - chat_type
         - creation_time
         - id
+        - last_message
         - last_message_sent
         - messages
       filter:
@@ -27,8 +44,10 @@ select_permissions:
     permission:
       columns:
         - chat_info
+        - chat_type
         - creation_time
         - id
+        - last_message
         - last_message_sent
         - messages
       filter:
@@ -43,6 +62,7 @@ select_permissions:
         - chat_type
         - creation_time
         - id
+        - last_message
         - last_message_sent
         - messages
       filter:
@@ -57,6 +77,7 @@ select_permissions:
         - chat_type
         - creation_time
         - id
+        - last_message
         - last_message_sent
         - messages
       filter:
@@ -71,6 +92,7 @@ select_permissions:
         - chat_type
         - creation_time
         - id
+        - last_message
         - last_message_sent
         - messages
       filter:
@@ -85,8 +107,10 @@ select_permissions:
     permission:
       columns:
         - chat_info
+        - chat_type
         - creation_time
         - id
+        - last_message
         - last_message_sent
         - messages
       filter:
@@ -95,6 +119,18 @@ select_permissions:
             id:
               _eq: X-Hasura-User-Id
 update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - last_message
+        - last_message_sent
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+      check: null
   - role: customer
     permission:
       columns:
@@ -110,6 +146,7 @@ update_permissions:
   - role: delivery_driver
     permission:
       columns:
+        - last_message
         - last_message_sent
         - messages
       filter:
@@ -121,6 +158,7 @@ update_permissions:
   - role: laundry_operator
     permission:
       columns:
+        - last_message
         - last_message_sent
         - messages
       filter:
@@ -136,6 +174,7 @@ update_permissions:
   - role: mez_admin
     permission:
       columns:
+        - last_message
         - last_message_sent
         - messages
       filter:
@@ -150,6 +189,7 @@ update_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - last_message
         - last_message_sent
         - messages
       filter:

@@ -468,7 +468,8 @@ class Launcher:
             os.system(f'flutter build ipa --target lib/{self.user_args["app"]}/main.dart{ios_export_options_plist_arg}{isVerbose}')
         elif self.user_args['build'] == 'web':
             # flutter build web --release --web-renderer html
-            os.system(f'Check image problem{isVerbose}')
+            os.system(f'flutter build web --release --web-renderer html --target lib/CustomerApp/main_web.dart{isVerbose}')
+            # os.system(f'Check image problem{isVerbose}')
         else:
             is_apk = self.user_args["build"] == 'apk'
             cmd_build = f'flutter build {self.user_args["build"]} -t lib/{self.user_args["app"]}/main.dart {isVerbose}{"--split-per-abi"if is_apk else""}'

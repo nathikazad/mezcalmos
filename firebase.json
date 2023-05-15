@@ -25,6 +25,7 @@
     "singleProjectMode": true
   },
   "hosting": {
+    "site": "mez-site-hs",
     "public": "flutter/build/web",
     "ignore": [
       "firebase.json",
