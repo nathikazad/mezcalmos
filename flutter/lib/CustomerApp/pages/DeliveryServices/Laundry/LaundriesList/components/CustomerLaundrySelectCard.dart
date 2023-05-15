@@ -58,7 +58,6 @@ class CustomerLaundrySelectCard extends StatelessWidget {
             width: 8,
           ),
           Flexible(
-            flex: 4,
             fit: FlexFit.loose,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,38 +75,33 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Flexible(
-                      flex: 4,
-                      fit: FlexFit.tight,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.delivery_dining,
-                            color: Colors.black,
-                            size: 24,
-                          ),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Flexible(
-                            child: ShippingCostComponent(
-                                shippingCost: _getShippingPrice(),
-                                alignment: MainAxisAlignment.start,
-                                textStyle: context.txt.bodySmall),
-                          ),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.delivery_dining,
+                          color: Colors.black,
+                          size: 24,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Flexible(
+                          child: ShippingCostComponent(
+                              shippingCost: _getShippingPrice(),
+                              alignment: MainAxisAlignment.start,
+                              textStyle: context.txt.bodySmall),
+                        ),
+                      ],
                     ),
                     Flexible(
-                      flex: 5,
                       fit: FlexFit.tight,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: 4,
+                            width: 25,
                           ),
                           Icon(
                             Icons.watch_later,
@@ -123,7 +117,6 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                     ),
                     (laundry.rate != null && laundry.rate != 0)
                         ? Flexible(
-                            flex: 5,
                             fit: FlexFit.tight,
                             child: Row(
                               children: [
@@ -143,7 +136,6 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             ),
                           )
                         : Flexible(
-                            flex: 5,
                             fit: FlexFit.tight,
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,

@@ -235,12 +235,15 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        viewController.products[index].details.name
-                            .getTranslation(userLanguage),
-                        overflow: TextOverflow.ellipsis,
-                        style: context.textTheme.displaySmall?.copyWith(
-                            fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                      SizedBox(
+                        width: 55.mezW,
+                        child: Text(
+                          viewController.products[index].details.name
+                              .getTranslation(userLanguage),
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textTheme.displaySmall?.copyWith(
+                              fontSize: 12.mezSp, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Text(
                         '${viewController.products[index].details.cost.values.first.toPriceString()}',

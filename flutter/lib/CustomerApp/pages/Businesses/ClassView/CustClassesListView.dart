@@ -300,10 +300,17 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                     )
                   ],
                 ),
-                Divider(),
-                if (viewController.classes[index].schedule != null)
-                  MezServiceOpenHours(
-                      schedule: viewController.classes[index].schedule!),
+                if (viewController.classes[index].schedule != null &&
+                    viewController.classes[index].scheduleType !=
+                        ScheduleType.OnDemand)
+                  Column(
+                    children: [
+                      Divider(),
+                      if (viewController.classes[index].schedule != null)
+                        MezServiceOpenHours(
+                            schedule: viewController.classes[index].schedule!),
+                    ],
+                  ),
                 Divider(),
                 Text(viewController.classes[index].businessName)
               ],

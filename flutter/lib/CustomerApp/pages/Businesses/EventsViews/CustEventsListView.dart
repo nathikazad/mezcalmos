@@ -302,12 +302,20 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                     )
                   ],
                 ),
-                Divider(),
-                CustBusinessScheduleBuilder(
-                    showTitle: false,
-                    showIcons: false,
-                    schedule: viewController.events[index].schedule,
-                    scheduleType: viewController.events[index].scheduleType),
+                if (viewController.events[index].schedule != null &&
+                    viewController.events[index].scheduleType !=
+                        ScheduleType.OnDemand)
+                  Column(
+                    children: [
+                      Divider(),
+                      CustBusinessScheduleBuilder(
+                          showTitle: false,
+                          showIcons: false,
+                          schedule: viewController.events[index].schedule,
+                          scheduleType:
+                              viewController.events[index].scheduleType)
+                    ],
+                  ),
                 Divider(),
                 Text(viewController.events[index].businessName)
               ],

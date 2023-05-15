@@ -272,77 +272,10 @@ class _CustBusinessViewState extends State<CustBusinessView>
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 4.0),
-            child: OutlinedButton(
-              style: ButtonStyle(
-                side: MaterialStatePropertyAll(
-                    BorderSide(color: primaryBlueColor)),
-                shape: MaterialStatePropertyAll(StadiumBorder()),
-              ),
-              onPressed: () => navigateToChat(),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 4.0),
-                    child: Icon(
-                      Icons.message_rounded,
-                      color: primaryBlueColor,
-                    ),
-                  ),
-                  Text(
-                    '${_i18n()["chatWithUs"]}',
-                    style: context.txt.bodyLarge
-                        ?.copyWith(color: primaryBlueColor),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 4.0),
-            child: OutlinedButton(
-              style: ButtonStyle(
-                side: MaterialStatePropertyAll(
-                    BorderSide(color: primaryBlueColor)),
-                shape: MaterialStatePropertyAll(StadiumBorder()),
-              ),
-              onPressed: () => navigateToChat(),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 4.0),
-                    child: Icon(
-                      Icons.phone,
-                      color: primaryBlueColor,
-                    ),
-                  ),
-                  Text(
-                    '${_i18n()["contactUs"]}',
-                    style: context.txt.bodyLarge
-                        ?.copyWith(color: primaryBlueColor),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-
-    return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Expanded(
-          flex: 1,
+        Flexible(
           child: RawChip(
             padding: EdgeInsets.symmetric(horizontal: 10),
             backgroundColor: Colors.transparent,
@@ -357,12 +290,9 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     children: [
                       WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 4.0),
-                            child: Icon(
-                              Icons.message_rounded,
-                              color: primaryBlueColor,
-                            ),
+                          child: Icon(
+                            Icons.message_rounded,
+                            color: primaryBlueColor,
                           )),
                       TextSpan(
                         text: '${_i18n()["chatWithUs"]}',
@@ -376,8 +306,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
             ),
           ),
         ),
-        Expanded(
-          flex: 1,
+        Flexible(
           child: RawChip(
             padding: EdgeInsets.symmetric(horizontal: 10),
             backgroundColor: Colors.transparent,
@@ -392,12 +321,9 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     children: [
                       WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 4.0),
-                            child: Icon(
-                              Icons.phone,
-                              color: primaryBlueColor,
-                            ),
+                          child: Icon(
+                            Icons.phone,
+                            color: primaryBlueColor,
                           )),
                       TextSpan(
                         text: '${_i18n()["contactUs"]}',

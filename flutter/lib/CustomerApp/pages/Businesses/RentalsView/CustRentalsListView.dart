@@ -386,12 +386,15 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        viewController.rentals[index].details.name
-                            .getTranslation(userLanguage),
-                        overflow: TextOverflow.ellipsis,
-                        style: context.textTheme.displaySmall?.copyWith(
-                            fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                      SizedBox(
+                        width: 55.mezW,
+                        child: Text(
+                          viewController.rentals[index].details.name
+                              .getTranslation(userLanguage),
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textTheme.displaySmall?.copyWith(
+                              fontSize: 12.mezSp, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Text(
                         '${viewController.rentals[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.rentals[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
