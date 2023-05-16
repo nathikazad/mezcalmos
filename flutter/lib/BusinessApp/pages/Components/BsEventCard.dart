@@ -6,13 +6,17 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:intl/intl.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
     ['pages']['Components']['BsEventCard'];
@@ -79,7 +83,22 @@ class BsEventCard extends StatelessWidget {
                     showTitle: false,
                   )
                 ],
-              )
+              ),
+            if (event.scheduleType == ScheduleType.OneTime)
+              Column(
+                children: [
+                  Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "${event.period?.start.toDayName()} ${event.period?.start.day} ${DateFormat.MMMM().format(event.period!.start)}"),
+                      Text(
+                          "${event.period!.formatTime(event.period!.start)} - ${event.period!.formatTime(event.period!.end)}"),
+                    ],
+                  ),
+                ],
+              ),
           ],
         ));
   }

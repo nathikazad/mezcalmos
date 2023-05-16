@@ -551,6 +551,10 @@ Future<List<EventCard>> get_business_events(
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           event: Event(
+            startsAt: data.starts_at,
+            endsAt: data.ends_at,
+            category2: data.details.category2.toEventCategory2(),
+            id: data.id,
             category1: data.details.category1.toEventCategory1(),
             gpsLocation: data.gps_location != null && data.address != null
                 ? Location(

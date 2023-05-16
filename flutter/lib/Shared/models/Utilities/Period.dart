@@ -33,6 +33,24 @@ class PeriodOfTime {
         (p2.end.isBefore(end) || p2.end.isAtSameMomentAs(end));
   }
 
+    String formatTime(DateTime time) {
+    final int h = int.parse(time.hour.toString());
+    final int m = int.parse(time.minute.toString());
+    if (h < 0 || h > 23 || m < 0 || m > 59) {
+      throw ArgumentError('Invalid time value');
+    }
+    if (h == 0) {
+      return '12:${m.toString().padLeft(2, '0')} AM';
+    } else if (h < 12) {
+      return '${h.toString()}:${m.toString().padLeft(2, '0')} AM';
+    } else if (h == 12) {
+      return '12:${m.toString().padLeft(2, '0')} PM';
+    } else if (h > 12 && h <= 23) {
+      return '${(h - 12).toString()}:${m.toString().padLeft(2, '0')} PM';
+    }
+    throw ArgumentError('Invalid time value');
+  }
+
   PeriodOfTime? merge(PeriodOfTime p2) {
     if (include(p2)) {
       return p2;

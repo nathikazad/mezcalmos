@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 
 typedef OfferingPricesMap = Map<TimeUnit, TextEditingController>;
 
@@ -23,6 +24,7 @@ class BsHomeRentalViewController {
       BusinessItemDetailsController();
   TextEditingController bedroomsController = TextEditingController();
   TextEditingController bathroomsController = TextEditingController();
+  TextEditingController areaController = TextEditingController();
 
   // vars //
   bool shouldRefetch = false;
@@ -71,6 +73,11 @@ class BsHomeRentalViewController {
           detalsId: rental!.details.id.toInt());
       bedroomsController.text = rental!.bedrooms.toString();
       bathroomsController.text = rental!.bathrooms.toString();
+      areaController.text = rental!.details.additionalParameters?["area"]
+              .toString()
+              .replaceAll("sq ft", "")
+              .trim() ??
+          "";
       homeLocation.value = rental!.gpsLocation;
       homeType.value = rental!.homeType;
     }
@@ -81,8 +88,12 @@ class BsHomeRentalViewController {
   }
 
   Future<Rental> _constructRentalWithDetails() async {
-    BusinessItemDetails details = await detailsController.contructDetails();
-    Rental rental = Rental(
+    final BusinessItemDetails details =
+        await detailsController.contructDetails();
+    details.additionalParameters = {
+      "area": areaController.text.trim() + " sq ft",
+    };
+    final Rental rental = Rental(
       homeType: homeType.value,
       category1: RentalCategory1.Home,
       gpsLocation: homeLocation.value,
@@ -94,7 +105,7 @@ class BsHomeRentalViewController {
   }
 
   Rental _constructRental() {
-    Rental rental = Rental(
+    final Rental rental = Rental(
       homeType: homeType.value,
       category1: RentalCategory1.Home,
       gpsLocation: homeLocation.value,
@@ -112,6 +123,12 @@ class BsHomeRentalViewController {
           await saveItemDetails();
           await update_business_home_rental(
               id: rental!.id!.toInt(), rental: _constructRental());
+          await update_item_additional_params(
+            id: rental!.details.id.toInt(),
+            additionalParams: {
+              "area": areaController.text.trim() + " sq ft",
+            },
+          );
           showSavedSnackBar();
         } catch (e, stk) {
           mezDbgPrint(

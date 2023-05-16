@@ -61,6 +61,12 @@ class EventCard extends Event {
           schedule: event.schedule,
           category1: event.category1,
           details: event.details,
+          startsAt: event.startsAt,
+          endsAt: event.endsAt,
+          tags: event.tags,
+          category2: event.category2,
+          gpsLocation: event.gpsLocation,
+          id: event.id,
         );
 
   bool get isClass {
