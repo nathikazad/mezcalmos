@@ -10,10 +10,13 @@ class BsOpPeriodPicker extends StatelessWidget {
     super.key,
     required this.timePeriod,
     required this.onNewPeriodSelected,
+    this.label = "Select time",
   });
 
   final PeriodOfTime? timePeriod;
   final void Function(PeriodOfTime) onNewPeriodSelected;
+  final String label;
+
   @override
   Widget build(BuildContext context) {
     return FormField<PeriodOfTime>(
@@ -30,37 +33,54 @@ class BsOpPeriodPicker extends StatelessWidget {
             children: [
               Text(
                 "Time",
+                style: context.textTheme.bodyLarge,
               ),
               smallSepartor,
-              Card(
-                child: InkWell(
-                  onTap: () {
-                    showModalBottomSheet<PeriodOfTime>(
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (BuildContext ctx) {
-                          return MezPeriodPicker(
-                            startDate: DateTime.now(),
-                            numberOfDaysInterval: 7,
-                            periodOfTime: null,
-                            serviceSchedule: scheduleFromData(defaultSchedule),
-                          );
-                        }).then((PeriodOfTime? value) {
-                      state.didChange(value);
-                      if (value != null) {
-                        onNewPeriodSelected.call(value);
-                      }
-                    });
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
-                      children: [
-                        Icon(Icons.watch_later),
-                        SizedBox(width: 5),
-                        Text(timePeriod?.toNormalString() ?? "Time")
-                      ],
-                    ),
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet<PeriodOfTime>(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (BuildContext ctx) {
+                        return MezPeriodPicker(
+                          startDate: DateTime.now(),
+                          numberOfDaysInterval: 7,
+                          periodOfTime: null,
+                          serviceSchedule: scheduleFromData(defaultSchedule),
+                        );
+                      }).then((PeriodOfTime? value) {
+                    state.didChange(value);
+                    if (value != null) {
+                      onNewPeriodSelected.call(value);
+                    }
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.watch_later,
+                              size: 22,
+                            ),
+                            SizedBox(width: 5),
+                            Text(timePeriod?.toNormalString() ?? label),
+                          ],
+                        ),
+                      ),
+                      Icon(Icons.chevron_right),
+                    ],
                   ),
                 ),
               ),

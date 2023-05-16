@@ -90,6 +90,7 @@
         "categoryError": "Please select a category",
         "schedule": "Schedule",
         "scheduleHint": "Add schedule",
+        "scheduleHint2": "At least one day must be selected.",
         "scheduleError": "Please add schedule",
         "locationLabel": "Select a location",
         "locationError": "Please select a location",
@@ -131,6 +132,7 @@
         },
         "vehicleRental": {
           "rentalTitle": "Rental",
+          "surfRentalTitle": "Surf rental",
           "rentalSubtitle": "Using a rental service, you can advertise a vehicle for rent.",
           "motorcycle": "Motorcycle",
           "car": "Car",

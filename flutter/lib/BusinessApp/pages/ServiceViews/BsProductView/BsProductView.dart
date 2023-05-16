@@ -178,7 +178,9 @@ class _BsOpProductViewState extends State<BsOpProductView>
         children: [
           Obx(
             () => MezItemAvSwitcher(
-              value: viewController.detailsController.isAvailable.value,
+              value: viewController.detailsController.isEditing.value
+                  ? viewController.detailsController.isAvailable.value
+                  : true,
               onAvalableTap: () {
                 viewController.detailsController.isAvailable.value = true;
               },
@@ -266,7 +268,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
               },
             );
           }),
-          smallSepartor,
+          bigSeperator,
           BsOpOfferingPricesList(
             availbleUnits: viewController.avalbleUnits,
             onAddPrice: (TimeUnit unit) {

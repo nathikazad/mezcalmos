@@ -17,6 +17,7 @@ class ServiceEditLocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Card(
+        elevation: 0,
         color: Colors.grey.shade200,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),

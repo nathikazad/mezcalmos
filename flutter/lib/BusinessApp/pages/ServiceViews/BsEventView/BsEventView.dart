@@ -192,7 +192,9 @@ class _BsOpEventViewState extends State<BsOpEventView>
         children: [
           Obx(
             () => MezItemAvSwitcher(
-              value: viewController.detailsController.isAvailable.value,
+              value: viewController.detailsController.isEditing.value
+                  ? viewController.detailsController.isAvailable.value
+                  : true,
               onAvalableTap: () {
                 viewController.detailsController.isAvailable.value = true;
               },
@@ -299,7 +301,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
               },
             ),
           ),
-          // bigSeperator,
+          bigSeperator,
           Obx(() => viewController.getScheduleWidget()),
         ],
       ),

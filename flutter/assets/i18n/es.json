@@ -89,6 +89,7 @@
         "categoryHint": "Seleccione una categoría",
         "schedule": "Horario",
         "scheduleHint": "Añadir horario",
+        "scheduleHint2": "Se debe seleccionar al menos un día.",
         "scheduleError": "Por favor, añada el horario",
         "categoryError": "Por favor, seleccione una categoría",
         "locationLabel": "Seleccione una ubicación",
@@ -131,6 +132,7 @@
         },
         "vehicleRental": {
           "rentalTitle": "Alquiler",
+          "surfRentalTitle": "Alquiler de surf",
           "rentalSubtitle": "A través de un servicio de alquiler, puede anunciar un vehículo en alquiler.",
           "motorcycle": "Motocicleta",
           "car": "Coche",

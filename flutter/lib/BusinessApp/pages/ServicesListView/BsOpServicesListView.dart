@@ -234,7 +234,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 Obx(
                   () => Column(
                     children: List.generate(
-                        viewController.services.length,
+                        viewController.product.length,
                         (int index) => BsProductCard(
                               product: viewController.product[index],
                               onClick: () {

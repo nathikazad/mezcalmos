@@ -30,13 +30,13 @@ Future<TimeUnit?> bsOpTimeUnitSelectorSheet({
                   style: context.textTheme.bodyLarge,
                 ),
               ),
-              Divider(
-                height: 35,
-              ),
+              // Divider(
+              //   height: 35,
+              // ),
               Column(
                 children: units.map((TimeUnit timeUnit) {
                   return Container(
-                    margin: const EdgeInsets.only(top: 5),
+                    margin: const EdgeInsets.only(top: 12),
                     child: Row(
                       children: [
                         Flexible(
@@ -67,7 +67,7 @@ Future<TimeUnit?> bsOpTimeUnitSelectorSheet({
                 children: [
                   Flexible(
                       child: MezButton(
-                    label:  _i18n()["cancel"],
+                    label: _i18n()["cancel"],
                     backgroundColor: offRedColor,
                     textColor: redAccentColor,
                     onClick: () async {
@@ -79,7 +79,7 @@ Future<TimeUnit?> bsOpTimeUnitSelectorSheet({
                   ),
                   Flexible(
                       child: MezButton(
-                    label:  _i18n()["add"],
+                    label: _i18n()["add"],
                     onClick: () async {
                       if (selected.value != null) {
                         Navigator.pop(context, selected.value);

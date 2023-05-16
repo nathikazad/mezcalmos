@@ -132,7 +132,9 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
     },
         titleWidget: Obx(() => Text(viewController.rental != null
             ? "${viewController.rental!.details.name.getTranslation(userLanguage)}"
-            : _i18n()["vehicleRental"]["rentalTitle"])));
+            : rentalCategory == RentalCategory1.Surf
+                ? _i18n()["vehicleRental"]["surfRentalTitle"]
+                : _i18n()["vehicleRental"]["rentalTitle"])));
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -192,7 +194,9 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
         children: [
           Obx(
             () => MezItemAvSwitcher(
-              value: viewController.detailsController.isAvailable.value,
+              value: viewController.detailsController.isEditing.value
+                  ? viewController.detailsController.isAvailable.value
+                  : true,
               onAvalableTap: () {
                 viewController.detailsController.isAvailable.value = true;
               },
