@@ -175,9 +175,8 @@ class CreateServiceInfoPage extends StatelessWidget {
                     .map((Language e) => e.toFirebaseFormatString())
                     .toList(),
                 onChanged: (String? v) {
-                  if (v != null) {
-                    viewController.languages.value.secondary = v.toLanguage();
-                  }
+                  viewController.languages.value.secondary =
+                      v?.toLanguage() ?? null;
                 }),
             SizedBox(
               height: 100,

@@ -237,10 +237,8 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                               .map((Language e) => e.toFirebaseFormatString())
                               .toList(),
                           onChanged: (String? v) {
-                            if (v != null) {
-                              viewController.languages.value?.secondary =
-                                  v.toLanguage();
-                            }
+                            viewController.languages.value?.secondary =
+                                v?.toLanguage() ?? null;
                           }),
                       bigSeperator,
                       bigSeperator,
