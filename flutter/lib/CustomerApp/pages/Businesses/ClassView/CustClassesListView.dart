@@ -1,21 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/controllers/CustClassesListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 
 // todo @ChiragKr04 fix the cards and ui  of this page
 class CustClassesListView extends StatefulWidget {
@@ -209,8 +206,11 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 eventId: viewController.classes[index].details.id.toInt(),
               );
             },
-            firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.classes[index].details.image?.first ?? ""),
+            firstAvatarBgImage:
+                (viewController.classes[index].details.firstImage != null)
+                    ? CachedNetworkImageProvider(
+                        viewController.classes[index].details.firstImage!)
+                    : null,
             content: Text(viewController.classes[index].details.name
                 .getTranslation(userLanguage))),
       ));
