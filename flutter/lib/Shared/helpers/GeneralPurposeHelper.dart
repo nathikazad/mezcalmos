@@ -757,6 +757,16 @@ void showSavedSnackBar({String? title, String? subtitle}) {
         color: Colors.green,
       ));
 }
+void showAddedSnackBar({String? title, String? subtitle}) {
+  return customSnackBar(
+      title: title ?? _i18n()['added'],
+      subTitle: subtitle ?? _i18n()['addedTitle'],
+      icon: Icon(
+        Icons.check_circle,
+        size: 40,
+        color: primaryBlueColor,
+      ));
+}
 
 void showSlowInternetSnackBar() {
   return customSnackBar(

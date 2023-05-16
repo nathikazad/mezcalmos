@@ -139,8 +139,8 @@ class BsHomeRentalViewController {
       int? res = await add_one_home_rental(rental: rental);
 
       if (res != null) {
-        showSavedSnackBar();
-        shouldRefetch = true;
+ showAddedSnackBar();        shouldRefetch = true;
+         await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");

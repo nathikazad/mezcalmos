@@ -122,8 +122,8 @@ class BsProductViewController {
       final int? res = await add_one_product(product: product);
 
       if (res != null) {
-        showSavedSnackBar();
-        shouldRefetch = true;
+ showAddedSnackBar();        shouldRefetch = true;
+         await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");

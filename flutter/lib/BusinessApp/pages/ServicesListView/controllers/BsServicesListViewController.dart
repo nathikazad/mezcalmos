@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
@@ -102,18 +104,29 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: rentalTitleLangKey,
             subtitle: rentalSubtitleLangKey,
-            route: () => BsOpRentalView.navigate(
-                id: null, rentalCategory: RentalCategory1.Surf),
+            route: () async {
+              bool? refetch = await BsOpRentalView.navigate(
+                  id: null, rentalCategory: RentalCategory1.Surf);
+              if (refetch == true) unawaited(_fetchRentals());
+            },
           ),
           BusinessProfileItem(
             title: classTitleLangKey,
             subtitle: classSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: true),
+            route: () async {
+              bool? refetch =
+                  await BsOpEventView.navigate(id: null, isClass: true);
+              if (refetch == true) unawaited(_fetchEvents());
+            },
           ),
           BusinessProfileItem(
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: false),
+            route: () async {
+              bool? refetch =
+                  await BsOpEventView.navigate(id: null, isClass: false);
+              if (refetch == true) unawaited(_fetchEvents());
+            },
           ),
         ];
       case BusinessProfile.VehicleRental:
@@ -121,8 +134,11 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: rentalTitleLangKey,
             subtitle: rentalSubtitleLangKey,
-            route: () => BsOpRentalView.navigate(
-                id: null, rentalCategory: RentalCategory1.Vehicle),
+            route: () async {
+              final bool? refetch = await BsOpRentalView.navigate(
+                  id: null, rentalCategory: RentalCategory1.Vehicle);
+              if (refetch == true) unawaited(_fetchRentals());
+            },
           ),
         ];
       case BusinessProfile.HomeRental:
@@ -130,7 +146,10 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: rentalTitleLangKey,
             subtitle: rentalSubtitleLangKey,
-            route: () => BsOpHomeRentalView.navigate(id: null),
+            route: () async {
+              bool? refetch = await BsOpHomeRentalView.navigate(id: null);
+              if (refetch == true) unawaited(_fetchHomeRentals());
+            },
           ),
         ];
       case BusinessProfile.WellnessPractitioner:
@@ -138,7 +157,11 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: false),
+            route: () async {
+              bool? refetch =
+                  await BsOpEventView.navigate(id: null, isClass: false);
+              if (refetch == true) unawaited(_fetchEvents());
+            },
           ),
         ];
       case BusinessProfile.Volunteer:
@@ -146,7 +169,11 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: false),
+            route: () async {
+              bool? refetch =
+                  await BsOpEventView.navigate(id: null, isClass: false);
+              if (refetch == true) unawaited(_fetchEvents());
+            },
           ),
         ];
       case BusinessProfile.TourAgency:
@@ -154,7 +181,11 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: false),
+            route: () async {
+              bool? refetch =
+                  await BsOpEventView.navigate(id: null, isClass: false);
+              if (refetch == true) unawaited(_fetchEvents());
+            },
           ),
         ];
       case BusinessProfile.YogaStudio:
@@ -162,12 +193,20 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: false),
+            route: () async {
+              bool? refetch =
+                  await BsOpEventView.navigate(id: null, isClass: false);
+              if (refetch == true) unawaited(_fetchEvents());
+            },
           ),
           BusinessProfileItem(
             title: classTitleLangKey,
             subtitle: classSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: true),
+            route: () async {
+              bool? refetch =
+                  await BsOpEventView.navigate(id: null, isClass: true);
+              if (refetch == true) unawaited(_fetchEvents());
+            },
           ),
         ];
       case BusinessProfile.LanguageSchool:
@@ -175,12 +214,20 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: false),
+            route: () async {
+              bool? refetch =
+                  await BsOpEventView.navigate(id: null, isClass: false);
+              if (refetch == true) unawaited(_fetchEvents());
+            },
           ),
           BusinessProfileItem(
             title: classTitleLangKey,
             subtitle: classSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: true),
+            route: () async {
+              bool? refetch =
+                  await BsOpEventView.navigate(id: null, isClass: true);
+              if (refetch == true) unawaited(_fetchEvents());
+            },
           ),
         ];
       case BusinessProfile.ArtisanalProduct:
@@ -188,7 +235,10 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: productTitleLangKey,
             subtitle: productSubTitleLangKey,
-            route: () => BsOpProductView.navigate(id: null),
+            route: () async {
+              bool? refetch = await BsOpProductView.navigate(id: null);
+              if (refetch == true) unawaited(_fetchProducts());
+            },
           ),
         ];
       case BusinessProfile.CleaningService:
@@ -196,7 +246,10 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: serviceTitleLangKey,
             subtitle: serviceSubtitleLangKey,
-            route: () => BsOpServiceView.navigate(id: null),
+            route: () async {
+              bool? refetch = await BsOpServiceView.navigate(id: null);
+              if (refetch == true) unawaited(_fetchServices());
+            },
           ),
         ];
       case BusinessProfile.PetSitting:
@@ -204,7 +257,12 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: serviceTitleLangKey,
             subtitle: serviceSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: false),
+            route: () async {
+              bool? refetch = await BsOpServiceView.navigate(
+                id: null,
+              );
+              if (refetch == true) unawaited(_fetchServices());
+            },
           ),
         ];
       case BusinessProfile.Entertainment:
@@ -212,31 +270,58 @@ class BsServicesListViewController {
           BusinessProfileItem(
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
-            route: () => BsOpEventView.navigate(id: null, isClass: false),
+            route: () async {
+              bool? refetch =
+                  await BsOpEventView.navigate(id: null, isClass: false);
+              if (refetch == true) unawaited(_fetchEvents());
+            },
           ),
         ];
     }
   }
 
   Future<void> fetchAllServices() async {
-    homeRentals.value = await get_business_home_rentals(
-      busniessId: _businessOpAuthController.companyId!,
-      withCache: false,
-    );
-    rentals.value = await get_business_rentals(
-      busniessId: _businessOpAuthController.companyId!,
-      withCache: false,
-    );
-    events.value = await get_business_events(
+    // convert this to future await array of futures
+    await Future.wait([
+      _fetchHomeRentals(),
+      _fetchRentals(),
+      _fetchEvents(),
+      _fetchServices(),
+      _fetchProducts(),
+    ]);
+  }
+
+  Future<void> _fetchProducts() async {
+    product.value = await get_business_products(
       businessId: _businessOpAuthController.companyId!,
       withCache: false,
     );
+  }
+
+  Future<void> _fetchServices() async {
     services.value = await get_business_services(
       businessId: _businessOpAuthController.companyId!,
       withCache: false,
     );
-    product.value = await get_business_products(
+  }
+
+  Future<void> _fetchEvents() async {
+    events.value = await get_business_events(
       businessId: _businessOpAuthController.companyId!,
+      withCache: false,
+    );
+  }
+
+  Future<void> _fetchRentals() async {
+    rentals.value = await get_business_rentals(
+      busniessId: _businessOpAuthController.companyId!,
+      withCache: false,
+    );
+  }
+
+  Future<void> _fetchHomeRentals() async {
+    homeRentals.value = await get_business_home_rentals(
+      busniessId: _businessOpAuthController.companyId!,
       withCache: false,
     );
   }
