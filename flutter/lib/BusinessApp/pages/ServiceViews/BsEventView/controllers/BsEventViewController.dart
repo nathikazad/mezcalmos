@@ -8,13 +8,13 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpSchedule
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -59,21 +59,35 @@ class BsEventViewController {
       .where((TimeUnit element) =>
           detailsController.priceTimeUnitMap.keys.contains(element) == false)
       .toList();
-  bool get showLocation =>
-      businessProfile == BusinessProfile.WellnessPractitioner ||
-      businessProfile == BusinessProfile.TourAgency ||
-      businessProfile == BusinessProfile.Entertainment ||
-      businessProfile == BusinessProfile.Volunteer;
+  bool get showLocation {
+    switch (businessProfile) {
+      case BusinessProfile.SurfShop:
+        return scheduleType.value == ScheduleType.OneTime;
+      case BusinessProfile.TourAgency:
+      case BusinessProfile.Volunteer:
+      case BusinessProfile.Entertainment:
+        return true;
+
+      case BusinessProfile.WellnessPractitioner:
+        return scheduleType.value != ScheduleType.OnDemand;
+      case BusinessProfile.YogaStudio:
+        return scheduleType.value == ScheduleType.OneTime;
+      default:
+        return false;
+    }
+  }
   // RxBool _hasData = RxBool(false);
 
 // methods //
 
   Future<void> init(
       {required TickerProvider thickerProvider, required bool isClass}) async {
+    this.isClass = isClass;
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
     detailsController.setLanguage(language: languages!);
-    this.isClass = isClass;
+
+    mezDbgPrint("Is class ================>$isClass");
     setPrices();
   }
 
@@ -129,7 +143,9 @@ class BsEventViewController {
     mezDbgPrint(
         "Create rental with this payload : ${event.toFirebaseFormattedJson()}");
     try {
-      int? res = await add_one_event(event: event);
+      int? res = isClass
+          ? await add_one_class(event: event)
+          : await add_one_event(event: event);
 
       if (res != null) {
         showSavedSnackBar();
@@ -142,6 +158,36 @@ class BsEventViewController {
 
   Future<Event> _constructEventWithDetails() async {
     BusinessItemDetails details = await detailsController.contructDetails();
+    EventCategory1 category1 = _getCategory1();
+    Event event = Event(
+        category1: category1,
+        scheduleType: scheduleType.value!,
+        startsAt: oneTimePeriod.value?.start.toUtc().toString(),
+        endsAt: oneTimePeriod.value?.end.toUtc().toString(),
+        schedule: avalaibilty.value,
+        gpsLocation: location.value,
+        tags: isClass ? [EventTag.Class] : [],
+        // time: oneTimePeriod.value.,
+        details: details);
+    return event;
+  }
+
+  Event _constructEvent() {
+    EventCategory1 category1 = _getCategory1();
+    Event event = Event(
+        category1: category1,
+        scheduleType: scheduleType.value!,
+        startsAt: oneTimePeriod.value?.start.toUtc().toString(),
+        endsAt: oneTimePeriod.value?.end.toUtc().toString(),
+        schedule: avalaibilty.value,
+        gpsLocation: location.value,
+        tags: isClass ? [EventTag.Class] : [],
+        // time: oneTimePeriod.value.,
+        details: detailsController.details!);
+    return event;
+  }
+
+  EventCategory1 _getCategory1() {
     EventCategory1 category1 = EventCategory1.Uncategorized;
     switch (businessProfile) {
       case BusinessProfile.YogaStudio:
@@ -175,31 +221,7 @@ class BsEventViewController {
         category1 = EventCategory1.Volunteer;
         break;
     }
-    Event event = Event(
-        category1: category1,
-        scheduleType: scheduleType.value!,
-        startsAt: oneTimePeriod.value?.start.toUtc().toString(),
-        endsAt: oneTimePeriod.value?.end.toUtc().toString(),
-        schedule: avalaibilty.value,
-        gpsLocation: location.value,
-        tags: isClass ? [EventTag.Class] : [],
-        // time: oneTimePeriod.value.,
-        details: details);
-    return event;
-  }
-
-  Event _constructEvent() {
-    Event event = Event(
-        category1: EventCategory1.Uncategorized,
-        scheduleType: scheduleType.value!,
-        startsAt: oneTimePeriod.value?.start.toUtc().toString(),
-        endsAt: oneTimePeriod.value?.end.toUtc().toString(),
-        schedule: avalaibilty.value,
-        gpsLocation: location.value,
-        tags: isClass ? [EventTag.Class] : [],
-        // time: oneTimePeriod.value.,
-        details: detailsController.details!);
-    return event;
+    return category1;
   }
 
   // special methods //
@@ -238,7 +260,7 @@ class BsEventViewController {
           ScheduleTypeInput(
               title: _i18n()[businessFB]["onDemand"],
               subtitle: _i18n()[businessFB]["onDemandLabel"],
-              type: ScheduleType.Scheduled),
+              type: ScheduleType.OnDemand),
           ScheduleTypeInput(
               title: _i18n()[businessFB]["weeklyEvent"],
               subtitle: _i18n()[businessFB]["weeklyEventLabel"],
@@ -253,7 +275,7 @@ class BsEventViewController {
           ScheduleTypeInput(
               title: _i18n()[businessFB]["onDemand"],
               subtitle: _i18n()[businessFB]["onDemandLabel"],
-              type: ScheduleType.Scheduled),
+              type: ScheduleType.OnDemand),
           ScheduleTypeInput(
               title: _i18n()[businessFB]["weeklyEvent"],
               subtitle: _i18n()[businessFB]["weeklyEventLabel"],
@@ -269,7 +291,7 @@ class BsEventViewController {
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["onDemandClass"],
                     subtitle: _i18n()[businessFB]["onDemandClassLabel"],
-                    type: ScheduleType.Scheduled),
+                    type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["weeklyClass"],
                     subtitle: _i18n()[businessFB]["weeklyClassLabel"],
@@ -306,7 +328,7 @@ class BsEventViewController {
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["onDemandClass"],
                     subtitle: _i18n()[businessFB]["onDemandClassLabel"],
-                    type: ScheduleType.Scheduled),
+                    type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["weeklyClass"],
                     subtitle: _i18n()[businessFB]["weeklyClassLabel"],
@@ -332,7 +354,7 @@ class BsEventViewController {
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["onDemandClass"],
                     subtitle: _i18n()[businessFB]["onDemandClassLabel"],
-                    type: ScheduleType.Scheduled),
+                    type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["weeklyClass"],
                     subtitle: _i18n()[businessFB]["weeklyClassLabel"],
@@ -389,8 +411,8 @@ class BsEventViewController {
 
   void setPrices() {
     detailsController.clearPrices();
-    if (scheduleType == ScheduleType.OnDemand &&
-        businessProfile != BusinessProfile.Entertainment) {
+    mezDbgPrint("setPrices : ${scheduleType.value}");
+    if (scheduleType == ScheduleType.OnDemand) {
       detailsController.addPriceTimeUnit(
         timeUnit: TimeUnit.PerHour,
       );

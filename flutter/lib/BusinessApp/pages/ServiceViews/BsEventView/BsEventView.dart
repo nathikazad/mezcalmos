@@ -8,13 +8,13 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceI
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -131,8 +131,8 @@ class _BsOpEventViewState extends State<BsOpEventView>
     return viewController.event != null
         ? "${viewController.event!.details.name.getTranslation(userLanguage)}"
         : (viewController.isClass == false)
-            ? _i18n()["event"]["event"]
-            : _i18n()["class"];
+            ? "${_i18n()["event"]["event"]}"
+            : "${_i18n()['class']}";
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -284,21 +284,22 @@ class _BsOpEventViewState extends State<BsOpEventView>
             seletedPrices: viewController.detailsController.priceTimeUnitMap,
           ),
           bigSeperator,
-          Obx(
-            () => BsOpOfferingLocationCard(
-              label: _i18n()["locationLabel"],
-              onLocationSelected: (Location v) {
-                viewController.setLocation(v);
-              },
-              location: viewController.location.value,
-              validator: (Location? loc) {
-                if (loc == null) {
-                  return _i18n()["locationError"];
-                }
-                return null;
-              },
+          if (viewController.showLocation)
+            Obx(
+              () => BsOpOfferingLocationCard(
+                label: _i18n()["locationLabel"],
+                onLocationSelected: (Location v) {
+                  viewController.setLocation(v);
+                },
+                location: viewController.location.value,
+                validator: (Location? loc) {
+                  if (loc == null) {
+                    return _i18n()["locationError"];
+                  }
+                  return null;
+                },
+              ),
             ),
-          ),
           // bigSeperator,
           Obx(() => viewController.getScheduleWidget()),
         ],
