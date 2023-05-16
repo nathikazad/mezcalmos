@@ -149,7 +149,7 @@ class BsEventViewController {
           : await add_one_event(event: event);
 
       if (res != null) {
-        showSavedSnackBar();
+        showAddedSnackBar();
         shouldRefetch = true;
         await initEditMode(id: res);
       }

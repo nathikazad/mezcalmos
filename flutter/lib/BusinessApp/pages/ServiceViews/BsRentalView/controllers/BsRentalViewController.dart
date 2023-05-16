@@ -172,8 +172,7 @@ class BsRentalViewController {
       int? res = await add_one_rental(rental: rental);
 
       if (res != null) {
-        showSavedSnackBar();
-        shouldRefetch = true;
+ showAddedSnackBar();        shouldRefetch = true;
          await initEditMode(id: res);
       }
     } on OperationException catch (e) {

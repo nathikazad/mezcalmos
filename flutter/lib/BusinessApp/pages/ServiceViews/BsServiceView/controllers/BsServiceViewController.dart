@@ -130,7 +130,7 @@ class BsServiceViewController {
       int? res = await add_one_service(service: service);
 
       if (res != null) {
-        showSavedSnackBar();
+        showAddedSnackBar();
         shouldRefetch = true;
         await initEditMode(id: res);
       }

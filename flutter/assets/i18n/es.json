@@ -1143,6 +1143,8 @@
         "photoAccessOffBody": "Apparently you denied the app from photo library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
+        "added" : "Agregada",
+        "addedTitle" : "Su información ha sido agregada",
         "saved": "Guardado",
         "routeError": "Error a obtener su información de ubicación e ruta",
         "writeReview": "Escribir un comentario",
