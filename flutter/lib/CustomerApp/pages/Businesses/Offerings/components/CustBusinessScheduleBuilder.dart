@@ -76,24 +76,27 @@ class _CustBusinessScheduleBuilderState
                   widget.schedule!.openHours.keys.elementAt(0).name;
               final OpenHours data =
                   widget.schedule!.openHours.values.elementAt(0);
+              final bool isOpen = data.isOpen;
               final String fromHour = data.from[0].toString();
               final String fromMinute = data.from[1].toString();
 
               final String toHour = data.to[0].toString();
               final String toMinute = data.to[1].toString();
 
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    day,
-                    style: context.textTheme.titleLarge,
-                  ),
-                  Text(
-                    "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
-                  ),
-                ],
-              );
+              return isOpen
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          day,
+                          style: context.textTheme.titleLarge,
+                        ),
+                        Text(
+                          "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
+                        ),
+                      ],
+                    )
+                  : SizedBox.shrink();
             },
           ),
         if (ScheduleType.OneTime != widget.scheduleType)
@@ -106,38 +109,41 @@ class _CustBusinessScheduleBuilderState
                     widget.schedule!.openHours.keys.elementAt(index).name;
                 final OpenHours data =
                     widget.schedule!.openHours.values.elementAt(index);
+                final bool isOpen = data.isOpen;
                 final String fromHour = data.from[0].toString();
                 final String fromMinute = data.from[1].toString();
 
                 final String toHour = data.to[0].toString();
                 final String toMinute = data.to[1].toString();
-                return //ScheduleType.OneTime == widget.scheduleType
-
-                    Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      !widget.showIcons
-                          ? Text(day)
-                          : SizedBox(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.access_time_outlined),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Text(day),
+                return isOpen
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            !widget.showIcons
+                                ? Text(
+                                    "$day${(widget.scheduleType == ScheduleType.Scheduled ? "s" : "")}")
+                                : SizedBox(
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.access_time_outlined),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Text(day),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
+                            Text(
+                              "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
                             ),
-                      Text(
-                        "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
-                      ),
-                    ],
-                  ),
-                );
+                          ],
+                        ),
+                      )
+                    : SizedBox.shrink();
               },
             ),
       ],

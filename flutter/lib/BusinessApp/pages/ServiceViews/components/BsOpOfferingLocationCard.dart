@@ -17,11 +17,13 @@ class BsOpOfferingLocationCard extends StatelessWidget {
       required this.onLocationSelected,
       required this.location,
       this.validator,
+      this.locationLabelStyle,
       this.label = "Select Location"});
   final Function(Location) onLocationSelected;
   final Location? location;
   final String label;
   final String? Function(Location?)? validator;
+  final TextStyle? locationLabelStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class BsOpOfferingLocationCard extends StatelessWidget {
       children: [
         Text(
           _i18n()["location"],
-          style: context.textTheme.bodyLarge,
+          style: locationLabelStyle ?? context.textTheme.bodyLarge,
         ),
         smallSepartor,
         FormField<Location?>(
@@ -41,60 +43,67 @@ class BsOpOfferingLocationCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Card(
+                    elevation: 0,
                     color: Colors.grey.shade200,
-                    child: InkWell(
-                      onTap: () async {
-                        MezLocation? newLoc = await PickLocationView.navigate(
-                            initialLocation: (location != null)
-                                ? LatLng(location!.lat.toDouble(),
-                                    location!.lng.toDouble())
-                                : null);
-                        mezDbgPrint(
-                            "Getting after await ==============>$newLoc");
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2.0),
+                      child: InkWell(
+                        onTap: () async {
+                          MezLocation? newLoc = await PickLocationView.navigate(
+                              initialLocation: (location != null)
+                                  ? LatLng(location!.lat.toDouble(),
+                                      location!.lng.toDouble())
+                                  : null);
+                          mezDbgPrint(
+                              "Getting after await ==============>$newLoc");
 
-                        if (newLoc != null) {
-                          state.didChange(Location(
-                              lat: newLoc.latitude,
-                              lng: newLoc.longitude,
-                              address: newLoc.address));
-                          onLocationSelected.call(state.value!);
-                          // onLocationSelected.call(Location(
-                          //     lat: newLoc.latitude,
-                          //     lng: newLoc.longitude,
-                          //     address: newLoc.address));
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 10),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: primaryBlueColor,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Flexible(
-                                fit: FlexFit.tight,
-                                child: Text(
-                                  (location != null)
-                                      ? location!.address
-                                      : label,
-                                  maxLines: 1,
-                                )),
-                            Icon(Icons.chevron_right_rounded)
-                          ],
+                          if (newLoc != null) {
+                            state.didChange(Location(
+                                lat: newLoc.latitude,
+                                lng: newLoc.longitude,
+                                address: newLoc.address));
+                            onLocationSelected.call(state.value!);
+                            // onLocationSelected.call(Location(
+                            //     lat: newLoc.latitude,
+                            //     lng: newLoc.longitude,
+                            //     address: newLoc.address));
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 10),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                color: primaryBlueColor,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Flexible(
+                                  fit: FlexFit.tight,
+                                  child: Text(
+                                    (location != null)
+                                        ? location!.address
+                                        : label,
+                                    maxLines: 1,
+                                  )),
+                              Icon(Icons.chevron_right_rounded)
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 2, left: 12),
-                    child: Text(state.errorText ?? "",
-                        style: context.theme.inputDecorationTheme.errorStyle),
-                  ),
+                  state.errorText != null
+                      ? Container(
+                          padding: const EdgeInsets.only(top: 2, left: 12),
+                          child: Text(state.errorText ?? "",
+                              style: context
+                                  .theme.inputDecorationTheme.errorStyle),
+                        )
+                      : SizedBox.shrink(),
                 ],
               );
             }),

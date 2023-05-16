@@ -42,7 +42,7 @@ class BsOpServiceImagesGrid extends StatelessWidget {
                         width: 70,
                         height: 70,
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
+                          color: Colors.grey.shade200,
                           borderRadius: BorderRadius.circular(10),
                           image: hasImage
                               ? DecorationImage(
@@ -53,7 +53,7 @@ class BsOpServiceImagesGrid extends StatelessWidget {
                         ),
                         child: hasImage == false
                             ? Icon(
-                                Icons.add_photo_alternate,
+                                Icons.add_photo_alternate_outlined,
                                 color: Colors.grey,
                                 size: 35,
                               )

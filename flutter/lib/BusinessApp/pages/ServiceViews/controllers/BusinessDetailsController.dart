@@ -65,7 +65,7 @@ class BusinessItemDetailsController {
 
       details!.cost.forEach((TimeUnit key, num value) {
         TextEditingController _controller = TextEditingController();
-        _controller.text = value.toString();
+        _controller.text = value.toDouble().toStringAsFixed(0);
         priceTimeUnitMap[key] = _controller;
       });
     }

@@ -269,7 +269,7 @@ class BsEventViewController {
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["onDemandClass"],
                     subtitle: _i18n()[businessFB]["onDemandClassLabel"],
-                    type: ScheduleType.Scheduled),
+                    type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["weeklyClass"],
                     subtitle: _i18n()[businessFB]["weeklyClassLabel"],
@@ -306,7 +306,7 @@ class BsEventViewController {
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["onDemandClass"],
                     subtitle: _i18n()[businessFB]["onDemandClassLabel"],
-                    type: ScheduleType.Scheduled),
+                    type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["weeklyClass"],
                     subtitle: _i18n()[businessFB]["weeklyClassLabel"],
@@ -332,7 +332,7 @@ class BsEventViewController {
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["onDemandClass"],
                     subtitle: _i18n()[businessFB]["onDemandClassLabel"],
-                    type: ScheduleType.Scheduled),
+                    type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["weeklyClass"],
                     subtitle: _i18n()[businessFB]["weeklyClassLabel"],
@@ -367,6 +367,7 @@ class BsEventViewController {
             onScheduleSelected: (Schedule? v) {
               avalaibilty.value = v;
             },
+            scheduleType: scheduleType.value!,
             schedule: avalaibilty.value,
           ),
         );

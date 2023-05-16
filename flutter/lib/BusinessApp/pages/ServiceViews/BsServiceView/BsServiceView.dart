@@ -178,7 +178,9 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
         children: [
           Obx(
             () => MezItemAvSwitcher(
-              value: viewController.detailsController.isAvailable.value,
+              value: viewController.detailsController.isEditing.value
+                  ? viewController.detailsController.isAvailable.value
+                  : true,
               onAvalableTap: () {
                 viewController.detailsController.isAvailable.value = true;
               },
@@ -257,6 +259,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
                 }
                 return null;
               },
+              scheduleType: ScheduleType.OnDemand,
               onScheduleSelected: (Schedule? schedule) {
                 viewController.changeSchedule(schedule);
               },

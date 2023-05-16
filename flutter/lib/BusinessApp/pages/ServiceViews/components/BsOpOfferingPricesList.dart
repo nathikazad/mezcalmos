@@ -97,7 +97,10 @@ class BsOpOfferingPricesList extends StatelessWidget {
       required bool canRemove,
       required void Function() onRemoveTimeUnit}) {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(
+        top: 0,
+        bottom: 12,
+      ),
       child: Row(
         children: [
           Flexible(
@@ -132,6 +135,7 @@ class BsOpOfferingPricesList extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 6),
               child: MezIconButton(
+                elevation: 0,
                 onTap: onRemoveTimeUnit,
                 iconSize: 20,
                 backgroundColor: Colors.transparent,

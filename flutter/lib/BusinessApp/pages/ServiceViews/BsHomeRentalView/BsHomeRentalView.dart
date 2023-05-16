@@ -182,7 +182,9 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
         children: [
           Obx(
             () => MezItemAvSwitcher(
-              value: viewController.detailsController.isAvailable.value,
+              value: viewController.detailsController.isEditing.value
+                  ? viewController.detailsController.isAvailable.value
+                  : true,
               onAvalableTap: () {
                 viewController.detailsController.isAvailable.value = true;
               },
@@ -260,10 +262,13 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             _i18n()["homeRental"]["rentalDetails"],
             style: context.textTheme.bodyLarge,
           ),
-          meduimSeperator,
+          smallSepartor,
           Text(
             "Home type",
-            style: context.textTheme.bodyLarge,
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
           ),
           smallSepartor,
           Obx(
@@ -287,11 +292,15 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               labelText: _i18n()["homeRental"]["homeType"],
             ),
           ),
-          bigSeperator,
+          smallSepartor,
           Obx(
             () => BsOpOfferingLocationCard(
               location: viewController.homeLocation.value,
               label: _i18n()["homeRental"]["homeLocation"],
+              locationLabelStyle: context.textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
               onLocationSelected: (Location loc) {
                 viewController.homeLocation.value = loc;
               },
@@ -303,10 +312,13 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               },
             ),
           ),
-          // bigSeperator,
+          smallSepartor,
           Text(
             _i18n()["homeRental"]["bedrooms"],
-            style: context.textTheme.bodyLarge,
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
           ),
           smallSepartor,
           TextFormField(
@@ -321,10 +333,13 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               return null;
             },
           ),
-          bigSeperator,
+          smallSepartor,
           Text(
             _i18n()["homeRental"]["bathrooms"],
-            style: context.textTheme.bodyLarge,
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
           ),
           smallSepartor,
           TextFormField(

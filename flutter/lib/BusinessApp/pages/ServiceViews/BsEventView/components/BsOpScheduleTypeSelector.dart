@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/controllers/BsEventViewController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class BsOpScheduleTypeSelector extends StatefulWidget {
@@ -29,7 +30,7 @@ class _BsOpScheduleTypeSelectorState extends State<BsOpScheduleTypeSelector> {
   @override
   void initState() {
     super.initState();
-  
+
     _selectedValue = widget.value;
   }
 
@@ -71,6 +72,7 @@ class _BsOpScheduleTypeSelectorState extends State<BsOpScheduleTypeSelector> {
                     Text(
                       item.subtitle,
                     ),
+                    smallSepartor,
                   ],
                 ),
               ))
@@ -80,6 +82,7 @@ class _BsOpScheduleTypeSelectorState extends State<BsOpScheduleTypeSelector> {
           _selectedValue = value;
         });
         widget.onChanged(value);
+        mezDbgPrint("DROPDOWN: ${value?.title} ${_selectedValue?.title}");
       },
       validator: widget.validator,
     );
