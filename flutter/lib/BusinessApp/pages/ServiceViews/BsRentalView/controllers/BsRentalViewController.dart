@@ -174,6 +174,7 @@ class BsRentalViewController {
       if (res != null) {
         showSavedSnackBar();
         shouldRefetch = true;
+         await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
