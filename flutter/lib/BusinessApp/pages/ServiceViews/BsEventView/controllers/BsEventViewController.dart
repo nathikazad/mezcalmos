@@ -30,7 +30,8 @@ class BsEventViewController {
       BusinessItemDetailsController();
   // vars //
   bool shouldRefetch = false;
-  bool isClass = false;
+  bool get isClass => _isClass.value;
+  RxBool _isClass = false.obs;
   // state variables //
   Rxn<EventWithBusinessCard> _event = Rxn<EventWithBusinessCard>();
   Rxn<ScheduleType> scheduleType = Rxn<ScheduleType>();
@@ -82,7 +83,7 @@ class BsEventViewController {
 
   Future<void> init(
       {required TickerProvider thickerProvider, required bool isClass}) async {
-    this.isClass = isClass;
+    _isClass.value = isClass;
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
     detailsController.setLanguage(language: languages!);
@@ -99,7 +100,7 @@ class BsEventViewController {
       detailsController.clearPrices();
       await detailsController.initEditMode(detalsId: event!.details.id.toInt());
 
-      isClass = event!.tags?.contains(EventTag.Class) == true;
+      _isClass.value = event!.tags?.contains(EventTag.Class) == true;
 
       location.value = event!.gpsLocation;
       scheduleType.value = event!.scheduleType;
