@@ -272,18 +272,25 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CachedNetworkImage(
-                      imageUrl: viewController.businesses[index].image,
-                      imageBuilder: (BuildContext context,
-                              ImageProvider<Object> imageProvider) =>
-                          CircleAvatar(
-                        radius: 18.5.mezSp,
-                        backgroundImage: imageProvider,
+                    if (_isValidImage(index))
+                      Row(
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: viewController.businesses[index].image,
+                            errorWidget: (BuildContext context, url, error) =>
+                                Icon(Icons.error),
+                            imageBuilder: (BuildContext context,
+                                    ImageProvider<Object> imageProvider) =>
+                                CircleAvatar(
+                              radius: 18.5.mezSp,
+                              backgroundImage: imageProvider,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          )
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
                     Expanded(
                       child: Text(
                         viewController.classes[index].details.name
@@ -351,4 +358,6 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       ],
     );
   }
+
+  bool _isValidImage(int index) => viewController.businesses.length > index;
 }

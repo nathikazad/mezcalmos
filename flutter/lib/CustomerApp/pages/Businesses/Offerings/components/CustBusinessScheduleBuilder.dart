@@ -124,15 +124,31 @@ class _CustBusinessScheduleBuilderState
                           children: [
                             !widget.showIcons
                                 ? Text(
-                                    "$day${(widget.scheduleType == ScheduleType.Scheduled ? "s" : "")}")
+                                    "$day${(widget.scheduleType == ScheduleType.Scheduled ? "s" : "")}",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600),
+                                  )
                                 : SizedBox(
                                     child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Icon(Icons.access_time_outlined),
                                         Padding(
                                           padding:
-                                              const EdgeInsets.only(left: 8.0),
-                                          child: Text(day),
+                                              const EdgeInsets.only(top: 3),
+                                          child: Icon(
+                                            Icons.access_time_outlined,
+                                            size: 20,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5.0),
+                                          child: Text(
+                                            day,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600),
+                                          ),
                                         ),
                                       ],
                                     ),
