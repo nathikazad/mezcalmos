@@ -114,7 +114,6 @@ class BsServiceViewController {
         final Service _service = await _constructService();
         mezDbgPrint("busniess id : ${_service.details.businessId}");
         await createItem(_service);
-        showSavedSnackBar();
       }
     }
   }

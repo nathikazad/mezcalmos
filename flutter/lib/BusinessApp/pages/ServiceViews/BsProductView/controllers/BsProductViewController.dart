@@ -106,7 +106,6 @@ class BsProductViewController {
         final Product _product = await _constructProduct();
         mezDbgPrint("busniess id : ${_product.details.businessId}");
         await createItem(_product);
-        showSavedSnackBar();
       }
     }
   }

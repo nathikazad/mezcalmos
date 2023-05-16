@@ -127,7 +127,6 @@ class BsEventViewController {
       } else {
         Event _event = await _constructEventWithDetails();
         await createItem(_event);
-        showSavedSnackBar();
       }
     }
   }

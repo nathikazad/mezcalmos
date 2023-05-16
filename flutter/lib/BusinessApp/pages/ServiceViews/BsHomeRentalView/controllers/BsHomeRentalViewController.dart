@@ -123,7 +123,6 @@ class BsHomeRentalViewController {
       } else {
         Rental _rental = await _constructRentalWithDetails();
         await createItem(_rental);
-        showSavedSnackBar();
       }
     }
   }
