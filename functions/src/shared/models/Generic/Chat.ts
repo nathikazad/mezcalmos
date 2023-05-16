@@ -72,7 +72,8 @@ export interface Chat {
   chatInfo: Partial<Record<ChatInfoAppName, ChatInfo>>,
   messages?: Array<Message>
   chatType: ChatType
-  participants?: Array<Participant>
+  participants?: Array<Participant>;
+  isServiceProviderChat?: boolean;
 }
 
 export interface Participant extends UserInfo {
