@@ -83,6 +83,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             MezIconButton(
+                                elevation: 0,
                                 iconSize: 18,
                                 padding: EdgeInsets.all(3),
                                 onTap: null,
@@ -132,7 +133,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             ))),
                   ),
                 ),
-                Divider(
+                SizedBox(
                   height: 30,
                 ),
                 Text(
@@ -177,7 +178,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         ),
                   ),
                 ),
-                Divider(
+                SizedBox(
                   height: 30,
                 ),
                 Text(
@@ -189,18 +190,47 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   () => Column(
                     children: List.generate(
                         viewController.events.length,
-                        (int index) => BsEventCard(
-                            event: viewController.events[index],
-                            onClick: () {
-                              BsOpEventView.navigate(
-                                id: viewController.events[index].details.id
-                                    .toInt(),
-                                isClass: viewController.events[index].isClass,
-                              );
-                            })),
+                        (int index) => !viewController.events[index].isClass
+                            ? BsEventCard(
+                                event: viewController.events[index],
+                                onClick: () {
+                                  BsOpEventView.navigate(
+                                    id: viewController.events[index].details.id
+                                        .toInt(),
+                                    isClass:
+                                        viewController.events[index].isClass,
+                                  );
+                                })
+                            : SizedBox.shrink()),
                   ),
                 ),
-                Divider(
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  _i18n()["classes"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.events.length,
+                        (int index) => viewController.events[index].isClass
+                            ? BsEventCard(
+                                event: viewController.events[index],
+                                onClick: () {
+                                  BsOpEventView.navigate(
+                                    id: viewController.events[index].details.id
+                                        .toInt(),
+                                    isClass:
+                                        viewController.events[index].isClass,
+                                  );
+                                })
+                            : SizedBox.shrink()),
+                  ),
+                ),
+                SizedBox(
                   height: 30,
                 ),
                 Text(
@@ -223,7 +253,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             )),
                   ),
                 ),
-                Divider(
+                SizedBox(
                   height: 30,
                 ),
                 Text(

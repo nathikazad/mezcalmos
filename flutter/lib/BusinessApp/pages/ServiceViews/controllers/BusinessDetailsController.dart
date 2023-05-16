@@ -196,6 +196,11 @@ class BusinessItemDetailsController {
     return null;
   }
 
+  void removeImage(int index) {
+    images[index] = null;
+    imagesUrls[index] = null;
+  }
+
   LanguageMap constructDesc() {
     final LanguageMap _desc = {
       languages.value!.primary: descriptionController.text

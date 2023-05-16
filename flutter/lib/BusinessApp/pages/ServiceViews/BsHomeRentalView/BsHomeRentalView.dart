@@ -354,6 +354,28 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               return null;
             },
           ),
+          smallSepartor,
+          Text(
+            _i18n()["homeRental"]["area"],
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+          smallSepartor,
+          TextFormField(
+            controller: viewController.areaController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                hintText: _i18n()["homeRental"]["areaHint"],
+                suffixText: "sq ft m²"),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return _i18n()["homeRental"]["areaError"];
+              }
+              return null;
+            },
+          ),
         ],
       ),
     );
