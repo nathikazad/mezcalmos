@@ -79,8 +79,8 @@
         "nameHint": "Añadir nombre de artículo",
         "nameError": "Por favor, añada el nombre del artículo",
         "description": "Descripción",
-        "descriptionHint": "Introduzca una descripción para su artículo",
-        "descriptionError": "Por favor, introduzca una descripción para su artículo",
+        "descriptionHint": "Introduzca una descripción para su evento",
+        "descriptionError": "Por favor, introduzca una descripción para su evento",
         "image": "Imagen",
         "imageInfo": "Sólo puedes subir hasta cinco imágenes.",
         "imageError": "Añada al menos una imagen",
@@ -149,7 +149,8 @@
           "motorcycleTypeHint": "Seleccione su tipo de motocicleta",
           "length": "Longitud",
           "surfLength": "Longitud de la tabla de surf",
-          "surfLengthError": "Introduzca la longitud de la tabla de surf"
+          "surfLengthError": "Introduzca la longitud de la tabla de surf",
+          "feet": "Pies"
         },
         "yogaStudio": {
           "eventTitle": "Evento",

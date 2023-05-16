@@ -79,8 +79,8 @@
         "nameHint": "Add item name",
         "nameError": "Please add item name",
         "description": "Description",
-        "descriptionHint": "Enter a description for your item",
-        "descriptionError": "Please enter a description for your item",
+        "descriptionHint": "Enter a description for your event",
+        "descriptionError": "Please enter a description for your event",
         "image": "Image",
         "imageInfo": "You can only upload up to five images.",
         "imageError": "Please add at least one image",
@@ -149,7 +149,8 @@
           "motorcycleTypeHint": "Select your motorcycle type",
           "length": "Length",
           "surfLength": "Surf board length",
-          "surfLengthError": "Please enter surf board length"
+          "surfLengthError": "Please enter surf board length",
+          "feet": "Feet"
         },
         "yogaStudio": {
           "eventTitle": "Event",

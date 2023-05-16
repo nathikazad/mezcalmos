@@ -362,7 +362,8 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                     smallSepartor,
                     Text(
                       _i18n()["vehicleRental"]["length"],
-                      style: context.textTheme.bodySmall,
+                      style: context.textTheme.bodySmall
+                          ?.copyWith(fontWeight: FontWeight.w700),
                     ),
                     smallSepartor,
                     TextFormField(
@@ -373,9 +374,9 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                         suffixIconConstraints: BoxConstraints(
                           minWidth: 0,
                           minHeight: 0,
-                        ).tighten(width: 80),
+                        ).tighten(width: 50),
                         suffixIcon: Text(
-                          "feet",
+                           _i18n()["vehicleRental"]["Feet"],
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),

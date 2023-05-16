@@ -118,14 +118,23 @@ class BsOpOfferingPricesList extends StatelessWidget {
               },
               decoration: InputDecoration(
                 hintText: _i18n()["price"],
-                suffixIconConstraints: BoxConstraints(
-                  minWidth: 0,
-                  minHeight: 0,
-                ).tighten(width: 80),
-                prefixIcon: const Icon(Icons.attach_money),
-                suffixIcon: Text(
-                  _i18n()[timeUnit.toFirebaseFormatString()],
-                  style: Theme.of(context).textTheme.bodyLarge,
+                // suffixIconConstraints: BoxConstraints(
+                //   minWidth: 0,
+                //   minHeight: 0,
+                // ).tighten(width: 75),
+                prefixIconConstraints: BoxConstraints.tight(Size(24, 24)),
+                prefixIcon: Padding(
+                    padding: EdgeInsets.zero,
+                    child: const Icon(Icons.attach_money)),
+                suffixIcon: Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(
+                      _i18n()[timeUnit.toFirebaseFormatString()],
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
                 ),
               ),
               controller: textEditingController,

@@ -166,7 +166,9 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                     icon: Icons.share,
                                     label: "${_i18n()['share']}",
                                     trailingWidget: MezIconButton(
+                                      elevation: 0,
                                       icon: Icons.copy,
+                                      iconSize: 20,
                                       onTap: () {
                                         String text = _viewController
                                             .serviceLink!.customerDeepLink
@@ -349,7 +351,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                   ),
                 ),
                 SizedBox(
-                  width: 12,
+                  width: 15,
                 ),
                 Flexible(
                     fit: FlexFit.tight,

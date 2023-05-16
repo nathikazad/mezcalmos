@@ -141,6 +141,9 @@ class ServiceScheduleWidgets {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: MezIconButton(
+        backgroundColor: backgroundShadeColor,
+        iconColor: offShadeGreyColor,
+        materialColor: Colors.transparent,
         onTap: () {
           showModalBottomSheet(
               context: context,
