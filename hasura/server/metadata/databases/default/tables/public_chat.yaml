@@ -1,6 +1,14 @@
 table:
   name: chat
   schema: public
+object_relationships:
+  - name: service_provider_customer_chat
+    using:
+      foreign_key_constraint_on:
+        column: chat_id
+        table:
+          name: service_provider_customer_chat
+          schema: public
 array_relationships:
   - name: chat_participants
     using:

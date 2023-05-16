@@ -70,7 +70,10 @@ export async function getChat(chatId: number): Promise<Chat> {
                 }
             }],
             chat_info: [{}, true],
-            chat_type: true
+            chat_type: true,
+            service_provider_customer_chat: {
+                customer_id: true
+            }
         }]
     });
     if (!(response.chat_by_pk)) {
@@ -96,6 +99,7 @@ export async function getChat(chatId: number): Promise<Chat> {
         participants: participants,
         chatInfo: JSON.parse(response.chat_by_pk.chat_info),
         chatType: response.chat_by_pk.chat_type as ChatType,
+        isServiceProviderChat: (response.chat_by_pk.service_provider_customer_chat) ? true : false,
     };
 }
 

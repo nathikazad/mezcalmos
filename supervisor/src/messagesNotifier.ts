@@ -234,6 +234,7 @@ async function notifyOtherMessageParticipants(notificationForQueue: chatModule.M
       time: notificationForQueue.timestamp,
       notificationType: NotificationType.NewMessage,
       notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+      isServiceProviderChat: chat.isServiceProviderChat,
     },
     background: {
       en: {
