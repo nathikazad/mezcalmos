@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/Components/BsToggleButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
     ['pages']['Components']['BsHomeRentalCard'];
@@ -18,8 +20,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
 class BsHomeRentalCard extends StatelessWidget {
   final RentalCard rental;
   final Function()? onClick;
+  final BsServicesListViewController viewController;
   const BsHomeRentalCard(
-      {super.key, required this.rental, required this.onClick});
+      {super.key,
+      required this.rental,
+      required this.onClick,
+      required this.viewController});
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +64,10 @@ class BsHomeRentalCard extends StatelessWidget {
                 textAlign: TextAlign.right,
               ),
             ),
-            Switch(
-              activeColor: primaryBlueColor,
-              onChanged: (_) {},
-              value: true,
-            )
+            BsItemToggleButton(
+              details: rental.details,
+              viewController: viewController,
+            ),
           ],
         ));
   }

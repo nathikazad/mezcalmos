@@ -116,15 +116,16 @@ class BsOpOfferingPricesList extends StatelessWidget {
                 }
                 return null;
               },
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 hintText: _i18n()["price"],
-                // suffixIconConstraints: BoxConstraints(
-                //   minWidth: 0,
-                //   minHeight: 0,
-                // ).tighten(width: 75),
+                suffixIconConstraints: BoxConstraints(
+                  minWidth: 0,
+                  minHeight: 0,
+                ).tighten(width: 100),
                 prefixIconConstraints: BoxConstraints.tight(Size(24, 24)),
                 prefixIcon: Padding(
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsets.only(left: 8),
                     child: const Icon(Icons.attach_money)),
                 suffixIcon: Align(
                   alignment: Alignment.centerRight,

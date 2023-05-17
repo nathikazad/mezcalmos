@@ -11,6 +11,8 @@ import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/Components/BsToggleButton.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
     ['pages']['Components']['BsServiceCard'];
@@ -18,8 +20,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
 class BsServiceCard extends StatelessWidget {
   final ServiceCard service;
   final Function()? onClick;
+  final BsServicesListViewController viewController;
+
   const BsServiceCard(
-      {super.key, required this.service, required this.onClick});
+      {super.key,
+      required this.service,
+      required this.onClick,
+      required this.viewController});
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +65,10 @@ class BsServiceCard extends StatelessWidget {
                 maxLines: 2,
               ),
             ),
-            Switch(
-              activeColor: primaryBlueColor,
-              onChanged: (_) {},
-              value: true,
-            )
+            BsItemToggleButton(
+              details: service.details,
+              viewController: viewController,
+            ),
           ],
         ));
   }

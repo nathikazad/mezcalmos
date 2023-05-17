@@ -261,9 +261,10 @@ Future<List<RentalCard>> get_business_home_rentals(
           businessName: data.rental.business.details.name,
           currency: data.rental.business.details.currency.toCurrency(),
           rental: Rental(
+            id: data.rental.id,
             category1: data.rental.details.category1.toRentalCategory1(),
             details: BusinessItemDetails(
-              id: data.rental.id,
+              id: data.rental.details.id,
               name: toLanguageMap(
                   translations: data.rental.details.name.translations),
               position: data.rental.details.position,
@@ -315,9 +316,10 @@ Future<List<RentalCard>> get_business_rentals(
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           rental: Rental(
+            id: data.id,
             category1: data.details.category1.toRentalCategory1(),
             details: BusinessItemDetails(
-              id: data.id,
+              id: data.details.id,
               name: toLanguageMap(translations: data.details.name.translations),
               position: data.details.position,
               businessId: data.business.id,

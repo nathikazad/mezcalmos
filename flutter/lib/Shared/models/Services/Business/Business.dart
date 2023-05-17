@@ -46,6 +46,7 @@ class RentalCard extends Rental {
           bedrooms: rental.bedrooms,
           homeType: rental.homeType,
           gpsLocation: rental.gpsLocation,
+          id: rental.id,
         );
 }
 
@@ -87,6 +88,7 @@ class ProductCard extends Product {
   }) : super(
           category1: product.category1,
           details: product.details,
+          id: product.id,
         );
 }
 
@@ -100,6 +102,8 @@ class ServiceCard extends Service {
   }) : super(
           category1: service.category1,
           details: service.details,
+          id: service.id,
+          schedule: service.schedule,
         );
 }
 

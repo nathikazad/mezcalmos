@@ -285,7 +285,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
             },
             seletedPrices: viewController.detailsController.priceTimeUnitMap,
           ),
-          bigSeperator,
+          smallSepartor,
           if (viewController.showLocation)
             Obx(
               () => BsOpOfferingLocationCard(
@@ -302,7 +302,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
                 },
               ),
             ),
-          bigSeperator,
+          if (viewController.showLocation) bigSeperator,
           Obx(() => viewController.getScheduleWidget()),
         ],
       ),

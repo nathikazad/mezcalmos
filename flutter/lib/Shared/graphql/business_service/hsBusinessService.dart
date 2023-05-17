@@ -268,8 +268,9 @@ Future<List<ServiceCard>> get_business_services(
           currency: data.business.details.currency.toCurrency(),
           service: Service(
             category1: data.details.category1.toServiceCategory1(),
+            id: data.id,
             details: BusinessItemDetails(
-              id: data.id,
+              id: data.details.id,
               name: toLanguageMap(translations: data.details.name.translations),
               position: data.details.position,
               businessId: data.business.id,

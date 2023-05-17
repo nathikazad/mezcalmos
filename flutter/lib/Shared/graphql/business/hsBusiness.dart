@@ -352,6 +352,7 @@ Future<int?> update_business_item_details(
   QueryResult<Mutation$update_business_item_details_by_id> res =
       await _db.graphQLClient.mutate$update_business_item_details_by_id(
           Options$Mutation$update_business_item_details_by_id(
+              fetchPolicy: FetchPolicy.networkOnly,
               variables: Variables$Mutation$update_business_item_details_by_id(
                   id: id,
                   object: Input$business_item_details_set_input(

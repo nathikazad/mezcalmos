@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/Components/BsEventCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/Components/BsHomeRentalCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/Components/BsProductCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/Components/BsRentalCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/Components/BsServiceCard.dart';
@@ -114,23 +115,16 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   () => Column(
                     children: List.generate(
                         viewController.homeRentals.length,
-                        (int index) => MezCard(
-                            onClick: () {
-                              BsOpHomeRentalView.navigate(
-                                  id: viewController
-                                      .homeRentals[index].details.id
-                                      .toInt());
-                            },
-                            firstAvatarBgImage: NetworkImage(
-                              viewController
-                                      .homeRentals[index].details.firstImage ??
-                                  customImageUrl,
-                            ),
-                            content: Text(
-                              viewController.homeRentals[index].details.name
-                                  .getTranslation(userLanguage),
-                              style: context.textTheme.bodyLarge,
-                            ))),
+                        (int index) => BsHomeRentalCard(
+                              rental: viewController.homeRentals[index],
+                              onClick: () {
+                                BsOpHomeRentalView.navigate(
+                                  id: viewController.homeRentals[index].id!
+                                      .toInt(),
+                                );
+                              },
+                              viewController: viewController,
+                            )),
                   ),
                 ),
                 SizedBox(
@@ -146,11 +140,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     children: List.generate(
                         viewController.rentals.length,
                         (int index) => BsRentalCard(
+                            viewController: viewController,
                             rental: viewController.rentals[index],
                             onClick: () {
                               BsOpRentalView.navigate(
-                                id: viewController.rentals[index].details.id
-                                    .toInt(),
+                                id: viewController.rentals[index].id!.toInt(),
                                 rentalCategory:
                                     viewController.rentals[index].category1,
                               );
@@ -192,10 +186,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         viewController.events.length,
                         (int index) => !viewController.events[index].isClass
                             ? BsEventCard(
+                                viewController: viewController,
                                 event: viewController.events[index],
                                 onClick: () {
                                   BsOpEventView.navigate(
-                                    id: viewController.events[index].details.id
+                                    id: viewController.events[index].id!
                                         .toInt(),
                                     isClass:
                                         viewController.events[index].isClass,
@@ -218,10 +213,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         viewController.events.length,
                         (int index) => viewController.events[index].isClass
                             ? BsEventCard(
+                                viewController: viewController,
                                 event: viewController.events[index],
                                 onClick: () {
                                   BsOpEventView.navigate(
-                                    id: viewController.events[index].details.id
+                                    id: viewController.events[index].id!
                                         .toInt(),
                                     isClass:
                                         viewController.events[index].isClass,
@@ -243,11 +239,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     children: List.generate(
                         viewController.services.length,
                         (int index) => BsServiceCard(
+                              viewController: viewController,
                               service: viewController.services[index],
                               onClick: () {
                                 BsOpServiceView.navigate(
-                                    id: viewController
-                                        .services[index].details.id
+                                    id: viewController.services[index].id!
                                         .toInt());
                               },
                             )),
@@ -266,6 +262,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     children: List.generate(
                         viewController.product.length,
                         (int index) => BsProductCard(
+                              viewController: viewController,
                               product: viewController.product[index],
                               onClick: () {
                                 BsOpProductView.navigate(

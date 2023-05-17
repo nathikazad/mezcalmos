@@ -560,7 +560,7 @@ Future<List<EventCard>> get_business_events(
                     .toList() ??
                 [],
             details: BusinessItemDetails(
-              id: data.id,
+              id: data.details.id,
               name: toLanguageMap(translations: data.details.name.translations),
               position: data.details.position,
               businessId: data.business.id,

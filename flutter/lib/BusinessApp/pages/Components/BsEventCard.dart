@@ -17,14 +17,21 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/BusinessApp/pages/Components/BsToggleButton.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
     ['pages']['Components']['BsEventCard'];
 
 class BsEventCard extends StatelessWidget {
   final EventCard event;
+  final BsServicesListViewController viewController;
   final Function()? onClick;
-  const BsEventCard({super.key, required this.event, required this.onClick});
+  const BsEventCard(
+      {super.key,
+      required this.event,
+      required this.onClick,
+      required this.viewController});
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +72,10 @@ class BsEventCard extends StatelessWidget {
                     textAlign: TextAlign.right,
                   ),
                 ),
-                Switch(
-                  activeColor: primaryBlueColor,
-                  onChanged: (_) {},
-                  value: true,
-                )
+                BsItemToggleButton(
+                  details: event.details,
+                  viewController: viewController,
+                ),
               ],
             ),
             if (event.schedule != null)
@@ -92,7 +98,9 @@ class BsEventCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          "${event.period?.start.toDayName()} ${event.period?.start.day} ${DateFormat.MMMM().format(event.period!.start)}"),
+                        "${event.period?.start.toDayName()} ${event.period?.start.day} ${DateFormat.MMMM().format(event.period!.start)}",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                       Text(
                           "${event.period!.formatTime(event.period!.start)} - ${event.period!.formatTime(event.period!.end)}"),
                     ],

@@ -43,6 +43,7 @@ class BusinessItemDetailsController {
 
   Future<void> initEditMode({required int detalsId}) async {
     mezDbgPrint(" 🟢  initEditMode : $detalsId");
+    isEditing.value = true;
     _details.value = await get_business_item_details_by_id(
         detailsId: detalsId,
         businessId: Get.find<BusinessOpAuthController>().companyId!);

@@ -81,7 +81,7 @@ class BsOpScheduleSelector extends StatelessWidget {
                       Flexible(
                         fit: FlexFit.tight,
                         child: Text(
-                          _i18n()["scheduleHint2"],
+                          _i18n()["scheduleHint"],
                           style: context.textTheme.bodyMedium!
                               .copyWith(color: primaryBlueColor),
                         ),

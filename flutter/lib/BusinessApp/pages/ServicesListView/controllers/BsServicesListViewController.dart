@@ -8,6 +8,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProduct
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
@@ -282,6 +283,11 @@ class BsServicesListViewController {
 
   Future<void> fetchAllServices() async {
     // convert this to future await array of futures
+    homeRentals.clear();
+    rentals.clear();
+    events.clear();
+    services.clear();
+    product.clear();
     await Future.wait([
       _fetchHomeRentals(),
       _fetchRentals(),
@@ -324,6 +330,13 @@ class BsServicesListViewController {
       busniessId: _businessOpAuthController.companyId!,
       withCache: false,
     );
+  }
+
+  Future<int?> changeItemAvailability(
+      int id, BusinessItemDetails details) async {
+    final int? response =
+        await update_business_item_details(id: id, details: details);
+    return response;
   }
 
   void dispose() {}

@@ -11,14 +11,21 @@ import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/Components/BsToggleButton.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
     ['pages']['Components']['BsRentalCard'];
 
 class BsRentalCard extends StatelessWidget {
   final RentalCard rental;
+  final BsServicesListViewController viewController;
   final Function()? onClick;
-  const BsRentalCard({super.key, required this.rental, required this.onClick});
+  const BsRentalCard(
+      {super.key,
+      required this.rental,
+      required this.onClick,
+      required this.viewController});
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +64,10 @@ class BsRentalCard extends StatelessWidget {
                 maxLines: 2,
               ),
             ),
-            Switch(
-              activeColor: primaryBlueColor,
-              onChanged: (_) {},
-              value: true,
-            )
+            BsItemToggleButton(
+              details: rental.details,
+              viewController: viewController,
+            ),
           ],
         ));
   }
