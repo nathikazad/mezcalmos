@@ -163,8 +163,12 @@ class ForegroundNotificationsController extends GetxController {
         .isNotEmpty;
   }
 
-  /// TODO: Temp logic only
   bool hasNewSPMessageNotification() {
-    return true;
+    return notifications()
+        .where((Notification notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            (notification.isServiceProvderChat ?? false))
+        .toList()
+        .isNotEmpty;
   }
 }

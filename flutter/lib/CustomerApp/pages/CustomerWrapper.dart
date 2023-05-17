@@ -18,10 +18,6 @@ import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:badges/badges.dart' as badge;
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -125,15 +121,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                   BottomNavigationBarItem(
                       icon: Icon(Icons.history), label: "${_i18n()['orders']}"),
                   BottomNavigationBarItem(
-                      icon:   badge.Badge(
-                        badgeColor: Colors.red,
-                        showBadge: Get.find<ForegroundNotificationsController>()
-                            .hasNewSPMessageNotification(),
-                        position: badge.BadgePosition(top: 0, end: 0),
-                        child: Icon(
-                          Icons.sms_outlined,
-                        ),
-                      ),
+                      icon: Icon(Icons.sms_outlined),
                       label: "${_i18n()['messages']}"),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.person_outline),

@@ -4,11 +4,13 @@ import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart'
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:badges/badges.dart' as badge;
 
 enum BusinessOpTabView { Services, Feed, Messages, Profile }
 
@@ -110,7 +112,15 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
                 label: '${_i18n()["feed"]}',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.textsms),
+                icon: badge.Badge(
+                  badgeColor: Colors.red,
+                  showBadge: Get.find<ForegroundNotificationsController>()
+                      .hasNewSPMessageNotification(),
+                  position: badge.BadgePosition(top: 0, end: 0),
+                  child: Icon(
+                    Icons.textsms,
+                  ),
+                ),
                 label: '${_i18n()["messages"]}',
               ),
               BottomNavigationBarItem(

@@ -176,11 +176,11 @@ class _MessagesListViewState extends State<MessagesListView> {
                                             top: 4.0,
                                           ),
                                           child: CircleAvatar(
-                                            radius: 10,
+                                            radius: 8,
                                             backgroundColor: Colors.red,
                                             child: Text(
                                               // TODO: How to get length of new message
-                                              "1",
+                                              "",
                                               style: context
                                                   .textTheme.labelSmall!
                                                   .copyWith(
