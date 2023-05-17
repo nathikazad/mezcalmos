@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/pages/CreateServiceInfoPage.dart';
@@ -77,7 +74,7 @@ class _CreateServiceViewState extends State<CreateServiceView> {
                 borderRadius: 0,
                 onClick: () async {
                   if (viewController.isFormValid()) {
-                    await _handleButton();
+                    await _handleButton(context);
                   }
                 },
               )
@@ -98,27 +95,23 @@ class _CreateServiceViewState extends State<CreateServiceView> {
     );
   }
 
-  Future<void> _handleButton() async {
-    if (viewController.currentPage.value == 3) {
-      final bool? res = await viewController.handleNext();
-      if (res == true) {
-        await showStatusInfoDialog(
-          context,
-          primaryClickTitle: "${_i18n()['ok']}",
-          primaryIcon: Icons.flatware,
-          showSmallIcon: false,
-          primaryCallBack: () {
-            Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
-            // MezRouter.popEverythingAndNavigateTo(RestaurantAppRoutes.tabsRoute);
-          },
-          status: "${_i18n()['restTitle']}",
-          description: "${_i18n()['restBody']}",
-        );
-      } else {
-        // handle error
-      }
-    } else {
-      await viewController.handleNext();
+  Future<void> _handleButton(BuildContext context) async {
+    final bool? res = await viewController.handleNext();
+    if (res == true) {
+      await showStatusInfoDialog(
+        context,
+        primaryClickTitle: "${_i18n()['ok']}",
+        primaryIcon: viewController.serviceType.toIcon(),
+        showSmallIcon: false,
+        primaryCallBack: () {
+          viewController.confirmCallBack(context);
+          // MezRouter.popEverythingAndNavigateTo(RestaurantAppRoutes.tabsRoute);
+        },
+        status:
+            "${_i18n()['createdTitle']["${viewController.serviceType.toFirebaseFormatString()}"]}",
+        description:
+            "${_i18n()['createdSubtitle']["${viewController.serviceType.toFirebaseFormatString()}"]}",
+      );
     }
   }
 }

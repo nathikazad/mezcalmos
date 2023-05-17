@@ -88,10 +88,9 @@
         "category": "Category",
         "categoryHint": "Select a category",
         "categoryError": "Please select a category",
-        "schedule": "Schedule",
-        "scheduleHint": "Add schedule",
-        "scheduleHint2": "At least one day must be selected.",
-        "scheduleError": "Please add schedule",
+        "schedule": "Availability",
+        "scheduleHint": "At least two days must be selected.",
+        "scheduleError": "At least two days must be selected.",
         "locationLabel": "Select a location",
         "locationError": "Please select a location",
         "add": "Add",
@@ -281,7 +280,6 @@
         "laundry": "laundries",
         "btn": "Show closed services"
       },
-
       "Menu": {
         "UserMenuComponent": {
           "savedLocations": "My locations",
@@ -345,7 +343,6 @@
           "showOnlyOpenCompanies": "Show only open companies",
           "search": "Search"
         },
-
         "CustCourierServiceView": {
           "orderNow": "Order now",
           "chatWithUs": "Chat with us",
@@ -378,7 +375,6 @@
           "reason": "Reason",
           "newPrice": "New price",
           "accept": "Accept",
-
           "cancelOrder": "Cancel order",
           "note": "Note",
           "delivery": "Delivery",
@@ -387,7 +383,6 @@
           "noDriverAssignedYet": "No driver assigned yet"
         }
       },
-
       "ListOrdersScreen": {
         "components": {
           "RestaurantOngoingOrderCard": {
@@ -473,7 +468,9 @@
             "searchField": {
               "search": "Search"
             },
-            "SearchItemCard": { "noName": "No name" }
+            "SearchItemCard": {
+              "noName": "No name"
+            }
           },
           "ListRestaurantScreen": {
             "restaurants": "Restaurants",
@@ -1486,6 +1483,16 @@
         "setNameAndImage": "Please set your name and image before proceeding"
       }
     },
+    "models": {
+      "Utilities": {
+        "ServiceProviderType": {
+          "restaurant": "Restaurant",
+          "business": "Business",
+          "laundry": "Laundry",
+          "deliveryCompany": "Delivery company"
+        }
+      }
+    },
     "helpers": {
       "DeliveryOrderHelper": {
         "status": {
@@ -1515,6 +1522,8 @@
         "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
+        "added" : "Added",
+        "addedTitle" : "Your information has been added",
         "saved": "Saved",
         "routeError": "Error getting your location and route informations",
         "writeReview": "Write review",
@@ -1579,23 +1588,38 @@
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage": {
-            "openNewRestaurantText": "Create a new restaurant and receive orders from your local customers."
+            "create" : "Create",
+           "subtitle" : {
+            "restaurant" : "Create a new restaurant and receive orders from your local customers.",
+            "business" : "Create an account to expand your business & attract more online customers.",
+            "laundry" : "Create a new laundry and receive orders from your local customers.",
+            "deliveryCompany" : "Create your delivery company profile and start receiving orders from your local customers"
+           }
           },
           "CreateServiceInfoPage": {
-            "name": "Restaurant name",
+            "name": "Name",
             "hintNameText": "Enter your name",
             "uploadImageText": "Upload image",
             "nameError": "Please provide a name",
             "descriptionError": "Please provide a description",
             "location": "Location",
             "locationError": "Please provide a location",
-            "pickLoc": "Pick restaurant’s location",
+            "pickLoc": "Pick location",
             "imageError": "Image is required",
             "description": "Description",
-            "descriptionHintText": "Enter a description for your restaurant",
+            "descriptionHintText": "Enter a description",
             "phoneText": "Phone number",
             "phoneTextDescription": "Enter your phone number",
-            "phoneTextError": "Enter valid phone number"
+            "phoneTextError": "Enter valid phone number",
+            "prLang": "Primary language",
+            "sameLangErrorText": "This language is used, please enter a different language",
+            "prLangErrorText": "Please enter a valid primary language",
+            "scLang": "Secondary language",
+            "scLangErrorText": "Please enter a valid secondary language",
+            "none": "None",
+             "en": "English",
+            "es": "Spanish"
+
           }
         },
         "createText": "Create",
@@ -1607,6 +1631,20 @@
         "ok": "Ok",
         "selectCompany": "Select a company",
         "selectCompanyText": "you need to select a delivery company",
+        "createdTitle" : {
+          "restaurant" : "Your restaurant is under review",
+          "business" : "Your business is under review",
+          "laundry" : "Your laundry is under review",
+          "deliveryCompany" : "Your delivery company is under review"
+
+        },
+        "createdSubtitle" : {
+          "restaurant" : "You can start adding items to your menu and you’ll be notified once your restaurant is approved.",
+          "business" : "You can start adding offerings and you’ll be notified once your business is approved.",
+          "laundry" : "You can start adding pricing and you’ll be notified once your laundry is approved.",
+          "deliveryCompany" : "You can start drivers offerings and you’ll be notified once your delivery company is approved."
+
+        },
         "restTitle": "Your restaurant is under review",
         "restBody": "You can start adding items to your menu and you’ll be notified once your restaurant is approved."
       },
@@ -1698,14 +1736,14 @@
         "prLangErrorText": "Please enter a valid primary language",
         "scLang": "Secondary language",
         "scLangErrorText": "Please enter a valid secondary language",
-        "none": "None",
+        "none": "None", "en": "English",
+        "es": "Spanish",
         "info": "Info",
         "save": "Save",
         "saved": "Saved",
         "error": "Error",
-        "savedSuccess": "Your information has been successfully saved ",
-        "en": "English",
-        "es": "Spanish"
+        "savedSuccess": "Your information has been successfully saved "
+       
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No restaurant found on your operator",

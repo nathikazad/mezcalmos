@@ -114,7 +114,6 @@ class BsServiceViewController {
         final Service _service = await _constructService();
         mezDbgPrint("busniess id : ${_service.details.businessId}");
         await createItem(_service);
-        showSavedSnackBar();
       }
     }
   }
@@ -130,8 +129,9 @@ class BsServiceViewController {
       int? res = await add_one_service(service: service);
 
       if (res != null) {
-        showSavedSnackBar();
+        showAddedSnackBar();
         shouldRefetch = true;
+        await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");

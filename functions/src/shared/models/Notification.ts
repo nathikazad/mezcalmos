@@ -50,7 +50,8 @@ export interface NewMessageNotification extends ForegroundNotification {
   sender: Participant,
   message: string,
   orderId?: string
-  orderType: OrderType
+  orderType: OrderType,
+  isServiceProviderChat: boolean,
 }
 
 export interface NewCallBackgroundNotification {

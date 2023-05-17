@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-
-
-
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["models"]
+    ["Utilities"]["ServiceProviderType"];
 
 extension ParseServiceProviderTypeToString on ServiceProviderType {
 //   String toFirebaseFormatString() {
@@ -10,12 +12,11 @@ extension ParseServiceProviderTypeToString on ServiceProviderType {
 //     return str[0].toLowerCase() + str.substring(1);
 //   }
 
-//   String toNormalString() {
-//     String str = toString().split('.').last;
-//     str = str[0].toUpperCase() + str.substring(1);
-//     str = str.replaceFirst("_", " ");
-//     return str;
-//   }
+  String toNormalString() {
+    String str = toFirebaseFormatString();
+
+    return "${_i18n()["$str"]}";
+  }
 
   IconData toIcon() {
     switch (this) {

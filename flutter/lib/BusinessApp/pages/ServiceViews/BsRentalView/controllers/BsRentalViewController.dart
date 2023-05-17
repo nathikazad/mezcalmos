@@ -156,7 +156,6 @@ class BsRentalViewController {
         final Rental _rental = await _constructRental();
         mezDbgPrint("busniess id : ${_rental.details.businessId}");
         await createItem(_rental);
-        showSavedSnackBar();
       }
     }
   }
@@ -172,8 +171,8 @@ class BsRentalViewController {
       int? res = await add_one_rental(rental: rental);
 
       if (res != null) {
-        showSavedSnackBar();
-        shouldRefetch = true;
+ showAddedSnackBar();        shouldRefetch = true;
+         await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");

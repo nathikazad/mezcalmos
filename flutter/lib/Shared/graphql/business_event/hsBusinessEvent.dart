@@ -407,47 +407,39 @@ Future<int?> add_one_event({
                     image: event.details.image,
                     name: Input$translation_obj_rel_insert_input(
                         data: Input$translation_insert_input(
+                      service_provider_id: event.details.businessId.toInt(),
+                      service_provider_type:
+                          ServiceProviderType.Business.toFirebaseFormatString(),
+                      translations:
+                          Input$translation_value_arr_rel_insert_input(
+                        data: event.details.name.entries
+                            .map((MapEntry<Language, String> e) =>
+                                Input$translation_value_insert_input(
+                                    language_id: e.key.toFirebaseFormatString(),
+                                    value: e.value))
+                            .toList(),
+                      ),
+                    )),
+                    position: event.details.position?.toInt(),
+                    additional_parameters: event.details.additionalParameters,
+                    description: (event.details.description != null)
+                        ? Input$translation_obj_rel_insert_input(
+                            data: Input$translation_insert_input(
                             service_provider_id:
                                 event.details.businessId.toInt(),
                             service_provider_type: ServiceProviderType.Business
                                 .toFirebaseFormatString(),
                             translations:
                                 Input$translation_value_arr_rel_insert_input(
-                                    data: <
-                                        Input$translation_value_insert_input>[
-                                  Input$translation_value_insert_input(
-                                      language_id:
-                                          Language.EN.toFirebaseFormatString(),
-                                      value: event.details.name[Language.EN]),
-                                  Input$translation_value_insert_input(
-                                      language_id:
-                                          Language.ES.toFirebaseFormatString(),
-                                      value: event.details.name[Language.ES])
-                                ]))),
-                    position: event.details.position?.toInt(),
-                    additional_parameters: event.details.additionalParameters,
-                    description: (event.details.description != null)
-                        ? Input$translation_obj_rel_insert_input(
-                            data: Input$translation_insert_input(
-                                service_provider_id:
-                                    event.details.businessId.toInt(),
-                                service_provider_type: ServiceProviderType
-                                    .Business.toFirebaseFormatString(),
-                                translations:
-                                    Input$translation_value_arr_rel_insert_input(
-                                        data: <
-                                            Input$translation_value_insert_input>[
+                              data: event.details.description!.entries
+                                  .map((MapEntry<Language, String> e) =>
                                       Input$translation_value_insert_input(
-                                          language_id: Language.EN
-                                              .toFirebaseFormatString(),
-                                          value: event.details
-                                              .description?[Language.EN]),
-                                      Input$translation_value_insert_input(
-                                          language_id: Language.ES
-                                              .toFirebaseFormatString(),
-                                          value: event.details
-                                              .description?[Language.ES])
-                                    ])))
+                                          language_id:
+                                              e.key.toFirebaseFormatString(),
+                                          value: e.value))
+                                  .toList(),
+                            ),
+                          ))
                         : null,
                   ))))));
   if (response.hasException) {
@@ -488,35 +480,35 @@ Future<int?> add_one_class({
     image: event.details.image,
     name: Input$translation_obj_rel_insert_input(
         data: Input$translation_insert_input(
-            service_provider_id: event.details.businessId.toInt(),
-            service_provider_type:
-                ServiceProviderType.Business.toFirebaseFormatString(),
-            translations: Input$translation_value_arr_rel_insert_input(
-                data: <Input$translation_value_insert_input>[
-                  Input$translation_value_insert_input(
-                      language_id: Language.EN.toFirebaseFormatString(),
-                      value: event.details.name[Language.EN]),
-                  Input$translation_value_insert_input(
-                      language_id: Language.ES.toFirebaseFormatString(),
-                      value: event.details.name[Language.ES])
-                ]))),
+      service_provider_id: event.details.businessId.toInt(),
+      service_provider_type:
+          ServiceProviderType.Business.toFirebaseFormatString(),
+      translations: Input$translation_value_arr_rel_insert_input(
+        data: event.details.name.entries
+            .map((MapEntry<Language, String> e) =>
+                Input$translation_value_insert_input(
+                    language_id: e.key.toFirebaseFormatString(),
+                    value: e.value))
+            .toList(),
+      ),
+    )),
     position: event.details.position?.toInt(),
     additional_parameters: event.details.additionalParameters,
     description: (event.details.description != null)
         ? Input$translation_obj_rel_insert_input(
             data: Input$translation_insert_input(
-                service_provider_id: event.details.businessId.toInt(),
-                service_provider_type:
-                    ServiceProviderType.Business.toFirebaseFormatString(),
-                translations: Input$translation_value_arr_rel_insert_input(
-                    data: <Input$translation_value_insert_input>[
+            service_provider_id: event.details.businessId.toInt(),
+            service_provider_type:
+                ServiceProviderType.Business.toFirebaseFormatString(),
+            translations: Input$translation_value_arr_rel_insert_input(
+              data: event.details.description!.entries
+                  .map((MapEntry<Language, String> e) =>
                       Input$translation_value_insert_input(
-                          language_id: Language.EN.toFirebaseFormatString(),
-                          value: event.details.description?[Language.EN]),
-                      Input$translation_value_insert_input(
-                          language_id: Language.ES.toFirebaseFormatString(),
-                          value: event.details.description?[Language.ES])
-                    ])))
+                          language_id: e.key.toFirebaseFormatString(),
+                          value: e.value))
+                  .toList(),
+            ),
+          ))
         : null,
   )));
   if (response.hasException) {

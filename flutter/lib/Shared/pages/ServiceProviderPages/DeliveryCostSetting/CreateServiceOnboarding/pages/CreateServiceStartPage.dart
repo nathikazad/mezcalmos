@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -28,7 +29,7 @@ class CreateServiceStartPage extends StatelessWidget {
               //  height: 30.h,
               width: 70.w,
               child: Image.asset(
-                "assets/images/restaurantApp/createRestaurant.png",
+                viewController.getCreateImage,
                 fit: BoxFit.cover,
               ),
             ),
@@ -36,7 +37,7 @@ class CreateServiceStartPage extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(top: 15),
             child: Text(
-              '${_i18n()['openNewRestaurantText']}',
+              '${_i18n()['subtitle']["${viewController.serviceType.toFirebaseFormatString()}"]}',
               style: context.txt.bodyLarge,
               textAlign: TextAlign.center,
             ),
@@ -45,7 +46,7 @@ class CreateServiceStartPage extends StatelessWidget {
             height: 25,
           ),
           MezButton(
-              label: "Create service",
+              label: "${_i18n()['create']}",
               onClick: () async {
                 unawaited(viewController.handleNext());
               }),

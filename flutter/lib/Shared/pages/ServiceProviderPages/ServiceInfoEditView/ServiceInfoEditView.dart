@@ -220,14 +220,15 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       smallSepartor,
                       MezStringDropDown(
                           labelText: "${_i18n()['none']}",
-                          value: viewController.languages.value!.secondary
+                          withNoneItem: true,
+                          value: viewController.languages.value?.secondary
                               ?.toFirebaseFormatString(),
                           langPath: _i18n(),
                           validator: (String? v) {
-                            if (v == null || v.isEmpty) {
-                              return "${_i18n()['scLangErrorText']}";
-                            } else if (v.toLanguage() ==
-                                viewController.languages.value!.primary) {
+                            if (v != null &&
+                                v != "none" &&
+                                v.toLanguage() ==
+                                    viewController.languages.value?.primary) {
                               return "${_i18n()['sameLangErrorText']}";
                             }
                             return null;
@@ -236,10 +237,8 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                               .map((Language e) => e.toFirebaseFormatString())
                               .toList(),
                           onChanged: (String? v) {
-                            if (v != null) {
-                              viewController.languages.value!.secondary =
-                                  v.toLanguage();
-                            }
+                            viewController.languages.value?.secondary =
+                                v?.toLanguage() ?? null;
                           }),
                       bigSeperator,
                       bigSeperator,

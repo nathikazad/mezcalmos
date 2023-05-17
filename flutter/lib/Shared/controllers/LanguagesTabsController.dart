@@ -45,6 +45,13 @@ class LanguageTabsController {
   // forms validation methods //
 
   bool validate() {
+    if (hasSecondaryLang)
+      return _validateTwoTabs();
+    else
+      return primaryLangFormKey.currentState?.validate() == true;
+  }
+
+  bool _validateTwoTabs() {
     if (isOnFirstTab) {
       // validate first tab
       firstFormValid = _isFirstFormValid;

@@ -7,6 +7,12 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
+import 'package:mezcalmos/BusinessApp/router.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
+import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -21,6 +27,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -32,6 +39,8 @@ class CreateServiceViewController {
   PageController pageController = PageController(initialPage: 0);
   GlobalKey<FormState> costFormKey = GlobalKey();
   GlobalKey<FormState> infoFromKey = GlobalKey();
+  Rx<ServiceProviderLanguage> languages =
+      Rx(ServiceProviderLanguage(primary: Language.EN));
 
   // text inputs //
   TextEditingController serviceName = TextEditingController();
@@ -77,6 +86,19 @@ class CreateServiceViewController {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else
       return null;
+  }
+
+  String get getCreateImage {
+    switch (serviceType) {
+      case ServiceProviderType.Business:
+        return "assets/images/businessApp/createBusiness.png";
+      case ServiceProviderType.Restaurant:
+        return "assets/images/restaurantApp/createRestaurant.png";
+      case ServiceProviderType.Laundry:
+        return "assets/images/laundryApp/createLaundry.png";
+      default:
+        throw Exception("Unhandled Service Provider Type");
+    }
   }
 
   // methods //
@@ -203,7 +225,6 @@ class CreateServiceViewController {
 
   Future<void> handleInfoPageNext() async {
     if (infoFromKey.currentState?.validate() == true) {
-      await _setImage();
       serviceInput.value.serviceInfo = ServiceInfo(
           location: newLocation.value!,
           hasuraId: Random().nextInt(5),
@@ -290,6 +311,7 @@ class CreateServiceViewController {
     mezDbgPrint(
         "Creating restaurant with this paylod ====>>>\n ${_constructServiceDetails()}");
     try {
+      await _setImage();
       final RestaurantResponse res =
           await CloudFunctions.restaurant3_createRestaurant(
         name: serviceInput.value.serviceInfo!.name,
@@ -312,7 +334,7 @@ class CreateServiceViewController {
           customerPickup: false,
           selfDelivery: serviceInput.value.isSelfDelivery,
         ),
-        language: serviceInput.value.languages!,
+        language: languages.value,
       );
       if (res.success == false) {
         mezDbgPrint(res.error);
@@ -329,8 +351,9 @@ class CreateServiceViewController {
 
   Future<bool> _pushBusinessToDb() async {
     mezDbgPrint(
-        "Creating business ${businessProfile?.toFirebaseFormatString()} with this paylod ====>>>\n ${_constructServiceDetails()}");
+        "Creating business ${languages.value.toFirebaseFormattedJson()} with this paylod ====>>>\n ${_constructServiceDetails()}");
     try {
+      await _setImage();
       cModels.BusinessResponse res =
           await CloudFunctions.business_createBusiness(
         name: serviceInput.value.serviceInfo!.name,
@@ -339,7 +362,7 @@ class CreateServiceViewController {
             lat: serviceInput.value.serviceInfo!.location.latitude,
             lng: serviceInput.value.serviceInfo!.location.longitude,
             address: serviceInput.value.serviceInfo!.location.address),
-        language: serviceInput.value.languages!,
+        language: languages.value,
         profile: businessProfile!,
         schedule: serviceInput.value.schedule!,
       );
@@ -351,6 +374,11 @@ class CreateServiceViewController {
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message?.toString() ?? "Unknown Error");
       throw Exception("Exception in _pushBusinessToDb 🟥🟥🟥 $e,$stk");
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      return false;
+      //  throw Exception("Exception in _pushBusinessToDb 🟥🟥🟥 $e,$stk");
     }
   }
 
@@ -376,6 +404,25 @@ class CreateServiceViewController {
 
   void clearBusinessProfile() {
     _businessProfile.value = null;
+  }
+
+  void confirmCallBack(BuildContext context) {
+    Navigator.of(context).pop();
+    switch (serviceType) {
+      case ServiceProviderType.Business:
+        Get.find<BusinessOpAuthController>().setupBusinessOperator();
+        MezRouter.toNamed(BusinessOpRoutes.kBusniessOpTabsView);
+        break;
+      case ServiceProviderType.Restaurant:
+        Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
+        MezRouter.toNamed(RestaurantAppRoutes.tabsRoute);
+        break;
+      case ServiceProviderType.Laundry:
+        Get.find<LaundryOpAuthController>().setupLaundryOperator();
+        MezRouter.toNamed(LaundryAppRoutes.kLaundryTabsViewRoute);
+        break;
+      default:
+    }
   }
 
   // Future<String> uploadServiceImgToFbStorage({

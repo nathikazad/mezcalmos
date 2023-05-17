@@ -178,45 +178,42 @@ Future<int?> add_one_service({required Service service}) async {
                           image: service.details.image,
                           name: Input$translation_obj_rel_insert_input(
                               data: Input$translation_insert_input(
-                                  service_provider_id:
-                                      service.details.businessId.toInt(),
-                                  service_provider_type: ServiceProviderType
-                                      .Business.toFirebaseFormatString(),
-                                  translations:
-                                      Input$translation_value_arr_rel_insert_input(
-                                          data: <
-                                              Input$translation_value_insert_input>[
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.EN
-                                                .toFirebaseFormatString(),
-                                            value: service
-                                                .details.name[Language.EN]),
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.ES
-                                                .toFirebaseFormatString(),
-                                            value: service
-                                                .details.name[Language.ES])
-                                      ]))),
+                            service_provider_id:
+                                service.details.businessId.toInt(),
+                            service_provider_type: ServiceProviderType.Business
+                                .toFirebaseFormatString(),
+                            translations:
+                                Input$translation_value_arr_rel_insert_input(
+                              data: service.details.name.entries
+                                  .map((MapEntry<Language, String> e) =>
+                                      Input$translation_value_insert_input(
+                                          language_id:
+                                              e.key.toFirebaseFormatString(),
+                                          value: e.value))
+                                  .toList(),
+                            ),
+                          )),
                           position: service.details.position?.toInt(),
                           additional_parameters:
                               service.details.additionalParameters,
                           description: (service.details.description != null)
                               ? Input$translation_obj_rel_insert_input(
                                   data: Input$translation_insert_input(
-                                      service_provider_id: service.details.businessId.toInt(),
-                                      service_provider_type: ServiceProviderType.Business.toFirebaseFormatString(),
-                                      translations: Input$translation_value_arr_rel_insert_input(data: <Input$translation_value_insert_input>[
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.EN
-                                                .toFirebaseFormatString(),
-                                            value: service.details
-                                                .description?[Language.EN]),
-                                        Input$translation_value_insert_input(
-                                            language_id: Language.ES
-                                                .toFirebaseFormatString(),
-                                            value: service.details
-                                                .description?[Language.ES])
-                                      ])))
+                                  service_provider_id:
+                                      service.details.businessId.toInt(),
+                                  service_provider_type: ServiceProviderType
+                                      .Business.toFirebaseFormatString(),
+                                  translations:
+                                      Input$translation_value_arr_rel_insert_input(
+                                    data: service.details.description!.entries
+                                        .map((MapEntry<Language, String> e) =>
+                                            Input$translation_value_insert_input(
+                                                language_id: e.key
+                                                    .toFirebaseFormatString(),
+                                                value: e.value))
+                                        .toList(),
+                                  ),
+                                ))
                               : null))))));
   if (response.hasException) {
     mezDbgPrint(
@@ -245,6 +242,7 @@ Future<int?> update_service_schedule({
         "✅✅✅ Hasura service schedule mutation success => ${response.data}");
     return response.parsedData?.update_business_service?.affected_rows;
   }
+  return null;
 }
 
 Future<List<ServiceCard>> get_business_services(

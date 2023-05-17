@@ -8,10 +8,12 @@ class MezStringDropDown extends StatefulWidget {
   final void Function(String?) onChanged;
   final String? Function(String?)? validator;
   final Map<String, dynamic> langPath;
+  final bool withNoneItem;
 
   const MezStringDropDown({
     required this.labelText,
     required this.langPath,
+    this.withNoneItem = false,
     this.value,
     required this.items,
     required this.onChanged,
@@ -51,17 +53,22 @@ class _MezStringDropDownState extends State<MezStringDropDown> {
         floatingLabelBehavior: FloatingLabelBehavior.never,
         //  border: OutlineInputBorder(),
       ),
-      items: widget.items
+      items: (widget.withNoneItem ? widget.items + ["none"] : widget.items)
           .map((String item) => DropdownMenuItem(
                 value: item,
                 child: Text("${widget.langPath['$item']}"),
               ))
           .toList(),
       onChanged: (String? value) {
-        setState(() {
-          _selectedValue = value;
-        });
-        widget.onChanged(value);
+        if (value == "none") {
+          _selectedValue = null;
+          widget.onChanged(null);
+        } else {
+          setState(() {
+            _selectedValue = value;
+          });
+          widget.onChanged(value);
+        }
       },
       validator: widget.validator,
     );
