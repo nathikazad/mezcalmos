@@ -439,3 +439,21 @@ Future<ServiceProviderLanguage?> get_business_lang(
   }
   return null;
 }
+
+Future<int?> get_businessId_from_item_detailsId(
+    {required int detailsId}) async {
+  final QueryResult<Query$get_business_id_from_details_id> res =
+      await _db.graphQLClient.query$get_business_id_from_details_id(
+          Options$Query$get_business_id_from_details_id(
+              variables: Variables$Query$get_business_id_from_details_id(
+                  businessDetailsId: detailsId)));
+  if (res.hasException) {
+    throw Exception("🛑 Error getting business lang ${res.exception}");
+  } else if (res.parsedData?.business_business != null &&
+      res.parsedData?.business_business.isNotEmpty == true) {
+    List<Query$get_business_id_from_details_id$business_business> data =
+        res.parsedData!.business_business;
+    return data.first.id;
+  }
+  return null;
+}

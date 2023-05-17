@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 enum BusinessServiceType {
@@ -50,6 +51,7 @@ class BsServicesListViewController {
   int _idx = 1;
   late int businessId;
   late BusinessProfile businessProfile;
+  late int businessDetailsId;
   // states variables //
   RxList<RentalCard> homeRentals = RxList.empty();
   RxList<RentalCard> rentals = RxList.empty();
@@ -58,9 +60,13 @@ class BsServicesListViewController {
   RxList<ProductCard> product = RxList.empty();
 
   // methods //
-  Future<void> init({required int id, required BusinessProfile profile}) async {
+  Future<void> init(
+      {required int id,
+      required BusinessProfile profile,
+      required int businessDetailsId}) async {
     businessId = id;
     businessProfile = profile;
+    this.businessDetailsId = businessDetailsId;
 
     _setupBottomSheetValue();
     await fetchAllServices();
@@ -105,7 +111,10 @@ class BsServicesListViewController {
             subtitle: rentalSubtitleLangKey,
             route: () async {
               bool? refetch = await BsOpRentalView.navigate(
-                  id: null, rentalCategory: RentalCategory1.Surf);
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  id: null,
+                  rentalCategory: RentalCategory1.Surf);
               if (refetch == true) unawaited(_fetchRentals());
             },
           ),
@@ -113,8 +122,12 @@ class BsServicesListViewController {
             title: classTitleLangKey,
             subtitle: classSubtitleLangKey,
             route: () async {
-              bool? refetch =
-                  await BsOpEventView.navigate(id: null, isClass: true);
+              bool? refetch = await BsOpEventView.navigate(
+                  id: null,
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  profile: businessProfile,
+                  isClass: true);
               if (refetch == true) unawaited(_fetchEvents());
             },
           ),
@@ -122,8 +135,12 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              bool? refetch =
-                  await BsOpEventView.navigate(id: null, isClass: false);
+              bool? refetch = await BsOpEventView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  profile: businessProfile,
+                  id: null,
+                  isClass: false);
               if (refetch == true) unawaited(_fetchEvents());
             },
           ),
@@ -135,7 +152,10 @@ class BsServicesListViewController {
             subtitle: rentalSubtitleLangKey,
             route: () async {
               final bool? refetch = await BsOpRentalView.navigate(
-                  id: null, rentalCategory: RentalCategory1.Vehicle);
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  id: null,
+                  rentalCategory: RentalCategory1.Vehicle);
               if (refetch == true) unawaited(_fetchRentals());
             },
           ),
@@ -146,7 +166,11 @@ class BsServicesListViewController {
             title: rentalTitleLangKey,
             subtitle: rentalSubtitleLangKey,
             route: () async {
-              bool? refetch = await BsOpHomeRentalView.navigate(id: null);
+              mezDbgPrint("Details id here ========$businessDetailsId");
+              bool? refetch = await BsOpHomeRentalView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  id: null);
               if (refetch == true) unawaited(_fetchHomeRentals());
             },
           ),
@@ -157,8 +181,12 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              bool? refetch =
-                  await BsOpEventView.navigate(id: null, isClass: false);
+              bool? refetch = await BsOpEventView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  profile: businessProfile,
+                  id: null,
+                  isClass: false);
               if (refetch == true) unawaited(_fetchEvents());
             },
           ),
@@ -169,8 +197,12 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              bool? refetch =
-                  await BsOpEventView.navigate(id: null, isClass: false);
+              bool? refetch = await BsOpEventView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  profile: businessProfile,
+                  id: null,
+                  isClass: false);
               if (refetch == true) unawaited(_fetchEvents());
             },
           ),
@@ -181,8 +213,12 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              bool? refetch =
-                  await BsOpEventView.navigate(id: null, isClass: false);
+              bool? refetch = await BsOpEventView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  profile: businessProfile,
+                  id: null,
+                  isClass: false);
               if (refetch == true) unawaited(_fetchEvents());
             },
           ),
@@ -193,8 +229,12 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              bool? refetch =
-                  await BsOpEventView.navigate(id: null, isClass: false);
+              bool? refetch = await BsOpEventView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  profile: businessProfile,
+                  id: null,
+                  isClass: false);
               if (refetch == true) unawaited(_fetchEvents());
             },
           ),
@@ -202,8 +242,12 @@ class BsServicesListViewController {
             title: classTitleLangKey,
             subtitle: classSubtitleLangKey,
             route: () async {
-              bool? refetch =
-                  await BsOpEventView.navigate(id: null, isClass: true);
+              bool? refetch = await BsOpEventView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  profile: businessProfile,
+                  id: null,
+                  isClass: true);
               if (refetch == true) unawaited(_fetchEvents());
             },
           ),
@@ -214,8 +258,12 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              bool? refetch =
-                  await BsOpEventView.navigate(id: null, isClass: false);
+              bool? refetch = await BsOpEventView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  profile: businessProfile,
+                  id: null,
+                  isClass: false);
               if (refetch == true) unawaited(_fetchEvents());
             },
           ),
@@ -223,8 +271,12 @@ class BsServicesListViewController {
             title: classTitleLangKey,
             subtitle: classSubtitleLangKey,
             route: () async {
-              bool? refetch =
-                  await BsOpEventView.navigate(id: null, isClass: true);
+              bool? refetch = await BsOpEventView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  profile: businessProfile,
+                  id: null,
+                  isClass: true);
               if (refetch == true) unawaited(_fetchEvents());
             },
           ),
@@ -235,7 +287,10 @@ class BsServicesListViewController {
             title: productTitleLangKey,
             subtitle: productSubTitleLangKey,
             route: () async {
-              bool? refetch = await BsOpProductView.navigate(id: null);
+              bool? refetch = await BsOpProductView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  id: null);
               if (refetch == true) unawaited(_fetchProducts());
             },
           ),
@@ -246,7 +301,10 @@ class BsServicesListViewController {
             title: serviceTitleLangKey,
             subtitle: serviceSubtitleLangKey,
             route: () async {
-              bool? refetch = await BsOpServiceView.navigate(id: null);
+              bool? refetch = await BsOpServiceView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  serviceId: null);
               if (refetch == true) unawaited(_fetchServices());
             },
           ),
@@ -258,7 +316,9 @@ class BsServicesListViewController {
             subtitle: serviceSubtitleLangKey,
             route: () async {
               bool? refetch = await BsOpServiceView.navigate(
-                id: null,
+                businessDetailsId: businessDetailsId,
+                businessId: businessId,
+                serviceId: null,
               );
               if (refetch == true) unawaited(_fetchServices());
             },
@@ -270,8 +330,12 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              bool? refetch =
-                  await BsOpEventView.navigate(id: null, isClass: false);
+              bool? refetch = await BsOpEventView.navigate(
+                  businessDetailsId: businessDetailsId,
+                  businessId: businessId,
+                  profile: businessProfile,
+                  id: null,
+                  isClass: false);
               if (refetch == true) unawaited(_fetchEvents());
             },
           ),

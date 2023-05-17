@@ -79,6 +79,7 @@ class AdminBsServiceCard extends StatelessWidget {
                         ontap: () {
                           BsOpServicesListView.navigate(
                               id: business.id.toInt(),
+                              detailsId: business.details.id.toInt(),
                               profile: business.profile);
                         }),
                     _smallBtn(

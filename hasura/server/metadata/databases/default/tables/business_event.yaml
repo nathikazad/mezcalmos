@@ -25,6 +25,26 @@ insert_permissions:
         - schedule_type
         - ends_at
         - starts_at
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - gps_location
+        - business_id
+        - details_id
+        - id
+        - schedule
+        - address
+        - ends_at
+        - starts_at
+        - schedule_type
 select_permissions:
   - role: business_operator
     permission:
@@ -57,6 +77,26 @@ select_permissions:
         - starts_at
       filter: {}
       allow_aggregations: true
+  - role: mez_admin
+    permission:
+      columns:
+        - gps_location
+        - business_id
+        - details_id
+        - id
+        - schedule
+        - address
+        - ends_at
+        - starts_at
+        - schedule_type
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
 update_permissions:
   - role: business_operator
     permission:
@@ -75,5 +115,30 @@ update_permissions:
       check:
         business:
           operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - address
+        - gps_location
+        - schedule
+        - schedule_type
+        - ends_at
+        - starts_at
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
             user_id:
               _eq: X-Hasura-User-Id

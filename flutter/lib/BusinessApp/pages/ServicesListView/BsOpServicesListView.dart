@@ -30,16 +30,19 @@ dynamic _i18n() =>
 
 class BsOpServicesListView extends StatefulWidget {
   final int? businessId;
+  final int? businessDetailsId;
   final BusinessProfile? businessProfile;
-  const BsOpServicesListView({Key? key, this.businessId, this.businessProfile})
+  const BsOpServicesListView(
+      {Key? key, this.businessId, this.businessProfile, this.businessDetailsId})
       : super(key: key);
   static Future<void> navigate(
-      {required int id, required BusinessProfile profile}) async {
+      {required int id,
+      required BusinessProfile profile,
+      required int detailsId}) async {
     String route =
         BusinessOpRoutes.kBusniessOpServiceList.replaceFirst(":id", "$id");
-    return MezRouter.toPath(route, arguments: {
-      "profile": profile,
-    });
+    return MezRouter.toPath(route,
+        arguments: {"profile": profile, "detailsId": detailsId});
   }
 
   @override
@@ -50,16 +53,21 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   BsServicesListViewController viewController = BsServicesListViewController();
   BusinessProfile? _businessProfile;
   int? _id;
+  int? _detailsId;
   @override
   void initState() {
+    _detailsId = widget.businessDetailsId ??
+        MezRouter.bodyArguments?["detailsId"] as int?;
+
     _businessProfile = widget.businessProfile ??
         MezRouter.bodyArguments?["profile"] as BusinessProfile?;
     _id =
         widget.businessId ?? int.parse(MezRouter.urlArguments["id"].toString());
-    if (_businessProfile != null && _id != null) {
-      viewController.init(profile: _businessProfile!, id: _id!);
+    if (_businessProfile != null && _id != null && _detailsId != null) {
+      viewController.init(
+          profile: _businessProfile!, id: _id!, businessDetailsId: _detailsId!);
     } else {
-      showErrorSnackBar(errorText: " missing business profile or id");
+      throw Exception("Missing arguments");
     }
     super.initState();
   }
@@ -135,6 +143,9 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         (int index) => MezCard(
                             onClick: () {
                               BsOpHomeRentalView.navigate(
+                                  businessId: viewController.businessId,
+                                  businessDetailsId:
+                                      viewController.businessDetailsId,
                                   id: viewController
                                       .homeRentals[index].details.id
                                       .toInt());
@@ -166,6 +177,9 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         (int index) => MezCard(
                             onClick: () {
                               BsOpRentalView.navigate(
+                                businessId: viewController.businessId,
+                                businessDetailsId:
+                                    viewController.businessDetailsId,
                                 id: viewController.rentals[index].details.id
                                     .toInt(),
                                 rentalCategory:
@@ -199,6 +213,10 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         (int index) => MezCard(
                             onClick: () {
                               BsOpEventView.navigate(
+                                businessId: viewController.businessId,
+                                profile: viewController.businessProfile,
+                                businessDetailsId:
+                                    viewController.businessDetailsId,
                                 id: viewController.events[index].details.id
                                     .toInt(),
                                 isClass: viewController.events[index].isClass,
@@ -230,7 +248,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         (int index) => MezCard(
                             onClick: () {
                               BsOpServiceView.navigate(
-                                  id: viewController.services[index].details.id
+                                  businessId: viewController.businessId,
+                                  businessDetailsId:
+                                      viewController.businessDetailsId,
+                                  serviceId: viewController
+                                      .services[index].details.id
                                       .toInt());
                             },
                             firstAvatarBgImage: NetworkImage(
@@ -260,6 +282,9 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         (int index) => MezCard(
                             onClick: () {
                               BsOpProductView.navigate(
+                                  businessId: viewController.businessId,
+                                  businessDetailsId:
+                                      viewController.businessDetailsId,
                                   id: viewController.product[index].details.id
                                       .toInt());
                             },

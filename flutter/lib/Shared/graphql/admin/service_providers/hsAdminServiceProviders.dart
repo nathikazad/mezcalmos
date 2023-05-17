@@ -112,7 +112,7 @@ Future<List<cm.Business>> admin_get_businesses(
         id: data.id,
         profile: data.profile.toBusinessProfile(),
         details: cm.ServiceProvider(
-          id: data.id,
+          id: data.details.id,
           name: data.details.name,
           image: data.details.image,
           location: cm.Location(

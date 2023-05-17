@@ -22,7 +22,9 @@ class BsOpRentalView extends StatefulWidget {
   const BsOpRentalView({Key? key}) : super(key: key);
   static Future<bool?> navigate({
     required int? id,
+    required int businessId,
     required RentalCategory1 rentalCategory,
+    required int businessDetailsId,
   }) async {
     String route = BusinessOpRoutes.kBsOpRental;
     route = route.replaceFirst(":id", id?.toString() ?? "add");
@@ -30,6 +32,8 @@ class BsOpRentalView extends StatefulWidget {
       route,
       arguments: {
         "rentalCategory": rentalCategory,
+        "businessDetailsId": businessDetailsId,
+        "businessId": businessId
       },
     );
     return MezRouter.backResult;
@@ -46,11 +50,20 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
   @override
   void initState() {
     rentalCategory =
-        MezRouter.bodyArguments!["rentalCategory"] as RentalCategory1;
+        MezRouter.bodyArguments?["rentalCategory"] as RentalCategory1;
+    final int? detailsId = int.tryParse(
+        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
+    final int? businessId =
+        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    if (detailsId == null || businessId == null) {
+      throw Exception("detailsId is null");
+    }
     viewController.init(
-      category1: rentalCategory,
-      thickerProvider: this,
-    );
+        businessId: businessId,
+        category1: rentalCategory,
+        thickerProvider: this,
+        detailsId: detailsId);
+
     int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
       viewController.initEditMode(id: id);

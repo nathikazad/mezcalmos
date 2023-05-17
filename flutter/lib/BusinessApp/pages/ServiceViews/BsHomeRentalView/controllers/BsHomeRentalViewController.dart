@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
@@ -13,8 +14,7 @@ typedef OfferingPricesMap = Map<TimeUnit, TextEditingController>;
 
 class BsHomeRentalViewController {
   // instances //
-  BusinessOpAuthController _opAuthController =
-      Get.find<BusinessOpAuthController>();
+
   LanguageTabsController languageTabsController = LanguageTabsController();
 
   bool firstFormValid = false;
@@ -54,10 +54,14 @@ class BsHomeRentalViewController {
       return languageTabsController.tabController != null;
   }
 
-  Future<void> init({required TickerProvider thickerProvider}) async {
+  Future<void> init(
+      {required TickerProvider thickerProvider,
+      required int detailsId,
+      required int businessId}) async {
     await languageTabsController.init(
-        vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
-    detailsController.setLanguage(language: languages!);
+        vsync: thickerProvider, detailsId: detailsId);
+    detailsController.initDetails(
+        businessId: businessId, language: languages!, detailsId: detailsId);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
 
@@ -67,8 +71,7 @@ class BsHomeRentalViewController {
         "rental id : $id home type ============>>> ${rental!.homeType}");
     if (rental != null) {
       detailsController.clearPrices();
-      await detailsController.initEditMode(
-          detalsId: rental!.details.id.toInt());
+      await detailsController.initEditMode();
       bedroomsController.text = rental!.bedrooms.toString();
       bathroomsController.text = rental!.bathrooms.toString();
       homeLocation.value = rental!.gpsLocation;
@@ -138,8 +141,9 @@ class BsHomeRentalViewController {
       int? res = await add_one_home_rental(rental: rental);
 
       if (res != null) {
- showAddedSnackBar();        shouldRefetch = true;
-         await initEditMode(id: res);
+        showAddedSnackBar();
+        shouldRefetch = true;
+        await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");

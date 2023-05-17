@@ -49,7 +49,11 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
   Widget _getBody() {
     switch (currentView.value) {
       case BusinessOpTabView.Services:
-        return BsOpServicesListView();
+        return BsOpServicesListView(
+          businessId: opAuthController.companyId,
+          businessDetailsId: opAuthController.businessDetailsId,
+          businessProfile: opAuthController.businessProfile,
+        );
       case BusinessOpTabView.Profile:
         return ServiceProfileView(
           serviceId: opAuthController.companyId,

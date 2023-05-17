@@ -41,36 +41,6 @@ class BusinessOpRoutes {
           name: kBusniessOpTabsView,
           builder: () => BsOpTabsView(),
         ),
-        QRoute(
-          path: kBsOpSchedulePick,
-          name: kBsOpSchedulePick,
-          builder: () => BsOpSchedulePickerView(),
-        ),
-        QRoute(
-          path: kBsOpHomeRental,
-          name: kBsOpHomeRental,
-          builder: () => BsOpHomeRentalView(),
-        ),
-        QRoute(
-          path: kBsOpRental,
-          name: kBsOpRental,
-          builder: () => BsOpRentalView(),
-        ),
-        QRoute(
-          path: kBsOpEvent,
-          name: kBsOpEvent,
-          builder: () => BsOpEventView(),
-        ),
-        QRoute(
-          path: kBsOpService,
-          name: kBsOpService,
-          builder: () => BsOpServiceView(),
-        ),
-        QRoute(
-          path: kBsOpProduct,
-          name: kBsOpProduct,
-          builder: () => BsOpProductView(),
-        ),
       ] +
       sharedWitAdminRoutes +
       SharedRoutes.qRoutes +
@@ -81,6 +51,36 @@ class BusinessOpRoutes {
       path: kBusniessOpServiceList,
       name: kBusniessOpServiceList,
       builder: () => BsOpServicesListView(),
+    ),
+    QRoute(
+      path: kBsOpSchedulePick,
+      name: kBsOpSchedulePick,
+      builder: () => BsOpSchedulePickerView(),
+    ),
+    QRoute(
+      path: kBsOpHomeRental,
+      name: kBsOpHomeRental,
+      builder: () => BsOpHomeRentalView(),
+    ),
+    QRoute(
+      path: kBsOpRental,
+      name: kBsOpRental,
+      builder: () => BsOpRentalView(),
+    ),
+    QRoute(
+      path: kBsOpEvent,
+      name: kBsOpEvent,
+      builder: () => BsOpEventView(),
+    ),
+    QRoute(
+      path: kBsOpService,
+      name: kBsOpService,
+      builder: () => BsOpServiceView(),
+    ),
+    QRoute(
+      path: kBsOpProduct,
+      name: kBsOpProduct,
+      builder: () => BsOpProductView(),
     ),
   ];
 }

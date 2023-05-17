@@ -8,6 +8,7 @@ import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -21,10 +22,16 @@ dynamic _i18n() =>
 
 class BsOpHomeRentalView extends StatefulWidget {
   const BsOpHomeRentalView({Key? key}) : super(key: key);
-  static Future<bool?> navigate({required int? id}) async {
+  static Future<bool?> navigate(
+      {required int? id,
+      required int businessDetailsId,
+      required int businessId}) async {
     String route = BusinessOpRoutes.kBsOpHomeRental;
     route = route.replaceFirst(":id", id?.toString() ?? "add");
-    await MezRouter.toPath(route);
+    await MezRouter.toPath(route, arguments: {
+      "businessDetailsId": businessDetailsId,
+      "businessId": businessId
+    });
     return MezRouter.backResult;
   }
 
@@ -37,7 +44,17 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
   BsHomeRentalViewController viewController = BsHomeRentalViewController();
   @override
   void initState() {
-    viewController.init(thickerProvider: this);
+    final int? detailsId = int.tryParse(
+        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
+    final int? businessId =
+        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+
+    if (detailsId == null || businessId == null) {
+      throw Exception("detailsId is null");
+    }
+    mezDbgPrint("detailsId: $detailsId");
+    viewController.init(
+        thickerProvider: this, detailsId: detailsId, businessId: businessId);
     int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
       viewController.initEditMode(id: id);

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
@@ -25,7 +24,8 @@ class BusinessItemDetailsController {
   TextEditingController scDescriptionController = TextEditingController();
   // state variables //
   RxList<String?> imagesUrls = RxList.filled(5, null);
-
+  late int businessId;
+  late int detailsId;
   RxMap<TimeUnit, TextEditingController> priceTimeUnitMap =
       RxMap<TimeUnit, TextEditingController>();
   RxList<File?> images = RxList.filled(5, null);
@@ -37,15 +37,22 @@ class BusinessItemDetailsController {
 
   BusinessItemDetails? get details => _details.value;
   // methods //
-  void setLanguage({required ServiceProviderLanguage language}) {
+  void initDetails({
+    required ServiceProviderLanguage language,
+    required int detailsId,
+    required int businessId,
+  }) {
     languages.value = language;
+    this.detailsId = detailsId;
+
+    businessId = businessId;
   }
 
-  Future<void> initEditMode({required int detalsId}) async {
-    mezDbgPrint(" 🟢  initEditMode : $detalsId");
+  Future<void> initEditMode() async {
+    mezDbgPrint(" 🟢  initEditMode : $detailsId");
+
     _details.value = await get_business_item_details_by_id(
-        detailsId: detalsId,
-        businessId: Get.find<BusinessOpAuthController>().companyId!);
+        detailsId: detailsId, businessId: businessId);
 
     if (details != null) {
       nameController.text = details!.name[languages.value!.primary] ?? "";
@@ -79,7 +86,7 @@ class BusinessItemDetailsController {
         name: constructName(),
         description: constructDesc(),
         image: images,
-        businessId: Get.find<BusinessOpAuthController>().companyId!,
+        businessId: businessId,
         available: isAvailable.value,
         cost: priceTimeUnitMap.value.map(
             (TimeUnit key, TextEditingController value) =>
@@ -109,7 +116,7 @@ class BusinessItemDetailsController {
         _imagesUrls[i] = await uploadImgToFbStorage(
             imageFile: imPicker.XFile(images[i]!.path),
             storageFolder:
-                "businesses/${Get.find<BusinessOpAuthController>().companyId}/items/${DateTime.now().millisecondsSinceEpoch}");
+                "businesses/$businessId/items/${DateTime.now().millisecondsSinceEpoch}");
       }
     }
     List<String> data = _imagesUrls
