@@ -83,17 +83,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                           : CustBusinessRentalCost(
                               cost: viewController.service!.details.cost,
                             ),
-                      SizedBox(height: 15),
-                      Text(
-                        _i18n()['description'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        viewController.service!.details.description
-                                ?.getTranslation(userLanguage) ??
-                            _i18n()['noDescription'],
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                      _description(context),
                       SizedBox(height: 15),
                       CustBusinessMessageCard(
                         margin: EdgeInsets.zero,
@@ -112,6 +102,27 @@ class _CustServiceViewState extends State<CustServiceView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          _i18n()['description'],
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          viewController.service!.details.description
+                  ?.getTranslation(userLanguage) ??
+              _i18n()['noDescription'],
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }

@@ -110,48 +110,21 @@ class _CustEventViewState extends State<CustEventView> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        _i18n()['description'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        viewController.event!.details.description
-                                ?.getTranslation(userLanguage) ??
-                            _i18n()['noDescription'],
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
 
-                      // todo @ChiragKr04 complete the view with the needed data
+                      _description(context),
+                      if (viewController.event?.schedule != null) _schedule(),
 
-                      CustBusinessScheduleBuilder(
-                        schedule: viewController.event!.schedule,
-                        scheduleType: viewController.event!.scheduleType,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      viewController.event!.gpsLocation == null
-                          ? const SizedBox.shrink()
-                          : ServiceLocationCard(
-                              height: 20.h,
-                              location: MezLocation(
-                                viewController.event!.gpsLocation?.address ??
-                                    "",
-                                MezLocation.buildLocationData(
-                                  viewController.event!.gpsLocation!.lat
-                                      .toDouble(),
-                                  viewController.event!.gpsLocation!.lng
-                                      .toDouble(),
-                                ),
-                              ),
+                      if (viewController.event?.gpsLocation != null)
+                        ServiceLocationCard(
+                          height: 20.h,
+                          location: MezLocation(
+                            viewController.event!.gpsLocation?.address ?? "",
+                            MezLocation.buildLocationData(
+                              viewController.event!.gpsLocation!.lat.toDouble(),
+                              viewController.event!.gpsLocation!.lng.toDouble(),
                             ),
+                          ),
+                        ),
 
                       CustBusinessMessageCard(
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
@@ -172,6 +145,41 @@ class _CustEventViewState extends State<CustEventView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Column _schedule() {
+    return Column(
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        CustBusinessScheduleBuilder(
+          schedule: viewController.event!.schedule,
+          scheduleType: viewController.event!.scheduleType,
+        )
+      ],
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          _i18n()['description'],
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          viewController.event!.details.description
+                  ?.getTranslation(userLanguage) ??
+              _i18n()['noDescription'],
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }

@@ -99,7 +99,7 @@ class _CustBusinessScheduleBuilderState
                   : SizedBox.shrink();
             },
           ),
-        if (ScheduleType.OneTime != widget.scheduleType)
+        if (widget.scheduleType != ScheduleType.OneTime)
           for (int index = 0;
               index < widget.schedule!.openHours.length;
               index++)
@@ -116,48 +116,43 @@ class _CustBusinessScheduleBuilderState
                 final String toHour = data.to[0].toString();
                 final String toMinute = data.to[1].toString();
                 return isOpen
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            !widget.showIcons
-                                ? Text(
-                                    "$day${(widget.scheduleType == ScheduleType.Scheduled ? "s" : "")}",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  )
-                                : SizedBox(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 3),
-                                          child: Icon(
-                                            Icons.access_time_outlined,
-                                            size: 20,
-                                          ),
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          !widget.showIcons
+                              ? Text(
+                                  "$day${(widget.scheduleType == ScheduleType.Scheduled ? "s" : "")}",
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                )
+                              : SizedBox(
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 3),
+                                        child: Icon(
+                                          Icons.access_time_outlined,
+                                          size: 20,
                                         ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 5.0),
-                                          child: Text(
-                                            day,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600),
-                                          ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 5.0),
+                                        child: Text(
+                                          '$day${(widget.scheduleType == ScheduleType.Scheduled ? 's' : '')}',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                            Text(
-                              "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
-                            ),
-                          ],
-                        ),
+                                ),
+                          Text(
+                            "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
+                          ),
+                        ],
                       )
                     : SizedBox.shrink();
               },

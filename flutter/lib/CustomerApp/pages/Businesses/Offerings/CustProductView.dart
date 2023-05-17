@@ -72,19 +72,7 @@ class _CustProductViewState extends State<CustProductView> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(
-                        height: 12.5,
-                      ),
-                      Text(
-                        _i18n()['description'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        viewController.product!.details.description
-                                ?.getTranslation(userLanguage) ??
-                            _i18n()['noDescription'],
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                      _description(context),
                       SizedBox(
                         height: 12.5,
                       ),
@@ -104,6 +92,27 @@ class _CustProductViewState extends State<CustProductView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          _i18n()['description'],
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          viewController.product!.details.description
+                  ?.getTranslation(userLanguage) ??
+              _i18n()['noDescription'],
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }

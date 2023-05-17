@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/controllers/CustClassesListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -314,9 +315,12 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                   Column(
                     children: [
                       Divider(),
-                      if (viewController.classes[index].schedule != null)
-                        MezServiceOpenHours(
-                            schedule: viewController.classes[index].schedule!),
+                      CustBusinessScheduleBuilder(
+                          showTitle: false,
+                          showIcons: false,
+                          schedule: viewController.classes[index].schedule,
+                          scheduleType:
+                              viewController.classes[index].scheduleType)
                     ],
                   ),
                 Divider(),

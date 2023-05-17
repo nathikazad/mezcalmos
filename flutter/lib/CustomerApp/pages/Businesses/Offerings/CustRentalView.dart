@@ -82,19 +82,7 @@ class _CustRentalViewState extends State<CustRentalView> {
                       CustBusinessRentalCost(
                         cost: viewController.rental!.details.cost,
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        _i18n()['description'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        viewController.rental!.details.description
-                                ?.getTranslation(userLanguage) ??
-                            _i18n()['noDescription'],
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                      _description(context),
                       viewController.rental!.gpsLocation == null
                           ? const SizedBox.shrink()
                           : ServiceLocationCard(
@@ -137,6 +125,27 @@ class _CustRentalViewState extends State<CustRentalView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          _i18n()['description'],
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          viewController.rental!.details.description
+                  ?.getTranslation(userLanguage) ??
+              _i18n()['noDescription'],
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }

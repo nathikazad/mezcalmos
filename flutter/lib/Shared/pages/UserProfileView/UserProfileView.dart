@@ -88,7 +88,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                     viewController: viewController,
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 15,
                   ),
                   if (!viewController.isEditingInfo)
                     Text(

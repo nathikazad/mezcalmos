@@ -82,22 +82,11 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       CustBusinessRentalCost(
                         cost: viewController.homeRental!.details.cost,
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        _i18n()['description'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        viewController.homeRental!.details.description
-                                ?.getTranslation(userLanguage) ??
-                            _i18n()['noDescription'],
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      viewController.homeRental!.gpsLocation == null
-                          ? const SizedBox.shrink()
-                          : ServiceLocationCard(
+                       _description(context),
+                      
+                      if (viewController.homeRental?.gpsLocation != null)
+                         
+                           ServiceLocationCard(
                               height: 20.h,
                               location: MezLocation(
                                 viewController
@@ -133,6 +122,27 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          _i18n()['description'],
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          viewController.homeRental!.details.description
+                  ?.getTranslation(userLanguage) ??
+              _i18n()['noDescription'],
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }
