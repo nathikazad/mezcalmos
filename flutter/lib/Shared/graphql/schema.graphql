@@ -5376,6 +5376,9 @@ type chat {
     """JSON select path"""
     path: String
   ): jsonb!
+
+  """An object relationship"""
+  service_provider_customer_chat: service_provider_customer_chat
 }
 
 """
@@ -5431,6 +5434,7 @@ input chat_bool_exp {
   last_message: jsonb_comparison_exp
   last_message_sent: timestamptz_comparison_exp
   messages: jsonb_comparison_exp
+  service_provider_customer_chat: service_provider_customer_chat_bool_exp
 }
 
 """
@@ -5492,6 +5496,7 @@ input chat_insert_input {
   last_message: jsonb
   last_message_sent: timestamptz
   messages: jsonb
+  service_provider_customer_chat: service_provider_customer_chat_obj_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -5552,6 +5557,7 @@ input chat_order_by {
   last_message: order_by
   last_message_sent: order_by
   messages: order_by
+  service_provider_customer_chat: service_provider_customer_chat_order_by
 }
 
 """
@@ -34405,6 +34411,16 @@ type service_provider_customer_chat_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [service_provider_customer_chat!]!
+}
+
+"""
+input type for inserting object relation for remote table "service_provider_customer_chat"
+"""
+input service_provider_customer_chat_obj_rel_insert_input {
+  data: service_provider_customer_chat_insert_input!
+
+  """upsert condition"""
+  on_conflict: service_provider_customer_chat_on_conflict
 }
 
 """

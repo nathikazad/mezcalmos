@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/service_providers/__generated/service_providers.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -86,6 +87,55 @@ Future<List<DeliveryCompany>> admin_get_dv_companies(
       .toList();
   returnedList.sort((DeliveryCompany a, DeliveryCompany b) =>
       a.info.hasuraId.compareTo(b.info.hasuraId));
+  return returnedList;
+}
+
+Future<List<cm.Business>> admin_get_businesses(
+    {required int limit, bool withCache = true}) async {
+  final QueryResult<Query$admin_get_businesses> result = await _hasuraDb
+      .graphQLClient
+      .query$admin_get_businesses(Options$Query$admin_get_businesses(
+          variables: Variables$Query$admin_get_businesses(limit: limit),
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
+  if (result.parsedData?.business_business == null) {
+    throwError(result.exception);
+  }
+  List<Query$admin_get_businesses$business_business> data =
+      result.parsedData!.business_business;
+  mezDbgPrint("Getting businesses ============>>>👋 ===>${result.data}");
+  final List<cm.Business> returnedList =
+      data.map((Query$admin_get_businesses$business_business data) {
+    mezDbgPrint(" ============>>>👋 ===>${data.profile}");
+
+    return cm.Business(
+        id: data.id,
+        profile: data.profile.toBusinessProfile(),
+        details: cm.ServiceProvider(
+          id: data.id,
+          name: data.details.name,
+          image: data.details.image,
+          location: cm.Location(
+            address: data.details.location.address,
+            lat: data.details.location.gps.latitude,
+            lng: data.details.location.gps.longitude,
+          ),
+          deliveryDetails: cm.DeliveryDetails(
+              deliveryAvailable: false,
+              customerPickup: false,
+              selfDelivery: false),
+          serviceProviderDetailsId: data.details.id,
+          serviceProviderType: cm.ServiceProviderType.Business,
+          // location: MezLocation.fromHasura(data.details!.location.gps,
+          //     data.details!.location.address),
+          openStatus: data.details.open_status.toOpenStatus(),
+          approved: data.details.approved,
+          creationTime: data.details.creation_time,
+          language: convertToLanguages(data.details.language),
+        ));
+  }).toList();
+  returnedList.sort(
+      (cm.Business a, cm.Business b) => a.details.id.compareTo(b.details.id));
   return returnedList;
 }
 

@@ -6,6 +6,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHome
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -13,6 +14,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class BusinessOpRoutes {
   static const String kBusniessOpTabsView = '/tabsView';
+  static const String kBusniessOpServiceList = '/services/:id';
   static const String kBsOpHomeRental = '/homeRental/:id';
   static const String kBsOpRental = '/rental/:id';
   static const String kBsOpEvent = '/event/:id';
@@ -69,26 +71,16 @@ class BusinessOpRoutes {
           name: kBsOpProduct,
           builder: () => BsOpProductView(),
         ),
-        // QRoute(
-        //   path: kDeliveryOpPastOrdersRoute,
-        //   name: kDeliveryOpPastOrdersRoute,
-        //   builder: () => DvOpPastOrdersView(),
-        // ),
-        // QRoute(
-        //   path: kNotAuthorizedOperatorRoute,
-        //   name: kNotAuthorizedOperatorRoute,
-        //   builder: () => DvOpUnauthView(),
-        // ),
       ] +
       sharedWitAdminRoutes +
       SharedRoutes.qRoutes +
       SharedServiceProviderRoutes.routes +
       NativeOnlyRoutes.routes;
   static final List<QRoute> sharedWitAdminRoutes = [
-    // QRoute(
-    //   path: kOrderViewRoute,
-    //   name: kOrderViewRoute,
-    //   builder: () => DvCompanyOrderView(),
-    // ),
+    QRoute(
+      path: kBusniessOpServiceList,
+      name: kBusniessOpServiceList,
+      builder: () => BsOpServicesListView(),
+    ),
   ];
 }

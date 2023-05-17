@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/admin/service_providers/hsAdminServiceProviders.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
@@ -19,7 +18,7 @@ class AdminServicesViewController {
   Rxn<List<Restaurant>> _restaurants = Rxn();
   Rxn<List<Laundry>> _laundries = Rxn();
   Rxn<List<DeliveryCompany>> _dvCompanies = Rxn();
-  Rxn<List<Business>> _businesses = Rxn();
+  Rxn<List<cModels.Business>> _businesses = Rxn();
   RxBool isFetching = RxBool(false);
   RxInt restLimit = RxInt(10);
   RxInt dvLimit = RxInt(5);
@@ -32,32 +31,44 @@ class AdminServicesViewController {
   List<Restaurant>? get restaurants => _restaurants.value;
   List<DeliveryCompany>? get companies => _dvCompanies.value;
   List<Laundry>? get laundries => _laundries.value;
-  List<Business>? get businesses => _businesses.value;
+  List<cModels.Business>? get businesses => _businesses.value;
 
   Future<void> init(
       {required AdminTabsViewController adminTabsViewController}) async {
     this.adminTabsViewController = adminTabsViewController;
-    await fetchRestaurants();
-    await fetchLaundries();
-    await fetchCompanies();
+    // await fetchRestaurants();
+    // await fetchLaundries();
+    // await fetchCompanies();
+    await Future.wait([
+      fetchRestaurants(),
+      fetchLaundries(),
+      fetchCompanies(),
+      fetchBusiness()
+    ]);
   }
 
   Future<void> fetchCompanies() async {
+    isFetching.value = true;
     _dvCompanies.value?.clear();
     _dvCompanies.value =
         await admin_get_dv_companies(withCache: false, limit: dvLimit.value);
+    isFetching.value = false;
   }
 
   Future<void> fetchBusiness() async {
+    isFetching.value = true;
     _businesses.value?.clear();
-    _dvCompanies.value =
-        await admin_get_dv_companies(withCache: false, limit: dvLimit.value);
+    _businesses.value =
+        await admin_get_businesses(withCache: false, limit: bsLimit.value);
+    isFetching.value = false;
   }
 
   Future<void> fetchLaundries() async {
+    isFetching.value = true;
     _laundries.value?.clear();
     _laundries.value =
         await admin_get_laundries(withCache: false, limit: laundryLimit.value);
+    isFetching.value = false;
   }
 
   Future<void> fetchRestaurants() async {
@@ -93,22 +104,28 @@ class AdminServicesViewController {
         dvLimit.value += increaseLimit ?? 0;
         unawaited(fetchCompanies());
         break;
+      case cModels.ServiceProviderType.Business:
+        dvLimit.value += increaseLimit ?? 0;
+        unawaited(fetchBusiness());
+        break;
       default:
     }
   }
 
-  // List<Service>? get getCurrentService {
-  //   switch (currentService) {
-  //     case cModels.ServiceProviderType.Laundry:
-  //       return _laundries.value;
-  //     case cModels.ServiceProviderType.Restaurant:
-  //       return _restaurants.value;
-  //     case cModels.ServiceProviderType.DeliveryCompany:
-  //       return _dvCompanies.value;
-  //     case cModels.ServiceProviderType.Customer:
-  //       return null;
-  //   }
-  // }
+  int get currentServiceLength {
+    switch (currentService) {
+      case cModels.ServiceProviderType.Laundry:
+        return _laundries.value?.length ?? 0;
+      case cModels.ServiceProviderType.Restaurant:
+        return _restaurants.value?.length ?? 0;
+      case cModels.ServiceProviderType.DeliveryCompany:
+        return _dvCompanies.value?.length ?? 0;
+      case cModels.ServiceProviderType.Business:
+        return _businesses.value?.length ?? 0;
+      default:
+        throw Exception("Service type not found");
+    }
+  }
 
   Future<void> approveService({required int detailsId}) async {
     await update_service_state(

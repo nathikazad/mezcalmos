@@ -419,8 +419,8 @@ class ServiceProviderLanguage {
     required this.primary, this.secondary});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "primary": primary.toFirebaseFormatString(),
-      "secondary": secondary?.toFirebaseFormatString(),
+      "primary": primary,
+      "secondary": secondary,
     };
   }
 
@@ -1987,6 +1987,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 }
 
 class Business {
+  num id;
   BusinessProfile profile;
   ServiceProvider details;
   List<Rental>? rentals;
@@ -1994,9 +1995,10 @@ class Business {
   List<Service>? services;
   List<Product>? products;
   Business({
-    required this.profile, required this.details, this.rentals, this.events, this.services, this.products});
+    required this.id, required this.profile, required this.details, this.rentals, this.events, this.services, this.products});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
+      "id": id,
       "profile": profile,
       "details": details,
       "rentals": rentals,

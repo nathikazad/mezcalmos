@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
@@ -12,7 +11,6 @@ import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 enum BusinessServiceType {
@@ -38,18 +36,20 @@ class BusinessProfileItem {
 
 class BsServicesListViewController {
   // instances //
-  BusinessOpAuthController _businessOpAuthController =
-      Get.find<BusinessOpAuthController>();
+  // BusinessOpAuthController _businessOpAuthController =
+  //     Get.find<BusinessOpAuthController>();
 
-  late Rx<BusinessProfile> businessProfile;
+  //late Rx<BusinessProfile> businessProfile;
   String get businessProfileFirebaseString =>
-      businessProfile.value.toFirebaseFormatString();
+      businessProfile.toFirebaseFormatString();
   List<BusinessProfileItem> currentBottomSheetData = [];
 
   // streams //
 
   // variables //
-
+  int _idx = 1;
+  late int businessId;
+  late BusinessProfile businessProfile;
   // states variables //
   RxList<RentalCard> homeRentals = RxList.empty();
   RxList<RentalCard> rentals = RxList.empty();
@@ -58,26 +58,25 @@ class BsServicesListViewController {
   RxList<ProductCard> product = RxList.empty();
 
   // methods //
-  Future<void> init() async {
-    // _businessProfile = _businessOpAuthController.businessProfile;
-    businessProfile = BusinessProfile.values.first.obs;
+  Future<void> init({required int id, required BusinessProfile profile}) async {
+    businessId = id;
+    businessProfile = profile;
+
     _setupBottomSheetValue();
     await fetchAllServices();
-    mezDbgPrint(
-        "Business data ${_businessOpAuthController.businessProfile?.name}");
   }
 
   // TODO: bottom sheet switcher logic
-  int _idx = 1;
+
   void changeBusiness() {
-    businessProfile.value = BusinessProfile.values[_idx];
+    businessProfile = BusinessProfile.values[_idx];
     if (_idx == BusinessProfile.values.length - 1) {
       _idx = 0;
     } else {
       _idx++;
     }
-    Get.find<BusinessOpAuthController>().setBusinessProfile =
-        businessProfile.value;
+    // Get.find<BusinessOpAuthController>().setBusinessProfile =
+    //     businessProfile.value;
     _setupBottomSheetValue();
   }
   // --
@@ -98,7 +97,7 @@ class BsServicesListViewController {
     final String productTitleLangKey = "productTitle";
     final String productSubTitleLangKey = "productSubtitle";
 
-    switch (businessProfile.value) {
+    switch (businessProfile) {
       case BusinessProfile.SurfShop:
         return [
           BusinessProfileItem(
@@ -293,35 +292,35 @@ class BsServicesListViewController {
 
   Future<void> _fetchProducts() async {
     product.value = await get_business_products(
-      businessId: _businessOpAuthController.companyId!,
+      businessId: businessId,
       withCache: false,
     );
   }
 
   Future<void> _fetchServices() async {
     services.value = await get_business_services(
-      businessId: _businessOpAuthController.companyId!,
+      businessId: businessId,
       withCache: false,
     );
   }
 
   Future<void> _fetchEvents() async {
     events.value = await get_business_events(
-      businessId: _businessOpAuthController.companyId!,
+      businessId: businessId,
       withCache: false,
     );
   }
 
   Future<void> _fetchRentals() async {
     rentals.value = await get_business_rentals(
-      busniessId: _businessOpAuthController.companyId!,
+      busniessId: businessId,
       withCache: false,
     );
   }
 
   Future<void> _fetchHomeRentals() async {
     homeRentals.value = await get_business_home_rentals(
-      busniessId: _businessOpAuthController.companyId!,
+      busniessId: businessId,
       withCache: false,
     );
   }

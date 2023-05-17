@@ -2993,7 +2993,8 @@
             "profile": "Profile",
             "costs": "Costs",
             "accept": "Accept",
-            "reject": "Reject"
+            "reject": "Reject",
+            "offerings" : "Offerings"
           }
         }
       },

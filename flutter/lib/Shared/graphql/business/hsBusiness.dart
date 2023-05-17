@@ -171,6 +171,7 @@ Future<Business?> get_business_by_id(
             )));
       });
       return Business(
+        id: data.id,
         profile: data.profile.toBusinessProfile(),
         details: ServiceProvider(
             id: data.id,

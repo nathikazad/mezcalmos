@@ -8,6 +8,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProduct
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
+import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -17,6 +18,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -27,7 +29,18 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpServicesListView extends StatefulWidget {
-  const BsOpServicesListView({Key? key}) : super(key: key);
+  final int? businessId;
+  final BusinessProfile? businessProfile;
+  const BsOpServicesListView({Key? key, this.businessId, this.businessProfile})
+      : super(key: key);
+  static Future<void> navigate(
+      {required int id, required BusinessProfile profile}) async {
+    String route =
+        BusinessOpRoutes.kBusniessOpServiceList.replaceFirst(":id", "$id");
+    return MezRouter.toPath(route, arguments: {
+      "profile": profile,
+    });
+  }
 
   @override
   _BsOpServicesListViewState createState() => _BsOpServicesListViewState();
@@ -35,9 +48,19 @@ class BsOpServicesListView extends StatefulWidget {
 
 class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   BsServicesListViewController viewController = BsServicesListViewController();
+  BusinessProfile? _businessProfile;
+  int? _id;
   @override
   void initState() {
-    viewController.init();
+    _businessProfile = widget.businessProfile ??
+        MezRouter.bodyArguments?["profile"] as BusinessProfile?;
+    _id =
+        widget.businessId ?? int.parse(MezRouter.urlArguments["id"].toString());
+    if (_businessProfile != null && _id != null) {
+      viewController.init(profile: _businessProfile!, id: _id!);
+    } else {
+      showErrorSnackBar(errorText: " missing business profile or id");
+    }
     super.initState();
   }
 
@@ -288,7 +311,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         Container(
                           alignment: Alignment.center,
                           child: Text(
-                            "${_i18n()["serviceType"]} ${viewController.businessProfile.value.name}",
+                            "${_i18n()["serviceType"]} ${viewController.businessProfile.name}",
                             style: context.textTheme.bodyLarge,
                             textAlign: TextAlign.center,
                           ),
