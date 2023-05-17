@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 enum BusinessServiceType {
   Rental,
@@ -336,6 +337,11 @@ class BsServicesListViewController {
       int id, BusinessItemDetails details) async {
     final int? response =
         await update_business_item_details(id: id, details: details);
+    if (response != null) {
+      showSavedSnackBar();
+    } else {
+      showErrorSnackBar();
+    }
     return response;
   }
 
