@@ -158,6 +158,7 @@ class BsEventViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
+         detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {

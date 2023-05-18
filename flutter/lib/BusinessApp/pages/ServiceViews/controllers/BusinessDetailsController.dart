@@ -231,4 +231,8 @@ class BusinessItemDetailsController {
     return imagesUrls.any((String? element) => element != null) ||
         images.any((File? element) => element != null);
   }
+
+  void clearImages() {
+    images.clear();
+  }
 }
