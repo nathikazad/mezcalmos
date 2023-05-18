@@ -14,12 +14,16 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['EventsViews']['CustEventsListView'];
@@ -304,9 +308,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                     )
                   ],
                 ),
-                if (viewController.events[index].schedule != null &&
-                    viewController.events[index].scheduleType !=
-                        ScheduleType.OnDemand)
+                if (viewController.events[index].schedule != null)
                   Column(
                     children: [
                       Divider(),
@@ -318,6 +320,9 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                               viewController.events[index].scheduleType)
                     ],
                   ),
+                if (viewController.events[index].scheduleType ==
+                    ScheduleType.OneTime)
+                  oneTimeBuilder(viewController.events[index]),
                 Divider(),
                 Text(viewController.events[index].businessName)
               ],
@@ -328,6 +333,25 @@ class _CustEventsListViewState extends State<CustEventsListView> {
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
           child: Text('${_i18n()['noEventsFound']}'));
+  }
+
+  Column oneTimeBuilder(EventCard eventData) {
+    return Column(
+      children: [
+        Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            Text(
+                "${eventData.period!.formatTime(eventData.period!.start)} - ${eventData.period!.formatTime(eventData.period!.end)}"),
+          ],
+        ),
+      ],
+    );
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

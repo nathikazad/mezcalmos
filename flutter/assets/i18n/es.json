@@ -1048,8 +1048,13 @@
             "social": "Social",
             "therapy": "Terapia",
             "scheduled": "Programada",
-            "oneTime": "Taller",
-            "onDemand": "Privada",
+            "oneTime": "Una vez",
+            "onDemand": "On demand",
+            "class": {
+              "scheduled": "Semanalmente",
+              "oneTime": "Taller",
+              "onDemand": "Privada"
+            },
             "all": "Alle"
           }
         },

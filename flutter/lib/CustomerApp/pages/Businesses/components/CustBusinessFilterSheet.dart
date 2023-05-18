@@ -14,6 +14,7 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
   required BuildContext context,
   required FilterInput filterInput,
   required FilterInput defaultFilterInput,
+  bool isClass = false,
 }) async {
   RxMap<String, List<String>> selectedFilters = RxMap<String, List<String>>({});
   filterInput.forEach((String key, List<String> value) {
@@ -37,7 +38,7 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
   }
 
   return showModalBottomSheet<Map<String, List<String>>?>(
-      isDismissible: false,
+      // isDismissible: false,  
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
@@ -86,7 +87,8 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                                       .values
                                       .elementAt(index)[subIndex];
                                   return _checkBoxTile(
-                                    title: '${_i18n()[actualSubItem]}',
+                                    title:
+                                        '${(defaultFilterInput.keys.elementAt(index) == "schedule" && isClass) ? _i18n()["class"][actualSubItem] : _i18n()[actualSubItem]}',
                                     value: selectedFilters[defaultFilterInput
                                                 .keys
                                                 .elementAt(index)]

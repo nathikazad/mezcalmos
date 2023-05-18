@@ -977,8 +977,13 @@
             "social": "Social",
             "therapy": "Therapy",
             "scheduled": "Scheduled",
-            "oneTime": "Workshop",
-            "onDemand": "Private",
+            "oneTime": "One time",
+            "onDemand": "On demand",
+            "class": {
+              "scheduled": "Weekly",
+              "oneTime": "Workshop",
+              "onDemand": "Private"
+            },
             "surf": "Surf",
             "fitness": "Fitness",
             "yoga": "Yoga",
@@ -1148,7 +1153,7 @@
         },
         "LocallyMadeView": {
           "CustLocallyMadeListView": {
-            "localMade" :"Locally made",
+            "localMade": "Locally made",
             "consumable": "Consumable",
             "personalCare": "Personal care",
             "noPetServiceFound": "No services found",
