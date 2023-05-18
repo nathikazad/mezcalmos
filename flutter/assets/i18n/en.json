@@ -62,7 +62,10 @@
         "event": {
           "event": "Event",
           "eventType": "Select an event type",
-          "scheduleTypeError": "Please select a schedule type"
+          "scheduleTypeError": "Please select a schedule type",
+          "scheduled": "Scheduled",
+          "oneTime": "One time",
+          "onDemand": "On demand"
         },
         "profile": "Profile",
         "feed": "Feed",
@@ -1064,7 +1067,10 @@
             "confirm": "Confirm",
             "none": "None",
             "class": "Class",
-            "studio": "Studio"
+            "studio": "Studio",
+            "scheduled": "Scheduled",
+            "oneTime": "One time",
+            "onDemand": "On demand"
           }
         },
         "ClassView": {

@@ -63,7 +63,10 @@
         "event": {
           "event": "Evento",
           "eventType": "Seleccione un tipo de evento",
-          "scheduleTypeError": "Seleccione un tipo de horario"
+          "scheduleTypeError": "Seleccione un tipo de horario",
+          "scheduled": "Programada",
+          "oneTime": "Una vez",
+          "onDemand": "Bajo demanda"
         },
         "profile": "Perfil",
         "feed": "Alimentar",
@@ -1126,7 +1129,10 @@
             "person": "persona",
             "unit": "unidad",
             "total": "total",
-            "filter": "Filtrar"
+            "filter": "Filtrar",
+            "scheduled": "Programada",
+            "oneTime": "Una vez",
+            "onDemand": "Bajo demanda"
           }
         },
         "ClassView": {
