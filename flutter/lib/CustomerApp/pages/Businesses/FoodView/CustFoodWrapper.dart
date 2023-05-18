@@ -52,7 +52,7 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
       case MezService.LocallyMade:
         mezDbgPrint("going to locally made =======");
         CustLocallyMadeListView.navigate(
-          productCategories: ProductCategory1.values,
+          productCategories: [ProductCategory1.Consumable],
         );
         break;
       case MezService.MealPlanning:

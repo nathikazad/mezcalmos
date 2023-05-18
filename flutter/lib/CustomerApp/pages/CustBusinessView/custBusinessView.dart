@@ -272,70 +272,103 @@ class _CustBusinessViewState extends State<CustBusinessView>
     }
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Flexible(
-          child: RawChip(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            backgroundColor: Colors.transparent,
-            shape: StadiumBorder(side: BorderSide(color: primaryBlueColor)),
-            label: InkWell(
-              onTap: () => navigateToChat(),
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                          alignment: PlaceholderAlignment.middle,
-                          child: Icon(
-                            Icons.message_rounded,
-                            color: primaryBlueColor,
-                          )),
-                      TextSpan(
-                        text: '${_i18n()["chatWithUs"]}',
-                        style: context.txt.bodyLarge
-                            ?.copyWith(color: primaryBlueColor),
-                      ),
-                    ],
+        Expanded(
+          child: Builder(builder: (context) {
+            bool isLoading = false;
+            return StatefulBuilder(builder: (context, setState) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 4.0),
+                child: TextButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll(Colors.transparent),
+                    side: MaterialStatePropertyAll(BorderSide(
+                      color: primaryBlueColor,
+                    )),
+                    shape: MaterialStatePropertyAll(StadiumBorder()),
                   ),
+                  onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    await navigateToChat();
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
+                  child: isLoading
+                      ? FittedBox(child: CircularProgressIndicator())
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 6.0),
+                              child: Icon(
+                                Icons.sms,
+                                color: primaryBlueColor,
+                              ),
+                            ),
+                            Text(
+                              '${_i18n()["chatWithUs"]}',
+                              style: context.txt.bodyLarge
+                                  ?.copyWith(color: primaryBlueColor),
+                            ),
+                          ],
+                        ),
                 ),
-              ),
-            ),
-          ),
+              );
+            });
+          }),
         ),
-        Flexible(
-          child: RawChip(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            backgroundColor: Colors.transparent,
-            shape: StadiumBorder(side: BorderSide(color: primaryBlueColor)),
-            label: InkWell(
-              onTap: () => navigateToChat(),
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                          alignment: PlaceholderAlignment.middle,
-                          child: Icon(
-                            Icons.phone,
-                            color: primaryBlueColor,
-                          )),
-                      TextSpan(
-                        text: '${_i18n()["contactUs"]}',
-                        style: context.txt.bodyLarge
-                            ?.copyWith(color: primaryBlueColor),
-                      ),
-                    ],
+        Expanded(
+          child: Builder(builder: (context) {
+            bool isLoading = false;
+            return StatefulBuilder(builder: (context, setState) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: TextButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll(Colors.transparent),
+                    side: MaterialStatePropertyAll(BorderSide(
+                      color: primaryBlueColor,
+                    )),
+                    shape: MaterialStatePropertyAll(StadiumBorder()),
                   ),
+                  onPressed: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    await navigateToChat();
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
+                  child: isLoading
+                      ? FittedBox(child: CircularProgressIndicator())
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 6.0),
+                              child: Icon(
+                                Icons.phone,
+                                color: primaryBlueColor,
+                              ),
+                            ),
+                            Text(
+                              '${_i18n()["contactUs"]}',
+                              style: context.txt.bodyLarge
+                                  ?.copyWith(color: primaryBlueColor),
+                            ),
+                          ],
+                        ),
                 ),
-              ),
-            ),
-          ),
+              );
+            });
+          }),
         ),
       ],
     );
