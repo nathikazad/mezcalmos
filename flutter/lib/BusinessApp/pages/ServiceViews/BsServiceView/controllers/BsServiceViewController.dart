@@ -58,7 +58,9 @@ class BsServiceViewController {
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
-        businessId: businessId, language: languages!, detailsId: detailsId);
+        businessId: businessId,
+        language: languages!,
+        businessDetailsId: detailsId);
 
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
@@ -67,7 +69,8 @@ class BsServiceViewController {
     _service.value = await get_service_by_id(id: id, withCache: false);
     mezDbgPrint("service id : $id");
     if (service != null) {
-      await detailsController.initEditMode();
+      await detailsController.initEditMode(
+          itemDetailsId: service!.details.id.toInt());
       serviceSchedule.value = service?.schedule;
     }
   }
@@ -135,6 +138,7 @@ class BsServiceViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
+        detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {

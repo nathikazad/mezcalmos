@@ -57,7 +57,9 @@ class BsProductViewController {
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
-        businessId: businessId, language: languages!, detailsId: detailsId);
+        businessId: businessId,
+        language: languages!,
+        businessDetailsId: detailsId);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
 
@@ -66,7 +68,8 @@ class BsProductViewController {
     mezDbgPrint(
         "product id : $id ${_product.value?.toFirebaseFormattedJson()}");
     if (product != null) {
-      await detailsController.initEditMode();
+      await detailsController.initEditMode(
+          itemDetailsId: product!.details.id.toInt());
       productCategory.value = product!.category1;
     }
   }
@@ -125,6 +128,7 @@ class BsProductViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
+         detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {

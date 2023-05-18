@@ -19,6 +19,18 @@ object_relationships:
           name: restaurant
           schema: restaurant
 select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - chat_id
+        - customer_id
+        - service_provider_id
+        - service_provider_type
+      filter:
+        chat:
+          chat_participants:
+            participant_id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:

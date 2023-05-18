@@ -22,6 +22,15 @@ insert_permissions:
         - id
         - schedule
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - business_id
+        - details_id
+        - id
+        - schedule
+      filter: {}
+      allow_aggregations: true
   - role: business_operator
     permission:
       columns:

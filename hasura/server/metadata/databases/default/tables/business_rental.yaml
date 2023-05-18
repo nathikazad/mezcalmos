@@ -29,6 +29,15 @@ insert_permissions:
         - details_id
         - id
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - business_id
+        - details_id
+        - category3
+      filter: {}
+      allow_aggregations: true
   - role: business_operator
     permission:
       columns:

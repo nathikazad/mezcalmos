@@ -22,6 +22,17 @@ insert_permissions:
         - address
         - home_type
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - gps_location
+        - bathrooms
+        - bedrooms
+        - rental_id
+        - address
+        - home_type
+      filter: {}
+      allow_aggregations: true
   - role: business_operator
     permission:
       columns:
@@ -47,6 +58,7 @@ select_permissions:
         - gps_location
         - home_type
       filter: {}
+      allow_aggregations: true
   - role: mez_admin
     permission:
       columns:

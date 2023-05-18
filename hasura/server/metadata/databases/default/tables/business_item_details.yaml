@@ -32,7 +32,47 @@ insert_permissions:
         - name_id
         - position
         - tags
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - additional_parameters
+        - available
+        - business_id
+        - category1
+        - category2
+        - cost
+        - description_id
+        - id
+        - image
+        - name_id
+        - position
+        - tags
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - additional_parameters
+        - available
+        - business_id
+        - category1
+        - category2
+        - cost
+        - description_id
+        - id
+        - image
+        - name_id
+        - position
+        - tags
+      filter: {}
+      allow_aggregations: true
   - role: business_operator
     permission:
       columns:
@@ -57,6 +97,7 @@ select_permissions:
       columns:
         - additional_parameters
         - available
+        - business_id
         - category1
         - category2
         - cost

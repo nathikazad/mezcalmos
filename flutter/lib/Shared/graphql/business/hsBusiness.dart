@@ -183,8 +183,9 @@ Future<Business?> get_business_by_id(
             language: ServiceProviderLanguage(
                 primary:
                     data.details.language["primary"].toString().toLanguage(),
-                secondary:
-                    data.details.language["secondary"].toString().toLanguage()),
+                secondary: (data.details.language?["secondary"] != null)
+                    ? data.details.language["secondary"].toString().toLanguage()
+                    : null),
             currency: data.details.currency.toCurrency(),
             deliveryDetails: DeliveryDetails(
                 deliveryAvailable: false,
@@ -371,12 +372,19 @@ Future<int?> update_business_item_details(
 }
 
 Future<BusinessItemDetails?> get_business_item_details_by_id(
-    {required int detailsId, required int businessId}) async {
+    {required int detailsId,
+    required int businessId,
+    bool withCache = true}) async {
   final QueryResult<Query$getBusinessItemDetailsById> res =
       await _db.graphQLClient.query$getBusinessItemDetailsById(
           Options$Query$getBusinessItemDetailsById(
+              fetchPolicy: withCache
+                  ? FetchPolicy.cacheAndNetwork
+                  : FetchPolicy.networkOnly,
               variables:
                   Variables$Query$getBusinessItemDetailsById(id: detailsId)));
+  mezDbgPrint(
+      "👍 👍👍 getting details id $detailsId ========================>${res.data}");
   if (res.hasException) {
     throw Exception("🛑 Error getting business item details ${res.exception}");
   } else if (res.parsedData?.business_item_details_by_pk != null) {

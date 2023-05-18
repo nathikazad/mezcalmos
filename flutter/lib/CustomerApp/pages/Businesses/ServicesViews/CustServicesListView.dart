@@ -268,7 +268,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                                   imageUrl: viewController.services[index]
                                               .details.firstImage ==
                                           null
-                                      ? customImageUrl
+                                      ? defaultUserImgUrl
                                       : viewController
                                           .services[index].details.firstImage!),
                             )

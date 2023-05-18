@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['EventsViews']['CustEventsListView'];
@@ -270,8 +271,8 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                   children: [
                     CachedNetworkImage(
                       imageUrl:
-                          viewController.events[index].details.image?.first ??
-                              "",
+                          viewController.events[index].details.firstImage ??
+                              defaultUserImgUrl,
                       imageBuilder: (BuildContext context,
                               ImageProvider<Object> imageProvider) =>
                           CircleAvatar(

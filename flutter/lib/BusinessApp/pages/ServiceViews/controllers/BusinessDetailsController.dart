@@ -25,7 +25,7 @@ class BusinessItemDetailsController {
   // state variables //
   RxList<String?> imagesUrls = RxList.filled(5, null);
   late int businessId;
-  late int detailsId;
+  late int businessDetailsId;
   RxMap<TimeUnit, TextEditingController> priceTimeUnitMap =
       RxMap<TimeUnit, TextEditingController>();
   RxList<File?> images = RxList.filled(5, null);
@@ -39,21 +39,22 @@ class BusinessItemDetailsController {
   // methods //
   void initDetails({
     required ServiceProviderLanguage language,
-    required int detailsId,
+    required int businessDetailsId,
     required int businessId,
   }) {
-    languages.value = language;
-    this.detailsId = detailsId;
+    this.businessDetailsId = businessDetailsId;
 
-    businessId = businessId;
+    this.businessId = businessId;
+    languages.value = language;
+    mezDbgPrint(" 🟢  businessId : $businessId");
   }
 
-  Future<void> initEditMode() async {
-    mezDbgPrint(" 🟢  initEditMode : $detailsId");
+  Future<void> initEditMode({required int itemDetailsId}) async {
+    mezDbgPrint(" 🟢  initEditMode : $itemDetailsId");
 
     _details.value = await get_business_item_details_by_id(
-        detailsId: detailsId, businessId: businessId);
-
+        detailsId: itemDetailsId, businessId: businessId, withCache: false);
+    mezDbgPrint("Edit mode details ==================> $_details");
     if (details != null) {
       nameController.text = details!.name[languages.value!.primary] ?? "";
       descriptionController.text =
@@ -229,5 +230,9 @@ class BusinessItemDetailsController {
   bool get hasOneImage {
     return imagesUrls.any((String? element) => element != null) ||
         images.any((File? element) => element != null);
+  }
+
+  void clearImages() {
+    images.clear();
   }
 }

@@ -46,6 +46,20 @@ insert_permissions:
         - starts_at
         - schedule_type
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - gps_location
+        - business_id
+        - details_id
+        - id
+        - schedule
+        - address
+        - ends_at
+        - starts_at
+        - schedule_type
+      filter: {}
+      allow_aggregations: true
   - role: business_operator
     permission:
       columns:

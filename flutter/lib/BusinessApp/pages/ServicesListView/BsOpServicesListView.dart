@@ -3,10 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/Components/BsEventCard.dart';
-import 'package:mezcalmos/BusinessApp/pages/Components/BsHomeRentalCard.dart';
-import 'package:mezcalmos/BusinessApp/pages/Components/BsProductCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/Components/BsRentalCard.dart';
-import 'package:mezcalmos/BusinessApp/pages/Components/BsServiceCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
@@ -77,10 +74,13 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
     super.initState();
   }
 
+  bool get asTab => widget.businessDetailsId != null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
+      appBar: MezcalmosAppBar(
+          asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+          onClick: asTab ? null : MezRouter.back,
           title: '${_i18n()["services"]}'),
       drawer: MezSideMenu(),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
@@ -152,8 +152,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                   businessId: viewController.businessId,
                                   businessDetailsId:
                                       viewController.businessDetailsId,
-                                  id: viewController
-                                      .homeRentals[index].details.id
+                                  id: viewController.homeRentals[index].id!
                                       .toInt());
                             },
                             firstAvatarBgImage: NetworkImage(
@@ -188,8 +187,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 businessId: viewController.businessId,
                                 businessDetailsId:
                                     viewController.businessDetailsId,
-                                id: viewController.rentals[index].details.id
-                                    .toInt(),
+                                id: viewController.rentals[index].id!.toInt(),
                                 rentalCategory:
                                     viewController.rentals[index].category1,
                               );
@@ -198,8 +196,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         //  MezCard(
                         //     onClick: () {
                         //       BsOpRentalView.navigate(
-                        //         id: viewController.rentals[index].details.id
-                        //             .toInt(),
+                        //         id: viewController.rentals[index].id
+                        //            ! .toInt(),
                         //         rentalCategory:
                         //             viewController.rentals[index].category1,
                         //       );
@@ -236,8 +234,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                 profile: viewController.businessProfile,
                                 businessDetailsId:
                                     viewController.businessDetailsId,
-                                id: viewController.events[index].details.id
-                                    .toInt(),
+                                id: viewController.events[index].id!.toInt(),
                                 isClass: viewController.events[index].isClass,
                               );
                             },
@@ -302,8 +299,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                   businessId: viewController.businessId,
                                   businessDetailsId:
                                       viewController.businessDetailsId,
-                                  serviceId: viewController
-                                      .services[index].details.id
+                                  serviceId: viewController.services[index].id!
                                       .toInt());
                             },
                             firstAvatarBgImage: NetworkImage(
@@ -337,7 +333,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                   businessId: viewController.businessId,
                                   businessDetailsId:
                                       viewController.businessDetailsId,
-                                  id: viewController.product[index].details.id
+                                  id: viewController.product[index].id!
                                       .toInt());
                             },
                             firstAvatarBgImage: NetworkImage(

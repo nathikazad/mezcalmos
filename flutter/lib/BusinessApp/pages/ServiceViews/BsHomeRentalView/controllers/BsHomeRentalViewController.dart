@@ -63,7 +63,9 @@ class BsHomeRentalViewController {
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
-        businessId: businessId, language: languages!, detailsId: detailsId);
+        businessId: businessId,
+        language: languages!,
+        businessDetailsId: detailsId);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
 
@@ -73,7 +75,8 @@ class BsHomeRentalViewController {
         "rental id : $id home type ============>>> ${rental!.homeType}");
     if (rental != null) {
       detailsController.clearPrices();
-      await detailsController.initEditMode();
+      await detailsController.initEditMode(
+          itemDetailsId: rental!.details.id.toInt());
       bedroomsController.text = rental!.bedrooms.toString();
       bathroomsController.text = rental!.bathrooms.toString();
       areaController.text = rental!.details.additionalParameters?["area"]
@@ -160,6 +163,7 @@ class BsHomeRentalViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
+         detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {

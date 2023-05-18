@@ -53,6 +53,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
         thickerProvider: this, detailsId: detailsId, businessId: businessId);
     int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
+      
       viewController.initEditMode(id: id);
     }
 

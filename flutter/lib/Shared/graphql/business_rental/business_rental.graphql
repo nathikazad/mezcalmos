@@ -21,6 +21,12 @@ query get_rental_by_category(
           details: {
             location: {
               gps: { _st_d_within: { distance: $distance, from: $from } }
+            },
+            approved: {
+              _eq: true
+            },
+            open_status: {
+              _eq: "open"
             }
           }
         }
@@ -140,7 +146,14 @@ query get_home_rentals(
 ) {
   business_home_rental(
     where: {
-      gps_location: { _st_d_within: { distance: $distance, from: $from } }
+      gps_location: { _st_d_within: { distance: $distance, from: $from } }, 
+      rental: {
+        business: {
+          details: {
+            approved: {_eq: true}, open_status: {_eq: "open"}
+          }
+        }
+      }
     }
     limit: $limit
     offset: $offset
