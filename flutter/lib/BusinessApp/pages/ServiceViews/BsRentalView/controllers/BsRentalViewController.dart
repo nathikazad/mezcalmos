@@ -68,6 +68,7 @@ class BsRentalViewController {
     required RentalCategory1 category1,
     required int detailsId,
     required int businessId,
+    int? rentalId,
   }) async {
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
@@ -78,6 +79,9 @@ class BsRentalViewController {
 
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
     rentalCategory1 = category1;
+    if (rentalId != null) {
+      await initEditMode(id: rentalId);
+    }
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -85,7 +89,7 @@ class BsRentalViewController {
     mezDbgPrint("service id : $id");
     if (rental != null) {
       detailsController.clearPrices();
-     await detailsController.initEditMode(
+      await detailsController.initEditMode(
           itemDetailsId: rental!.details.id.toInt());
       rentalCategory2.value = rental!.category2;
       rentalCategory3.value = rental!.category3;
@@ -179,7 +183,7 @@ class BsRentalViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
-         detailsController.clearImages();
+        detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {

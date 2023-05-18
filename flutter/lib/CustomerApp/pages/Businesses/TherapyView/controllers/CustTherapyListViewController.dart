@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
-import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
+import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['components']['cusShowBusinessFilerSheet'];
@@ -54,7 +53,7 @@ class CustTherapyListViewController {
 
   void _categoryStringGen() {
     selectedCategoriesText.value = "";
-    var data =
+    List<ScheduleType> data =
         filterInput["schedule"]!.map((String e) => e.toScheduleType()).toList();
     if (data.length == 3) {
       selectedCategoriesText.value = _i18n()["all"];
@@ -138,7 +137,7 @@ class CustTherapyListViewController {
         distance: 100000000000,
         categories2: _categories2,
         fromLocation: _fromLocation!,
-        tags: [],
+        tags: ["class"],
         scheduleType: filterInput["schedule"]!
             .map((String e) => e.toScheduleType())
             .toList(),

@@ -35,13 +35,7 @@ class CustEventsListViewController {
   bool _businessReachedEndOfData = false;
   /* SCROLL CONTROLLER */
 
-  final List<EventCategory1> _filterCategories = <EventCategory1>[
-    EventCategory1.Dance,
-    EventCategory1.Party,
-    EventCategory1.Social,
-    EventCategory1.Therapy,
-  ];
-
+  final List<EventCategory1> _filterCategories = [];
   final List<EventCategory2> _categories2 = <EventCategory2>[
     EventCategory2.Uncategorized,
   ];
@@ -51,7 +45,7 @@ class CustEventsListViewController {
 
   void _categoryStringGen() {
     selectedCategoriesText.value = "";
-    var data = filterInput["categories"]!
+    List<EventCategory1> data = filterInput["categories"]!
         .map((String e) => e.toEventCategory1())
         .toList();
     if (data.length == _filterCategories.length) {
@@ -79,6 +73,7 @@ class CustEventsListViewController {
   List<BusinessCard> get businesses => _businesses.value;
 
   Future<void> init() async {
+    _filterCategories.addAll(EventCategory1.values);
     _filterInput = defaultFilters();
     try {
       _isLoading.value = true;

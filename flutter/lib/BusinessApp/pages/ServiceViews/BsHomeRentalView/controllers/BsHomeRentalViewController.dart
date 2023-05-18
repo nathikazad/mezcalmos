@@ -6,10 +6,10 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
+import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 
 typedef OfferingPricesMap = Map<TimeUnit, TextEditingController>;
 
@@ -59,6 +59,7 @@ class BsHomeRentalViewController {
   Future<void> init(
       {required TickerProvider thickerProvider,
       required int detailsId,
+      int? homeRentalId,
       required int businessId}) async {
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
@@ -67,6 +68,9 @@ class BsHomeRentalViewController {
         language: languages!,
         businessDetailsId: detailsId);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
+    if (homeRentalId != null) {
+      await initEditMode(id: homeRentalId);
+    }
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -163,7 +167,7 @@ class BsHomeRentalViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
-         detailsController.clearImages();
+        detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {

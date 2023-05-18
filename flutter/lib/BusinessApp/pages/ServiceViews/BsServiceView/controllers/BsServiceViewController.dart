@@ -54,7 +54,8 @@ class BsServiceViewController {
   Future<void> init(
       {required TickerProvider thickerProvider,
       required int detailsId,
-      required int businessId}) async {
+      required int businessId,
+      int? serviceId}) async {
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
@@ -63,6 +64,9 @@ class BsServiceViewController {
         businessDetailsId: detailsId);
 
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
+    if (serviceId != null) {
+      await initEditMode(id: serviceId);
+    }
   }
 
   Future<void> initEditMode({required int id}) async {

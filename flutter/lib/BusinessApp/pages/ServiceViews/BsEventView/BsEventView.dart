@@ -48,32 +48,37 @@ class BsOpEventView extends StatefulWidget {
 class _BsOpEventViewState extends State<BsOpEventView>
     with TickerProviderStateMixin {
   BsEventViewController viewController = BsEventViewController();
+  int? detailsId;
+  int? businessId;
+  BusinessProfile? profile;
+  bool isClass = false;
+  int? eventId;
   @override
   void initState() {
-    final int? detailsId = int.tryParse(
-        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
-    final int? businessId =
-        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
-    final BusinessProfile? profile =
-        MezRouter.bodyArguments?["profile"] as BusinessProfile?;
-    final bool isClass = MezRouter.bodyArguments?["class"] ?? false;
+    _assignValues();
     if (detailsId == null || profile == null || businessId == null) {
       throw Exception("detailsId or businessId or profile is null");
     }
     viewController.init(
       thickerProvider: this,
-      businessId: businessId,
-      profile: profile,
-      detailsId: detailsId,
+      businessId: businessId!,
+      profile: profile!,
+      eventId: eventId,
+      detailsId: detailsId!,
       isClass: isClass,
     );
 
-    int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
-    if (id != null) {
-      viewController.initEditMode(id: id);
-    }
-
     super.initState();
+  }
+
+  void _assignValues() {
+    detailsId = int.tryParse(
+        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
+    businessId =
+        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    profile = MezRouter.bodyArguments?["profile"] as BusinessProfile?;
+    isClass = MezRouter.bodyArguments?["class"] ?? false;
+    eventId = int.tryParse(MezRouter.urlArguments["id"].toString());
   }
 
   @override
