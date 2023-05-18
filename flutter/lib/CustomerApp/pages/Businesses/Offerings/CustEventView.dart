@@ -91,7 +91,8 @@ class _CustEventViewState extends State<CustEventView> {
                     children: [
                       Text(
                         viewController.event!.details.name
-                            .getTranslation(userLanguage)!,
+                            .getTranslation(userLanguage)!
+                            .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
                       CustBusinessAdditionalData(
@@ -125,14 +126,11 @@ class _CustEventViewState extends State<CustEventView> {
                             ),
                           ),
                         ),
-
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.event!.business,
                         offeringName: viewController.event!.details.name,
-                      ),
-                      SizedBox(
-                        height: 15,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

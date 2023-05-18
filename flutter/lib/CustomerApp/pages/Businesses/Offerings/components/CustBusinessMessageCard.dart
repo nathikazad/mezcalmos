@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesList
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
-class CustBusinessMessageCard extends StatelessWidget {
+class CustBusinessMessageCard extends StatefulWidget {
   const CustBusinessMessageCard(
       {super.key,
       required this.business,
@@ -24,36 +24,51 @@ class CustBusinessMessageCard extends StatelessWidget {
   final EdgeInsets margin;
 
   @override
+  State<CustBusinessMessageCard> createState() =>
+      _CustBusinessMessageCardState();
+}
+
+class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
+  bool isLoading = false;
+  @override
   Widget build(BuildContext context) {
     final CustMessagesListViewController custChatController =
         CustMessagesListViewController();
-    print("BUSINESS DATA ${business.id} ${business.detailsId}");
+    print("BUSINESS DATA ${widget.business.id} ${widget.business.detailsId}");
     return MezCard(
         elevation: 0,
-        margin: margin,
+        margin: widget.margin,
         radius: 20.mezSp,
         contentPadding: EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
-        firstAvatarBgImage: CachedNetworkImageProvider(business.image),
-        action: MessageButton(
-          chatId: 0,
-          onTap: () {
-            // check if user not logged in
-            if (Get.find<AuthController>().user == null) {
-              SignInView.navigateAtOrderTime();
-            } else {
-              custChatController.initiateChat(
-                businessId: business.id,
-                businessImage: business.image,
-                offeringName: offeringName,
-              );
-            }
-          },
-        ),
+        firstAvatarBgImage: CachedNetworkImageProvider(widget.business.image),
+        action: isLoading
+            ? CircularProgressIndicator()
+            : MessageButton(
+                chatId: 0,
+                onTap: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  // check if user not logged in
+                  if (Get.find<AuthController>().user == null) {
+                    await SignInView.navigateAtOrderTime();
+                  } else {
+                    await custChatController.initiateChat(
+                      businessId: widget.business.id,
+                      businessImage: widget.business.image,
+                      offeringName: widget.offeringName,
+                    );
+                  }
+                  setState(() {
+                    isLoading = false;
+                  });
+                },
+              ),
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              business.name,
+              widget.business.name,
               style: context.textTheme.displaySmall
                   ?.copyWith(fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
             ),
@@ -61,7 +76,7 @@ class CustBusinessMessageCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _getAcceptedPaymentIcons(business.acceptedPayments),
+                _getAcceptedPaymentIcons(widget.business.acceptedPayments),
                 SizedBox(
                   width: 15,
                 ),
@@ -77,12 +92,12 @@ class CustBusinessMessageCard extends StatelessWidget {
                       SizedBox(
                         width: 2,
                       ),
-                      Text('${business.avgRating ?? '0'}',
+                      Text('${widget.business.avgRating ?? '0'}',
                           style: context.textTheme.bodySmall),
                       Padding(
                         padding: const EdgeInsets.only(left: 2, bottom: 3),
                         child: Text(
-                          '(${business.reviewCount})',
+                          '(${widget.business.reviewCount})',
                           style: context.textTheme.bodyMedium,
                         ),
                       )

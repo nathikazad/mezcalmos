@@ -66,7 +66,8 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     children: [
                       Text(
                         viewController.homeRental!.details.name
-                            .getTranslation(userLanguage)!,
+                            .getTranslation(userLanguage)!
+                            .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
@@ -97,16 +98,11 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                             ),
                           ),
                         ),
-                      SizedBox(
-                        height: 15,
-                      ),
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.homeRental!.business,
                         offeringName: viewController.homeRental!.details.name,
-                      ),
-                      SizedBox(
-                        height: 15,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

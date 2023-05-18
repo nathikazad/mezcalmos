@@ -236,7 +236,8 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                         width: 55.mezW,
                         child: Text(
                           viewController.products[index].details.name
-                              .getTranslation(userLanguage)!,
+                              .getTranslation(userLanguage)!
+                              .inCaps,
                           overflow: TextOverflow.ellipsis,
                           style: context.textTheme.displaySmall?.copyWith(
                               fontSize: 12.mezSp, fontWeight: FontWeight.bold),

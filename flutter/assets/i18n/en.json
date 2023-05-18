@@ -979,6 +979,11 @@
             "scheduled": "Scheduled",
             "oneTime": "One time",
             "onDemand": "On demand",
+            "class": {
+              "scheduled": "Weekly",
+              "oneTime": "Workshop",
+              "onDemand": "Private"
+            },
             "surf": "Surf",
             "fitness": "Fitness",
             "yoga": "Yoga",
@@ -1148,7 +1153,7 @@
         },
         "LocallyMadeView": {
           "CustLocallyMadeListView": {
-            "localMade" :"Locally made",
+            "localMade": "Locally made",
             "consumable": "Consumable",
             "personalCare": "Personal care",
             "noPetServiceFound": "No services found",
@@ -1523,8 +1528,8 @@
         "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
-        "added" : "Added",
-        "addedTitle" : "Your information has been added",
+        "added": "Added",
+        "addedTitle": "Your information has been added",
         "saved": "Saved",
         "routeError": "Error getting your location and route informations",
         "writeReview": "Write review",
@@ -1589,13 +1594,13 @@
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage": {
-            "create" : "Create",
-           "subtitle" : {
-            "restaurant" : "Create a new restaurant and receive orders from your local customers.",
-            "business" : "Create an account to expand your business & attract more online customers.",
-            "laundry" : "Create a new laundry and receive orders from your local customers.",
-            "deliveryCompany" : "Create your delivery company profile and start receiving orders from your local customers"
-           }
+            "create": "Create",
+            "subtitle": {
+              "restaurant": "Create a new restaurant and receive orders from your local customers.",
+              "business": "Create an account to expand your business & attract more online customers.",
+              "laundry": "Create a new laundry and receive orders from your local customers.",
+              "deliveryCompany": "Create your delivery company profile and start receiving orders from your local customers"
+            }
           },
           "CreateServiceInfoPage": {
             "name": "Name",
@@ -1618,9 +1623,8 @@
             "scLang": "Secondary language",
             "scLangErrorText": "Please enter a valid secondary language",
             "none": "None",
-             "en": "English",
+            "en": "English",
             "es": "Spanish"
-
           }
         },
         "createText": "Create",
@@ -1632,19 +1636,17 @@
         "ok": "Ok",
         "selectCompany": "Select a company",
         "selectCompanyText": "you need to select a delivery company",
-        "createdTitle" : {
-          "restaurant" : "Your restaurant is under review",
-          "business" : "Your business is under review",
-          "laundry" : "Your laundry is under review",
-          "deliveryCompany" : "Your delivery company is under review"
-
+        "createdTitle": {
+          "restaurant": "Your restaurant is under review",
+          "business": "Your business is under review",
+          "laundry": "Your laundry is under review",
+          "deliveryCompany": "Your delivery company is under review"
         },
-        "createdSubtitle" : {
-          "restaurant" : "You can start adding items to your menu and you’ll be notified once your restaurant is approved.",
-          "business" : "You can start adding offerings and you’ll be notified once your business is approved.",
-          "laundry" : "You can start adding pricing and you’ll be notified once your laundry is approved.",
-          "deliveryCompany" : "You can start drivers offerings and you’ll be notified once your delivery company is approved."
-
+        "createdSubtitle": {
+          "restaurant": "You can start adding items to your menu and you’ll be notified once your restaurant is approved.",
+          "business": "You can start adding offerings and you’ll be notified once your business is approved.",
+          "laundry": "You can start adding pricing and you’ll be notified once your laundry is approved.",
+          "deliveryCompany": "You can start drivers offerings and you’ll be notified once your delivery company is approved."
         },
         "restTitle": "Your restaurant is under review",
         "restBody": "You can start adding items to your menu and you’ll be notified once your restaurant is approved."
@@ -1737,14 +1739,14 @@
         "prLangErrorText": "Please enter a valid primary language",
         "scLang": "Secondary language",
         "scLangErrorText": "Please enter a valid secondary language",
-        "none": "None", "en": "English",
+        "none": "None",
+        "en": "English",
         "es": "Spanish",
         "info": "Info",
         "save": "Save",
         "saved": "Saved",
         "error": "Error",
         "savedSuccess": "Your information has been successfully saved "
-       
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No restaurant found on your operator",
@@ -3377,7 +3379,7 @@
             "costs": "Costs",
             "accept": "Accept",
             "reject": "Reject",
-            "offerings" : "Offerings"
+            "offerings": "Offerings"
           }
         }
       },

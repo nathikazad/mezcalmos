@@ -111,3 +111,5 @@ class BsEventCard extends StatelessWidget {
         ));
   }
 }
+
+                   

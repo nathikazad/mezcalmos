@@ -124,8 +124,8 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                               style: context.txt.bodyLarge,
                             ),
                             Text(_viewController.company.info.description!
-                                    .getTranslation(userLanguage) ??
-                                "NoDescription"),
+                                .getTranslation(userLanguage)!
+                                .inCaps),
                           ],
                         ),
                       ServiceLocationCard(

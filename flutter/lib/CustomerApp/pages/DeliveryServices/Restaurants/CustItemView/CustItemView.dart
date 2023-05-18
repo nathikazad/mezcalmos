@@ -95,7 +95,8 @@ class _CustItemViewState extends State<CustItemView> {
                     image: viewController.getItem?.image,
                     ordersRoute: CustomerRoutes.customerOrdersRoute,
                     title: viewController.getItem?.name
-                            .getTranslation(userLanguage) ??
+                            .getTranslation(userLanguage)
+                            .inCaps ??
                         "Error",
                   ),
                   SliverToBoxAdapter(

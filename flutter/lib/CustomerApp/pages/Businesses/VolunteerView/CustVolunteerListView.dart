@@ -161,7 +161,8 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
                   defaultUserImgUrl,
             ),
             content: Text(viewController.volunteer[index].details.name
-                .getTranslation(userLanguage)!)),
+                .getTranslation(userLanguage)!
+                .inCaps)),
       ));
     } else
       return Container(
