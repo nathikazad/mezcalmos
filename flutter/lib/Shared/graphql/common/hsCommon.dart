@@ -29,24 +29,32 @@ Future<ServiceTree> get_service_tree(
 
   final ServiceTree deliveries = ServiceTree(
       MezService.Deliveries,
-      deliveryResponse.parsedData!.laundry_store_aggregate.aggregate!.count +
-          deliveryResponse
-              .parsedData!.delivery_company_aggregate.aggregate!.count,
+      deliveryResponse.parsedData?.laundry_store_aggregate.aggregate?.count ??
+          0 +
+              (deliveryResponse.parsedData?.delivery_company_aggregate.aggregate
+                      ?.count ??
+                  0),
       root);
-  if (deliveryResponse.parsedData!.delivery_company_aggregate.aggregate!.count >
+  if ((deliveryResponse
+              .parsedData?.delivery_company_aggregate.aggregate?.count ??
+          0) >
       0) {
     final ServiceTree courier = ServiceTree(
         MezService.Courier,
-        deliveryResponse
-            .parsedData!.delivery_company_aggregate.aggregate!.count,
+        (deliveryResponse
+                .parsedData?.delivery_company_aggregate.aggregate?.count ??
+            0),
         deliveries);
     deliveries.children.add(courier);
   }
-  if (deliveryResponse.parsedData!.laundry_store_aggregate.aggregate!.count >
+  if ((deliveryResponse.parsedData?.laundry_store_aggregate.aggregate?.count ??
+          0) >
       0) {
     final ServiceTree laundry = ServiceTree(
         MezService.Laundry,
-        deliveryResponse.parsedData!.laundry_store_aggregate.aggregate!.count,
+        (deliveryResponse
+                .parsedData?.laundry_store_aggregate.aggregate?.count ??
+            0),
         deliveries);
     deliveries.children.add(laundry);
   }
@@ -65,34 +73,45 @@ Future<ServiceTree> get_service_tree(
 
   final ServiceTree food = ServiceTree(
       MezService.Food,
-      foodResponse
-              .parsedData!.restaurant_restaurant_aggregate.aggregate!.count +
-          foodResponse.parsedData!.business_product_aggregate.aggregate!.count +
-          foodResponse.parsedData!.business_service_aggregate.aggregate!.count,
+      (foodResponse.parsedData?.restaurant_restaurant_aggregate.aggregate
+                  ?.count ??
+              0) +
+          (foodResponse
+                  .parsedData?.business_product_aggregate.aggregate?.count ??
+              0) +
+          (foodResponse
+                  .parsedData?.business_service_aggregate.aggregate?.count ??
+              0),
       root);
-  if (foodResponse
-          .parsedData!.restaurant_restaurant_aggregate.aggregate!.count >
+  if ((foodResponse
+              .parsedData?.restaurant_restaurant_aggregate.aggregate?.count ??
+          0) >
       0) {
     final ServiceTree restaurant = ServiceTree(
         MezService.Restaurants,
-        foodResponse
-            .parsedData!.restaurant_restaurant_aggregate.aggregate!.count,
+        (foodResponse
+                .parsedData?.restaurant_restaurant_aggregate.aggregate?.count ??
+            0),
         food);
     food.children.add(restaurant);
   }
-  if (foodResponse.parsedData!.business_product_aggregate.aggregate!.count >
+  if ((foodResponse.parsedData?.business_product_aggregate.aggregate?.count ??
+          0) >
       0) {
     final ServiceTree product = ServiceTree(
         MezService.LocallyMade,
-        foodResponse.parsedData!.business_product_aggregate.aggregate!.count,
+        foodResponse.parsedData?.business_product_aggregate.aggregate?.count ??
+            0,
         food);
     food.children.add(product);
   }
-  if (foodResponse.parsedData!.business_service_aggregate.aggregate!.count >
+  if ((foodResponse.parsedData?.business_service_aggregate.aggregate?.count ??
+          0) >
       0) {
     final ServiceTree service = ServiceTree(
         MezService.MealPlanning,
-        foodResponse.parsedData!.business_service_aggregate.aggregate!.count,
+        foodResponse.parsedData?.business_service_aggregate.aggregate?.count ??
+            0,
         food);
     food.children.add(service);
   }
@@ -121,7 +140,7 @@ Future<ServiceTree> get_service_tree(
               distance: distance, from: Geography(lat, lng))));
   final ServiceTree classes = ServiceTree(
       MezService.Classes,
-      classResponse.parsedData!.business_event_aggregate.aggregate!.count,
+      classResponse.parsedData?.business_event_aggregate.aggregate?.count ?? 0,
       root);
   if (classes.count > 0) {
     root.children.add(classes);
@@ -136,7 +155,8 @@ Future<ServiceTree> get_service_tree(
               distance: distance, from: Geography(lat, lng))));
   final ServiceTree therapy = ServiceTree(
       MezService.Therapy,
-      therapyResponse.parsedData!.business_event_aggregate.aggregate!.count,
+      therapyResponse.parsedData?.business_event_aggregate.aggregate?.count ??
+          0,
       root);
   if (therapy.count > 0) {
     root.children.add(therapy);
@@ -151,7 +171,7 @@ Future<ServiceTree> get_service_tree(
               distance: distance, from: Geography(lat, lng))));
   final ServiceTree events = ServiceTree(
       MezService.Events,
-      eventsResponse.parsedData!.business_event_aggregate.aggregate!.count,
+      eventsResponse.parsedData?.business_event_aggregate.aggregate?.count ?? 0,
       root);
   if (events.count > 0) {
     root.children.add(events);
@@ -166,7 +186,8 @@ Future<ServiceTree> get_service_tree(
               distance: distance, from: Geography(lat, lng))));
   final ServiceTree volunteer = ServiceTree(
       MezService.Volunteer,
-      volunteerResponse.parsedData!.business_event_aggregate.aggregate!.count,
+      volunteerResponse.parsedData?.business_event_aggregate.aggregate?.count ??
+          0,
       root);
   if (volunteer.count > 0) {
     root.children.add(volunteer);
@@ -182,7 +203,8 @@ Future<ServiceTree> get_service_tree(
 
   final ServiceTree adventure = ServiceTree(
       MezService.Adventure,
-      adventureResponse.parsedData!.business_event_aggregate.aggregate!.count,
+      adventureResponse.parsedData?.business_event_aggregate.aggregate?.count ??
+          0,
       root);
   if (adventure.count > 0) {
     root.children.add(adventure);
@@ -228,11 +250,15 @@ Future<void> productsQuery(bool withCache, double distance, double lat,
                   distance: distance,
                   from: Geography(lat, lng),
                   category1: element.toFirebaseFormatString())));
-  if (productResponse.parsedData!.business_product_aggregate.aggregate!.count >
+  if ((productResponse
+              .parsedData?.business_product_aggregate.aggregate?.count ??
+          0) >
       0) {
     final ServiceTree product = ServiceTree(
         element.toFirebaseFormatString().toMezService(),
-        productResponse.parsedData!.business_product_aggregate.aggregate!.count,
+        productResponse
+                .parsedData?.business_product_aggregate.aggregate?.count ??
+            0,
         products);
     products.children.add(product);
     products.count += product.count;
@@ -251,11 +277,15 @@ Future<void> servicesQuery(bool withCache, double distance, double lat,
                   distance: distance,
                   from: Geography(lat, lng),
                   category1: element.toFirebaseFormatString())));
-  if (serviceResponse.parsedData!.business_service_aggregate.aggregate!.count >
+  if ((serviceResponse
+              .parsedData?.business_service_aggregate.aggregate?.count ??
+          0) >
       0) {
     final ServiceTree service = ServiceTree(
         element.toFirebaseFormatString().toMezService(),
-        serviceResponse.parsedData!.business_service_aggregate.aggregate!.count,
+        serviceResponse
+                .parsedData?.business_service_aggregate.aggregate?.count ??
+            0,
         services);
     services.children.add(service);
     services.count += service.count;
@@ -275,11 +305,13 @@ Future<void> rentalsQuery(bool withCache, double distance, double lat,
                   from: Geography(lat, lng),
                   category1: element.toFirebaseFormatString())));
 
-  if (rentalResponse.parsedData!.business_rental_aggregate.aggregate!.count >
+  if ((rentalResponse.parsedData?.business_rental_aggregate.aggregate?.count ??
+          0) >
       0) {
     final ServiceTree rental = ServiceTree(
         element.toFirebaseFormatString().toMezService(),
-        rentalResponse.parsedData!.business_rental_aggregate.aggregate!.count,
+        rentalResponse.parsedData?.business_rental_aggregate.aggregate?.count ??
+            0,
         rentals);
     rentals.children.add(rental);
     rentals.count += rental.count;
