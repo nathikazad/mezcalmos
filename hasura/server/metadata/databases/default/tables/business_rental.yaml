@@ -29,6 +29,15 @@ insert_permissions:
         - details_id
         - id
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - business_id
+        - details_id
+        - category3
+      filter: {}
+      allow_aggregations: true
   - role: business_operator
     permission:
       columns:
@@ -50,6 +59,21 @@ select_permissions:
         - id
       filter: {}
       allow_aggregations: true
+  - role: mez_admin
+    permission:
+      columns:
+        - business_id
+        - details_id
+        - id
+        - category3
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
 update_permissions:
   - role: business_operator
     permission:
@@ -63,5 +87,25 @@ update_permissions:
       check:
         business:
           operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - category3
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
             user_id:
               _eq: X-Hasura-User-Id
