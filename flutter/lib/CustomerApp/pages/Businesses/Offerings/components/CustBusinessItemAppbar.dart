@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/widgets/MezImageslider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessImageScreen.dart';
 
 class CustBusinessItemAppbar extends StatelessWidget {
   const CustBusinessItemAppbar({super.key, required this.itemDetails});
@@ -101,7 +102,11 @@ class CustBusinessItemAppbar extends StatelessWidget {
                                   size: 9.mezSp,
                                   color: Colors.white,
                                 )),
-                            onTap: () {},
+                            onTap: () {
+                              CustBusinessImageScreen.navigate(
+                                images: itemDetails.image ?? [],
+                              );
+                            },
                           )),
                     ],
                   ),

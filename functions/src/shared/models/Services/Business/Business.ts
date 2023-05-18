@@ -4,6 +4,7 @@ import { ForegroundNotification } from "../../Notification";
 import { ServiceProvider } from "../Service";
 
 export interface Business {
+  id: number;
   profile: BusinessProfile;
   details: ServiceProvider;
   rentals?: Array<Rental>;

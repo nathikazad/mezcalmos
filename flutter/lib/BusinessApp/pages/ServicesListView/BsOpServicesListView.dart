@@ -13,6 +13,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProduct
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
+import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -22,6 +23,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -32,7 +34,21 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
 class BsOpServicesListView extends StatefulWidget {
-  const BsOpServicesListView({Key? key}) : super(key: key);
+  final int? businessId;
+  final int? businessDetailsId;
+  final BusinessProfile? businessProfile;
+  const BsOpServicesListView(
+      {Key? key, this.businessId, this.businessProfile, this.businessDetailsId})
+      : super(key: key);
+  static Future<void> navigate(
+      {required int id,
+      required BusinessProfile profile,
+      required int detailsId}) async {
+    String route =
+        BusinessOpRoutes.kBusniessOpServiceList.replaceFirst(":id", "$id");
+    return MezRouter.toPath(route,
+        arguments: {"profile": profile, "detailsId": detailsId});
+  }
 
   @override
   _BsOpServicesListViewState createState() => _BsOpServicesListViewState();
@@ -40,9 +56,24 @@ class BsOpServicesListView extends StatefulWidget {
 
 class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   BsServicesListViewController viewController = BsServicesListViewController();
+  BusinessProfile? _businessProfile;
+  int? _id;
+  int? _detailsId;
   @override
   void initState() {
-    viewController.init();
+    _detailsId = widget.businessDetailsId ??
+        MezRouter.bodyArguments?["detailsId"] as int?;
+
+    _businessProfile = widget.businessProfile ??
+        MezRouter.bodyArguments?["profile"] as BusinessProfile?;
+    _id =
+        widget.businessId ?? int.parse(MezRouter.urlArguments["id"].toString());
+    if (_businessProfile != null && _id != null && _detailsId != null) {
+      viewController.init(
+          profile: _businessProfile!, id: _id!, businessDetailsId: _detailsId!);
+    } else {
+      throw Exception("Missing arguments");
+    }
     super.initState();
   }
 
@@ -115,16 +146,26 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   () => Column(
                     children: List.generate(
                         viewController.homeRentals.length,
-                        (int index) => BsHomeRentalCard(
-                              rental: viewController.homeRentals[index],
-                              onClick: () {
-                                BsOpHomeRentalView.navigate(
-                                  id: viewController.homeRentals[index].id!
-                                      .toInt(),
-                                );
-                              },
-                              viewController: viewController,
-                            )),
+                        (int index) => MezCard(
+                            onClick: () {
+                              BsOpHomeRentalView.navigate(
+                                  businessId: viewController.businessId,
+                                  businessDetailsId:
+                                      viewController.businessDetailsId,
+                                  id: viewController
+                                      .homeRentals[index].details.id
+                                      .toInt());
+                            },
+                            firstAvatarBgImage: NetworkImage(
+                              viewController
+                                      .homeRentals[index].details.firstImage ??
+                                  customImageUrl,
+                            ),
+                            content: Text(
+                              viewController.homeRentals[index].details.name
+                                  .getTranslation(userLanguage),
+                              style: context.textTheme.bodyLarge,
+                            ))),
                   ),
                 ),
                 SizedBox(
@@ -144,7 +185,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             rental: viewController.rentals[index],
                             onClick: () {
                               BsOpRentalView.navigate(
-                                id: viewController.rentals[index].id!.toInt(),
+                                businessId: viewController.businessId,
+                                businessDetailsId:
+                                    viewController.businessDetailsId,
+                                id: viewController.rentals[index].details.id
+                                    .toInt(),
                                 rentalCategory:
                                     viewController.rentals[index].category1,
                               );
@@ -184,19 +229,27 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   () => Column(
                     children: List.generate(
                         viewController.events.length,
-                        (int index) => !viewController.events[index].isClass
-                            ? BsEventCard(
-                                viewController: viewController,
-                                event: viewController.events[index],
-                                onClick: () {
-                                  BsOpEventView.navigate(
-                                    id: viewController.events[index].id!
-                                        .toInt(),
-                                    isClass:
-                                        viewController.events[index].isClass,
-                                  );
-                                })
-                            : SizedBox.shrink()),
+                        (int index) => MezCard(
+                            onClick: () {
+                              BsOpEventView.navigate(
+                                businessId: viewController.businessId,
+                                profile: viewController.businessProfile,
+                                businessDetailsId:
+                                    viewController.businessDetailsId,
+                                id: viewController.events[index].details.id
+                                    .toInt(),
+                                isClass: viewController.events[index].isClass,
+                              );
+                            },
+                            firstAvatarBgImage: NetworkImage(
+                              viewController.events[index].details.firstImage ??
+                                  customImageUrl,
+                            ),
+                            content: Text(
+                              viewController.events[index].details.name
+                                  .getTranslation(userLanguage),
+                              style: context.textTheme.bodyLarge,
+                            ))),
                   ),
                 ),
                 SizedBox(
@@ -219,6 +272,10 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                   BsOpEventView.navigate(
                                     id: viewController.events[index].id!
                                         .toInt(),
+                                    businessId: viewController.businessId,
+                                    businessDetailsId:
+                                        viewController.businessDetailsId,
+                                    profile: viewController.businessProfile,
                                     isClass:
                                         viewController.events[index].isClass,
                                   );
@@ -238,15 +295,26 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   () => Column(
                     children: List.generate(
                         viewController.services.length,
-                        (int index) => BsServiceCard(
-                              viewController: viewController,
-                              service: viewController.services[index],
-                              onClick: () {
-                                BsOpServiceView.navigate(
-                                    id: viewController.services[index].id!
-                                        .toInt());
-                              },
-                            )),
+                        (int index) => MezCard(
+                            onClick: () {
+                              BsOpServiceView.navigate(
+                                  businessId: viewController.businessId,
+                                  businessDetailsId:
+                                      viewController.businessDetailsId,
+                                  serviceId: viewController
+                                      .services[index].details.id
+                                      .toInt());
+                            },
+                            firstAvatarBgImage: NetworkImage(
+                              viewController
+                                      .services[index].details.firstImage ??
+                                  customImageUrl,
+                            ),
+                            content: Text(
+                              viewController.services[index].details.name
+                                  .getTranslation(userLanguage),
+                              style: context.textTheme.bodyLarge,
+                            ))),
                   ),
                 ),
                 SizedBox(
@@ -261,15 +329,25 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   () => Column(
                     children: List.generate(
                         viewController.product.length,
-                        (int index) => BsProductCard(
-                              viewController: viewController,
-                              product: viewController.product[index],
-                              onClick: () {
-                                BsOpProductView.navigate(
-                                    id: viewController.product[index].details.id
-                                        .toInt());
-                              },
-                            )),
+                        (int index) => MezCard(
+                            onClick: () {
+                              BsOpProductView.navigate(
+                                  businessId: viewController.businessId,
+                                  businessDetailsId:
+                                      viewController.businessDetailsId,
+                                  id: viewController.product[index].details.id
+                                      .toInt());
+                            },
+                            firstAvatarBgImage: NetworkImage(
+                              viewController
+                                      .product[index].details.firstImage ??
+                                  customImageUrl,
+                            ),
+                            content: Text(
+                              viewController.product[index].details.name
+                                  .getTranslation(userLanguage),
+                              style: context.textTheme.bodyLarge,
+                            ))),
                   ),
                 ),
               ],
@@ -308,7 +386,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         Container(
                           alignment: Alignment.center,
                           child: Text(
-                            "${_i18n()["serviceType"]} ${viewController.businessProfile.value.name}",
+                            "${_i18n()["serviceType"]} ${viewController.businessProfile.name}",
                             style: context.textTheme.bodyLarge,
                             textAlign: TextAlign.center,
                           ),

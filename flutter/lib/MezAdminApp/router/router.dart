@@ -1,3 +1,4 @@
+import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/MezAdminApp/MezAdminWrapper.dart';
@@ -34,6 +35,7 @@ class MezAdminRoutes {
       RestaurantAppRoutes.sharedWithAdminRoutes +
       LaundryAppRoutes.sharedWithAdminRoutes +
       DeliveryAdminRoutes.sharedWitAdminRoutes +
+      BusinessOpRoutes.sharedWitAdminRoutes +
       SharedServiceProviderRoutes.routes +
       NativeOnlyRoutes.routes;
 }

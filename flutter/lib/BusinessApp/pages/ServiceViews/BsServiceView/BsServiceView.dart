@@ -20,10 +20,16 @@ dynamic _i18n() =>
 
 class BsOpServiceView extends StatefulWidget {
   const BsOpServiceView({Key? key}) : super(key: key);
-  static Future<bool?> navigate({required int? id}) async {
+  static Future<bool?> navigate(
+      {required int? serviceId,
+      required int businessDetailsId,
+      required int businessId}) async {
     String route = BusinessOpRoutes.kBsOpService;
-    route = route.replaceFirst(":id", id?.toString() ?? "add");
-    await MezRouter.toPath(route);
+    route = route.replaceFirst(":id", serviceId?.toString() ?? "add");
+    await MezRouter.toPath(route, arguments: {
+      "businessDetailsId": businessDetailsId,
+      "businessId": businessId,
+    });
     return MezRouter.backResult;
   }
 
@@ -36,7 +42,15 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
   BsServiceViewController viewController = BsServiceViewController();
   @override
   void initState() {
-    viewController.init(thickerProvider: this);
+    final int? detailsId = int.tryParse(
+        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
+    final int? businessId =
+        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    if (detailsId == null || businessId == null) {
+      throw Exception("detailsId is null");
+    }
+    viewController.init(
+        thickerProvider: this, detailsId: detailsId, businessId: businessId);
     int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
       viewController.initEditMode(id: id);

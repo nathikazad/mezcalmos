@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpPeriodPicker.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
@@ -21,14 +22,14 @@ dynamic _i18n() =>
 
 class BsEventViewController {
   // instances //
-  BusinessOpAuthController _opAuthController =
-      Get.find<BusinessOpAuthController>();
+
   LanguageTabsController languageTabsController = LanguageTabsController();
   bool firstFormValid = false;
   bool secondFormValid = false;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
   // vars //
+  late BusinessProfile businessProfile;
   bool shouldRefetch = false;
   bool get isClass => _isClass.value;
   RxBool _isClass = false.obs;
@@ -49,8 +50,6 @@ class BsEventViewController {
       return languageTabsController.tabController != null;
   }
 
-  BusinessProfile get businessProfile =>
-      Get.find<BusinessOpAuthController>().businessProfile!;
   EventWithBusinessCard? get event => _event.value;
   bool get isEditing => _event.value != null;
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
@@ -82,11 +81,17 @@ class BsEventViewController {
 // methods //
 
   Future<void> init(
-      {required TickerProvider thickerProvider, required bool isClass}) async {
+      {required TickerProvider thickerProvider,
+      required bool isClass,
+      required int detailsId,
+      required int businessId,
+      required BusinessProfile profile}) async {
     _isClass.value = isClass;
+    businessProfile = profile;
     await languageTabsController.init(
-        vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
-    detailsController.setLanguage(language: languages!);
+        vsync: thickerProvider, detailsId: detailsId);
+    detailsController.initDetails(
+        businessId: businessId, language: languages!, detailsId: detailsId);
 
     mezDbgPrint("Is class ================>$isClass");
     setPrices();
@@ -98,7 +103,7 @@ class BsEventViewController {
     mezDbgPrint("event id : $id");
     if (event != null) {
       detailsController.clearPrices();
-      await detailsController.initEditMode(detalsId: event!.details.id.toInt());
+      await detailsController.initEditMode();
 
       _isClass.value = event!.tags?.contains(EventTag.Class) == true;
 

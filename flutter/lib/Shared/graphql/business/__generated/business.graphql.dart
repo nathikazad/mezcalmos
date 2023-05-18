@@ -17581,3 +17581,576 @@ class _CopyWithStubImpl$Query$get_business_lang$business_business_by_pk$details<
   }) =>
       _res;
 }
+
+class Variables$Query$get_business_id_from_details_id {
+  factory Variables$Query$get_business_id_from_details_id(
+          {required int businessDetailsId}) =>
+      Variables$Query$get_business_id_from_details_id._({
+        r'businessDetailsId': businessDetailsId,
+      });
+
+  Variables$Query$get_business_id_from_details_id._(this._$data);
+
+  factory Variables$Query$get_business_id_from_details_id.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$businessDetailsId = data['businessDetailsId'];
+    result$data['businessDetailsId'] = (l$businessDetailsId as int);
+    return Variables$Query$get_business_id_from_details_id._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get businessDetailsId => (_$data['businessDetailsId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$businessDetailsId = businessDetailsId;
+    result$data['businessDetailsId'] = l$businessDetailsId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_business_id_from_details_id<
+          Variables$Query$get_business_id_from_details_id>
+      get copyWith => CopyWith$Variables$Query$get_business_id_from_details_id(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_business_id_from_details_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$businessDetailsId = businessDetailsId;
+    final lOther$businessDetailsId = other.businessDetailsId;
+    if (l$businessDetailsId != lOther$businessDetailsId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$businessDetailsId = businessDetailsId;
+    return Object.hashAll([l$businessDetailsId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_business_id_from_details_id<TRes> {
+  factory CopyWith$Variables$Query$get_business_id_from_details_id(
+    Variables$Query$get_business_id_from_details_id instance,
+    TRes Function(Variables$Query$get_business_id_from_details_id) then,
+  ) = _CopyWithImpl$Variables$Query$get_business_id_from_details_id;
+
+  factory CopyWith$Variables$Query$get_business_id_from_details_id.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_business_id_from_details_id;
+
+  TRes call({int? businessDetailsId});
+}
+
+class _CopyWithImpl$Variables$Query$get_business_id_from_details_id<TRes>
+    implements CopyWith$Variables$Query$get_business_id_from_details_id<TRes> {
+  _CopyWithImpl$Variables$Query$get_business_id_from_details_id(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_business_id_from_details_id _instance;
+
+  final TRes Function(Variables$Query$get_business_id_from_details_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? businessDetailsId = _undefined}) =>
+      _then(Variables$Query$get_business_id_from_details_id._({
+        ..._instance._$data,
+        if (businessDetailsId != _undefined && businessDetailsId != null)
+          'businessDetailsId': (businessDetailsId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_business_id_from_details_id<TRes>
+    implements CopyWith$Variables$Query$get_business_id_from_details_id<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_business_id_from_details_id(this._res);
+
+  TRes _res;
+
+  call({int? businessDetailsId}) => _res;
+}
+
+class Query$get_business_id_from_details_id {
+  Query$get_business_id_from_details_id({
+    required this.business_business,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_id_from_details_id.fromJson(
+      Map<String, dynamic> json) {
+    final l$business_business = json['business_business'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_id_from_details_id(
+      business_business: (l$business_business as List<dynamic>)
+          .map((e) =>
+              Query$get_business_id_from_details_id$business_business.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$get_business_id_from_details_id$business_business>
+      business_business;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_business = business_business;
+    _resultData['business_business'] =
+        l$business_business.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_business = business_business;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$business_business.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_business_id_from_details_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_business = business_business;
+    final lOther$business_business = other.business_business;
+    if (l$business_business.length != lOther$business_business.length) {
+      return false;
+    }
+    for (int i = 0; i < l$business_business.length; i++) {
+      final l$business_business$entry = l$business_business[i];
+      final lOther$business_business$entry = lOther$business_business[i];
+      if (l$business_business$entry != lOther$business_business$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_id_from_details_id
+    on Query$get_business_id_from_details_id {
+  CopyWith$Query$get_business_id_from_details_id<
+          Query$get_business_id_from_details_id>
+      get copyWith => CopyWith$Query$get_business_id_from_details_id(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_id_from_details_id<TRes> {
+  factory CopyWith$Query$get_business_id_from_details_id(
+    Query$get_business_id_from_details_id instance,
+    TRes Function(Query$get_business_id_from_details_id) then,
+  ) = _CopyWithImpl$Query$get_business_id_from_details_id;
+
+  factory CopyWith$Query$get_business_id_from_details_id.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_business_id_from_details_id;
+
+  TRes call({
+    List<Query$get_business_id_from_details_id$business_business>?
+        business_business,
+    String? $__typename,
+  });
+  TRes business_business(
+      Iterable<Query$get_business_id_from_details_id$business_business> Function(
+              Iterable<
+                  CopyWith$Query$get_business_id_from_details_id$business_business<
+                      Query$get_business_id_from_details_id$business_business>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_business_id_from_details_id<TRes>
+    implements CopyWith$Query$get_business_id_from_details_id<TRes> {
+  _CopyWithImpl$Query$get_business_id_from_details_id(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_id_from_details_id _instance;
+
+  final TRes Function(Query$get_business_id_from_details_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_business = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_id_from_details_id(
+        business_business:
+            business_business == _undefined || business_business == null
+                ? _instance.business_business
+                : (business_business as List<
+                    Query$get_business_id_from_details_id$business_business>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes business_business(
+          Iterable<Query$get_business_id_from_details_id$business_business> Function(
+                  Iterable<
+                      CopyWith$Query$get_business_id_from_details_id$business_business<
+                          Query$get_business_id_from_details_id$business_business>>)
+              _fn) =>
+      call(
+          business_business: _fn(_instance.business_business.map((e) =>
+              CopyWith$Query$get_business_id_from_details_id$business_business(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_business_id_from_details_id<TRes>
+    implements CopyWith$Query$get_business_id_from_details_id<TRes> {
+  _CopyWithStubImpl$Query$get_business_id_from_details_id(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_business_id_from_details_id$business_business>?
+        business_business,
+    String? $__typename,
+  }) =>
+      _res;
+  business_business(_fn) => _res;
+}
+
+const documentNodeQueryget_business_id_from_details_id =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_business_id_from_details_id'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'businessDetailsId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_business'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'businessDetailsId')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_business_id_from_details_id
+    _parserFn$Query$get_business_id_from_details_id(
+            Map<String, dynamic> data) =>
+        Query$get_business_id_from_details_id.fromJson(data);
+
+class Options$Query$get_business_id_from_details_id
+    extends graphql.QueryOptions<Query$get_business_id_from_details_id> {
+  Options$Query$get_business_id_from_details_id({
+    String? operationName,
+    required Variables$Query$get_business_id_from_details_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_business_id_from_details_id,
+          parserFn: _parserFn$Query$get_business_id_from_details_id,
+        );
+}
+
+class WatchOptions$Query$get_business_id_from_details_id
+    extends graphql.WatchQueryOptions<Query$get_business_id_from_details_id> {
+  WatchOptions$Query$get_business_id_from_details_id({
+    String? operationName,
+    required Variables$Query$get_business_id_from_details_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_business_id_from_details_id,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_business_id_from_details_id,
+        );
+}
+
+class FetchMoreOptions$Query$get_business_id_from_details_id
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_business_id_from_details_id({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$get_business_id_from_details_id variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryget_business_id_from_details_id,
+        );
+}
+
+extension ClientExtension$Query$get_business_id_from_details_id
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_business_id_from_details_id>>
+      query$get_business_id_from_details_id(
+              Options$Query$get_business_id_from_details_id options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$get_business_id_from_details_id>
+      watchQuery$get_business_id_from_details_id(
+              WatchOptions$Query$get_business_id_from_details_id options) =>
+          this.watchQuery(options);
+  void writeQuery$get_business_id_from_details_id({
+    required Query$get_business_id_from_details_id data,
+    required Variables$Query$get_business_id_from_details_id variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryget_business_id_from_details_id),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_business_id_from_details_id?
+      readQuery$get_business_id_from_details_id({
+    required Variables$Query$get_business_id_from_details_id variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryget_business_id_from_details_id),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$get_business_id_from_details_id.fromJson(result);
+  }
+}
+
+class Query$get_business_id_from_details_id$business_business {
+  Query$get_business_id_from_details_id$business_business({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_id_from_details_id$business_business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_id_from_details_id$business_business(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_business_id_from_details_id$business_business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_id_from_details_id$business_business
+    on Query$get_business_id_from_details_id$business_business {
+  CopyWith$Query$get_business_id_from_details_id$business_business<
+          Query$get_business_id_from_details_id$business_business>
+      get copyWith =>
+          CopyWith$Query$get_business_id_from_details_id$business_business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_id_from_details_id$business_business<
+    TRes> {
+  factory CopyWith$Query$get_business_id_from_details_id$business_business(
+    Query$get_business_id_from_details_id$business_business instance,
+    TRes Function(Query$get_business_id_from_details_id$business_business) then,
+  ) = _CopyWithImpl$Query$get_business_id_from_details_id$business_business;
+
+  factory CopyWith$Query$get_business_id_from_details_id$business_business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_id_from_details_id$business_business;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_id_from_details_id$business_business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_id_from_details_id$business_business<TRes> {
+  _CopyWithImpl$Query$get_business_id_from_details_id$business_business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_id_from_details_id$business_business _instance;
+
+  final TRes Function(Query$get_business_id_from_details_id$business_business)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_id_from_details_id$business_business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_id_from_details_id$business_business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_id_from_details_id$business_business<TRes> {
+  _CopyWithStubImpl$Query$get_business_id_from_details_id$business_business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}

@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
@@ -12,8 +13,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class BsServiceViewController {
   // instances //
-  BusinessOpAuthController _opAuthController =
-      Get.find<BusinessOpAuthController>();
+
   LanguageTabsController languageTabsController = LanguageTabsController();
 
   // streams //
@@ -51,10 +51,15 @@ class BsServiceViewController {
       return languageTabsController.tabController != null;
   }
 
-  Future<void> init({required TickerProvider thickerProvider}) async {
+  Future<void> init(
+      {required TickerProvider thickerProvider,
+      required int detailsId,
+      required int businessId}) async {
     await languageTabsController.init(
-        vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
-    detailsController.setLanguage(language: languages!);
+        vsync: thickerProvider, detailsId: detailsId);
+    detailsController.initDetails(
+        businessId: businessId, language: languages!, detailsId: detailsId);
+
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
 
@@ -62,8 +67,7 @@ class BsServiceViewController {
     _service.value = await get_service_by_id(id: id, withCache: false);
     mezDbgPrint("service id : $id");
     if (service != null) {
-      await detailsController.initEditMode(
-          detalsId: service!.details.id.toInt());
+      await detailsController.initEditMode();
       serviceSchedule.value = service?.schedule;
     }
   }
