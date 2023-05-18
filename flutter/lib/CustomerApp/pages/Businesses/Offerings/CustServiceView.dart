@@ -68,7 +68,8 @@ class _CustServiceViewState extends State<CustServiceView> {
                     children: [
                       Text(
                         viewController.service!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)
+                            .inCaps,
                         style: context.textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w700, fontSize: 18.mezSp),
                       ),
@@ -84,9 +85,8 @@ class _CustServiceViewState extends State<CustServiceView> {
                               cost: viewController.service!.details.cost,
                             ),
                       _description(context),
-                      SizedBox(height: 15),
                       CustBusinessMessageCard(
-                        margin: EdgeInsets.zero,
+                        margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.service!.business,
                         offeringName: viewController.service!.details.name,

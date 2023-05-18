@@ -270,7 +270,8 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                         children: [
                           CachedNetworkImage(
                             imageUrl: viewController.therapy[index].details.name
-                                .getTranslation(userLanguage),
+                                .getTranslation(userLanguage)
+                                .inCaps,
                             imageBuilder: (BuildContext context,
                                     ImageProvider<Object> imageProvider) =>
                                 CircleAvatar(

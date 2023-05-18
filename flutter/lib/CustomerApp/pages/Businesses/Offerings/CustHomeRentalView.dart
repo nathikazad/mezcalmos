@@ -66,7 +66,8 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     children: [
                       Text(
                         viewController.homeRental!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)
+                            .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
@@ -82,34 +83,26 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       CustBusinessRentalCost(
                         cost: viewController.homeRental!.details.cost,
                       ),
-                       _description(context),
-                      
+                      _description(context),
                       if (viewController.homeRental?.gpsLocation != null)
-                         
-                           ServiceLocationCard(
-                              height: 20.h,
-                              location: MezLocation(
-                                viewController
-                                        .homeRental!.gpsLocation?.address ??
-                                    "",
-                                MezLocation.buildLocationData(
-                                  viewController.homeRental!.gpsLocation!.lat
-                                      .toDouble(),
-                                  viewController.homeRental!.gpsLocation!.lng
-                                      .toDouble(),
-                                ),
-                              ),
+                        ServiceLocationCard(
+                          height: 20.h,
+                          location: MezLocation(
+                            viewController.homeRental!.gpsLocation?.address ??
+                                "",
+                            MezLocation.buildLocationData(
+                              viewController.homeRental!.gpsLocation!.lat
+                                  .toDouble(),
+                              viewController.homeRental!.gpsLocation!.lng
+                                  .toDouble(),
                             ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                          ),
+                        ),
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.homeRental!.business,
                         offeringName: viewController.homeRental!.details.name,
-                      ),
-                      SizedBox(
-                        height: 15,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

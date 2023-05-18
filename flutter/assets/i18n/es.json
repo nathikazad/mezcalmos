@@ -1048,8 +1048,8 @@
             "social": "Social",
             "therapy": "Terapia",
             "scheduled": "Programada",
-            "oneTime": "Una vez",
-            "onDemand": "On demand",
+            "oneTime": "Taller",
+            "onDemand": "Privada",
             "all": "Alle"
           }
         },
@@ -1542,14 +1542,14 @@
         "setNameAndImage": "Establezca su nombre e imagen antes de continuar "
       }
     },
-    "models" : {
-      "Utilities" : {
-"ServiceProviderType" : {
-  "restaurant" : "Restaurante",
-  "business" : "Negocio",
-  "laundry" : "Lavadero",
-  "deliveryCompany" :"Compañía de entrega"
-}
+    "models": {
+      "Utilities": {
+        "ServiceProviderType": {
+          "restaurant": "Restaurante",
+          "business": "Negocio",
+          "laundry": "Lavadero",
+          "deliveryCompany": "Compañía de entrega"
+        }
       }
     },
     "helpers": {
@@ -1581,8 +1581,8 @@
         "photoAccessOffBody": "Apparently you denied the app from photo library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
-        "added" : "Agregada",
-        "addedTitle" : "Su información ha sido agregada",
+        "added": "Agregada",
+        "addedTitle": "Su información ha sido agregada",
         "saved": "Guardado",
         "routeError": "Error a obtener su información de ubicación e ruta",
         "writeReview": "Escribir un comentario",
@@ -1645,16 +1645,16 @@
         "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación."
       },
       "CreateServiceView": {
-
         "pages": {
           "createServiceStartPage": {
-            "create" : "Crear",
-            "subtitle" : {
-              "restaurant" : "Cree un nuevo restaurante y reciba pedidos de sus clientes locales..",
-              "business" : "Cree su perfil comercial y comience a recibir pedidos de sus clientes locales.",
-              "laundry" : "Cree una nueva ropa y reciba pedidos de sus clientes locales.",
-              "deliveryCompany" : "Cree el perfil de su empresa de entrega y comience a recibir pedidos de sus clientes locales"
-             }   },
+            "create": "Crear",
+            "subtitle": {
+              "restaurant": "Cree un nuevo restaurante y reciba pedidos de sus clientes locales..",
+              "business": "Cree su perfil comercial y comience a recibir pedidos de sus clientes locales.",
+              "laundry": "Cree una nueva ropa y reciba pedidos de sus clientes locales.",
+              "deliveryCompany": "Cree el perfil de su empresa de entrega y comience a recibir pedidos de sus clientes locales"
+            }
+          },
           "CreateServiceInfoPage": {
             "name": "Nombre ",
             "hintNameText": "Introduzca su nombre",
@@ -1689,21 +1689,19 @@
         "ok": "OK",
         "selectCompany": "Seleccione una empresa",
         "selectCompanyText": "Necesita seleccionar una empresa de entrega",
-        "createdTitle" : {
-          "restaurant" : "Tu restaurante está en revisión",
-          "business" : "Su negocio está en revisión",
-          "laundry" : "Tu lavandería está en revisión",
-          "deliveryCompany" : "Su empresa de entrega está bajo revisión"
-
+        "createdTitle": {
+          "restaurant": "Tu restaurante está en revisión",
+          "business": "Su negocio está en revisión",
+          "laundry": "Tu lavandería está en revisión",
+          "deliveryCompany": "Su empresa de entrega está bajo revisión"
         },
-        "createdSubtitle" : {
-          "restaurant" : "Puede comenzar a agregar elementos a su menú y se le notificará una vez que su restaurante esté aprobado.",
-          "business" : "Puede comenzar a agregar ofertas y se le notificará una vez que su negocio esté aprobado.",
-          "laundry" : "Puede comenzar a agregar precios y se le notificará una vez que se apruebe su lavandería.",
-          "deliveryCompany" : "Puede comenzar las ofertas de conducir y se le notificará una vez que se apruebe su empresa de entrega."
-
+        "createdSubtitle": {
+          "restaurant": "Puede comenzar a agregar elementos a su menú y se le notificará una vez que su restaurante esté aprobado.",
+          "business": "Puede comenzar a agregar ofertas y se le notificará una vez que su negocio esté aprobado.",
+          "laundry": "Puede comenzar a agregar precios y se le notificará una vez que se apruebe su lavandería.",
+          "deliveryCompany": "Puede comenzar las ofertas de conducir y se le notificará una vez que se apruebe su empresa de entrega."
         }
-        },
+      },
       "DeliveryCostSettingView": {
         "dvCost": "Coste de envío",
         "km": "km",
@@ -3424,8 +3422,8 @@
             "profile": "Perfil",
             "costs": "Costo",
             "accept": "Aceptar",
-            "reject": "Rechazar"
-            ,"offerings" : "Ofertas"
+            "reject": "Rechazar",
+            "offerings": "Ofertas"
           }
         }
       },

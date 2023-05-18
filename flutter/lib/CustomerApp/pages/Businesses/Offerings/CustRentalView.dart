@@ -66,7 +66,8 @@ class _CustRentalViewState extends State<CustRentalView> {
                     children: [
                       Text(
                         viewController.rental!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)
+                            .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
@@ -98,21 +99,12 @@ class _CustRentalViewState extends State<CustRentalView> {
                                 ),
                               ),
                             ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        _i18n()['store'],
-                        style: context.textTheme.bodyLarge,
-                      ),
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.only(top: 15),
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
                         business: viewController.rental!.business,
                         offeringName: viewController.rental!.details.name,
-                      ),
-                      SizedBox(
-                        height: 10,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

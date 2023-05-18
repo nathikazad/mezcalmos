@@ -83,7 +83,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
             children: [
               Container(
                 child: ListView(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   children: [
                     if (_viewController.business!.rentals != null &&
                         _viewController.business!.rentals!.isNotEmpty)
@@ -199,7 +199,10 @@ class _CustBusinessViewState extends State<CustBusinessView>
             margin: EdgeInsets.only(bottom: 10),
             rental: rental,
             elevation: 0,
-          )
+          ),
+        SizedBox(
+          height: 10,
+        )
       ],
     );
   }
@@ -208,9 +211,6 @@ class _CustBusinessViewState extends State<CustBusinessView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 15,
-        ),
         Text('${_i18n()['events']}',
             style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
         SizedBox(height: 5),
@@ -219,7 +219,10 @@ class _CustBusinessViewState extends State<CustBusinessView>
             margin: EdgeInsets.only(bottom: 10),
             elevation: 0,
             event: event,
-          )
+          ),
+        SizedBox(
+          height: 10,
+        )
       ],
     );
   }
@@ -235,7 +238,10 @@ class _CustBusinessViewState extends State<CustBusinessView>
           CustBusinessProductCard(
               margin: EdgeInsets.only(bottom: 10),
               elevation: 0,
-              product: product)
+              product: product),
+        SizedBox(
+          height: 10,
+        )
       ],
     );
   }
@@ -252,7 +258,10 @@ class _CustBusinessViewState extends State<CustBusinessView>
             margin: EdgeInsets.only(bottom: 10),
             service: service,
             elevation: 0,
-          )
+          ),
+        SizedBox(
+          height: 10,
+        )
       ],
     );
   }
@@ -290,9 +299,12 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     children: [
                       WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
-                          child: Icon(
-                            Icons.message_rounded,
-                            color: primaryBlueColor,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Icon(
+                              Icons.message_rounded,
+                              color: primaryBlueColor,
+                            ),
                           )),
                       TextSpan(
                         text: '${_i18n()["chatWithUs"]}',
@@ -321,9 +333,12 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     children: [
                       WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
-                          child: Icon(
-                            Icons.phone,
-                            color: primaryBlueColor,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Icon(
+                              Icons.phone,
+                              color: primaryBlueColor,
+                            ),
                           )),
                       TextSpan(
                         text: '${_i18n()["contactUs"]}',

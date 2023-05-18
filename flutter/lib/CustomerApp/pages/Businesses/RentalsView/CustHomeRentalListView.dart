@@ -222,7 +222,8 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                       children: [
                         Text(
                           viewController.rentals[index].details.name
-                              .getTranslation(userLanguage),
+                              .getTranslation(userLanguage)
+                              .inCaps,
                           overflow: TextOverflow.ellipsis,
                           style: context.textTheme.displaySmall?.copyWith(
                               fontSize: 12.5.mezSp,

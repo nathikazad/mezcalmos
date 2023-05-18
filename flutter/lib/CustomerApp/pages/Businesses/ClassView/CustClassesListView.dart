@@ -274,11 +274,12 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (_isValidImage(index))
+                    if (viewController.classes[index].details.image != null)
                       Row(
                         children: [
                           CachedNetworkImage(
-                            imageUrl: viewController.businesses[index].image,
+                            imageUrl:
+                                viewController.classes[index].details.image![0],
                             errorWidget: (BuildContext context, url, error) =>
                                 Icon(Icons.error),
                             imageBuilder: (BuildContext context,
@@ -296,7 +297,8 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                     Expanded(
                       child: Text(
                         viewController.classes[index].details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)
+                            .inCaps,
                         style: context.textTheme.bodyLarge?.copyWith(
                             fontSize: 12.5.mezSp, fontWeight: FontWeight.w600),
                       ),
@@ -363,6 +365,4 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       ],
     );
   }
-
-  bool _isValidImage(int index) => viewController.businesses.length > index;
 }

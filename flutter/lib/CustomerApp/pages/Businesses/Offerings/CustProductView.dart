@@ -62,7 +62,8 @@ class _CustProductViewState extends State<CustProductView> {
                     children: [
                       Text(
                         viewController.product!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)
+                            .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
                       Text(
@@ -73,10 +74,8 @@ class _CustProductViewState extends State<CustProductView> {
                         ),
                       ),
                       _description(context),
-                      SizedBox(
-                        height: 12.5,
-                      ),
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 15),
                         business: viewController.product!.business,
                         offeringName: viewController.product!.details.name,
