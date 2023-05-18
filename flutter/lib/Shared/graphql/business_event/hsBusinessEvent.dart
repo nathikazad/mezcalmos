@@ -33,9 +33,9 @@ Future<List<EventCard>> get_event_by_category(
               categories1: categories1
                   .map((EventCategory1 e) => e.toFirebaseFormatString())
                   .toList(),
-              distance: distance,
-              from: Geography(
-                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+              // distance: distance,
+              // from: Geography(
+              //     fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               categories2: categories2
                       ?.map((EventCategory2 e) => e.toFirebaseFormatString())
                       .toList() ??
@@ -46,7 +46,7 @@ Future<List<EventCard>> get_event_by_category(
               tags: tags ?? [],
               offset: offset,
               limit: limit)));
-  mezDbgPrint("Event response ======>${response.data}");
+  mezDbgPrint("Event response ======>${response.parsedData?.toJson()}");
   if (response.parsedData?.business_event != null) {
     response.parsedData?.business_event
         .forEach((Query$get_event_by_category$business_event data) async {

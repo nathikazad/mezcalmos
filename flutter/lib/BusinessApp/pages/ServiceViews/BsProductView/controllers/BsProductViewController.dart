@@ -53,7 +53,8 @@ class BsProductViewController {
   Future<void> init(
       {required TickerProvider thickerProvider,
       required int detailsId,
-      required int businessId}) async {
+      required int businessId,
+      int? productId}) async {
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
@@ -61,6 +62,9 @@ class BsProductViewController {
         language: languages!,
         businessDetailsId: detailsId);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
+    if (productId != null) {
+      await initEditMode(id: productId);
+    }
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -128,7 +132,7 @@ class BsProductViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
-         detailsController.clearImages();
+        detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {

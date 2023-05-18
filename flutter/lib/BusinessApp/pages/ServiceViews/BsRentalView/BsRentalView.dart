@@ -47,22 +47,21 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
     with TickerProviderStateMixin {
   BsRentalViewController viewController = BsRentalViewController();
   late RentalCategory1 rentalCategory;
+  int? businessId;
+  int? businessDetailsId;
+  int? rentalId;
   @override
   void initState() {
-    rentalCategory =
-        MezRouter.bodyArguments?["rentalCategory"] as RentalCategory1;
-    final int? detailsId = int.tryParse(
-        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
-    final int? businessId =
-        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
-    if (detailsId == null || businessId == null) {
+    _assignValues();
+    if (businessDetailsId == null || businessId == null) {
       throw Exception("detailsId is null");
     }
     viewController.init(
-        businessId: businessId,
+        businessId: businessId!,
         category1: rentalCategory,
+        rentalId: rentalId,
         thickerProvider: this,
-        detailsId: detailsId);
+        detailsId: businessDetailsId!);
 
     int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
@@ -70,6 +69,16 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
     }
 
     super.initState();
+  }
+
+  void _assignValues() {
+       rentalCategory =
+        MezRouter.bodyArguments?["rentalCategory"] as RentalCategory1;
+    businessDetailsId = int.tryParse(
+        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
+    businessId =
+        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    rentalId = int.tryParse(MezRouter.urlArguments["id"].toString());
   }
 
   @override
@@ -390,7 +399,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                           minHeight: 0,
                         ).tighten(width: 50),
                         suffixIcon: Text(
-                           _i18n()["vehicleRental"]["Feet"],
+                          _i18n()["vehicleRental"]["Feet"],
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),

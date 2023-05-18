@@ -40,22 +40,24 @@ class BsOpServiceView extends StatefulWidget {
 class _BsOpServiceViewState extends State<BsOpServiceView>
     with TickerProviderStateMixin {
   BsServiceViewController viewController = BsServiceViewController();
+  int? businessId;
+  int? businessDetailsId;
+  int? serviceId;
   @override
   void initState() {
-    final int? detailsId = int.tryParse(
+    businessDetailsId = int.tryParse(
         MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
-    final int? businessId =
+    businessId =
         int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
-    if (detailsId == null || businessId == null) {
+    serviceId = int.tryParse(MezRouter.urlArguments["id"].toString());
+    if (businessDetailsId == null || businessId == null) {
       throw Exception("detailsId is null");
     }
     viewController.init(
-        thickerProvider: this, detailsId: detailsId, businessId: businessId);
-    int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
-    if (id != null) {
-      
-      viewController.initEditMode(id: id);
-    }
+        thickerProvider: this,
+        serviceId: serviceId,
+        detailsId: businessDetailsId!,
+        businessId: businessId!);
 
     super.initState();
   }

@@ -85,6 +85,7 @@ class BsEventViewController {
       required bool isClass,
       required int detailsId,
       required int businessId,
+      int? eventId,
       required BusinessProfile profile}) async {
     _isClass.value = isClass;
     businessProfile = profile;
@@ -97,6 +98,9 @@ class BsEventViewController {
 
     mezDbgPrint("Is class ================>$isClass");
     setPrices();
+    if (eventId != null) {
+      await initEditMode(id: eventId);
+    }
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -158,7 +162,7 @@ class BsEventViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
-         detailsController.clearImages();
+        detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {

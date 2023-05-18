@@ -3077,8 +3077,8 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$name$
 class Variables$Query$get_event_by_category {
   factory Variables$Query$get_event_by_category({
     List<String>? categories1,
-    required double distance,
-    required Geography from,
+    double? distance,
+    Geography? from,
     int? limit,
     int? offset,
     List<String>? categories2,
@@ -3087,8 +3087,8 @@ class Variables$Query$get_event_by_category {
   }) =>
       Variables$Query$get_event_by_category._({
         if (categories1 != null) r'categories1': categories1,
-        r'distance': distance,
-        r'from': from,
+        if (distance != null) r'distance': distance,
+        if (from != null) r'from': from,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
         if (categories2 != null) r'categories2': categories2,
@@ -3106,10 +3106,14 @@ class Variables$Query$get_event_by_category {
       result$data['categories1'] =
           (l$categories1 as List<dynamic>?)?.map((e) => (e as String)).toList();
     }
-    final l$distance = data['distance'];
-    result$data['distance'] = (l$distance as num).toDouble();
-    final l$from = data['from'];
-    result$data['from'] = geographyFromJson(l$from);
+    if (data.containsKey('distance')) {
+      final l$distance = data['distance'];
+      result$data['distance'] = (l$distance as num?)?.toDouble();
+    }
+    if (data.containsKey('from')) {
+      final l$from = data['from'];
+      result$data['from'] = l$from == null ? null : geographyFromJson(l$from);
+    }
     if (data.containsKey('limit')) {
       final l$limit = data['limit'];
       result$data['limit'] = (l$limit as int?);
@@ -3140,8 +3144,8 @@ class Variables$Query$get_event_by_category {
   Map<String, dynamic> _$data;
 
   List<String>? get categories1 => (_$data['categories1'] as List<String>?);
-  double get distance => (_$data['distance'] as double);
-  Geography get from => (_$data['from'] as Geography);
+  double? get distance => (_$data['distance'] as double?);
+  Geography? get from => (_$data['from'] as Geography?);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
   List<String>? get categories2 => (_$data['categories2'] as List<String>?);
@@ -3153,10 +3157,14 @@ class Variables$Query$get_event_by_category {
       final l$categories1 = categories1;
       result$data['categories1'] = l$categories1?.map((e) => e).toList();
     }
-    final l$distance = distance;
-    result$data['distance'] = l$distance;
-    final l$from = from;
-    result$data['from'] = geographyToJson(l$from);
+    if (_$data.containsKey('distance')) {
+      final l$distance = distance;
+      result$data['distance'] = l$distance;
+    }
+    if (_$data.containsKey('from')) {
+      final l$from = from;
+      result$data['from'] = l$from == null ? null : geographyToJson(l$from);
+    }
     if (_$data.containsKey('limit')) {
       final l$limit = limit;
       result$data['limit'] = l$limit;
@@ -3217,11 +3225,18 @@ class Variables$Query$get_event_by_category {
     }
     final l$distance = distance;
     final lOther$distance = other.distance;
+    if (_$data.containsKey('distance') !=
+        other._$data.containsKey('distance')) {
+      return false;
+    }
     if (l$distance != lOther$distance) {
       return false;
     }
     final l$from = from;
     final lOther$from = other.from;
+    if (_$data.containsKey('from') != other._$data.containsKey('from')) {
+      return false;
+    }
     if (l$from != lOther$from) {
       return false;
     }
@@ -3319,8 +3334,8 @@ class Variables$Query$get_event_by_category {
               ? null
               : Object.hashAll(l$categories1.map((v) => v))
           : const {},
-      l$distance,
-      l$from,
+      _$data.containsKey('distance') ? l$distance : const {},
+      _$data.containsKey('from') ? l$from : const {},
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
       _$data.containsKey('categories2')
@@ -3390,9 +3405,8 @@ class _CopyWithImpl$Variables$Query$get_event_by_category<TRes>
         ..._instance._$data,
         if (categories1 != _undefined)
           'categories1': (categories1 as List<String>?),
-        if (distance != _undefined && distance != null)
-          'distance': (distance as double),
-        if (from != _undefined && from != null) 'from': (from as Geography),
+        if (distance != _undefined) 'distance': (distance as double?),
+        if (from != _undefined) 'from': (from as Geography?),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
         if (categories2 != _undefined)
@@ -3599,7 +3613,7 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'distance')),
         type: NamedTypeNode(
           name: NameNode(value: 'Float'),
-          isNonNull: true,
+          isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -3608,7 +3622,7 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'from')),
         type: NamedTypeNode(
           name: NameNode(value: 'geography'),
-          isNonNull: true,
+          isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -3753,31 +3767,6 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
                       ObjectFieldNode(
                         name: NameNode(value: 'details'),
                         value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: 'location'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'gps'),
-                                value: ObjectValueNode(fields: [
-                                  ObjectFieldNode(
-                                    name: NameNode(value: '_st_d_within'),
-                                    value: ObjectValueNode(fields: [
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'distance'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'distance')),
-                                      ),
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'from'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'from')),
-                                      ),
-                                    ]),
-                                  )
-                                ]),
-                              )
-                            ]),
-                          ),
                           ObjectFieldNode(
                             name: NameNode(value: 'approved'),
                             value: ObjectValueNode(fields: [
@@ -4090,7 +4079,7 @@ class Options$Query$get_event_by_category
     extends graphql.QueryOptions<Query$get_event_by_category> {
   Options$Query$get_event_by_category({
     String? operationName,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -4098,7 +4087,7 @@ class Options$Query$get_event_by_category
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -4115,7 +4104,7 @@ class WatchOptions$Query$get_event_by_category
     extends graphql.WatchQueryOptions<Query$get_event_by_category> {
   WatchOptions$Query$get_event_by_category({
     String? operationName,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -4126,7 +4115,7 @@ class WatchOptions$Query$get_event_by_category
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -4146,10 +4135,10 @@ class FetchMoreOptions$Query$get_event_by_category
     extends graphql.FetchMoreOptions {
   FetchMoreOptions$Query$get_event_by_category({
     required graphql.UpdateQuery updateQuery,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
   }) : super(
           updateQuery: updateQuery,
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           document: documentNodeQueryget_event_by_category,
         );
 }
@@ -4157,35 +4146,35 @@ class FetchMoreOptions$Query$get_event_by_category
 extension ClientExtension$Query$get_event_by_category on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$get_event_by_category>>
       query$get_event_by_category(
-              Options$Query$get_event_by_category options) async =>
-          await this.query(options);
-  graphql.ObservableQuery<Query$get_event_by_category>
-      watchQuery$get_event_by_category(
-              WatchOptions$Query$get_event_by_category options) =>
-          this.watchQuery(options);
+              [Options$Query$get_event_by_category? options]) async =>
+          await this.query(options ?? Options$Query$get_event_by_category());
+  graphql.ObservableQuery<
+      Query$get_event_by_category> watchQuery$get_event_by_category(
+          [WatchOptions$Query$get_event_by_category? options]) =>
+      this.watchQuery(options ?? WatchOptions$Query$get_event_by_category());
   void writeQuery$get_event_by_category({
     required Query$get_event_by_category data,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
           operation: graphql.Operation(
               document: documentNodeQueryget_event_by_category),
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? const {},
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
   Query$get_event_by_category? readQuery$get_event_by_category({
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
         operation:
             graphql.Operation(document: documentNodeQueryget_event_by_category),
-        variables: variables.toJson(),
+        variables: variables?.toJson() ?? const {},
       ),
       optimistic: optimistic,
     );

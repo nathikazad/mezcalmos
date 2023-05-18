@@ -8,7 +8,6 @@ import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -42,25 +41,33 @@ class BsOpHomeRentalView extends StatefulWidget {
 class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
     with TickerProviderStateMixin {
   BsHomeRentalViewController viewController = BsHomeRentalViewController();
+  int? businessId;
+  int? businessDetailsId;
+  int? homeRentalId;
+
   @override
   void initState() {
-    final int? detailsId = int.tryParse(
-        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
-    final int? businessId =
-        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    _assignValues();
 
-    if (detailsId == null || businessId == null) {
+    if (businessDetailsId == null || businessId == null) {
       throw Exception("detailsId is null");
     }
-    mezDbgPrint("detailsId: $detailsId");
+
     viewController.init(
-        thickerProvider: this, detailsId: detailsId, businessId: businessId);
-    int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
-    if (id != null) {
-      viewController.initEditMode(id: id);
-    }
+        thickerProvider: this,
+        homeRentalId: homeRentalId,
+        detailsId: businessDetailsId!,
+        businessId: businessId!);
 
     super.initState();
+  }
+
+  void _assignValues() {
+    businessDetailsId = int.tryParse(
+        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
+    businessId =
+        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    homeRentalId = int.tryParse(MezRouter.urlArguments["id"].toString());
   }
 
   @override
