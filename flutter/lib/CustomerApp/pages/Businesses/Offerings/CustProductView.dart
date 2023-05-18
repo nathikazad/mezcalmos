@@ -62,7 +62,7 @@ class _CustProductViewState extends State<CustProductView> {
                     children: [
                       Text(
                         viewController.product!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!,
                         style: context.textTheme.displayMedium,
                       ),
                       Text(

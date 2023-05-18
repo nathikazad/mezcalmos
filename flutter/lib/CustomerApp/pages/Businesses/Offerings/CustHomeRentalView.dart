@@ -66,7 +66,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     children: [
                       Text(
                         viewController.homeRental!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!,
                         style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
@@ -82,24 +82,21 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       CustBusinessRentalCost(
                         cost: viewController.homeRental!.details.cost,
                       ),
-                       _description(context),
-                      
+                      _description(context),
                       if (viewController.homeRental?.gpsLocation != null)
-                         
-                           ServiceLocationCard(
-                              height: 20.h,
-                              location: MezLocation(
-                                viewController
-                                        .homeRental!.gpsLocation?.address ??
-                                    "",
-                                MezLocation.buildLocationData(
-                                  viewController.homeRental!.gpsLocation!.lat
-                                      .toDouble(),
-                                  viewController.homeRental!.gpsLocation!.lng
-                                      .toDouble(),
-                                ),
-                              ),
+                        ServiceLocationCard(
+                          height: 20.h,
+                          location: MezLocation(
+                            viewController.homeRental!.gpsLocation?.address ??
+                                "",
+                            MezLocation.buildLocationData(
+                              viewController.homeRental!.gpsLocation!.lat
+                                  .toDouble(),
+                              viewController.homeRental!.gpsLocation!.lng
+                                  .toDouble(),
                             ),
+                          ),
+                        ),
                       SizedBox(
                         height: 15,
                       ),

@@ -76,7 +76,7 @@ class _RestaurantsListOfItemsComponentState
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "${widget.item.name.getTranslation(userLanguage).capitalizeFirstofEach}",
+                        "${widget.item.name.getTranslation(userLanguage)!.capitalizeFirstofEach}",
                         style: context.txt.displaySmall?.copyWith(
                           fontSize: 13.mezSp,
                         ),

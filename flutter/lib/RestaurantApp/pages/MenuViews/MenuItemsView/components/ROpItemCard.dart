@@ -87,7 +87,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                     Flexible(
                       fit: FlexFit.tight,
                       child: Text(
-                        widget.item.name.getTranslation(userLanguage),
+                        widget.item.name.getTranslation(userLanguage)!,
                         style: context.txt.bodyLarge,
                         maxLines: 2,
                       ),

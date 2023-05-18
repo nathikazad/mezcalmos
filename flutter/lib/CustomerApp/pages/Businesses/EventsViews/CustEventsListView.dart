@@ -286,7 +286,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                     Expanded(
                       child: Text(
                         viewController.events[index].details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!,
                         style: context.textTheme.bodyLarge?.copyWith(
                             fontSize: 12.5.mezSp,
                             fontWeight: FontWeight.w600,

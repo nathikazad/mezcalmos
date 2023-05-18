@@ -47,9 +47,7 @@ class RestaurantInfoTab extends StatelessWidget {
       children: <Widget>[
         _topBarInfo(context),
         if (restaurant.info.description != null &&
-            restaurant.info.description!
-                .getTranslation(userLanguage)
-                .isNotEmpty)
+            restaurant.info.description!.getTranslation(userLanguage) != null)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

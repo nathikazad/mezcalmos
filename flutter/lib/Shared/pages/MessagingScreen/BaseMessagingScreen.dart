@@ -133,7 +133,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
               : SizedBox.shrink(),
         ),
         content: Text(
-          link.name.getTranslation(userLanguage),
+          link.name.getTranslation(userLanguage)!,
         ),
       ),
     );

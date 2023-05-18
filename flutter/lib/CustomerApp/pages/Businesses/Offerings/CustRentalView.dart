@@ -66,7 +66,7 @@ class _CustRentalViewState extends State<CustRentalView> {
                     children: [
                       Text(
                         viewController.rental!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!,
                         style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(

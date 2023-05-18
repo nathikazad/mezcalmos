@@ -240,7 +240,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                                   width: 55.mezW,
                                   child: Text(
                                     viewController.services[index].details.name
-                                        .getTranslation(userLanguage),
+                                        .getTranslation(userLanguage)!,
                                     overflow: TextOverflow.ellipsis,
                                     style: context.textTheme.displaySmall
                                         ?.copyWith(

@@ -68,7 +68,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                     children: [
                       Text(
                         viewController.service!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!,
                         style: context.textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w700, fontSize: 18.mezSp),
                       ),

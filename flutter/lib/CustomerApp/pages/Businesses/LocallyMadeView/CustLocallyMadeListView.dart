@@ -58,7 +58,8 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: MezRouter.back, title: "${_i18n()[viewController.getTitleKey]}"),
+          onClick: MezRouter.back,
+          title: "${_i18n()[viewController.getTitleKey]}"),
       body: Obx(() {
         if (viewController.isLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -235,7 +236,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                         width: 55.mezW,
                         child: Text(
                           viewController.products[index].details.name
-                              .getTranslation(userLanguage),
+                              .getTranslation(userLanguage)!,
                           overflow: TextOverflow.ellipsis,
                           style: context.textTheme.displaySmall?.copyWith(
                               fontSize: 12.mezSp, fontWeight: FontWeight.bold),

@@ -361,7 +361,7 @@ class _CustLaundryOrderRequestViewState
           Flexible(
             flex: 1,
             child: Text(
-              item.name.getTranslation(userLanguage).inCaps,
+              item.name.getTranslation(userLanguage)!.inCaps,
               style: context.txt.bodyMedium,
               maxLines: 1,
             ),

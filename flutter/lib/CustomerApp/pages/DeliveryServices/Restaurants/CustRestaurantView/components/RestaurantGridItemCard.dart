@@ -66,7 +66,7 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
                 height: 5,
               ),
               Text(
-                widget.item.name.getTranslation(userLanguage),
+                widget.item.name.getTranslation(userLanguage)!,
                 textAlign: TextAlign.center,
               ),
               SizedBox(

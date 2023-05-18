@@ -46,7 +46,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              widget.item.name.getTranslation(userLanguage),
+              widget.item.name.getTranslation(userLanguage)!,
               style: context.txt.displaySmall?.copyWith(fontSize: 12.sp),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,

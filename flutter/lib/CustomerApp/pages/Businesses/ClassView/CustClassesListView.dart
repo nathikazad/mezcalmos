@@ -298,7 +298,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                     Expanded(
                       child: Text(
                         viewController.classes[index].details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!,
                         style: context.textTheme.bodyLarge?.copyWith(
                             fontSize: 12.5.mezSp, fontWeight: FontWeight.w600),
                       ),

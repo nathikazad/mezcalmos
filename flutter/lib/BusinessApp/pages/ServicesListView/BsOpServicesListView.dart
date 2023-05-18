@@ -166,7 +166,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             ),
                             content: Text(
                               viewController.homeRentals[index].details.name
-                                  .getTranslation(userLanguage),
+                                  .getTranslation(userLanguage)!,
                               style: context.textTheme.bodyLarge,
                             ))),
                   ),
@@ -250,7 +250,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             ),
                             content: Text(
                               viewController.events[index].details.name
-                                  .getTranslation(userLanguage),
+                                  .getTranslation(userLanguage)!,
                               style: context.textTheme.bodyLarge,
                             ))),
                   ),
@@ -315,7 +315,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             ),
                             content: Text(
                               viewController.services[index].details.name
-                                  .getTranslation(userLanguage),
+                                  .getTranslation(userLanguage)!,
                               style: context.textTheme.bodyLarge,
                             ))),
                   ),
@@ -348,7 +348,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             ),
                             content: Text(
                               viewController.product[index].details.name
-                                  .getTranslation(userLanguage),
+                                  .getTranslation(userLanguage)!,
                               style: context.textTheme.bodyLarge,
                             ))),
                   ),

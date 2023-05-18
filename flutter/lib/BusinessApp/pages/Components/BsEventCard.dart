@@ -55,7 +55,7 @@ class BsEventCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    event.details.name.getTranslation(userLanguage),
+                    event.details.name.getTranslation(userLanguage)!,
                     style: context.textTheme.bodyLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,

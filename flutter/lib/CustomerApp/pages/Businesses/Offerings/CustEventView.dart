@@ -91,7 +91,7 @@ class _CustEventViewState extends State<CustEventView> {
                     children: [
                       Text(
                         viewController.event!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!,
                         style: context.textTheme.displayMedium,
                       ),
                       CustBusinessAdditionalData(

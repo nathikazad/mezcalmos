@@ -47,7 +47,7 @@ class CustBusinessItemAppbar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 1),
             child: !isCollapsed
                 ? Text(
-                    itemDetails.name.getTranslation(userLanguage),
+                    itemDetails.name.getTranslation(userLanguage)!,
                     style: context.textTheme.displayMedium!
                         .copyWith(color: Colors.white),
                   )

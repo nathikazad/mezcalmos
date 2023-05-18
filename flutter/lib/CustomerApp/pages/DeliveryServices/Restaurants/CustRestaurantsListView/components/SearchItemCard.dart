@@ -46,7 +46,7 @@ class SearchItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      item.name.getTranslation(userLanguage),
+                      item.name.getTranslation(userLanguage)!,
                       maxLines: 2,
                       style: context.txt.bodyLarge,
                     ),

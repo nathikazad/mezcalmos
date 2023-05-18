@@ -55,8 +55,9 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                 child: Text(
                   (widget.viewController.isEditingCategory)
                       ? widget.viewController.editableCategory.value!.name
-                          .getTranslation(userLanguage)
-                          .capitalizeFirst!
+                              .getTranslation(userLanguage)
+                              ?.capitalizeFirst! ??
+                          "${_i18n()["newItemsWeight"]}"
                       : "${_i18n()["newItemsWeight"]}",
                   style: Theme.of(context).textTheme.displaySmall,
                   maxLines: 2,

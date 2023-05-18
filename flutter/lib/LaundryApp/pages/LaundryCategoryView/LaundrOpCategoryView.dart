@@ -97,7 +97,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView>
         () => Text((_viewController.editMode.value &&
                 _viewController.copyOfCategory.value != null)
             ? _viewController.copyOfCategory.value!.name
-                .getTranslation(userLanguage)
+                .getTranslation(userLanguage)!
             : "${_i18n()["addCategory"]}"),
       ),
     );
