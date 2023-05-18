@@ -235,7 +235,9 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         (int index) => viewController
                                     .events[index].scheduleType ==
                                 ScheduleType.Scheduled
-                            ? MezCard(
+                            ? BsEventCard(
+                                event: viewController.events[index],
+                                viewController: viewController,
                                 onClick: () {
                                   BsOpEventView.navigate(
                                     businessId: viewController.businessId,
@@ -248,17 +250,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                         viewController.events[index].isClass,
                                   );
                                 },
-                                firstAvatarBgImage: NetworkImage(
-                                  viewController
-                                          .events[index].details.firstImage ??
-                                      customImageUrl,
-                                ),
-                                content: Text(
-                                  viewController.events[index].details.name
-                                      .getTranslation(userLanguage)!
-                                      .inCaps,
-                                  style: context.textTheme.bodyLarge,
-                                ))
+                              )
                             : SizedBox.shrink()),
                   ),
                 ),
@@ -279,7 +271,9 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         (int index) => viewController
                                     .events[index].scheduleType ==
                                 ScheduleType.OnDemand
-                            ? MezCard(
+                            ? BsEventCard(
+                                event: viewController.events[index],
+                                viewController: viewController,
                                 onClick: () {
                                   BsOpEventView.navigate(
                                     businessId: viewController.businessId,
@@ -292,17 +286,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                         viewController.events[index].isClass,
                                   );
                                 },
-                                firstAvatarBgImage: NetworkImage(
-                                  viewController
-                                          .events[index].details.firstImage ??
-                                      customImageUrl,
-                                ),
-                                content: Text(
-                                  viewController.events[index].details.name
-                                      .getTranslation(userLanguage)!
-                                      .inCaps,
-                                  style: context.textTheme.bodyLarge,
-                                ))
+                              )
                             : SizedBox.shrink()),
                   ),
                 ),
@@ -323,7 +307,9 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         (int index) => viewController
                                     .events[index].scheduleType ==
                                 ScheduleType.OneTime
-                            ? MezCard(
+                            ? BsEventCard(
+                                event: viewController.events[index],
+                                viewController: viewController,
                                 onClick: () {
                                   BsOpEventView.navigate(
                                     businessId: viewController.businessId,
@@ -336,17 +322,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                         viewController.events[index].isClass,
                                   );
                                 },
-                                firstAvatarBgImage: NetworkImage(
-                                  viewController
-                                          .events[index].details.firstImage ??
-                                      customImageUrl,
-                                ),
-                                content: Text(
-                                  viewController.events[index].details.name
-                                      .getTranslation(userLanguage)!
-                                      .inCaps,
-                                  style: context.textTheme.bodyLarge,
-                                ))
+                              )
                             : SizedBox.shrink()),
                   ),
                 ),
