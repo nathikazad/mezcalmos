@@ -2,12 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/controllers/CustLocallyMadeListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -16,18 +18,17 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['LocallyMadeView']['CustLocallyMadeListView'];
 
 class CustLocallyMadeListView extends StatefulWidget {
   const CustLocallyMadeListView({super.key});
-  static Future<void> navigate({required ProductCategory1 productCategory}) {
+  static Future<void> navigate(
+      {required List<ProductCategory1> productCategories}) {
     final String route = CustBusinessRoutes.custLocallyMadeRoute;
     return MezRouter.toPath(route, arguments: {
-      "productCategory": productCategory,
+      "productCategories": productCategories,
     });
   }
 
@@ -42,8 +43,8 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
 
   @override
   void initState() {
-    ProductCategory1? serviceCategory =
-        MezRouter.bodyArguments?["productCategory"] as ProductCategory1?;
+    List<ProductCategory1>? serviceCategory = MezRouter
+        .bodyArguments?["productCategories"] as List<ProductCategory1>?;
     if (serviceCategory != null) {
       viewController.init(serviceCategory: serviceCategory);
     } else {
@@ -56,12 +57,8 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        onClick: MezRouter.back,
-        titleWidget: Text(
-            '${_i18n()[viewController.productsCategory.first.toFirebaseFormatString()]}'),
-      ),
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: MezRouter.back, title: "${_i18n()[viewController.getTitleKey]}"),
       body: Obx(() {
         if (viewController.isLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -105,8 +102,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
       children: [
         Flexible(
           child: MezButton(
-            label:
-                '${_i18n()[viewController.productsCategory.first.toFirebaseFormatString()]}',
+            label: '${_i18n()["${viewController.getTitleKey}"]}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -264,7 +260,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                         imageUrl:
                             viewController.products[index].details.firstImage ==
                                     null
-                                ? customImageUrl
+                                ? defaultUserImgUrl
                                 : viewController
                                     .products[index].details.firstImage!),
                   )

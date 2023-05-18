@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['TherapyView']['CustTherapyListView'];
@@ -269,8 +270,9 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CachedNetworkImage(
-                            imageUrl: viewController.therapy[index].details.name
-                                .getTranslation(userLanguage),
+                            imageUrl: viewController
+                                    .therapy[index].details.firstImage ??
+                                defaultUserImgUrl,
                             imageBuilder: (BuildContext context,
                                     ImageProvider<Object> imageProvider) =>
                                 CircleAvatar(
