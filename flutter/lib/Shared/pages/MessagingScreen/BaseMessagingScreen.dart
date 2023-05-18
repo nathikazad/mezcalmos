@@ -289,10 +289,6 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                         ),
                       ),
                       Obx(() {
-                        mezDbgPrint("Linkkkkkkkk ⏰");
-                        mezDbgPrint(
-                            "${controller.chat.value?.messages.last.message}");
-
                         if (controller.chat.value?.chatInfo.parentlink ==
                                 null ||
                             (MezRouter.isRouteInStack(

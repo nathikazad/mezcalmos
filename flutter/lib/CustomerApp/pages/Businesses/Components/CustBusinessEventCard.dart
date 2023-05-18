@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
-import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['components']['CustBusinessEventCard'];
@@ -39,10 +38,9 @@ class CustBusinessEventCard extends StatelessWidget {
           eventId: event.details.id.toInt(),
         );
       },
-      firstAvatarBgImage:
-          (event.details.image != null && event.details.image!.isNotEmpty)
-              ? CachedNetworkImageProvider(event.details.image![0])
-              : null,
+      firstAvatarBgImage: (event.details.firstImage != null)
+          ? CachedNetworkImageProvider(event.details.firstImage!)
+          : null,
       content: Text(
         event.details.name.getTranslation(userLanguage),
         style: context.textTheme.bodyLarge

@@ -183,8 +183,9 @@ Future<Business?> get_business_by_id(
             language: ServiceProviderLanguage(
                 primary:
                     data.details.language["primary"].toString().toLanguage(),
-                secondary:
-                    data.details.language["secondary"].toString().toLanguage()),
+                secondary: (data.details.language?["secondary"] != null)
+                    ? data.details.language["secondary"].toString().toLanguage()
+                    : null),
             currency: data.details.currency.toCurrency(),
             deliveryDetails: DeliveryDetails(
                 deliveryAvailable: false,
