@@ -54,6 +54,8 @@ Future<List<EventCard>> get_event_by_category(
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           event: Event(
+            startsAt: data.starts_at,
+            endsAt: data.ends_at,
             category1: data.details.category1.toEventCategory1(),
             gpsLocation: data.gps_location != null && data.address != null
                 ? Location(

@@ -223,31 +223,131 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   style: context.textTheme.bodyLarge,
                 ),
                 smallSepartor,
+                Text(
+                  _i18n()["events"]["scheduled"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
                 Obx(
                   () => Column(
                     children: List.generate(
                         viewController.events.length,
-                        (int index) => MezCard(
-                            onClick: () {
-                              BsOpEventView.navigate(
-                                businessId: viewController.businessId,
-                                profile: viewController.businessProfile,
-                                businessDetailsId:
-                                    viewController.businessDetailsId,
-                                id: viewController.events[index].id!.toInt(),
-                                isClass: viewController.events[index].isClass,
-                              );
-                            },
-                            firstAvatarBgImage: NetworkImage(
-                              viewController.events[index].details.firstImage ??
-                                  customImageUrl,
-                            ),
-                            content: Text(
-                              viewController.events[index].details.name
-                                  .getTranslation(userLanguage)
-                                  .inCaps,
-                              style: context.textTheme.bodyLarge,
-                            ))),
+                        (int index) => viewController
+                                    .events[index].scheduleType ==
+                                ScheduleType.Scheduled
+                            ? MezCard(
+                                onClick: () {
+                                  BsOpEventView.navigate(
+                                    businessId: viewController.businessId,
+                                    profile: viewController.businessProfile,
+                                    businessDetailsId:
+                                        viewController.businessDetailsId,
+                                    id: viewController.events[index].id!
+                                        .toInt(),
+                                    isClass:
+                                        viewController.events[index].isClass,
+                                  );
+                                },
+                                firstAvatarBgImage: NetworkImage(
+                                  viewController
+                                          .events[index].details.firstImage ??
+                                      customImageUrl,
+                                ),
+                                content: Text(
+                                  viewController.events[index].details.name
+                                      .getTranslation(userLanguage)
+                                      .inCaps,
+                                  style: context.textTheme.bodyLarge,
+                                ))
+                            : SizedBox.shrink()),
+                  ),
+                ),
+                Text(
+                  _i18n()["events"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Text(
+                  _i18n()["events"]["onDemand"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.events.length,
+                        (int index) => viewController
+                                    .events[index].scheduleType ==
+                                ScheduleType.OnDemand
+                            ? MezCard(
+                                onClick: () {
+                                  BsOpEventView.navigate(
+                                    businessId: viewController.businessId,
+                                    profile: viewController.businessProfile,
+                                    businessDetailsId:
+                                        viewController.businessDetailsId,
+                                    id: viewController.events[index].id!
+                                        .toInt(),
+                                    isClass:
+                                        viewController.events[index].isClass,
+                                  );
+                                },
+                                firstAvatarBgImage: NetworkImage(
+                                  viewController
+                                          .events[index].details.firstImage ??
+                                      customImageUrl,
+                                ),
+                                content: Text(
+                                  viewController.events[index].details.name
+                                      .getTranslation(userLanguage)
+                                      .inCaps,
+                                  style: context.textTheme.bodyLarge,
+                                ))
+                            : SizedBox.shrink()),
+                  ),
+                ),
+                Text(
+                  _i18n()["events"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Text(
+                  _i18n()["events"]["oneTime"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.events.length,
+                        (int index) => viewController
+                                    .events[index].scheduleType ==
+                                ScheduleType.OneTime
+                            ? MezCard(
+                                onClick: () {
+                                  BsOpEventView.navigate(
+                                    businessId: viewController.businessId,
+                                    profile: viewController.businessProfile,
+                                    businessDetailsId:
+                                        viewController.businessDetailsId,
+                                    id: viewController.events[index].id!
+                                        .toInt(),
+                                    isClass:
+                                        viewController.events[index].isClass,
+                                  );
+                                },
+                                firstAvatarBgImage: NetworkImage(
+                                  viewController
+                                          .events[index].details.firstImage ??
+                                      customImageUrl,
+                                ),
+                                content: Text(
+                                  viewController.events[index].details.name
+                                      .getTranslation(userLanguage)
+                                      .inCaps,
+                                  style: context.textTheme.bodyLarge,
+                                ))
+                            : SizedBox.shrink()),
                   ),
                 ),
                 SizedBox(

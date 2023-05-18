@@ -78,7 +78,33 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
                             ? _buildBusinesses()
-                            : _buildEvents(),
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${_i18n()["scheduled"]}",
+                                    style: context.textTheme.bodyLarge,
+                                  ),
+                                  smallSepartor,
+                                  _buildEvents(ScheduleType.Scheduled),
+                                  bigSeperator,
+                                  Text(
+                                    "${_i18n()["onDemand"]}",
+                                    style: context.textTheme.bodyLarge,
+                                  ),
+                                  smallSepartor,
+                                  _buildEvents(
+                                    ScheduleType.OnDemand,
+                                  ),
+                                  bigSeperator,
+                                  Text(
+                                    "${_i18n()["oneTime"]}",
+                                    style: context.textTheme.bodyLarge,
+                                  ),
+                                  smallSepartor,
+                                  _buildEvents(ScheduleType.OneTime),
+                                ],
+                              ),
                       ),
                     ],
                   ),
@@ -254,79 +280,81 @@ class _CustEventsListViewState extends State<CustEventsListView> {
           child: Text('${_i18n()['noBusinessesFound']}'));
   }
 
-  Widget _buildEvents() {
+  Widget _buildEvents(ScheduleType scheduleType) {
     if (viewController.events.isNotEmpty) {
       return Column(
           children: List.generate(
         viewController.events.length,
-        (int index) => MezCard(
-            onClick: () {
-              CustEventView.navigate(
-                eventId: viewController.events[index].details.id.toInt(),
-              );
-            },
-            elevation: 0,
-            margin: EdgeInsets.only(bottom: 12.5),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        (int index) => scheduleType != viewController.events[index].scheduleType
+            ? const SizedBox.shrink()
+            : MezCard(
+                onClick: () {
+                  CustEventView.navigate(
+                    eventId: viewController.events[index].details.id.toInt(),
+                  );
+                },
+                elevation: 0,
+                margin: EdgeInsets.only(bottom: 12.5),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CachedNetworkImage(
-                      imageUrl:
-                          viewController.events[index].details.firstImage ??
-                              defaultUserImgUrl,
-                      imageBuilder: (BuildContext context,
-                              ImageProvider<Object> imageProvider) =>
-                          CircleAvatar(
-                        radius: 16.mezSp,
-                        backgroundImage: imageProvider,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl:
+                              viewController.events[index].details.firstImage ??
+                                  defaultUserImgUrl,
+                          imageBuilder: (BuildContext context,
+                                  ImageProvider<Object> imageProvider) =>
+                              CircleAvatar(
+                            radius: 16.mezSp,
+                            backgroundImage: imageProvider,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Text(
+                            viewController.events[index].details.name
+                                .getTranslation(userLanguage)
+                                .inCaps,
+                            style: context.textTheme.bodyLarge?.copyWith(
+                                fontSize: 12.5.mezSp,
+                                fontWeight: FontWeight.w600,
+                                overflow: TextOverflow.ellipsis),
+                          ),
+                        ),
+                        Text(
+                          '${viewController.events[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.events[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textTheme.bodyLarge?.copyWith(
+                              fontSize: 12.5.mezSp,
+                              fontWeight: FontWeight.w600,
+                              overflow: TextOverflow.ellipsis),
+                        )
+                      ],
+                    ),
+                    if (viewController.events[index].schedule != null)
+                      Column(
+                        children: [
+                          Divider(),
+                          CustBusinessScheduleBuilder(
+                              showTitle: false,
+                              showIcons: false,
+                              schedule: viewController.events[index].schedule,
+                              scheduleType:
+                                  viewController.events[index].scheduleType)
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: Text(
-                        viewController.events[index].details.name
-                            .getTranslation(userLanguage)
-                            .inCaps,
-                        style: context.textTheme.bodyLarge?.copyWith(
-                            fontSize: 12.5.mezSp,
-                            fontWeight: FontWeight.w600,
-                            overflow: TextOverflow.ellipsis),
-                      ),
-                    ),
-                    Text(
-                      '${viewController.events[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.events[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
-                      overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.bodyLarge?.copyWith(
-                          fontSize: 12.5.mezSp,
-                          fontWeight: FontWeight.w600,
-                          overflow: TextOverflow.ellipsis),
-                    )
+                    if (viewController.events[index].scheduleType ==
+                        ScheduleType.OneTime)
+                      oneTimeBuilder(viewController.events[index]),
+                    Divider(),
+                    Text(viewController.events[index].businessName)
                   ],
-                ),
-                if (viewController.events[index].schedule != null)
-                  Column(
-                    children: [
-                      Divider(),
-                      CustBusinessScheduleBuilder(
-                          showTitle: false,
-                          showIcons: false,
-                          schedule: viewController.events[index].schedule,
-                          scheduleType:
-                              viewController.events[index].scheduleType)
-                    ],
-                  ),
-                if (viewController.events[index].scheduleType ==
-                    ScheduleType.OneTime)
-                  oneTimeBuilder(viewController.events[index]),
-                Divider(),
-                Text(viewController.events[index].businessName)
-              ],
-            )),
+                )),
       ));
     } else
       return Container(
@@ -335,23 +363,25 @@ class _CustEventsListViewState extends State<CustEventsListView> {
           child: Text('${_i18n()['noEventsFound']}'));
   }
 
-  Column oneTimeBuilder(EventCard eventData) {
-    return Column(
-      children: [
-        Divider(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-            Text(
-                "${eventData.period!.formatTime(eventData.period!.start)} - ${eventData.period!.formatTime(eventData.period!.end)}"),
-          ],
-        ),
-      ],
-    );
+  Widget oneTimeBuilder(EventCard eventData) {
+    return eventData.startsAt != null && eventData.endsAt != null
+        ? Column(
+            children: [
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                      "${eventData.period!.formatTime(eventData.period!.start)} - ${eventData.period!.formatTime(eventData.period!.end)}"),
+                ],
+              ),
+            ],
+          )
+        : SizedBox.shrink();
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
