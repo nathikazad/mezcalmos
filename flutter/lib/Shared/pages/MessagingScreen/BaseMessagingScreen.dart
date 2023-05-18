@@ -99,7 +99,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
     Timer(mezChatScrollDuration ?? Duration(milliseconds: 200), () {
       if (_listViewScrollController.hasClients)
         _listViewScrollController.jumpTo(
-          _listViewScrollController.position.maxScrollExtent,
+          _listViewScrollController.position.minScrollExtent,
           // duration: Duration(seconds: 1),
           // curve: Curves.fastOutSlowIn
         );
@@ -325,9 +325,10 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                       Expanded(
                         child: Obx(
                           () => ListView(
+                            reverse: true,
                             shrinkWrap: true,
                             controller: _listViewScrollController,
-                            children: List.from(chatLines),
+                            children: List.from(chatLines.reversed),
                           ),
                         ),
                       ),
