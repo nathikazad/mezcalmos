@@ -91,7 +91,9 @@ class BsEventViewController {
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
-        businessId: businessId, language: languages!, detailsId: detailsId);
+        businessId: businessId,
+        language: languages!,
+        businessDetailsId: detailsId);
 
     mezDbgPrint("Is class ================>$isClass");
     setPrices();
@@ -103,7 +105,8 @@ class BsEventViewController {
     mezDbgPrint("event id : $id");
     if (event != null) {
       detailsController.clearPrices();
-      await detailsController.initEditMode();
+      await detailsController.initEditMode(
+          itemDetailsId: event!.details.id.toInt());
 
       _isClass.value = event!.tags?.contains(EventTag.Class) == true;
 

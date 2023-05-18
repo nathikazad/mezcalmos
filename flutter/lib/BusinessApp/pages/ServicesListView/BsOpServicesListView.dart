@@ -77,10 +77,13 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
     super.initState();
   }
 
+  bool get asTab => widget.businessDetailsId != null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
+      appBar: MezcalmosAppBar(
+          asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+          onClick: asTab ? null : MezRouter.back,
           title: '${_i18n()["services"]}'),
       drawer: MezSideMenu(),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
