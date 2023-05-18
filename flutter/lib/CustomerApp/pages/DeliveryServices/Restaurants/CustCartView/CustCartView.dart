@@ -63,7 +63,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           );
         } else if (viewController.cart.cartItems.length > 0) {
           return SingleChildScrollView(
-            reverse: true,
+            reverse: false,
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
