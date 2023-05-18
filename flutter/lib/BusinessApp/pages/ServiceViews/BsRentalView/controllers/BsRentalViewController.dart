@@ -72,7 +72,9 @@ class BsRentalViewController {
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
-        businessId: businessId, language: languages!, detailsId: detailsId);
+        businessId: businessId,
+        language: languages!,
+        businessDetailsId: detailsId);
 
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
     rentalCategory1 = category1;
@@ -83,7 +85,8 @@ class BsRentalViewController {
     mezDbgPrint("service id : $id");
     if (rental != null) {
       detailsController.clearPrices();
-      await detailsController.initEditMode();
+     await detailsController.initEditMode(
+          itemDetailsId: rental!.details.id.toInt());
       rentalCategory2.value = rental!.category2;
       rentalCategory3.value = rental!.category3;
       if (rentalCategory1 == RentalCategory1.Surf) {

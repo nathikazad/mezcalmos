@@ -12,6 +12,29 @@ object_relationships:
     using:
       foreign_key_constraint_on: name_id
 insert_permissions:
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - additional_parameters
+        - available
+        - business_id
+        - category1
+        - category2
+        - cost
+        - description_id
+        - id
+        - image
+        - name_id
+        - position
+        - tags
   - role: business_operator
     permission:
       check:
