@@ -1229,6 +1229,10 @@
             "personalCare": {
               "title": "Cuidado personal",
               "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            },
+            "art": {
+              "title": "Art",
+              "description": "Agregue un toque de belleza e inspiración a su hogar con nuestra colección de bellas artes."
             }
           }
         },

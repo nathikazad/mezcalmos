@@ -141,7 +141,9 @@ query get_business_by_rental_category1(
         details: {
           location: {
             gps: { _st_d_within: { distance: $distance, from: $from } }
-          }
+          }, 
+          approved: {_eq: true}, 
+          open_status: {_eq: "open"}
         }
         rentals: { details: { category1: { _in: $categories1 } } }
       }
@@ -182,7 +184,9 @@ query get_business_by_event_category1(
         details: {
           location: {
             gps: { _st_d_within: { distance: $distance, from: $from } }
-          }
+          }, 
+          approved: {_eq: true}, 
+          open_status: {_eq: "open"}
         }
         events: {
           details: { category1: { _in: $categories1 } }
@@ -225,7 +229,9 @@ query get_business_by_service_category1(
         details: {
           location: {
             gps: { _st_d_within: { distance: $distance, from: $from } }
-          }
+          }, 
+          approved: {_eq: true}, 
+          open_status: {_eq: "open"}
         }
         services: { details: { category1: { _in: $categories1 } } }
       }
@@ -265,7 +271,9 @@ query get_business_by_product_category1(
         details: {
           location: {
             gps: { _st_d_within: { distance: $distance, from: $from } }
-          }
+          }, 
+          approved: {_eq: true}, 
+          open_status: {_eq: "open"}
         }
         products: { details: { category1: { _in: $categories1 } } }
       }

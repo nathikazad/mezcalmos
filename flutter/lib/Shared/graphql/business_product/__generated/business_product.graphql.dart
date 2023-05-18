@@ -3503,7 +3503,28 @@ const documentNodeQueryget_product_by_category = DocumentNode(definitions: [
                                 ]),
                               )
                             ]),
-                          )
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'approved'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_eq'),
+                                value: BooleanValueNode(value: true),
+                              )
+                            ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'open_status'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_eq'),
+                                value: StringValueNode(
+                                  value: 'open',
+                                  isBlock: false,
+                                ),
+                              )
+                            ]),
+                          ),
                         ]),
                       )
                     ]),

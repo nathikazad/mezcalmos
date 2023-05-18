@@ -176,7 +176,7 @@ class _CustFoodListViewState extends State<CustFoodListView> {
                 (viewController.services[index].details.firstImage != null)
                     ? CachedNetworkImageProvider(
                         viewController.services[index].details.firstImage!)
-                    : CachedNetworkImageProvider(customImageUrl),
+                    : CachedNetworkImageProvider(defaultUserImgUrl),
             content: Text(viewController.services[index].details.name
                 .getTranslation(userLanguage))),
       ));

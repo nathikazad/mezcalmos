@@ -278,7 +278,9 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                       Row(
                         children: [
                           CachedNetworkImage(
-                            imageUrl: viewController.businesses[index].image,
+                            imageUrl: viewController
+                                    .classes[index].details.firstImage ??
+                                defaultUserImgUrl,
                             errorWidget: (BuildContext context, url, error) =>
                                 Icon(Icons.error),
                             imageBuilder: (BuildContext context,

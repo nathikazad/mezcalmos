@@ -79,18 +79,24 @@ query get_event_by_category($categories1: [String!],
         schedule_type: {
           _in: $schedule_type
         },
-         business: {
-           details: {
-             location: {
-               gps: {
-                 _st_d_within: {
-                   distance: $distance, 
-                   from: $from
-                 }
-               }
-             }
-           }
-         }
+        business: {
+          details: {
+            location: {
+              gps: {
+                _st_d_within: {
+                  distance: $distance, 
+                  from: $from
+                }
+              }
+            },
+            approved: {
+              _eq: true
+            },
+            open_status: {
+              _eq: "open"
+            }
+          }
+        }
       }
     }, limit: $limit, offset: $offset) {
     details {
@@ -155,18 +161,24 @@ query get_class_by_category($categories1: [String!],
         schedule_type: {
           _in: $schedule_type
         },
-         business: {
-           details: {
-             location: {
-               gps: {
-                 _st_d_within: {
-                   distance: $distance, 
-                   from: $from
-                 }
-               }
-             }
-           }
-         }
+        business: {
+          details: {
+            location: {
+              gps: {
+                _st_d_within: {
+                  distance: $distance, 
+                  from: $from
+                }
+              }
+            },
+            approved: {
+              _eq: true
+            },
+            open_status: {
+              _eq: "open"
+            }
+          }
+        }
       }
     }, limit: $limit, offset: $offset) {
     details {

@@ -70,7 +70,8 @@ query get_service_by_category($categories1: [String!], $distance: Float!, $from:
                   from: $from
                 }
               }
-            }
+            },
+            approved: {_eq: true}, open_status: {_eq: "open"}
           }
         }
       }
