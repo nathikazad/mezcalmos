@@ -1148,6 +1148,7 @@
         },
         "LocallyMadeView": {
           "CustLocallyMadeListView": {
+            "localMade" :"Locally made",
             "consumable": "Consumable",
             "personalCare": "Personal care",
             "noPetServiceFound": "No services found",

@@ -1211,6 +1211,7 @@
         },
         "LocallyMadeView": {
           "CustLocallyMadeListView": {
+            "localMade" :"Hecho localmente",
             "consumable": "Consumible",
             "personalCare": "Cuidado personal",
             "art": "Arte",
