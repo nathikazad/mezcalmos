@@ -36,7 +36,7 @@
   <link rel="preloads" as="script" href="https://maps.googleapis.com/maps/api/js?key=AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY&libraries=geometry" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="icons/favicon.ico"/>
 
   <title>mez_services_web_app</title>
   <link rel="manifest" href="manifest.json">
@@ -47,7 +47,7 @@
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY&libraries=geometry"></script>
   <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+  <script src="main.dart.js" type="application/javascript" defer></script>
 </head>
 <body>
 
@@ -101,6 +101,7 @@
   // Initialize Firebase
 
 </script>
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-messaging.js"></script>
   <script>
     window.addEventListener('load', function(ev) {
       var loading = document.querySelector('#loading');
@@ -108,7 +109,7 @@
       loading.innerHTML += `<div style="margin-left: 24%;margin-bottom: 15px;" class="loader"/>`;
       loading.innerHTML+=`<div class="everythingOnOneLine"><span style="display: inline-block;">Loading, please wait ..</span> </div>`
   loading.innerHTML+=`</div>`
-  
+  navigator.serviceWorker.register("/firebase-messaging-sw.js");
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
