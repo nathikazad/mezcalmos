@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
@@ -95,22 +97,25 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    choice.name.getTranslation(userLanguage).inCaps,
-                    style: context.txt.bodyMedium?.copyWith(
-                      color: (widget.cartItem.value!.chosenChoices[optionId]
-                                  ?.contains(choice) ??
-                              false)
-                          ? primaryBlueColor
-                          : null,
-                      fontWeight: (widget
-                                  .cartItem.value!.chosenChoices[optionId]
-                                  ?.contains(choice) ??
-                              false)
-                          ? FontWeight.w700
-                          : null,
+                  Expanded(
+                    child: Text(
+                      choice.name.getTranslation(userLanguage).inCaps,
+                      style: context.txt.bodyMedium?.copyWith(
+                        color: (widget.cartItem.value!.chosenChoices[optionId]
+                                    ?.contains(choice) ??
+                                false)
+                            ? primaryBlueColor
+                            : null,
+                        fontWeight: (widget
+                                    .cartItem.value!.chosenChoices[optionId]
+                                    ?.contains(choice) ??
+                                false)
+                            ? FontWeight.w700
+                            : null,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     ),
-                    maxLines: 2,
                   ),
                   SizedBox(
                     width: 5,

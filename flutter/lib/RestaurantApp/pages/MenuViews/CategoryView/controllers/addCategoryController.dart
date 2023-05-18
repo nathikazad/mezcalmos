@@ -45,6 +45,8 @@ class AddCategoryController {
 
   bool get hasSecondaryLang => languageTabsController.hasSecondaryLang;
 
+  bool refetch = false;
+
   /// LOGIC ///
 
   // INIT STATE ///
@@ -95,6 +97,7 @@ class AddCategoryController {
       try {
         await _updateName();
         await _updateDescription();
+        refetch = true;
         return true;
       } on Exception catch (e, stk) {
         mezDbgPrint(e);
@@ -108,6 +111,7 @@ class AddCategoryController {
       try {
         final String? newCatId = await add_category(
             category: constructCategory(), restaurantId: restaurantId);
+        refetch = true;
         return true;
       } on Exception catch (e, stk) {
         mezDbgPrint(e);

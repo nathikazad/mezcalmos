@@ -58,16 +58,6 @@ class RestaurantAppRoutes {
           builder: () => ROpPastOrdersList(),
         ),
         QRoute(
-          path: restaurantOptionRoute,
-          name: restaurantOptionRoute,
-          builder: () => ROpOptionView(),
-        ),
-        QRoute(
-          path: restaurantChoiceRoute,
-          name: restaurantChoiceRoute,
-          builder: () => ROpChoiceView(),
-        ),
-        QRoute(
           path: tabsRoute,
           name: tabsRoute,
           builder: () => ROpTabsViewView(),
@@ -99,6 +89,16 @@ class RestaurantAppRoutes {
       path: restaurantItemRoute,
       name: restaurantItemRoute,
       builder: () => ROpItemView(),
+    ),
+    QRoute(
+      path: restaurantOptionRoute,
+      name: restaurantOptionRoute,
+      builder: () => ROpOptionView(),
+    ),
+    QRoute(
+      path: restaurantChoiceRoute,
+      name: restaurantChoiceRoute,
+      builder: () => ROpChoiceView(),
     ),
     QRoute(
       path: restaurantOrderRoute,

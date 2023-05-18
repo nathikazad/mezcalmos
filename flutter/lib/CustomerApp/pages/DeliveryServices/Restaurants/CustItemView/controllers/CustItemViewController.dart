@@ -37,9 +37,7 @@ class CustItemViewController {
   /// returns the item object from the current cart item
   Item? get getItem => cartItem.value?.item;
 
-  bool get isAdding =>
-      currentMode == ViewItemScreenMode.AddItemMode &&
-      cartContainCurrentItem == false;
+  bool get isAdding => currentMode == ViewItemScreenMode.AddItemMode;
   bool get itemHasDescription {
     return getItem!.description != null &&
         getItem!.description!.getTranslation(userLanguage) != "unnamed";

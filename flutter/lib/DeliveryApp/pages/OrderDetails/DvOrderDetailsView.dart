@@ -60,7 +60,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
     super.initState();
   }
-
+ @override 
+ void dispose(){
+  viewController.dispose();
+  super.dispose();
+ }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
