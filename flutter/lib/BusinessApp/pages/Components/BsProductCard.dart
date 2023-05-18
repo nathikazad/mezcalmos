@@ -47,7 +47,7 @@ class BsProductCard extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                product.details.name.getTranslation(userLanguage),
+                product.details.name.getTranslation(userLanguage)!,
                 style: context.textTheme.bodyLarge,
                 overflow: TextOverflow.ellipsis,
               ),

@@ -158,17 +158,22 @@ class MezSideMenu extends GetWidget<AuthController> {
         //     onClick: () => launchUrlString(MezEnv.appType.getPrivacyLink()),
         //   ),
         // ),
-        // if (controller.isUserSignedIn)
-        //   Obx(
-        //     () => SideMenuItem(
-        //       icon: Icons.logout,
-        //       title: _i18n()["logout"],
-        //       onClick: () async {
-        //         _drawerController.closeMenu();
-        //         await signOut();
-        //       },
-        //     ),
-        //   ),
+
+        Obx(
+          () => SideMenuItem(
+            icon: controller.isUserSignedIn ? Icons.logout : Icons.person,
+            title: (controller.isUserSignedIn)
+                ? "${_i18n()["logout"]}"
+                : "${_i18n()["login"]}",
+            onClick: () {
+              _drawerController.closeMenu();
+              if (controller.isUserSignedIn) {
+                signOut();
+              } else
+                SignInView.navigateAtOrderTime();
+            },
+          ),
+        ),
       ],
     );
   }

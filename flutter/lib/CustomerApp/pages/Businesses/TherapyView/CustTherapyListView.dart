@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -20,6 +21,9 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFi
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['TherapyView']['CustTherapyListView'];
@@ -143,6 +147,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
           FilterInput? data = await cusShowBusinessFilerSheet(
               context: context,
               filterInput: viewController.filterInput,
+              isClass: true,
               defaultFilterInput: viewController.defaultFilters());
           if (data != null) {
             viewController.filter(data);
@@ -303,13 +308,22 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                           )
                         ],
                       ),
-                      Divider(),
-                      CustBusinessScheduleBuilder(
-                          showTitle: false,
-                          showIcons: false,
-                          schedule: viewController.therapy[index].schedule,
-                          scheduleType:
-                              viewController.therapy[index].scheduleType),
+                      if (viewController.therapy[index].schedule != null)
+                        Column(
+                          children: [
+                            Divider(),
+                            CustBusinessScheduleBuilder(
+                                showTitle: false,
+                                showIcons: false,
+                                schedule:
+                                    viewController.therapy[index].schedule,
+                                scheduleType:
+                                    viewController.therapy[index].scheduleType),
+                          ],
+                        ),
+                      if (viewController.therapy[index].scheduleType ==
+                          ScheduleType.OneTime)
+                        oneTimeBuilder(viewController.therapy[index]),
                       Divider(),
                       Text(viewController.therapy[index].businessName)
                     ],
@@ -319,6 +333,25 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
           child: Text('${_i18n()['noTherapyFound']}'));
+  }
+
+  Column oneTimeBuilder(EventCard eventData) {
+    return Column(
+      children: [
+        Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            Text(
+                "${eventData.period!.formatTime(eventData.period!.start)} - ${eventData.period!.formatTime(eventData.period!.end)}"),
+          ],
+        ),
+      ],
+    );
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

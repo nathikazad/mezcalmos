@@ -165,7 +165,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.item.name.getTranslation(userLanguage) +
+                        widget.item.name.getTranslation(userLanguage)! +
                             " x${widget.item.quantity}",
                         style: txt.bodyLarge?.copyWith(
                             color: widget.item.unavailable
@@ -234,7 +234,7 @@ Widget _itemChoiche(
         height: 5,
       ),
       Text(
-        optionName.getTranslation(userLanguage),
+        optionName.getTranslation(userLanguage)!,
         style: context.txt.bodyLarge,
       ),
       SizedBox(
@@ -250,7 +250,7 @@ Widget _itemChoiche(
                     children: [
                       Flexible(
                         child: Text(
-                          choices[index].name.getTranslation(userLanguage),
+                          choices[index].name.getTranslation(userLanguage)!,
                           style: context.txt.bodyMedium,
                           maxLines: 2,
                         ),

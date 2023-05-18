@@ -57,7 +57,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.option.name.getTranslation(userLanguage).inCaps,
+            Text(widget.option.name.getTranslation(userLanguage)!.inCaps,
                 textAlign: TextAlign.left, style: context.txt.bodyLarge),
             if (widget.option.optionType == OptionType.Custom)
               Container(
@@ -99,7 +99,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                 children: [
                   Expanded(
                     child: Text(
-                      choice.name.getTranslation(userLanguage).inCaps,
+                      choice.name.getTranslation(userLanguage)!.inCaps,
                       style: context.txt.bodyMedium?.copyWith(
                         color: (widget.cartItem.value!.chosenChoices[optionId]
                                     ?.contains(choice) ??

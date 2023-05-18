@@ -42,7 +42,7 @@ class CustBusinessEventCard extends StatelessWidget {
           ? CachedNetworkImageProvider(event.details.firstImage!)
           : null,
       content: Text(
-        event.details.name.getTranslation(userLanguage),
+        event.details.name.getTranslation(userLanguage)!,
         style: context.textTheme.bodyLarge
             ?.copyWith(fontSize: 11.5.sp, fontWeight: FontWeight.bold),
         overflow: TextOverflow.ellipsis,

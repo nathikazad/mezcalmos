@@ -160,14 +160,15 @@ class _SignInViewState extends State<SignInView> {
               alignment: Alignment.center,
               child: Row(
                 children: [
-                  Container(
-                      padding: EdgeInsets.only(
-                          left: Get.width * 0.05, right: Get.width * 0.05),
+                  Padding(
+                      padding: EdgeInsets.only(right: 15),
                       child: Icon(Ionicons.log_in)),
-                  SizedBox(width: 30),
-                  Text(
-                    "${_i18n()['loginAs']} ${_i18n()[credential.identifier.toLowerCase()]}",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Text(
+                      "${_i18n()['loginAs']} ${_i18n()[credential.identifier.toLowerCase()]}",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 11.mezSp),
+                    ),
                   ),
                 ],
               ),
@@ -195,14 +196,15 @@ class _SignInViewState extends State<SignInView> {
             alignment: Alignment.center,
             child: Row(
               children: [
-                Container(
-                    padding: EdgeInsets.only(
-                        left: Get.width * 0.05, right: Get.width * 0.05),
+                Padding(
+                    padding: EdgeInsets.only(right: 20),
                     child: Icon(Ionicons.logo_apple)),
-                SizedBox(width: 30),
-                Text(
-                  _i18n()["loginWithApple"],
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    _i18n()["loginWithApple"],
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 11.mezSp),
+                  ),
                 ),
               ],
             ),
@@ -222,14 +224,15 @@ class _SignInViewState extends State<SignInView> {
             alignment: Alignment.center,
             child: Row(
               children: [
-                Container(
-                    padding: EdgeInsets.only(
-                        left: Get.width * 0.05, right: Get.width * 0.05),
+                Padding(
+                    padding: EdgeInsets.only(right: 15),
                     child: Icon(Ionicons.log_in)),
-                SizedBox(width: 30),
-                Text(
-                  _i18n()["loginWithSms"],
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    _i18n()["loginWithSms"],
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 11.mezSp),
+                  ),
                 ),
               ],
             ),
@@ -285,19 +288,19 @@ class _SignInViewState extends State<SignInView> {
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Container(
-                  padding: EdgeInsets.only(
-                      left: Get.width * 0.05, right: Get.width * 0.05),
+                Padding(
+                  padding: EdgeInsets.only(right: 15),
                   child: Icon(Ionicons.logo_facebook),
                 ),
-                Spacer(),
-                Text(
-                  lmode != AppLaunchMode.dev
-                      ? _i18n()["fbBtn"]
-                      : "test mode login",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    lmode != AppLaunchMode.dev
+                        ? _i18n()["fbBtn"]
+                        : "test mode login",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 11.mezSp),
+                  ),
                 ),
-                Spacer(),
               ],
             ),
           )),

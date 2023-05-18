@@ -95,7 +95,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
           Flexible(
             fit: FlexFit.tight,
             child: Text(
-              option.name.getTranslation(userLanguage),
+              option.name.getTranslation(userLanguage)!,
               style: context.txt.bodyLarge,
             ),
           ),
@@ -142,7 +142,7 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
               Flexible(
                 fit: FlexFit.tight,
                 child: Text(
-                  option.choices[index].name.getTranslation(userLanguage),
+                  option.choices[index].name.getTranslation(userLanguage)!,
                   style: context.txt.bodyLarge,
                 ),
               ),

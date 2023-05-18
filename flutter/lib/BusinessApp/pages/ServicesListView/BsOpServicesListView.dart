@@ -162,7 +162,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             ),
                             content: Text(
                               viewController.homeRentals[index].details.name
-                                  .getTranslation(userLanguage),
+                                  .getTranslation(userLanguage)!,
                               style: context.textTheme.bodyLarge,
                             ))),
                   ),
@@ -223,30 +223,107 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   style: context.textTheme.bodyLarge,
                 ),
                 smallSepartor,
+                Text(
+                  _i18n()["event"]["scheduled"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
                 Obx(
                   () => Column(
                     children: List.generate(
                         viewController.events.length,
-                        (int index) => MezCard(
-                            onClick: () {
-                              BsOpEventView.navigate(
-                                businessId: viewController.businessId,
-                                profile: viewController.businessProfile,
-                                businessDetailsId:
-                                    viewController.businessDetailsId,
-                                id: viewController.events[index].id!.toInt(),
-                                isClass: viewController.events[index].isClass,
-                              );
-                            },
-                            firstAvatarBgImage: NetworkImage(
-                              viewController.events[index].details.firstImage ??
-                                  customImageUrl,
-                            ),
-                            content: Text(
-                              viewController.events[index].details.name
-                                  .getTranslation(userLanguage),
-                              style: context.textTheme.bodyLarge,
-                            ))),
+                        (int index) => viewController
+                                    .events[index].scheduleType ==
+                                ScheduleType.Scheduled
+                            ? BsEventCard(
+                                event: viewController.events[index],
+                                viewController: viewController,
+                                onClick: () {
+                                  BsOpEventView.navigate(
+                                    businessId: viewController.businessId,
+                                    profile: viewController.businessProfile,
+                                    businessDetailsId:
+                                        viewController.businessDetailsId,
+                                    id: viewController.events[index].id!
+                                        .toInt(),
+                                    isClass:
+                                        viewController.events[index].isClass,
+                                  );
+                                },
+                              )
+                            : SizedBox.shrink()),
+                  ),
+                ),
+                Text(
+                  _i18n()["events"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Text(
+                  _i18n()["event"]["onDemand"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.events.length,
+                        (int index) => viewController
+                                    .events[index].scheduleType ==
+                                ScheduleType.OnDemand
+                            ? BsEventCard(
+                                event: viewController.events[index],
+                                viewController: viewController,
+                                onClick: () {
+                                  BsOpEventView.navigate(
+                                    businessId: viewController.businessId,
+                                    profile: viewController.businessProfile,
+                                    businessDetailsId:
+                                        viewController.businessDetailsId,
+                                    id: viewController.events[index].id!
+                                        .toInt(),
+                                    isClass:
+                                        viewController.events[index].isClass,
+                                  );
+                                },
+                              )
+                            : SizedBox.shrink()),
+                  ),
+                ),
+                Text(
+                  _i18n()["events"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Text(
+                  _i18n()["event"]["oneTime"],
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.events.length,
+                        (int index) => viewController
+                                    .events[index].scheduleType ==
+                                ScheduleType.OneTime
+                            ? BsEventCard(
+                                event: viewController.events[index],
+                                viewController: viewController,
+                                onClick: () {
+                                  BsOpEventView.navigate(
+                                    businessId: viewController.businessId,
+                                    profile: viewController.businessProfile,
+                                    businessDetailsId:
+                                        viewController.businessDetailsId,
+                                    id: viewController.events[index].id!
+                                        .toInt(),
+                                    isClass:
+                                        viewController.events[index].isClass,
+                                  );
+                                },
+                              )
+                            : SizedBox.shrink()),
                   ),
                 ),
                 SizedBox(
@@ -308,7 +385,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             ),
                             content: Text(
                               viewController.services[index].details.name
-                                  .getTranslation(userLanguage),
+                                  .getTranslation(userLanguage)!
+                                  .inCaps,
                               style: context.textTheme.bodyLarge,
                             ))),
                   ),
@@ -341,7 +419,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             ),
                             content: Text(
                               viewController.product[index].details.name
-                                  .getTranslation(userLanguage),
+                                  .getTranslation(userLanguage)!
+                                  .inCaps,
                               style: context.textTheme.bodyLarge,
                             ))),
                   ),

@@ -95,7 +95,8 @@ class _CustItemViewState extends State<CustItemView> {
                     image: viewController.getItem?.image,
                     ordersRoute: CustomerRoutes.customerOrdersRoute,
                     title: viewController.getItem?.name
-                            .getTranslation(userLanguage) ??
+                            .getTranslation(userLanguage)
+                            ?.inCaps ??
                         "Error",
                   ),
                   SliverToBoxAdapter(
@@ -242,7 +243,7 @@ class _CustItemViewState extends State<CustItemView> {
         children: [
           Text("${_i18n()["itemDescription"]}", style: context.txt.bodyLarge),
           Text(
-            "${item.description!.getTranslation(userLanguage).inCaps}",
+            "${(item.description!.getTranslation(userLanguage) ?? "No Description").inCaps}",
             textAlign: TextAlign.left,
             style: context.txt.bodyMedium,
           ),

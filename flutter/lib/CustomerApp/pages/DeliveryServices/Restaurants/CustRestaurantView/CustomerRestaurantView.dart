@@ -173,7 +173,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 0),
             child: Text(
-              category.name?.getTranslation(userLanguage).inCaps ??
+              category.name?.getTranslation(userLanguage)?.inCaps ??
                   '${_i18n()["undefinedCategory"]}',
               style: category.name?.getTranslation(userLanguage) != null
                   ? context.txt.headlineSmall
@@ -183,10 +183,10 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             ),
           ),
           if (category.dialog != null &&
-              category.dialog!.getTranslation(userLanguage).inCaps != "unnamed")
+              category.dialog!.getTranslation(userLanguage) != null)
             Container(
               child: Text(
-                category.dialog!.getTranslation(userLanguage).inCaps,
+                category.dialog!.getTranslation(userLanguage)!.inCaps,
                 style: context.txt.bodyMedium?.copyWith(
                   color: offLightShadeGreyColor,
                 ),

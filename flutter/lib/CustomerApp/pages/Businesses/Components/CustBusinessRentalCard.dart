@@ -48,7 +48,7 @@ class CustBusinessRentalCard extends StatelessWidget {
               ? CachedNetworkImageProvider(rental.details.image![0])
               : null,
       content: Text(
-        rental.details.name.getTranslation(userLanguage),
+        rental.details.name.getTranslation(userLanguage)!,
         style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.sp),
         overflow: TextOverflow.ellipsis,
       ),

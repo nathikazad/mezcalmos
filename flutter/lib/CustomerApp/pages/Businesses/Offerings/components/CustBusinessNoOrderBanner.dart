@@ -7,12 +7,14 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Offerings']['components'];
 
 class CustBusinessNoOrderBanner extends StatelessWidget {
-  const CustBusinessNoOrderBanner({super.key});
+  final EdgeInsetsGeometry margin;
+  const CustBusinessNoOrderBanner(
+      {super.key, this.margin = const EdgeInsets.only(top: 15)});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: margin,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

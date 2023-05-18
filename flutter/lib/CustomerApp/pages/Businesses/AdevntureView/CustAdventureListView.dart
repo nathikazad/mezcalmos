@@ -157,11 +157,11 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
               );
             },
             firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.adventure[index].details.firstImage ??
+              viewController.adventure[index].details.firstImage ??
                   defaultUserImgUrl,
             ),
             content: Text(viewController.adventure[index].details.name
-                .getTranslation(userLanguage))),
+                .getTranslation(userLanguage)!)),
       ));
     } else
       return Container(

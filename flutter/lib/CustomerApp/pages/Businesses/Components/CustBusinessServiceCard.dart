@@ -43,7 +43,7 @@ class CustBusinessServiceCard extends StatelessWidget {
               ? CachedNetworkImageProvider(service.details.image![0])
               : null,
       content: Text(
-        service.details.name.getTranslation(userLanguage),
+        service.details.name.getTranslation(userLanguage)!,
         style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.sp),
         overflow: TextOverflow.ellipsis,
       ),

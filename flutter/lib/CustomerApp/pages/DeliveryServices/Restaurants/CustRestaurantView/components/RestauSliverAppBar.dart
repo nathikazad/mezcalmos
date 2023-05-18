@@ -240,7 +240,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                             text: controller.restaurant.value!
                                     .getAvailableCategories[index].name
                                     ?.getTranslation(userLanguage)
-                                    .inCaps ??
+                                    ?.inCaps ??
                                 "",
                           );
                         })

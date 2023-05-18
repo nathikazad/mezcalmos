@@ -38,7 +38,7 @@ class ROpOptionChoiceCard extends StatelessWidget {
                   Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      choice.name.getTranslation(userLanguage),
+                      choice.name.getTranslation(userLanguage)!,
                       style: context.txt.bodyLarge,
                     ),
                   ),

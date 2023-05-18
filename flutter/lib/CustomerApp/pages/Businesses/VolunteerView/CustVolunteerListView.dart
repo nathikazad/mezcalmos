@@ -157,11 +157,12 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
               );
             },
             firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.volunteer[index].details.firstImage ??
+              viewController.volunteer[index].details.firstImage ??
                   defaultUserImgUrl,
             ),
             content: Text(viewController.volunteer[index].details.name
-                .getTranslation(userLanguage))),
+                .getTranslation(userLanguage)!
+                .inCaps)),
       ));
     } else
       return Container(

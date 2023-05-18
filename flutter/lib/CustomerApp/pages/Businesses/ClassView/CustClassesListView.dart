@@ -10,11 +10,13 @@ import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -23,6 +25,8 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:intl/intl.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['ClassView']['CustEventsListView'];
@@ -146,6 +150,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
           FilterInput? data = await cusShowBusinessFilerSheet(
               context: context,
               filterInput: viewController.filterInput,
+              isClass: true,
               defaultFilterInput: viewController.defaultFilters());
           if (data != null) {
             viewController.filter(data);
@@ -274,7 +279,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (_isValidImage(index))
+                    if (viewController.classes[index].details.image != null)
                       Row(
                         children: [
                           CachedNetworkImage(
@@ -298,7 +303,8 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                     Expanded(
                       child: Text(
                         viewController.classes[index].details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!
+                            .inCaps,
                         style: context.textTheme.bodyLarge?.copyWith(
                             fontSize: 12.5.mezSp, fontWeight: FontWeight.w600),
                       ),
@@ -311,9 +317,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                     )
                   ],
                 ),
-                if (viewController.classes[index].schedule != null &&
-                    viewController.classes[index].scheduleType !=
-                        ScheduleType.OnDemand)
+                if (viewController.classes[index].schedule != null)
                   Column(
                     children: [
                       Divider(),
@@ -325,6 +329,9 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                               viewController.classes[index].scheduleType)
                     ],
                   ),
+                if (viewController.classes[index].scheduleType ==
+                    ScheduleType.OneTime)
+                  oneTimeBuilder(viewController.classes[index]),
                 Divider(),
                 Text(viewController.classes[index].businessName)
               ],
@@ -335,6 +342,25 @@ class _CustClassesListViewState extends State<CustClassesListView> {
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
           child: Text('${_i18n()['noEventsFound']}'));
+  }
+
+  Column oneTimeBuilder(EventCard classData) {
+    return Column(
+      children: [
+        Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "${classData.period?.start.toDayName()} ${classData.period?.start.day} ${DateFormat.MMMM().format(classData.period!.start)}",
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            Text(
+                "${classData.period!.formatTime(classData.period!.start)} - ${classData.period!.formatTime(classData.period!.end)}"),
+          ],
+        ),
+      ],
+    );
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
@@ -365,6 +391,4 @@ class _CustClassesListViewState extends State<CustClassesListView> {
       ],
     );
   }
-
-  bool _isValidImage(int index) => viewController.businesses.length > index;
 }
