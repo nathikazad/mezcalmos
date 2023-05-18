@@ -224,7 +224,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 ),
                 smallSepartor,
                 Text(
-                  _i18n()["events"]["scheduled"],
+                  _i18n()["event"]["scheduled"],
                   style: context.textTheme.bodyLarge,
                 ),
                 smallSepartor,
@@ -260,7 +260,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 ),
                 smallSepartor,
                 Text(
-                  _i18n()["events"]["onDemand"],
+                  _i18n()["event"]["onDemand"],
                   style: context.textTheme.bodyLarge,
                 ),
                 smallSepartor,
@@ -296,7 +296,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 ),
                 smallSepartor,
                 Text(
-                  _i18n()["events"]["oneTime"],
+                  _i18n()["event"]["oneTime"],
                   style: context.textTheme.bodyLarge,
                 ),
                 smallSepartor,
