@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
@@ -12,8 +13,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class BsProductViewController {
   // instances //
-  BusinessOpAuthController _opAuthController =
-      Get.find<BusinessOpAuthController>();
+
   LanguageTabsController languageTabsController = LanguageTabsController();
 
   // streams //
@@ -50,10 +50,14 @@ class BsProductViewController {
       return languageTabsController.tabController != null;
   }
 
-  Future<void> init({required TickerProvider thickerProvider}) async {
+  Future<void> init(
+      {required TickerProvider thickerProvider,
+      required int detailsId,
+      required int businessId}) async {
     await languageTabsController.init(
-        vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
-    detailsController.setLanguage(language: languages!);
+        vsync: thickerProvider, detailsId: detailsId);
+    detailsController.initDetails(
+        businessId: businessId, language: languages!, detailsId: detailsId);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
   }
 
@@ -62,9 +66,7 @@ class BsProductViewController {
     mezDbgPrint(
         "product id : $id ${_product.value?.toFirebaseFormattedJson()}");
     if (product != null) {
-      await detailsController.initEditMode(
-        detalsId: product!.details.id.toInt(),
-      );
+      await detailsController.initEditMode();
       productCategory.value = product!.category1;
     }
   }
@@ -121,8 +123,9 @@ class BsProductViewController {
       final int? res = await add_one_product(product: product);
 
       if (res != null) {
- showAddedSnackBar();        shouldRefetch = true;
-         await initEditMode(id: res);
+        showAddedSnackBar();
+        shouldRefetch = true;
+        await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");

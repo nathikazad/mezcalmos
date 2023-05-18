@@ -80,3 +80,18 @@ select_permissions:
         - profile
         - service_provider_type
       filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - details_id
+        - id
+        - service_provider_type
+        - profile
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

@@ -345,4 +345,8 @@ query get_business_lang($id: Int!) {
       language
     }
   }
+}query get_business_id_from_details_id( $businessDetailsId: Int!) {
+
+  business_business(where: {details_id: {_eq: $businessDetailsId}})
+{id}
 }

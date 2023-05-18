@@ -40,7 +40,7 @@ class ServiceProfileView extends StatefulWidget {
   static Future<void> navigate(
       {required int serviceProviderId,
       required int serviceDetailsId,
-      required int deliveryDetailsId}) {
+      required int? deliveryDetailsId}) {
     return MezRouter.toPath(SharedServiceProviderRoutes.kServiceProfileRoute
         .replaceAll(":serviceId", serviceProviderId.toString())
         .replaceAll(":serviceDetailsId", serviceDetailsId.toString())

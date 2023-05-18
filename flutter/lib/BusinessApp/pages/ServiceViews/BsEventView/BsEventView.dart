@@ -22,12 +22,21 @@ dynamic _i18n() =>
 class BsOpEventView extends StatefulWidget {
   const BsOpEventView({Key? key}) : super(key: key);
   static Future<bool?> navigate(
-      {required int? id, required bool isClass}) async {
+      {required int? id,
+      required bool isClass,
+      required int businessId,
+      required int businessDetailsId,
+      required BusinessProfile profile}) async {
     String route = BusinessOpRoutes.kBsOpEvent;
     route = route.replaceFirst(":id", id?.toString() ?? "add");
     await MezRouter.toPath(
       route,
-      arguments: {"class": isClass},
+      arguments: {
+        "class": isClass,
+        "businessDetailsId": businessDetailsId,
+        "profile": profile,
+        "businessId": businessId,
+      },
     );
     return MezRouter.backResult;
   }
@@ -41,9 +50,24 @@ class _BsOpEventViewState extends State<BsOpEventView>
   BsEventViewController viewController = BsEventViewController();
   @override
   void initState() {
+    final int? detailsId = int.tryParse(
+        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
+    final int? businessId =
+        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    final BusinessProfile? profile =
+        MezRouter.bodyArguments?["profile"] as BusinessProfile?;
+    final bool isClass = MezRouter.bodyArguments?["class"] ?? false;
+    if (detailsId == null || profile == null || businessId == null) {
+      throw Exception("detailsId or businessId or profile is null");
+    }
     viewController.init(
-        thickerProvider: this,
-        isClass: MezRouter.bodyArguments?["class"] ?? false);
+      thickerProvider: this,
+      businessId: businessId,
+      profile: profile,
+      detailsId: detailsId,
+      isClass: isClass,
+    );
+
     int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
       viewController.initEditMode(id: id);

@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
@@ -14,8 +15,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 class BsRentalViewController {
   // instances //
   LanguageTabsController languageTabsController = LanguageTabsController();
-  BusinessOpAuthController _opAuthController =
-      Get.find<BusinessOpAuthController>();
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<FormState> scFormKey = GlobalKey<FormState>();
   bool firstFormValid = false;
@@ -66,10 +66,14 @@ class BsRentalViewController {
   Future<void> init({
     required TickerProvider thickerProvider,
     required RentalCategory1 category1,
+    required int detailsId,
+    required int businessId,
   }) async {
     await languageTabsController.init(
-        vsync: thickerProvider, detailsId: _opAuthController.businessDetailsId);
-    detailsController.setLanguage(language: languages!);
+        vsync: thickerProvider, detailsId: detailsId);
+    detailsController.initDetails(
+        businessId: businessId, language: languages!, detailsId: detailsId);
+
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
     rentalCategory1 = category1;
   }
@@ -79,8 +83,7 @@ class BsRentalViewController {
     mezDbgPrint("service id : $id");
     if (rental != null) {
       detailsController.clearPrices();
-      await detailsController.initEditMode(
-          detalsId: rental!.details.id.toInt());
+      await detailsController.initEditMode();
       rentalCategory2.value = rental!.category2;
       rentalCategory3.value = rental!.category3;
       if (rentalCategory1 == RentalCategory1.Surf) {
@@ -171,8 +174,9 @@ class BsRentalViewController {
       int? res = await add_one_rental(rental: rental);
 
       if (res != null) {
- showAddedSnackBar();        shouldRefetch = true;
-         await initEditMode(id: res);
+        showAddedSnackBar();
+        shouldRefetch = true;
+        await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");

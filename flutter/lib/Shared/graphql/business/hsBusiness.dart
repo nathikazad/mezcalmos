@@ -171,6 +171,7 @@ Future<Business?> get_business_by_id(
             )));
       });
       return Business(
+        id: data.id,
         profile: data.profile.toBusinessProfile(),
         details: ServiceProvider(
             id: data.id,
@@ -436,6 +437,24 @@ Future<ServiceProviderLanguage?> get_business_lang(
     return ServiceProviderLanguage(
         primary: data.details.language["primary"].toString().toLanguage(),
         secondary: data.details.language["secondary"].toString().toLanguage());
+  }
+  return null;
+}
+
+Future<int?> get_businessId_from_item_detailsId(
+    {required int detailsId}) async {
+  final QueryResult<Query$get_business_id_from_details_id> res =
+      await _db.graphQLClient.query$get_business_id_from_details_id(
+          Options$Query$get_business_id_from_details_id(
+              variables: Variables$Query$get_business_id_from_details_id(
+                  businessDetailsId: detailsId)));
+  if (res.hasException) {
+    throw Exception("🛑 Error getting business lang ${res.exception}");
+  } else if (res.parsedData?.business_business != null &&
+      res.parsedData?.business_business.isNotEmpty == true) {
+    List<Query$get_business_id_from_details_id$business_business> data =
+        res.parsedData!.business_business;
+    return data.first.id;
   }
   return null;
 }
