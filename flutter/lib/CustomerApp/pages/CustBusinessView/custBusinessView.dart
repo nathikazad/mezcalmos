@@ -258,13 +258,13 @@ class _CustBusinessViewState extends State<CustBusinessView>
   }
 
   Widget __headerButtons() {
-    void navigateToChat() {
+    Future<void> navigateToChat() async {
       // check if user not logged in
       if (Get.find<AuthController>().user == null) {
-        SignInView.navigateAtOrderTime();
+        await SignInView.navigateAtOrderTime();
       } else {
-        CustMessagesListViewController().initiateChat(
-          businessId: _viewController.business!.details.id.toInt(),
+        await CustMessagesListViewController().initiateChat(
+          businessId: _viewController.business!.id.toInt(),
           businessImage: _viewController.business!.details.image,
           offeringName: null,
         );
