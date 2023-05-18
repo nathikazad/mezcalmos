@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 
 // todo @ChiragKr04 fix the cards and ui  of this page
 class CustAdventureListView extends StatefulWidget {
@@ -156,7 +157,9 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
               );
             },
             firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.adventure[index].details.image?.first ?? ""),
+                viewController.adventure[index].details.firstImage ??
+                  defaultUserImgUrl,
+            ),
             content: Text(viewController.adventure[index].details.name
                 .getTranslation(userLanguage))),
       ));

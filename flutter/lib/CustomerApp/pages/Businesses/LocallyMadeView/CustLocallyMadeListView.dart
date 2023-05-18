@@ -260,7 +260,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                         imageUrl:
                             viewController.products[index].details.firstImage ==
                                     null
-                                ? customImageUrl
+                                ? defaultUserImgUrl
                                 : viewController
                                     .products[index].details.firstImage!),
                   )
