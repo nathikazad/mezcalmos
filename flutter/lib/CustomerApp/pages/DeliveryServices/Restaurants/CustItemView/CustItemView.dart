@@ -96,7 +96,7 @@ class _CustItemViewState extends State<CustItemView> {
                     ordersRoute: CustomerRoutes.customerOrdersRoute,
                     title: viewController.getItem?.name
                             .getTranslation(userLanguage)
-                            .inCaps ??
+                            ?.inCaps ??
                         "Error",
                   ),
                   SliverToBoxAdapter(

@@ -27,11 +27,11 @@ class CustAdventureListViewController {
       : _adventureScrollController;
   ScrollController _adventureScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  final int adventureFetchSize = 10;
+  final int adventureFetchSize = 20;
   int _adventureCurrentOffset = 0;
   bool _adventureFetchingData = false;
   bool _adventureReachedEndOfData = false;
-  final int businessFetchSize = 10;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;

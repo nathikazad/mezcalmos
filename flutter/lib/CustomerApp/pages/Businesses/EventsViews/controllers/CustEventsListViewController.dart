@@ -25,11 +25,11 @@ class CustEventsListViewController {
       showBusiness.isTrue ? _businessScrollController : _eventScrollController;
   ScrollController _eventScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  final int eventFetchSize = 10;
+  final int eventFetchSize = 20;
   int _eventCurrentOffset = 0;
   bool _eventFetchingData = false;
   bool _eventReachedEndOfData = false;
-  final int businessFetchSize = 10;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;

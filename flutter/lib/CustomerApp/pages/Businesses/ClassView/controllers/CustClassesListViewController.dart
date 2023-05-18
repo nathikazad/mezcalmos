@@ -27,11 +27,11 @@ class CustClassesListViewController {
       : _classesScrollController;
   ScrollController _classesScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  final int eventFetchSize = 10;
+  final int eventFetchSize = 20;
   int _classesCurrentOffset = 0;
   bool _classesFetchingData = false;
   bool _classesReachedEndOfData = false;
-  final int businessFetchSize = 10;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;

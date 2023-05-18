@@ -30,11 +30,11 @@ class CustLocallyMadeListViewController {
       : _productsScrollController;
   ScrollController _productsScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  int productsFetchSize = 15;
+  int productsFetchSize = 20;
   int _productsCurrentOffset = 0;
   bool _productsFetchingData = false;
   bool _productsReachedEndOfData = false;
-  final int businessFetchSize = 3;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;

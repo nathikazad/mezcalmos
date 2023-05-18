@@ -32,11 +32,11 @@ class CustServiceListViewController {
       : _servicesScrollController;
   ScrollController _servicesScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  int servicesFetchSize = 15;
+  int servicesFetchSize = 20;
   int _servicesCurrentOffset = 0;
   bool _servicesFetchingData = false;
   bool _servicesReachedEndOfData = false;
-  final int businessFetchSize = 3;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;

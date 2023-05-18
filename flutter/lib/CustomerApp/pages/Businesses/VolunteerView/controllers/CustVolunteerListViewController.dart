@@ -27,11 +27,11 @@ class CustVolunteerListViewController {
       : _volunteerScrollController;
   ScrollController _volunteerScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  final int volunteerFetchSize = 10;
+  final int volunteerFetchSize = 20;
   int _volunteerCurrentOffset = 0;
   bool _volunteerFetchingData = false;
   bool _volunteerReachedEndOfData = false;
-  final int businessFetchSize = 10;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;

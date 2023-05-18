@@ -31,11 +31,11 @@ class CustTherapyListViewController {
       : _therapyScrollController;
   ScrollController _therapyScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  final int therapyFetchSize = 10;
+  final int therapyFetchSize = 20;
   int _therapyCurrentOffset = 0;
   bool _therapyFetchingData = false;
   bool _therapyReachedEndOfData = false;
-  final int businessFetchSize = 10;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;
