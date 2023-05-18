@@ -31,7 +31,7 @@ class SharedServiceProviderRoutes {
       "/costDeliverySettingScreen/:providerId/:providerType";
   static const String kServiceReviews = "/reviews";
   static const String kServiceProfileRoute =
-      '/service/:serviceId/:serviceDetailsId/:deliveryDetailsId';
+      '/serviceProfile/:serviceId/:serviceDetailsId/:deliveryDetailsId';
 
   static final List<QRoute> routes = [
     QRoute(

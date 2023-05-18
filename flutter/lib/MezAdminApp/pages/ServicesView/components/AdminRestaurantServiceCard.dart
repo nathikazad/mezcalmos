@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -114,8 +113,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                               ServiceProfileView.navigate(
                                 serviceProviderId: restaurant.info.hasuraId,
                                 serviceDetailsId: restaurant.serviceDetailsId,
-                                deliveryDetailsId:
-                                    restaurant.deliveryDetailsId!,
+                                deliveryDetailsId: restaurant.deliveryDetailsId,
                               );
                             }),
                       ],
