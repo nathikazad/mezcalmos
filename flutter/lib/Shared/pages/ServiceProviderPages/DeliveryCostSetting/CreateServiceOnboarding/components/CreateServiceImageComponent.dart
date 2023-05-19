@@ -37,7 +37,7 @@ class CreateServiceImageComponent extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      backgroundColor: Color(0xFFF5F5F5),
+                      backgroundColor: Colors.grey.shade200,
                       backgroundImage: viewController.getRightImage,
                       radius: 9.5.h,
                       child: (viewController.imageLoading.isTrue)

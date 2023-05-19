@@ -22,168 +22,180 @@ class CreateServiceInfoPage extends StatelessWidget {
   const CreateServiceInfoPage({
     Key? key,
     required this.viewController,
+    required this.onSaveButton,
   }) : super(key: key);
 
   final CreateServiceViewController viewController;
+  final Function() onSaveButton;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(15),
-      child: Form(
-        key: viewController.infoFromKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CreateServiceImageComponent(viewController: viewController),
-            SizedBox(
-              height: 15,
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(15),
+            child: Form(
+              key: viewController.infoFromKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CreateServiceImageComponent(viewController: viewController),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "${_i18n()['name']}",
+                    style: context.txt.bodyLarge,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: viewController.serviceName,
+                    validator: (String? v) {
+                      if (v == null || v.isEmpty) {
+                        return "${_i18n()['nameError']}";
+                      }
+                      return null;
+                    },
+                    style: context.txt.bodyLarge,
+                    decoration: InputDecoration(
+                        hintStyle: context.txt.bodyMedium,
+                        hintText: "${_i18n()['hintNameText']}"),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  // Text(
+                  //   "${_i18n()['description']}",
+                  //   style: context.txt.bodyLarge,
+                  // ),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+                  // TextFormField(
+                  //   minLines: 2,
+                  //   maxLines: 7,
+                  //   controller: viewController.description,
+                  //   validator: (String? v) {
+                  //     if (v == null || v.isEmpty) {
+                  //       return "${_i18n()['descriptionError']}";
+                  //     }
+                  //     return null;
+                  //   },
+                  //   style: context.txt.bodyLarge,
+                  //   decoration: InputDecoration(
+                  //       hintStyle: context.txt.bodyMedium,
+                  //       hintText: "${_i18n()['descriptionHintText']}"),
+                  // ),
+                  // SizedBox(
+                  //   height: 15,
+                  // ),
+                  if (viewController.isBusiness) _businessTypeFilter(context),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "${_i18n()['phoneText']}",
+                    style: context.txt.bodyLarge,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: viewController.phone,
+                    keyboardType: TextInputType.phone,
+                    validator: (String? v) {
+                      if (v == null || v.isEmpty || v.isPhoneNumber == false) {
+                        return "${_i18n()['phoneTextError']}";
+                      }
+                      return null;
+                    },
+                    style: context.txt.bodyLarge,
+                    decoration: InputDecoration(
+                        hintStyle: context.txt.bodyMedium,
+                        hintText: "${_i18n()['phoneTextDescription']}"),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "${_i18n()['location']}",
+                    style: context.txt.bodyLarge,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _locationCard(context),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "${_i18n()['prLang']}",
+                    style: context.textTheme.bodyLarge,
+                  ),
+                  smallSepartor,
+                  MezStringDropDown(
+                    labelText: "${_i18n()['none']}",
+                    value: viewController.languages.value.primary
+                        .toFirebaseFormatString(),
+                    langPath: _i18n(),
+                    items: Language.values
+                        .map((Language e) => e.toFirebaseFormatString())
+                        .toList(),
+                    onChanged: (String? v) {
+                      if (v != null) {
+                        viewController.languages.value.primary = v.toLanguage();
+                      }
+                    },
+                    validator: (String? p0) {
+                      if (p0 == null || p0.isEmpty) {
+                        return "${_i18n()['prLangErrorText']}";
+                      }
+                      return null;
+                    },
+                  ),
+                  meduimSeperator,
+                  Text(
+                    "${_i18n()['scLang']}",
+                    style: context.textTheme.bodyLarge,
+                  ),
+                  smallSepartor,
+                  MezStringDropDown(
+                      labelText: "${_i18n()['none']}",
+                      withNoneItem: true,
+                      value: viewController.languages.value.secondary
+                          ?.toFirebaseFormatString(),
+                      langPath: _i18n(),
+                      validator: (String? v) {
+                        if (v != null &&
+                            v != "none" &&
+                            v.toLanguage() ==
+                                viewController.languages.value.primary) {
+                          return "${_i18n()['sameLangErrorText']}";
+                        }
+                        return null;
+                      },
+                      items: Language.values
+                          .map((Language e) => e.toFirebaseFormatString())
+                          .toList(),
+                      onChanged: (String? v) {
+                        viewController.languages.value.secondary =
+                            v?.toLanguage() ?? null;
+                      }),
+                ],
+              ),
             ),
-            Text(
-              "${_i18n()['name']}",
-              style: context.txt.bodyLarge,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: viewController.serviceName,
-              validator: (String? v) {
-                if (v == null || v.isEmpty) {
-                  return "${_i18n()['nameError']}";
-                }
-                return null;
-              },
-              style: context.txt.bodyLarge,
-              decoration: InputDecoration(
-                  hintStyle: context.txt.bodyMedium,
-                  hintText: "${_i18n()['hintNameText']}"),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            // Text(
-            //   "${_i18n()['description']}",
-            //   style: context.txt.bodyLarge,
-            // ),
-            // SizedBox(
-            //   height: 10,
-            // ),
-            // TextFormField(
-            //   minLines: 2,
-            //   maxLines: 7,
-            //   controller: viewController.description,
-            //   validator: (String? v) {
-            //     if (v == null || v.isEmpty) {
-            //       return "${_i18n()['descriptionError']}";
-            //     }
-            //     return null;
-            //   },
-            //   style: context.txt.bodyLarge,
-            //   decoration: InputDecoration(
-            //       hintStyle: context.txt.bodyMedium,
-            //       hintText: "${_i18n()['descriptionHintText']}"),
-            // ),
-            // SizedBox(
-            //   height: 15,
-            // ),
-            // todo @ChiragKr04 fix ui and translation for the filter card and sheet
-            if (viewController.isBusiness) _businessTypeFilter(context),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              "${_i18n()['phoneText']}",
-              style: context.txt.bodyLarge,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: viewController.phone,
-              keyboardType: TextInputType.phone,
-              validator: (String? v) {
-                if (v == null || v.isEmpty || v.isPhoneNumber == false) {
-                  return "${_i18n()['phoneTextError']}";
-                }
-                return null;
-              },
-              style: context.txt.bodyLarge,
-              decoration: InputDecoration(
-                  hintStyle: context.txt.bodyMedium,
-                  hintText: "${_i18n()['phoneTextDescription']}"),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              "${_i18n()['location']}",
-              style: context.txt.bodyLarge,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            _locationCard(context),
-            meduimSeperator,
-            Text(
-              "${_i18n()['prLang']}",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            MezStringDropDown(
-              labelText: "${_i18n()['none']}",
-              value: viewController.languages.value.primary
-                  .toFirebaseFormatString(),
-              langPath: _i18n(),
-              items: Language.values
-                  .map((Language e) => e.toFirebaseFormatString())
-                  .toList(),
-              onChanged: (String? v) {
-                if (v != null) {
-                  viewController.languages.value.primary = v.toLanguage();
-                }
-              },
-              validator: (String? p0) {
-                if (p0 == null || p0.isEmpty) {
-                  return "${_i18n()['prLangErrorText']}";
-                }
-                return null;
-              },
-            ),
-            meduimSeperator,
-            Text(
-              "${_i18n()['scLang']}",
-              style: context.textTheme.bodyLarge,
-            ),
-            smallSepartor,
-            MezStringDropDown(
-                labelText: "${_i18n()['none']}",
-                withNoneItem: true,
-                value: viewController.languages.value.secondary
-                    ?.toFirebaseFormatString(),
-                langPath: _i18n(),
-                validator: (String? v) {
-                  if (v != null &&
-                      v != "none" &&
-                      v.toLanguage() ==
-                          viewController.languages.value.primary) {
-                    return "${_i18n()['sameLangErrorText']}";
-                  }
-                  return null;
-                },
-                items: Language.values
-                    .map((Language e) => e.toFirebaseFormatString())
-                    .toList(),
-                onChanged: (String? v) {
-                  viewController.languages.value.secondary =
-                      v?.toLanguage() ?? null;
-                }),
-            SizedBox(
-              height: 100,
-            )
-          ],
+          ),
         ),
-      ),
+        MezButton(
+          height: 75,
+          label: viewController.getSaveButtonTitle(),
+          borderRadius: 0,
+          onClick: () => onSaveButton(),
+        )
+      ],
     );
   }
 
@@ -212,7 +224,10 @@ class CreateServiceInfoPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Card(
+                    color: Colors.grey.shade200,
+                    elevation: 0,
                     child: InkWell(
+                      borderRadius: BorderRadius.circular(10),
                       onTap: () async {
                         final BusinessProfile? newBusinessType =
                             await _businessTypeSheet(
@@ -226,9 +241,6 @@ class CreateServiceInfoPage extends StatelessWidget {
                         }
                       },
                       child: Ink(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                        ),
                         padding: const EdgeInsets.all(12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -241,7 +253,7 @@ class CreateServiceInfoPage extends StatelessWidget {
                                 //  style: context.textTheme.bodyLarge,
                               ),
                             ),
-                            Icon(Icons.arrow_forward_ios)
+                            Icon(Icons.keyboard_arrow_right)
                           ],
                         ),
                       ),
@@ -326,23 +338,29 @@ class CreateServiceInfoPage extends StatelessWidget {
               Row(
                 children: [
                   Flexible(
-                      child: MezButton(
-                    label: "Cancel",
-                    onClick: () async {
-                      Navigator.pop(context);
-                    },
-                    backgroundColor: offRedColor,
-                    textColor: redAccentColor,
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: MezButton(
+                      label: "Cancel",
+                      onClick: () async {
+                        Navigator.pop(context);
+                      },
+                      backgroundColor: offRedColor,
+                      textColor: redAccentColor,
+                    ),
                   )),
                   SizedBox(
                     width: 10,
                   ),
                   Flexible(
-                      child: MezButton(
-                    label: "Save",
-                    onClick: () async {
-                      Navigator.pop(context, _businessProfile.value);
-                    },
+                      child: Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: MezButton(
+                      label: "Save",
+                      onClick: () async {
+                        Navigator.pop(context, _businessProfile.value);
+                      },
+                    ),
                   )),
                 ],
               ),
@@ -366,6 +384,7 @@ class CreateServiceInfoPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Card(
+              elevation: 0,
               color: Colors.grey.shade200,
               child: InkWell(
                 borderRadius: BorderRadius.circular(10),
@@ -383,7 +402,7 @@ class CreateServiceInfoPage extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.place_rounded,
-                        color: primaryBlueColor,
+                        color: blackColor,
                       ),
                       SizedBox(
                         width: 5,
@@ -399,21 +418,23 @@ class CreateServiceInfoPage extends StatelessWidget {
                           )),
                       Spacer(),
                       Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: primaryBlueColor,
+                        Icons.keyboard_arrow_right,
+                        color: blackColor,
                       )
                     ],
                   ),
                 ),
               ),
             ),
-            if (!state.isValid)
-              Container(
-                  margin: const EdgeInsets.only(top: 5),
-                  child: Text(
-                    state.errorText ?? "",
-                    style: context.txt.titleMedium?.copyWith(color: Colors.red),
-                  ))
+            state.isValid
+                ? Container(
+                    margin: const EdgeInsets.only(top: 5),
+                    child: Text(
+                      state.errorText ?? "",
+                      style:
+                          context.txt.titleMedium?.copyWith(color: Colors.red),
+                    ))
+                : SizedBox.shrink()
           ],
         ),
       );

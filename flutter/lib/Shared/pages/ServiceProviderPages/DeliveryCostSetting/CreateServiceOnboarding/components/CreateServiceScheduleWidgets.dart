@@ -140,6 +140,8 @@ class CreateServiceScheduleWidgets {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: MezIconButton(
+        elevation: 0,
+        backgroundColor: Colors.grey.shade200,
         onTap: () {
           showModalBottomSheet(
               context: context,
@@ -158,6 +160,7 @@ class CreateServiceScheduleWidgets {
               });
         },
         icon: Icons.edit_outlined,
+        iconColor: blackColor,
       ),
     );
   }
