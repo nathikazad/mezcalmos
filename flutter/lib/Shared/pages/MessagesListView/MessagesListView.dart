@@ -95,7 +95,7 @@ class _MessagesListViewState extends State<MessagesListView> {
               children: [
                 Image(
                   image: AssetImage(
-                    noMessages,
+                    aNoMessages,
                   ),
                 ),
                 smallSepartor,
