@@ -124,6 +124,8 @@ const String aDeliveredIcon =
 const String aCancelledIcon = "assets/images/shared/notifications/cancel.png";
 const String aAtLaundry = "assets/images/shared/notifications/atLaundry.png";
 const String aNoMessages = "assets/images/shared/noMessages.png";
+const String aNoResults = "assets/images/shared/noresults.png";
+const String aNoServices = "assets/images/shared/noServicesAdded.png";
 const String aReadyDeliveryLaundry =
     "assets/images/shared/notifications/readyForDelivery.png";
 const rive.RiveAnimation aDriverAnimation = rive.RiveAnimation.asset(

@@ -60,6 +60,8 @@
         "addService": "Agregar servicio",
         "reorder": "Reordenar",
         "events": "Eventos",
+        "noServicesFound": "Todavía no se ha agregado ningún servicio",
+        "bodyMessage": "Al seleccionar \"Agregar servicio\", puede agregar su primer servicio y comenzar a construir su negocio en línea.",
         "event": {
           "event": "Evento",
           "eventType": "Seleccione un tipo de evento",
@@ -1077,6 +1079,10 @@
             "martialArt": "Arte marcial",
             "adventure": "Aventura",
             "volunteer": "Voluntaria"
+          },
+          "NoServicesFound": {
+            "noServicesFound": "No se encontraron servicios",
+            "bodyMessage": "Lo siento, el servicio que está buscando no se ofrece actualmente."
           }
         },
         "RentalsView": {
@@ -1240,7 +1246,7 @@
         },
         "LocallyMadeView": {
           "CustLocallyMadeListView": {
-            "localMade" :"Hecho localmente",
+            "localMade": "Hecho localmente",
             "consumable": "Consumible",
             "personalCare": "Cuidado personal",
             "art": "Arte",

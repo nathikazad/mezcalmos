@@ -61,6 +61,13 @@ class BsServicesListViewController {
   RxList<ServiceCard> services = RxList.empty();
   RxList<ProductCard> product = RxList.empty();
 
+  bool get noData =>
+      homeRentals.isEmpty &&
+      rentals.isEmpty &&
+      events.isEmpty &&
+      services.isEmpty &&
+      product.isEmpty;
+
   // methods //
   Future<void> init(
       {required int id,

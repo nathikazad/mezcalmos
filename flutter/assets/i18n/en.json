@@ -59,6 +59,8 @@
         "serviceType": "What type of service will you add?",
         "addService": "Add Service",
         "reorder": "Reorder",
+        "noServicesFound": "No service have yet been added",
+        "bodyMessage": "By selecting \"Add Service\" you can add your first service and start building your business online.",
         "event": {
           "event": "Event",
           "eventType": "Select an event type",
@@ -1006,6 +1008,10 @@
             "adventure": "Adventure",
             "volunteer": "Volunteer",
             "all": "All"
+          },
+          "NoServicesFound": {
+            "noServicesFound": "No services found",
+            "bodyMessage": "Sorry, the service you are looking for is not currently offered."
           }
         },
         "RentalsView": {
@@ -1234,7 +1240,7 @@
         "loading": "Loading",
         "weekly": "Weekly",
         "oneTime": "One time",
-        "onDemand":"On demand"
+        "onDemand": "On demand"
       },
       "CustomerWrapper": {
         "orders": "Orders",
