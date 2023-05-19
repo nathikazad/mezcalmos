@@ -22,11 +22,10 @@
           "unit": "unidad",
           "none": "ningunauna"
         },
-        "BsDeleteOfferButton" : {
-          "title" : "Eliminar la oferta",
-          "helperText" : "¿Estás seguro de que quieres eliminar esta ofrenda?",
-          "buttonText" : "Si, eliminar la oferta"
-        
+        "BsDeleteOfferButton": {
+          "title": "Eliminar la oferta",
+          "helperText": "¿Estás seguro de que quieres eliminar esta ofrenda?",
+          "buttonText": "Si, eliminar la oferta"
         },
         "BsServiceCard": {
           "hour": "hora",
@@ -66,6 +65,8 @@
         "addService": "Agregar servicio",
         "reorder": "Reordenar",
         "events": "Eventos",
+        "noServicesFound": "Todavía no se ha agregado ningún servicio",
+        "bodyMessage": "Al seleccionar \"Agregar servicio\", puede agregar su primer servicio y comenzar a construir su negocio en línea.",
         "event": {
           "event": "Evento",
           "eventType": "Seleccione un tipo de evento",
@@ -267,6 +268,11 @@
           "oneTimeEvent": "Evento de una vez",
           "oneTimeEventLabel": "Evento programado que ocurre en una cierta fecha y hora en la que varias personas pueden ingresar. Por ejemplo, el Año Nuevo Bash con DJ Rocco."
         }
+      },
+      "BsOpSchedulePickerView": {
+        "BsOpSchedulePickerView": {
+          "schedule": "Availability"
+        }
       }
     }
   },
@@ -322,7 +328,16 @@
           "schedule": "Horario",
           "availability": "Disponibilidad",
           "time": "Tiempo",
-          "noBooking": "No se pueden hacer reservas en línea, pero puede enviar un mensaje a la empresa para cualquier consulta."
+          "noBooking": "No se pueden hacer reservas en línea, pero puede enviar un mensaje a la empresa para cualquier consulta.",
+          "weekDays": {
+            "monday": "Lunes",
+            "tuesday": "Martes",
+            "wednesday": "Miércoles",
+            "thursday": "Jueves",
+            "friday": "Viernes",
+            "saturday": "Sábado",
+            "sunday": "Domingo"
+          }
         },
         "description": "Descripción",
         "price": "Precio",
@@ -1082,10 +1097,11 @@
             "yoga": "Yoga",
             "martialArt": "Arte marcial",
             "adventure": "Aventura",
-            "volunteer": "Voluntaria",
-            "motorcycle": "Motocicleta",
-            "car": "Auto",
-            "bicycle": "Bicicleta"
+            "volunteer": "Voluntaria"
+          },
+          "NoServicesFound": {
+            "noServicesFound": "No se encontraron servicios",
+            "bodyMessage": "Lo siento, el servicio que está buscando no se ofrece actualmente."
           }
         },
         "RentalsView": {
@@ -1249,7 +1265,7 @@
         },
         "LocallyMadeView": {
           "CustLocallyMadeListView": {
-            "localMade" :"Hecho localmente",
+            "localMade": "Hecho localmente",
             "consumable": "Consumible",
             "personalCare": "Cuidado personal",
             "art": "Arte",
@@ -1732,17 +1748,17 @@
             "cancel": "Cancelar",
             "businessProfile": {
               "surfShop": "Tienda de Surf",
-    "vehicleRental": "Alquiler de Vehículos",
-    "yogaStudio": "Estudio de Yoga",
-    "homeRental": "Alquiler de Viviendas",
-    "languageSchool": "Escuela de Idiomas",
-    "tourAgency": "Agencia de Turismo",
-    "artisanalProduct": "Producto Artesanal",
-    "cleaningService": "Servicio de Limpieza",
-    "petSitting": "Cuidado de Mascotas",
-    "wellnessPractitioner": "Profesional de Bienestar",
-    "volunteer": "Voluntariado",
-    "entertainment": "Entretenimiento"
+              "vehicleRental": "Alquiler de Vehículos",
+              "yogaStudio": "Estudio de Yoga",
+              "homeRental": "Alquiler de Viviendas",
+              "languageSchool": "Escuela de Idiomas",
+              "tourAgency": "Agencia de Turismo",
+              "artisanalProduct": "Producto Artesanal",
+              "cleaningService": "Servicio de Limpieza",
+              "petSitting": "Cuidado de Mascotas",
+              "wellnessPractitioner": "Profesional de Bienestar",
+              "volunteer": "Voluntariado",
+              "entertainment": "Entretenimiento"
             }
           }
         },

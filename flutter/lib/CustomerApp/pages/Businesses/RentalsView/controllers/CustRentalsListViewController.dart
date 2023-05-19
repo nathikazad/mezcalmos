@@ -135,14 +135,13 @@ class CustRentalsListViewController {
     try {
       _rentalFetchingData = true;
       mezDbgPrint(
-          "👋 _fetchRentals called selected categories : ${filterInput["categories"]!.map((String e) => e.toRentalCategory2()).toList()} \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
+          "👋 _fetchRentals called selected categories : ${isVehicle ? filterInput["categories"]!.map((String e) => e.toRentalCategory2()).toList() : ""} \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
       List<RentalCard> newList = await get_rental_by_category(
         category1: rentalCategory,
         categories2: (isVehicle)
-            ? filterCategories
-            //  filterInput["categories"]
-            //     ?.map((String e) => e.toRentalCategory2())
-            //     .toList()
+            ? filterInput["categories"]
+                ?.map((String e) => e.toRentalCategory2())
+                .toList()
             : null,
         distance: 1000000000000,
         fromLocation: _fromLocation!,

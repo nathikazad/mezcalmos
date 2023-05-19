@@ -88,7 +88,7 @@ class _CustBusinessScheduleBuilderState
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          day,
+                          '${_i18n()[day]['weekDays']}',
                           style: context.textTheme.titleLarge,
                         ),
                         Text(
@@ -122,7 +122,10 @@ class _CustBusinessScheduleBuilderState
                         children: [
                           !widget.showIcons
                               ? Text(
-                                  "$day${(widget.scheduleType == ScheduleType.Scheduled ? "s" : "")}",
+                                  widget.scheduleType == ScheduleType.Scheduled
+                                      ? _days(
+                                          '${_i18n()['weekDays'][day.toLowerCase()]}')
+                                      : '${_i18n()['weekDays'][day.toLowerCase()]}',
                                   style: TextStyle(fontWeight: FontWeight.w600),
                                 )
                               : SizedBox(
@@ -141,7 +144,7 @@ class _CustBusinessScheduleBuilderState
                                         padding:
                                             const EdgeInsets.only(left: 5.0),
                                         child: Text(
-                                          '$day${(widget.scheduleType == ScheduleType.Scheduled ? 's' : '')}',
+                                          '${_i18n()[day]}${(widget.scheduleType == ScheduleType.Scheduled ? 's' : '')}',
                                           style: TextStyle(
                                               fontWeight: FontWeight.w600),
                                         ),
@@ -159,5 +162,13 @@ class _CustBusinessScheduleBuilderState
             ),
       ],
     );
+  }
+
+  String _days(String day) {
+    if (Get.find<LanguageController>().langFullName == 'English') {
+      return '${day}s';
+    } else {
+      return 'Los ${day.toLowerCase()}';
+    }
   }
 }

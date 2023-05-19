@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/components/BsOpSchedulePickerComponents.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/controllers/BsOpSchedulePickerViewController.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
+    ['pages']['BsOpSchedulePickerView']['BsOpSchedulePickerView'];
 
 class BsOpSchedulePickerView extends StatefulWidget {
   const BsOpSchedulePickerView({Key? key}) : super(key: key);
@@ -42,7 +47,7 @@ class _BsOpSchedulePickerViewState extends State<BsOpSchedulePickerView> {
       backgroundColor: Colors.white,
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        title: "Schedule",
+        title: '${_i18n()['schedule']}',
         onClick: () {
           MezRouter.back(
             backResult: viewController.newSchedule.value,

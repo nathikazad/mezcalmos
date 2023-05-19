@@ -86,7 +86,7 @@ class _MessagesListViewState extends State<MessagesListView> {
             child: CircularProgressIndicator(),
           );
         }
-        if (viewcontroller.allChats.isNotEmpty) {
+        if (viewcontroller.allChats.isEmpty) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

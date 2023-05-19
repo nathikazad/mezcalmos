@@ -216,7 +216,8 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       foregroundColor: primaryBlueColor,
       onPressed: () {
         Clipboard.setData(ClipboardData(
-                text: viewController.order.value?.clipBoardText(userLanguage)))
+                text:
+                    '${viewController.order.value?.clipBoardText(userLanguage)}'))
             .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
                 position: Alignment.topCenter));
       },

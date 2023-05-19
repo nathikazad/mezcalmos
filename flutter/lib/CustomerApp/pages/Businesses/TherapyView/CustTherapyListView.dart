@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/controllers/CustTherapyListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -24,6 +25,7 @@ import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dar
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['TherapyView']['CustTherapyListView'];
@@ -147,7 +149,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
           FilterInput? data = await cusShowBusinessFilerSheet(
               context: context,
               filterInput: viewController.filterInput,
-             // isTherapy: true,
+              isTherapy: true,
               defaultFilterInput: viewController.defaultFilters());
           if (data != null) {
             viewController.filter(data);
@@ -329,10 +331,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                     ],
                   ))));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noTherapyFound']}'));
+      return NoServicesFound();
   }
 
   Column oneTimeBuilder(EventCard eventData) {

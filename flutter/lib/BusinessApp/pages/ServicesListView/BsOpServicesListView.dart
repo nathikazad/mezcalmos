@@ -3,6 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/Components/BsProductCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsEventCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsHomeRentalCard.dart';
@@ -15,10 +20,13 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -81,241 +89,384 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
         onRefresh: () async {
           await viewController.fetchAllServices();
         },
-        child: Column(
-          children: [
-            Obx(() {
-              if (viewController.isFetchingAll ||
-                  viewController.isFetchingSingle) {
-                return LinearProgressIndicator();
-              } else
-                return SizedBox.shrink();
-            }),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Obx(
-                  () => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _addServiceButton(context),
-                      bigSeperator,
-                      Row(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Obx(
+            () => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _addServiceButton(context),
+                bigSeperator,
+                Row(
+                  children: [
+                    Flexible(
+                        fit: FlexFit.tight,
+                        child: Text(
+                          _i18n()["services"],
+                          style: context.textTheme.bodyLarge,
+                        )),
+                    InkWell(
+                      onTap: () {
+                        /// TODO: Only to view purpose
+                        viewController.changeBusiness();
+                      },
+                      child: Ink(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            MezIconButton(
+                                elevation: 0,
+                                iconSize: 18,
+                                padding: EdgeInsets.all(3),
+                                onTap: null,
+                                icon: Icons.low_priority_rounded),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              _i18n()["reorder"],
+                              style: context.textTheme.bodyLarge
+                                  ?.copyWith(color: primaryBlueColor),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                !viewController.noData
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(
-                              fit: FlexFit.tight,
-                              child: Text(
-                                _i18n()["services"],
-                                style: context.textTheme.bodyLarge,
-                              )),
-                        ],
-                      ),
-                      Divider(
-                        height: 30,
-                      ),
-                      Text(
-                        _i18n()["homeRental"]["rentalTitle"],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Obx(
-                        () => Column(
-                          children: List.generate(
-                              viewController.homeRentals.length,
-                              (int index) => BsHomeRentalCard(
-                                    rental: viewController.homeRentals[index],
-                                    viewController: viewController,
-                                    onClick: () {
-                                      viewController.navigateToHomeRental(
-                                          id: viewController
-                                              .homeRentals[index].id!
-                                              .toInt());
-                                    },
-                                  )),
-                        ),
-                      ),
-                      bigSeperator,
-                      Text(
-                        _i18n()["rental"],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Obx(
-                        () => Column(
-                          children: List.generate(
-                              viewController.rentals.length,
-                              (int index) => BsRentalCard(
-                                  viewController: viewController,
-                                  rental: viewController.rentals[index],
-                                  onClick: () {
-                                    viewController.navigateToRental(
-                                        id: viewController.rentals[index].id!
-                                            .toInt(),
-                                        rentalCategory: viewController
-                                            .rentals[index].category1);
-                                  })),
-                        ),
-                      ),
-                      bigSeperator,
-                      Text(
-                        "${_i18n()["event"]["scheduled"]} ${_i18n()["events"]}",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Obx(
-                        () => Column(
-                          children: List.generate(
-                              viewController.events.length,
-                              (int index) => viewController
-                                          .events[index].scheduleType ==
-                                      ScheduleType.Scheduled
-                                  ? BsEventCard(
-                                      event: viewController.events[index],
-                                      viewController: viewController,
-                                      onClick: () {
-                                        viewController.navigateToEvent(
-                                          id: viewController.events[index].id!
-                                              .toInt(),
-                                          isClass: viewController
-                                              .events[index].isClass,
-                                        );
-                                      },
-                                    )
-                                  : SizedBox.shrink()),
-                        ),
-                      ),
-                      bigSeperator,
-                      Text(
-                        "${_i18n()["event"]["onDemand"]} ${_i18n()["events"]}",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Obx(
-                        () => Column(
-                          children: List.generate(
-                              viewController.events.length,
-                              (int index) => viewController
-                                          .events[index].scheduleType ==
-                                      ScheduleType.OnDemand
-                                  ? BsEventCard(
-                                      event: viewController.events[index],
-                                      viewController: viewController,
-                                      onClick: () async {
-                                        viewController.navigateToEvent(
-                                          id: viewController.events[index].id!
-                                              .toInt(),
-                                          isClass: viewController
-                                              .events[index].isClass,
-                                        );
-                                      },
-                                    )
-                                  : SizedBox.shrink()),
-                        ),
-                      ),
-                      bigSeperator,
-                      Text(
-                        "${_i18n()["event"]["oneTime"]} ${_i18n()["events"]}",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Obx(
-                        () => Column(
-                          children: List.generate(
-                              viewController.events.length,
-                              (int index) => viewController
-                                          .events[index].scheduleType ==
-                                      ScheduleType.OneTime
-                                  ? BsEventCard(
-                                      event: viewController.events[index],
-                                      viewController: viewController,
-                                      onClick: () {
-                                        viewController.navigateToEvent(
-                                          id: viewController.events[index].id!
-                                              .toInt(),
-                                          isClass: viewController
-                                              .events[index].isClass,
-                                        );
-                                      },
-                                    )
-                                  : SizedBox.shrink()),
-                        ),
-                      ),
-                      bigSeperator,
-                      Text(
-                        _i18n()["classes"],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Obx(
-                        () => Column(
-                          children: List.generate(
-                              viewController.events.length,
-                              (int index) =>
-                                  viewController.events[index].isClass
+                          Divider(
+                            height: 30,
+                          ),
+                          if (viewController.homeRentals.length > 0)
+                            _homeRentals(context),
+                          if (viewController.rentals.length > 0)
+                            _rentals(context),
+                          if (viewController.events.length > 0)
+                            _events(context),
+                          Text(
+                            "${_i18n()["event"]["onDemand"]} ${_i18n()["events"]}",
+                            style: context.textTheme.bodyLarge,
+                          ),
+                          smallSepartor,
+                          Obx(
+                            () => Column(
+                              children: List.generate(
+                                  viewController.events.length,
+                                  (int index) => viewController
+                                              .events[index].scheduleType ==
+                                          ScheduleType.OnDemand
                                       ? BsEventCard(
-                                          viewController: viewController,
                                           event: viewController.events[index],
-                                          onClick: () async {
-                                            viewController.navigateToEvent(
+                                          viewController: viewController,
+                                          onClick: () {
+                                            BsOpEventView.navigate(
+                                              businessId:
+                                                  viewController.businessId,
+                                              profile: viewController
+                                                  .businessProfile,
+                                              businessDetailsId: viewController
+                                                  .businessDetailsId,
                                               id: viewController
                                                   .events[index].id!
                                                   .toInt(),
                                               isClass: viewController
                                                   .events[index].isClass,
                                             );
+                                          },
+                                        )
+                                      : SizedBox.shrink()),
+                            ),
+                          ),
+                          bigSeperator,
+                          Text(
+                            "${_i18n()["event"]["oneTime"]} ${_i18n()["events"]}",
+                            style: context.textTheme.bodyLarge,
+                          ),
+                          smallSepartor,
+                          Obx(
+                            () => Column(
+                              children: List.generate(
+                                  viewController.events.length,
+                                  (int index) => viewController
+                                              .events[index].scheduleType ==
+                                          ScheduleType.OneTime
+                                      ? BsEventCard(
+                                          event: viewController.events[index],
+                                          viewController: viewController,
+                                          onClick: () {
+                                            BsOpEventView.navigate(
+                                              businessId:
+                                                  viewController.businessId,
+                                              profile: viewController
+                                                  .businessProfile,
+                                              businessDetailsId: viewController
+                                                  .businessDetailsId,
+                                              id: viewController
+                                                  .events[index].id!
+                                                  .toInt(),
+                                              isClass: viewController
+                                                  .events[index].isClass,
+                                            );
+                                          },
+                                        )
+                                      : SizedBox.shrink()),
+                            ),
+                          ),
+                          bigSeperator,
+                          Text(
+                            _i18n()["classes"],
+                            style: context.textTheme.bodyLarge,
+                          ),
+                          smallSepartor,
+                          Obx(
+                            () => Column(
+                              children: List.generate(
+                                  viewController.events.length,
+                                  (int index) => viewController
+                                          .events[index].isClass
+                                      ? BsEventCard(
+                                          viewController: viewController,
+                                          event: viewController.events[index],
+                                          onClick: () {
+                                            BsOpEventView.navigate(
+                                              id: viewController
+                                                  .events[index].id!
+                                                  .toInt(),
+                                              businessId:
+                                                  viewController.businessId,
+                                              businessDetailsId: viewController
+                                                  .businessDetailsId,
+                                              profile: viewController
+                                                  .businessProfile,
+                                              isClass: viewController
+                                                  .events[index].isClass,
+                                            );
                                           })
                                       : SizedBox.shrink()),
+                            ),
+                          ),
+                          bigSeperator,
+                          if (viewController.services.length > 0)
+                            _services(context),
+                          if (viewController.product.length > 0)
+                            _products(context),
+                        ],
+                      )
+                    : Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Image.asset(
+                              aNoServices,
+                              height: 200.mezSp,
+                              width: 200.mezSp,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              '${_i18n()['noServicesFound']}',
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            Text(
+                              '${_i18n()['bodyMessage']}',
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
-                      ),
-                      bigSeperator,
-                      Text(
-                        _i18n()["services"],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Obx(
-                        () => Column(
-                          children: List.generate(
-                              viewController.services.length,
-                              (int index) => BsServiceCard(
-                                    service: viewController.services[index],
-                                    viewController: viewController,
-                                    onClick: () {
-                                      viewController.navigateToService(
-                                          id: viewController.services[index].id!
-                                              .toInt());
-                                    },
-                                  )),
-                        ),
-                      ),
-                      bigSeperator,
-                      Text(
-                        _i18n()["product"],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Obx(
-                        () => Column(
-                          children: List.generate(
-                              viewController.product.length,
-                              (int index) => BsProductCard(
-                                    product: viewController.product[index],
-                                    viewController: viewController,
-                                    onClick: () {
-                                      viewController.navigateToProduct(
-                                          id: viewController.product[index].id!
-                                              .toInt());
-                                    },
-                                  )),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                      )
+              ],
             ),
-          ],
+          ),
         ),
       ),
+    );
+  }
+
+  Column _products(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          _i18n()["product"],
+          style: context.textTheme.bodyLarge,
+        ),
+        smallSepartor,
+        Obx(
+          () => Column(
+            children: List.generate(
+                viewController.product.length,
+                (int index) => BsProductCard(
+                      product: viewController.product[index],
+                      viewController: viewController,
+                      onClick: () {
+                        BsOpProductView.navigate(
+                            businessId: viewController.businessId,
+                            businessDetailsId: viewController.businessDetailsId,
+                            id: viewController.product[index].id!.toInt());
+                      },
+                    )),
+          ),
+        )
+      ],
+    );
+  }
+
+  Column _services(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          _i18n()["services"],
+          style: context.textTheme.bodyLarge,
+        ),
+        smallSepartor,
+        Obx(
+          () => Column(
+            children: List.generate(
+                viewController.services.length,
+                (int index) => BsServiceCard(
+                      service: viewController.services[index],
+                      viewController: viewController,
+                      onClick: () {
+                        BsOpServiceView.navigate(
+                            businessId: viewController.businessId,
+                            businessDetailsId: viewController.businessDetailsId,
+                            serviceId:
+                                viewController.services[index].id!.toInt());
+                      },
+                    )),
+          ),
+        ),
+        bigSeperator,
+      ],
+    );
+  }
+
+  Column _events(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "${_i18n()["event"]["scheduled"]} ${_i18n()["events"]}",
+          style: context.textTheme.bodyLarge,
+        ),
+        smallSepartor,
+        Obx(
+          () => Column(
+            children: List.generate(
+                viewController.events.length,
+                (int index) => viewController.events[index].scheduleType ==
+                        ScheduleType.Scheduled
+                    ? BsEventCard(
+                        event: viewController.events[index],
+                        viewController: viewController,
+                        onClick: () {
+                          BsOpEventView.navigate(
+                            businessId: viewController.businessId,
+                            profile: viewController.businessProfile,
+                            businessDetailsId: viewController.businessDetailsId,
+                            id: viewController.events[index].id!.toInt(),
+                            isClass: viewController.events[index].isClass,
+                          );
+                        },
+                      )
+                    : SizedBox.shrink()),
+          ),
+        ),
+        bigSeperator,
+      ],
+    );
+  }
+
+  Column _rentals(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          _i18n()["rental"],
+          style: context.textTheme.bodyLarge,
+        ),
+        smallSepartor,
+        Obx(
+          () => Column(
+            children: List.generate(
+                viewController.rentals.length,
+                (int index) => BsRentalCard(
+                    viewController: viewController,
+                    rental: viewController.rentals[index],
+                    onClick: () {
+                      BsOpRentalView.navigate(
+                        businessId: viewController.businessId,
+                        businessDetailsId: viewController.businessDetailsId,
+                        id: viewController.rentals[index].id!.toInt(),
+                        rentalCategory: viewController.rentals[index].category1,
+                      );
+                    })
+
+                //  MezCard(
+                //     onClick: () {
+                //       BsOpRentalView.navigate(
+                //         id: viewController.rentals[index].id
+                //            ! .toInt(),
+                //         rentalCategory:
+                //             viewController.rentals[index].category1,
+                //       );
+                //     },
+                //     firstAvatarBgImage: NetworkImage(
+                //       viewController
+                //               .rentals[index].details.firstImage ??
+                //           customImageUrl,
+                //     ),
+                //     content: Text(
+                //       viewController.rentals[index].details.name
+                //           .getTranslation(userLanguage),
+                //       style: context.textTheme.bodyLarge,
+                //     ))
+                ),
+          ),
+        ),
+        bigSeperator,
+      ],
+    );
+  }
+
+  Column _homeRentals(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          _i18n()["homeRental"]["rentalTitle"],
+          style: context.textTheme.bodyLarge,
+        ),
+        smallSepartor,
+        Obx(
+          () => Column(
+            children: List.generate(
+                viewController.homeRentals.length,
+                (int index) => BsHomeRentalCard(
+                      rental: viewController.homeRentals[index],
+                      viewController: viewController,
+                      onClick: () {
+                        BsOpHomeRentalView.navigate(
+                            businessId: viewController.businessId,
+                            businessDetailsId: viewController.businessDetailsId,
+                            id: viewController.homeRentals[index].id!.toInt());
+                      },
+                    )),
+          ),
+        ),
+        bigSeperator,
+      ],
     );
   }
 

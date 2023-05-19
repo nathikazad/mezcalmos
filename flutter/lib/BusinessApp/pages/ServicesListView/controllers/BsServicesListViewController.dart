@@ -66,6 +66,13 @@ class BsServicesListViewController {
   bool get isFetchingAll => _isFetchingAll.value;
   bool get isFetchingSingle => _isFetchingSingle.value;
 
+  bool get noData =>
+      homeRentals.isEmpty &&
+      rentals.isEmpty &&
+      events.isEmpty &&
+      services.isEmpty &&
+      product.isEmpty;
+
   // methods //
   Future<void> init(
       {required int id,
