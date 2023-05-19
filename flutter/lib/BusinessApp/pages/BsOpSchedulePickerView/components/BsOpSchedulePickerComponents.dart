@@ -142,6 +142,7 @@ class BsOpSchedulePickerWidgets {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: MezIconButton(
+        elevation: 0,
         onTap: () {
           showModalBottomSheet(
               context: context,

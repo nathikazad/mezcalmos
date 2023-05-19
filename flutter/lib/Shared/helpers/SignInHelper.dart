@@ -14,8 +14,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -86,6 +84,7 @@ Future<SendOtpResponse?> sendOTPForLogin(String phoneNumber) async {
     mezDbgPrint(e);
     mezDbgPrint(stk);
   }
+  return null;
 }
 
 Future<AuthResponse?> signInUsingOTP(String phoneNumber, String otpCode) async {
@@ -93,7 +92,7 @@ Future<AuthResponse?> signInUsingOTP(String phoneNumber, String otpCode) async {
 
   try {
     // _waitingResponse.value = true;
-    AuthResponse response = await CloudFunctions.otp3_getAuthUsingOTP(
+    final AuthResponse response = await CloudFunctions.otp3_getAuthUsingOTP(
       phoneNumber: phoneNumber,
       OTPCode: otpCode,
       // 'language': _settings.appLanguage.userLanguageKey,
@@ -109,7 +108,6 @@ Future<AuthResponse?> signInUsingOTP(String phoneNumber, String otpCode) async {
             "Your account has been deleted permanently!",
             position: Alignment.topCenter,
           );
-          return null;
         }
       });
     }
@@ -118,11 +116,12 @@ Future<AuthResponse?> signInUsingOTP(String phoneNumber, String otpCode) async {
     // MezSnackbar("Oops ..", _i18n()['failedOTPConfirmRequest']);
     print("Exception happend in GetAuthUsingOTP : $e");
   }
+  return null;
 }
 
 // flutter_facebook_auth Package causes a conflict with GetStorage !
 
-Future signInWithFacebook() async {
+Future<void> signInWithFacebook() async {
   // Trigger the sign-in flow
   final LoginResult result = await FacebookAuth.instance.login();
   print(" FB AUTH STATUS +++++++++++++++++++++ ${result.status.toString()}");
@@ -152,7 +151,7 @@ Future signInWithFacebook() async {
   }
 }
 
-Future signInWithApple() async {
+Future<void> signInWithApple() async {
   // To prevent replay attacks with the credential returned from Apple, we
   // include a nonce in the credential request. When signing in in with
   // Firebase, the nonce in the id token returned by Apple, is expected to
@@ -191,7 +190,6 @@ Future signInWithApple() async {
           "Your account has been deleted permanently!",
           position: Alignment.topCenter,
         );
-        return null;
       }
     }));
   } catch (exception) {
@@ -206,6 +204,13 @@ String generateNonce([int length = 32]) {
       '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
   final Random random = Random.secure();
   return List.generate(length, (_) => charset[random.nextInt(charset.length)])
+      .join();
+}
+
+String generateString() {
+  final String charset = 'abcdefghijklmnopqrstuvwxyz';
+  final Random random = Random.secure();
+  return List.generate(10, (_) => charset[random.nextInt(charset.length)])
       .join();
 }
 

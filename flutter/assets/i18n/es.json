@@ -1307,6 +1307,8 @@
         "orders": "Pedidos",
         "profile": "Perfil",
         "messages": "Mensajes",
+        "noMessage": "No se han encontrado mensajes",
+        "noMessageLabel": "Una vez que reciba un nuevo mensaje, se mostrará aquí.",
         "home": "Hogar",
         "savedLocations": "Ubicaciones guardadas",
         "welcomeText": "Bienvenido a MEZCALMOS 👋",

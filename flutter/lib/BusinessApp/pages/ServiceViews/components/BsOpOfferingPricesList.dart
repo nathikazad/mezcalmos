@@ -119,6 +119,9 @@ class BsOpOfferingPricesList extends StatelessWidget {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 hintText: _i18n()["price"],
+                hintStyle: context.textTheme.bodyLarge!.copyWith(
+                  color: Theme.of(context).disabledColor,
+                ),
                 suffixIconConstraints: BoxConstraints(
                   minWidth: 0,
                   minHeight: 0,
@@ -126,7 +129,10 @@ class BsOpOfferingPricesList extends StatelessWidget {
                 prefixIconConstraints: BoxConstraints.tight(Size(24, 24)),
                 prefixIcon: Padding(
                     padding: EdgeInsets.only(left: 8),
-                    child: const Icon(Icons.attach_money)),
+                    child: const Icon(
+                      Icons.attach_money,
+                      color: Colors.black,
+                    )),
                 suffixIcon: Align(
                   alignment: Alignment.centerRight,
                   child: Padding(

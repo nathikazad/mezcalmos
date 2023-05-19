@@ -63,9 +63,10 @@ class BsOpScheduleSelector extends StatelessWidget {
                       _i18n()["schedule"],
                       style: context.textTheme.bodyLarge,
                     ),
-                    Icon(
-                      Icons.keyboard_arrow_right,
-                    ),
+                    if (schedule == null || checkIfAnyOpen(schedule))
+                      Icon(
+                        Icons.keyboard_arrow_right,
+                      ),
                   ],
                 ),
                 if (schedule == null || checkIfAnyOpen(schedule))
