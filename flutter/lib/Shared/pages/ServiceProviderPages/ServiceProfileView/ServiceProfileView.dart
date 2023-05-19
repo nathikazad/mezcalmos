@@ -110,7 +110,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   },
                                   icon: Icons.person,
                                   label: "${_i18n()['info']}"),
-                              if (_viewController.serviceLink != null)
+                             // if (_viewController.serviceLink != null)
                                 _navigationLink(
                                     onClick: () async {
                                       await _viewController

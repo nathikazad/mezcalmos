@@ -37,3 +37,33 @@ business{
   
   }
 }
+
+query getBusinessOperators($businessId: Int!) {
+  business_business_by_pk(id: $businessId) {
+    operators {
+      id
+    operator_details {
+  owner
+    status
+    online
+    }
+  business{
+    details_id
+    details{service_link_id}
+  }
+    user_id
+    user {
+      firebase_id
+  
+      image
+      language_id
+      name
+   
+    }
+    business_id
+    details_id
+   
+   
+    }
+  }
+}

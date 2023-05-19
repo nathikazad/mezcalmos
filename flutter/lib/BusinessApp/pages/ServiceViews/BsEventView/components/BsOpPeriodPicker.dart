@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -9,12 +10,14 @@ class BsOpPeriodPicker extends StatelessWidget {
   const BsOpPeriodPicker({
     super.key,
     required this.timePeriod,
+    required this.serviceSchedule,
     required this.onNewPeriodSelected,
     this.label = "Select time",
   });
 
   final PeriodOfTime? timePeriod;
   final void Function(PeriodOfTime) onNewPeriodSelected;
+  final Schedule serviceSchedule;
   final String label;
 
   @override
@@ -46,7 +49,7 @@ class BsOpPeriodPicker extends StatelessWidget {
                           startDate: DateTime.now(),
                           numberOfDaysInterval: 7,
                           periodOfTime: null,
-                          serviceSchedule: scheduleFromData(defaultSchedule),
+                          serviceSchedule: serviceSchedule,
                         );
                       }).then((PeriodOfTime? value) {
                     state.didChange(value);

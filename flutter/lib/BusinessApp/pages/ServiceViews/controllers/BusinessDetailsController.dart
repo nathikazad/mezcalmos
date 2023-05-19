@@ -196,7 +196,7 @@ class BusinessItemDetailsController {
   }
 
   ImageProvider? getImage(int index) {
-    if (images[index] != null) {
+    if (images.length > index && images[index] != null) {
       return FileImage(images[index]!);
     } else if (imagesUrls[index] != null) {
       return CachedNetworkImageProvider(imagesUrls[index]!);

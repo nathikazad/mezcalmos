@@ -62,31 +62,31 @@ class CreateServiceInfoPage extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            Text(
-              "${_i18n()['description']}",
-              style: context.txt.bodyLarge,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              minLines: 2,
-              maxLines: 7,
-              controller: viewController.description,
-              validator: (String? v) {
-                if (v == null || v.isEmpty) {
-                  return "${_i18n()['descriptionError']}";
-                }
-                return null;
-              },
-              style: context.txt.bodyLarge,
-              decoration: InputDecoration(
-                  hintStyle: context.txt.bodyMedium,
-                  hintText: "${_i18n()['descriptionHintText']}"),
-            ),
-            SizedBox(
-              height: 15,
-            ),
+            // Text(
+            //   "${_i18n()['description']}",
+            //   style: context.txt.bodyLarge,
+            // ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            // TextFormField(
+            //   minLines: 2,
+            //   maxLines: 7,
+            //   controller: viewController.description,
+            //   validator: (String? v) {
+            //     if (v == null || v.isEmpty) {
+            //       return "${_i18n()['descriptionError']}";
+            //     }
+            //     return null;
+            //   },
+            //   style: context.txt.bodyLarge,
+            //   decoration: InputDecoration(
+            //       hintStyle: context.txt.bodyMedium,
+            //       hintText: "${_i18n()['descriptionHintText']}"),
+            // ),
+            // SizedBox(
+            //   height: 15,
+            // ),
             // todo @ChiragKr04 fix ui and translation for the filter card and sheet
             if (viewController.isBusiness) _businessTypeFilter(context),
             SizedBox(

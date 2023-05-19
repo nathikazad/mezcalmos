@@ -1,15 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/components/ListOperatorCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/controllers/OperatorsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -37,12 +35,14 @@ class OperatorsListView extends StatefulWidget {
 
   static Future<void> navigate(
       {required int serviceProviderId,
-      required int serviceLinkId,
+      required int? serviceLinkId,
       required ServiceProviderType serviceProviderType}) {
     mezDbgPrint("Arguments =============>$serviceProviderId \n $serviceLinkId");
     String route = SharedServiceProviderRoutes.kOperatorsListRoute
         .replaceFirst(":serviceProviderId", serviceProviderId.toString());
-    route = route.replaceFirst(":serviceLinkId", serviceLinkId.toString());
+    if (serviceLinkId != null) {
+      route = route.replaceFirst(":serviceLinkId", serviceLinkId.toString());
+    }
     return MezRouter.toPath(route, arguments: <String, dynamic>{
       "serviceProviderType": serviceProviderType,
     });
@@ -64,7 +64,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
     mezDbgPrint("Body args ::::::========>${MezRouter.urlArguments.asMap}");
     viewController.init(
         serviceProviderId: serviceProviderId!,
-        serviceLinkId: serviceLinkId!,
+        serviceLinkId: serviceLinkId,
         serviceProviderType: serviceProviderType!);
 
     super.initState();
@@ -89,13 +89,14 @@ class _OperatorsListViewState extends State<OperatorsListView> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              MezAddButton(
-                onClick: () async {
-                  // await viewController.fetchServiceLinks();
-                  await _addOperatorSheet(context);
-                },
-                title: "${_i18n()['addOperator']}",
-              ),
+              if (viewController.serviceLinkId != null)
+                MezAddButton(
+                  onClick: () async {
+                    // await viewController.fetchServiceLinks();
+                    await _addOperatorSheet(context);
+                  },
+                  title: "${_i18n()['addOperator']}",
+                ),
               SizedBox(
                 height: 15,
               ),

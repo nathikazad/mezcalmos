@@ -322,6 +322,20 @@ const documentNodeQuerygetOperatorByUserId = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -841,6 +855,8 @@ class Query$getOperatorByUserId$delivery_operator$operator_details {
   Query$getOperatorByUserId$delivery_operator$operator_details({
     required this.owner,
     required this.status,
+    required this.online,
+    required this.id,
     required this.$__typename,
   });
 
@@ -848,10 +864,14 @@ class Query$getOperatorByUserId$delivery_operator$operator_details {
       Map<String, dynamic> json) {
     final l$owner = json['owner'];
     final l$status = json['status'];
+    final l$online = json['online'];
+    final l$id = json['id'];
     final l$$__typename = json['__typename'];
     return Query$getOperatorByUserId$delivery_operator$operator_details(
       owner: (l$owner as bool),
       status: (l$status as String),
+      online: (l$online as bool),
+      id: (l$id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -859,6 +879,10 @@ class Query$getOperatorByUserId$delivery_operator$operator_details {
   final bool owner;
 
   final String status;
+
+  final bool online;
+
+  final int id;
 
   final String $__typename;
 
@@ -868,6 +892,10 @@ class Query$getOperatorByUserId$delivery_operator$operator_details {
     _resultData['owner'] = l$owner;
     final l$status = status;
     _resultData['status'] = l$status;
+    final l$online = online;
+    _resultData['online'] = l$online;
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -877,10 +905,14 @@ class Query$getOperatorByUserId$delivery_operator$operator_details {
   int get hashCode {
     final l$owner = owner;
     final l$status = status;
+    final l$online = online;
+    final l$id = id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$owner,
       l$status,
+      l$online,
+      l$id,
       l$$__typename,
     ]);
   }
@@ -903,6 +935,16 @@ class Query$getOperatorByUserId$delivery_operator$operator_details {
     final l$status = status;
     final lOther$status = other.status;
     if (l$status != lOther$status) {
+      return false;
+    }
+    final l$online = online;
+    final lOther$online = other.online;
+    if (l$online != lOther$online) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -940,6 +982,8 @@ abstract class CopyWith$Query$getOperatorByUserId$delivery_operator$operator_det
   TRes call({
     bool? owner,
     String? status,
+    bool? online,
+    int? id,
     String? $__typename,
   });
 }
@@ -964,6 +1008,8 @@ class _CopyWithImpl$Query$getOperatorByUserId$delivery_operator$operator_details
   TRes call({
     Object? owner = _undefined,
     Object? status = _undefined,
+    Object? online = _undefined,
+    Object? id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getOperatorByUserId$delivery_operator$operator_details(
@@ -973,6 +1019,10 @@ class _CopyWithImpl$Query$getOperatorByUserId$delivery_operator$operator_details
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
+        online: online == _undefined || online == null
+            ? _instance.online
+            : (online as bool),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -992,6 +1042,8 @@ class _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$operator_det
   call({
     bool? owner,
     String? status,
+    bool? online,
+    int? id,
     String? $__typename,
   }) =>
       _res;

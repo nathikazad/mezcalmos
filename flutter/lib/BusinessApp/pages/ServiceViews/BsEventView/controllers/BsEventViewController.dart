@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -34,6 +35,7 @@ class BsEventViewController {
   bool get isClass => _isClass.value;
   RxBool _isClass = false.obs;
   // state variables //
+  Schedule? serviceSchedule;
   Rxn<EventWithBusinessCard> _event = Rxn<EventWithBusinessCard>();
   Rxn<ScheduleType> scheduleType = Rxn<ScheduleType>();
   Rxn<Schedule> avalaibilty = Rxn<Schedule>();
@@ -101,6 +103,9 @@ class BsEventViewController {
     if (eventId != null) {
       await initEditMode(id: eventId);
     }
+    unawaited(
+        get_service_schedule(serviceDetailsId: detailsId, withCache: false)
+            .then((Schedule? value) => serviceSchedule = value));
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -409,12 +414,20 @@ class BsEventViewController {
         );
       case ScheduleType.OneTime:
         return Obx(
-          () => BsOpPeriodPicker(
-            onNewPeriodSelected: (PeriodOfTime v) {
-              oneTimePeriod.value = v;
-            },
-            timePeriod: oneTimePeriod.value,
-          ),
+          () {
+            if (serviceSchedule != null) {
+              return BsOpPeriodPicker(
+                onNewPeriodSelected: (PeriodOfTime v) {
+                  oneTimePeriod.value = v;
+                },
+                serviceSchedule: serviceSchedule!,
+                timePeriod: oneTimePeriod.value,
+              );
+            } else
+              return Container(
+                child: Text("Business schedule not found"),
+              );
+          },
         );
       case null:
         return Container();

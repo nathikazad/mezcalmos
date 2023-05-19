@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/graphql/business_operator/hsBusinessOperator.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_operator/hsDeliveryOperator.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_operator/hsLaundryOperator.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
@@ -12,7 +13,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class OperatorsListViewController {
   // instances and streams subscriptions
@@ -35,28 +35,31 @@ class OperatorsListViewController {
   // late variables //
 
   late int serviceProviderId;
-  late int serviceLinkId;
+  int? serviceLinkId;
   late cModels.ServiceProviderType serviceProviderType;
   Future<void> init({
     required int serviceProviderId,
-    required int serviceLinkId,
+    required int? serviceLinkId,
     required cModels.ServiceProviderType serviceProviderType,
   }) async {
     this.serviceProviderId = serviceProviderId;
     this.serviceLinkId = serviceLinkId;
     this.serviceProviderType = serviceProviderType;
     await fetchOperators();
+
     await fetchServiceLinks();
 
-    mezDbgPrint("Init operators of restaurant id  ====>$serviceProviderId");
+    mezDbgPrint("Init operators of service id  ====>$serviceProviderId");
   }
 
   Future<void> fetchServiceLinks() async {
-    try {
-      serviceLink.value = await get_service_link_by_id(
-          serviceLinkId: serviceLinkId, withCache: false);
-    } on Exception {
-      mezDbgPrint("Service dont have links");
+    if (serviceLinkId != null) {
+      try {
+        serviceLink.value = await get_service_link_by_id(
+            serviceLinkId: serviceLinkId!, withCache: false);
+      } on Exception {
+        mezDbgPrint("Service dont have links");
+      }
     }
   }
 
@@ -77,6 +80,12 @@ class OperatorsListViewController {
       case cModels.ServiceProviderType.Laundry:
         operators.value = await get_laundry_operators(
                 laundryId: serviceProviderId, withCache: false) ??
+            [];
+        break;
+      case cModels.ServiceProviderType.Business:
+        operators.value = await get_business_ops(
+              businessId: serviceProviderId,
+            ) ??
             [];
 
         break;
