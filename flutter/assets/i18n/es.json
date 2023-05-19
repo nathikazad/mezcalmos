@@ -268,6 +268,11 @@
           "oneTimeEvent": "Evento de una vez",
           "oneTimeEventLabel": "Evento programado que ocurre en una cierta fecha y hora en la que varias personas pueden ingresar. Por ejemplo, el Año Nuevo Bash con DJ Rocco."
         }
+      },
+      "BsOpSchedulePickerView": {
+        "BsOpSchedulePickerView": {
+          "schedule": "Availability"
+        }
       }
     }
   },
@@ -323,7 +328,16 @@
           "schedule": "Horario",
           "availability": "Disponibilidad",
           "time": "Tiempo",
-          "noBooking": "No se pueden hacer reservas en línea, pero puede enviar un mensaje a la empresa para cualquier consulta."
+          "noBooking": "No se pueden hacer reservas en línea, pero puede enviar un mensaje a la empresa para cualquier consulta.",
+          "weekDays": {
+            "monday": "Lunes",
+            "tuesday": "Martes",
+            "wednesday": "Miércoles",
+            "thursday": "Jueves",
+            "friday": "Viernes",
+            "saturday": "Sábado",
+            "sunday": "Domingo"
+          }
         },
         "description": "Descripción",
         "price": "Precio",

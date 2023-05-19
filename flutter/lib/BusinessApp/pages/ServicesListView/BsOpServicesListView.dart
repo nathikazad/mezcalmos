@@ -135,8 +135,9 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     ),
                   ],
                 ),
-                viewController.noData
+                !viewController.noData
                     ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Divider(
                             height: 30,

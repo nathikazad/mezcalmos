@@ -272,6 +272,11 @@
           "oneTimeEvent": "One time event",
           "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco."
         }
+      },
+      "BsOpSchedulePickerView": {
+        "BsOpSchedulePickerView": {
+          "schedule": "Availability"
+        }
       }
     }
   },
@@ -327,7 +332,16 @@
           "schedule": "Schedule",
           "availability": "Availability",
           "time": "Time",
-          "noBooking": "Online booking is not available, you can message the business for any inquiries."
+          "noBooking": "Online booking is not available, you can message the business for any inquiries.",
+          "weekDays": {
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday",
+            "sunday": "Sunday"
+          }
         },
         "description": "Description",
         "price": "Price",
