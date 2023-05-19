@@ -76,7 +76,7 @@ class BsOpOfferingLocationCard extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.location_on,
-                                color: primaryBlueColor,
+                                color: Colors.black,
                               ),
                               SizedBox(
                                 width: 8,

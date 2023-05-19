@@ -72,7 +72,7 @@ class BsOpPeriodPicker extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.watch_later,
-                              size: 22,
+                              size: 18,
                             ),
                             SizedBox(width: 5),
                             Text(timePeriod?.toNormalString() ?? label),
