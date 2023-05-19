@@ -78,7 +78,8 @@ class BsEventCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (event.schedule != null)
+            if (event.schedule != null &&
+                !(event.isClass && event.scheduleType == ScheduleType.OnDemand))
               Column(
                 children: [
                   Divider(),
@@ -111,5 +112,3 @@ class BsEventCard extends StatelessWidget {
         ));
   }
 }
-
-                   

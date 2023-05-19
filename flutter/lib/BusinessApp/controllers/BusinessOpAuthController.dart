@@ -19,7 +19,7 @@ class BusinessOpAuthController extends GetxController {
       Get.find<AppLifeCycleController>();
 
   /// TODO: Just for testing
-  BusinessProfile? _businessProfile = BusinessProfile.SurfShop;
+  late BusinessProfile? _businessProfile;
   String? _appLifeCyclePauseCallbackId;
   String? _appLifeCycleResumeCallbackId;
 
@@ -59,7 +59,7 @@ class BusinessOpAuthController extends GetxController {
             await get_operator_business_profile(userId: operatorUserId);
 
         /// TODO: Just for testing
-        _businessProfile = BusinessProfile.SurfShop;
+        // _businessProfile = BusinessProfile.SurfShop;
       }
     } catch (e, stk) {
       mezDbgPrint(e);

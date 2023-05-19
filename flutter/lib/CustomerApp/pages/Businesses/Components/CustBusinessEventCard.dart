@@ -78,7 +78,8 @@ class CustBusinessEventCard extends StatelessWidget {
                 )
               ],
             ),
-            if (event.schedule != null)
+            if (event.schedule != null &&
+                !(event.scheduleType == ScheduleType.OnDemand && event.isClass))
               Column(
                 children: [
                   Divider(),

@@ -317,7 +317,9 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                     )
                   ],
                 ),
-                if (viewController.classes[index].schedule != null)
+                if (viewController.classes[index].schedule != null &&
+                    (viewController.classes[index].scheduleType !=
+                        ScheduleType.OnDemand))
                   Column(
                     children: [
                       Divider(),
