@@ -28,6 +28,21 @@ insert_permissions:
         - category3
         - details_id
         - id
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - business_id
+        - details_id
+        - id
+        - category3
 select_permissions:
   - role: anonymous
     permission:
@@ -109,3 +124,21 @@ update_permissions:
           _where:
             user_id:
               _eq: X-Hasura-User-Id
+delete_permissions:
+  - role: business_operator
+    permission:
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id            

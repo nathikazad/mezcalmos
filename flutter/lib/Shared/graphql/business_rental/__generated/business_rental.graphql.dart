@@ -3056,6 +3056,13 @@ const documentNodeQueryget_rental_by_id = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'business'),
             alias: null,
             arguments: [],
@@ -3575,6 +3582,7 @@ extension ClientExtension$Query$get_rental_by_id on graphql.GraphQLClient {
 
 class Query$get_rental_by_id$business_rental_by_pk {
   Query$get_rental_by_id$business_rental_by_pk({
+    required this.id,
     required this.business,
     required this.details,
     required this.category3,
@@ -3584,12 +3592,14 @@ class Query$get_rental_by_id$business_rental_by_pk {
 
   factory Query$get_rental_by_id$business_rental_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$business = json['business'];
     final l$details = json['details'];
     final l$category3 = json['category3'];
     final l$home_rental = json['home_rental'];
     final l$$__typename = json['__typename'];
     return Query$get_rental_by_id$business_rental_by_pk(
+      id: (l$id as int),
       business: Query$get_rental_by_id$business_rental_by_pk$business.fromJson(
           (l$business as Map<String, dynamic>)),
       details: Query$get_rental_by_id$business_rental_by_pk$details.fromJson(
@@ -3603,6 +3613,8 @@ class Query$get_rental_by_id$business_rental_by_pk {
     );
   }
 
+  final int id;
+
   final Query$get_rental_by_id$business_rental_by_pk$business business;
 
   final Query$get_rental_by_id$business_rental_by_pk$details details;
@@ -3615,6 +3627,8 @@ class Query$get_rental_by_id$business_rental_by_pk {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$details = details;
@@ -3630,12 +3644,14 @@ class Query$get_rental_by_id$business_rental_by_pk {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$business = business;
     final l$details = details;
     final l$category3 = category3;
     final l$home_rental = home_rental;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$business,
       l$details,
       l$category3,
@@ -3651,6 +3667,11 @@ class Query$get_rental_by_id$business_rental_by_pk {
     }
     if (!(other is Query$get_rental_by_id$business_rental_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$business = business;
@@ -3702,6 +3723,7 @@ abstract class CopyWith$Query$get_rental_by_id$business_rental_by_pk<TRes> {
       _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk;
 
   TRes call({
+    int? id,
     Query$get_rental_by_id$business_rental_by_pk$business? business,
     Query$get_rental_by_id$business_rental_by_pk$details? details,
     String? category3,
@@ -3730,6 +3752,7 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? business = _undefined,
     Object? details = _undefined,
     Object? category3 = _undefined,
@@ -3737,6 +3760,7 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_rental_by_id$business_rental_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         business: business == _undefined || business == null
             ? _instance.business
             : (business
@@ -3787,6 +3811,7 @@ class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk<TRes>
   TRes _res;
 
   call({
+    int? id,
     Query$get_rental_by_id$business_rental_by_pk$business? business,
     Query$get_rental_by_id$business_rental_by_pk$details? details,
     String? category3,
@@ -21016,6 +21041,541 @@ class _CopyWithStubImpl$Mutation$update_rental_category3$update_business_rental<
 
   call({
     int? affected_rows,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$delete_business_rental {
+  factory Variables$Mutation$delete_business_rental({required int id}) =>
+      Variables$Mutation$delete_business_rental._({
+        r'id': id,
+      });
+
+  Variables$Mutation$delete_business_rental._(this._$data);
+
+  factory Variables$Mutation$delete_business_rental.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Mutation$delete_business_rental._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$delete_business_rental<
+          Variables$Mutation$delete_business_rental>
+      get copyWith => CopyWith$Variables$Mutation$delete_business_rental(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$delete_business_rental) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$delete_business_rental<TRes> {
+  factory CopyWith$Variables$Mutation$delete_business_rental(
+    Variables$Mutation$delete_business_rental instance,
+    TRes Function(Variables$Mutation$delete_business_rental) then,
+  ) = _CopyWithImpl$Variables$Mutation$delete_business_rental;
+
+  factory CopyWith$Variables$Mutation$delete_business_rental.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$delete_business_rental;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Mutation$delete_business_rental<TRes>
+    implements CopyWith$Variables$Mutation$delete_business_rental<TRes> {
+  _CopyWithImpl$Variables$Mutation$delete_business_rental(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$delete_business_rental _instance;
+
+  final TRes Function(Variables$Mutation$delete_business_rental) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Mutation$delete_business_rental._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$delete_business_rental<TRes>
+    implements CopyWith$Variables$Mutation$delete_business_rental<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$delete_business_rental(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Mutation$delete_business_rental {
+  Mutation$delete_business_rental({
+    this.delete_business_rental_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_business_rental.fromJson(Map<String, dynamic> json) {
+    final l$delete_business_rental_by_pk = json['delete_business_rental_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_business_rental(
+      delete_business_rental_by_pk: l$delete_business_rental_by_pk == null
+          ? null
+          : Mutation$delete_business_rental$delete_business_rental_by_pk
+              .fromJson(
+                  (l$delete_business_rental_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$delete_business_rental$delete_business_rental_by_pk?
+      delete_business_rental_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delete_business_rental_by_pk = delete_business_rental_by_pk;
+    _resultData['delete_business_rental_by_pk'] =
+        l$delete_business_rental_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delete_business_rental_by_pk = delete_business_rental_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delete_business_rental_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$delete_business_rental) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delete_business_rental_by_pk = delete_business_rental_by_pk;
+    final lOther$delete_business_rental_by_pk =
+        other.delete_business_rental_by_pk;
+    if (l$delete_business_rental_by_pk != lOther$delete_business_rental_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_business_rental
+    on Mutation$delete_business_rental {
+  CopyWith$Mutation$delete_business_rental<Mutation$delete_business_rental>
+      get copyWith => CopyWith$Mutation$delete_business_rental(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$delete_business_rental<TRes> {
+  factory CopyWith$Mutation$delete_business_rental(
+    Mutation$delete_business_rental instance,
+    TRes Function(Mutation$delete_business_rental) then,
+  ) = _CopyWithImpl$Mutation$delete_business_rental;
+
+  factory CopyWith$Mutation$delete_business_rental.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$delete_business_rental;
+
+  TRes call({
+    Mutation$delete_business_rental$delete_business_rental_by_pk?
+        delete_business_rental_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk<TRes>
+      get delete_business_rental_by_pk;
+}
+
+class _CopyWithImpl$Mutation$delete_business_rental<TRes>
+    implements CopyWith$Mutation$delete_business_rental<TRes> {
+  _CopyWithImpl$Mutation$delete_business_rental(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_business_rental _instance;
+
+  final TRes Function(Mutation$delete_business_rental) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delete_business_rental_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_business_rental(
+        delete_business_rental_by_pk: delete_business_rental_by_pk == _undefined
+            ? _instance.delete_business_rental_by_pk
+            : (delete_business_rental_by_pk
+                as Mutation$delete_business_rental$delete_business_rental_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk<TRes>
+      get delete_business_rental_by_pk {
+    final local$delete_business_rental_by_pk =
+        _instance.delete_business_rental_by_pk;
+    return local$delete_business_rental_by_pk == null
+        ? CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk(
+            local$delete_business_rental_by_pk,
+            (e) => call(delete_business_rental_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$delete_business_rental<TRes>
+    implements CopyWith$Mutation$delete_business_rental<TRes> {
+  _CopyWithStubImpl$Mutation$delete_business_rental(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$delete_business_rental$delete_business_rental_by_pk?
+        delete_business_rental_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk<TRes>
+      get delete_business_rental_by_pk =>
+          CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationdelete_business_rental = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'delete_business_rental'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delete_business_rental_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$delete_business_rental _parserFn$Mutation$delete_business_rental(
+        Map<String, dynamic> data) =>
+    Mutation$delete_business_rental.fromJson(data);
+typedef OnMutationCompleted$Mutation$delete_business_rental = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$delete_business_rental?,
+);
+
+class Options$Mutation$delete_business_rental
+    extends graphql.MutationOptions<Mutation$delete_business_rental> {
+  Options$Mutation$delete_business_rental({
+    String? operationName,
+    required Variables$Mutation$delete_business_rental variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$delete_business_rental? onCompleted,
+    graphql.OnMutationUpdate<Mutation$delete_business_rental>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$delete_business_rental(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationdelete_business_rental,
+          parserFn: _parserFn$Mutation$delete_business_rental,
+        );
+
+  final OnMutationCompleted$Mutation$delete_business_rental?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$delete_business_rental
+    extends graphql.WatchQueryOptions<Mutation$delete_business_rental> {
+  WatchOptions$Mutation$delete_business_rental({
+    String? operationName,
+    required Variables$Mutation$delete_business_rental variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationdelete_business_rental,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$delete_business_rental,
+        );
+}
+
+extension ClientExtension$Mutation$delete_business_rental
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$delete_business_rental>>
+      mutate$delete_business_rental(
+              Options$Mutation$delete_business_rental options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$delete_business_rental>
+      watchMutation$delete_business_rental(
+              WatchOptions$Mutation$delete_business_rental options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$delete_business_rental$delete_business_rental_by_pk {
+  Mutation$delete_business_rental$delete_business_rental_by_pk({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_business_rental$delete_business_rental_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_business_rental$delete_business_rental_by_pk(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$delete_business_rental$delete_business_rental_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_business_rental$delete_business_rental_by_pk
+    on Mutation$delete_business_rental$delete_business_rental_by_pk {
+  CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk<
+          Mutation$delete_business_rental$delete_business_rental_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk(
+    Mutation$delete_business_rental$delete_business_rental_by_pk instance,
+    TRes Function(Mutation$delete_business_rental$delete_business_rental_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$delete_business_rental$delete_business_rental_by_pk;
+
+  factory CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$delete_business_rental$delete_business_rental_by_pk;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$delete_business_rental$delete_business_rental_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$delete_business_rental$delete_business_rental_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_business_rental$delete_business_rental_by_pk _instance;
+
+  final TRes Function(
+      Mutation$delete_business_rental$delete_business_rental_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_business_rental$delete_business_rental_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$delete_business_rental$delete_business_rental_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_business_rental$delete_business_rental_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$delete_business_rental$delete_business_rental_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
     String? $__typename,
   }) =>
       _res;

@@ -1,5 +1,6 @@
 query get_product_by_id($id: Int!) {
   business_product_by_pk(id: $id) {
+    id
     business {
       id
       details {
@@ -187,5 +188,10 @@ mutation update_product_category1($id: Int!, $category1: String!) {
     _set: { category1: $category1 }
   ) {
     affected_rows
+  }
+}
+mutation delete_business_product($id: Int!) {
+  delete_business_product_by_pk(id: $id) {
+    id
   }
 }

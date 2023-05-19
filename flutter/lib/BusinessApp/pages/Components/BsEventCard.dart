@@ -17,7 +17,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/BusinessApp/pages/Components/BsToggleButton.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsToggleButton.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']

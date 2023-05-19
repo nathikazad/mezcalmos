@@ -156,3 +156,21 @@ update_permissions:
           _where:
             user_id:
               _eq: X-Hasura-User-Id
+delete_permissions:
+  - role: business_operator
+    permission:
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id    

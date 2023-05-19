@@ -439,6 +439,16 @@ class BsEventViewController {
   void setLocation(Location v) {
     location.value = v;
   }
+
+  Future<void> deleteOffer() async {
+    try {
+      await delete_business_event(eventId: event!.id!.toInt());
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
 }
 
 class ScheduleTypeInput {

@@ -19,6 +19,7 @@ class BsProductViewController {
   // streams //
 
   // variables //
+  int? productId;
 
   // states variables //
 
@@ -63,6 +64,7 @@ class BsProductViewController {
         businessDetailsId: detailsId);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
     if (productId != null) {
+      this.productId = productId;
       await initEditMode(id: productId);
     }
   }
@@ -137,6 +139,18 @@ class BsProductViewController {
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
+    }
+  }
+
+  Future<void> deleteOffer() async {
+    mezDbgPrint("prdouct id ============>$productId");
+    try {
+      await delete_business_product(productId: productId!);
+      shouldRefetch = true;
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
   }
 }

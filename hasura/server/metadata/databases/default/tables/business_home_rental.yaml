@@ -21,6 +21,23 @@ insert_permissions:
         - rental_id
         - address
         - home_type
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - gps_location
+        - bathrooms
+        - bedrooms
+        - rental_id
+        - address
+        - home_type
 select_permissions:
   - role: anonymous
     permission:
@@ -116,3 +133,22 @@ update_permissions:
           _where:
             user_id:
               _eq: X-Hasura-User-Id
+delete_permissions:
+  - role: business_operator
+    permission:
+      filter:
+        rental:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id    

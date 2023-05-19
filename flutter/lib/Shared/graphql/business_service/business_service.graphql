@@ -1,5 +1,6 @@
 query get_service_by_id($id: Int!) {
   business_service_by_pk(id: $id) {
+    id
     schedule
     business {
       id
@@ -183,4 +184,9 @@ query get_business_services($businessId: Int!, $limit: Int, $offset: Int) {
       }
     }
   
+}
+mutation delete_business_service($id: Int!){
+  delete_business_service_by_pk(id: $id){
+    id
+  }
 }

@@ -149,4 +149,15 @@ class BsServiceViewController {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
     }
   }
+
+  Future<void> deleteOffer() async {
+    try {
+      await delete_business_service(serviceId: service!.id!.toInt());
+      shouldRefetch = true;
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
 }

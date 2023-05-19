@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/BusinessApp/pages/Components/BsToggleButton.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsToggleButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
     ['pages']['Components']['BsHomeRentalCard'];

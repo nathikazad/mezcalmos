@@ -93,6 +93,7 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
         data.details.image.map<String>((e) => e.toString()).toList();
     return ServiceWithBusinessCard(
         service: Service(
+            id: data.id,
             category1: data.details.category1.toServiceCategory1(),
             schedule: (data.schedule != null)
                 ? scheduleFromData(data.schedule)
@@ -288,4 +289,21 @@ Future<List<ServiceCard>> get_business_services(
   } else {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   }
+}
+
+Future<int?> delete_business_service({required int serviceId}) async {
+  final QueryResult<Mutation$delete_business_service> response = await _db
+      .graphQLClient
+      .mutate$delete_business_service(Options$Mutation$delete_business_service(
+          variables:
+              Variables$Mutation$delete_business_service(id: serviceId)));
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨🚨 Hasura delete service mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura delete service mutation success => ${response.data}");
+    return response.parsedData?.delete_business_service_by_pk?.id;
+  }
+  return null;
 }

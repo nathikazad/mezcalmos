@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/BusinessApp/pages/Components/BsEventCard.dart';
-import 'package:mezcalmos/BusinessApp/pages/Components/BsRentalCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsEventCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsRentalCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';

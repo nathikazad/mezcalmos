@@ -19,6 +19,20 @@ insert_permissions:
       columns:
         - business_id
         - details_id
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - business_id
+        - details_id
+        - id
 select_permissions:
   - role: anonymous
     permission:

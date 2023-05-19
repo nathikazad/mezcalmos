@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/controllers/BsRentalViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsDeleteOfferButton.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -72,7 +73,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
   }
 
   void _assignValues() {
-       rentalCategory =
+    rentalCategory =
         MezRouter.bodyArguments?["rentalCategory"] as RentalCategory1;
     businessDetailsId = int.tryParse(
         MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
@@ -399,13 +400,13 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                           minHeight: 0,
                         ).tighten(width: 50),
                         suffixIcon: Text(
-                          _i18n()["vehicleRental"]["Feet"],
+                          "${_i18n()["vehicleRental"]["Feet"]}",
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return _i18n()["vehicleRental"]["surfLengthError"];
+                          return "${_i18n()["vehicleRental"]["surfLengthError"]}";
                         }
                         return null;
                       },
@@ -414,6 +415,12 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                   ],
                 )
               : SizedBox.shrink(),
+          if (viewController.isEditing)
+            BsDeleteOfferButton(
+              onDelete: () async {
+                await viewController.deleteOffer();
+              },
+            )
         ],
       ),
     );

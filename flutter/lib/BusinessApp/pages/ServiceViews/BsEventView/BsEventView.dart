@@ -5,6 +5,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/controllers
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingLocationCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsDeleteOfferButton.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -333,6 +334,13 @@ class _BsOpEventViewState extends State<BsOpEventView>
             ),
           if (viewController.showLocation) bigSeperator,
           Obx(() => viewController.getScheduleWidget()),
+
+          if(viewController.isEditing)
+          BsDeleteOfferButton(
+            onDelete: () async {
+              await viewController.deleteOffer();
+            },
+          )
         ],
       ),
     );

@@ -147,7 +147,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
           FilterInput? data = await cusShowBusinessFilerSheet(
               context: context,
               filterInput: viewController.filterInput,
-              isTherapy: true,
+             // isTherapy: true,
               defaultFilterInput: viewController.defaultFilters());
           if (data != null) {
             viewController.filter(data);

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/controllers/BsProductViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsDeleteOfferButton.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -55,10 +56,9 @@ class _BsOpProductViewState extends State<BsOpProductView>
     }
     viewController.init(
         thickerProvider: this,
-        productId : productId,
+        productId: productId,
         detailsId: businessDetailsId!,
         businessId: businessId!);
-
 
     super.initState();
   }
@@ -298,6 +298,12 @@ class _BsOpProductViewState extends State<BsOpProductView>
             },
             seletedPrices: viewController.detailsController.priceTimeUnitMap,
           ),
+          if (viewController.isEditing)
+            BsDeleteOfferButton(
+              onDelete: () async {
+                await viewController.deleteOffer();
+              },
+            )
         ],
       ),
     );

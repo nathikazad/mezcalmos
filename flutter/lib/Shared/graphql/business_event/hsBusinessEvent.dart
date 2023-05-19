@@ -683,3 +683,18 @@ Future<EventWithBusinessCard?> update_event_by_id(
   }
   return null;
 }
+
+Future<int?> delete_business_event({required int eventId}) async {
+  final QueryResult<Mutation$delete_business_event> res = await _db
+      .graphQLClient
+      .mutate$delete_business_event(Options$Mutation$delete_business_event(
+          variables: Variables$Mutation$delete_business_event(id: eventId)));
+  if (res.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨🚨 Hasura delete event by id exception : ${res.exception}");
+    throw Exception(
+        "🚨🚨🚨🚨 Hasura delete event by id exception : ${res.exception}");
+  } else {
+    return res.parsedData?.delete_business_event_by_pk?.id;
+  }
+}
