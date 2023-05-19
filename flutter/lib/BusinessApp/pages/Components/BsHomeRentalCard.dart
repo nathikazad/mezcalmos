@@ -47,7 +47,7 @@ class BsHomeRentalCard extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                rental.details.name.getTranslation(userLanguage)!,
+                rental.details.name.getTranslation(userLanguage)!.inCaps,
                 style: context.textTheme.bodyLarge,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
