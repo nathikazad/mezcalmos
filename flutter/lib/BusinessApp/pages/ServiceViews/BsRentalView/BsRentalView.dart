@@ -419,6 +419,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
             BsDeleteOfferButton(
               onDelete: () async {
                 await viewController.deleteOffer();
+                  await MezRouter.back(backResult: true);
               },
             )
         ],

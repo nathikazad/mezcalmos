@@ -173,4 +173,4 @@ delete_permissions:
             schema: public
           _where:
             user_id:
-              _eq: X-Hasura-User-Id    
+              _eq: X-Hasura-User-Id

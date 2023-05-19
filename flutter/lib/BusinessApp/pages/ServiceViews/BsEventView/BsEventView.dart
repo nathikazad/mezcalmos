@@ -335,12 +335,13 @@ class _BsOpEventViewState extends State<BsOpEventView>
           if (viewController.showLocation) bigSeperator,
           Obx(() => viewController.getScheduleWidget()),
 
-          if(viewController.isEditing)
-          BsDeleteOfferButton(
-            onDelete: () async {
-              await viewController.deleteOffer();
-            },
-          )
+          if (viewController.isEditing)
+            BsDeleteOfferButton(
+              onDelete: () async {
+                await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
+              },
+            )
         ],
       ),
     );

@@ -402,11 +402,12 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               return null;
             },
           ),
-       
+
           if (viewController.isEditing)
             BsDeleteOfferButton(
               onDelete: () async {
                 await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
               },
             )
         ],

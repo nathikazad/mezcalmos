@@ -74,7 +74,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
     return Scaffold(
       appBar: _appbar(),
       bottomNavigationBar: MezButton(
-        label: '_i18n()["save"]',
+        label: '${_i18n()["save"]}',
         withGradient: true,
         borderRadius: 0,
         onClick: () async {
@@ -289,6 +289,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             BsDeleteOfferButton(
               onDelete: () async {
                 await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
               },
             )
         ],

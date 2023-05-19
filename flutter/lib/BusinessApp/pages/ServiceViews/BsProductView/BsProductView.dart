@@ -302,6 +302,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
             BsDeleteOfferButton(
               onDelete: () async {
                 await viewController.deleteOffer();
+                  await MezRouter.back(backResult: true);
               },
             )
         ],

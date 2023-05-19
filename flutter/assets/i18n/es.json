@@ -22,6 +22,12 @@
           "unit": "unidad",
           "none": "ningunauna"
         },
+        "BsDeleteOfferButton" : {
+          "title" : "Eliminar la oferta",
+          "helperText" : "¿Estás seguro de que quieres eliminar esta ofrenda?",
+          "buttonText" : "Si, eliminar la oferta"
+        
+        },
         "BsServiceCard": {
           "hour": "hora",
           "day": "día",
