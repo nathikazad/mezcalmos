@@ -141,13 +141,25 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
 
   void _fillCallBack() {
     mezDbgPrint("Fill Calback has been called ...... 👋");
+    DateTime? currentDate;
     chatLines.assignAll(controller.chat.value!.messages.map(
       (Message message) {
+        final bool isFirstMessage = currentDate == null;
+        final bool isDifferentDate = currentDate?.day != message.timestamp.day;
+        if (isFirstMessage || isDifferentDate) {
+          currentDate = message.timestamp.copyWith();
+        }
+
         /// This condition display offering card on top of chat
         /// if message has link only then it shows
         if (message.link != null) {
           return Column(
             children: [
+              if (isDifferentDate)
+                SizedBox(
+                  child: Text(
+                      "${intl.DateFormat('dd-MM-yyyy').format(message.timestamp)}"),
+                ),
               offeringViewCard(message.link!),
               singleChatComponent(
                 message: message.message,
@@ -161,11 +173,21 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
         }
 
         /// else we just show chat component
-        return singleChatComponent(
-          message: message.message,
-          time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
-          isMe: message.userId == _authController.user!.hasuraId,
-          userImage: getchatImg(message),
+        return Column(
+          children: [
+            if (isFirstMessage || isDifferentDate)
+              SizedBox(
+                child: Text(
+                    "${intl.DateFormat('dd-MM-yyyy').format(message.timestamp)}"),
+              ),
+            singleChatComponent(
+              message: message.message,
+              time: intl.DateFormat('hh:mm a')
+                  .format(message.timestamp.toLocal()),
+              isMe: message.userId == _authController.user!.hasuraId,
+              userImage: getchatImg(message),
+            ),
+          ],
         );
       },
     ));
@@ -282,12 +304,12 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.1),
-                        child: Center(
-                          child: Text(formattedDate),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(top: 10.1),
+                      //   child: Center(
+                      //     child: Text(formattedDate),
+                      //   ),
+                      // ),
                       Obx(() {
                         if (controller.chat.value?.chatInfo.parentlink ==
                                 null ||
@@ -321,6 +343,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                       Expanded(
                         child: Obx(
                           () => ListView(
+                            addAutomaticKeepAlives: true,
                             reverse: true,
                             shrinkWrap: true,
                             controller: _listViewScrollController,
