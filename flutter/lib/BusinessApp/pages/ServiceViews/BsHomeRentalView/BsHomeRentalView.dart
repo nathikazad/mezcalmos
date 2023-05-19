@@ -208,14 +208,12 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
         children: [
           Obx(
             () => MezItemAvSwitcher(
-              value: viewController.detailsController.isEditing.value
-                  ? viewController.detailsController.isAvailable.value
-                  : true,
+              value: viewController.detailsController.isAvailable.value,
               onAvalableTap: () {
-                viewController.detailsController.isAvailable.value = true;
+                viewController.detailsController.switchAvailable(true);
               },
               onUnavalableTap: () {
-                viewController.detailsController.isAvailable.value = false;
+                viewController.detailsController.switchAvailable(false);
               },
             ),
           ),

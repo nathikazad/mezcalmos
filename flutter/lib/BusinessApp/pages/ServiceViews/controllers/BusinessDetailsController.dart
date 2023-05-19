@@ -235,4 +235,9 @@ class BusinessItemDetailsController {
   void clearImages() {
     images.clear();
   }
+
+  void switchAvailable(bool value) {
+    isAvailable.value = value;
+    isAvailable.refresh();
+  }
 }
