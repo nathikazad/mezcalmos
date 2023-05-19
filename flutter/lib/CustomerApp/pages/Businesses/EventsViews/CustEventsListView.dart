@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/controllers/CustEventsListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -82,23 +83,14 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${_i18n()["scheduled"]}",
+                                    "${_i18n()["scheduled"]} ${_i18n()['events'].toString().toLowerCase()}",
                                     style: context.textTheme.bodyLarge,
                                   ),
                                   smallSepartor,
                                   _buildEvents(ScheduleType.Scheduled),
-                                  bigSeperator,
+                                  meduimSeperator,
                                   Text(
-                                    "${_i18n()["onDemand"]}",
-                                    style: context.textTheme.bodyLarge,
-                                  ),
-                                  smallSepartor,
-                                  _buildEvents(
-                                    ScheduleType.OnDemand,
-                                  ),
-                                  bigSeperator,
-                                  Text(
-                                    "${_i18n()["oneTime"]}",
+                                    "${_i18n()["oneTime"]} ${_i18n()['events'].toString().toLowerCase()}",
                                     style: context.textTheme.bodyLarge,
                                   ),
                                   smallSepartor,
@@ -194,7 +186,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
               SizedBox(
                 width: 3,
               ),
-              Container(
+              Flexible(
                 child: Text(
                   (viewController.selectedCategories.length == 1)
                       ? "${viewController.selectedCategories.first.name}"
@@ -287,101 +279,16 @@ class _CustEventsListViewState extends State<CustEventsListView> {
         viewController.events.length,
         (int index) => scheduleType != viewController.events[index].scheduleType
             ? const SizedBox.shrink()
-            : MezCard(
-                onClick: () {
-                  CustEventView.navigate(
-                    eventId: viewController.events[index].details.id.toInt(),
-                  );
-                },
-                elevation: 0,
-                margin: EdgeInsets.only(bottom: 12.5),
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CachedNetworkImage(
-                          imageUrl:
-                              viewController.events[index].details.firstImage ??
-                                  defaultUserImgUrl,
-                          imageBuilder: (BuildContext context,
-                                  ImageProvider<Object> imageProvider) =>
-                              CircleAvatar(
-                            radius: 16.mezSp,
-                            backgroundImage: imageProvider,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Text(
-                            viewController.events[index].details.name
-                                .getTranslation(userLanguage)!
-                                .inCaps,
-                            style: context.textTheme.bodyLarge?.copyWith(
-                                fontSize: 12.5.mezSp,
-                                fontWeight: FontWeight.w600,
-                                overflow: TextOverflow.ellipsis),
-                          ),
-                        ),
-                        Text(
-                          '${viewController.events[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.events[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
-                          overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.bodyLarge?.copyWith(
-                              fontSize: 12.5.mezSp,
-                              fontWeight: FontWeight.w600,
-                              overflow: TextOverflow.ellipsis),
-                        )
-                      ],
-                    ),
-                    if (viewController.events[index].schedule != null)
-                      Column(
-                        children: [
-                          Divider(),
-                          CustBusinessScheduleBuilder(
-                              showTitle: false,
-                              showIcons: false,
-                              schedule: viewController.events[index].schedule,
-                              scheduleType:
-                                  viewController.events[index].scheduleType)
-                        ],
-                      ),
-                    if (viewController.events[index].scheduleType ==
-                        ScheduleType.OneTime)
-                      oneTimeBuilder(viewController.events[index]),
-                    Divider(),
-                    Text(viewController.events[index].businessName)
-                  ],
-                )),
+            : CustBusinessEventCard(
+                event: viewController.events[index],
+                needBussinessName: true,
+              ),
       ));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
           child: Text('${_i18n()['noEventsFound']}'));
-  }
-
-  Widget oneTimeBuilder(EventCard eventData) {
-    return eventData.startsAt != null && eventData.endsAt != null
-        ? Column(
-            children: [
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                      "${eventData.period!.formatTime(eventData.period!.start)} - ${eventData.period!.formatTime(eventData.period!.end)}"),
-                ],
-              ),
-            ],
-          )
-        : SizedBox.shrink();
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

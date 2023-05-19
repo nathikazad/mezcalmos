@@ -326,7 +326,14 @@
         "price": "Price",
         "noDescription": "No Description",
         "noTitle": "No Title",
-        "store": "Store"
+        "store": "Store",
+        "CustBusinessMessageCard": {
+          "store": "Store",
+          "organizer": "Organizer",
+          "studio": "Studio",
+          "view": "View",
+          "agency": "Agency"
+        }
       },
       "cards": {
         "SavedCardsListView": {
@@ -974,7 +981,7 @@
             "cancel": "Cancel",
             "filter": "Filter",
             "categories": "Categories",
-            "schedule": "Schedule",
+            "schedule": "Type",
             "dance": "Dance",
             "party": "Party",
             "social": "Social",
@@ -987,9 +994,17 @@
               "oneTime": "Workshop",
               "onDemand": "Private"
             },
+            "therapies": {
+              "scheduled": "Weekly",
+              "oneTime": "Retreat",
+              "onDemand": "Private"
+            },
             "surf": "Surf",
             "fitness": "Fitness",
             "yoga": "Yoga",
+            "martialArt": "Martial Art",
+            "adventure": "Adventure",
+            "volunteer": "Volunteer",
             "all": "All"
           }
         },
@@ -1068,7 +1083,7 @@
             "none": "None",
             "class": "Class",
             "studio": "Studio",
-            "scheduled": "Scheduled",
+            "scheduled": "Weekly",
             "oneTime": "One time",
             "onDemand": "On demand"
           }
@@ -1216,7 +1231,10 @@
         "contactUs": "Contact us",
         "reviews": "Reviews",
         "viewAll": "View All",
-        "loading": "Loading"
+        "loading": "Loading",
+        "weekly": "Weekly",
+        "oneTime": "One time",
+        "onDemand":"On demand"
       },
       "CustomerWrapper": {
         "orders": "Orders",

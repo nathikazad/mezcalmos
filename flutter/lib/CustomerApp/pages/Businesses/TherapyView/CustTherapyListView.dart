@@ -147,7 +147,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
           FilterInput? data = await cusShowBusinessFilerSheet(
               context: context,
               filterInput: viewController.filterInput,
-              isClass: true,
+              isTherapy: true,
               defaultFilterInput: viewController.defaultFilters());
           if (data != null) {
             viewController.filter(data);
@@ -171,7 +171,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
               SizedBox(
                 width: 3,
               ),
-              Container(
+              Flexible(
                 child: Text(
                   "${viewController.selectedCategoriesText.value}",
                   style: TextStyle(

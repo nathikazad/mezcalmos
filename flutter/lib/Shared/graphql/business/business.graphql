@@ -27,6 +27,8 @@ query get_business_by_id($id: Int!) {
       id
       schedule_type
       schedule
+      starts_at
+      ends_at
       details {
         additional_parameters
         available

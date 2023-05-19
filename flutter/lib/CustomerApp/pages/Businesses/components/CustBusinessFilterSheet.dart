@@ -15,6 +15,7 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
   required FilterInput filterInput,
   required FilterInput defaultFilterInput,
   bool isClass = false,
+  bool isTherapy = false,
 }) async {
   RxMap<String, List<String>> selectedFilters = RxMap<String, List<String>>({});
   filterInput.forEach((String key, List<String> value) {
@@ -38,7 +39,7 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
   }
 
   return showModalBottomSheet<Map<String, List<String>>?>(
-      // isDismissible: false,  
+      // isDismissible: false,
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
@@ -86,9 +87,22 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                                   String actualSubItem = defaultFilterInput
                                       .values
                                       .elementAt(index)[subIndex];
+                                  bool isScheduleClass = defaultFilterInput.keys
+                                              .elementAt(index) ==
+                                          "schedule" &&
+                                      isClass;
+                                  bool isScheduleTherapy = defaultFilterInput
+                                              .keys
+                                              .elementAt(index) ==
+                                          "schedule" &&
+                                      isTherapy;
+                                  String title = isScheduleClass
+                                      ? _i18n()["class"][actualSubItem]
+                                      : isScheduleTherapy
+                                          ? _i18n()["therapies"][actualSubItem]
+                                          : _i18n()[actualSubItem];
                                   return _checkBoxTile(
-                                    title:
-                                        '${(defaultFilterInput.keys.elementAt(index) == "schedule" && isClass) ? _i18n()["class"][actualSubItem] : _i18n()[actualSubItem]}',
+                                    title: '$title',
                                     value: selectedFilters[defaultFilterInput
                                                 .keys
                                                 .elementAt(index)]

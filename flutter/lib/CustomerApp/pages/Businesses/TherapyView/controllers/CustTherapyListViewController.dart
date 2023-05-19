@@ -63,10 +63,10 @@ class CustTherapyListViewController {
     for (int idx = 0; idx < data.length; idx++) {
       if (idx == data.length - 1) {
         selectedCategoriesText.value +=
-            _i18n()[data[idx].toFirebaseFormatString()];
+            _i18n()["therapies"][data[idx].toFirebaseFormatString()];
       } else {
         selectedCategoriesText.value +=
-            "${_i18n()[data[idx].toFirebaseFormatString()]}, ";
+            "${_i18n()["therapies"][data[idx].toFirebaseFormatString()]}, ";
       }
     }
   }

@@ -174,7 +174,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
               SizedBox(
                 width: 3,
               ),
-              Container(
+              Flexible(
                 child: Text(
                   (viewController.selectedCategories.length == 1)
                       ? "${viewController.selectedCategories.first.name}"

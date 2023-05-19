@@ -190,7 +190,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
               SizedBox(
                 width: 3,
               ),
-              Container(
+              Flexible(
                 child: Text(
                   (viewController.selectedCategories.length == 1)
                       ? "${viewController.selectedCategories.first.name}"

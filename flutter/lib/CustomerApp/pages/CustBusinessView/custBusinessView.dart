@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessEventCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessPaymentMethods.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessProductCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessRentalCard.dart';
@@ -23,6 +22,8 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustBusinessView'];
@@ -32,11 +33,12 @@ class CustBusinessView extends StatefulWidget {
   static Future<void> navigate({
     required int businessId,
   }) async {
-    String route = CustomerRoutes.custBusinessRoute
+    return MezRouter.toPath(constructUrl(businessId: businessId));
+  }
+
+  static String constructUrl({required int businessId}) {
+    return CustomerRoutes.custBusinessRoute
         .replaceFirst(':businessId', businessId.toString());
-    return MezRouter.toPath(
-      route,
-    );
   }
 
   @override
@@ -191,8 +193,10 @@ class _CustBusinessViewState extends State<CustBusinessView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('${_i18n()['rentals']}',
-            style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+        Text(
+          '${_i18n()['rentals']}',
+          style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+        ),
         SizedBox(height: 5),
         for (Rental rental in _viewController.business!.rentals!)
           CustBusinessRentalCard(
@@ -208,21 +212,69 @@ class _CustBusinessViewState extends State<CustBusinessView>
   }
 
   Column _events(BuildContext context) {
+    final List<Event> scheduledEvents = _viewController.business!.events!
+        .where((element) => element.scheduleType == ScheduleType.Scheduled)
+        .toList();
+    final List<Event> oneTimeEvents = _viewController.business!.events!
+        .where((element) => element.scheduleType == ScheduleType.OneTime)
+        .toList();
+    final List<Event> onDemandEvents = _viewController.business!.events!
+        .where((element) => element.scheduleType == ScheduleType.OnDemand)
+        .toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('${_i18n()['events']}',
-            style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+        Text(
+          '${_i18n()['weekly']} ${_i18n()['events'].toString().toLowerCase()}',
+          style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+        ),
         SizedBox(height: 5),
-        for (Event event in _viewController.business!.events!)
+        for (Event event in scheduledEvents)
           CustBusinessEventCard(
-            margin: EdgeInsets.only(bottom: 10),
-            elevation: 0,
-            event: event,
+            event: EventCard(
+              event: event,
+              businessName: _viewController.business!.details.name,
+              currency: _viewController.business!.details.currency!,
+            ),
+            needBussinessName: false,
           ),
         SizedBox(
           height: 10,
-        )
+        ),
+        Text(
+          '${_i18n()['oneTime']} ${_i18n()['events'].toString().toLowerCase()}',
+          style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+        ),
+        SizedBox(height: 5),
+        for (Event event in oneTimeEvents)
+          CustBusinessEventCard(
+            event: EventCard(
+              event: event,
+              businessName: _viewController.business!.details.name,
+              currency: _viewController.business!.details.currency!,
+            ),
+            needBussinessName: false,
+          ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          '${_i18n()['onDemand']} ${_i18n()['events'].toString().toLowerCase()}',
+          style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+        ),
+        SizedBox(height: 5),
+        for (Event event in onDemandEvents)
+          CustBusinessEventCard(
+            event: EventCard(
+              event: event,
+              businessName: _viewController.business!.details.name,
+              currency: _viewController.business!.details.currency!,
+            ),
+            needBussinessName: false,
+          ),
+        SizedBox(
+          height: 10,
+        ),
       ],
     );
   }

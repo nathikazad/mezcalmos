@@ -314,7 +314,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                   BsOpEventView.navigate(
                                     businessId: viewController.businessId,
                                     profile: viewController.businessProfile,
-                                    businessDetailsId:
+                                    businessDetailsId:                                                                                                       
                                         viewController.businessDetailsId,
                                     id: viewController.events[index].id!
                                         .toInt(),

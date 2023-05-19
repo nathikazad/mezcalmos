@@ -2,14 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Offerings']['CustBusinessMessageCard'];
 
 class CustBusinessMessageCard extends StatefulWidget {
   const CustBusinessMessageCard(
@@ -35,10 +40,19 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
     final CustMessagesListViewController custChatController =
         CustMessagesListViewController();
     print("BUSINESS DATA ${widget.business.id} ${widget.business.detailsId}");
+    final bool ifNotFromBusiness = !(MezRouter.isRouteInStack(
+        CustBusinessView.constructUrl(businessId: widget.business.id)));
     return MezCard(
         elevation: 0,
         margin: widget.margin,
         radius: 20.mezSp,
+        onClick: () async {
+          if (ifNotFromBusiness) {
+            await CustBusinessView.navigate(businessId: widget.business.id);
+          } else {
+            await MezRouter.back();
+          }
+        },
         contentPadding: EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
         firstAvatarBgImage: CachedNetworkImageProvider(widget.business.image),
         action: isLoading

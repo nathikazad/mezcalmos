@@ -73,7 +73,11 @@ class CustEventsListViewController {
   List<BusinessCard> get businesses => _businesses.value;
 
   Future<void> init() async {
-    _filterCategories.addAll(EventCategory1.values);
+    _filterCategories.addAll([
+      EventCategory1.Party,
+      EventCategory1.Dance,
+      EventCategory1.Social,
+    ]);
     _filterInput = defaultFilters();
     try {
       _isLoading.value = true;
@@ -109,7 +113,6 @@ class CustEventsListViewController {
       "schedule": [
         ScheduleType.Scheduled,
         ScheduleType.OneTime,
-        ScheduleType.OnDemand
       ].map((ScheduleType e) => e.toFirebaseFormatString()).toList(),
     };
   }

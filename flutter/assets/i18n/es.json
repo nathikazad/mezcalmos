@@ -322,7 +322,14 @@
         "price": "Precio",
         "noDescription": "Sin descripción",
         "noTitle": "Sin Título",
-        "store": "Tienda"
+        "store": "Tienda",
+        "CustBusinessMessageCard": {
+          "store": "Almacenar",
+          "organizer": "Organizadora",
+          "studio": "Estudio",
+          "view": "Ver",
+          "agency": "Agencia"
+        }
       },
       "cards": {
         "SavedCardsListView": {
@@ -1045,7 +1052,7 @@
             "cancel": "Cancelar",
             "filter": "Filtrar",
             "categories": "Categories",
-            "schedule": "Horario",
+            "schedule": "Tipo",
             "dance": "Bailar",
             "party": "Fiesta",
             "social": "Social",
@@ -1058,7 +1065,18 @@
               "oneTime": "Taller",
               "onDemand": "Privada"
             },
-            "all": "Alle"
+            "therapies": {
+              "scheduled": "Semanalmente",
+              "oneTime": "Retiro",
+              "onDemand": "Privada"
+            },
+            "all": "Alle",
+            "surf": "Navegar",
+            "fitness": "Aptitud física",
+            "yoga": "Yoga",
+            "martialArt": "Arte marcial",
+            "adventure": "Aventura",
+            "volunteer": "Voluntaria"
           }
         },
         "RentalsView": {
@@ -1130,7 +1148,7 @@
             "unit": "unidad",
             "total": "total",
             "filter": "Filtrar",
-            "scheduled": "Programada",
+            "scheduled": "Semanalmente",
             "oneTime": "Una vez",
             "onDemand": "Bajo demanda"
           }
@@ -1279,7 +1297,10 @@
         "contactUs": "Contáctenos",
         "reviews": "Reseñas",
         "viewAll": "Ver todo",
-        "loading": "Cargando"
+        "loading": "Cargando",
+        "weekly": "Semanalmente",
+        "oneTime": "Una vez",
+        "onDemand": "Bajo demanda"
       },
 
       "CustomerWrapper": {
