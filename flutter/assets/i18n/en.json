@@ -1240,6 +1240,8 @@
         "orders": "Orders",
         "profile": "Profile",
         "messages": "Messages",
+        "noMessage": "No messages found",
+        "noMessageLabel": "Once you receive a new message, it will be displayed here.",
         "home": "Home",
         "savedLocations": "Saved locations",
         "welcomeText": "Welcome to MEZCALMOS 👋",

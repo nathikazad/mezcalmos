@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -79,20 +80,42 @@ class _MessagesListViewState extends State<MessagesListView> {
         title: '${_i18n()["messages"]}',
         showNotifications: true,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(10),
-        child: Obx(() {
-          if (viewcontroller.isLoading.value) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (viewcontroller.allChats.isEmpty) {
-            return Center(
-              child: Text("No Chats"),
-            );
-          }
-          return Column(
+      body: Obx(() {
+        if (viewcontroller.isLoading.value) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (viewcontroller.allChats.isNotEmpty) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage(
+                    noMessages,
+                  ),
+                ),
+                smallSepartor,
+                Text(
+                  "${_i18n()["noMessage"]}",
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Text(
+                  "${_i18n()["noMessageLabel"]}",
+                  style: context.textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          );
+        }
+        return SingleChildScrollView(
+          padding: EdgeInsets.all(10),
+          child: Column(
             children: List.generate(
               viewcontroller.allChats.length,
               (int index) {
@@ -204,9 +227,9 @@ class _MessagesListViewState extends State<MessagesListView> {
                 );
               },
             ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }
