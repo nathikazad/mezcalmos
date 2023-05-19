@@ -174,6 +174,39 @@ class _SignInViewState extends State<SignInView> {
               ),
             )),
       ));
+
+      list.add(SizedBox(
+        height: 10,
+      ));
+      list.add(Container(
+        width: double.infinity,
+        child: TextButton(
+            onPressed: () {
+              clickedLogin.value = true;
+              signUp('${generateString()}@mezc.com', 'password')
+                  .whenComplete(() => clickedLogin.value = false);
+            },
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.black,
+                fixedSize: Size(double.infinity, 50)),
+            child: Container(
+              alignment: Alignment.center,
+              child: Row(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(right: 15),
+                      child: Icon(Ionicons.log_in)),
+                  Expanded(
+                    child: Text(
+                      "${_i18n()['loginAs']} random",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 11.mezSp),
+                    ),
+                  ),
+                ],
+              ),
+            )),
+      ));
       list.add(SizedBox(
         height: 10,
       ));

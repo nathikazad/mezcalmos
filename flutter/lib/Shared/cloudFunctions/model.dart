@@ -419,8 +419,8 @@ class ServiceProviderLanguage {
     required this.primary, this.secondary});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "primary": primary,
-      "secondary": secondary,
+      "primary": primary.toFirebaseFormatString(),
+      "secondary": secondary?.toFirebaseFormatString(),
     };
   }
 
