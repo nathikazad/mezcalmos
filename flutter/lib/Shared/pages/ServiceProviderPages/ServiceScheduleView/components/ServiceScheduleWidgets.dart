@@ -144,6 +144,7 @@ class ServiceScheduleWidgets {
         backgroundColor: backgroundShadeColor,
         iconColor: offShadeGreyColor,
         materialColor: Colors.transparent,
+        elevation: 0,
         onTap: () {
           showModalBottomSheet(
               context: context,
