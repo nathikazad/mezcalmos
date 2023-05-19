@@ -197,14 +197,12 @@ class _BsOpProductViewState extends State<BsOpProductView>
         children: [
           Obx(
             () => MezItemAvSwitcher(
-              value: viewController.detailsController.isEditing.value
-                  ? viewController.detailsController.isAvailable.value
-                  : true,
+             value: viewController.detailsController.isAvailable.value,
               onAvalableTap: () {
-                viewController.detailsController.isAvailable.value = true;
+                viewController.detailsController.switchAvailable(true);
               },
               onUnavalableTap: () {
-                viewController.detailsController.isAvailable.value = false;
+                viewController.detailsController.switchAvailable(false);
               },
             ),
           ),
@@ -302,6 +300,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
             BsDeleteOfferButton(
               onDelete: () async {
                 await viewController.deleteOffer();
+                  await MezRouter.back(backResult: true);
               },
             )
         ],

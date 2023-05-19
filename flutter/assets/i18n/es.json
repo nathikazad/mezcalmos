@@ -22,6 +22,11 @@
           "unit": "unidad",
           "none": "ningunauna"
         },
+        "BsDeleteOfferButton": {
+          "title": "Eliminar la oferta",
+          "helperText": "¿Estás seguro de que quieres eliminar esta ofrenda?",
+          "buttonText": "Si, eliminar la oferta"
+        },
         "BsServiceCard": {
           "hour": "hora",
           "day": "día",
@@ -1722,7 +1727,25 @@
             "sameLangErrorText": "Se utiliza este idioma, ingrese un idioma diferente.",
             "none": "Ninguna",
             "en": "Inglesa",
-            "es": "Español"
+            "es": "Español",
+            "businessType": "Tipo de negocio",
+            "businessTypeErrorText": "Por favor, seleccione un tipo de negocio",
+            "save": "Guardar",
+            "cancel": "Cancelar",
+            "businessProfile": {
+              "surfShop": "Tienda de Surf",
+              "vehicleRental": "Alquiler de Vehículos",
+              "yogaStudio": "Estudio de Yoga",
+              "homeRental": "Alquiler de Viviendas",
+              "languageSchool": "Escuela de Idiomas",
+              "tourAgency": "Agencia de Turismo",
+              "artisanalProduct": "Producto Artesanal",
+              "cleaningService": "Servicio de Limpieza",
+              "petSitting": "Cuidado de Mascotas",
+              "wellnessPractitioner": "Profesional de Bienestar",
+              "volunteer": "Voluntariado",
+              "entertainment": "Entretenimiento"
+            }
           }
         },
         "createText": "Crear",

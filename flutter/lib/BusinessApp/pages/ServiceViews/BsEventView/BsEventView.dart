@@ -222,14 +222,12 @@ class _BsOpEventViewState extends State<BsOpEventView>
         children: [
           Obx(
             () => MezItemAvSwitcher(
-              value: viewController.detailsController.isEditing.value
-                  ? viewController.detailsController.isAvailable.value
-                  : true,
+               value: viewController.detailsController.isAvailable.value,
               onAvalableTap: () {
-                viewController.detailsController.isAvailable.value = true;
+                viewController.detailsController.switchAvailable(true);
               },
               onUnavalableTap: () {
-                viewController.detailsController.isAvailable.value = false;
+                viewController.detailsController.switchAvailable(false);
               },
             ),
           ),
@@ -335,12 +333,13 @@ class _BsOpEventViewState extends State<BsOpEventView>
           if (viewController.showLocation) bigSeperator,
           Obx(() => viewController.getScheduleWidget()),
 
-          if(viewController.isEditing)
-          BsDeleteOfferButton(
-            onDelete: () async {
-              await viewController.deleteOffer();
-            },
-          )
+          if (viewController.isEditing)
+            BsDeleteOfferButton(
+              onDelete: () async {
+                await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
+              },
+            )
         ],
       ),
     );

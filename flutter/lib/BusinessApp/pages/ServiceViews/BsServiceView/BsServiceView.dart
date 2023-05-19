@@ -74,7 +74,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
     return Scaffold(
       appBar: _appbar(),
       bottomNavigationBar: MezButton(
-        label: '_i18n()["save"]',
+        label: '${_i18n()["save"]}',
         withGradient: true,
         borderRadius: 0,
         onClick: () async {
@@ -197,14 +197,12 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
         children: [
           Obx(
             () => MezItemAvSwitcher(
-              value: viewController.detailsController.isEditing.value
-                  ? viewController.detailsController.isAvailable.value
-                  : true,
+              value: viewController.detailsController.isAvailable.value,
               onAvalableTap: () {
-                viewController.detailsController.isAvailable.value = true;
+                viewController.detailsController.switchAvailable(true);
               },
               onUnavalableTap: () {
-                viewController.detailsController.isAvailable.value = false;
+                viewController.detailsController.switchAvailable(false);
               },
             ),
           ),
@@ -289,6 +287,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             BsDeleteOfferButton(
               onDelete: () async {
                 await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
               },
             )
         ],

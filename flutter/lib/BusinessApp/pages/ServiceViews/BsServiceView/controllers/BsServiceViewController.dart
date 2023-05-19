@@ -19,6 +19,7 @@ class BsServiceViewController {
   // streams //
 
   // variables //
+  int? serviceId;
 
   // states variables //
 
@@ -65,6 +66,7 @@ class BsServiceViewController {
 
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
     if (serviceId != null) {
+      this.serviceId = serviceId;
       await initEditMode(id: serviceId);
     }
   }
@@ -152,7 +154,7 @@ class BsServiceViewController {
 
   Future<void> deleteOffer() async {
     try {
-      await delete_business_service(serviceId: service!.id!.toInt());
+      await delete_business_service(serviceId: serviceId!);
       shouldRefetch = true;
     } catch (e, stk) {
       showErrorSnackBar();

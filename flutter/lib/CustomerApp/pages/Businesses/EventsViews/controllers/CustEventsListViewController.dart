@@ -161,7 +161,7 @@ class CustEventsListViewController {
           "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_event_category1(
-          categories1: filterInput["categpries"]
+          categories1: filterInput["categories"]
                   ?.map((String e) => e.toEventCategory1())
                   .toList() ??
               _filterCategories,

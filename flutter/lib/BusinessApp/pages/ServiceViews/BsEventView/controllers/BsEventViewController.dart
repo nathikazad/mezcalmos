@@ -443,6 +443,7 @@ class BsEventViewController {
   Future<void> deleteOffer() async {
     try {
       await delete_business_event(eventId: event!.id!.toInt());
+      shouldRefetch = true;
     } catch (e, stk) {
       showErrorSnackBar();
       mezDbgPrint(e);

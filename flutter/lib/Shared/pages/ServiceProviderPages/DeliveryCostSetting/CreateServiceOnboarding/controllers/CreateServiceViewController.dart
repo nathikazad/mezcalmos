@@ -357,7 +357,7 @@ class CreateServiceViewController {
       cModels.BusinessResponse res =
           await CloudFunctions.business_createBusiness(
         name: serviceInput.value.serviceInfo!.name,
-        image: serviceInput.value.serviceInfo!.image,
+        image: newImageUrl.value ?? defaultUserImgUrl,
         location: cModels.Location(
             lat: serviceInput.value.serviceInfo!.location.latitude,
             lng: serviceInput.value.serviceInfo!.location.longitude,

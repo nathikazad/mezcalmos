@@ -21,6 +21,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['RentalsView']['CustRentalsListView'];
@@ -170,8 +171,15 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
       color: Color(0xFFF0F0F0),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          _showFilterSheet(context);
+        onTap: () async {
+          // _showFilterSheet(context);
+          FilterInput? data = await cusShowBusinessFilerSheet(
+              context: context,
+              filterInput: viewController.filterInput,
+              defaultFilterInput: viewController.defaultFilters());
+          if (data != null) {
+            viewController.filter(data);
+          }
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -191,11 +199,11 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
               SizedBox(
                 width: 3,
               ),
-              Flexible(
+              Container(
                 child: Text(
                   (viewController.selectedCategories.length == 1)
                       ? "${viewController.selectedCategories.first.name}"
-                      : "${viewController.selectedCategories.length}",
+                      : "${viewController.selectedCategoriesText}",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
@@ -205,82 +213,6 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
         ),
       ),
     );
-  }
-
-  Future<List<String>?> _showFilterSheet<String>(
-    BuildContext context,
-  ) {
-    return showModalBottomSheet<List<String>?>(
-        isDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return Container(
-            padding: const EdgeInsets.all(30),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  '${_i18n()['filter']}',
-                  style:
-                      context.textTheme.bodyLarge?.copyWith(fontSize: 15.mezSp),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Obx(
-                  () => Column(
-                    children: List.generate(
-                        viewController.filterCategories.length, (int index) {
-                      return _checkBoxTile(
-                          '${_i18n()[viewController.filterCategories[index].name.toLowerCase()]}',
-                          viewController.selectedCategories
-                              .contains(viewController.filterCategories[index]),
-                          (bool? v) {
-                        viewController.switchFilterCategory(v, index);
-                      });
-                    }),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                        child: MezButton(
-                            height: 45,
-                            borderColor: redAccentColor,
-                            textStyle: context.textTheme.bodyLarge?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: redAccentColor),
-                            label: '${_i18n()['cancel']}',
-                            backgroundColor: Colors.transparent,
-                            textColor: redAccentColor,
-                            onClick: () async {
-                              //   viewController.resetFilter();
-
-                              Navigator.pop(context, null);
-                            })),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Flexible(
-                        child: MezButton(
-                            height: 45,
-                            withGradient: true,
-                            label: '${_i18n()['confirm']}',
-                            onClick: () async {
-                              viewController.filter();
-                              Navigator.pop(
-                                context,
-                              );
-                            })),
-                  ],
-                ),
-              ],
-            ),
-          );
-        });
   }
 
   Widget _checkBoxTile(String title, bool value, Function(bool?)? onChanged) {
