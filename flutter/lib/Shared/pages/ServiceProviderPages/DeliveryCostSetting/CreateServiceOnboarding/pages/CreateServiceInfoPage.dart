@@ -192,7 +192,7 @@ class CreateServiceInfoPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Business type",
+          "${_i18n()['businessType']}",
           style: context.txt.bodyLarge,
         ),
         SizedBox(
@@ -202,7 +202,7 @@ class CreateServiceInfoPage extends StatelessWidget {
             validator: (BusinessProfile? value) {
               mezDbgPrint("Called Validator");
               if (value == null) {
-                return "Required";
+                return "${_i18n()['businessTypeErrorText']}";
               }
               return null;
             },
@@ -226,17 +226,18 @@ class CreateServiceInfoPage extends StatelessWidget {
                         }
                       },
                       child: Ink(
-                        decoration: BoxDecoration(),
-                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                        ),
+                        padding: const EdgeInsets.all(12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Obx(
                               () => Text(
                                 (viewController.businessProfile != null)
-                                    ? viewController.businessProfile!
-                                        .toFirebaseFormatString()
-                                    : "Business type",
+                                    ? "${_i18n()['businessProfile'][viewController.businessProfile!.toFirebaseFormatString()]}"
+                                    : "${_i18n()['businessType']}",
                                 //  style: context.textTheme.bodyLarge,
                               ),
                             ),
@@ -272,27 +273,32 @@ class CreateServiceInfoPage extends StatelessWidget {
         builder: (BuildContext context) {
           return Column(
             children: [
+              SizedBox(
+                height: 15,
+              ),
               Text(
-                "Business type",
+                "${_i18n()['businessType']}",
                 style: context.textTheme.bodyLarge,
               ),
-              Divider(),
+              Divider(
+                height: 15,
+              ),
               Expanded(
                 child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(12),
                   child: Obx(
                     () => Column(
                         children: List.generate(
                             BusinessProfile.values.length,
                             (int index) => Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 8),
+                                  padding: const EdgeInsets.only(
+                                      left: 8, right: 8, bottom: 18),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        BusinessProfile.values[index]
-                                            .toFirebaseFormatString(),
+                                        "${_i18n()['businessProfile'][BusinessProfile.values[index].toFirebaseFormatString()]}",
                                         style: context.textTheme.bodyLarge,
                                       ),
                                       radioCircleButton(
@@ -305,10 +311,7 @@ class CreateServiceInfoPage extends StatelessWidget {
                                                     BusinessProfile
                                                         .values[index]
                                                 : _businessProfile.value = null;
-                                            mezDbgPrint(
-                                                "current ======> ${_businessProfile.value}");
-                                            mezDbgPrint(
-                                                "from list ======> ${BusinessProfile.values[index]}");
+
                                             _businessProfile.refresh();
                                           })
                                     ],
@@ -317,7 +320,9 @@ class CreateServiceInfoPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(),
+              Divider(
+                height: 35,
+              ),
               Row(
                 children: [
                   Flexible(
@@ -340,7 +345,10 @@ class CreateServiceInfoPage extends StatelessWidget {
                     },
                   )),
                 ],
-              )
+              ),
+              SizedBox(
+                height: 15,
+              ),
             ],
           );
         });

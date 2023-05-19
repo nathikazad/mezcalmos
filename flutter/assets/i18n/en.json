@@ -1658,7 +1658,26 @@
             "scLangErrorText": "Please enter a valid secondary language",
             "none": "None",
             "en": "English",
-            "es": "Spanish"
+            "es": "Spanish",
+            "businessType" : "Business type",
+            "businessTypeErrorText": "Please select a business type",
+            "save" :"Save",
+            "cancel" : "Cancel",
+            "businessProfile" : {
+              "surfShop": "Surf Shop",
+    "vehicleRental": "Vehicle Rental",
+    "yogaStudio": "Yoga Studio",
+    "homeRental": "Home Rental",
+    "languageSchool": "Language School",
+    "tourAgency": "Tour Agency",
+    "artisanalProduct": "Artisanal Product",
+    "cleaningService": "Cleaning Service",
+    "petSitting": "Pet Sitting",
+    "wellnessPractitioner": "Wellness Practitioner",
+    "volunteer": "Volunteer",
+    "entertainment": "Entertainment"
+            }
+            
           }
         },
         "createText": "Create",
