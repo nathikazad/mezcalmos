@@ -1082,7 +1082,10 @@
             "yoga": "Yoga",
             "martialArt": "Arte marcial",
             "adventure": "Aventura",
-            "volunteer": "Voluntaria"
+            "volunteer": "Voluntaria",
+            "motorcycle": "Motocicleta",
+            "car": "Auto",
+            "bicycle": "Bicicleta"
           }
         },
         "RentalsView": {

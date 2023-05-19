@@ -1010,7 +1010,10 @@
             "martialArt": "Martial Art",
             "adventure": "Adventure",
             "volunteer": "Volunteer",
-            "all": "All"
+            "all": "All",
+            "motorcycle": "Motorcycle",
+            "car": "Car",
+            "bicycle": "Bicycle"
           }
         },
         "RentalsView": {
