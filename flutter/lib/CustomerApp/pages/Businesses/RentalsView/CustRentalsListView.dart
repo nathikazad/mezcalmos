@@ -83,7 +83,8 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                       _viewBusinessesSwitcher(),
 
                       // filter bar
-                      if (viewController.showFilter) _filterButton(context),
+                      if (viewController.isVehicle && viewController.showFilter)
+                        _filterButton(context),
                       Container(
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
