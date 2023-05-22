@@ -26,6 +26,8 @@ class BusinessItemDetailsController {
   RxList<String?> imagesUrls = RxList.filled(5, null);
   late int businessId;
   late int businessDetailsId;
+  int? itemDetailsId;
+
   RxMap<TimeUnit, TextEditingController> priceTimeUnitMap =
       RxMap<TimeUnit, TextEditingController>();
   RxList<File?> images = RxList.filled(5, null);
@@ -51,6 +53,7 @@ class BusinessItemDetailsController {
 
   Future<void> initEditMode({required int itemDetailsId}) async {
     mezDbgPrint(" 🟢  initEditMode : $itemDetailsId");
+    this.itemDetailsId = itemDetailsId;
 
     _details.value = await get_business_item_details_by_id(
         detailsId: itemDetailsId, businessId: businessId, withCache: false);
@@ -95,8 +98,13 @@ class BusinessItemDetailsController {
   }
 
   Future<void> updateItemDetails() async {
-    await Future.wait(
-        [_updateName(), _updateDescription(), _pushDetailsToDb()]);
+    await Future.wait([
+      _updateName(),
+      _updateDescription(),
+      _pushDetailsToDb(),
+    ]).then(
+      (List<void> value) => initEditMode(itemDetailsId: itemDetailsId!),
+    );
   }
 
   Future<void> _pushDetailsToDb() async {

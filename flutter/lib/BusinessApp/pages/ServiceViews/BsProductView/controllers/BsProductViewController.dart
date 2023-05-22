@@ -105,6 +105,7 @@ class BsProductViewController {
               productCategory: productCategory.value!,
             );
             showSavedSnackBar();
+            shouldRefetch = true;
           }
         } catch (e, stk) {
           mezDbgPrint(

@@ -131,7 +131,7 @@ class BsHomeRentalViewController {
       if (isEditing) {
         try {
           await saveItemDetails();
-          await update_business_home_rental(
+     _rental.value =      await update_business_home_rental(
               id: rental!.id!.toInt(), rental: _constructRental());
           await update_item_additional_params(
             id: rental!.details.id.toInt(),
@@ -140,6 +140,7 @@ class BsHomeRentalViewController {
             },
           );
           showSavedSnackBar();
+          shouldRefetch = true;
         } catch (e, stk) {
           mezDbgPrint(
               " 🛑 ${rental?.id?.toInt()}  OperationException : ${e.toString()}");

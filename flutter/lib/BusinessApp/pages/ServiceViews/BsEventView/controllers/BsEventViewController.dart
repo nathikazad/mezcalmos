@@ -35,7 +35,7 @@ class BsEventViewController {
   bool get isClass => _isClass.value;
   RxBool _isClass = false.obs;
   // state variables //
-  Schedule? serviceSchedule;
+  Rxn<Schedule> serviceSchedule = Rxn();
   Rxn<EventWithBusinessCard> _event = Rxn<EventWithBusinessCard>();
   Rxn<ScheduleType> scheduleType = Rxn<ScheduleType>();
   Rxn<Schedule> avalaibilty = Rxn<Schedule>();
@@ -105,7 +105,7 @@ class BsEventViewController {
     }
     unawaited(
         get_service_schedule(serviceDetailsId: detailsId, withCache: false)
-            .then((Schedule? value) => serviceSchedule = value));
+            .then((Schedule? value) => serviceSchedule.value = value));
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -131,9 +131,10 @@ class BsEventViewController {
       if (isEditing) {
         try {
           await saveItemDetails();
-          await update_event_by_id(
+          _event.value = await update_event_by_id(
               eventId: event!.id!.toInt(), event: _constructEvent());
           showSavedSnackBar();
+          shouldRefetch = true;
         } catch (e, stk) {
           mezDbgPrint(
               " 🛑 ${event?.id?.toInt()}  OperationException : ${e.toString()}");
@@ -415,12 +416,12 @@ class BsEventViewController {
       case ScheduleType.OneTime:
         return Obx(
           () {
-            if (serviceSchedule != null) {
+            if (serviceSchedule.value != null) {
               return BsOpPeriodPicker(
                 onNewPeriodSelected: (PeriodOfTime v) {
                   oneTimePeriod.value = v;
                 },
-                serviceSchedule: serviceSchedule!,
+                serviceSchedule: serviceSchedule.value!,
                 timePeriod: oneTimePeriod.value,
               );
             } else

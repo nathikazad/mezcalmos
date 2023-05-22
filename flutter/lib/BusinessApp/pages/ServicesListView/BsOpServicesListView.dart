@@ -3,11 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/Components/BsProductCard.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsEventCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsHomeRentalCard.dart';
@@ -108,7 +103,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     InkWell(
                       onTap: () {
                         /// TODO: Only to view purpose
-                        viewController.changeBusiness();
+                        //  viewController.changeBusiness();
                       },
                       child: Ink(
                         padding: const EdgeInsets.all(5),
@@ -164,19 +159,12 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                           event: viewController.events[index],
                                           viewController: viewController,
                                           onClick: () {
-                                            BsOpEventView.navigate(
-                                              businessId:
-                                                  viewController.businessId,
-                                              profile: viewController
-                                                  .businessProfile,
-                                              businessDetailsId: viewController
-                                                  .businessDetailsId,
-                                              id: viewController
-                                                  .events[index].id!
-                                                  .toInt(),
-                                              isClass: viewController
-                                                  .events[index].isClass,
-                                            );
+                                            viewController.navigateToEvent(
+                                                isClass: viewController
+                                                    .events[index].isClass,
+                                                id: viewController
+                                                    .events[index].id!
+                                                    .toInt());
                                           },
                                         )
                                       : SizedBox.shrink()),
@@ -199,19 +187,12 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                           event: viewController.events[index],
                                           viewController: viewController,
                                           onClick: () {
-                                            BsOpEventView.navigate(
-                                              businessId:
-                                                  viewController.businessId,
-                                              profile: viewController
-                                                  .businessProfile,
-                                              businessDetailsId: viewController
-                                                  .businessDetailsId,
-                                              id: viewController
-                                                  .events[index].id!
-                                                  .toInt(),
-                                              isClass: viewController
-                                                  .events[index].isClass,
-                                            );
+                                            viewController.navigateToEvent(
+                                                isClass: viewController
+                                                    .events[index].isClass,
+                                                id: viewController
+                                                    .events[index].id!
+                                                    .toInt());
                                           },
                                         )
                                       : SizedBox.shrink()),
@@ -233,19 +214,12 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                           viewController: viewController,
                                           event: viewController.events[index],
                                           onClick: () {
-                                            BsOpEventView.navigate(
-                                              id: viewController
-                                                  .events[index].id!
-                                                  .toInt(),
-                                              businessId:
-                                                  viewController.businessId,
-                                              businessDetailsId: viewController
-                                                  .businessDetailsId,
-                                              profile: viewController
-                                                  .businessProfile,
-                                              isClass: viewController
-                                                  .events[index].isClass,
-                                            );
+                                            viewController.navigateToEvent(
+                                                isClass: viewController
+                                                    .events[index].isClass,
+                                                id: viewController
+                                                    .events[index].id!
+                                                    .toInt());
                                           })
                                       : SizedBox.shrink()),
                             ),
@@ -309,10 +283,9 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                       product: viewController.product[index],
                       viewController: viewController,
                       onClick: () {
-                        BsOpProductView.navigate(
-                            businessId: viewController.businessId,
-                            businessDetailsId: viewController.businessDetailsId,
-                            id: viewController.product[index].id!.toInt());
+                        viewController.navigateToProduct(
+                          id: viewController.product[index].id!.toInt(),
+                        );
                       },
                     )),
           ),
@@ -338,11 +311,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                       service: viewController.services[index],
                       viewController: viewController,
                       onClick: () {
-                        BsOpServiceView.navigate(
-                            businessId: viewController.businessId,
-                            businessDetailsId: viewController.businessDetailsId,
-                            serviceId:
-                                viewController.services[index].id!.toInt());
+                        viewController.navigateToService(
+                            id: viewController.services[index].id!.toInt());
                       },
                     )),
           ),
@@ -371,13 +341,9 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         event: viewController.events[index],
                         viewController: viewController,
                         onClick: () {
-                          BsOpEventView.navigate(
-                            businessId: viewController.businessId,
-                            profile: viewController.businessProfile,
-                            businessDetailsId: viewController.businessDetailsId,
-                            id: viewController.events[index].id!.toInt(),
-                            isClass: viewController.events[index].isClass,
-                          );
+                          viewController.navigateToEvent(
+                              isClass: viewController.events[index].isClass,
+                              id: viewController.events[index].id!.toInt());
                         },
                       )
                     : SizedBox.shrink()),
@@ -405,34 +371,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     viewController: viewController,
                     rental: viewController.rentals[index],
                     onClick: () {
-                      BsOpRentalView.navigate(
-                        businessId: viewController.businessId,
-                        businessDetailsId: viewController.businessDetailsId,
+                      viewController.navigateToRental(
                         id: viewController.rentals[index].id!.toInt(),
                         rentalCategory: viewController.rentals[index].category1,
                       );
-                    })
-
-                //  MezCard(
-                //     onClick: () {
-                //       BsOpRentalView.navigate(
-                //         id: viewController.rentals[index].id
-                //            ! .toInt(),
-                //         rentalCategory:
-                //             viewController.rentals[index].category1,
-                //       );
-                //     },
-                //     firstAvatarBgImage: NetworkImage(
-                //       viewController
-                //               .rentals[index].details.firstImage ??
-                //           customImageUrl,
-                //     ),
-                //     content: Text(
-                //       viewController.rentals[index].details.name
-                //           .getTranslation(userLanguage),
-                //       style: context.textTheme.bodyLarge,
-                //     ))
-                ),
+                    })),
           ),
         ),
         bigSeperator,
@@ -457,9 +400,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                       rental: viewController.homeRentals[index],
                       viewController: viewController,
                       onClick: () {
-                        BsOpHomeRentalView.navigate(
-                            businessId: viewController.businessId,
-                            businessDetailsId: viewController.businessDetailsId,
+                        viewController.navigateToHomeRental(
                             id: viewController.homeRentals[index].id!.toInt());
                       },
                     )),

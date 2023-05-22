@@ -27,6 +27,7 @@ class AdminBsServiceCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(8),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CircleAvatar(
               radius: 23,
@@ -42,12 +43,22 @@ class AdminBsServiceCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Flexible(
                       fit: FlexFit.tight,
-                      child: Text(
-                        business.details.name,
-                        style: context.txt.bodyLarge,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            business.details.name,
+                            style: context.txt.bodyLarge,
+                          ),
+                          Text(
+                            business.profile.name,
+                            style: context.txt.bodyMedium,
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
@@ -70,7 +81,7 @@ class AdminBsServiceCard extends StatelessWidget {
                   color: Colors.grey.shade100,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     _smallBtn(
                         icon: Icons.sell_rounded,
