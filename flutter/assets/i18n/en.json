@@ -74,6 +74,14 @@
           "oneTime": "One time",
           "onDemand": "On demand"
         },
+        "weeklyClass": "Weekly Classes",
+        "oneTimeClass": "Workshops/Retreat",
+        "onDemandClass": "Private Lessons",
+        "weeklyEvent": "Weekly Events",
+        "oneTimeEvent": "Upcoming Events",
+        "onDemandEvent": "Experiences",
+        "vehicleRentals": "Vehicle Rentals",
+        "surfRentals": "Surf Rentals",
         "profile": "Profile",
         "feed": "Feed",
         "messages": "Messages",
@@ -1249,6 +1257,8 @@
       },
       "CustBusinessView": {
         "rentals": "Rentals",
+        "vehicleRentals": "Vehicle Rentals",
+        "surfRentals": "Surf Rentals",
         "events": "Events",
         "products": "Products",
         "services": "Services",
@@ -1259,7 +1269,13 @@
         "loading": "Loading",
         "weekly": "Weekly",
         "oneTime": "One time",
-        "onDemand": "On demand"
+        "onDemand": "On demand",
+        "weeklyClasses": "Weekly Classes",
+        "oneTimeClasses": "Workshops/Retreat",
+        "onDemandClasses": "Private Lessons",
+        "weeklyEvents": "Weekly Events",
+        "oneTimeEvents": "Upcoming Events",
+        "onDemandEvents": "Experiences"
       },
       "CustomerWrapper": {
         "orders": "Orders",

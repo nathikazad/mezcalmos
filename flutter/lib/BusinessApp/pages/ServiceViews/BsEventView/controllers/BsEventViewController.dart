@@ -395,8 +395,31 @@ class BsEventViewController {
                     type: ScheduleType.OneTime),
               ];
       default:
-        throw StateError(
-            "BusinessProfile ${businessProfile.name} not supported");
+        return [
+          ScheduleTypeInput(
+              title: _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
+                  ["onDemandClass"],
+              subtitle:
+                  _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
+                      ["onDemandClassLabel"],
+              type: ScheduleType.OnDemand),
+          ScheduleTypeInput(
+              title: _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
+                  ["weeklyClass"],
+              subtitle:
+                  _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
+                      ["weeklyClassLabel"],
+              type: ScheduleType.Scheduled),
+          ScheduleTypeInput(
+              title: _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
+                  ["oneTimeClass"],
+              subtitle:
+                  _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
+                      ["oneTimeClassLabel"],
+              type: ScheduleType.OneTime),
+        ];
+      // throw StateError(
+      //     "BusinessProfile ${businessProfile.name} not supported");
     }
   }
 
