@@ -50,8 +50,6 @@ class BsServicesListViewController {
 
   // streams //
 
-  // variables //
-  int _idx = 1;
   late int businessId;
   late BusinessProfile businessProfile;
   late int businessDetailsId;
@@ -101,12 +99,14 @@ class BsServicesListViewController {
   // TODO: bottom sheet switcher logic
 
   void changeBusiness() {
-    businessProfile = BusinessProfile.values[_idx];
+    int _idx = BusinessProfile.values.indexOf(businessProfile);
     if (_idx == BusinessProfile.values.length - 1) {
       _idx = 0;
     } else {
       _idx++;
     }
+    businessProfile = BusinessProfile.values[_idx];
+    mezDbgPrint(businessProfile);
     // Get.find<BusinessOpAuthController>().setBusinessProfile =
     //     businessProfile.value;
     _setupBottomSheetValue();
