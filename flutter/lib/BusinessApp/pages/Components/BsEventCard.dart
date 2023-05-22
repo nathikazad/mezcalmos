@@ -66,7 +66,9 @@ class BsEventCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    '${event.details.cost.values.first.toPriceString()}/${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}',
+                    event.details.cost.values.first == 0
+                        ? '${_i18n()['free']}'
+                        : '${event.details.cost.values.first.toPriceString()}/${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}',
                     style: context.textTheme.bodyLarge?.copyWith(
                         fontSize: 12.mezSp, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.right,

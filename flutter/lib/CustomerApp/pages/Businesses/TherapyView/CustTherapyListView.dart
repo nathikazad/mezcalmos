@@ -287,9 +287,12 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                               backgroundImage: imageProvider,
                             ),
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
+                          if (viewController
+                                  .therapy[index].details.firstImage ==
+                              null)
+                            SizedBox(
+                              width: 10,
+                            ),
                           Expanded(
                             child: Text(
                               viewController.therapy[index].details

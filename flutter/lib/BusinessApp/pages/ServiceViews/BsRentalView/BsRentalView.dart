@@ -341,7 +341,10 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                       smallSepartor,
                       Text(
                         _i18n()["vehicleRental"]["motorcycleType"],
-                        style: context.textTheme.bodySmall,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
                       smallSepartor,
                       MezStringDropDown(
@@ -417,7 +420,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
             BsDeleteOfferButton(
               onDelete: () async {
                 await viewController.deleteOffer();
-                  await MezRouter.back(backResult: true);
+                await MezRouter.back(backResult: true);
               },
             )
         ],

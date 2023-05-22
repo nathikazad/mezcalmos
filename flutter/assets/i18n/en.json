@@ -55,7 +55,8 @@
           "person": "person",
           "total": "total",
           "unit": "unit",
-          "none": "none"
+          "none": "none",
+          "free": "Free"
         }
       },
       "services": {
@@ -947,7 +948,8 @@
             "classes": "Classes",
             "services": "Services",
             "locallyMade": "Locally made",
-            "therapy": "Therapies"
+            "therapy": "Therapies",
+            "volunteer": "Volunteer"
           }
         },
         "AllServiceView": {

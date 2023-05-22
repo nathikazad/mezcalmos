@@ -288,8 +288,8 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           smallSepartor,
           Text(
-            "Home type",
-            style: context.textTheme.bodyMedium!.copyWith(
+            '${_i18n()["homeRental"]["homeType"]}',
+            style: context.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
