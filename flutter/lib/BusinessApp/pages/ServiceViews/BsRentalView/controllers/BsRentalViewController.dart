@@ -174,7 +174,7 @@ class BsRentalViewController {
   }
 
   void dispose() {
-    // TODO: implement dispose
+    languageTabsController.dispose();
   }
 
   Future<void> createItem(Rental rental) async {

@@ -160,7 +160,7 @@ class BsEventViewController {
   }
 
   void dispose() {
-    // TODO: implement dispose
+    languageTabsController.dispose();
   }
 
   Future<void> createItem(Event event) async {

@@ -1637,6 +1637,10 @@
           "business": "Negocio",
           "laundry": "Lavadero",
           "deliveryCompany": "Compañía de entrega"
+        },
+        "Generic" : {
+          "en" : "Inglesa",
+          "es" : "Española"
         }
       }
     },

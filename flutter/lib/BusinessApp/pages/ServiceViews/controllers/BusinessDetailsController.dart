@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class BusinessItemDetailsController {
@@ -222,7 +223,7 @@ class BusinessItemDetailsController {
       languages.value!.primary: descriptionController.text
     };
     if (languages.value!.secondary != null) {
-      _desc[languages.value!.secondary!] = scDescriptionController.text;
+      _desc[languages.value!.secondary!] = scDescriptionController.text.inCaps;
     }
     return _desc;
   }
@@ -230,7 +231,7 @@ class BusinessItemDetailsController {
   LanguageMap constructName() {
     final LanguageMap _name = {languages.value!.primary: nameController.text};
     if (languages.value!.secondary != null) {
-      _name[languages.value!.secondary!] = scNameController.text;
+      _name[languages.value!.secondary!] = scNameController.text.inCaps;
     }
     return _name;
   }

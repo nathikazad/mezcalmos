@@ -124,7 +124,7 @@ class BsProductViewController {
   }
 
   void dispose() {
-    // TODO: implement dispose
+   languageTabsController.dispose();
   }
 
   Future<void> createItem(Product product) async {

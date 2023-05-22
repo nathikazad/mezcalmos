@@ -133,7 +133,7 @@ class BsServiceViewController {
   }
 
   void dispose() {
-    // TODO: implement dispose
+    languageTabsController.dispose();
   }
 
   Future<void> createItem(Service service) async {

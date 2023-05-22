@@ -1,7 +1,12 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:collection/collection.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["models"]
+    ["Utilities"]["Generic"];
 
 enum ServiceStatus { Open, ClosedTemporarily, ClosedIndefinitely }
 
@@ -53,16 +58,7 @@ extension ParseLangaugeToString on Language {
   }
 
   String? toLanguageName() {
-    final String str = toString().split('.').last;
-    switch (str) {
-      case "EN":
-        return "English";
-      case "ES":
-        return "Spanish";
-
-      default:
-        return null;
-    }
+    return _i18n()["${toFirebaseFormatString()}"];
   }
 }
 

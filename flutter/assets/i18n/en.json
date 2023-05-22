@@ -1571,6 +1571,10 @@
           "business": "Business",
           "laundry": "Laundry",
           "deliveryCompany": "Delivery company"
+        },
+        "Generic" : {
+          "en" : "English",
+          "es" : "Spanish"
         }
       }
     },
