@@ -446,14 +446,10 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   }
 
   Column _rentals(BuildContext context) {
-    final RxList<RentalCard> surfRentals = viewController.rentals
-        .where((RentalCard element) => element.isSurf)
-        .toList()
-        .obs;
-    final RxList<RentalCard> vehicleRentals = viewController.rentals
-        .where((RentalCard element) => element.isSurf)
-        .toList()
-        .obs;
+    final RxList<RentalCard> surfRentals =
+        viewController.rentals.where((element) => element.isSurf).toList().obs;
+    final RxList<RentalCard> vehicleRentals =
+        viewController.rentals.where((element) => element.isVehicle).toList().obs;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
