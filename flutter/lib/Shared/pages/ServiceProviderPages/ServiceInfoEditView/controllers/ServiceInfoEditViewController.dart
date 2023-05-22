@@ -225,4 +225,11 @@ class ServiceInfoEditViewController {
     phoneNumber.dispose();
     serviceNameTxt.dispose();
   }
+
+  List<String> getSecLangsOptions() {
+    List<Language> data = [];
+    data.addAll(Language.values);
+    data.remove(languages.value!.primary);
+    return data.map((Language e) => e.toFirebaseFormatString()).toList();
+  }
 }

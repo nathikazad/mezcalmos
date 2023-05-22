@@ -9,7 +9,6 @@ import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -81,13 +80,15 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbar(),
-      bottomNavigationBar: MezButton(
-        label: _i18n()["save"],
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.save();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: _i18n()["save"],
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.save();
+          },
+        ),
       ),
       body: Obx(
         () {
@@ -147,7 +148,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
       MezRouter.back(backResult: viewController.shouldRefetch);
     },
         titleWidget: Obx(() => Text(viewController.rental != null
-            ? "${viewController.rental!.details.name.getTranslation(userLanguage)}"
+            ? "${viewController.rental!.details.name.getTranslation(viewController.languages!.primary)}"
             : _i18n()["homeRental"]["rentalTitle"])));
   }
 

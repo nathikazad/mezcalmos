@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
 class LanguageTabsController {
   late int serviceDetailsId;
@@ -25,6 +29,7 @@ class LanguageTabsController {
   // vars //
   bool firstFormValid = false;
   bool secondFormValid = false;
+  late Language _oldUserLanguage;
   // methods //
   Future<void> init(
       {required TickerProvider vsync,
@@ -32,9 +37,14 @@ class LanguageTabsController {
       ServiceProviderLanguage? language}) async {
     assert((detailsId ?? language) != null,
         'Either Details id or language must be not null.');
+    _oldUserLanguage = userLanguage;
     serviceDetailsId = detailsId ?? 0;
     _language = language ?? await get_service_lang(detailsId: serviceDetailsId);
     if (_language != null) {
+      await Get.find<LanguageController>().changeUserLanguage(
+        language: _language!.primary,
+        saveToDatabase: false,
+      );
       _tabController.value = TabController(length: _length, vsync: vsync);
       _tabController.refresh();
       secondaryLangFormKey =
@@ -93,6 +103,12 @@ class LanguageTabsController {
   }
 
   void dispose() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(Get.find<LanguageController>().changeUserLanguage(
+        language: _oldUserLanguage,
+        saveToDatabase: false,
+      ));
+    });
     tabController?.dispose();
   }
 }

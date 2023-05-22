@@ -44,7 +44,7 @@ class BsProductViewController {
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
   bool get hasData {
-    if (isEditing) {
+    if (productId != null) {
       return _product.value != null &&
           languageTabsController.tabController != null;
     } else
@@ -56,6 +56,7 @@ class BsProductViewController {
       required int detailsId,
       required int businessId,
       int? productId}) async {
+    this.productId = productId;
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(

@@ -219,11 +219,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                       scheduledClass.length,
                       (int index) => BsEventCard(
                           viewController: viewController,
-                          event: oneTimeClass[index],
+                          event: scheduledClass[index],
                           onClick: () {
                             viewController.navigateToEvent(
-                                isClass: oneTimeClass[index].isClass,
-                                id: oneTimeClass[index].id!.toInt());
+                                isClass: scheduledClass[index].isClass,
+                                id: scheduledClass[index].id!.toInt());
                           })),
                 ),
               ),

@@ -117,7 +117,11 @@ class AdminBsServiceCard extends StatelessWidget {
                                 backgroundColor: offRedColor,
                                 textColor: Colors.red,
                                 label: "${_i18n()['reject']}",
-                                onClick: () async {})),
+                                onClick: () async {
+                                  await viewController.approveService(
+                                      detailsId: business.details.id.toInt(),
+                                      approved: false);
+                                })),
                         SizedBox(
                           width: 8,
                         ),
@@ -129,7 +133,8 @@ class AdminBsServiceCard extends StatelessWidget {
                                 label: "${_i18n()['accept']}",
                                 onClick: () async {
                                   await viewController.approveService(
-                                      detailsId: business.details.id.toInt());
+                                      detailsId: business.details.id.toInt(),
+                                      approved: true);
                                 })),
                       ],
                     ),

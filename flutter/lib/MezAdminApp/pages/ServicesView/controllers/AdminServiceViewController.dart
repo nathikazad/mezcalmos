@@ -127,9 +127,10 @@ class AdminServicesViewController {
     }
   }
 
-  Future<void> approveService({required int detailsId}) async {
+  Future<void> approveService(
+      {required int detailsId, required bool approved}) async {
     await update_service_state(
-        status: null, detailsId: detailsId, approved: true);
+        status: null, detailsId: detailsId, approved: approved);
     fetchCurrent();
   }
 }

@@ -24,6 +24,7 @@ class BsRentalViewController {
   // streams //
 
   // variables //
+  int? _rentalId;
 
   // states variables //
 
@@ -56,7 +57,7 @@ class BsRentalViewController {
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
   bool get hasData {
-    if (isEditing) {
+    if (_rentalId != null) {
       return _rental.value != null &&
           languageTabsController.tabController != null;
     } else
@@ -70,6 +71,7 @@ class BsRentalViewController {
     required int businessId,
     int? rentalId,
   }) async {
+    _rentalId = rentalId;
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(

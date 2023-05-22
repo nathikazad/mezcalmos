@@ -10,7 +10,6 @@ import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -159,7 +158,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
 
   String getAppbartitle() {
     return viewController.event != null
-        ? "${viewController.event!.details.name.getTranslation(userLanguage)}"
+        ? "${viewController.event!.details.name.getTranslation(viewController.languages!.primary)}"
         : (viewController.isClass == false)
             ? "${_i18n()["event"]["event"]}"
             : "${_i18n()['class']}";
@@ -222,7 +221,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
         children: [
           Obx(
             () => MezItemAvSwitcher(
-               value: viewController.detailsController.isAvailable.value,
+              value: viewController.detailsController.isAvailable.value,
               onAvalableTap: () {
                 viewController.detailsController.switchAvailable(true);
               },

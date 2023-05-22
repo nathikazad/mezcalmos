@@ -47,7 +47,7 @@ class BsProductCard extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                product.details.name.getTranslation(userLanguage)!.inCaps,
+                product.details.name.getTranslation(viewController.primaryLang)!.inCaps,
                 style: context.textTheme.bodyLarge,
                 overflow: TextOverflow.ellipsis,
               ),

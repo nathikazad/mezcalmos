@@ -159,7 +159,8 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                               validator: (String? v) {
                                 if (v == null || v.isEmpty) {
                                   return null;
-                                } else if (v.toString().isPhoneNumber == false) {
+                                } else if (v.toString().isPhoneNumber ==
+                                    false) {
                                   return "${_i18n()['phoneErrorText']}";
                                 }
                                 return null;
@@ -190,7 +191,8 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                                   .toFirebaseFormatString(),
                               langPath: _i18n(),
                               items: Language.values
-                                  .map((Language e) => e.toFirebaseFormatString())
+                                  .map((Language e) =>
+                                      e.toFirebaseFormatString())
                                   .toList(),
                               onChanged: (String? v) {
                                 if (v != null) {
@@ -221,14 +223,13 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                                   if (v != null &&
                                       v != "none" &&
                                       v.toLanguage() ==
-                                          viewController.languages.value?.primary) {
+                                          viewController
+                                              .languages.value?.primary) {
                                     return "${_i18n()['sameLangErrorText']}";
                                   }
                                   return null;
                                 },
-                                items: Language.values
-                                    .map((Language e) => e.toFirebaseFormatString())
-                                    .toList(),
+                                items: viewController.getSecLangsOptions(),
                                 onChanged: (String? v) {
                                   viewController.languages.value?.secondary =
                                       v?.toLanguage() ?? null;
@@ -237,7 +238,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         ),
                       )),
                 ),
-              MezButton(
+                MezButton(
                   label: "${_i18n()['save']}",
                   borderRadius: 0,
                   onClick: () async {

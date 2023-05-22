@@ -403,7 +403,7 @@ Future<cModels.ServiceProviderLanguage?> get_service_lang(
     {required int detailsId}) async {
   final QueryResult<Query$getServiceLanguage> response = await _db.graphQLClient
       .query$getServiceLanguage(Options$Query$getServiceLanguage(
-          fetchPolicy: FetchPolicy.cacheFirst,
+          fetchPolicy: FetchPolicy.networkOnly,
           variables:
               Variables$Query$getServiceLanguage(serviceDetailsId: detailsId)));
   if (response.hasException) {

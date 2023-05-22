@@ -133,7 +133,10 @@ class AdminLaundryServiceCard extends StatelessWidget {
                             backgroundColor: offRedColor,
                             textColor: Colors.red,
                             label: "${_i18n()['reject']}",
-                            onClick: () async {})),
+                            onClick: () async {
+                                await viewController.approveService(
+                                  detailsId: laundry.serviceDetailsId,approved: false);
+                            })),
                     SizedBox(
                       width: 8,
                     ),
@@ -144,8 +147,8 @@ class AdminLaundryServiceCard extends StatelessWidget {
                             textColor: Colors.white,
                             label: "${_i18n()['accept']}",
                             onClick: () async {
-                              await viewController.approveService(
-                                  detailsId: laundry.serviceDetailsId);
+                             await viewController.approveService(
+                                  detailsId: laundry.serviceDetailsId,approved: true);
                             })),
                   ],
                 ),

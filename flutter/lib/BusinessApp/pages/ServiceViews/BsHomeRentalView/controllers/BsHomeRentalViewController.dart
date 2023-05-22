@@ -27,6 +27,7 @@ class BsHomeRentalViewController {
   TextEditingController areaController = TextEditingController();
 
   // vars //
+  int? _homeRentalId;
   bool shouldRefetch = false;
   // state variables //
   Rxn<Rental> _rental = Rxn<Rental>();
@@ -49,7 +50,7 @@ class BsHomeRentalViewController {
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
   bool get hasData {
-    if (isEditing) {
+    if (_homeRentalId != null) {
       return _rental.value != null &&
           languageTabsController.tabController != null;
     } else
@@ -61,6 +62,7 @@ class BsHomeRentalViewController {
       required int detailsId,
       int? homeRentalId,
       required int businessId}) async {
+    _homeRentalId = homeRentalId;
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
@@ -131,7 +133,7 @@ class BsHomeRentalViewController {
       if (isEditing) {
         try {
           await saveItemDetails();
-     _rental.value =      await update_business_home_rental(
+          _rental.value = await update_business_home_rental(
               id: rental!.id!.toInt(), rental: _constructRental());
           await update_item_additional_params(
             id: rental!.details.id.toInt(),
@@ -156,7 +158,7 @@ class BsHomeRentalViewController {
   }
 
   void dispose() {
-    // TODO: implement dispose
+    languageTabsController.dispose();
   }
 
   Future<void> createItem(Rental rental) async {
@@ -179,8 +181,7 @@ class BsHomeRentalViewController {
   Future<void> deleteOffer() async {
     try {
       await delete_busines_rental(rentalId: rental!.id!.toInt());
-            shouldRefetch = true;
-
+      shouldRefetch = true;
     } catch (e, stk) {
       showErrorSnackBar();
       mezDbgPrint(e);

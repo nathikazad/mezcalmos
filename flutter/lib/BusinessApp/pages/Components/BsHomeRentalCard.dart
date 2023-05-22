@@ -48,7 +48,7 @@ class BsHomeRentalCard extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                rental.details.name.getTranslation(userLanguage)?.inCaps ?? "",
+                rental.details.name.getTranslation(viewController.primaryLang)?.inCaps ?? "",
                 style: context.textTheme.bodyLarge,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,

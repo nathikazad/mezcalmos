@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
@@ -73,6 +74,10 @@ class BsServicesListViewController {
       services.isEmpty &&
       product.isEmpty;
 
+  Rx<ServiceProviderLanguage> _language =
+      Rx(ServiceProviderLanguage(primary: Language.ES));
+  Language get primaryLang => _language.value.primary;
+
   // methods //
   Future<void> init(
       {required int id,
@@ -81,6 +86,13 @@ class BsServicesListViewController {
     businessId = id;
     businessProfile = profile;
     this.businessDetailsId = businessDetailsId;
+
+    await get_service_lang(detailsId: businessDetailsId)
+        .then((ServiceProviderLanguage? value) {
+      if (value != null) {
+        _language.value = value;
+      }
+    });
 
     _setupBottomSheetValue();
     await fetchAllServices();

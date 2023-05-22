@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpPeriodPicker.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -12,11 +12,9 @@ import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -30,6 +28,7 @@ class BsEventViewController {
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
   // vars //
+  int? _eventId;
   late BusinessProfile businessProfile;
   bool shouldRefetch = false;
   bool get isClass => _isClass.value;
@@ -39,13 +38,14 @@ class BsEventViewController {
   Rxn<EventWithBusinessCard> _event = Rxn<EventWithBusinessCard>();
   Rxn<ScheduleType> scheduleType = Rxn<ScheduleType>();
   Rxn<Schedule> avalaibilty = Rxn<Schedule>();
-  Rxn<PeriodOfTime> oneTimePeriod = Rxn<PeriodOfTime>();
+  Rxn<DateTime> startDate = Rxn<DateTime>();
+  Rxn<DateTime> endDate = Rxn<DateTime>();
   Rxn<Location> location = Rxn<Location>();
   // getters //
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
   bool get hasData {
-    if (isEditing) {
+    if (_eventId != null) {
       return _event.value != null &&
           languageTabsController.tabController != null;
     } else
@@ -89,6 +89,7 @@ class BsEventViewController {
       required int businessId,
       int? eventId,
       required BusinessProfile profile}) async {
+    _eventId = eventId;
     _isClass.value = isClass;
     businessProfile = profile;
     await languageTabsController.init(
@@ -122,7 +123,12 @@ class BsEventViewController {
       location.value = event!.gpsLocation;
       scheduleType.value = event!.scheduleType;
       avalaibilty.value = event!.schedule;
-      oneTimePeriod.value = event!.period;
+      startDate.value = event!.startsAt != null
+          ? DateTime.parse(event!.startsAt!).toLocal()
+          : null;
+      endDate.value = event!.endsAt != null
+          ? DateTime.parse(event!.endsAt!).toLocal()
+          : null;
     }
   }
 
@@ -182,12 +188,11 @@ class BsEventViewController {
     Event event = Event(
         category1: category1,
         scheduleType: scheduleType.value!,
-        startsAt: oneTimePeriod.value?.start.toUtc().toString(),
-        endsAt: oneTimePeriod.value?.end.toUtc().toString(),
+        startsAt: startDate.value?.toUtc().toString(),
+        endsAt: endDate.value?.toUtc().toString(),
         schedule: avalaibilty.value,
         gpsLocation: location.value,
         tags: isClass ? [EventTag.Class] : [],
-        // time: oneTimePeriod.value.,
         details: details);
     return event;
   }
@@ -197,8 +202,8 @@ class BsEventViewController {
     Event event = Event(
         category1: category1,
         scheduleType: scheduleType.value!,
-        startsAt: oneTimePeriod.value?.start.toUtc().toString(),
-        endsAt: oneTimePeriod.value?.end.toUtc().toString(),
+        startsAt: startDate.value?.toUtc().toString(),
+        endsAt: endDate.value?.toUtc().toString(),
         schedule: avalaibilty.value,
         gpsLocation: location.value,
         tags: isClass ? [EventTag.Class] : [],
@@ -439,18 +444,39 @@ class BsEventViewController {
       case ScheduleType.OneTime:
         return Obx(
           () {
-            if (serviceSchedule.value != null) {
-              return BsOpPeriodPicker(
-                onNewPeriodSelected: (PeriodOfTime v) {
-                  oneTimePeriod.value = v;
-                },
-                serviceSchedule: serviceSchedule.value!,
-                timePeriod: oneTimePeriod.value,
-              );
-            } else
-              return Container(
-                child: Text("Business schedule not found"),
-              );
+            return Column(
+              children: [
+                BsOpDateTimePicker(
+                  onNewPeriodSelected: (DateTime v) {
+                    startDate.value = v;
+                  },
+                  label: "${_i18n()['event']['startDate']}",
+                  validator: (DateTime? p0) {
+                    if (p0 == null)
+                      return "${_i18n()['event']['startTimeErrorText']}";
+
+                    return null;
+                  },
+                  time: startDate.value,
+                ),
+                BsOpDateTimePicker(
+                  onNewPeriodSelected: (DateTime v) {
+                    endDate.value = v;
+                  },
+                  validator: (DateTime? p0) {
+                    if (p0 == null)
+                      return "${_i18n()['event']['endTimeErrorText']}";
+                    if (startDate.value != null &&
+                        p0.isBefore(startDate.value!))
+                      return "${_i18n()['event']['endTimeBeforeErrorText']}";
+                    return null;
+                  },
+                  label: "${_i18n()['event']['endDate']}",
+                  time: endDate.value,
+                  startTime: startDate.value,
+                ),
+              ],
+            );
           },
         );
       case null:

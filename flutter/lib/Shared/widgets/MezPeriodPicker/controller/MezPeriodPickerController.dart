@@ -20,10 +20,15 @@ class MezPeriodPickerController {
   Rx<AmPmEnum> startAmpPm = Rx(AmPmEnum.AM);
   Rx<AmPmEnum> endAmPm = Rx(AmPmEnum.AM);
   late Schedule serviceSchedule;
+  late bool basedOnSchedule;
 
   // init //
-  void init({required Schedule schedule, required PeriodOfTime? period}) {
+  void init(
+      {required Schedule schedule,
+      required PeriodOfTime? period,
+      required bool basedOnSchedule}) {
     // assign variables //
+    this.basedOnSchedule = basedOnSchedule;
     serviceSchedule = schedule;
     // init first time mode //
     if (period == null) {
@@ -35,6 +40,7 @@ class MezPeriodPickerController {
       this.period.value = period;
       _initPeriodValues();
     }
+
     _setAmPm();
   }
 

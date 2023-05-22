@@ -72,7 +72,13 @@
           "scheduleTypeError": "Please select a schedule type",
           "scheduled": "Scheduled",
           "oneTime": "One time",
-          "onDemand": "On demand"
+          "onDemand": "On demand",
+        "startDate" : "Start date",
+        "endDate" : "End date", 
+        "startTimeErrorText" : "Please select start time",
+        "endTimeErrorText" : "Please select end time",
+        "endTimeBeforeErrorText" : "End time must be after start time"
+
         },
         "weeklyClass": "Weekly Classes",
         "oneTimeClass": "Workshops/Retreat",

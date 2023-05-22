@@ -73,7 +73,13 @@
           "scheduleTypeError": "Seleccione un tipo de horario",
           "scheduled": "Programada",
           "oneTime": "Una vez",
-          "onDemand": "Bajo demanda"
+          "onDemand": "Bajo demanda",
+          "startDate" : "Fecha de inicio",
+"endDate" : "Fecha de fin",
+"startTimeErrorText" : "Por favor, selecciona la hora de inicio",
+"endTimeErrorText" : "Por favor, selecciona la hora de fin",
+"endTimeBeforeErrorText" : "La hora de fin debe ser posterior a la hora de inicio"
+
         },
         "weeklyClass": "Clases semanales",
         "oneTimeClass": "Talleres/retirarse",
