@@ -22,7 +22,7 @@ class AdminServicesViewController {
   RxBool isFetching = RxBool(false);
   RxInt restLimit = RxInt(10);
   RxInt dvLimit = RxInt(10);
-  RxInt bsLimit = RxInt(10);
+  RxInt bsLimit = RxInt(100);
   RxInt laundryLimit = RxInt(10);
 // getters //
   bool get hasData => _dvCompanies.value != null && _restaurants.value != null;
