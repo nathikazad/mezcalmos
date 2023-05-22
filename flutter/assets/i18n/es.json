@@ -75,12 +75,11 @@
           "scheduled": "Programada",
           "oneTime": "Una vez",
           "onDemand": "Bajo demanda",
-          "startDate" : "Fecha de inicio",
-"endDate" : "Fecha de fin",
-"startTimeErrorText" : "Por favor, selecciona la hora de inicio",
-"endTimeErrorText" : "Por favor, selecciona la hora de fin",
-"endTimeBeforeErrorText" : "La hora de fin debe ser posterior a la hora de inicio"
-
+          "startDate": "Fecha de inicio",
+          "endDate": "Fecha de fin",
+          "startTimeErrorText": "Por favor, selecciona la hora de inicio",
+          "endTimeErrorText": "Por favor, selecciona la hora de fin",
+          "endTimeBeforeErrorText": "La hora de fin debe ser posterior a la hora de inicio"
         },
         "weeklyClass": "Clases semanales",
         "oneTimeClass": "Talleres/retirarse",
@@ -1026,7 +1025,8 @@
             "services": "Servicios",
             "locallyMade": "Hecho localmente",
             "therapy": "Terapias",
-            "volunteer": "Voluntaria"
+            "volunteer": "Voluntaria",
+            "adventures": "Aventuras"
           }
         },
         "AllServiceView": {
@@ -1242,6 +1242,49 @@
               "title": "Reunirse",
               "description": "Obtenga la entrega de todo lo que desee a su ubicación."
             }
+          }
+        },
+        "VolunteerView": {
+          "CustVolunteerListView": {
+            "filter": "Filtrar",
+            "therapy": "Terapia",
+            "therapies": "Terapias",
+            "therapist": "Terapeuta",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "hora",
+            "day": "día",
+            "week": "week",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "none": "Ninguna",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noVolunteerFound": "No se encontró ningún voluntario",
+            "volunteer": "Voluntaria",
+            "organizers": "Organizadoras"
+          }
+        },
+        "AdventureView": {
+          "CustAdventureListView": {
+            "filter": "Filtrar",
+            "therapy": "Terapia",
+            "therapies": "Terapias",
+            "therapist": "Terapeuta",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "none": "Ninguna",
+            "noBusinessesFound": "No se encontraron negocios",
+            "adventure": "Aventura",
+            "organizers": "Organizadoras"
           }
         },
         "ServicesViews": {
@@ -1638,9 +1681,9 @@
           "laundry": "Lavadero",
           "deliveryCompany": "Compañía de entrega"
         },
-        "Generic" : {
-          "en" : "Inglesa",
-          "es" : "Española"
+        "Generic": {
+          "en": "Inglesa",
+          "es": "Española"
         }
       }
     },

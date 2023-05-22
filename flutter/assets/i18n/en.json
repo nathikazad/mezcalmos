@@ -74,12 +74,11 @@
           "scheduled": "Scheduled",
           "oneTime": "One time",
           "onDemand": "On demand",
-        "startDate" : "Start date",
-        "endDate" : "End date", 
-        "startTimeErrorText" : "Please select start time",
-        "endTimeErrorText" : "Please select end time",
-        "endTimeBeforeErrorText" : "End time must be after start time"
-
+          "startDate": "Start date",
+          "endDate": "End date",
+          "startTimeErrorText": "Please select start time",
+          "endTimeErrorText": "Please select end time",
+          "endTimeBeforeErrorText": "End time must be after start time"
         },
         "weeklyClass": "Weekly Classes",
         "oneTimeClass": "Workshops/Retreat",
@@ -955,7 +954,8 @@
             "services": "Services",
             "locallyMade": "Locally made",
             "therapy": "Therapies",
-            "volunteer": "Volunteer"
+            "volunteer": "Volunteer",
+            "adventures": "Adventures"
           }
         },
         "AllServiceView": {
@@ -1177,6 +1177,49 @@
               "title": "Get Together",
               "description": "Obtain delivery of anything you desire to your location."
             }
+          }
+        },
+        "VolunteerView": {
+          "CustVolunteerListView": {
+            "filter": "Filter",
+            "therapy": "Therapy",
+            "therapies": "Therapies",
+            "therapist": "Therapist",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "total",
+            "unit": "unit",
+            "none": "None",
+            "noBusinessesFound": "No businesses found",
+            "noVolunteerFound": "No volunteer found",
+            "volunteer": "Volunteer",
+            "organizers": "Organizers"
+          }
+        },
+        "AdventureView": {
+          "CustAdventureListView": {
+            "filter": "Filter",
+            "therapy": "Therapy",
+            "therapies": "Therapies",
+            "therapist": "Therapist",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "total",
+            "unit": "unit",
+            "none": "None",
+            "noBusinessesFound": "No businesses found",
+            "adventure": "Adventure",
+            "organizers": "Organizers"
           }
         },
         "ServicesViews": {
@@ -1572,9 +1615,9 @@
           "laundry": "Laundry",
           "deliveryCompany": "Delivery company"
         },
-        "Generic" : {
-          "en" : "English",
-          "es" : "Spanish"
+        "Generic": {
+          "en": "English",
+          "es": "Spanish"
         }
       }
     },

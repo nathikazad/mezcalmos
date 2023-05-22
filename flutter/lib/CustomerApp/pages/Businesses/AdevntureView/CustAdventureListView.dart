@@ -1,22 +1,31 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/controllers/CustAdventureListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Businesses']['AdventureView']['CustAdventureListView'];
 
 // todo @ChiragKr04 fix the cards and ui  of this page
 class CustAdventureListView extends StatefulWidget {
@@ -46,7 +55,7 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Adventure",
+        title: '${_i18n()['adventure']}',
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -86,7 +95,7 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: "Adventure",
+            label: '${_i18n()['adventure']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -105,7 +114,7 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
         ),
         Flexible(
           child: MezButton(
-            label: "Organizer",
+            label: '${_i18n()['organizers']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
@@ -142,31 +151,109 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
       return Container(
           margin: const EdgeInsets.all(16),
           alignment: Alignment.center,
-          child: Text("No businesses found"));
+          child: Text('${_i18n()['noBusinessesFound']}'));
   }
 
   Widget _buildAdventure() {
     if (viewController.adventure.isNotEmpty) {
       return Column(
           children: List.generate(
-        viewController.adventure.length,
-        (int index) => MezCard(
-            onClick: () {
-              CustEventView.navigate(
-                eventId: viewController.adventure[index].details.id.toInt(),
-              );
-            },
-            firstAvatarBgImage: CachedNetworkImageProvider(
-              viewController.adventure[index].details.firstImage ??
-                  defaultUserImgUrl,
-            ),
-            content: Text(viewController.adventure[index].details.name
-                .getTranslation(userLanguage)!)),
-      ));
+              viewController.adventure.length,
+              (int index) => MezCard(
+                  elevation: 0,
+                  margin: EdgeInsets.only(bottom: 12.5),
+                  onClick: () {
+                    CustEventView.navigate(
+                      eventId:
+                          viewController.adventure[index].details.id.toInt(),
+                    );
+                  },
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: viewController
+                                    .adventure[index].details.firstImage ??
+                                defaultUserImgUrl,
+                            imageBuilder: (BuildContext context,
+                                    ImageProvider<Object> imageProvider) =>
+                                CircleAvatar(
+                              radius: 16.mezSp,
+                              backgroundImage: imageProvider,
+                            ),
+                          ),
+                          if (viewController
+                                  .adventure[index].details.firstImage !=
+                              null)
+                            SizedBox(
+                              width: 10,
+                            ),
+                          Expanded(
+                            child: Text(
+                              viewController.adventure[index].details
+                                      .name[userLanguage] ??
+                                  "",
+                              style: context.textTheme.displaySmall?.copyWith(
+                                  fontSize: 11.75.mezSp,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.ellipsis),
+                            ),
+                          ),
+                          Text(
+                            '${viewController.adventure[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.adventure[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
+                            overflow: TextOverflow.ellipsis,
+                            style: context.textTheme.bodyLarge?.copyWith(
+                                fontSize: 12.5.mezSp,
+                                fontWeight: FontWeight.w600),
+                          )
+                        ],
+                      ),
+                      if (viewController.adventure[index].schedule != null)
+                        Column(
+                          children: [
+                            Divider(),
+                            CustBusinessScheduleBuilder(
+                                showTitle: false,
+                                showIcons: false,
+                                schedule:
+                                    viewController.adventure[index].schedule,
+                                scheduleType: viewController
+                                    .adventure[index].scheduleType),
+                          ],
+                        ),
+                      if (viewController.adventure[index].scheduleType ==
+                          ScheduleType.OneTime)
+                        oneTimeBuilder(viewController.adventure[index]),
+                      Divider(),
+                      Text(viewController.adventure[index].businessName)
+                    ],
+                  ))));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text("No Adventures found"));
+      return NoServicesFound();
+  }
+
+  Column oneTimeBuilder(EventCard eventData) {
+    return Column(
+      children: [
+        Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              eventData.period == null
+                  ? '-'
+                  : "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            Text(eventData.period == null
+                ? '-'
+                : "${eventData.period!.formatTime(eventData.period!.start)} - ${eventData.period!.formatTime(eventData.period!.end)}"),
+          ],
+        ),
+      ],
+    );
   }
 }
