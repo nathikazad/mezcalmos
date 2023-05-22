@@ -354,11 +354,14 @@ class _CustClassesListViewState extends State<CustClassesListView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "${classData.period?.start.toDayName()} ${classData.period?.start.day} ${DateFormat.MMMM().format(classData.period!.start)}",
+              classData.period == null
+                  ? '-'
+                  : "${classData.period?.start.toDayName()} ${classData.period?.start.day} ${DateFormat.MMMM().format(classData.period!.start)}",
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
-            Text(
-                "${classData.period!.formatTime(classData.period!.start)} - ${classData.period!.formatTime(classData.period!.end)}"),
+            Text(classData.period == null
+                ? '-'
+                : "${classData.period?.formatTime(classData.period!.start)} - ${classData.period!.formatTime(classData.period!.end)}"),
           ],
         ),
       ],

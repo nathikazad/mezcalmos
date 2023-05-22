@@ -55,7 +55,8 @@
           "person": "persona",
           "total": "total",
           "unit": "unidad",
-          "none": "ninguna"
+          "none": "ninguna",
+          "free": "Gratis"
         }
       },
       "services": {
@@ -1024,7 +1025,8 @@
             "classes": "Clases",
             "services": "Servicios",
             "locallyMade": "Hecho localmente",
-            "therapy": "Terapias"
+            "therapy": "Terapias",
+            "volunteer": "Voluntaria"
           }
         },
         "AllServiceView": {

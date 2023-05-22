@@ -132,13 +132,13 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     ),
                   ],
                 ),
+                Divider(
+                  height: 25,
+                ),
                 !viewController.noData
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Divider(
-                            height: 30,
-                          ),
                           if (viewController.homeRentals.length > 0)
                             _homeRentals(context),
                           _rentals(context),
@@ -155,13 +155,13 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Image.asset(
-                              aNoServices,
-                              height: 200.mezSp,
-                              width: 200.mezSp,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Image.asset(
+                                aNoServices,
+                                height: 200.mezSp,
+                                width: 200.mezSp,
+                              ),
                             ),
                             SizedBox(
                               height: 10,
@@ -392,7 +392,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${_i18n()["oneTimeEvent"]}}",
+                "${_i18n()["oneTimeEvent"]}",
                 style: context.textTheme.bodyLarge,
               ),
               smallSepartor,
@@ -419,7 +419,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${_i18n()["oneDemandEvent"]}",
+                "${_i18n()["onDemandEvent"]}",
                 style: context.textTheme.bodyLarge,
               ),
               smallSepartor,
@@ -446,12 +446,10 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   }
 
   Column _rentals(BuildContext context) {
-    final RxList<RentalCard> surfRentals = viewController.rentals
-        .where((RentalCard element) => element.isSurf)
-        .toList()
-        .obs;
+    final RxList<RentalCard> surfRentals =
+        viewController.rentals.where((element) => element.isSurf).toList().obs;
     final RxList<RentalCard> vehicleRentals = viewController.rentals
-        .where((RentalCard element) => element.isSurf)
+        .where((element) => element.isVehicle)
         .toList()
         .obs;
     return Column(
@@ -571,41 +569,45 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         Container(
                           alignment: Alignment.center,
                           child: Text(
-                            "${_i18n()["serviceType"]} ${viewController.businessProfile.name}",
+                            '${_i18n()['serviceType']}',
                             style: context.textTheme.bodyLarge,
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        Divider(
-                          height: 35,
+                        SizedBox(
+                          height: 25,
                         ),
                         ...viewController.currentBottomSheetData.map(
-                          (BusinessProfileItem item) => Row(
-                            children: [
-                              Flexible(
-                                fit: FlexFit.tight,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${_i18n()[viewController.businessProfileFirebaseString][item.title]}",
-                                      style: context.textTheme.bodyLarge,
-                                    ),
-                                    Text(
-                                      "${_i18n()[viewController.businessProfileFirebaseString][item.subtitle]}",
-                                    )
-                                  ],
+                          (BusinessProfileItem item) => Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  fit: FlexFit.tight,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${_i18n()[viewController.businessProfileFirebaseString][item.title]}",
+                                        style: context.textTheme.bodyLarge,
+                                      ),
+                                      Text(
+                                        "${_i18n()[viewController.businessProfileFirebaseString][item.subtitle]}",
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              radioCircleButton(
-                                onTap: (bool v) {
-                                  setState(() {
-                                    currentSelectedService = item;
-                                  });
-                                },
-                                value: item == currentSelectedService,
-                              ),
-                            ],
+                                radioCircleButton(
+                                  onTap: (bool v) {
+                                    setState(() {
+                                      currentSelectedService = item;
+                                    });
+                                  },
+                                  value: item == currentSelectedService,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(
