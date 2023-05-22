@@ -24,6 +24,8 @@ import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/RentalHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustBusinessView'];
@@ -190,132 +192,287 @@ class _CustBusinessViewState extends State<CustBusinessView>
   }
 
   Column _rentals(BuildContext context) {
+    final List<Rental> surfRentals = _viewController.business!.rentals!
+        .where((element) => element.isSurf)
+        .toList();
+    final List<Rental> vehicleRentals = _viewController.business!.rentals!
+        .where((element) => element.isVehicle)
+        .toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '${_i18n()['rentals']}',
-          style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
-        ),
-        SizedBox(height: 5),
-        for (Rental rental in _viewController.business!.rentals!)
-          CustBusinessRentalCard(
-            margin: EdgeInsets.only(bottom: 10),
-            rental: rental,
-            elevation: 0,
+        /// Surf Rentals
+        if (surfRentals.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['surfRentals']}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Rental rental in surfRentals)
+                CustBusinessRentalCard(
+                  margin: EdgeInsets.only(bottom: 10),
+                  rental: rental,
+                  elevation: 0,
+                ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
           ),
-        SizedBox(
-          height: 10,
-        )
+
+        /// Vehicle Rentals
+        if (vehicleRentals.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['vehicleRentals']}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Rental rental in vehicleRentals)
+                CustBusinessRentalCard(
+                  margin: EdgeInsets.only(bottom: 10),
+                  rental: rental,
+                  elevation: 0,
+                ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
       ],
     );
   }
 
   Column _events(BuildContext context) {
     final List<Event> scheduledEvents = _viewController.business!.events!
-        .where((element) => element.scheduleType == ScheduleType.Scheduled)
+        .where((element) =>
+            element.scheduleType == ScheduleType.Scheduled && !element.isClass)
         .toList();
     final List<Event> oneTimeEvents = _viewController.business!.events!
-        .where((element) => element.scheduleType == ScheduleType.OneTime)
+        .where((element) =>
+            element.scheduleType == ScheduleType.OneTime && !element.isClass)
         .toList();
     final List<Event> onDemandEvents = _viewController.business!.events!
-        .where((element) => element.scheduleType == ScheduleType.OnDemand)
+        .where((element) =>
+            element.scheduleType == ScheduleType.OnDemand && !element.isClass)
+        .toList();
+    final List<Event> scheduledClass = _viewController.business!.events!
+        .where((element) =>
+            element.scheduleType == ScheduleType.Scheduled && element.isClass)
+        .toList();
+    final List<Event> oneTimeClass = _viewController.business!.events!
+        .where((element) =>
+            element.scheduleType == ScheduleType.OneTime && element.isClass)
+        .toList();
+    final List<Event> onDemandClass = _viewController.business!.events!
+        .where((element) =>
+            element.scheduleType == ScheduleType.OnDemand && element.isClass)
         .toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '${_i18n()['weekly']} ${_i18n()['events'].toString().toLowerCase()}',
-          style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
-        ),
-        SizedBox(height: 5),
-        for (Event event in scheduledEvents)
-          CustBusinessEventCard(
-            event: EventCard(
-              event: event,
-              businessName: _viewController.business!.details.name,
-              currency: _viewController.business!.details.currency!,
-            ),
-            needBussinessName: false,
+        /// Weekly Events
+        if (scheduledEvents.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['weeklyEvents']}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Event event in scheduledEvents)
+                CustBusinessEventCard(
+                  event: EventCard(
+                    event: event,
+                    businessName: _viewController.business!.details.name,
+                    currency: _viewController.business!.details.currency!,
+                  ),
+                  needBussinessName: false,
+                ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
           ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          '${_i18n()['oneTime']} ${_i18n()['events'].toString().toLowerCase()}',
-          style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
-        ),
-        SizedBox(height: 5),
-        for (Event event in oneTimeEvents)
-          CustBusinessEventCard(
-            event: EventCard(
-              event: event,
-              businessName: _viewController.business!.details.name,
-              currency: _viewController.business!.details.currency!,
-            ),
-            needBussinessName: false,
+
+        /// Weekly Classes
+        if (scheduledClass.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['weeklyClasses']}}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Event event in scheduledClass)
+                CustBusinessEventCard(
+                  event: EventCard(
+                    event: event,
+                    businessName: _viewController.business!.details.name,
+                    currency: _viewController.business!.details.currency!,
+                  ),
+                  needBussinessName: false,
+                ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
           ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          '${_i18n()['onDemand']} ${_i18n()['events'].toString().toLowerCase()}',
-          style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
-        ),
-        SizedBox(height: 5),
-        for (Event event in onDemandEvents)
-          CustBusinessEventCard(
-            event: EventCard(
-              event: event,
-              businessName: _viewController.business!.details.name,
-              currency: _viewController.business!.details.currency!,
-            ),
-            needBussinessName: false,
+
+        /// One time Events
+        if (oneTimeEvents.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['oneTimeEvents']}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Event event in oneTimeEvents)
+                CustBusinessEventCard(
+                  event: EventCard(
+                    event: event,
+                    businessName: _viewController.business!.details.name,
+                    currency: _viewController.business!.details.currency!,
+                  ),
+                  needBussinessName: false,
+                ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
           ),
-        SizedBox(
-          height: 10,
-        ),
+
+        /// One time Classes
+        if (oneTimeClass.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['oneTimeClasses']}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Event event in oneTimeClass)
+                CustBusinessEventCard(
+                  event: EventCard(
+                    event: event,
+                    businessName: _viewController.business!.details.name,
+                    currency: _viewController.business!.details.currency!,
+                  ),
+                  needBussinessName: false,
+                ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+
+        /// on demand Events
+        if (onDemandEvents.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['onDemandEvents']}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Event event in onDemandEvents)
+                CustBusinessEventCard(
+                  event: EventCard(
+                    event: event,
+                    businessName: _viewController.business!.details.name,
+                    currency: _viewController.business!.details.currency!,
+                  ),
+                  needBussinessName: false,
+                ),
+              SizedBox(
+                height: 10,
+              )
+            ],
+          ),
+
+        /// on demand classes
+        if (onDemandClass.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['onDemandClasses']}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Event event in onDemandClass)
+                CustBusinessEventCard(
+                  event: EventCard(
+                    event: event,
+                    businessName: _viewController.business!.details.name,
+                    currency: _viewController.business!.details.currency!,
+                  ),
+                  needBussinessName: false,
+                ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
       ],
     );
   }
 
-  Column _products(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('${_i18n()['products']}',
-            style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
-        SizedBox(height: 5),
-        for (Product product in _viewController.business!.products!)
-          CustBusinessProductCard(
-              margin: EdgeInsets.only(bottom: 10),
-              elevation: 0,
-              product: product),
-        SizedBox(
-          height: 10,
-        )
-      ],
-    );
+  Widget _products(BuildContext context) {
+    return _viewController.business!.products!.isNotEmpty
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('${_i18n()['products']}',
+                  style:
+                      context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+              SizedBox(height: 5),
+              for (Product product in _viewController.business!.products!)
+                CustBusinessProductCard(
+                    margin: EdgeInsets.only(bottom: 10),
+                    elevation: 0,
+                    product: product),
+              SizedBox(
+                height: 10,
+              )
+            ],
+          )
+        : SizedBox.shrink();
   }
 
-  Column _services(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('${_i18n()['services']}',
-            style: context.textTheme.displayMedium?.copyWith(fontSize: 20)),
-        SizedBox(height: 5),
-        for (Service service in _viewController.business!.services!)
-          CustBusinessServiceCard(
-            margin: EdgeInsets.only(bottom: 10),
-            service: service,
-            elevation: 0,
-          ),
-        SizedBox(
-          height: 10,
-        )
-      ],
-    );
+  Widget _services(BuildContext context) {
+    return _viewController.business!.services!.isNotEmpty
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('${_i18n()['services']}',
+                  style:
+                      context.textTheme.displayMedium?.copyWith(fontSize: 20)),
+              SizedBox(height: 5),
+              for (Service service in _viewController.business!.services!)
+                CustBusinessServiceCard(
+                  margin: EdgeInsets.only(bottom: 10),
+                  service: service,
+                  elevation: 0,
+                ),
+              SizedBox(
+                height: 10,
+              )
+            ],
+          )
+        : SizedBox.shrink();
   }
 
   Widget __headerButtons() {
