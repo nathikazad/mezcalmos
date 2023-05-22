@@ -419,7 +419,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${_i18n()["oneDemandEvent"]}",
+                "${_i18n()["onDemandEvent"]}",
                 style: context.textTheme.bodyLarge,
               ),
               smallSepartor,
