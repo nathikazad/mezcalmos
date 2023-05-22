@@ -73,13 +73,15 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbar(),
-      bottomNavigationBar: MezButton(
-        label: '${_i18n()["save"]}',
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.save();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: '${_i18n()["save"]}',
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.save();
+          },
+        ),
       ),
       body: Obx(
         () => viewController.hasData

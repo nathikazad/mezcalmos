@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsToggleButton.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -14,11 +17,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:intl/intl.dart';
-import 'package:mezcalmos/BusinessApp/pages/components/BsToggleButton.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
     ['pages']['Components']['BsEventCard'];
@@ -55,7 +54,9 @@ class BsEventCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    event.details.name.getTranslation(viewController.primaryLang)!.inCaps,
+                    event.details.name
+                        .getTranslation(viewController.primaryLang)!
+                        .inCaps,
                     style: context.textTheme.bodyLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -93,7 +94,8 @@ class BsEventCard extends StatelessWidget {
                   )
                 ],
               ),
-            if (event.scheduleType == ScheduleType.OneTime)
+            if (event.scheduleType == ScheduleType.OneTime &&
+                event.period != null)
               Column(
                 children: [
                   Divider(),
@@ -101,7 +103,7 @@ class BsEventCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${event.period?.start.toDayName()} ${event.period?.start.day} ${DateFormat.MMMM().format(event.period!.start)}",
+                        "${event.period?.start.toDayName()} ${event.period?.start.day} ${event.period != null ? DateFormat.MMMM().format(event.period!.start) : ""}",
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       Text(
