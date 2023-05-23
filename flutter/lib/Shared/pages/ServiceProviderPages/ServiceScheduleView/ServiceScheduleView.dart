@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleView/components/ServiceScheduleWidgets.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleView/controllers/ServiceScheduleViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/MezWorkingHours/MezEditableWorkingHours.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
@@ -24,13 +24,11 @@ class ServiceScheduleView extends StatefulWidget {
 class _ServiceScheduleViewState extends State<ServiceScheduleView> {
   ServiceScheduleViewController viewController =
       ServiceScheduleViewController();
-  late ServiceScheduleWidgets _viewWidgets;
+
   int? serviceProviderId;
 
   @override
   void initState() {
-    _viewWidgets = ServiceScheduleWidgets(
-        viewController: viewController, context: context);
     viewController.init();
     super.initState();
   }
@@ -72,8 +70,8 @@ class _ServiceScheduleViewState extends State<ServiceScheduleView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  child: _viewWidgets.editWorkingHoursComponent(),
+                MezEditableWorkingHours(
+                  schedule: viewController.oldSchedule.value!,
                 ),
                 SizedBox(
                   height: 25,

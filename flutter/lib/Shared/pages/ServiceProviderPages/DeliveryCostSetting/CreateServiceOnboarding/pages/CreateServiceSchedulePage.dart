@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/components/CreateServiceScheduleWidgets.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
+import 'package:mezcalmos/Shared/widgets/MezWorkingHours/MezEditableWorkingHours.dart';
 
 class CreateServiceSchedulePage extends StatefulWidget {
   const CreateServiceSchedulePage({
@@ -16,11 +15,8 @@ class CreateServiceSchedulePage extends StatefulWidget {
 }
 
 class _CreateServiceSchedulePageState extends State<CreateServiceSchedulePage> {
-  late CreateServiceScheduleWidgets viewWidgets;
   @override
   void initState() {
-    viewWidgets = CreateServiceScheduleWidgets(
-        viewController: widget.viewController, context: context);
     super.initState();
   }
 
@@ -32,7 +28,9 @@ class _CreateServiceSchedulePageState extends State<CreateServiceSchedulePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Card(
-            child: viewWidgets.editWorkingHoursComponent(),
+            child: MezEditableWorkingHours(
+              schedule: widget.viewController.oldSchedule.value,
+            ),
           ),
           SizedBox(
             height: 25,

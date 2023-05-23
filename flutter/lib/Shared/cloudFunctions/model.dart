@@ -381,7 +381,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 }
 
 class Schedule {
-  Map<Weekday, OpenHours> openHours;
+  Map<Weekday, List<OpenHours>> openHours;
   Schedule({
     required this.openHours});
 
@@ -419,8 +419,8 @@ class ServiceProviderLanguage {
     required this.primary, this.secondary});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "primary": primary.toFirebaseFormatString(),
-      "secondary": secondary?.toFirebaseFormatString(),
+      "primary": primary,
+      "secondary": secondary,
     };
   }
 

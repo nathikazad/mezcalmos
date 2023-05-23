@@ -1,6 +1,6 @@
 
 export interface Schedule {
-    openHours: Record<Weekday, OpenHours>;
+    openHours: Record<Weekday, Array<OpenHours>>;
 }
 
 export interface OpenHours {

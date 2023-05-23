@@ -85,9 +85,9 @@ class BsServiceViewController {
   Future<void> changeSchedule(Schedule? schedule) async {
     if (schedule != null &&
         // This condition checks if the schedule has any [isOpen=true] timing
-        (schedule.openHours.values
-            .toList()
-            .any((OpenHours element) => element.isOpen))) {
+        schedule.openHours.values
+            .expand((List<OpenHours> hours) => hours)
+            .any((OpenHours element) => element.isOpen)) {
       serviceSchedule.value = schedule;
     }
   }

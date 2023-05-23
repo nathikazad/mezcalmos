@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["MezWorkingHours"];
@@ -14,19 +12,21 @@ class MezWorkingHours extends StatelessWidget {
     Key? key,
     required this.schedule,
   }) : super(key: key);
+
   final Schedule schedule;
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-          child: workingHoursComponent(schedule: schedule, context: context)),
+        child: workingHoursComponent(schedule: schedule, context: context),
+      ),
     );
   }
 
   Widget workingHoursComponent(
-      {Schedule? schedule, required BuildContext context}) {
-    final DateFormat _dateFormat = new DateFormat('hh:mma');
+      {required Schedule schedule, required BuildContext context}) {
+    final DateFormat _dateFormat = DateFormat('hh:mma');
 
     final List<Widget> widgets = [
       Container(
@@ -38,27 +38,38 @@ class MezWorkingHours extends StatelessWidget {
       ),
       SizedBox(
         height: 10,
-      )
+      ),
     ];
-    final int pos = 0;
-    for (int i = 0; i < schedule!.openHours.length; i++) {
-      schedule.openHours.forEach((Weekday key, OpenHours value) {
-        if (key.index == i) {
+
+    for (Weekday weekday in Weekday.values) {
+      List<OpenHours>? openHoursList = schedule.openHours[weekday];
+
+      if (openHoursList != null && openHoursList.isNotEmpty) {
+        for (OpenHours openHours in openHoursList) {
           widgets.add(_workingHourCard(
-              context: context, weekday: key, openHours: value));
+            context: context,
+            weekday: weekday,
+            openHours: openHours,
+            dateFormat: _dateFormat,
+            i18n: _i18n(),
+          ));
         }
-      });
+      }
     }
+
     return Column(
       children: widgets,
     );
   }
 }
 
-Widget _workingHourCard(
-    {required Weekday weekday,
-    required OpenHours openHours,
-    required BuildContext context}) {
+Widget _workingHourCard({
+  required Weekday weekday,
+  required OpenHours openHours,
+  required BuildContext context,
+  required DateFormat dateFormat,
+  required Map<String, dynamic> i18n,
+}) {
   return Card(
     child: Container(
       padding: const EdgeInsets.all(5),
@@ -72,7 +83,8 @@ Widget _workingHourCard(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 5),
               child: Text(
-                  "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}"),
+                "${i18n["weekDays"][weekday.toString().split('.').last.toLowerCase()]}",
+              ),
             ),
           ),
           Flexible(
@@ -82,32 +94,31 @@ Widget _workingHourCard(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: openHours.isOpen
-                    ? Color.fromRGBO(101, 225, 137, 0.6)
-                    : Color.fromRGBO(252, 89, 99, 0.6),
+                    ? Colors.green.withOpacity(0.6)
+                    : Colors.red.withOpacity(0.6),
               ),
               child: Center(
-                  child: Text(
-                openHours.isOpen
-                    ? "${_i18n()["workingHoursCard"]["open"]}"
-                    : "${_i18n()["workingHoursCard"]["closed"]}",
-                textAlign: TextAlign.center,
-                style: context.txt.bodyMedium?.copyWith(
-                    color: openHours.isOpen ? Colors.green : Colors.red),
-              )),
+                child: Text(
+                  openHours.isOpen
+                      ? i18n["workingHoursCard"]["open"]
+                      : i18n["workingHoursCard"]["closed"],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: openHours.isOpen ? Colors.green : Colors.red,
+                  ),
+                ),
+              ),
             ),
           ),
           Flexible(
-              flex: 4,
-              fit: FlexFit.tight,
-              child: openHours.isOpen
-                  ? Column(children: [
+            flex: 4,
+            fit: FlexFit.tight,
+            child: openHours.isOpen
+                ? Column(
+                    children: [
                       Text(
                         convertToAmPm(openHours.from[0].toInt(),
-                            openHours.from[1].toInt())
-
-                        //     "${openHours.from[0]} : ${openHours.from[1]}  "
-
-                        ,
+                            openHours.from[1].toInt()),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(
@@ -117,10 +128,12 @@ Widget _workingHourCard(
                         "${openHours.to[0]} : ${openHours.to[1]}",
                         textAlign: TextAlign.center,
                       ),
-                    ])
-                  : Container(
-                      height: 40,
-                    )),
+                    ],
+                  )
+                : Container(
+                    height: 40,
+                  ),
+          ),
         ],
       ),
     ),
@@ -130,15 +143,18 @@ Widget _workingHourCard(
 String convertToAmPm(int hours, int minutes) {
   String minutesFormattedString;
   String formattedString;
+
   if (minutes < 10) {
     minutesFormattedString = "0$minutes";
   } else {
     minutesFormattedString = "$minutes";
   }
+
   if (hours <= 12) {
     formattedString = "$hours:$minutesFormattedString AM";
   } else {
     formattedString = "${hours - 12}:$minutesFormattedString PM";
   }
+
   return formattedString;
 }

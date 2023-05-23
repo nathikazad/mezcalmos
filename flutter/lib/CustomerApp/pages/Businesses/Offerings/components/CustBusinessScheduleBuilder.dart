@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Offerings']['components'];
 
 class CustBusinessScheduleBuilder extends StatefulWidget {
-  const CustBusinessScheduleBuilder(
-      {super.key,
-      required this.schedule,
-      required this.scheduleType,
-      this.showTitle = true,
-      this.showIcons = true});
+  const CustBusinessScheduleBuilder({
+    Key? key,
+    required this.schedule,
+    required this.scheduleType,
+    this.showTitle = true,
+    this.showIcons = true,
+  }) : super(key: key);
 
   final bool showTitle;
   final bool showIcons;
@@ -67,99 +67,98 @@ class _CustBusinessScheduleBuilderState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.showTitle)
-          Text(_i18n()[scheduleTypeHeading()],
-              style: context.textTheme.bodyLarge),
-        if (ScheduleType.OneTime == widget.scheduleType)
+          Text(
+            _i18n()[scheduleTypeHeading()]!,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+        if (widget.scheduleType == ScheduleType.OneTime)
           Builder(
-            builder: (context) {
-              final String day =
-                  widget.schedule!.openHours.keys.elementAt(0).name;
-              final OpenHours data =
-                  widget.schedule!.openHours.values.elementAt(0);
-              final bool isOpen = data.isOpen;
-              final String fromHour = data.from[0].toString();
-              final String fromMinute = data.from[1].toString();
+            builder: (BuildContext context) {
+              return SizedBox();
+              //       final List<OpenHours>? openHours =
+              //           widget.schedule!.openHours.values.toList();
 
-              final String toHour = data.to[0].toString();
-              final String toMinute = data.to[1].toString();
+              //       if (openHours?.isEmpty == true) {
+              //         return SizedBox.shrink();
+              //       }
 
-              return isOpen
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '${_i18n()[day]['weekDays']}',
-                          style: context.textTheme.titleLarge,
-                        ),
-                        Text(
-                          "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
-                        ),
-                      ],
-                    )
-                  : SizedBox.shrink();
+              //       final OpenHours data = openHours[0];
+              //       final bool isOpen = data.isOpen;
+              //       final String fromHour = data.from[0].toString();
+              //       final String fromMinute = data.from[1].toString();
+              //       final String toHour = data.to[0].toString();
+              //       final String toMinute = data.to[1].toString();
+
+              //       return isOpen
+              //           ? Row(
+              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //               children: [
+              //                 Text(
+              //                   '${_i18n()[data.day.toLowerCase()]['weekDays']}',
+              //                   style: Theme.of(context).textTheme.titleLarge,
+              //                 ),
+              //                 Text(
+              //                   "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
+              //                 ),
+              //               ],
+              //             )
+              //           : SizedBox.shrink();
+              //     },
+              //   ),
+              // if (widget.scheduleType != ScheduleType.OneTime)
+              //   for (final openHours in widget.schedule!.openHours)
+              //     Builder(
+              //       builder: (BuildContext context) {
+              //         final bool isOpen = openHours.isOpen;
+              //         final String fromHour = openHours.from[0].toString();
+              //         final String fromMinute = openHours.from[1].toString();
+              //         final String toHour = openHours.to[0].toString();
+              //         final String toMinute = openHours.to[1].toString();
+
+              //         return isOpen
+              //             ? Row(
+              //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //                 crossAxisAlignment: CrossAxisAlignment.center,
+              //                 children: [
+              //                   !widget.showIcons
+              //                       ? Text(
+              //                           widget.scheduleType == ScheduleType.Scheduled
+              //                               ? _days(openHours.day)
+              //                               : openHours.day,
+              //                           style: TextStyle(fontWeight: FontWeight.w600),
+              //                         )
+              //                       : SizedBox(
+              //                           child: Row(
+              //                             crossAxisAlignment:
+              //                                 CrossAxisAlignment.center,
+              //                             children: [
+              //                               Padding(
+              //                                 padding: const EdgeInsets.only(top: 3),
+              //                                 child: Icon(
+              //                                   Icons.access_time_outlined,
+              //                                   size: 20,
+              //                                 ),
+              //                               ),
+              //                               Padding(
+              //                                 padding:
+              //                                     const EdgeInsets.only(left: 5.0),
+              //                                 child: Text(
+              //                                   '${_i18n()[openHours.day]}${(widget.scheduleType == ScheduleType.Scheduled ? 's' : '')}',
+              //                                   style: TextStyle(
+              //                                       fontWeight: FontWeight.w600),
+              //                                 ),
+              //                               ),
+              //                             ],
+              //                           ),
+              //                         ),
+              //                   Text(
+              //                     "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
+              //                   ),
+              //                 ],
+              //               )
+              //             : SizedBox.shrink();
             },
           ),
-        if (widget.scheduleType != ScheduleType.OneTime)
-          for (int index = 0;
-              index < widget.schedule!.openHours.length;
-              index++)
-            Builder(
-              builder: (context) {
-                final String day =
-                    widget.schedule!.openHours.keys.elementAt(index).name;
-                final OpenHours data =
-                    widget.schedule!.openHours.values.elementAt(index);
-                final bool isOpen = data.isOpen;
-                final String fromHour = data.from[0].toString();
-                final String fromMinute = data.from[1].toString();
-
-                final String toHour = data.to[0].toString();
-                final String toMinute = data.to[1].toString();
-                return isOpen
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          !widget.showIcons
-                              ? Text(
-                                  widget.scheduleType == ScheduleType.Scheduled
-                                      ? _days(
-                                          '${_i18n()['weekDays'][day.toLowerCase()]}')
-                                      : '${_i18n()['weekDays'][day.toLowerCase()]}',
-                                  style: TextStyle(fontWeight: FontWeight.w600),
-                                )
-                              : SizedBox(
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 3),
-                                        child: Icon(
-                                          Icons.access_time_outlined,
-                                          size: 20,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 5.0),
-                                        child: Text(
-                                          '${_i18n()[day]}${(widget.scheduleType == ScheduleType.Scheduled ? 's' : '')}',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                          Text(
-                            "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
-                          ),
-                        ],
-                      )
-                    : SizedBox.shrink();
-              },
-            ),
       ],
     );
   }
