@@ -277,7 +277,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                         ),
                         Divider(),
                         Text(
-                            '${viewController.services[index].details.name[userLanguage]}')
+                            '${viewController.services[index].businessName}')
                       ],
                     ),
                   )));

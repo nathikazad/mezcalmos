@@ -989,6 +989,33 @@
         }
       },
       "Businesses": {
+        "LocallyMadeView": {
+          "CustLocallyMadeListView": {
+            "localMade": "Made locally",
+            "consumable": "Consumable",
+            "personalCare": "Personal care",
+            "noPetServiceFound": "No services were found",
+            "art": "Art",
+            "noBusinessesFound": "No business was found",
+            "store": "Store",
+            "services": "Services"
+          },
+          "CustLocallyMadeWrapper": {
+            "locallyMade": "Made locally",
+            "consumable": {
+              "title": "Consumable",
+              "description": "Savor the taste of local treats."
+            },
+            "personalCare": {
+              "title": "Personal care",
+              "description": "Take care of high quality personal care products."
+            },
+            "art": {
+              "title": "Art",
+              "description": "Add a touch of beauty and inspiration to your home with our Collection of Fine Arts."
+            }
+          }
+        },
         "components": {
           "CustBusinessRentalCard": {
             "hour": "hour",
