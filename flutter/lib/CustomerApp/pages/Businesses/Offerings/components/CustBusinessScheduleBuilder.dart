@@ -157,7 +157,7 @@ class _CustBusinessScheduleBuilderState
                                   ),
                                 ),
                           Text(
-                            "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
+                            "${formatTime(fromHour, fromMinute)} - ${formatTime(toHour, toMinute)}",
                           ),
                         ],
                       )

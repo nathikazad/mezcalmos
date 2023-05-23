@@ -35,9 +35,12 @@ class BsServiceViewController {
   ServiceWithBusinessCard? get service => _service.value;
   bool get isEditing => _service.value != null;
   Rxn<Schedule?> serviceSchedule = Rxn();
+  late ServiceCategory1 serviceCategory;
 
-  List<TimeUnit> get _possibleTimeUnits =>
-      List.unmodifiable([TimeUnit.PerHour]);
+  List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
+        TimeUnit.PerHour,
+        TimeUnit.PerDay,
+      ]);
   List<TimeUnit> get avalbleUnits => _possibleTimeUnits
       .where((TimeUnit element) =>
           detailsController.priceTimeUnitMap.keys.contains(element) == false)
@@ -56,6 +59,7 @@ class BsServiceViewController {
       {required TickerProvider thickerProvider,
       required int detailsId,
       required int businessId,
+      required ServiceCategory1 serviceCategory,
       int? serviceId}) async {
     this.serviceId = serviceId;
     await languageTabsController.init(
@@ -64,7 +68,7 @@ class BsServiceViewController {
         businessId: businessId,
         language: languages!,
         businessDetailsId: detailsId);
-
+    this.serviceCategory = serviceCategory;
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
     if (serviceId != null) {
       this.serviceId = serviceId;
@@ -100,7 +104,7 @@ class BsServiceViewController {
     final BusinessItemDetails details =
         await detailsController.contructDetails();
     final Service service = Service(
-      category1: ServiceCategory1.Cleaning,
+      category1: serviceCategory,
       details: details,
       schedule: serviceSchedule.value,
     );

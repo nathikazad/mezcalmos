@@ -81,12 +81,21 @@
           "endTimeErrorText": "Por favor, selecciona la hora de fin",
           "endTimeBeforeErrorText": "La hora de fin debe ser posterior a la hora de inicio"
         },
+        "cleaning": "Servicio de limpieza",
+        "meal": "Servicio de planificación de comidas",
+        "petSittingService": "Servicio de mascotas",
+        "weeklySchedule": "Programación semanal",
+        "artProduct": "Productos de arte",
+        "careProduct": "Productos de cuidado personal",
+        "consumableProduct": "Productos consumibles",
         "weeklyClass": "Clases semanales",
         "oneTimeClass": "Talleres/retirarse",
         "onDemandClass": "Lecciones privadas",
         "weeklyEvent": "Eventos semanales",
         "oneTimeEvent": "Próximos Eventos",
-        "onDemandEvent": "Experiencias",
+        "onDemandEvent": "Eventos a pedido",
+        "experiences": "Experiencias",
+        "therapyEvent": "Terapia privada",
         "vehicleRentals": "Alquiler de vehículos",
         "surfRentals": "Alquiler de surf",
         "profile": "Perfil",
@@ -187,9 +196,11 @@
           "onDemandClass": "Lección privada",
           "onDemandClassLabel": "Clase no programada que un estudiante puede reservar con usted en función de su disponibilidad",
           "weeklyClass": "Clase semanal programada",
-          "weeklyClassLabel": "Clase programada que ocurre cada semana que ocurre en el grupo.",
+          "weeklyClassLabel": "Clase semanal programada que ocurre en el grupo.",
           "oneTimeClass": "Taller",
-          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular."
+          "oneTimeClassLabel": "Un taller educativo que ocurre en un día en particular.",
+          "retreat": "Retiro",
+          "retreatLabel": "Un retiro educativo que ocurre en un conjunto de días particulares."
         },
         "homeRental": {
           "rentalTitle": "Alquiler de viviendas",
@@ -227,7 +238,9 @@
           "weeklyClass": "Clase semanal programada",
           "weeklyClassLabel": "Clase programada que ocurre cada semana que ocurre en el grupo.",
           "oneTimeClass": "Taller",
-          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular."
+          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular.",
+          "retreat": "Retiro",
+          "retreatLabel": "Un retiro educativo que ocurre en un conjunto de días particulares."
         },
         "tourAgency": {
           "eventTitle": "Evento",
@@ -285,7 +298,8 @@
       },
       "BsOpSchedulePickerView": {
         "BsOpSchedulePickerView": {
-          "schedule": "Availability"
+          "schedule": "Disponibilidad",
+          "weeklySchedule": "Programación semanal"
         }
       }
     }

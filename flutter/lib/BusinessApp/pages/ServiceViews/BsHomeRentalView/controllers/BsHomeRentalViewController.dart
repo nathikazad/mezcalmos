@@ -38,7 +38,7 @@ class BsHomeRentalViewController {
   bool get isEditing => _rental.value != null;
 
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
-        TimeUnit.PerHour,
+        // TimeUnit.PerHour,
         TimeUnit.PerDay,
         TimeUnit.PerWeek,
         TimeUnit.PerMonth,
