@@ -15,10 +15,14 @@ dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
 class BsOpSchedulePickerView extends StatefulWidget {
   const BsOpSchedulePickerView({Key? key}) : super(key: key);
 
-  static Future<Schedule?> navigate({Schedule? schedule}) async {
+  static Future<Schedule?> navigate(
+      {Schedule? schedule, ScheduleType? scheduleType}) async {
     String route = BusinessOpRoutes.kBsOpSchedulePick;
 
-    await MezRouter.toPath(route, arguments: {"schedule": schedule});
+    await MezRouter.toPath(route, arguments: {
+      "schedule": schedule,
+      "scheduleType": scheduleType,
+    });
     return MezRouter.backResult;
   }
 
@@ -30,11 +34,13 @@ class _BsOpSchedulePickerViewState extends State<BsOpSchedulePickerView> {
   late BsOpSchedulePickerWidgets viewWidgets;
   BsOpSchedulePickerViewController viewController =
       BsOpSchedulePickerViewController();
+  late ScheduleType? scheduleType;
 
   @override
   void initState() {
     final Schedule? schedule =
         MezRouter.bodyArguments!["schedule"] as Schedule?;
+    scheduleType = MezRouter.bodyArguments!["scheduleType"] as ScheduleType?;
     viewController.init(schedule: schedule);
     viewWidgets = BsOpSchedulePickerWidgets(
         context: context, viewController: viewController);
@@ -47,7 +53,8 @@ class _BsOpSchedulePickerViewState extends State<BsOpSchedulePickerView> {
       backgroundColor: Colors.white,
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        title: '${_i18n()['schedule']}',
+        title:
+            '${scheduleType != null && scheduleType == ScheduleType.Scheduled ? _i18n()['weeklySchedule'] : _i18n()['schedule']}',
         onClick: () {
           MezRouter.back(
             backResult: viewController.newSchedule.value,

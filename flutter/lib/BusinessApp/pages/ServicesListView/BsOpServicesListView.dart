@@ -23,7 +23,7 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -105,7 +105,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     InkWell(
                       onTap: () {
                         /// TODO: Only to view purpose
-                        //  viewController.changeBusiness();
+                        viewController.changeBusiness();
                       },
                       child: Ink(
                         padding: const EdgeInsets.all(5),
@@ -139,15 +139,12 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (viewController.homeRentals.length > 0)
-                            _homeRentals(context),
+                          _homeRentals(context),
                           _rentals(context),
                           _events(context),
                           _classes(context),
-                          if (viewController.services.length > 0)
-                            _services(context),
-                          if (viewController.product.length > 0)
-                            _products(context),
+                          _services(context),
+                          _products(context),
                         ],
                       )
                     : Center(
@@ -212,7 +209,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 _i18n()["weeklyClass"],
                 style: context.textTheme.bodyLarge,
               ),
-              smallSepartor,
+              // smallSepartor,
               Obx(
                 () => Column(
                   children: List.generate(
@@ -238,7 +235,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 _i18n()["oneTimeClass"],
                 style: context.textTheme.bodyLarge,
               ),
-              smallSepartor,
+              // smallSepartor,
               Obx(
                 () => Column(
                   children: List.generate(
@@ -264,7 +261,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 _i18n()["onDemandClass"],
                 style: context.textTheme.bodyLarge,
               ),
-              smallSepartor,
+              // smallSepartor,
               Obx(
                 () => Column(
                   children: List.generate(
@@ -279,64 +276,212 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           })),
                 ),
               ),
+              bigSeperator,
             ],
           ),
       ],
     );
   }
 
-  Column _products(BuildContext context) {
+  Widget _products(BuildContext context) {
+    final RxList<ProductCard> artProducts = viewController.product
+        .where((element) => element.category1 == ProductCategory1.Art)
+        .toList()
+        .obs;
+    final RxList<ProductCard> consumableProducts = viewController.product
+        .where((element) => element.category1 == ProductCategory1.Consumable)
+        .toList()
+        .obs;
+    final RxList<ProductCard> careProducts = viewController.product
+        .where((element) => element.category1 == ProductCategory1.PersonalCare)
+        .toList()
+        .obs;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          _i18n()["product"],
-          style: context.textTheme.bodyLarge,
-        ),
-        smallSepartor,
-        Obx(
-          () => Column(
-            children: List.generate(
-                viewController.product.length,
-                (int index) => BsProductCard(
-                      product: viewController.product[index],
-                      viewController: viewController,
-                      onClick: () {
-                        viewController.navigateToProduct(
-                          id: viewController.product[index].id!.toInt(),
-                        );
-                      },
-                    )),
+        if (artProducts.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["artProduct"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      artProducts.length,
+                      (int index) => BsProductCard(
+                            product: artProducts[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToProduct(
+                                id: artProducts[index].id!.toInt(),
+                              );
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
           ),
-        )
+        if (consumableProducts.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["consumableProduct"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      consumableProducts.length,
+                      (int index) => BsProductCard(
+                            product: consumableProducts[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToProduct(
+                                id: consumableProducts[index].id!.toInt(),
+                              );
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
+        if (careProducts.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["careProduct"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      careProducts.length,
+                      (int index) => BsProductCard(
+                            product: careProducts[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToProduct(
+                                id: careProducts[index].id!.toInt(),
+                              );
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
       ],
     );
   }
 
-  Column _services(BuildContext context) {
+  Widget _services(BuildContext context) {
+    final RxList<ServiceCard> cleaningService = viewController.services
+        .where((element) => element.category1 == ServiceCategory1.Cleaning)
+        .toList()
+        .obs;
+    final RxList<ServiceCard> petSittingService = viewController.services
+        .where((element) => element.category1 == ServiceCategory1.PetSitting)
+        .toList()
+        .obs;
+    final RxList<ServiceCard> mealPlanningService = viewController.services
+        .where((element) => element.category1 == ServiceCategory1.MealPlanning)
+        .toList()
+        .obs;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          _i18n()["services"],
-          style: context.textTheme.bodyLarge,
-        ),
-        smallSepartor,
-        Obx(
-          () => Column(
-            children: List.generate(
-                viewController.services.length,
-                (int index) => BsServiceCard(
-                      service: viewController.services[index],
-                      viewController: viewController,
-                      onClick: () {
-                        viewController.navigateToService(
-                            id: viewController.services[index].id!.toInt());
-                      },
-                    )),
+        if (cleaningService.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["cleaning"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      cleaningService.length,
+                      (int index) => BsServiceCard(
+                            service: cleaningService[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToService(
+                                  serviceCategory: ServiceCategory1.Cleaning,
+                                  id: cleaningService[index].id!.toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
           ),
-        ),
-        bigSeperator,
+        if (petSittingService.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["petSittingService"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      petSittingService.length,
+                      (int index) => BsServiceCard(
+                            service: petSittingService[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToService(
+                                  serviceCategory: ServiceCategory1.PetSitting,
+                                  id: petSittingService[index].id!.toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
+        if (mealPlanningService.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["meal"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      mealPlanningService.length,
+                      (int index) => BsServiceCard(
+                            service: mealPlanningService[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToService(
+                                  serviceCategory:
+                                      ServiceCategory1.MealPlanning,
+                                  id: mealPlanningService[index].id!.toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
       ],
     );
   }
@@ -354,7 +499,26 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
         .obs;
     final RxList<EventCard> onDemandEvents = viewController.events
         .where((EventCard element) =>
-            element.scheduleType == ScheduleType.OnDemand && !element.isClass)
+            element.scheduleType == ScheduleType.OnDemand &&
+            !element.isClass &&
+            !element.isAdventure &&
+            !element.isTherapy)
+        .toList()
+        .obs;
+    final RxList<EventCard> tourEvents = viewController.events
+        .where((EventCard element) =>
+            element.scheduleType == ScheduleType.OnDemand &&
+            !element.isClass &&
+            element.isAdventure &&
+            !element.isTherapy)
+        .toList()
+        .obs;
+    final RxList<EventCard> therapyEvents = viewController.events
+        .where((EventCard element) =>
+            element.scheduleType == ScheduleType.OnDemand &&
+            !element.isClass &&
+            !element.isAdventure &&
+            element.isTherapy)
         .toList()
         .obs;
     return Column(
@@ -368,7 +532,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 "${_i18n()["weeklyEvent"]}",
                 style: context.textTheme.bodyLarge,
               ),
-              smallSepartor,
+              // smallSepartor,
               Obx(
                 () => Column(
                   children: List.generate(
@@ -395,7 +559,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 "${_i18n()["oneTimeEvent"]}",
                 style: context.textTheme.bodyLarge,
               ),
-              smallSepartor,
+              // smallSepartor,
               Obx(
                 () => Column(
                   children: List.generate(
@@ -422,7 +586,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 "${_i18n()["onDemandEvent"]}",
                 style: context.textTheme.bodyLarge,
               ),
-              smallSepartor,
+              // smallSepartor,
               Obx(
                 () => Column(
                   children: List.generate(
@@ -434,6 +598,60 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                               viewController.navigateToEvent(
                                   isClass: onDemandEvents[index].isClass,
                                   id: onDemandEvents[index].id!.toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
+        if (tourEvents.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${_i18n()["experiences"]}",
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      tourEvents.length,
+                      (int index) => BsEventCard(
+                            event: tourEvents[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToEvent(
+                                  isClass: tourEvents[index].isClass,
+                                  id: tourEvents[index].id!.toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
+        if (therapyEvents.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${_i18n()["therapyEvent"]}",
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      therapyEvents.length,
+                      (int index) => BsEventCard(
+                            event: therapyEvents[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToEvent(
+                                  isClass: therapyEvents[index].isClass,
+                                  id: therapyEvents[index].id!.toInt());
                             },
                           )),
                 ),
@@ -463,7 +681,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 _i18n()["surfRentals"],
                 style: context.textTheme.bodyLarge,
               ),
-              smallSepartor,
+              // smallSepartor,
               Obx(
                 () => Column(
                   children: List.generate(
@@ -490,7 +708,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 _i18n()["vehicleRentals"],
                 style: context.textTheme.bodyLarge,
               ),
-              smallSepartor,
+              // smallSepartor,
               Obx(
                 () => Column(
                   children: List.generate(
@@ -513,32 +731,35 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
     );
   }
 
-  Column _homeRentals(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          _i18n()["homeRental"]["rentalTitle"],
-          style: context.textTheme.bodyLarge,
-        ),
-        smallSepartor,
-        Obx(
-          () => Column(
-            children: List.generate(
-                viewController.homeRentals.length,
-                (int index) => BsHomeRentalCard(
-                      rental: viewController.homeRentals[index],
-                      viewController: viewController,
-                      onClick: () {
-                        viewController.navigateToHomeRental(
-                            id: viewController.homeRentals[index].id!.toInt());
-                      },
-                    )),
-          ),
-        ),
-        bigSeperator,
-      ],
-    );
+  Widget _homeRentals(BuildContext context) {
+    return viewController.homeRentals.length > 0
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["homeRental"]["rentalTitle"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      viewController.homeRentals.length,
+                      (int index) => BsHomeRentalCard(
+                            rental: viewController.homeRentals[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToHomeRental(
+                                  id: viewController.homeRentals[index].id!
+                                      .toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          )
+        : SizedBox.shrink();
   }
 
   MezButton _addServiceButton(BuildContext context) {

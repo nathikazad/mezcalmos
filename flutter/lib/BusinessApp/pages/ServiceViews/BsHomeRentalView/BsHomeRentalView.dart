@@ -394,12 +394,12 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             decoration: InputDecoration(
                 hintText: _i18n()["homeRental"]["areaHint"],
                 suffixText: "sq ft m²"),
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return _i18n()["homeRental"]["areaError"];
-              }
-              return null;
-            },
+            // validator: (String? value) {
+            //   if (value == null || value.isEmpty) {
+            //     return _i18n()["homeRental"]["areaError"];
+            //   }
+            //   return null;
+            // },
           ),
 
           if (viewController.isEditing)

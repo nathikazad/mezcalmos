@@ -49,6 +49,7 @@ class BsOpScheduleSelector extends StatelessWidget {
               final Schedule? returnedSchedule =
                   await BsOpSchedulePickerView.navigate(
                 schedule: schedule,
+                scheduleType: scheduleType,
               );
               state.didChange(returnedSchedule);
               onScheduleSelected.call(returnedSchedule);
@@ -60,7 +61,7 @@ class BsOpScheduleSelector extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      _i18n()["schedule"],
+                      "${scheduleType == ScheduleType.Scheduled ? _i18n()["weeklySchedule"] : _i18n()["schedule"]}",
                       style: context.textTheme.bodyLarge,
                     ),
                     if (schedule == null || checkIfAnyOpen(schedule))

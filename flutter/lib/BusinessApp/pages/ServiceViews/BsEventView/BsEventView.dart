@@ -239,7 +239,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
               label: _i18n()["event"]["eventType"],
               value: viewController.getScheduleType().firstWhereOrNull(
                   (ScheduleTypeInput element) =>
-                      element.type == viewController.scheduleType.value),
+                      element.type == viewController.scheduleTypeInput.value),
               validator: (ScheduleTypeInput? v) {
                 if (v == null) {
                   return _i18n()["event"]["scheduleTypeError"];
@@ -248,7 +248,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
               },
               onChanged: (ScheduleTypeInput? v) {
                 if (v != null) {
-                  viewController.switchScheduleType(v.type);
+                  viewController.switchScheduleType(v);
                 }
               },
             ),
@@ -323,12 +323,12 @@ class _BsOpEventViewState extends State<BsOpEventView>
                   viewController.setLocation(v);
                 },
                 location: viewController.location.value,
-                validator: (Location? loc) {
-                  if (loc == null) {
-                    return _i18n()["locationError"];
-                  }
-                  return null;
-                },
+                // validator: (Location? loc) {
+                //   if (loc == null) {
+                //     return _i18n()["locationError"];
+                //   }
+                //   return null;
+                // },
               ),
             ),
           if (viewController.showLocation) bigSeperator,

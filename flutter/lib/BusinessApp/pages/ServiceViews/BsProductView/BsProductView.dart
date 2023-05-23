@@ -267,6 +267,10 @@ class _BsOpProductViewState extends State<BsOpProductView>
           Obx(() {
             print(
                 "productCategory ${viewController.productCategory.value?.toFirebaseFormatString()}");
+            final List<ProductCategory1> validCategories = [
+              ...ProductCategory1.values
+            ];
+            validCategories.remove(ProductCategory1.Uncategorized);
             return MezStringDropDown(
               validator: (String? p0) {
                 if (viewController.productCategory.value == null) {
@@ -276,7 +280,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
               },
               labelText: _i18n()["categoryHint"],
               langPath: _i18n()["artisanalProduct"],
-              items: ProductCategory1.values
+              items: validCategories
                   .map((ProductCategory1 e) => e.toFirebaseFormatString())
                   .toList(),
               value: viewController.productCategory.value

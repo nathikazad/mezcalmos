@@ -58,7 +58,7 @@
                 "shimmer": "^2.0.0",
                 "pin_code_fields": "^7.2.0",
                 "sizer": "^2.0.15",
-                "intl": "^0.18.0",
+                "intl": "^0.17.0",
                 "device_preview":"^1.1.0",
                 "webview_flutter": "^4.0.1",
                 "google_maps_flutter_platform_interface": "^2.2.4",

@@ -80,12 +80,21 @@
           "endTimeErrorText": "Please select end time",
           "endTimeBeforeErrorText": "End time must be after start time"
         },
+        "cleaning": "Cleaning Service",
+        "meal": "Meal Planning Service",
+        "petSittingService": "Pet Sitting Service",
+        "artProduct": "Art Products",
+        "careProduct": "Personal Care Products",
+        "consumableProduct": "Consumable Products",
+        "weeklySchedule": "Weekly Schedule",
         "weeklyClass": "Weekly Classes",
         "oneTimeClass": "Workshops/Retreat",
         "onDemandClass": "Private Lessons",
         "weeklyEvent": "Weekly Events",
         "oneTimeEvent": "Upcoming Events",
-        "onDemandEvent": "Experiences",
+        "onDemandEvent": "On Demand Events",
+        "experiences": "Experiences",
+        "therapyEvent": "Private Therapy",
         "vehicleRentals": "Vehicle Rentals",
         "surfRentals": "Surf Rentals",
         "profile": "Profile",
@@ -187,9 +196,11 @@
           "onDemandClass": "Private lesson",
           "onDemandClassLabel": "Unscheduled class that a student can book with you based on your availability",
           "weeklyClass": "Weekly scheduled class",
-          "weeklyClassLabel": "Scheduled class that happens every week that happens in group.",
+          "weeklyClassLabel": "Scheduled weekly class that happens in group.",
           "oneTimeClass": "Workshop",
-          "oneTimeClassLabel": "A one time class that happens on a particular day."
+          "oneTimeClassLabel": "An educational workshop that happens on a particular day.",
+          "retreat": "Retreat",
+          "retreatLabel": "An educational retreat that happens on a set of particular days"
         },
         "homeRental": {
           "rentalTitle": "Home rental",
@@ -227,7 +238,9 @@
           "weeklyClass": "Weekly scheduled class",
           "weeklyClassLabel": "Scheduled class that happens every week that happens in group.",
           "oneTimeClass": "Workshop",
-          "oneTimeClassLabel": "A one time class that happens on a particular day."
+          "oneTimeClassLabel": "A one time class that happens on a particular day.",
+          "retreat": "Retreat",
+          "retreatLabel": "An educational retreat that happens on a set of particular days"
         },
         "tourAgency": {
           "eventTitle": "Event",
@@ -289,7 +302,8 @@
       },
       "BsOpSchedulePickerView": {
         "BsOpSchedulePickerView": {
-          "schedule": "Availability"
+          "schedule": "Availability",
+          "weeklySchedule": "Weekly Schedule"
         }
       }
     }
