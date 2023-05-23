@@ -22,9 +22,6 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
-import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:intl/intl.dart';
 
@@ -239,7 +236,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                               '${viewController.businesses[index].avgRating ?? '0'}',
                               style: context.textTheme.bodySmall),
                           Padding(
-                            padding: const EdgeInsets.only(left: 2, bottom: 3),
+                            padding: const EdgeInsets.only(left: 2),
                             child: Text(
                               '(${viewController.businesses[index].reviewCount})',
                               style: context.textTheme.bodyMedium,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -49,7 +50,10 @@ class CustClassesListViewController {
   ];
 
   RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
-  RxString selectedCategoriesText = "All".obs;
+  RxString selectedCategoriesText =
+      LanguageController().userLanguageKey == Language.EN
+          ? "All".obs
+          : "Alle".obs;
 
   void _categoryStringGen() {
     selectedCategoriesText.value = "";
@@ -57,7 +61,8 @@ class CustClassesListViewController {
         .map((String e) => e.toEventCategory1())
         .toList();
     if (data.length == _filterCategories.length) {
-      selectedCategoriesText.value = "All";
+      selectedCategoriesText.value =
+          LanguageController().userLanguageKey == Language.EN ? 'All' : 'Alle';
       return;
     }
 

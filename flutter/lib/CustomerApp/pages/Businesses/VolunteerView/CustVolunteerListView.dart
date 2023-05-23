@@ -136,17 +136,65 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
     if (viewController.businesses.isNotEmpty) {
       return Column(
           children: List.generate(
-        viewController.businesses.length,
-        (int index) => MezCard(
-            onClick: () {
-              CustBusinessView.navigate(
-                businessId: viewController.businesses[index].id,
-              );
-            },
-            firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.businesses[index].image),
-            content: Text(viewController.businesses[index].name)),
-      ));
+              viewController.businesses.length,
+              (int index) => MezCard(
+                  onClick: () {
+                    CustBusinessView.navigate(
+                      businessId: viewController.businesses[index].id,
+                    );
+                  },
+                  elevation: 0,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
+                  margin: EdgeInsets.only(bottom: 15),
+                  firstAvatarBgImage: CachedNetworkImageProvider(
+                      viewController.businesses[index].image),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        viewController.businesses[index].name,
+                        style: context.textTheme.displaySmall?.copyWith(
+                            fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          _getAcceptedPaymentIcons(viewController
+                              .businesses[index].acceptedPayments),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  size: 17.5.mezSp,
+                                  color: Color(0xFF6779FE),
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                    '${viewController.businesses[index].avgRating ?? '0'}',
+                                    style: context.textTheme.bodySmall),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 2),
+                                  child: Text(
+                                    '(${viewController.businesses[index].reviewCount})',
+                                    style: context.textTheme.bodyMedium,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ))));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
@@ -253,6 +301,35 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
                 : "${eventData.period!.formatTime(eventData.period!.start)} - ${eventData.period!.formatTime(eventData.period!.end)}"),
           ],
         ),
+      ],
+    );
+  }
+
+  Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
+    final List<IconData> iconList = [];
+    acceptedPayments.forEach((PaymentType key, bool value) {
+      if (value) {
+        switch (key) {
+          case PaymentType.Cash:
+            iconList.add(Icons.payments_outlined);
+            break;
+          case PaymentType.Card:
+            iconList.add(Icons.credit_card_outlined);
+            break;
+          case PaymentType.BankTransfer:
+            iconList.add(Icons.account_balance_outlined);
+            break;
+        }
+      }
+    });
+
+    return Row(
+      children: <Icon>[
+        for (IconData icon in iconList)
+          Icon(
+            icon,
+            size: 15.mezSp,
+          )
       ],
     );
   }

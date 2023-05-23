@@ -337,6 +337,14 @@
     },
     "pages": {
       "Offerings": {
+        "hour": "hora",
+        "day": "día",
+        "week": "semana",
+        "month": "mes",
+        "person": "persona",
+        "total": "total",
+        "unit": "unidad",
+        "none": "ninguna",
         "components": {
           "loading": "Cargando",
           "schedule": "Horario",
@@ -1155,7 +1163,7 @@
             "uncategorized": "Sin categoría",
             "surf": "Surf",
             "homes": "Casas",
-            "vehicle": "Vehicles",
+            "vehicle": "Vehículos",
             "noRentalsFound": "No se encontraron alquileres",
             "none": "Ninguna",
             "noBusinessFound": "No se encontraron Buisinesses",
@@ -1163,8 +1171,8 @@
             "cancel": "Cancelar",
             "filter": "Filtrar",
             "store": "Tienda",
-            "hour": "hour",
-            "day": "day",
+            "hour": "hora",
+            "day": "día",
             "week": "semana",
             "month": "mes",
             "person": "persona",
@@ -1327,24 +1335,24 @@
             "localMade": "Hecho localmente",
             "consumable": "Consumible",
             "personalCare": "Cuidado personal",
-            "art": "Arte",
             "noPetServiceFound": "No se encontraron servicios",
+            "art": "Arte",
             "noBusinessesFound": "No se encontraron negocios",
-            "store": "Tienda",
+            "store": "Almacenar",
             "services": "Servicios"
           },
           "CustLocallyMadeWrapper": {
             "locallyMade": "Hecho localmente",
             "consumable": {
               "title": "Consumible",
-              "description": "Saboree las delicias locales."
+              "description": "Saborea el sabor de las golosinas locales."
             },
             "personalCare": {
               "title": "Cuidado personal",
-              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+              "description": "Cuídate con productos de cuidado personal de alta calidad."
             },
             "art": {
-              "title": "Art",
+              "title": "Arte",
               "description": "Agregue un toque de belleza e inspiración a su hogar con nuestra colección de bellas artes."
             }
           }
@@ -1353,8 +1361,8 @@
           "CustFoodWrapper": {
             "food": "Alimento",
             "restaurants": {
-              "title": "Restaurants",
-              "description": "Discover most delicious dishes from the nearest restaurants."
+              "title": "Restaurantes",
+              "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
             },
             "locallyMade": {
               "title": "Hecho localmente",

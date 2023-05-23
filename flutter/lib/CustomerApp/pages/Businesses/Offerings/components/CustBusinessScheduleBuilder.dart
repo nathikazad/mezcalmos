@@ -88,7 +88,7 @@ class _CustBusinessScheduleBuilderState
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${_i18n()[day]['weekDays']}',
+                          '${_i18n()['weekDays'][day.toLowerCase()]}',
                           style: context.textTheme.titleLarge,
                         ),
                         Text(
@@ -144,7 +144,11 @@ class _CustBusinessScheduleBuilderState
                                         padding:
                                             const EdgeInsets.only(left: 5.0),
                                         child: Text(
-                                          '${_i18n()[day]}${(widget.scheduleType == ScheduleType.Scheduled ? 's' : '')}',
+                                          widget.scheduleType ==
+                                                  ScheduleType.Scheduled
+                                              ? _days(
+                                                  '${_i18n()['weekDays'][day.toLowerCase()]}')
+                                              : '${_i18n()['weekDays'][day.toLowerCase()]}',
                                           style: TextStyle(
                                               fontWeight: FontWeight.w600),
                                         ),
