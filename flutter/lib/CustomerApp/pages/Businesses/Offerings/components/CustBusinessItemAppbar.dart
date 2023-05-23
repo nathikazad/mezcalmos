@@ -46,10 +46,17 @@ class CustBusinessItemAppbar extends StatelessWidget {
           title: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 1),
             child: !isCollapsed
-                ? Text(
-                    itemDetails.name.getTranslation(userLanguage)!,
-                    style: context.textTheme.displayMedium!
-                        .copyWith(color: Colors.white),
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                      left: 50,
+                    ),
+                    child: Text(
+                      itemDetails.name.getTranslation(userLanguage)!,
+                      style: context.textTheme.displayMedium!
+                          .copyWith(color: Colors.white),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
