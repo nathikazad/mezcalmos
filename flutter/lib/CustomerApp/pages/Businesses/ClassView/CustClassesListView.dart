@@ -343,26 +343,33 @@ class _CustClassesListViewState extends State<CustClassesListView> {
           child: Text('${_i18n()['noEventsFound']}'));
   }
 
-  Column oneTimeBuilder(EventCard classData) {
-    return Column(
-      children: [
-        Divider(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              classData.period == null
-                  ? '-'
-                  : "${classData.period?.start.toDayName()} ${classData.period?.start.day} ${DateFormat.MMMM().format(classData.period!.start)}",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-            Text(classData.period == null
-                ? '-'
-                : "${classData.period?.formatTime(classData.period!.start)} - ${classData.period!.formatTime(classData.period!.end)}"),
-          ],
-        ),
-      ],
-    );
+  Widget oneTimeBuilder(EventCard classData) {
+    return (classData.scheduleType == ScheduleType.OneTime &&
+            classData.period != null &&
+            classData.startsAt != null &&
+            classData.endsAt != null)
+        ? Column(
+            children: [
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${classData.period?.start.toDayName().inCaps} ${classData.period?.start.day} ${classData.period != null ? DateFormat.MMMM().format(classData.period!.start) : ""}",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "${formatTime(DateTime.parse(classData.startsAt!).toLocal())} - ${formatTime(DateTime.parse(classData.endsAt!).toLocal())}",
+                  ),
+                ],
+              ),
+            ],
+          )
+        : SizedBox.shrink();
+  }
+
+  String formatTime(DateTime date) {
+    return DateFormat("hh:mm a").format(date);
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

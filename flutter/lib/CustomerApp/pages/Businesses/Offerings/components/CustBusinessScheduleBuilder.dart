@@ -124,8 +124,8 @@ class _CustBusinessScheduleBuilderState
                               ? Text(
                                   widget.scheduleType == ScheduleType.Scheduled
                                       ? _days(
-                                          '${_i18n()['weekDays'][day.toLowerCase()]}')
-                                      : '${_i18n()['weekDays'][day.toLowerCase()]}',
+                                          '${_i18n()['weekDays']['${day.toLowerCase()}']}')
+                                      : '${_i18n()['weekDays']['${day.toLowerCase()}']}',
                                   style: TextStyle(fontWeight: FontWeight.w600),
                                 )
                               : SizedBox(
