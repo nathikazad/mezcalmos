@@ -105,7 +105,7 @@ class BsEventCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${event.period?.start.toDayName()} ${event.period?.start.day} ${event.period != null ? DateFormat.MMMM().format(event.period!.start) : ""}",
+                        "${event.period?.start.toDayName().inCaps} ${event.period?.start.day} ${event.period != null ? DateFormat.MMMM().format(event.period!.start) : ""}",
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       Text(

@@ -515,10 +515,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
         .obs;
     final RxList<EventCard> therapyEvents = viewController.events
         .where((EventCard element) =>
-            element.scheduleType == ScheduleType.OnDemand &&
-            !element.isClass &&
-            !element.isAdventure &&
-            element.isTherapy)
+            element.scheduleType == ScheduleType.OnDemand && element.isTherapy)
         .toList()
         .obs;
     return Column(
