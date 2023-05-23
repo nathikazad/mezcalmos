@@ -79,6 +79,7 @@ class CustBusinessEventCard extends StatelessWidget {
               ],
             ),
             if (event.schedule != null &&
+                event.scheduleType != ScheduleType.OneTime &&
                 !(event.scheduleType == ScheduleType.OnDemand && event.isClass))
               Column(
                 children: [
@@ -90,7 +91,8 @@ class CustBusinessEventCard extends StatelessWidget {
                       scheduleType: event.scheduleType)
                 ],
               ),
-            if (event.scheduleType == ScheduleType.OneTime)
+            if (event.period != null &&
+                event.scheduleType == ScheduleType.OneTime)
               oneTimeBuilder(event),
             if (needBussinessName)
               Column(
@@ -105,7 +107,7 @@ class CustBusinessEventCard extends StatelessWidget {
   }
 
   Widget oneTimeBuilder(EventCard eventData) {
-    return eventData.startsAt != null && eventData.endsAt != null
+    return eventData.period != null
         ? Column(
             children: [
               Divider(),
