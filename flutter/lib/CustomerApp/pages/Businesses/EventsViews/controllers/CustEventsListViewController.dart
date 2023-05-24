@@ -77,6 +77,25 @@ class CustEventsListViewController {
   List<EventCard> get events => _events.value;
   List<BusinessCard> get businesses => _businesses.value;
 
+  int get weeklyEventsNumbe {
+    int number = 0;
+    for (EventCard event in _events) {
+      if (event.scheduleType == ScheduleType.Scheduled) number++;
+    }
+    return number;
+  }
+
+  bool get isWeeklyEventsEmpty =>
+      _events
+          .where((EventCard e) => e.scheduleType == ScheduleType.Scheduled)
+          .length ==
+      0;
+  bool get isOneTimeEventsEmpty =>
+      _events
+          .where((EventCard e) => e.scheduleType == ScheduleType.OneTime)
+          .length ==
+      0;
+
   Future<void> init() async {
     _filterCategories.addAll([
       EventCategory1.Dance,

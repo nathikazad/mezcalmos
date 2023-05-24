@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -207,10 +208,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
             )),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noBusinessFound']}'));
+      return NoServicesFound();
   }
 
   Widget _buildServices() {
@@ -249,7 +247,8 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                                   ),
                                 ),
                                 Text(
-                                  '${viewController.services[index].details.cost.values.first.toPriceString()}',
+                                  '${viewController.services[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.services[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
+                                  // '${viewController.services[index].details.cost.values.first.toPriceString()}',
                                   overflow: TextOverflow.ellipsis,
                                   style: context.textTheme.bodyLarge?.copyWith(
                                       height: 2,

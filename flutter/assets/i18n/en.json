@@ -1019,6 +1019,7 @@
             "localMade": "Made locally",
             "consumable": "Consumable",
             "personalCare": "Personal care",
+            "product": "Products",
             "noPetServiceFound": "No services were found",
             "art": "Art",
             "noBusinessesFound": "No business was found",
@@ -1058,7 +1059,8 @@
             "month": "month",
             "person": "person",
             "total": "total",
-            "unit": "unit"
+            "unit": "unit",
+            "free": "FREE"
           },
           "CustBusinessRentalCost": {
             "hour": "hour",
@@ -1186,7 +1188,7 @@
           "CustEventsListView": {
             "homes": "Homes",
             "events": "Events",
-            "organizers": "Organizers",
+            "organizers": "Organizer",
             "noBusinessesFound": "No businesses found",
             "noEventsFound": "No events found",
             "hour": "hour",
@@ -1276,7 +1278,7 @@
             "noBusinessesFound": "No businesses found",
             "noVolunteerFound": "No volunteer found",
             "volunteer": "Volunteer",
-            "organizers": "Organizers"
+            "organizers": "Organizer"
           }
         },
         "AdventureView": {
@@ -1297,7 +1299,7 @@
             "none": "None",
             "noBusinessesFound": "No businesses found",
             "adventure": "Adventure",
-            "organizers": "Organizers"
+            "organizers": "Organizer"
           }
         },
         "ServicesViews": {
@@ -1312,7 +1314,15 @@
             "mealplanning": "Meal planning",
             "petSitting": "Pet sitting",
             "uncategorized": "Uncategorized",
-            "cleaning": "Cleaning"
+            "cleaning": "Cleaning",
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "total",
+            "unit": "unit",
+            "none": "None"
           },
           "CustServicesWrapper": {
             "services": "Services",

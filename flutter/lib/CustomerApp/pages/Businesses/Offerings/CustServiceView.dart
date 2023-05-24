@@ -74,6 +74,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                         style: context.textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w700, fontSize: 18.mezSp),
                       ),
+                      SizedBox(height: 10),
                       viewController.service!.details.cost.length == 1
                           ? Text(
                               "${costData.entries.first.value.toPriceString()}/${costData.entries.first.key.name.toString().toLowerCase().replaceAll("per", "")}",

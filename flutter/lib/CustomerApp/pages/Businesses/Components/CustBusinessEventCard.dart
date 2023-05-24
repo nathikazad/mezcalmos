@@ -69,7 +69,9 @@ class CustBusinessEventCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${event.details.cost.values.first.toPriceString()}/${'${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
+                  event.details.cost.values.first == 0
+                      ? '${_i18n()['free']}'
+                      : '${event.details.cost.values.first.toPriceString()}/${'${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
                   overflow: TextOverflow.ellipsis,
                   style: context.textTheme.bodyLarge?.copyWith(
                       fontSize: 12.5.mezSp,

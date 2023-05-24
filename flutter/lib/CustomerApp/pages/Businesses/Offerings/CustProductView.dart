@@ -66,6 +66,9 @@ class _CustProductViewState extends State<CustProductView> {
                             .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         "${viewController.product!.details.cost.entries.first.value.toPriceString()}",
                         style: context.textTheme.bodyLarge!.copyWith(

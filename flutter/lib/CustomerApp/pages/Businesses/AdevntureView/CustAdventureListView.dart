@@ -101,6 +101,7 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
             onClick: () async {
               viewController.showBusiness.value = false;
             },
+            fontSize: 12.mezSp,
             icon: Icons.hiking,
             borderRadius: 35,
             backgroundColor:
@@ -120,6 +121,7 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
             onClick: () async {
               viewController.showBusiness.value = true;
             },
+            fontSize: 12.mezSp,
             icon: Icons.local_activity,
             borderRadius: 35,
             backgroundColor:
@@ -197,10 +199,7 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
                     ],
                   ))));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noBusinessesFound']}'));
+      return NoServicesFound();
   }
 
   Widget _buildAdventure() {
@@ -292,7 +291,7 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
             Text(
               eventData.period == null
                   ? '-'
-                  : "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
+                  : "${eventData.period?.start.toDayName().inCaps} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             Text(eventData.period == null

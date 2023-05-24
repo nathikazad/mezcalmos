@@ -105,7 +105,7 @@ class _CustEventViewState extends State<CustEventView> {
                       ),
                       // Price
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       Text(
                         generateCost(),

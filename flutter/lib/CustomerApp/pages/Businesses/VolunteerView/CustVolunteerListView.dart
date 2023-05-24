@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -100,6 +101,7 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
             onClick: () async {
               viewController.showBusiness.value = false;
             },
+            fontSize: 12.mezSp,
             icon: Icons.volunteer_activism,
             borderRadius: 35,
             backgroundColor:
@@ -120,6 +122,7 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
               viewController.showBusiness.value = true;
             },
             icon: Icons.local_activity,
+            fontSize: 12.mezSp,
             borderRadius: 35,
             backgroundColor:
                 viewController.showBusiness.isFalse ? Color(0xFFF0F0F0) : null,
@@ -196,10 +199,7 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
                     ],
                   ))));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noBusinessesFound']}'));
+      return NoServicesFound();
   }
 
   Widget _buildVolunteer() {
@@ -241,9 +241,7 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
                             ),
                           Expanded(
                             child: Text(
-                              viewController.volunteer[index].details
-                                      .name[userLanguage] ??
-                                  "",
+                              '${viewController.volunteer[index].details.name.getTranslation(userLanguage)!.inCaps}',
                               style: context.textTheme.displaySmall?.copyWith(
                                   fontSize: 11.75.mezSp,
                                   fontWeight: FontWeight.bold,
@@ -293,7 +291,7 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
             Text(
               eventData.period == null
                   ? '-'
-                  : "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
+                  : "${eventData.period?.start.toDayName().inCaps} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             Text(eventData.period == null

@@ -983,7 +983,7 @@
           "shared": {
             "filter": "Filtrar",
             "events": "Eventos",
-            "organizers": "Organizadoras",
+            "organizers": "Organizadora",
             "cancel": "Cancelar",
             "confirm": "Confirmar",
             "hour": "Hora",
@@ -1102,7 +1102,8 @@
             "month": "mes",
             "person": "persona",
             "total": "total",
-            "unit": "unidad"
+            "unit": "unidad",
+            "free": "GRATIS"
           },
           "CustBusinessRentalCost": {
             "hour": "hora",
@@ -1229,7 +1230,7 @@
         "EventsViews": {
           "CustEventsListView": {
             "events": "Eventos",
-            "organizers": "Organizadoras",
+            "organizers": "Organizadora",
             "noBusinessesFound": "No se encontraron negocios",
             "noEventsFound": "No se encuentran eventos",
             "hour": "hora",
@@ -1314,7 +1315,7 @@
             "noBusinessesFound": "No se encontraron negocios",
             "noVolunteerFound": "No se encontró ningún voluntario",
             "volunteer": "Voluntaria",
-            "organizers": "Organizadoras"
+            "organizers": "Organizadora"
           }
         },
         "AdventureView": {
@@ -1335,7 +1336,7 @@
             "none": "Ninguna",
             "noBusinessesFound": "No se encontraron negocios",
             "adventure": "Aventura",
-            "organizers": "Organizadoras"
+            "organizers": "Organizadora"
           }
         },
         "ServicesViews": {
@@ -1348,9 +1349,17 @@
             "store": "Tienda",
             "services": "Servicios",
             "mealplanning": "Planificación de comidas",
-            "petSitting": "Pet sitting",
+            "petSitting": "Cuidado de mascotas",
             "uncategorized": "Sin categoría",
-            "cleaning": "Limpieza"
+            "cleaning": "Limpieza",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "personaa",
+            "total": "total",
+            "unit": "unidad",
+            "none": "Ninguna"
           },
           "CustServicesWrapper": {
             "services": "Servicios",
@@ -1378,6 +1387,7 @@
             "localMade": "Hecho localmente",
             "consumable": "Consumible",
             "personalCare": "Cuidado personal",
+            "product": "Productos",
             "noPetServiceFound": "No se encontraron servicios",
             "art": "Arte",
             "noBusinessesFound": "No se encontraron negocios",

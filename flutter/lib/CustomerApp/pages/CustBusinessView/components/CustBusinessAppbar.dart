@@ -78,7 +78,7 @@ class CustBusinessViewAppbar extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: context.textTheme.bodyLarge
                       ?.copyWith(color: Colors.white),
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
                 ),
               ),
               AnimatedOpacity(
