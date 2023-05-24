@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/SingleDayScheduleView.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezWorkingHours/controllers/MezWorkingHoursController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -38,61 +39,11 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
                 controller.workingHours.openHours.keys.elementAt(index);
             final List<OpenHours> workingHoursList =
                 controller.workingHours.openHours[day]!;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "${day.toFirebaseFormatString()}",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ),
-                SizedBox(height: 10),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: workingHoursList.length,
-                  itemBuilder: (BuildContext context, int hourIndex) {
-                    final OpenHours openHours = workingHoursList[hourIndex];
-                    return _workingHourCard(
-                      context: context,
-                      day: day,
-                      index: hourIndex,
-                      openHours: openHours,
-                    );
-                  },
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.addWorkingHour(
-                            day: day,
-                            openHours: OpenHours(
-                              isOpen: false,
-                              from: [08, 0],
-                              to: [17, 0],
-                            ));
-                      },
-                      child: Text('Add Working Hour'),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (workingHoursList.isNotEmpty) {
-                          controller.removeWorkingHour(
-                              day: day, index: workingHoursList.length - 1);
-                        }
-                      },
-                      child: Text('Remove Working Hour'),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-              ],
+            return _workingHourCard(
+              context: context,
+              weekday: day,
+              index: index,
+              openHours: workingHoursList,
             );
           },
         ),
@@ -100,12 +51,11 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
     );
   }
 
-  Widget _workingHourCard({
-    required BuildContext context,
-    required Weekday day,
-    required int index,
-    required OpenHours openHours,
-  }) {
+  Widget _workingHourCard(
+      {required Weekday weekday,
+      required int index,
+      required List<OpenHours> openHours,
+      required BuildContext context}) {
     return Card(
       child: Container(
         padding: const EdgeInsets.all(5),
@@ -114,180 +64,93 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-              flex: 4,
-              fit: FlexFit.tight,
+              flex: 2,
+              fit: FlexFit.loose,
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),
-                child: Text("${openHours.isOpen ? 'Open' : 'Closed'}"),
+                child: Text(
+                  "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
+                  style: context.textTheme.bodyLarge,
+                ),
               ),
             ),
             Flexible(
-              flex: 4,
-              fit: FlexFit.tight,
-              child: openHours.isOpen
-                  ? Column(
-                      children: [
-                        Text(
-                          '${openHours.from[0]}:${openHours.from[1]}',
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          '${openHours.to[0]}:${openHours.to[1]}',
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    )
-                  : Container(height: 40),
+                fit: FlexFit.tight,
+                flex: 3,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(openHours.length, (int hourIndex) {
+                      return Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              convertToAmPm(
+                                  openHours[hourIndex].from[0].toInt(),
+                                  openHours[hourIndex].from[1].toInt()),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              convertToAmPm(openHours[hourIndex].to[0].toInt(),
+                                  openHours[hourIndex].to[1].toInt()),
+                              textAlign: TextAlign.center,
+                            ),
+                          ]);
+                    }))),
+            Flexible(
+              flex: 2,
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(35),
+                  color: openHours.isNotEmpty
+                      ? Colors.green.shade200.withOpacity(0.3)
+                      : Colors.red.shade200.withOpacity(0.3),
+                ),
+                child: Center(
+                    child: Text(
+                  openHours.isNotEmpty
+                      ? "${_i18n()["workingHoursCard"]["open"]}"
+                      : "${_i18n()["workingHoursCard"]["closed"]}",
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                      color: openHours.isNotEmpty ? Colors.green : Colors.red),
+                )),
+              ),
             ),
-            IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  isDismissible: false,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                  ),
-                  builder: (BuildContext context) => MezEditDayScheduleSheet(
-                    day: day,
-                    index: index,
-                    controller: controller,
-                    openHours: openHours,
-                  ),
-                );
-              },
-              icon: Icon(Icons.edit, color: primaryBlueColor),
-            ),
+            MezIconButton(
+                onTap: () async {
+                  List<OpenHours>? newOpenHours =
+                      await SingleDayScheduleView.navigate(
+                          weekday: weekday, openHours: openHours);
+                  if (newOpenHours != null) {
+                    controller.updateWorkingHours(
+                        day: weekday, openHours: newOpenHours);
+                  }
+                },
+                icon: Icons.edit_outlined)
           ],
         ),
       ),
     );
   }
-}
 
-class MezEditDayScheduleSheet extends StatelessWidget {
-  final Weekday day;
-  final int index;
-  final OpenHours openHours;
-  final MezWorkingHoursController controller;
-
-  const MezEditDayScheduleSheet({
-    required this.day,
-    required this.index,
-    required this.openHours,
-    required this.controller,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 10),
-          Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.all(8),
-            child: Text(
-              '${day.toFirebaseFormatString()}',
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-          ),
-          Divider(),
-          CheckboxListTile(
-            value: openHours.isOpen,
-            activeColor: primaryBlueColor,
-            title: Text('Open'),
-            onChanged: (bool? value) => controller.updateOpenStatus(
-                day: day, index: index, isOpen: value ?? false),
-          ),
-          CheckboxListTile(
-            value: !openHours.isOpen,
-            activeColor: primaryBlueColor,
-            title: Text('Closed'),
-            onChanged: (bool? value) => controller.updateOpenStatus(
-                day: day, index: index, isOpen: value ?? false),
-          ),
-          Text('From:'),
-          Card(
-            child: InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap: () {
-                // controller.showTimePicker(
-                //   context: context,
-                //   initialTime: openHours.from,
-                //   onSelected: (time) => controller.updateOpeningTime(
-                //       day: day,
-                //       index: index,
-                //       hour: time.hour,
-                //       minute: time.minute),
-                // );
-              },
-              child: Container(
-                padding: EdgeInsets.all(12),
-                width: double.infinity,
-                child: Text(
-                  '${openHours.from[0]}:${openHours.from[1]}',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Text('To:'),
-          SizedBox(height: 5),
-          Card(
-            child: InkWell(
-              borderRadius: BorderRadius.circular(10),
-              onTap: () {
-                // controller.showTimePicker(
-                //   context: context,
-                //   initialTime: openHours.to,
-                //   onSelected: (time) => controller.updateClosingTime(
-                //       day: day, index: index, time: time),
-                // );
-              },
-              child: Container(
-                padding: EdgeInsets.all(12),
-                width: double.infinity,
-                child: Text(
-                  '${openHours.to[1]}:${openHours.to[0]}',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  controller.removeWorkingHour(day: day, index: index);
-                  Navigator.of(context).pop();
-                },
-                child: Text('Delete'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Cancel'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Save'),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+  String convertToAmPm(int hours, int minutes) {
+    String minutesFormattedString;
+    String formattedString;
+    if (minutes < 10) {
+      minutesFormattedString = "0$minutes";
+    } else {
+      minutesFormattedString = "$minutes";
+    }
+    if (hours <= 12) {
+      formattedString = "$hours:$minutesFormattedString AM";
+    } else {
+      formattedString = "${hours - 12}:$minutesFormattedString PM";
+    }
+    return formattedString;
   }
 }
