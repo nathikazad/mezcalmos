@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
@@ -137,6 +136,8 @@ class BsEventViewController {
           ? DateTime.parse(event!.endsAt!).toLocal()
           : null;
     }
+    mezDbgPrint("event schedule ========> ${event?.scheduleType.name}");
+    _event.refresh();
   }
 
   Future<void> save() async {
@@ -156,7 +157,7 @@ class BsEventViewController {
         }
         shouldRefetch = true;
       } else {
-        Event _event = await _constructEventWithDetails();
+        final Event _event = await _constructEventWithDetails();
         await createItem(_event);
       }
     }
@@ -190,9 +191,10 @@ class BsEventViewController {
   }
 
   Future<Event> _constructEventWithDetails() async {
-    BusinessItemDetails details = await detailsController.contructDetails();
-    EventCategory1 category1 = _getCategory1();
-    Event event = Event(
+    final BusinessItemDetails details =
+        await detailsController.contructDetails();
+    final EventCategory1 category1 = _getCategory1();
+    final Event event = Event(
         category1: category1,
         scheduleType: scheduleTypeInput.value.type,
         startsAt: startDate.value?.toUtc().toString(),
@@ -205,8 +207,8 @@ class BsEventViewController {
   }
 
   Event _constructEvent() {
-    EventCategory1 category1 = _getCategory1();
-    Event event = Event(
+    final EventCategory1 category1 = _getCategory1();
+    final Event event = Event(
         category1: category1,
         scheduleType: scheduleTypeInput.value.type,
         startsAt: startDate.value?.toUtc().toString(),
@@ -462,6 +464,7 @@ class BsEventViewController {
           () => BsOpScheduleSelector(
             onScheduleSelected: (Schedule? v) {
               avalaibilty.value = v;
+              avalaibilty.refresh();
             },
             scheduleType: scheduleTypeInput.value.type,
             schedule: avalaibilty.value,

@@ -17,7 +17,7 @@ class BsOpSchedulePickerView extends StatefulWidget {
 
   static Future<Schedule?> navigate(
       {Schedule? schedule, ScheduleType? scheduleType}) async {
-    String route = BusinessOpRoutes.kBsOpSchedulePick;
+    final String route = BusinessOpRoutes.kBsOpSchedulePick;
 
     await MezRouter.toPath(route, arguments: {
       "schedule": schedule,
@@ -55,7 +55,7 @@ class _BsOpSchedulePickerViewState extends State<BsOpSchedulePickerView> {
             '${scheduleType != null && scheduleType == ScheduleType.Scheduled ? _i18n()['weeklySchedule'] : _i18n()['schedule']}',
         onClick: () {
           MezRouter.back(
-            backResult: viewController.newSchedule.value,
+            backResult: viewController.oldSchedule.value,
           );
         },
       ),

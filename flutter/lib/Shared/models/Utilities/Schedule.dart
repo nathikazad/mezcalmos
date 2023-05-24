@@ -50,26 +50,42 @@ OpenHours openHoursfromJson(Map<dynamic, dynamic> json) {
   );
 }
 
-Schedule scheduleFromData(Map<String, dynamic> json) {
+Schedule scheduleFromData(json) {
   Map<Weekday, List<OpenHours>> openHours = {};
-  for (String weekdayKey in json.keys) {
-    Weekday weekday = Weekday.values
-        .firstWhere((Weekday e) => e.toFirebaseFormatString() == weekdayKey);
-    dynamic openHoursJson = json[weekdayKey];
-    if (openHoursJson is List) {
-      List<OpenHours> openHoursList = openHoursJson
-          .map<OpenHours>((hourJson) => openHoursfromJson(hourJson))
-          .toList();
-      openHours[weekday] = openHoursList;
-    } else if (openHoursJson is Map) {
-      OpenHours singleOpenHours = openHoursfromJson(openHoursJson);
-      openHours[weekday] = [singleOpenHours];
+  if (json != null) {
+    for (String weekdayKey in json.keys) {
+      final Weekday weekday = Weekday.values
+          .firstWhere((Weekday e) => e.toFirebaseFormatString() == weekdayKey);
+      final dynamic openHoursJson = json[weekdayKey];
+      if (openHoursJson is List) {
+        List<OpenHours> openHoursList = openHoursJson
+            .map<OpenHours>((hourJson) => openHoursfromJson(hourJson))
+            .toList();
+        openHours[weekday] = openHoursList;
+      } else if (openHoursJson is Map) {
+        final OpenHours singleOpenHours = openHoursfromJson(openHoursJson);
+        openHours[weekday] = [singleOpenHours];
+      }
     }
   }
   return Schedule(openHours: openHours);
 }
+extension ListOfOpenHoursHelpers on List<OpenHours> {
+  bool get isOpen {
+    return any((OpenHours hour) => hour.isOpen);
+  }
+}
 
 extension ScheduleFunctions on Schedule {
+  bool get atLeastOneDayIsOpen {
+    return openHours.values
+            .toList()
+            .firstWhereOrNull((List<OpenHours> element) {
+          return element.isNotEmpty == true;
+        }) !=
+        null;
+  }
+
   bool isOpen() {
     bool isOpen = false;
     final String dayName = DateFormat('EEEE').format(DateTime.now());
@@ -112,34 +128,37 @@ extension ScheduleFunctions on Schedule {
     return isOpen;
   }
 
+  // Map<String, dynamic> toFirebaseFormattedJson() {
+  //   Map<String, dynamic> json = {};
+  //   openHours.forEach((Weekday weekday, List<OpenHours> openHoursList) {
+  //     if (openHoursList.length == 1) {
+  //       json[weekday.toString().split('.').last] =
+  //           openHoursList[0].toFirebaseFormattedString();
+  //     } else {
+  //       json[weekday.toString().split('.').last] = openHoursList
+  //           .map((OpenHours openHours) => openHours.toFirebaseFormattedString())
+  //           .toList();
+  //     }
+  //   });
+
+  //   return json;
+  // }
+
   Map<String, dynamic> toFirebaseFormattedJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
-    // // if (timezone[0] < 0) {
-    // //   timezone[1] = -timezone[1];
-    // //   json["timezone"] = timezone.join(':');
-    // //   timezone[1] = -timezone[1];
-    // // } else {
-    // //   json["timezone"] = timezone.join(':');
-    // // }
-    // Weekday.values.forEach((Weekday weekday) {
-    //   json[weekday.toFirebaseFormatString()] =
-    //       openHours[weekday]?.toFirebaseFormattedString();
-    // });
-    return json;
-  }
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    openHours.forEach((Weekday weekday, List<OpenHours> openHoursList) {
-      if (openHoursList.length == 1) {
-        json[weekday.toString().split('.').last] =
-            openHoursList[0].toFirebaseFormattedString();
-      } else {
-        json[weekday.toString().split('.').last] = openHoursList
-            .map((OpenHours openHours) => openHours.toFirebaseFormattedString())
-            .toList();
-      }
+    // if (timezone[0] < 0) {
+    //   timezone[1] = -timezone[1];
+    //   json["timezone"] = timezone.join(':');
+    //   timezone[1] = -timezone[1];
+    // } else {
+    //   json["timezone"] = timezone.join(':');
+    // }
+    Weekday.values.forEach((Weekday weekday) {
+      json[weekday.toFirebaseFormatString()] = openHours[weekday]
+          ?.map((OpenHours e) => e.toFirebaseFormattedString())
+          .toList();
     });
+    mezDbgPrint(" ------- Schedule toFirebaseFormattedJson  ------- \n $json");
     return json;
   }
 

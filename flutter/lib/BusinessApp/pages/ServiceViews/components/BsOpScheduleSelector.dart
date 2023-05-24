@@ -5,11 +5,13 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
 
-class BsOpScheduleSelector extends StatelessWidget {
+class BsOpScheduleSelector extends StatefulWidget {
   const BsOpScheduleSelector({
     Key? key,
     required this.onScheduleSelected,
@@ -24,22 +26,37 @@ class BsOpScheduleSelector extends StatelessWidget {
   final String? Function(String?)? validator;
 
   @override
-  Widget build(BuildContext context) {
-    bool checkIfAnyOpen(Schedule? value) {
-      return !(value!.openHours.values
-          .expand((List<OpenHours> hours) => hours)
-          .any((OpenHours element) => element.isOpen));
-    }
+  State<BsOpScheduleSelector> createState() => _BsOpScheduleSelectorState();
+}
 
+class _BsOpScheduleSelectorState extends State<BsOpScheduleSelector> {
+  Schedule? _selectedSchedule;
+  @override
+  void initState() {
+    super.initState();
+    mezDbgPrint("widget.value =================>>>>>${widget.schedule}");
+    _selectedSchedule = widget.schedule;
+  }
+
+  @override
+  void didUpdateWidget(covariant BsOpScheduleSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {
+      _selectedSchedule = widget.schedule;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return FormField<Schedule>(
-      initialValue: schedule,
+      initialValue: _selectedSchedule,
       validator: (Schedule? value) {
         if (value == null) {
           return _i18n()["scheduleError"];
         }
 
         /// This condition checks if the schedule has any [isOpen=true] timing
-        else if (checkIfAnyOpen(value)) {
+        else if (value.atLeastOneDayIsOpen == false) {
           return _i18n()["scheduleError"];
         }
         return null;
@@ -49,10 +66,11 @@ class BsOpScheduleSelector extends StatelessWidget {
           onTap: () async {
             final Schedule? returnedSchedule =
                 await BsOpSchedulePickerView.navigate(
-              schedule: schedule,
+              schedule: widget.schedule,
             );
+            mezDbgPrint("returnedSchedule: $returnedSchedule");
             state.didChange(returnedSchedule);
-            onScheduleSelected.call(returnedSchedule);
+            widget.onScheduleSelected.call(returnedSchedule);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,16 +79,19 @@ class BsOpScheduleSelector extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    _i18n()["schedule"],
+                    "${_i18n()["schedule"]}",
                     style: context.textTheme.bodyLarge,
                   ),
-                  if (schedule == null || checkIfAnyOpen(schedule))
+                  if (state.value == null ||
+                      _selectedSchedule!.atLeastOneDayIsOpen == false)
                     Icon(
                       Icons.keyboard_arrow_right,
                     ),
                 ],
               ),
-              if (schedule == null || checkIfAnyOpen(schedule))
+              //  if (schedule == null || checkIfAnyOpen(schedule))
+              if (_selectedSchedule == null ||
+                  _selectedSchedule!.atLeastOneDayIsOpen == false)
                 Row(
                   children: [
                     Padding(
@@ -91,80 +112,134 @@ class BsOpScheduleSelector extends StatelessWidget {
                   ],
                 ),
               smallSepartor,
-              if (schedule != null && !checkIfAnyOpen(schedule))
+              if (_selectedSchedule != null &&
+                  _selectedSchedule!.atLeastOneDayIsOpen)
                 Stack(
                   children: [
                     Card(
                       child: Container(
                         padding: const EdgeInsets.only(
-                          left: 16,
-                          right: 16,
+                          left: 8,
+                          right: 8,
                           top: 8,
                         ),
                         child: Column(
                           children: [
-                            ...schedule!.openHours.entries.expand(
-                                (MapEntry<Weekday, List<OpenHours>> entry) {
-                              return entry.value;
-                            }).map(
-                              (OpenHours openHours) {
-                                final String from = convertToAmPm(
-                                    openHours.from[0].toInt(),
-                                    openHours.from[1].toInt());
-                                final String to = convertToAmPm(
-                                    openHours.to[0].toInt(),
-                                    openHours.to[1].toInt());
-                                final String time = "$from - $to";
-                                return openHours.isOpen
-                                    ? Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: 8,
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Icon(
+                            smallSepartor,
+                            ..._selectedSchedule!.openHours.entries
+                                .map((MapEntry<Weekday, List<OpenHours>> e) {
+                              if (e.value.isOpen) {
+                                return Container(
+                                  // margin: const EdgeInsets.only(bottom: 5),
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.grey.shade300,
+                                        width: 0.5,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 2),
+                                            child: Icon(
                                               Icons.calendar_today,
+                                              size: 18,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8.0),
-                                              child: Text(
-                                                "${(scheduleType == ScheduleType.Scheduled ? "s" : "")}",
-                                                style: context
-                                                    .textTheme.bodyMedium!
-                                                    .copyWith(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Flexible(
+                                            fit: FlexFit.tight,
+                                            child: Text(
+                                              "${_i18n()["weekdays"][e.key.toFirebaseFormatString()]}",
+                                              style:
+                                                  context.textTheme.bodyLarge,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 12.0),
-                                              child: Text(
-                                                time,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : SizedBox.shrink();
-                              },
-                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      smallSepartor,
+                                      Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: List.generate(
+                                              e.value.length, (int hourIndex) {
+                                            return Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Icon(
+                                                      Icons
+                                                          .watch_later_outlined,
+                                                      size: 18),
+                                                  SizedBox(
+                                                    width: 3,
+                                                  ),
+                                                  Text(
+                                                    convertToAmPm(
+                                                        e.value[hourIndex]
+                                                            .from[0]
+                                                            .toInt(),
+                                                        e.value[hourIndex]
+                                                            .from[1]
+                                                            .toInt()),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(
+                                                    convertToAmPm(
+                                                        e.value[hourIndex].to[0]
+                                                            .toInt(),
+                                                        e.value[hourIndex].to[1]
+                                                            .toInt()),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ]);
+                                          })),
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            }).toList(),
                           ],
                         ),
                       ),
                     ),
                     Positioned(
-                      right: 6,
-                      top: 6,
+                      right: 4,
+                      top: 4,
                       child: InkWell(
+                        onTap: () async {
+                          final Schedule? returnedSchedule =
+                              await BsOpSchedulePickerView.navigate(
+                            schedule: widget.schedule,
+                          );
+                          mezDbgPrint(
+                              "returnedSchedule: ${_selectedSchedule!.toFirebaseFormattedJson()}}");
+                          state.didChange(returnedSchedule);
+                          widget.onScheduleSelected.call(returnedSchedule);
+                        },
                         child: CircleAvatar(
                           backgroundColor: Colors.grey.shade200,
-                          radius: 14,
+                          radius: 16,
                           child: Icon(
                             Icons.mode_edit_outline_outlined,
-                            size: 16,
+                            size: 18,
                             color: Colors.black,
                           ),
                         ),

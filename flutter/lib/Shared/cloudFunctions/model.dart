@@ -2310,7 +2310,7 @@ extension ParseStringToProductCategory1 on String {
 }
 
 
-enum EventTag { Class, Retreat, Workshop }
+enum EventTag { Class, Workshop, Retreat }
 extension ParseEventTagToString on EventTag {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;

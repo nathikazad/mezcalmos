@@ -93,6 +93,7 @@ class BsServiceViewController {
             .expand((List<OpenHours> hours) => hours)
             .any((OpenHours element) => element.isOpen)) {
       serviceSchedule.value = schedule;
+      serviceSchedule.refresh();
     }
   }
 

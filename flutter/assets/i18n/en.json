@@ -60,6 +60,16 @@
         }
       },
       "services": {
+        "weekdays" : {
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday",
+          "saturday": "Saturday",
+          "sunday": "Sunday"
+      
+        },
         "services": "Services",
         "service": "Service",
         "serviceType": "What type of service will you add?",

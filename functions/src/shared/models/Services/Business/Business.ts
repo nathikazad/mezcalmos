@@ -158,6 +158,8 @@ export enum ProductCategory1 {
 }
 export enum EventTag {
   Class = "class",
+  Workshop = "workshop",
+  Retreat= "retreat",
 }
 export interface NewBusinessNotification extends ForegroundNotification {
   name: string;

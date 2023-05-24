@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class SingleDayScheduleViewController {
@@ -13,7 +15,10 @@ class SingleDayScheduleViewController {
   void initialize(
       {required Weekday day, required List<OpenHours> workingHours}) {
     this.day = day;
-    _workingHours.addAll(workingHours);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _workingHours.addAll(workingHours);
+    });
+    mezDbgPrint("Working hours =============> $workingHours");
   }
 
   void addWorkingHours({required OpenHours openHours}) {
@@ -30,6 +35,7 @@ class SingleDayScheduleViewController {
 
   void removeWorkingHours({required int index}) {
     _workingHours.removeAt(index);
+    _workingHours.refresh();
   }
 
   void saveWorkingHours() {
@@ -39,10 +45,17 @@ class SingleDayScheduleViewController {
   void updateToTime(
       {required int index, required int hour, required int minute}) {
     _workingHours[index].to = [hour, minute];
+    _workingHours.refresh();
   }
 
   void updateFromTime(
       {required int index, required int hour, required int minute}) {
     _workingHours[index].from = [hour, minute];
+    _workingHours.refresh();
+  }
+
+  void switchAvailable({required int index, required bool value}) {
+    _workingHours[index].isOpen = value;
+    _workingHours.refresh();
   }
 }

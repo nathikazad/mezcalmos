@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/SingleDayScheduleView.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezWorkingHours/controllers/MezWorkingHoursController.dart';
@@ -43,6 +45,7 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
               context: context,
               weekday: day,
               index: index,
+              isLast: index == controller.workingHours.openHours.length - 1,
               openHours: workingHoursList,
             );
           },
@@ -54,32 +57,39 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
   Widget _workingHourCard(
       {required Weekday weekday,
       required int index,
+      bool isLast = false,
       required List<OpenHours> openHours,
       required BuildContext context}) {
-    return Card(
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              flex: 2,
-              fit: FlexFit.loose,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                child: Text(
-                  "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
-                  style: context.textTheme.bodyLarge,
-                ),
+    return Container(
+      padding: const EdgeInsets.all(8),
+      margin: EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+          border: (isLast)
+              ? null
+              : Border(
+                  bottom: BorderSide(color: Colors.grey.shade200, width: 1))),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            flex: 2,
+            fit: FlexFit.loose,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 5),
+              child: Text(
+                "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
+                style: context.textTheme.bodyLarge,
               ),
             ),
-            Flexible(
-                fit: FlexFit.tight,
-                flex: 3,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(openHours.length, (int hourIndex) {
+          ),
+          Flexible(
+              fit: FlexFit.tight,
+              flex: 3,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(openHours.length, (int hourIndex) {
+                    if (openHours[hourIndex].isOpen) {
                       return Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -99,41 +109,47 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
                               textAlign: TextAlign.center,
                             ),
                           ]);
-                    }))),
-            Flexible(
-              flex: 2,
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(35),
-                  color: openHours.isNotEmpty
-                      ? Colors.green.shade200.withOpacity(0.3)
-                      : Colors.red.shade200.withOpacity(0.3),
-                ),
-                child: Center(
-                    child: Text(
-                  openHours.isNotEmpty
-                      ? "${_i18n()["workingHoursCard"]["open"]}"
-                      : "${_i18n()["workingHoursCard"]["closed"]}",
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.bodyMedium?.copyWith(
-                      color: openHours.isNotEmpty ? Colors.green : Colors.red),
-                )),
+                    } else
+                      return SizedBox.shrink();
+                  }))),
+          Flexible(
+            flex: 2,
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35),
+                color: openHours.isOpen
+                    ? Color.fromRGBO(237, 255, 222, 0.86)
+                    : Color(0xFFFFD6DC),
               ),
+              child: Center(
+                  child: Text(
+                openHours.isOpen
+                    ? "${_i18n()["workingHoursCard"]["open"]}"
+                    : "${_i18n()["workingHoursCard"]["closed"]}",
+                textAlign: TextAlign.center,
+                style: context.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: openHours.isOpen ? Colors.green : redAccentColor),
+              )),
             ),
-            MezIconButton(
-                onTap: () async {
-                  List<OpenHours>? newOpenHours =
-                      await SingleDayScheduleView.navigate(
-                          weekday: weekday, openHours: openHours);
-                  if (newOpenHours != null) {
-                    controller.updateWorkingHours(
-                        day: weekday, openHours: newOpenHours);
-                  }
-                },
-                icon: Icons.edit_outlined)
-          ],
-        ),
+          ),
+          MezIconButton(
+              onTap: () async {
+                List<OpenHours>? newOpenHours =
+                    await SingleDayScheduleView.navigate(
+                        weekday: weekday, openHours: openHours);
+                if (newOpenHours != null) {
+                  controller.updateWorkingHours(
+                      day: weekday, openHours: newOpenHours);
+                }
+              },
+              padding: EdgeInsets.all(3),
+              iconSize: 25,
+              iconColor: Colors.grey.shade600,
+              backgroundColor: Colors.grey.shade200,
+              icon: Icons.edit_outlined)
+        ],
       ),
     );
   }
