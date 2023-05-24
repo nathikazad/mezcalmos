@@ -1135,7 +1135,11 @@
             "yoga": "Yoga",
             "martialArt": "Arte marcial",
             "adventure": "Aventura",
-            "volunteer": "Voluntaria"
+            "volunteer": "Voluntaria",
+            "motorcycle": "Motocicleta",
+            "car": "Auto",
+            "bicycle": "Bicicleta",
+            "aTB": "ATV"
           },
           "NoServicesFound": {
             "noServicesFound": "No se encontraron servicios",
@@ -1851,7 +1855,8 @@
               "petSitting": "Cuidado de Mascotas",
               "wellnessPractitioner": "Profesional de Bienestar",
               "volunteer": "Voluntariado",
-              "entertainment": "Entretenimiento"
+              "entertainment": "Planificadores de eventos",
+              "danceStudio": "Estudio de baile"
             }
           }
         },

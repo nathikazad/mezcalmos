@@ -283,6 +283,23 @@ class BsServicesListViewController {
             },
           ),
         ];
+      case BusinessProfile.DanceStudio:
+        return [
+          BusinessProfileItem(
+            title: eventTitleLangKey,
+            subtitle: eventSubtitleLangKey,
+            route: () async {
+              await navigateToEvent(isClass: false);
+            },
+          ),
+          BusinessProfileItem(
+            title: classTitleLangKey,
+            subtitle: classSubtitleLangKey,
+            route: () async {
+              await navigateToEvent(isClass: true);
+            },
+          ),
+        ];
     }
   }
 

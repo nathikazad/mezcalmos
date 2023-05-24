@@ -121,10 +121,10 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                     crossAxisCount: 2,
                     mainAxisSpacing: 14.0,
                     crossAxisSpacing: 14.0),
-                itemCount:
-                    cServiceController.serviceTreeData.value!.children.length,
+                itemCount: cServiceController
+                    .serviceTreeData.value!.children.length,
                 itemBuilder: (BuildContext context, int index) {
-                  MezService currentMezService = cServiceController
+                  final MezService currentMezService = cServiceController
                       .serviceTreeData.value!.children[index].name;
                   return MezCard(
                     radius: 10,
@@ -133,8 +133,8 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                     onClick: () {
                       navigateToServices(
                         currentMezService,
-                        cServiceController
-                            .serviceTreeData.value!.children[index].children,
+                        cServiceController.serviceTreeData.value!
+                            .children[index].children,
                       );
                     },
                     content: Column(
