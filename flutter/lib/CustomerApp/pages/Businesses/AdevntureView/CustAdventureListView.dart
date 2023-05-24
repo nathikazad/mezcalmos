@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/controllers/CustAdventureListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -206,77 +207,10 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
     if (viewController.adventure.isNotEmpty) {
       return Column(
           children: List.generate(
-              viewController.adventure.length,
-              (int index) => MezCard(
-                  elevation: 0,
-                  margin: EdgeInsets.only(bottom: 12.5),
-                  onClick: () {
-                    CustEventView.navigate(
-                      eventId:
-                          viewController.adventure[index].details.id.toInt(),
-                    );
-                  },
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: viewController
-                                    .adventure[index].details.firstImage ??
-                                defaultUserImgUrl,
-                            imageBuilder: (BuildContext context,
-                                    ImageProvider<Object> imageProvider) =>
-                                CircleAvatar(
-                              radius: 16.mezSp,
-                              backgroundImage: imageProvider,
-                            ),
-                          ),
-                          if (viewController
-                                  .adventure[index].details.firstImage !=
-                              null)
-                            SizedBox(
-                              width: 10,
-                            ),
-                          Expanded(
-                            child: Text(
-                              '${viewController.adventure[index].details.name.getTranslation(userLanguage)!.inCaps}',
-                              style: context.textTheme.displaySmall?.copyWith(
-                                  fontSize: 11.75.mezSp,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          ),
-                          Text(
-                            '${viewController.adventure[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.adventure[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
-                            overflow: TextOverflow.ellipsis,
-                            style: context.textTheme.bodyLarge?.copyWith(
-                                fontSize: 12.5.mezSp,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                      if (viewController.adventure[index].schedule != null)
-                        Column(
-                          children: [
-                            Divider(),
-                            CustBusinessScheduleBuilder(
-                                showTitle: false,
-                                showIcons: false,
-                                schedule:
-                                    viewController.adventure[index].schedule,
-                                scheduleType: viewController
-                                    .adventure[index].scheduleType),
-                          ],
-                        ),
-                      if (viewController.adventure[index].scheduleType ==
-                          ScheduleType.OneTime)
-                        oneTimeBuilder(viewController.adventure[index]),
-                      Divider(),
-                      Text(viewController.adventure[index].businessName)
-                    ],
-                  ))));
+        viewController.adventure.length,
+        (int index) => CustBusinessEventCard(
+            event: viewController.adventure[index], needBussinessName: true),
+      ));
     } else
       return NoServicesFound();
   }
