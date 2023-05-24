@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['LocallyMadeView']['CustLocallyMadeListView'];
@@ -204,10 +205,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
             )),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noBusinessFound']}'));
+      return NoServicesFound();
   }
 
   Widget _buildProducts() {
@@ -273,10 +271,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
         ),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noServiceFound']}'));
+      return NoServicesFound();
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
