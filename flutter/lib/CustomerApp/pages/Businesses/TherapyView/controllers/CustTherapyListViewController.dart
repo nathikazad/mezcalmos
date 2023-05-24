@@ -137,7 +137,7 @@ class CustTherapyListViewController {
         distance: 100000000000,
         categories2: _categories2,
         fromLocation: _fromLocation!,
-        tags: ["class"],
+        tags: [],
         scheduleType: filterInput["schedule"]!
             .map((String e) => e.toScheduleType())
             .toList(),
