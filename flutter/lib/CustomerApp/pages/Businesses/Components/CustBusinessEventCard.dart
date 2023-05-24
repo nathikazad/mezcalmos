@@ -61,7 +61,7 @@ class CustBusinessEventCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    event.details.name.getTranslation(userLanguage)!.inCaps,
+                    '${event.details.name.getTranslation(userLanguage)!.inCaps}',
                     style: context.textTheme.bodyLarge?.copyWith(
                         fontSize: 12.5.mezSp,
                         fontWeight: FontWeight.w600,

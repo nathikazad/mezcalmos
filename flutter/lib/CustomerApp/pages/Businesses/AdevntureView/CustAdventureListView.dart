@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.da
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -136,65 +137,65 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
     if (viewController.businesses.isNotEmpty) {
       return Column(
           children: List.generate(
-        viewController.businesses.length,
-        (int index) => MezCard(
-            onClick: () {
-              CustBusinessView.navigate(
-                businessId: viewController.businesses[index].id,
-              );
-            },
-            elevation: 0,
-            contentPadding: EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
-            margin: EdgeInsets.only(bottom: 15),
-            firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.businesses[index].image),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  viewController.businesses[index].name,
-                  style: context.textTheme.displaySmall?.copyWith(
-                      fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _getAcceptedPaymentIcons(
-                        viewController.businesses[index].acceptedPayments),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Flexible(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.star,
-                            size: 17.5.mezSp,
-                            color: Color(0xFF6779FE),
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                              '${viewController.businesses[index].avgRating ?? '0'}',
-                              style: context.textTheme.bodySmall),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 2),
-                            child: Text(
-                              '(${viewController.businesses[index].reviewCount})',
-                              style: context.textTheme.bodyMedium,
-                            ),
-                          )
-                        ],
+              viewController.businesses.length,
+              (int index) => MezCard(
+                  onClick: () {
+                    CustBusinessView.navigate(
+                      businessId: viewController.businesses[index].id,
+                    );
+                  },
+                  elevation: 0,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
+                  margin: EdgeInsets.only(bottom: 15),
+                  firstAvatarBgImage: CachedNetworkImageProvider(
+                      viewController.businesses[index].image),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        viewController.businesses[index].name,
+                        style: context.textTheme.displaySmall?.copyWith(
+                            fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  ],
-                )
-              ],
-            ))
-      ));
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          _getAcceptedPaymentIcons(viewController
+                              .businesses[index].acceptedPayments),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  size: 17.5.mezSp,
+                                  color: Color(0xFF6779FE),
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                    '${viewController.businesses[index].avgRating ?? '0'}',
+                                    style: context.textTheme.bodySmall),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 2),
+                                  child: Text(
+                                    '(${viewController.businesses[index].reviewCount})',
+                                    style: context.textTheme.bodyMedium,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ))));
     } else
       return Container(
           margin: const EdgeInsets.all(16),
@@ -241,9 +242,7 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
                             ),
                           Expanded(
                             child: Text(
-                              viewController.adventure[index].details
-                                      .name[userLanguage] ??
-                                  "",
+                              '${viewController.adventure[index].details.name.getTranslation(userLanguage)!.inCaps}',
                               style: context.textTheme.displaySmall?.copyWith(
                                   fontSize: 11.75.mezSp,
                                   fontWeight: FontWeight.bold,

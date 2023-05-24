@@ -240,9 +240,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                                 SizedBox(
                                   width: 55.mezW,
                                   child: Text(
-                                    viewController.services[index].details.name
-                                        .getTranslation(userLanguage)!
-                                        .inCaps,
+                                    '${viewController.services[index].details.name.getTranslation(userLanguage)!.inCaps}',
                                     overflow: TextOverflow.ellipsis,
                                     style: context.textTheme.displaySmall
                                         ?.copyWith(
@@ -276,8 +274,7 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                           ],
                         ),
                         Divider(),
-                        Text(
-                            '${viewController.services[index].businessName}')
+                        Text('${viewController.services[index].businessName}')
                       ],
                     ),
                   )));
