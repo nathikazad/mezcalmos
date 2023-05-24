@@ -255,7 +255,9 @@ class BsServicesListViewController {
             title: serviceTitleLangKey,
             subtitle: serviceSubtitleLangKey,
             route: () async {
-              await navigateToService();
+              await navigateToService(
+                serviceCategory: ServiceCategory1.Cleaning
+              );
             },
           ),
         ];
@@ -265,7 +267,9 @@ class BsServicesListViewController {
             title: serviceTitleLangKey,
             subtitle: serviceSubtitleLangKey,
             route: () async {
-              await navigateToService();
+              await navigateToService(
+                serviceCategory: ServiceCategory1.PetSitting
+              );
             },
           ),
         ];
@@ -317,10 +321,12 @@ class BsServicesListViewController {
 
   Future<void> navigateToService({
     int? id,
+    required ServiceCategory1 serviceCategory,
   }) async {
     bool? refetch = await BsOpServiceView.navigate(
         businessDetailsId: businessDetailsId,
         businessId: businessId,
+        serviceCategory: serviceCategory,
         serviceId: id);
     mezDbgPrint("should refetch services =============>$refetch");
     if (refetch == true) unawaited(_fetchServices());

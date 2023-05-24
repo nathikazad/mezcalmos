@@ -106,7 +106,9 @@ class _CustRentalViewState extends State<CustRentalView> {
                         business: viewController.rental!.business,
                         offeringName: viewController.rental!.details.name,
                       ),
-                      CustBusinessNoOrderBanner(),
+                      CustBusinessNoOrderBanner(
+                        margin: EdgeInsets.zero,
+                      ),
                     ],
                   ),
                 ),

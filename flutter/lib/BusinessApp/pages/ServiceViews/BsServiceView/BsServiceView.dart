@@ -24,12 +24,14 @@ class BsOpServiceView extends StatefulWidget {
   static Future<bool?> navigate(
       {required int? serviceId,
       required int businessDetailsId,
+      required ServiceCategory1 serviceCategory,
       required int businessId}) async {
     String route = BusinessOpRoutes.kBsOpService;
     route = route.replaceFirst(":id", serviceId?.toString() ?? "add");
     await MezRouter.toPath(route, arguments: {
       "businessDetailsId": businessDetailsId,
       "businessId": businessId,
+      "serviceCategory": serviceCategory,
     });
     return MezRouter.backResult;
   }
@@ -44,6 +46,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
   int? businessId;
   int? businessDetailsId;
   int? serviceId;
+  ServiceCategory1? serviceCategory;
   @override
   void initState() {
     businessDetailsId = int.tryParse(
@@ -51,6 +54,8 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
     businessId =
         int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
     serviceId = int.tryParse(MezRouter.urlArguments["id"].toString());
+    serviceCategory =
+        MezRouter.bodyArguments!["serviceCategory"] as ServiceCategory1;
     if (businessDetailsId == null || businessId == null) {
       throw Exception("detailsId is null");
     }
@@ -58,6 +63,7 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
         thickerProvider: this,
         serviceId: serviceId,
         detailsId: businessDetailsId!,
+        serviceCategory: serviceCategory!,
         businessId: businessId!);
 
     super.initState();

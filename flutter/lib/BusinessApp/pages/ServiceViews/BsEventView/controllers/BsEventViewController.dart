@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
@@ -36,7 +38,12 @@ class BsEventViewController {
   // state variables //
   Rxn<Schedule> serviceSchedule = Rxn();
   Rxn<EventWithBusinessCard> _event = Rxn<EventWithBusinessCard>();
-  Rxn<ScheduleType> scheduleType = Rxn<ScheduleType>();
+  Rx<ScheduleTypeInput> scheduleTypeInput =
+      Rx<ScheduleTypeInput>(ScheduleTypeInput(
+    title: "title",
+    subtitle: "subtitle",
+    type: ScheduleType.Scheduled,
+  ));
   Rxn<Schedule> avalaibilty = Rxn<Schedule>();
   Rxn<DateTime> startDate = Rxn<DateTime>();
   Rxn<DateTime> endDate = Rxn<DateTime>();
@@ -64,16 +71,16 @@ class BsEventViewController {
   bool get showLocation {
     switch (businessProfile) {
       case BusinessProfile.SurfShop:
-        return scheduleType.value == ScheduleType.OneTime;
+        return scheduleTypeInput.value.type == ScheduleType.OneTime;
       case BusinessProfile.TourAgency:
       case BusinessProfile.Volunteer:
       case BusinessProfile.Entertainment:
         return true;
 
       case BusinessProfile.WellnessPractitioner:
-        return scheduleType.value != ScheduleType.OnDemand;
+        return scheduleTypeInput.value.type != ScheduleType.OnDemand;
       case BusinessProfile.YogaStudio:
-        return scheduleType.value == ScheduleType.OneTime;
+        return scheduleTypeInput.value.type == ScheduleType.OneTime;
       default:
         return false;
     }
@@ -121,7 +128,7 @@ class BsEventViewController {
       _isClass.value = event!.tags?.contains(EventTag.Class) == true;
 
       location.value = event!.gpsLocation;
-      scheduleType.value = event!.scheduleType;
+      scheduleTypeInput.value.type = event!.scheduleType;
       avalaibilty.value = event!.schedule;
       startDate.value = event!.startsAt != null
           ? DateTime.parse(event!.startsAt!).toLocal()
@@ -187,12 +194,12 @@ class BsEventViewController {
     EventCategory1 category1 = _getCategory1();
     Event event = Event(
         category1: category1,
-        scheduleType: scheduleType.value!,
+        scheduleType: scheduleTypeInput.value.type,
         startsAt: startDate.value?.toUtc().toString(),
         endsAt: endDate.value?.toUtc().toString(),
         schedule: avalaibilty.value,
         gpsLocation: location.value,
-        tags: isClass ? [EventTag.Class] : [],
+        tags: scheduleTypeInput.value.tags,
         details: details);
     return event;
   }
@@ -201,12 +208,12 @@ class BsEventViewController {
     EventCategory1 category1 = _getCategory1();
     Event event = Event(
         category1: category1,
-        scheduleType: scheduleType.value!,
+        scheduleType: scheduleTypeInput.value.type,
         startsAt: startDate.value?.toUtc().toString(),
         endsAt: endDate.value?.toUtc().toString(),
         schedule: avalaibilty.value,
         gpsLocation: location.value,
-        tags: isClass ? [EventTag.Class] : [],
+        tags: scheduleTypeInput.value.tags,
         // time: oneTimePeriod.value.,
         details: detailsController.details!);
     return event;
@@ -250,8 +257,8 @@ class BsEventViewController {
   }
 
   // special methods //
-  void switchScheduleType(ScheduleType type) {
-    scheduleType.value = type;
+  void switchScheduleType(ScheduleTypeInput inputType) {
+    scheduleTypeInput.value = inputType;
     setPrices();
   }
 
@@ -316,14 +323,22 @@ class BsEventViewController {
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["onDemandClass"],
                     subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    tags: [EventTag.Class],
                     type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["weeklyClass"],
                     subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    tags: [EventTag.Class],
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["oneTimeClass"],
                     subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    tags: [EventTag.Class, EventTag.Workshop],
+                    type: ScheduleType.OneTime),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["retreat"],
+                    subtitle: _i18n()[businessFB]["retreatLabel"],
+                    tags: [EventTag.Class, EventTag.Retreat],
                     type: ScheduleType.OneTime),
               ]
             : [
@@ -353,14 +368,22 @@ class BsEventViewController {
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["onDemandClass"],
                     subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    tags: [EventTag.Class],
                     type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["weeklyClass"],
                     subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    tags: [EventTag.Class],
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["oneTimeClass"],
                     subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    tags: [EventTag.Class, EventTag.Workshop],
+                    type: ScheduleType.OneTime),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["retreat"],
+                    subtitle: _i18n()[businessFB]["retreatLabel"],
+                    tags: [EventTag.Class, EventTag.Retreat],
                     type: ScheduleType.OneTime),
               ]
             : [
@@ -379,14 +402,17 @@ class BsEventViewController {
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["onDemandClass"],
                     subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    tags: [EventTag.Class],
                     type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["weeklyClass"],
                     subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    tags: [EventTag.Class],
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
                     title: _i18n()[businessFB]["oneTimeClass"],
                     subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    tags: [EventTag.Class],
                     type: ScheduleType.OneTime),
               ]
             : [
@@ -429,7 +455,7 @@ class BsEventViewController {
   }
 
   Widget getScheduleWidget() {
-    switch (scheduleType.value) {
+    switch (scheduleTypeInput.value.type) {
       case ScheduleType.Scheduled:
       case ScheduleType.OnDemand:
         return Obx(
@@ -437,7 +463,7 @@ class BsEventViewController {
             onScheduleSelected: (Schedule? v) {
               avalaibilty.value = v;
             },
-            scheduleType: scheduleType.value!,
+            scheduleType: scheduleTypeInput.value.type,
             schedule: avalaibilty.value,
           ),
         );
@@ -479,18 +505,19 @@ class BsEventViewController {
             );
           },
         );
-      case null:
-        return Container();
+      // case null:
+      //   return Container();
 
       default:
-        throw StateError("unhandled schedule type ${scheduleType.value}");
+        throw StateError("unhandled schedule type ${scheduleTypeInput.value}");
     }
   }
 
   void setPrices() {
     detailsController.clearPrices();
-    mezDbgPrint("setPrices : ${scheduleType.value}");
-    if (scheduleType == ScheduleType.OnDemand) {
+    mezDbgPrint("setPrices : ${scheduleTypeInput.value}");
+    if (scheduleTypeInput.value.type == ScheduleType.OnDemand &&
+        businessProfile != BusinessProfile.TourAgency) {
       detailsController.addPriceTimeUnit(
         timeUnit: TimeUnit.PerHour,
       );
@@ -519,21 +546,27 @@ class ScheduleTypeInput {
   String title;
   String subtitle;
   ScheduleType type;
+  List<EventTag>? tags;
   ScheduleTypeInput({
     required this.title,
     required this.subtitle,
     required this.type,
+    this.tags,
   });
 
   @override
-  bool operator ==(covariant ScheduleTypeInput other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other.title == title &&
+    return other is ScheduleTypeInput &&
+        other.title == title &&
         other.subtitle == subtitle &&
-        other.type == type;
+        other.type == type &&
+        listEquals(other.tags, tags);
   }
 
   @override
-  int get hashCode => title.hashCode ^ subtitle.hashCode ^ type.hashCode;
+  int get hashCode {
+    return title.hashCode ^ subtitle.hashCode ^ type.hashCode ^ tags.hashCode;
+  }
 }

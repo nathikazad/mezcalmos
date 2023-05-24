@@ -81,12 +81,21 @@
           "endTimeErrorText": "Por favor, selecciona la hora de fin",
           "endTimeBeforeErrorText": "La hora de fin debe ser posterior a la hora de inicio"
         },
+        "cleaning": "Servicio de limpieza",
+        "meal": "Servicio de planificación de comidas",
+        "petSittingService": "Servicio de mascotas",
+        "weeklySchedule": "Programación semanal",
+        "artProduct": "Productos de arte",
+        "careProduct": "Productos de cuidado personal",
+        "consumableProduct": "Productos consumibles",
         "weeklyClass": "Clases semanales",
         "oneTimeClass": "Talleres/retirarse",
         "onDemandClass": "Lecciones privadas",
         "weeklyEvent": "Eventos semanales",
         "oneTimeEvent": "Próximos Eventos",
-        "onDemandEvent": "Experiencias",
+        "onDemandEvent": "Eventos a pedido",
+        "experiences": "Experiencias",
+        "therapyEvent": "Terapia privada",
         "vehicleRentals": "Alquiler de vehículos",
         "surfRentals": "Alquiler de surf",
         "profile": "Perfil",
@@ -187,9 +196,11 @@
           "onDemandClass": "Lección privada",
           "onDemandClassLabel": "Clase no programada que un estudiante puede reservar con usted en función de su disponibilidad",
           "weeklyClass": "Clase semanal programada",
-          "weeklyClassLabel": "Clase programada que ocurre cada semana que ocurre en el grupo.",
+          "weeklyClassLabel": "Clase semanal programada que ocurre en el grupo.",
           "oneTimeClass": "Taller",
-          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular."
+          "oneTimeClassLabel": "Un taller educativo que ocurre en un día en particular.",
+          "retreat": "Retiro",
+          "retreatLabel": "Un retiro educativo que ocurre en un conjunto de días particulares."
         },
         "homeRental": {
           "rentalTitle": "Alquiler de viviendas",
@@ -227,7 +238,9 @@
           "weeklyClass": "Clase semanal programada",
           "weeklyClassLabel": "Clase programada que ocurre cada semana que ocurre en el grupo.",
           "oneTimeClass": "Taller",
-          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular."
+          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular.",
+          "retreat": "Retiro",
+          "retreatLabel": "Un retiro educativo que ocurre en un conjunto de días particulares."
         },
         "tourAgency": {
           "eventTitle": "Evento",
@@ -285,7 +298,8 @@
       },
       "BsOpSchedulePickerView": {
         "BsOpSchedulePickerView": {
-          "schedule": "Availability"
+          "schedule": "Disponibilidad",
+          "weeklySchedule": "Programación semanal"
         }
       }
     }
@@ -337,6 +351,14 @@
     },
     "pages": {
       "Offerings": {
+        "hour": "hora",
+        "day": "día",
+        "week": "semana",
+        "month": "mes",
+        "person": "persona",
+        "total": "total",
+        "unit": "unidad",
+        "none": "ninguna",
         "components": {
           "loading": "Cargando",
           "schedule": "Horario",
@@ -1113,7 +1135,11 @@
             "yoga": "Yoga",
             "martialArt": "Arte marcial",
             "adventure": "Aventura",
-            "volunteer": "Voluntaria"
+            "volunteer": "Voluntaria",
+            "motorcycle": "Motocicleta",
+            "car": "Auto",
+            "bicycle": "Bicicleta",
+            "aTB": "ATV"
           },
           "NoServicesFound": {
             "noServicesFound": "No se encontraron servicios",
@@ -1155,7 +1181,7 @@
             "uncategorized": "Sin categoría",
             "surf": "Surf",
             "homes": "Casas",
-            "vehicle": "Vehicles",
+            "vehicle": "Vehículos",
             "noRentalsFound": "No se encontraron alquileres",
             "none": "Ninguna",
             "noBusinessFound": "No se encontraron Buisinesses",
@@ -1163,8 +1189,8 @@
             "cancel": "Cancelar",
             "filter": "Filtrar",
             "store": "Tienda",
-            "hour": "hour",
-            "day": "day",
+            "hour": "hora",
+            "day": "día",
             "week": "semana",
             "month": "mes",
             "person": "persona",
@@ -1327,24 +1353,24 @@
             "localMade": "Hecho localmente",
             "consumable": "Consumible",
             "personalCare": "Cuidado personal",
-            "art": "Arte",
             "noPetServiceFound": "No se encontraron servicios",
+            "art": "Arte",
             "noBusinessesFound": "No se encontraron negocios",
-            "store": "Tienda",
+            "store": "Almacenar",
             "services": "Servicios"
           },
           "CustLocallyMadeWrapper": {
             "locallyMade": "Hecho localmente",
             "consumable": {
               "title": "Consumible",
-              "description": "Saboree las delicias locales."
+              "description": "Saborea el sabor de las golosinas locales."
             },
             "personalCare": {
               "title": "Cuidado personal",
-              "desctiption": "Haga que su ropa limpie su servicio de lavandería más cercano."
+              "description": "Cuídate con productos de cuidado personal de alta calidad."
             },
             "art": {
-              "title": "Art",
+              "title": "Arte",
               "description": "Agregue un toque de belleza e inspiración a su hogar con nuestra colección de bellas artes."
             }
           }
@@ -1353,8 +1379,8 @@
           "CustFoodWrapper": {
             "food": "Alimento",
             "restaurants": {
-              "title": "Restaurants",
-              "description": "Discover most delicious dishes from the nearest restaurants."
+              "title": "Restaurantes",
+              "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
             },
             "locallyMade": {
               "title": "Hecho localmente",
@@ -1829,7 +1855,7 @@
               "petSitting": "Cuidado de Mascotas",
               "wellnessPractitioner": "Profesional de Bienestar",
               "volunteer": "Voluntariado",
-              "entertainment": "Entretenimiento"
+              "entertainment": "Planificadores de eventos"
             }
           }
         },

@@ -56,7 +56,7 @@ class _CustEventViewState extends State<CustEventView> {
       if (timeUnit == TimeUnit.Unit) {
         return "";
       }
-      return "/${timeUnit.name.toString().toLowerCase().replaceFirst("per", "")}";
+      return '/${_i18n()[timeUnit.name.toString().toLowerCase().replaceFirst('per', '')]}';
     }
 
     final Map<TimeUnit, num> singleCost = viewController.event!.details.cost;

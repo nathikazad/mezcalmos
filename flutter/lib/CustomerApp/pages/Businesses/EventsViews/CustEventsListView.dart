@@ -62,6 +62,12 @@ class _CustEventsListViewState extends State<CustEventsListView> {
         if (viewController.isLoading) {
           return const Center(child: CircularProgressIndicator());
         } else {
+          final bool onlyScheduleOneTimeIsEmpty = viewController.events
+              .where((element) =>
+                  element.scheduleType == ScheduleType.Scheduled ||
+                  element.scheduleType == ScheduleType.OneTime)
+              .toList()
+              .isEmpty;
           return CustomScrollView(
             controller: viewController.scrollController,
             physics: AlwaysScrollableScrollPhysics(),
@@ -80,24 +86,27 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
                             ? _buildBusinesses()
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${_i18n()["scheduled"]} ${_i18n()['events'].toString().toLowerCase()}",
-                                    style: context.textTheme.bodyLarge,
+                            : onlyScheduleOneTimeIsEmpty
+                                ? NoServicesFound()
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${_i18n()["scheduled"]} ${_i18n()['events'].toString().toLowerCase()}",
+                                        style: context.textTheme.bodyLarge,
+                                      ),
+                                      smallSepartor,
+                                      _buildEvents(ScheduleType.Scheduled),
+                                      meduimSeperator,
+                                      Text(
+                                        "${_i18n()["oneTime"]} ${_i18n()['events'].toString().toLowerCase()}",
+                                        style: context.textTheme.bodyLarge,
+                                      ),
+                                      smallSepartor,
+                                      _buildEvents(ScheduleType.OneTime),
+                                    ],
                                   ),
-                                  smallSepartor,
-                                  _buildEvents(ScheduleType.Scheduled),
-                                  meduimSeperator,
-                                  Text(
-                                    "${_i18n()["oneTime"]} ${_i18n()['events'].toString().toLowerCase()}",
-                                    style: context.textTheme.bodyLarge,
-                                  ),
-                                  smallSepartor,
-                                  _buildEvents(ScheduleType.OneTime),
-                                ],
-                              ),
                       ),
                     ],
                   ),
@@ -252,7 +261,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                               '${viewController.businesses[index].avgRating ?? '0'}',
                               style: context.textTheme.bodySmall),
                           Padding(
-                            padding: const EdgeInsets.only(left: 2, bottom: 3),
+                            padding: const EdgeInsets.only(left: 2),
                             child: Text(
                               '(${viewController.businesses[index].reviewCount})',
                               style: context.textTheme.bodyMedium,
@@ -274,19 +283,16 @@ class _CustEventsListViewState extends State<CustEventsListView> {
   }
 
   Widget _buildEvents(ScheduleType scheduleType) {
-    if (viewController.events.isNotEmpty) {
-      return Column(
-          children: List.generate(
-        viewController.events.length,
-        (int index) => scheduleType != viewController.events[index].scheduleType
-            ? const SizedBox.shrink()
-            : CustBusinessEventCard(
-                event: viewController.events[index],
-                needBussinessName: true,
-              ),
-      ));
-    } else
-      return NoServicesFound();
+    return Column(
+        children: List.generate(
+      viewController.events.length,
+      (int index) => scheduleType != viewController.events[index].scheduleType
+          ? const SizedBox.shrink()
+          : CustBusinessEventCard(
+              event: viewController.events[index],
+              needBussinessName: true,
+            ),
+    ));
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

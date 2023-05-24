@@ -95,7 +95,9 @@ class BsEventCard extends StatelessWidget {
                 ],
               ),
             if (event.scheduleType == ScheduleType.OneTime &&
-                event.period != null)
+                event.period != null &&
+                event.startsAt != null &&
+                event.endsAt != null)
               Column(
                 children: [
                   Divider(),
@@ -103,16 +105,21 @@ class BsEventCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${event.period?.start.toDayName()} ${event.period?.start.day} ${event.period != null ? DateFormat.MMMM().format(event.period!.start) : ""}",
+                        "${event.period?.start.toDayName().inCaps} ${event.period?.start.day} ${event.period != null ? DateFormat.MMMM().format(event.period!.start) : ""}",
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       Text(
-                          "${event.period!.formatTime(event.period!.start)} - ${event.period!.formatTime(event.period!.end)}"),
+                        "${formatTime(DateTime.parse(event.startsAt!).toLocal())} - ${formatTime(DateTime.parse(event.endsAt!).toLocal())}",
+                      ),
                     ],
                   ),
                 ],
               ),
           ],
         ));
+  }
+
+  String formatTime(DateTime date) {
+    return DateFormat("hh:mm a").format(date);
   }
 }

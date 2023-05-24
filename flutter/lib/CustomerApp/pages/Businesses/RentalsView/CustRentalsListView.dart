@@ -277,7 +277,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                               '${viewController.businesses[index].avgRating ?? '0'}',
                               style: context.textTheme.bodySmall),
                           Padding(
-                            padding: const EdgeInsets.only(left: 2, bottom: 3),
+                            padding: const EdgeInsets.only(left: 2),
                             child: Text(
                               '(${viewController.businesses[index].reviewCount})',
                               style: context.textTheme.bodyMedium,
