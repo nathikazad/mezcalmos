@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
@@ -85,6 +86,10 @@ class _CustServiceViewState extends State<CustServiceView> {
                               cost: viewController.service!.details.cost,
                             ),
                       _description(context),
+                      CustBusinessScheduleBuilder(
+                        schedule: viewController.service!.schedule,
+                        scheduleType: ScheduleType.Scheduled,
+                      ),
                       CustBusinessMessageCard(
                         margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
