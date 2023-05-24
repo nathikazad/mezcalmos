@@ -363,6 +363,13 @@
         "total": "total",
         "unit": "unit",
         "none": "none",
+        "bedrooms": "Bedrooms",
+        "bathrooms": "Bathrooms",
+        "apartment": "Apartment",
+        "villa": "Villa",
+        "condo": "Condo",
+        "bungalow": "Bungalow",
+        "hotel": "Hotel",
         "components": {
           "loading": "Loading",
           "schedule": "Schedule",

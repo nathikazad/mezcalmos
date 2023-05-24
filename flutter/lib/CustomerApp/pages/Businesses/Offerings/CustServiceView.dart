@@ -123,7 +123,8 @@ class _CustServiceViewState extends State<CustServiceView> {
         ),
         Text(
           viewController.service!.details.description
-                  ?.getTranslation(userLanguage) ??
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
               _i18n()['noDescription'],
           style: Theme.of(context).textTheme.bodyMedium,
         ),

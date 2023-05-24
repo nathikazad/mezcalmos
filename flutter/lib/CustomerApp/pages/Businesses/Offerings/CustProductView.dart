@@ -107,7 +107,8 @@ class _CustProductViewState extends State<CustProductView> {
         ),
         Text(
           viewController.product!.details.description
-                  ?.getTranslation(userLanguage) ??
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
               _i18n()['noDescription'],
           style: Theme.of(context).textTheme.bodyMedium,
         ),

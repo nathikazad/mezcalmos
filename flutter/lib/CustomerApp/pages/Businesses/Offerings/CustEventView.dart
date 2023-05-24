@@ -53,6 +53,9 @@ class _CustEventViewState extends State<CustEventView> {
 
   String generateCost() {
     String removePerFromTime(TimeUnit timeUnit) {
+      if (timeUnit == TimeUnit.PerPerson) {
+        return '/${_i18n()['person']}';
+      }
       if (timeUnit == TimeUnit.Unit) {
         return "";
       }
@@ -62,7 +65,7 @@ class _CustEventViewState extends State<CustEventView> {
     final Map<TimeUnit, num> singleCost = viewController.event!.details.cost;
     switch (viewController.event!.scheduleType) {
       case ScheduleType.Scheduled:
-        return "${singleCost.entries.first.value.toPriceString()}";
+        return "${singleCost.entries.first.value.toPriceString()}${removePerFromTime(singleCost.entries.first.key)}";
 
       case ScheduleType.OnDemand:
         return "${singleCost.entries.first.value.toPriceString()}${removePerFromTime(singleCost.entries.first.key)}";
@@ -173,7 +176,8 @@ class _CustEventViewState extends State<CustEventView> {
         ),
         Text(
           viewController.event!.details.description
-                  ?.getTranslation(userLanguage) ??
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
               _i18n()['noDescription'],
           style: Theme.of(context).textTheme.bodyMedium,
         ),

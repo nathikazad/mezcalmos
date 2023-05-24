@@ -359,6 +359,13 @@
         "total": "total",
         "unit": "unidad",
         "none": "ninguna",
+        "bedrooms": "Dormitorios",
+        "bathrooms": "Baños",
+        "apartment": "Departamento",
+        "villa": "Villa",
+        "condo": "Condominio",
+        "bungalow": "Bungalow",
+        "hotel": "Hotel",
         "components": {
           "loading": "Cargando",
           "schedule": "Horario",

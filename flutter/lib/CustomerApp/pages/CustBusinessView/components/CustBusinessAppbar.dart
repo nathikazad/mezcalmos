@@ -72,11 +72,14 @@ class CustBusinessViewAppbar extends StatelessWidget {
                         )),
                     onTap: () {},
                   )),
-              Text(
-                viewController.business!.details.name,
-                style:
-                    context.textTheme.bodyLarge?.copyWith(color: Colors.white),
-                textAlign: TextAlign.left,
+              Expanded(
+                child: Text(
+                  viewController.business!.details.name,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.textTheme.bodyLarge
+                      ?.copyWith(color: Colors.white),
+                  textAlign: TextAlign.left,
+                ),
               ),
               AnimatedOpacity(
                   duration: Duration(milliseconds: 300),

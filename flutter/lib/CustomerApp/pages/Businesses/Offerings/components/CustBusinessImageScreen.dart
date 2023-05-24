@@ -80,16 +80,16 @@ class _CustBusinessImageScreenState extends State<CustBusinessImageScreen> {
                       maxWidth: 40,
                     ),
                     decoration: BoxDecoration(
-                      color:
-                          _currentPage == 0 ? Colors.white : primaryBlueColor,
+                      color: _currentPage == 0
+                          ? Colors.grey.shade300
+                          : primaryBlueColor,
                       shape: BoxShape.circle,
                     ),
                     child: InkWell(
                       child: Icon(
                         Icons.chevron_left,
                         size: 25,
-                        color:
-                            _currentPage == 0 ? primaryBlueColor : Colors.white,
+                        color: _currentPage == 0 ? Colors.grey : Colors.white,
                       ),
                       onTap: () {
                         if (_currentPage == 0) {
@@ -113,7 +113,7 @@ class _CustBusinessImageScreenState extends State<CustBusinessImageScreen> {
                     ),
                     decoration: BoxDecoration(
                       color: _currentPage == images.length - 1
-                          ? Colors.white
+                          ? Colors.grey.shade300
                           : primaryBlueColor,
                       shape: BoxShape.circle,
                     ),
@@ -122,7 +122,7 @@ class _CustBusinessImageScreenState extends State<CustBusinessImageScreen> {
                         Icons.chevron_right,
                         size: 25,
                         color: _currentPage == images.length - 1
-                            ? primaryBlueColor
+                            ? Colors.grey
                             : Colors.white,
                       ),
                       onTap: () {

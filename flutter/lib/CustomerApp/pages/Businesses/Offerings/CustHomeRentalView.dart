@@ -131,7 +131,8 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
         ),
         Text(
           viewController.homeRental!.details.description
-                  ?.getTranslation(userLanguage) ??
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
               _i18n()['noDescription'],
           style: Theme.of(context).textTheme.bodyMedium,
         ),
@@ -152,9 +153,10 @@ class _CustBusinessAdditionalData extends StatelessWidget {
     String wholeAdditionalParamString() {
       final String circle = "•";
       final Map<String, String> additionalValues = {
-        "bedRooms": "Bedrooms ${homeRental?.bedrooms ?? 0}",
-        "bathRooms": "Bathrooms ${homeRental?.bathrooms ?? 0}",
-        "houseType": "${homeRental?.homeType!.name ?? ""}",
+        'bedRooms': '${homeRental?.bedrooms ?? 0} ${_i18n()['bedrooms']}',
+        'bathRooms': '${homeRental?.bathrooms ?? 0} ${_i18n()['bathrooms']}',
+        'houseType':
+            '${_i18n()[homeRental?.homeType?.name.toLowerCase()] ?? ''}',
       };
       final Map<String, String> moreAdditionalValues = homeRental
               ?.details.additionalParameters
