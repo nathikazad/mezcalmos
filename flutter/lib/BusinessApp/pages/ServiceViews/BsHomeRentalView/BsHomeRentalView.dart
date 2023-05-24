@@ -45,6 +45,11 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
   int? businessDetailsId;
   int? homeRentalId;
 
+  final FocusNode nameNode = FocusNode();
+  final FocusNode descriptionNode = FocusNode();
+  final FocusNode bedroomNode = FocusNode();
+  final FocusNode bathroomNode = FocusNode();
+
   @override
   void initState() {
     _assignValues();
@@ -73,6 +78,10 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
   @override
   void dispose() {
     viewController.dispose();
+    nameNode.dispose();
+    descriptionNode.dispose();
+    bedroomNode.dispose();
+    bathroomNode.dispose();
     super.dispose();
   }
 
@@ -201,6 +210,11 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
     );
   }
 
+  void _focus(FocusNode node) {
+    FocusScope.of(context).unfocus();
+    node.requestFocus();
+  }
+
   Widget _primaryTab(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -237,12 +251,14 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           smallSepartor,
           TextFormField(
+            focusNode: nameNode,
             controller: viewController.detailsController.nameController,
             decoration: InputDecoration(
               hintText: _i18n()["nameHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
+                _focus(nameNode);
                 return _i18n()["nameError"];
               }
               return null;
@@ -255,6 +271,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           smallSepartor,
           TextFormField(
+            focusNode: descriptionNode,
             maxLines: 7,
             minLines: 5,
             controller: viewController.detailsController.descriptionController,
@@ -263,6 +280,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
+                _focus(descriptionNode);
                 return _i18n()["descriptionError"];
               }
               return null;
@@ -347,12 +365,14 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           smallSepartor,
           TextFormField(
+            focusNode: bedroomNode,
             controller: viewController.bedroomsController,
             decoration: InputDecoration(
               hintText: _i18n()["homeRental"]["bedroomsHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
+                _focus(bedroomNode);
                 return _i18n()["homeRental"]["bedroomsError"];
               }
               return null;
@@ -368,12 +388,14 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           smallSepartor,
           TextFormField(
+            focusNode: bathroomNode,
             controller: viewController.bathroomsController,
             decoration: InputDecoration(
               hintText: _i18n()["homeRental"]["bathroomsHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
+                _focus(bathroomNode);
                 return _i18n()["homeRental"]["bathroomsError"];
               }
               return null;
