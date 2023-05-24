@@ -128,6 +128,7 @@ class BsEventViewController {
 
       location.value = event!.gpsLocation;
       scheduleTypeInput.value.type = event!.scheduleType;
+
       avalaibilty.value = event!.schedule;
       startDate.value = event!.startsAt != null
           ? DateTime.parse(event!.startsAt!).toLocal()
@@ -137,7 +138,7 @@ class BsEventViewController {
           : null;
     }
     mezDbgPrint("event schedule ========> ${event?.scheduleType.name}");
-    _event.refresh();
+    scheduleTypeInput.refresh();
   }
 
   Future<void> save() async {
