@@ -202,6 +202,24 @@
           "retreat": "Retreat",
           "retreatLabel": "An educational retreat that happens on a set of particular days"
         },
+        "danceStudio": {
+          "eventTitle": "Event",
+          "eventSubtitle": "Event service is used to plan events for your business.",
+          "classTitle": "Class",
+          "classSubtitle": "A class service is when you instruct a class for a student.",
+          "weeklyEvent": "Weekly event",
+          "weeklyEventLabel": "Scheduled event that happens on a weekly repeating basis. For example, Latin Tuesday nights",
+          "oneTimeEvent": "One time event",
+          "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco.",
+          "onDemandClass": "Private lesson",
+          "onDemandClassLabel": "Unscheduled class that a student can book with you based on your availability",
+          "weeklyClass": "Weekly scheduled class",
+          "weeklyClassLabel": "Scheduled weekly class that happens in group.",
+          "oneTimeClass": "Workshop",
+          "oneTimeClassLabel": "An educational workshop that happens on a particular day.",
+          "retreat": "Retreat",
+          "retreatLabel": "An educational retreat that happens on a set of particular days"
+        },
         "homeRental": {
           "rentalTitle": "Home rental",
           "rentalSubtitle": "Using a home rental service, you can advertise a home for rent.",

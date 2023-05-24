@@ -79,7 +79,6 @@ class CustEventsListViewController {
 
   Future<void> init() async {
     _filterCategories.addAll([
-      EventCategory1.Party,
       EventCategory1.Dance,
       EventCategory1.Social,
     ]);
