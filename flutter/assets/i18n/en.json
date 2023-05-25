@@ -1776,6 +1776,22 @@
       }
     },
     "pages": {
+      "ServiceProviderPages" : {
+        "ServiceScheduleViews" : {
+          "SingleDayScheduleView" : {
+            "open" : "Open",
+            "closed" : "Closed",
+            "save" : "Save",
+            "delete" : "Delete",
+            "time" : "Time",
+            "startsAt" :"Starts at",
+            "endsAt" : "Ends at",
+            "add" : "Add additional time",
+            "overlapError" : "Working hours can't overlap"
+          }
+          }
+        },
+      
       "ServiceProfileView": {
         "profile": "Profile",
         "info": "Information",

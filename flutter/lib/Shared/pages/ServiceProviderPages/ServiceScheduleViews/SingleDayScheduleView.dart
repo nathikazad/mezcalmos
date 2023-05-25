@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/controllers/SingleDayScheduleController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -11,6 +12,9 @@ import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['ServiceProviderPages']['ServiceScheduleViews']['SingleDayScheduleView'];
 
 class SingleDayScheduleView extends StatefulWidget {
   const SingleDayScheduleView({super.key});
@@ -52,12 +56,12 @@ class _SingleDayScheduleViewState extends State<SingleDayScheduleView> {
     return Scaffold(
         appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Back,
-          title: "${weekday!.name}",
+          title: "${weekday!.translate()}",
           onClick: MezRouter.back,
         ),
         bottomNavigationBar: MezButton(
             borderRadius: 0,
-            label: "Save",
+            label: "${_i18n()['save']}",
             onClick: () async {
               viewController.saveWorkingHours();
             }),
@@ -91,9 +95,7 @@ class _SingleDayScheduleViewState extends State<SingleDayScheduleView> {
               Flexible(
                 fit: FlexFit.tight,
                 child: Text(
-                  convertToAmPm(
-                      viewController.workingHours![index].from[0].toInt(),
-                      viewController.workingHours![index].from[1].toInt()),
+                  viewController.workingHours![index].fromTimeFormatted,
                   style: context.textTheme.bodyLarge,
                 ),
               ),
@@ -129,9 +131,7 @@ class _SingleDayScheduleViewState extends State<SingleDayScheduleView> {
               Flexible(
                 fit: FlexFit.tight,
                 child: Text(
-                  convertToAmPm(
-                      viewController.workingHours![index].to[0].toInt(),
-                      viewController.workingHours![index].to[1].toInt()),
+                  viewController.workingHours![index].toTimeFormatted,
                   style: context.textTheme.bodyLarge,
                 ),
               ),
@@ -179,7 +179,7 @@ class _SingleDayScheduleViewState extends State<SingleDayScheduleView> {
                               Flexible(
                                 fit: FlexFit.tight,
                                 child: Text(
-                                  "Time ${index + 1}",
+                                  "${_i18n()["time"]} ${index + 1}",
                                   style: context.textTheme.bodyLarge,
                                 ),
                               ),
@@ -199,7 +199,7 @@ class _SingleDayScheduleViewState extends State<SingleDayScheduleView> {
                                       SizedBox(
                                         width: 3,
                                       ),
-                                      Text("Delete",
+                                      Text("${_i18n()['delete']}",
                                           style: context.textTheme.bodyLarge
                                               ?.copyWith(color: redAccentColor))
                                     ],
@@ -208,14 +208,14 @@ class _SingleDayScheduleViewState extends State<SingleDayScheduleView> {
                           ),
                           smallSepartor,
                           Text(
-                            "Starts at",
+                            "${_i18n()['startsAt']}",
                             style: context.textTheme.bodyLarge,
                           ),
                           smallSepartor,
                           _startsAtCard(context, index),
                           meduimSeperator,
                           Text(
-                            "Ends at",
+                            "${_i18n()['endsAt']}",
                             style: context.textTheme.bodyLarge,
                           ),
                           smallSepartor,
@@ -230,11 +230,10 @@ class _SingleDayScheduleViewState extends State<SingleDayScheduleView> {
           ),
           bigSeperator,
           MezAddButton(
-            onClick: () {
-              viewController.newWorkingHours();
-            },
-            title: "Add additional time",
-          ),
+              onClick: () {
+                viewController.newWorkingHours();
+              },
+              title: "${_i18n()['add']}"),
           //   bigSeperator,
           bigSeperator,
         ]));

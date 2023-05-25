@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['ServiceProviderPages']['ServiceScheduleViews']['SingleDayScheduleView'];
 
 class SingleDayScheduleViewController {
   // final Rxn<Schedule> _workingDay.value?.openHours = Rxn<Schedule>();
@@ -43,7 +49,11 @@ class SingleDayScheduleViewController {
   }
 
   void saveWorkingHours() {
-    MezRouter.back(backResult: _workingDay.value);
+    if (_workingDay.value?.hasOverlaps == false) {
+      MezRouter.back(backResult: _workingDay.value);
+    } else {
+      showErrorSnackBar(errorText: _i18n()['overlapError']);
+    }
   }
 
   void updateToTime(

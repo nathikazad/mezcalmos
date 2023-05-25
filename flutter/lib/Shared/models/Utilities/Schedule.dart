@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 extension AddDayOfWeekToDateTime on DateTime {
@@ -25,28 +26,28 @@ Schedule scheduleFromData(json) {
           .firstWhere((Weekday e) => e.toFirebaseFormatString() == weekdayKey);
       final dynamic workindDay = json[weekdayKey];
       // this will be removed in the future
-      if (workindDay is List) {
-        List<OpenHours> openHoursList = workindDay
+      // if (workindDay is List) {
+      //   List<OpenHours> openHoursList = workindDay
+      //       .map<OpenHours>((hourJson) => openHoursfromJson(hourJson))
+      //       .toList();
+      //   openHours[weekday] = WorkingDay(isOpen: true, openHours: openHoursList);
+      // } else if (workindDay is Map) {
+      // the latest format
+      if (workindDay["openHours"] != null) {
+        List<OpenHours> openHoursList = workindDay["openHours"]
             .map<OpenHours>((hourJson) => openHoursfromJson(hourJson))
             .toList();
-        openHours[weekday] = WorkingDay(isOpen: true, openHours: openHoursList);
-      } else if (workindDay is Map) {
-        // the latest format
-        if (workindDay["openHours"] != null) {
-          List<OpenHours> openHoursList = workindDay["openHours"]
-              .map<OpenHours>((hourJson) => openHoursfromJson(hourJson))
-              .toList();
-          openHours[weekday] = WorkingDay(
-              isOpen: workindDay["isOpen"] ?? true, openHours: openHoursList);
-        }
-        // the old format
-        else {
-          final OpenHours singleOpenHour = openHoursfromJson(workindDay);
-
-          openHours[weekday] =
-              WorkingDay(isOpen: true, openHours: [singleOpenHour]);
-        }
+        openHours[weekday] = WorkingDay(
+            isOpen: workindDay["isOpen"] ?? true, openHours: openHoursList);
       }
+      // the old format
+      else {
+        final OpenHours singleOpenHour = openHoursfromJson(workindDay);
+
+        openHours[weekday] =
+            WorkingDay(isOpen: true, openHours: [singleOpenHour]);
+      }
+      //  }
     }
   }
   return Schedule(openHours: openHours);
@@ -257,6 +258,22 @@ extension WorkingDayExtension on WorkingDay {
       openHours: clonedOpenHours,
     );
   }
+
+  bool get hasOverlaps {
+    openHours
+        .sort((OpenHours a, OpenHours b) => a.from[0].compareTo(b.from[0]));
+
+    for (int i = 0; i < openHours.length - 1; i++) {
+      final OpenHours current = openHours[i];
+      final OpenHours next = openHours[i + 1];
+      mezDbgPrint("current ${current.from[0]} next ${next.from[0]}");
+
+      if (current.to[0] > next.from[0]) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 // open hours
@@ -266,6 +283,29 @@ extension OpenHoursFunctions on OpenHours {
       "from": from.join(":"),
       "to": to.join(":"),
     };
+  }
+
+  String get fromTimeFormatted {
+    final String hours = from[0] == 12
+        ? '12'
+        : (from[0] > 12 ? from[0] - 12 : from[0]).toString().padLeft(2, '0');
+
+    final String minutes = from[1].toString().padLeft(2, '0');
+    final String period = from[0] < 12 ? 'AM' : 'PM';
+
+    return '$hours:$minutes $period';
+  }
+
+  String get toTimeFormatted {
+    final String hours = to[0] == 12
+        ? '12'
+        : (to[0] > 12 ? to[0] - 12 : to[0]).toString().padLeft(2, '0');
+
+    final String minutes = to[1].toString().padLeft(2, '0');
+
+    final String period = to[0] < 12 ? 'AM' : 'PM';
+
+    return '$hours:$minutes $period';
   }
 
   OpenHours clone() {
@@ -281,4 +321,13 @@ OpenHours openHoursfromJson(Map<dynamic, dynamic> json) {
     from: (json['from'] as String).split(':').map(int.parse).toList(),
     to: (json['to'] as String).split(':').map(int.parse).toList(),
   );
+}
+
+// weekday
+
+extension WeekdayExtension on Weekday {
+  String translate() {
+    return Get.find<LanguageController>().strings["BusinessApp"]["pages"]
+        ["services"]["weekdays"][toFirebaseFormatString()];
+  }
 }
