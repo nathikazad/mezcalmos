@@ -21,19 +21,16 @@ query get_rental_by_category(
           details: {
             location: {
               gps: { _st_d_within: { distance: $distance, from: $from } }
-            },
-            approved: {
-              _eq: true
-            },
-            open_status: {
-              _eq: "open"
             }
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
           }
         }
       }
     }
     limit: $limit
     offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
   ) {
     details {
       name_id
@@ -147,17 +144,21 @@ query get_home_rentals(
 ) {
   business_home_rental(
     where: {
-      gps_location: { _st_d_within: { distance: $distance, from: $from } }, 
+      gps_location: { _st_d_within: { distance: $distance, from: $from } }
       rental: {
         business: {
           details: {
-            approved: {_eq: true}, open_status: {_eq: "open"}
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
           }
         }
       }
     }
     limit: $limit
     offset: $offset
+    order_by: {
+      rental: { business: { details: { referral_points: desc_nulls_last } } }
+    }
   ) {
     bathrooms
     bedrooms

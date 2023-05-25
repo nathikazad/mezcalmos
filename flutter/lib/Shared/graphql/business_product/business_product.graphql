@@ -46,41 +46,40 @@ query get_product_by_id($id: Int!) {
   }
 }
 
-query get_product_by_category($categories1: [String!], $distance: Float!, $from: geography!, $limit: Int, $offset: Int, $categories2: [String!], $tags: [String!]) {
+query get_product_by_category(
+  $categories1: [String!]
+  $distance: Float!
+  $from: geography!
+  $limit: Int
+  $offset: Int
+  $categories2: [String!]
+  $tags: [String!]
+) {
   business_product(
     where: {
       _and: {
         details: {
           _and: {
-            category1: {
-              _in: $categories1
-            }, 
-            category2: {
-              _in: $categories2
-            },
-            tags: {_has_keys_all: $tags}
+            category1: { _in: $categories1 }
+            category2: { _in: $categories2 }
+            tags: { _has_keys_all: $tags }
           }
-        },
+        }
         business: {
           details: {
             location: {
-              gps: {
-                _st_d_within: {
-                  distance: $distance, 
-                  from: $from
-                }
-              }
-            },
-            approved: {
-              _eq: true
-            },
-            open_status: {
-              _eq: "open"
+              gps: { _st_d_within: { distance: $distance, from: $from } }
             }
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
           }
         }
       }
-    }, limit: $limit, offset: $offset) {
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
+  ) {
     details {
       id
       name {

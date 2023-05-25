@@ -619,9 +619,9 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
                             name: NameNode(value: 'open_status'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: '_eq'),
+                                name: NameNode(value: '_neq'),
                                 value: StringValueNode(
-                                  value: 'open',
+                                  value: 'closedIndefinitely',
                                   isBlock: false,
                                 ),
                               )
@@ -642,6 +642,26 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'offset'),
             value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'referral_points'),
+                        value: EnumValueNode(
+                            name: NameNode(value: 'desc_nulls_last')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -6700,9 +6720,9 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
                             name: NameNode(value: 'open_status'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: '_eq'),
+                                name: NameNode(value: '_neq'),
                                 value: StringValueNode(
-                                  value: 'open',
+                                  value: 'closedIndefinitely',
                                   isBlock: false,
                                 ),
                               )
@@ -6723,6 +6743,31 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'offset'),
             value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'rental'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'business'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'details'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'referral_points'),
+                            value: EnumValueNode(
+                                name: NameNode(value: 'desc_nulls_last')),
+                          )
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -13020,7 +13065,28 @@ const documentNodeQuerynumber_of_rentals_by_category =
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   )
                 ]),
