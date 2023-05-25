@@ -48,27 +48,48 @@ const int nSplashScreenTimer = 1;
 const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
 const int nScheduledCounterOfferValidExpireTimeInSeconds = 900; // 15mins
 const Map<String, dynamic> defaultSchedule = {
-  "friday": [
-    {"from": "8:00", "isOpen": false, "to": "20:00"}
-  ],
-  "monday": [
-    {"from": "8:00", "isOpen": false, "to": "20:00"}
-  ],
-  "saturday": [
-    {"from": "8:00", "isOpen": false, "to": "20:00"}
-  ],
-  "sunday": [
-    {"from": "8:00", "isOpen": false, "to": "20:00"}
-  ],
-  "thursday": [
-    {"from": "8:00", "isOpen": false, "to": "20:00"}
-  ],
-  "tuesday": [
-    {"from": "8:00", "isOpen": false, "to": "20:00"}
-  ],
-  "wednesday": [
-    {"from": "8:00", "isOpen": false, "to": "20:00"}
-  ],
+  "friday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "monday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "saturday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "sunday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "thursday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "tuesday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "wednesday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
 };
 // ----------------- Costants Strings ----------------- //
 const String sPrivacyPolicyCustomerApp =

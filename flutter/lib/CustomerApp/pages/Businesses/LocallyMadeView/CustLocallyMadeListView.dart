@@ -112,7 +112,9 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
             onClick: () async {
               viewController.showBusiness.value = false;
             },
-            icon: Icons.local_offer,
+            icon: viewController.productsCategory.first == ProductCategory1.Art
+                ? Icons.palette
+                : Icons.local_offer,
             borderRadius: 35,
             backgroundColor:
                 viewController.showBusiness.isTrue ? Color(0xFFF0F0F0) : null,
