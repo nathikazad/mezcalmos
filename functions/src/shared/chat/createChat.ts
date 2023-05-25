@@ -6,8 +6,9 @@ import { getRestaurant } from "../graphql/restaurant/getRestaurant";
 import { getCustomer } from "../graphql/user/customer/getCustomer";
 import { getUser } from "../graphql/user/getUser";
 import { getMezAdmins } from "../graphql/user/mezAdmin/getMezAdmin";
+import { RecipientType } from "../models/Generic/Chat";
 import { AppType, MezError } from "../models/Generic/Generic";
-import { CustomerInfo } from "../models/Generic/User";
+import { CustomerInfo, MezAdmin, UserInfo } from "../models/Generic/User";
 import { ServiceProvider, ServiceProviderType } from "../models/Services/Service";
 
 export interface ServiceProviderDetails {
@@ -92,12 +93,45 @@ export async function createNewDirectChat(userId1: number, directChatDetails: Di
 
 export interface MezAdminChatDetails {
     userAppType: AppType,
+    recipientId: number,
+    recipientType: RecipientType
 }
 export async function createNewMezAdminChat(userId: number, mezAdminChatDetails: MezAdminChatDetails) {
-    let userPromise = getUser(userId);
-    let mezAdminPromise = getMezAdmins();
-    let response = await Promise.all([userPromise, mezAdminPromise]);
-    let user = response[0];
-    let mezAdmins = response[1];
-    createMezAdminChat(user, mezAdminChatDetails.userAppType, mezAdmins)
+
+    let mezAdmins: MezAdmin[] = await getMezAdmins();
+    let serviceProvider: ServiceProvider | undefined;
+    let recipients: number[] = [];
+    let name: string | undefined;
+    let image: string | undefined;
+    
+    switch (mezAdminChatDetails.recipientType) {
+        case RecipientType.Customer:
+        case RecipientType.DeliveryDriver:
+            recipients.push(mezAdminChatDetails.recipientId);
+            const user: UserInfo = await getUser(mezAdminChatDetails.recipientId);
+            name = user.name;
+            image = user.image;
+            break;
+        case RecipientType.Restaurant:
+            serviceProvider = await getRestaurant(mezAdminChatDetails.recipientId);
+            break;
+        case RecipientType.Laundry:
+            serviceProvider = await getLaundryStore(mezAdminChatDetails.recipientId);
+            break;
+        case RecipientType.Business:
+            serviceProvider = (await getBusiness(mezAdminChatDetails.recipientId)).details;
+            break;
+        case RecipientType.DeliveryCompany:
+            serviceProvider = await getDeliveryCompany(mezAdminChatDetails.recipientId);
+            break;
+        default:
+            break;
+    }
+    if(serviceProvider) {
+        recipients = serviceProvider.operators!.map(operator => operator.userId);
+        name = serviceProvider.name;
+        image = serviceProvider.image;
+    }
+
+    createMezAdminChat(recipients, mezAdminChatDetails, mezAdmins, name, image);
 }
