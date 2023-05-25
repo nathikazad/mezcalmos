@@ -287,6 +287,10 @@
           "serviceTitle": "Servicio de mascotas",
           "serviceSubtitle": "Anuncie su servicio de sentado para mascotas."
         },
+        "mealPlanning": {
+          "serviceTitle": "Servicio",
+          "serviceSubtitle": "Anuncie un servicio de planificación de comidas.ón de comidas."
+        },
         "wellnessPractitioner": {
           "eventTitle": "Evento",
           "eventSubtitle": "Anuncie un evento, ya sea una sesión privada, un evento de repetición semanal o un evento único.",
@@ -925,7 +929,7 @@
               "store": "Almacenar",
               "uncategorized": "Sin categoría",
               "cleaning": "Limpieza",
-              "mealplanning": "Planificación de comidas",
+              "mealPlanning": "Planificación de comidas",
               "petsitting": "Cuidado de mascotas",
               "noUncategorizedFound": "No se encontró sin categoría",
               "noCleaningFound": "No se encontró limpieza",
@@ -1036,7 +1040,7 @@
             "store": "Almacenar",
             "uncategorized": "Sin categoría",
             "cleaning": "Limpieza",
-            "mealplanning": "Planificación de comidas",
+            "mealPlanning": "Planificación de comidas",
             "petsitting": "Cuidado de mascotas",
             "noUncategorizedFound": "No se encontró sin categoría",
             "noCleaningFound": "No se encontró limpieza",
@@ -1348,7 +1352,7 @@
             "noBusinessesFound": "No businesses found",
             "store": "Tienda",
             "services": "Servicios",
-            "mealplanning": "Planificación de comidas",
+            "mealPlanning": "Planificación de comidas",
             "petSitting": "Cuidado de mascotas",
             "uncategorized": "Sin categoría",
             "cleaning": "Limpieza",
@@ -1368,7 +1372,7 @@
               "title": "Limpieza",
               "description": "Mantenga su espacio impecable con limpiadores profesionales."
             },
-            "mealplanning": {
+            "mealPlanning": {
               "title": "Planificación de comidas",
               "description": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
             },
@@ -1420,6 +1424,10 @@
             "locallyMade": {
               "title": "Hecho localmente",
               "description": "Saborea el sabor de las golosinas locales."
+            },
+            "mealPlanning": {
+              "title": "Planificación de comidas",
+              "description": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
             }
           },
           "CustFoodListView": {
@@ -1487,7 +1495,7 @@
           "title": "Fabricación local",
           "subtitle": "Saboree las delicias locales."
         },
-        "mealplanning": {
+        "mealPlanning": {
           "title": "Planificación de comidas",
           "subtitle": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
         },

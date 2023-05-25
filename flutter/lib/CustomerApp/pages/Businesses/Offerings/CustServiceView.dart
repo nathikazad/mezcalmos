@@ -95,7 +95,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                         margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.service!.business,
-                        offeringName: viewController.service!.details.name,
+                        offering: viewController.service!.details,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

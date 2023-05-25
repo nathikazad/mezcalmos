@@ -283,6 +283,10 @@
           "serviceTitle": "Service",
           "serviceSubtitle": "Advertise a service that clients can book."
         },
+        "mealPlanning": {
+          "serviceTitle": "Service",
+          "serviceSubtitle": "Advertise a meal planning service."
+        },
         "petSitting": {
           "serviceTitle": "Pet sitting service",
           "serviceSubtitle": "Advertise your pet sitting service.",
@@ -1311,7 +1315,7 @@
             "noBusinessesFound": "No businesses found",
             "store": "Store",
             "services": "Services",
-            "mealplanning": "Meal planning",
+            "mealPlanning": "Meal planning",
             "petSitting": "Pet sitting",
             "uncategorized": "Uncategorized",
             "cleaning": "Cleaning",
@@ -1330,7 +1334,7 @@
               "title": "Cleaning",
               "description": "Keep your space spotless with professional cleaners."
             },
-            "mealplanning": {
+            "mealPlanning": {
               "title": "Meal planning",
               "description": "Plan your meals effortlessly with our meal planning service."
             },
@@ -1354,12 +1358,17 @@
             "locallyMade": {
               "title": "Locally Made",
               "description": "Savor the taste of locally made treats."
+            },
+            "mealPlanning": {
+              "title": "Meal planning",
+              "description": "Plan your meals effortlessly with our meal planning service."
             }
           },
           "CustFoodListView": {
             "store": "Store",
             "noUncategorizedFound": "No uncategorized found",
             "noCleaningFound": "No cleaning found",
+            "mealPlanning": "Meal planning",
             "noMealPlanningFound": "No meal planning found",
             "noPetSittingFound": "No pet sitting found",
             "noBusinessesFound": "No businesses found",
@@ -1420,7 +1429,7 @@
           "title": "Locally Made",
           "subtitle": "Savor the taste of locally made treats."
         },
-        "mealplanning": {
+        "mealPlanning": {
           "title": "Meal Planning",
           "subtitle": "Plan your meals effortlessly with our meal planning service."
         },

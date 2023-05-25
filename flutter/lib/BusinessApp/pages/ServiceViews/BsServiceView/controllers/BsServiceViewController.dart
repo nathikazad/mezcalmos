@@ -37,10 +37,10 @@ class BsServiceViewController {
   Rxn<Schedule?> serviceSchedule = Rxn();
   late ServiceCategory1 serviceCategory;
 
-  List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
-        TimeUnit.PerHour,
-        TimeUnit.PerDay,
-      ]);
+  List<TimeUnit> _possibleTimeUnits = [
+    TimeUnit.PerHour,
+    TimeUnit.PerDay,
+  ];
   List<TimeUnit> get avalbleUnits => _possibleTimeUnits
       .where((TimeUnit element) =>
           detailsController.priceTimeUnitMap.keys.contains(element) == false)
@@ -69,6 +69,9 @@ class BsServiceViewController {
         language: languages!,
         businessDetailsId: detailsId);
     this.serviceCategory = serviceCategory;
+    if (serviceCategory == ServiceCategory1.MealPlanning) {
+      _possibleTimeUnits = [TimeUnit.Unit];
+    }
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
     if (serviceId != null) {
       this.serviceId = serviceId;

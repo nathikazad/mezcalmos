@@ -116,7 +116,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                         margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.homeRental!.business,
-                        offeringName: viewController.homeRental!.details.name,
+                        offering: viewController.homeRental!.details,
                       ),
                       
                       /// Bookings

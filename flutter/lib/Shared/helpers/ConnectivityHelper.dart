@@ -55,16 +55,16 @@ class ConnectivityHelper {
   }
 
   Future<InternetStatus> checkForInternet([ConnectivityResult? event]) async {
-    List<Future<bool>> futures = <Future<bool>>[_pingServer(proxyUrl)];
+    List<Future<bool>> futures = <Future<bool>>[pingServer(proxyUrl)];
 
     if (!kIsWeb) {
       futures.addAll([
-        _pingServer(sNetworkCheckUrl1),
-        _pingServer(firebaseDbUrl),
-        _pingServer(hasuraDbUrl),
+        pingServer(sNetworkCheckUrl1),
+        pingServer(firebaseDbUrl),
+        pingServer(hasuraDbUrl),
         MezEnv.appLaunchMode == AppLaunchMode.prod
-            ? _pingServer(firebaseFunctionsProdUrl)
-            : _pingServer(firebaseFunctionsStageUrl)
+            ? pingServer(firebaseFunctionsProdUrl)
+            : pingServer(firebaseFunctionsStageUrl)
       ]);
     }
     final Stopwatch stopwatch = Stopwatch()..start();
@@ -81,7 +81,7 @@ class ConnectivityHelper {
     }
   }
 
-  Future<bool> _pingServer(String pingUrl) async {
+  static Future<bool> pingServer(String pingUrl) async {
     try {
       await http.get(Uri.parse(pingUrl));
       return Future<bool>.delayed(Duration.zero, () => true);
