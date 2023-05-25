@@ -24,6 +24,7 @@ class MezButton extends StatefulWidget {
     required this.label,
     this.onClick,
     this.borderColor,
+    this.fontSize,
   }) : super(key: key);
 
   final bool enabled;
@@ -38,6 +39,7 @@ class MezButton extends StatefulWidget {
   final TextStyle? textStyle;
   final IconData? icon;
   final BoxBorder? border;
+  final double? fontSize;
 
   @override
   State<MezButton> createState() => _MezButtonState();
@@ -117,6 +119,7 @@ class _MezButtonState extends State<MezButton> {
                               widget.label,
                               style: widget.textStyle ??
                                   context.txt.bodyLarge?.copyWith(
+                                      fontSize: widget.fontSize,
                                       color: widget.textColor ?? Colors.white),
                             ),
                           ),

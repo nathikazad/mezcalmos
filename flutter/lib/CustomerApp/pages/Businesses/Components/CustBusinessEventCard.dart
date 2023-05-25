@@ -61,7 +61,7 @@ class CustBusinessEventCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    event.details.name.getTranslation(userLanguage)!.inCaps,
+                    '${event.details.name.getTranslation(userLanguage)!.inCaps}',
                     style: context.textTheme.bodyLarge?.copyWith(
                         fontSize: 12.5.mezSp,
                         fontWeight: FontWeight.w600,
@@ -69,7 +69,9 @@ class CustBusinessEventCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${event.details.cost.values.first.toPriceString()}/${'${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
+                  event.details.cost.values.first == 0
+                      ? '${_i18n()['free']}'
+                      : '${event.details.cost.values.first.toPriceString()}/${'${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
                   overflow: TextOverflow.ellipsis,
                   style: context.textTheme.bodyLarge?.copyWith(
                       fontSize: 12.5.mezSp,
@@ -79,6 +81,7 @@ class CustBusinessEventCard extends StatelessWidget {
               ],
             ),
             if (event.schedule != null &&
+                event.scheduleType != ScheduleType.OneTime &&
                 !(event.scheduleType == ScheduleType.OnDemand && event.isClass))
               Column(
                 children: [
@@ -90,7 +93,8 @@ class CustBusinessEventCard extends StatelessWidget {
                       scheduleType: event.scheduleType)
                 ],
               ),
-            if (event.scheduleType == ScheduleType.OneTime)
+            if (event.period != null &&
+                event.scheduleType == ScheduleType.OneTime)
               oneTimeBuilder(event),
             if (needBussinessName)
               Column(
@@ -105,7 +109,7 @@ class CustBusinessEventCard extends StatelessWidget {
   }
 
   Widget oneTimeBuilder(EventCard eventData) {
-    return eventData.startsAt != null && eventData.endsAt != null
+    return eventData.period != null
         ? Column(
             children: [
               Divider(),

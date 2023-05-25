@@ -255,6 +255,9 @@ class BsEventViewController {
       case BusinessProfile.Volunteer:
         category1 = EventCategory1.Volunteer;
         break;
+      case BusinessProfile.DanceStudio:
+        category1 = EventCategory1.Dance;
+        break;
     }
     return category1;
   }
@@ -321,6 +324,40 @@ class BsEventViewController {
               type: ScheduleType.OneTime),
         ];
       case BusinessProfile.YogaStudio:
+        return isClass
+            ? [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["onDemandClass"],
+                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    tags: [EventTag.Class],
+                    type: ScheduleType.OnDemand),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyClass"],
+                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    tags: [EventTag.Class],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeClass"],
+                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    tags: [EventTag.Class, EventTag.Workshop],
+                    type: ScheduleType.OneTime),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["retreat"],
+                    subtitle: _i18n()[businessFB]["retreatLabel"],
+                    tags: [EventTag.Class, EventTag.Retreat],
+                    type: ScheduleType.OneTime),
+              ]
+            : [
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["weeklyEvent"],
+                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: _i18n()[businessFB]["oneTimeEvent"],
+                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    type: ScheduleType.OneTime),
+              ];
+      case BusinessProfile.DanceStudio:
         return isClass
             ? [
                 ScheduleTypeInput(

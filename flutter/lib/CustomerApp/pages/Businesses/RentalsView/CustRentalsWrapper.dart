@@ -34,7 +34,7 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
   @override
   void initState() {
     super.initState();
-    serviceTree = MezRouter.bodyArguments!["serviceTree"] as List<ServiceTree>;
+    serviceTree = MezRouter.bodyArguments?["serviceTree"] as List<ServiceTree>;
   }
 
   void navigateToListView(MezService mezService) {

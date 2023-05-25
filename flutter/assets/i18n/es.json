@@ -212,6 +212,24 @@
           "retreat": "Retiro",
           "retreatLabel": "Un retiro educativo que ocurre en un conjunto de días particulares."
         },
+        "danceStudio": {
+          "eventTitle": "Evento",
+          "eventSubtitle": "El servicio de eventos se utiliza para planificar eventos para su negocio.",
+          "classTitle": "Clase",
+          "classSubtitle": "Un servicio de clase es cuando instruye a una clase para un estudiante.",
+          "weeklyEvent": "Evento semanal",
+          "weeklyEventLabel": "Evento programado que ocurre en una base de repetición semanal. Por ejemplo, los martes latinos por la noche.",
+          "oneTimeEvent": "Evento de una vez",
+          "oneTimeEventLabel": "Evento programado que ocurre en una cierta fecha y hora en la que varias personas pueden ingresar. Por ejemplo, el Año Nuevo Bash con DJ Rocco.",
+          "onDemandClass": "Lección privada",
+          "onDemandClassLabel": "Clase no programada que un estudiante puede reservar con usted en función de su disponibilidad",
+          "weeklyClass": "Clase semanal programada",
+          "weeklyClassLabel": "Clase semanal programada que ocurre en el grupo.",
+          "oneTimeClass": "Taller",
+          "oneTimeClassLabel": "Un taller educativo que ocurre en un día en particular.",
+          "retreat": "Retiro",
+          "retreatLabel": "Un retiro educativo que ocurre en un conjunto de días particulares."
+        },
         "homeRental": {
           "rentalTitle": "Alquiler de viviendas",
           "rentalSubtitle": "A través de un servicio de alquiler de viviendas, puede anunciar una casa en alquiler.",
@@ -278,6 +296,10 @@
         "petSitting": {
           "serviceTitle": "Servicio de mascotas",
           "serviceSubtitle": "Anuncie su servicio de sentado para mascotas."
+        },
+        "mealPlanning": {
+          "serviceTitle": "Servicio",
+          "serviceSubtitle": "Anuncie un servicio de planificación de comidas.ón de comidas."
         },
         "wellnessPractitioner": {
           "eventTitle": "Evento",
@@ -369,6 +391,13 @@
         "total": "total",
         "unit": "unidad",
         "none": "ninguna",
+        "bedrooms": "Dormitorios",
+        "bathrooms": "Baños",
+        "apartment": "Departamento",
+        "villa": "Villa",
+        "condo": "Condominio",
+        "bungalow": "Bungalow",
+        "hotel": "Hotel",
         "components": {
           "loading": "Cargando",
           "schedule": "Horario",
@@ -910,7 +939,7 @@
               "store": "Almacenar",
               "uncategorized": "Sin categoría",
               "cleaning": "Limpieza",
-              "mealplanning": "Planificación de comidas",
+              "mealPlanning": "Planificación de comidas",
               "petsitting": "Cuidado de mascotas",
               "noUncategorizedFound": "No se encontró sin categoría",
               "noCleaningFound": "No se encontró limpieza",
@@ -968,7 +997,7 @@
           "shared": {
             "filter": "Filtrar",
             "events": "Eventos",
-            "organizers": "Organizadoras",
+            "organizers": "Organizadora",
             "cancel": "Cancelar",
             "confirm": "Confirmar",
             "hour": "Hora",
@@ -1021,7 +1050,7 @@
             "store": "Almacenar",
             "uncategorized": "Sin categoría",
             "cleaning": "Limpieza",
-            "mealplanning": "Planificación de comidas",
+            "mealPlanning": "Planificación de comidas",
             "petsitting": "Cuidado de mascotas",
             "noUncategorizedFound": "No se encontró sin categoría",
             "noCleaningFound": "No se encontró limpieza",
@@ -1087,7 +1116,8 @@
             "month": "mes",
             "person": "persona",
             "total": "total",
-            "unit": "unidad"
+            "unit": "unidad",
+            "free": "GRATIS"
           },
           "CustBusinessRentalCost": {
             "hour": "hora",
@@ -1214,7 +1244,7 @@
         "EventsViews": {
           "CustEventsListView": {
             "events": "Eventos",
-            "organizers": "Organizadoras",
+            "organizers": "Organizadora",
             "noBusinessesFound": "No se encontraron negocios",
             "noEventsFound": "No se encuentran eventos",
             "hour": "hora",
@@ -1299,7 +1329,7 @@
             "noBusinessesFound": "No se encontraron negocios",
             "noVolunteerFound": "No se encontró ningún voluntario",
             "volunteer": "Voluntaria",
-            "organizers": "Organizadoras"
+            "organizers": "Organizadora"
           }
         },
         "AdventureView": {
@@ -1320,7 +1350,7 @@
             "none": "Ninguna",
             "noBusinessesFound": "No se encontraron negocios",
             "adventure": "Aventura",
-            "organizers": "Organizadoras"
+            "organizers": "Organizadora"
           }
         },
         "ServicesViews": {
@@ -1332,10 +1362,18 @@
             "noBusinessesFound": "No businesses found",
             "store": "Tienda",
             "services": "Servicios",
-            "mealplanning": "Planificación de comidas",
-            "petSitting": "Pet sitting",
+            "mealPlanning": "Planificación de comidas",
+            "petSitting": "Cuidado de mascotas",
             "uncategorized": "Sin categoría",
-            "cleaning": "Limpieza"
+            "cleaning": "Limpieza",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "personaa",
+            "total": "total",
+            "unit": "unidad",
+            "none": "Ninguna"
           },
           "CustServicesWrapper": {
             "services": "Servicios",
@@ -1344,7 +1382,7 @@
               "title": "Limpieza",
               "description": "Mantenga su espacio impecable con limpiadores profesionales."
             },
-            "mealplanning": {
+            "mealPlanning": {
               "title": "Planificación de comidas",
               "description": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
             },
@@ -1363,6 +1401,7 @@
             "localMade": "Hecho localmente",
             "consumable": "Consumible",
             "personalCare": "Cuidado personal",
+            "product": "Productos",
             "noPetServiceFound": "No se encontraron servicios",
             "art": "Arte",
             "noBusinessesFound": "No se encontraron negocios",
@@ -1395,6 +1434,10 @@
             "locallyMade": {
               "title": "Hecho localmente",
               "description": "Saborea el sabor de las golosinas locales."
+            },
+            "mealPlanning": {
+              "title": "Planificación de comidas",
+              "description": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
             }
           },
           "CustFoodListView": {
@@ -1462,7 +1505,7 @@
           "title": "Fabricación local",
           "subtitle": "Saboree las delicias locales."
         },
-        "mealplanning": {
+        "mealPlanning": {
           "title": "Planificación de comidas",
           "subtitle": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
         },
@@ -1865,7 +1908,8 @@
               "petSitting": "Cuidado de Mascotas",
               "wellnessPractitioner": "Profesional de Bienestar",
               "volunteer": "Voluntariado",
-              "entertainment": "Planificadores de eventos"
+              "entertainment": "Planificadores de eventos",
+              "danceStudio": "Estudio de baile"
             }
           }
         },

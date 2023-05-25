@@ -77,6 +77,7 @@ const String sPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
 
 const String sNetworkCheckUrl1 = 'https://www.google.com';
 const String firebaseDbUrl = 'https://www.firebaseio.com';
+const String firebaseAuthUrl = 'https://identitytoolkit.googleapis.com';
 const String firebaseFunctionsProdUrl =
     'https://us-central1-mezcalmos-31f1c.cloudfunctions.net';
 const String firebaseFunctionsStageUrl =

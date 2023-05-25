@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/controllers/CustLocallyMadeListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
@@ -18,6 +19,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['LocallyMadeView']['CustLocallyMadeListView'];
@@ -103,7 +105,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: '${_i18n()["${viewController.getTitleKey}"]}',
+            label: '${_i18n()['product']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
@@ -204,10 +206,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
             )),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noBusinessFound']}'));
+      return NoServicesFound();
   }
 
   Widget _buildProducts() {
@@ -235,9 +234,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                       SizedBox(
                         width: 55.mezW,
                         child: Text(
-                          viewController.products[index].details.name
-                              .getTranslation(userLanguage)!
-                              .inCaps,
+                          '${viewController.products[index].details.name.getTranslation(userLanguage)!.inCaps}',
                           overflow: TextOverflow.ellipsis,
                           style: context.textTheme.displaySmall?.copyWith(
                               fontSize: 12.mezSp, fontWeight: FontWeight.bold),
@@ -275,10 +272,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
         ),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noServiceFound']}'));
+      return NoServicesFound();
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

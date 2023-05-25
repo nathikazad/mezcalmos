@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/controllers/CustTherapyListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -251,88 +252,19 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
             )),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noBusinessesFound']}'));
+      return NoServicesFound();
   }
 
   Widget _buildTherapy() {
     if (viewController.therapy.isNotEmpty) {
       return Column(
           children: List.generate(
-              viewController.therapy.length,
-              (int index) => MezCard(
-                  elevation: 0,
-                  margin: EdgeInsets.only(bottom: 12.5),
-                  onClick: () {
-                    CustEventView.navigate(
-                      eventId: viewController.therapy[index].details.id.toInt(),
-                    );
-                  },
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: viewController
-                                    .therapy[index].details.firstImage ??
-                                defaultUserImgUrl,
-                            imageBuilder: (BuildContext context,
-                                    ImageProvider<Object> imageProvider) =>
-                                CircleAvatar(
-                              radius: 16.mezSp,
-                              backgroundImage: imageProvider,
-                            ),
-                          ),
-                          if (viewController
-                                  .therapy[index].details.firstImage ==
-                              null)
-                            SizedBox(
-                              width: 10,
-                            ),
-                          Expanded(
-                            child: Text(
-                              viewController.therapy[index].details
-                                      .name[userLanguage] ??
-                                  "",
-                              style: context.textTheme.displaySmall?.copyWith(
-                                  fontSize: 11.75.mezSp,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          ),
-                          Text(
-                            '${viewController.therapy[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.therapy[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
-                            overflow: TextOverflow.ellipsis,
-                            style: context.textTheme.bodyLarge?.copyWith(
-                                fontSize: 12.5.mezSp,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                      if (viewController.therapy[index].schedule != null)
-                        Column(
-                          children: [
-                            Divider(),
-                            CustBusinessScheduleBuilder(
-                                showTitle: false,
-                                showIcons: false,
-                                schedule:
-                                    viewController.therapy[index].schedule,
-                                scheduleType:
-                                    viewController.therapy[index].scheduleType),
-                          ],
-                        ),
-                      if (viewController.therapy[index].scheduleType ==
-                          ScheduleType.OneTime)
-                        oneTimeBuilder(viewController.therapy[index]),
-                      Divider(),
-                      Text(viewController.therapy[index].businessName)
-                    ],
-                  ))));
+        viewController.therapy.length,
+        (int index) => CustBusinessEventCard(
+          event: viewController.therapy[index],
+          needBussinessName: true,
+        ),
+      ));
     } else
       return NoServicesFound();
   }

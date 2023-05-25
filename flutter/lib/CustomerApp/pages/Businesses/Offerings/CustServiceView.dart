@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
@@ -73,6 +74,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                         style: context.textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w700, fontSize: 18.mezSp),
                       ),
+                      SizedBox(height: 10),
                       viewController.service!.details.cost.length == 1
                           ? Text(
                               "${costData.entries.first.value.toPriceString()}/${costData.entries.first.key.name.toString().toLowerCase().replaceAll("per", "")}",
@@ -85,11 +87,15 @@ class _CustServiceViewState extends State<CustServiceView> {
                               cost: viewController.service!.details.cost,
                             ),
                       _description(context),
+                      CustBusinessScheduleBuilder(
+                        schedule: viewController.service!.schedule,
+                        scheduleType: ScheduleType.Scheduled,
+                      ),
                       CustBusinessMessageCard(
                         margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.service!.business,
-                        offeringName: viewController.service!.details.name,
+                        offering: viewController.service!.details,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],
@@ -118,7 +124,8 @@ class _CustServiceViewState extends State<CustServiceView> {
         ),
         Text(
           viewController.service!.details.description
-                  ?.getTranslation(userLanguage) ??
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
               _i18n()['noDescription'],
           style: Theme.of(context).textTheme.bodyMedium,
         ),

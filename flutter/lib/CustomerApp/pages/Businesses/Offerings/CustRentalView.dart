@@ -104,10 +104,10 @@ class _CustRentalViewState extends State<CustRentalView> {
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
                         business: viewController.rental!.business,
-                        offeringName: viewController.rental!.details.name,
+                        offering: viewController.rental!.details,
                       ),
                       CustBusinessNoOrderBanner(
-                        margin: EdgeInsets.zero,
+                        margin: EdgeInsets.only(top: 15),
                       ),
                     ],
                   ),
@@ -135,7 +135,8 @@ class _CustRentalViewState extends State<CustRentalView> {
         ),
         Text(
           viewController.rental!.details.description
-                  ?.getTranslation(userLanguage) ??
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
               _i18n()['noDescription'],
           style: Theme.of(context).textTheme.bodyMedium,
         ),

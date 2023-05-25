@@ -17,12 +17,14 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['VolunteerView']['CustVolunteerListView'];
@@ -100,6 +102,7 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
             onClick: () async {
               viewController.showBusiness.value = false;
             },
+            fontSize: 12.mezSp,
             icon: Icons.volunteer_activism,
             borderRadius: 35,
             backgroundColor:
@@ -120,6 +123,7 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
               viewController.showBusiness.value = true;
             },
             icon: Icons.local_activity,
+            fontSize: 12.mezSp,
             borderRadius: 35,
             backgroundColor:
                 viewController.showBusiness.isFalse ? Color(0xFFF0F0F0) : null,
@@ -196,89 +200,19 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
                     ],
                   ))));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noBusinessesFound']}'));
+      return NoServicesFound();
   }
 
   Widget _buildVolunteer() {
     if (viewController.volunteer.isNotEmpty) {
       return Column(
           children: List.generate(
-              viewController.volunteer.length,
-              (int index) => MezCard(
-                  elevation: 0,
-                  margin: EdgeInsets.only(bottom: 12.5),
-                  onClick: () {
-                    CustEventView.navigate(
-                      eventId:
-                          viewController.volunteer[index].details.id.toInt(),
-                    );
-                  },
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: viewController
-                                    .volunteer[index].details.firstImage ??
-                                defaultUserImgUrl,
-                            imageBuilder: (BuildContext context,
-                                    ImageProvider<Object> imageProvider) =>
-                                CircleAvatar(
-                              radius: 16.mezSp,
-                              backgroundImage: imageProvider,
-                            ),
-                          ),
-                          if (viewController
-                                  .volunteer[index].details.firstImage !=
-                              null)
-                            SizedBox(
-                              width: 10,
-                            ),
-                          Expanded(
-                            child: Text(
-                              viewController.volunteer[index].details
-                                      .name[userLanguage] ??
-                                  "",
-                              style: context.textTheme.displaySmall?.copyWith(
-                                  fontSize: 11.75.mezSp,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          ),
-                          Text(
-                            '${viewController.volunteer[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.volunteer[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
-                            overflow: TextOverflow.ellipsis,
-                            style: context.textTheme.bodyLarge?.copyWith(
-                                fontSize: 12.5.mezSp,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                      if (viewController.volunteer[index].schedule != null)
-                        Column(
-                          children: [
-                            Divider(),
-                            CustBusinessScheduleBuilder(
-                                showTitle: false,
-                                showIcons: false,
-                                schedule:
-                                    viewController.volunteer[index].schedule,
-                                scheduleType: viewController
-                                    .volunteer[index].scheduleType),
-                          ],
-                        ),
-                      if (viewController.volunteer[index].scheduleType ==
-                          ScheduleType.OneTime)
-                        oneTimeBuilder(viewController.volunteer[index]),
-                      Divider(),
-                      Text(viewController.volunteer[index].businessName)
-                    ],
-                  ))));
+        viewController.volunteer.length,
+        (int index) => CustBusinessEventCard(
+          event: viewController.volunteer[index],
+          needBussinessName: true,
+        ),
+      ));
     } else
       return NoServicesFound();
   }
@@ -293,7 +227,7 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
             Text(
               eventData.period == null
                   ? '-'
-                  : "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
+                  : "${eventData.period?.start.toDayName().inCaps} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             Text(eventData.period == null

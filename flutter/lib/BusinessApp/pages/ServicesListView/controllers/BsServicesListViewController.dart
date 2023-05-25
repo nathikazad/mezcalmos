@@ -256,8 +256,7 @@ class BsServicesListViewController {
             subtitle: serviceSubtitleLangKey,
             route: () async {
               await navigateToService(
-                serviceCategory: ServiceCategory1.Cleaning
-              );
+                  serviceCategory: ServiceCategory1.Cleaning);
             },
           ),
         ];
@@ -268,8 +267,7 @@ class BsServicesListViewController {
             subtitle: serviceSubtitleLangKey,
             route: () async {
               await navigateToService(
-                serviceCategory: ServiceCategory1.PetSitting
-              );
+                  serviceCategory: ServiceCategory1.PetSitting);
             },
           ),
         ];
@@ -280,6 +278,34 @@ class BsServicesListViewController {
             subtitle: eventSubtitleLangKey,
             route: () async {
               await navigateToEvent(isClass: false);
+            },
+          ),
+        ];
+      case BusinessProfile.DanceStudio:
+        return [
+          BusinessProfileItem(
+            title: eventTitleLangKey,
+            subtitle: eventSubtitleLangKey,
+            route: () async {
+              await navigateToEvent(isClass: false);
+            },
+          ),
+          BusinessProfileItem(
+            title: classTitleLangKey,
+            subtitle: classSubtitleLangKey,
+            route: () async {
+              await navigateToEvent(isClass: true);
+            },
+          ),
+        ];
+      case BusinessProfile.MealPlanning:
+        return [
+          BusinessProfileItem(
+            title: serviceTitleLangKey,
+            subtitle: serviceSubtitleLangKey,
+            route: () async {
+              await navigateToService(
+                  serviceCategory: ServiceCategory1.MealPlanning);
             },
           ),
         ];

@@ -292,10 +292,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
             )),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noBusinessFound']}'));
+      return NoServicesFound();
   }
 
   Widget _buildRentals() {

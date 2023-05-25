@@ -66,6 +66,9 @@ class _CustProductViewState extends State<CustProductView> {
                             .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         "${viewController.product!.details.cost.entries.first.value.toPriceString()}",
                         style: context.textTheme.bodyLarge!.copyWith(
@@ -78,7 +81,7 @@ class _CustProductViewState extends State<CustProductView> {
                         margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 15),
                         business: viewController.product!.business,
-                        offeringName: viewController.product!.details.name,
+                        offering: viewController.product!.details,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],
@@ -107,7 +110,8 @@ class _CustProductViewState extends State<CustProductView> {
         ),
         Text(
           viewController.product!.details.description
-                  ?.getTranslation(userLanguage) ??
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
               _i18n()['noDescription'],
           style: Theme.of(context).textTheme.bodyMedium,
         ),

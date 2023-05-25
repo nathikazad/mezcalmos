@@ -92,19 +92,36 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "${_i18n()["scheduled"]} ${_i18n()['events'].toString().toLowerCase()}",
-                                        style: context.textTheme.bodyLarge,
-                                      ),
-                                      smallSepartor,
-                                      _buildEvents(ScheduleType.Scheduled),
+                                      if (!viewController.isWeeklyEventsEmpty)
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${_i18n()["scheduled"]} ${_i18n()['events'].toString().toLowerCase()}",
+                                              style:
+                                                  context.textTheme.bodyLarge,
+                                            ),
+                                            smallSepartor,
+                                            _buildEvents(
+                                                ScheduleType.Scheduled),
+                                          ],
+                                        ),
                                       meduimSeperator,
-                                      Text(
-                                        "${_i18n()["oneTime"]} ${_i18n()['events'].toString().toLowerCase()}",
-                                        style: context.textTheme.bodyLarge,
-                                      ),
-                                      smallSepartor,
-                                      _buildEvents(ScheduleType.OneTime),
+                                      if (!viewController.isOneTimeEventsEmpty)
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${_i18n()["oneTime"]} ${_i18n()['events'].toString().toLowerCase()}",
+                                              style:
+                                                  context.textTheme.bodyLarge,
+                                            ),
+                                            smallSepartor,
+                                            _buildEvents(ScheduleType.OneTime),
+                                          ],
+                                        ),
                                     ],
                                   ),
                       ),
@@ -129,6 +146,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
             onClick: () async {
               viewController.showBusiness.value = false;
             },
+            fontSize: 12.mezSp,
             icon: Icons.celebration,
             borderRadius: 35,
             backgroundColor:
@@ -148,6 +166,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
             onClick: () async {
               viewController.showBusiness.value = true;
             },
+            fontSize: 12.mezSp,
             icon: Icons.local_activity,
             borderRadius: 35,
             backgroundColor:
@@ -276,10 +295,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
             )),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noBusinessesFound']}'));
+      return NoServicesFound();
   }
 
   Widget _buildEvents(ScheduleType scheduleType) {

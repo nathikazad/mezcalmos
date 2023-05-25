@@ -2,27 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/controllers/CustAdventureListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
-import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['AdventureView']['CustAdventureListView'];
@@ -73,6 +64,8 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _viewBusinessesSwitcher(),
+                      if (viewController.showBusiness.isFalse)
+                        _filterButton(context),
                       Container(
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
@@ -100,6 +93,7 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
             onClick: () async {
               viewController.showBusiness.value = false;
             },
+            fontSize: 12.mezSp,
             icon: Icons.hiking,
             borderRadius: 35,
             backgroundColor:
@@ -119,6 +113,7 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
             onClick: () async {
               viewController.showBusiness.value = true;
             },
+            fontSize: 12.mezSp,
             icon: Icons.local_activity,
             borderRadius: 35,
             backgroundColor:
@@ -136,173 +131,131 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
     if (viewController.businesses.isNotEmpty) {
       return Column(
           children: List.generate(
-        viewController.businesses.length,
-        (int index) => MezCard(
-            onClick: () {
-              CustBusinessView.navigate(
-                businessId: viewController.businesses[index].id,
-              );
-            },
-            elevation: 0,
-            contentPadding: EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
-            margin: EdgeInsets.only(bottom: 15),
-            firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.businesses[index].image),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  viewController.businesses[index].name,
-                  style: context.textTheme.displaySmall?.copyWith(
-                      fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _getAcceptedPaymentIcons(
-                        viewController.businesses[index].acceptedPayments),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Flexible(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.star,
-                            size: 17.5.mezSp,
-                            color: Color(0xFF6779FE),
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                              '${viewController.businesses[index].avgRating ?? '0'}',
-                              style: context.textTheme.bodySmall),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 2),
-                            child: Text(
-                              '(${viewController.businesses[index].reviewCount})',
-                              style: context.textTheme.bodyMedium,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ))
-      ));
-    } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noBusinessesFound']}'));
-  }
-
-  Widget _buildAdventure() {
-    if (viewController.adventure.isNotEmpty) {
-      return Column(
-          children: List.generate(
-              viewController.adventure.length,
+              viewController.businesses.length,
               (int index) => MezCard(
-                  elevation: 0,
-                  margin: EdgeInsets.only(bottom: 12.5),
                   onClick: () {
-                    CustEventView.navigate(
-                      eventId:
-                          viewController.adventure[index].details.id.toInt(),
+                    CustBusinessView.navigate(
+                      businessId: viewController.businesses[index].id,
                     );
                   },
+                  elevation: 0,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
+                  margin: EdgeInsets.only(bottom: 15),
+                  firstAvatarBgImage: CachedNetworkImageProvider(
+                      viewController.businesses[index].image),
                   content: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: viewController
-                                    .adventure[index].details.firstImage ??
-                                defaultUserImgUrl,
-                            imageBuilder: (BuildContext context,
-                                    ImageProvider<Object> imageProvider) =>
-                                CircleAvatar(
-                              radius: 16.mezSp,
-                              backgroundImage: imageProvider,
-                            ),
-                          ),
-                          if (viewController
-                                  .adventure[index].details.firstImage !=
-                              null)
-                            SizedBox(
-                              width: 10,
-                            ),
-                          Expanded(
-                            child: Text(
-                              viewController.adventure[index].details
-                                      .name[userLanguage] ??
-                                  "",
-                              style: context.textTheme.displaySmall?.copyWith(
-                                  fontSize: 11.75.mezSp,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          ),
-                          Text(
-                            '${viewController.adventure[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.adventure[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
-                            overflow: TextOverflow.ellipsis,
-                            style: context.textTheme.bodyLarge?.copyWith(
-                                fontSize: 12.5.mezSp,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
+                      Text(
+                        viewController.businesses[index].name,
+                        style: context.textTheme.displaySmall?.copyWith(
+                            fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
                       ),
-                      if (viewController.adventure[index].schedule != null)
-                        Column(
-                          children: [
-                            Divider(),
-                            CustBusinessScheduleBuilder(
-                                showTitle: false,
-                                showIcons: false,
-                                schedule:
-                                    viewController.adventure[index].schedule,
-                                scheduleType: viewController
-                                    .adventure[index].scheduleType),
-                          ],
-                        ),
-                      if (viewController.adventure[index].scheduleType ==
-                          ScheduleType.OneTime)
-                        oneTimeBuilder(viewController.adventure[index]),
-                      Divider(),
-                      Text(viewController.adventure[index].businessName)
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          _getAcceptedPaymentIcons(viewController
+                              .businesses[index].acceptedPayments),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  size: 17.5.mezSp,
+                                  color: Color(0xFF6779FE),
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                    '${viewController.businesses[index].avgRating ?? '0'}',
+                                    style: context.textTheme.bodySmall),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 2),
+                                  child: Text(
+                                    '(${viewController.businesses[index].reviewCount})',
+                                    style: context.textTheme.bodyMedium,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ))));
     } else
       return NoServicesFound();
   }
 
-  Column oneTimeBuilder(EventCard eventData) {
-    return Column(
-      children: [
-        Divider(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              eventData.period == null
-                  ? '-'
-                  : "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-            Text(eventData.period == null
-                ? '-'
-                : "${eventData.period!.formatTime(eventData.period!.start)} - ${eventData.period!.formatTime(eventData.period!.end)}"),
-          ],
+  Widget _filterButton(BuildContext context) {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.only(top: 15),
+      color: Color(0xFFF0F0F0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () async {
+          // _showFilterSheet(context);
+          FilterInput? data = await cusShowBusinessFilerSheet(
+              context: context,
+              filterInput: viewController.filterInput,
+              isClass: true,
+              defaultFilterInput: viewController.defaultFilters());
+          if (data != null) {
+            viewController.filter(data);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.filter_alt,
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '${_i18n()['filter']}:',
+              ),
+              SizedBox(
+                width: 3,
+              ),
+              Flexible(
+                child: Text(
+                  (viewController.selectedCategories.length == 1)
+                      ? "${viewController.selectedCategories.first.name}"
+                      : "${viewController.selectedCategoriesText}",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
         ),
-      ],
+      ),
     );
+  }
+
+  Widget _buildAdventure() {
+    if (viewController.adventure.isNotEmpty) {
+      return Column(
+          children: List.generate(
+        viewController.adventure.length,
+        (int index) => CustBusinessEventCard(
+            event: viewController.adventure[index], needBussinessName: true),
+      ));
+    } else
+      return NoServicesFound();
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

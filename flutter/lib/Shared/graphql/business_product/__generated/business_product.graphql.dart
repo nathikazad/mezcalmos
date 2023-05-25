@@ -3542,9 +3542,9 @@ const documentNodeQueryget_product_by_category = DocumentNode(definitions: [
                             name: NameNode(value: 'open_status'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: '_eq'),
+                                name: NameNode(value: '_neq'),
                                 value: StringValueNode(
-                                  value: 'open',
+                                  value: 'closedIndefinitely',
                                   isBlock: false,
                                 ),
                               )
@@ -3565,6 +3565,26 @@ const documentNodeQueryget_product_by_category = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'offset'),
             value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'referral_points'),
+                        value: EnumValueNode(
+                            name: NameNode(value: 'desc_nulls_last')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
