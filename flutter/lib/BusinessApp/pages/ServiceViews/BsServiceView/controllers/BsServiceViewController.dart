@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 class BsServiceViewController {
   // instances //
@@ -89,9 +90,7 @@ class BsServiceViewController {
   Future<void> changeSchedule(Schedule? schedule) async {
     if (schedule != null &&
         // This condition checks if the schedule has any [isOpen=true] timing
-        schedule.openHours.values
-            .expand((List<OpenHours> hours) => hours)
-            .any((OpenHours element) => element.isOpen)) {
+        schedule.atLeastOneDayIsOpen) {
       serviceSchedule.value = schedule;
       serviceSchedule.refresh();
     }

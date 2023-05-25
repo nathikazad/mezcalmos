@@ -11,8 +11,8 @@ class MezWorkingHoursController {
   }
 
   void updateWorkingHours(
-      {required Weekday day, required List<OpenHours> openHours}) {
-    _workingHours.value!.openHours[day] = openHours;
+      {required Weekday day, required WorkingDay workingDay}) {
+    _workingHours.value!.openHours[day] = workingDay;
     _workingHours.refresh();
   }
 }

@@ -5,57 +5,61 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class SingleDayScheduleViewController {
-  // final Rxn<Schedule> _workingHours = Rxn<Schedule>();
-  // Schedule get workingHours => _workingHours.value!;
-  final RxList<OpenHours> _workingHours = RxList<OpenHours>([]);
+  // final Rxn<Schedule> _workingDay.value?.openHours = Rxn<Schedule>();
+  // Schedule get workingHours => _workingDay.value?.openHours.value!;
+  Rxn<WorkingDay> _workingDay = Rxn<WorkingDay>();
+
   late Weekday day;
 
-  List<OpenHours> get workingHours => _workingHours;
+  List<OpenHours>? get workingHours => _workingDay.value?.openHours;
+  WorkingDay? get workingDay => _workingDay.value;
 
-  void initialize(
-      {required Weekday day, required List<OpenHours> workingHours}) {
+  bool get hasData => _workingDay.value != null;
+
+  void initialize({required Weekday day, required WorkingDay workingDay}) {
     this.day = day;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _workingHours.addAll(workingHours);
+      _workingDay.value = workingDay;
     });
     mezDbgPrint("Working hours =============> $workingHours");
   }
 
   void addWorkingHours({required OpenHours openHours}) {
-    _workingHours.add(openHours);
+    _workingDay.value?.openHours.add(openHours);
   }
 
   void editWorkingHours({required int index, required OpenHours openHours}) {
-    _workingHours[index] = openHours;
+    _workingDay.value?.openHours[index] = openHours;
   }
 
   void newWorkingHours() {
-    _workingHours.add(OpenHours(from: [00, 00], isOpen: true, to: [20, 00]));
+    _workingDay.value?.openHours.add(OpenHours(from: [00, 00], to: [20, 00]));
+    _workingDay.refresh();
   }
 
   void removeWorkingHours({required int index}) {
-    _workingHours.removeAt(index);
-    _workingHours.refresh();
+    _workingDay.value?.openHours.removeAt(index);
+    _workingDay.refresh();
   }
 
   void saveWorkingHours() {
-    MezRouter.back(backResult: _workingHours.value);
+    MezRouter.back(backResult: _workingDay.value);
   }
 
   void updateToTime(
       {required int index, required int hour, required int minute}) {
-    _workingHours[index].to = [hour, minute];
-    _workingHours.refresh();
+    _workingDay.value?.openHours[index].to = [hour, minute];
+    _workingDay.refresh();
   }
 
   void updateFromTime(
       {required int index, required int hour, required int minute}) {
-    _workingHours[index].from = [hour, minute];
-    _workingHours.refresh();
+    _workingDay.value?.openHours[index].from = [hour, minute];
+    _workingDay.refresh();
   }
 
-  void switchAvailable({required int index, required bool value}) {
-    _workingHours[index].isOpen = value;
-    _workingHours.refresh();
+  void switchAvailable({required bool value}) {
+    _workingDay.value?.isOpen = value;
+    _workingDay.refresh();
   }
 }

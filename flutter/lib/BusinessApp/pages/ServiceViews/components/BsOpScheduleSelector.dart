@@ -127,8 +127,8 @@ class _BsOpScheduleSelectorState extends State<BsOpScheduleSelector> {
                           children: [
                             smallSepartor,
                             ..._selectedSchedule!.openHours.entries
-                                .map((MapEntry<Weekday, List<OpenHours>> e) {
-                              if (e.value.isOpen) {
+                                .map((MapEntry<Weekday, WorkingDay> entry) {
+                              if (entry.value.isOpen) {
                                 return Container(
                                   // margin: const EdgeInsets.only(bottom: 5),
                                   padding: const EdgeInsets.all(8),
@@ -160,7 +160,7 @@ class _BsOpScheduleSelectorState extends State<BsOpScheduleSelector> {
                                           Flexible(
                                             fit: FlexFit.tight,
                                             child: Text(
-                                              "${_i18n()["weekdays"][e.key.toFirebaseFormatString()]}",
+                                              "${_i18n()["weekdays"][entry.key.toFirebaseFormatString()]}",
                                               style:
                                                   context.textTheme.bodyLarge,
                                             ),
@@ -172,7 +172,8 @@ class _BsOpScheduleSelectorState extends State<BsOpScheduleSelector> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: List.generate(
-                                              e.value.length, (int hourIndex) {
+                                              entry.value.openHours.length,
+                                              (int hourIndex) {
                                             return Row(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
@@ -188,10 +189,16 @@ class _BsOpScheduleSelectorState extends State<BsOpScheduleSelector> {
                                                   ),
                                                   Text(
                                                     convertToAmPm(
-                                                        e.value[hourIndex]
+                                                        entry
+                                                            .value
+                                                            .openHours[
+                                                                hourIndex]
                                                             .from[0]
                                                             .toInt(),
-                                                        e.value[hourIndex]
+                                                        entry
+                                                            .value
+                                                            .openHours[
+                                                                hourIndex]
                                                             .from[1]
                                                             .toInt()),
                                                     textAlign: TextAlign.center,
@@ -201,9 +208,17 @@ class _BsOpScheduleSelectorState extends State<BsOpScheduleSelector> {
                                                   ),
                                                   Text(
                                                     convertToAmPm(
-                                                        e.value[hourIndex].to[0]
+                                                        entry
+                                                            .value
+                                                            .openHours[
+                                                                hourIndex]
+                                                            .to[0]
                                                             .toInt(),
-                                                        e.value[hourIndex].to[1]
+                                                        entry
+                                                            .value
+                                                            .openHours[
+                                                                hourIndex]
+                                                            .to[1]
                                                             .toInt()),
                                                     textAlign: TextAlign.center,
                                                   ),

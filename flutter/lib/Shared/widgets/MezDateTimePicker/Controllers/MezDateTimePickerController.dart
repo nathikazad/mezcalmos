@@ -219,10 +219,12 @@ class MezDateTimePickerController {
       );
 
       if (weekday != null && serviceSchedule.openHours.containsKey(weekday)) {
-        final OpenHours? openHours = serviceSchedule.openHours[weekday]
-            ?.firstWhereOrNull((OpenHours hour) => hour.isOpen);
-        if (openHours != null) {
-          return MapEntry(weekday, openHours);
+        final List<OpenHours>? openHours =
+            serviceSchedule.openHours[weekday]?.openHours;
+        bool? isOpen = serviceSchedule.openHours[weekday]?.isOpen;
+
+        if (openHours != null && isOpen != null && isOpen) {
+          return MapEntry(weekday, openHours.first);
         }
       }
     }

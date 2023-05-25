@@ -30,7 +30,7 @@ class MezServiceOpenHours extends StatelessWidget {
         Column(
           children:
               List.generate(schedule.openHours.entries.length, (int index) {
-            final MapEntry<Weekday, List<OpenHours>> entry =
+            final MapEntry<Weekday, WorkingDay> entry =
                 schedule.openHours.entries.elementAt(index);
             final bool isLastElement =
                 index == schedule.openHours.entries.length - 1;
@@ -76,7 +76,7 @@ class MezServiceOpenHours extends StatelessWidget {
                           fit: FlexFit.tight,
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(entry.value.length,
+                              children: List.generate(entry.value.openHours.length,
                                   (int hourIndex) {
                                 return Row(
                                     crossAxisAlignment:
@@ -90,9 +90,9 @@ class MezServiceOpenHours extends StatelessWidget {
                                       ),
                                       Text(
                                         convertToAmPm(
-                                            entry.value[hourIndex].from[0]
+                                           entry.value.openHours[hourIndex].from[0]
                                                 .toInt(),
-                                            entry.value[hourIndex].from[1]
+                                          entry.value.openHours[hourIndex].from[1]
                                                 .toInt()),
                                         textAlign: TextAlign.center,
                                       ),
@@ -101,9 +101,9 @@ class MezServiceOpenHours extends StatelessWidget {
                                       ),
                                       Text(
                                         convertToAmPm(
-                                            entry.value[hourIndex].to[0]
+                                           entry.value.openHours[hourIndex].to[0]
                                                 .toInt(),
-                                            entry.value[hourIndex].to[1]
+                                            entry.value.openHours[hourIndex].to[1]
                                                 .toInt()),
                                         textAlign: TextAlign.center,
                                       ),

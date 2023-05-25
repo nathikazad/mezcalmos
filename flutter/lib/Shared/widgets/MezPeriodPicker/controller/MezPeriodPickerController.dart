@@ -265,19 +265,24 @@ class MezPeriodPickerController {
 
   // to review with nathik
 
+  /// return the selected date on Weekday format
   MapEntry<Weekday, OpenHours>? get selectedWorkDay {
-    final String dayName =
-        DateFormat('EEEE').format(pickedDate.value.toLocal());
-    final Weekday? weekday = Weekday.values.firstWhereOrNull(
-      (Weekday weekday) =>
-          weekday.toFirebaseFormatString() == dayName.toLowerCase(),
-    );
+    if (pickedDate.value != null) {
+      final String dayName =
+          DateFormat('EEEE').format(pickedDate.value!.toLocal());
+      final Weekday? weekday = Weekday.values.firstWhereOrNull(
+        (Weekday weekday) =>
+            weekday.toFirebaseFormatString() == dayName.toLowerCase(),
+      );
 
-    if (weekday != null && serviceSchedule.openHours.containsKey(weekday)) {
-      final OpenHours? openHours = serviceSchedule.openHours[weekday]
-          ?.firstWhereOrNull((OpenHours hour) => hour.isOpen);
-      if (openHours != null) {
-        return MapEntry(weekday, openHours);
+      if (weekday != null && serviceSchedule.openHours.containsKey(weekday)) {
+        final List<OpenHours>? openHours =
+            serviceSchedule.openHours[weekday]?.openHours;
+        bool? isOpen = serviceSchedule.openHours[weekday]?.isOpen;
+
+        if (openHours != null && isOpen != null && isOpen) {
+          return MapEntry(weekday, openHours.first);
+        }
       }
     }
 

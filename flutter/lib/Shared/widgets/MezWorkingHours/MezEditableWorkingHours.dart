@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/SingleDayScheduleView.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezWorkingHours/controllers/MezWorkingHoursController.dart';
@@ -40,13 +39,13 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
             final Weekday day =
                 controller.workingHours.openHours.keys.elementAt(index);
             final List<OpenHours> workingHoursList =
-                controller.workingHours.openHours[day]!;
+                controller.workingHours.openHours[day]!.openHours;
             return _workingHourCard(
               context: context,
               weekday: day,
               index: index,
               isLast: index == controller.workingHours.openHours.length - 1,
-              openHours: workingHoursList,
+              workingDay: controller.workingHours.openHours[day]!,
             );
           },
         ),
@@ -58,7 +57,7 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
       {required Weekday weekday,
       required int index,
       bool isLast = false,
-      required List<OpenHours> openHours,
+      required WorkingDay workingDay,
       required BuildContext context}) {
     return Container(
       padding: const EdgeInsets.all(8),
@@ -88,24 +87,29 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
               flex: 3,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: List.generate(openHours.length, (int hourIndex) {
-                    if (openHours[hourIndex].isOpen) {
+                  children: List.generate(workingDay.openHours.length,
+                      (int hourIndex) {
+                    if (workingDay.isOpen) {
                       return Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               convertToAmPm(
-                                  openHours[hourIndex].from[0].toInt(),
-                                  openHours[hourIndex].from[1].toInt()),
+                                  workingDay.openHours[hourIndex].from[0]
+                                      .toInt(),
+                                  workingDay.openHours[hourIndex].from[1]
+                                      .toInt()),
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             Text(
-                              convertToAmPm(openHours[hourIndex].to[0].toInt(),
-                                  openHours[hourIndex].to[1].toInt()),
+                              convertToAmPm(
+                                  workingDay.openHours[hourIndex].to[0].toInt(),
+                                  workingDay.openHours[hourIndex].to[1]
+                                      .toInt()),
                               textAlign: TextAlign.center,
                             ),
                           ]);
@@ -118,30 +122,30 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(35),
-                color: openHours.isOpen
+                color: workingDay.isOpen
                     ? Color.fromRGBO(237, 255, 222, 0.86)
                     : Color(0xFFFFD6DC),
               ),
               child: Center(
                   child: Text(
-                openHours.isOpen
+                workingDay.isOpen
                     ? "${_i18n()["workingHoursCard"]["open"]}"
                     : "${_i18n()["workingHoursCard"]["closed"]}",
                 textAlign: TextAlign.center,
                 style: context.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: openHours.isOpen ? Colors.green : redAccentColor),
+                    color: workingDay.isOpen ? Colors.green : redAccentColor),
               )),
             ),
           ),
           MezIconButton(
               onTap: () async {
-                List<OpenHours>? newOpenHours =
+                WorkingDay? newWorkingDay =
                     await SingleDayScheduleView.navigate(
-                        weekday: weekday, openHours: openHours);
-                if (newOpenHours != null) {
+                        weekday: weekday, workingDay: workingDay);
+                if (newWorkingDay != null) {
                   controller.updateWorkingHours(
-                      day: weekday, openHours: newOpenHours);
+                      day: weekday, workingDay: newWorkingDay);
                 }
               },
               padding: EdgeInsets.all(3),
