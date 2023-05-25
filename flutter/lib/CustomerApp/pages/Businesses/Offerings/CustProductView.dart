@@ -81,7 +81,7 @@ class _CustProductViewState extends State<CustProductView> {
                         margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 15),
                         business: viewController.product!.business,
-                        offeringName: viewController.product!.details.name,
+                        offering: viewController.product!.details,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],
