@@ -104,7 +104,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
             onClick: () async {
               viewController.showBusiness.value = false;
             },
-            icon: Icons.celebration,
+            icon: Icons.class_,
             borderRadius: 35,
             backgroundColor:
                 viewController.showBusiness.isTrue ? Color(0xFFF0F0F0) : null,

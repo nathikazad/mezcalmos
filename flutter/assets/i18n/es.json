@@ -1365,6 +1365,8 @@
             "store": "Tienda",
             "services": "Servicios",
             "mealPlanning": "Planificación de comidas",
+            "service": "Servicio",
+            "meal": "Comida",
             "petSitting": "Cuidado de mascotas",
             "uncategorized": "Sin categoría",
             "cleaning": "Limpieza",
@@ -1434,7 +1436,7 @@
               "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
             },
             "locallyMade": {
-              "title": "Hecho localmente",
+              "title": "Consumible",
               "description": "Saborea el sabor de las golosinas locales."
             },
             "mealPlanning": {

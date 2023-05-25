@@ -1327,7 +1327,9 @@
             "noBusinessesFound": "No businesses found",
             "store": "Store",
             "services": "Services",
+            "service": "Service",
             "mealPlanning": "Meal planning",
+            "meal": "Meal",
             "petSitting": "Pet sitting",
             "uncategorized": "Uncategorized",
             "cleaning": "Cleaning",
@@ -1368,7 +1370,7 @@
               "description": "Discover most delicious dishes from the nearest restaurants."
             },
             "locallyMade": {
-              "title": "Locally Made",
+              "title": "Consumable",
               "description": "Savor the taste of locally made treats."
             },
             "mealPlanning": {

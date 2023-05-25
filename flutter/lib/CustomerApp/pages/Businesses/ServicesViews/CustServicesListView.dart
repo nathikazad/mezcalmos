@@ -102,17 +102,32 @@ class _CustServicesListViewState extends State<CustServicesListView> {
   }
 
   Widget _viewBusinessesSwitcher() {
+    IconData getIcon() {
+      switch (viewController.serviceCategory.first) {
+        case ServiceCategory1.Cleaning:
+          return Icons.cleaning_services;
+        case ServiceCategory1.MealPlanning:
+          return Icons.set_meal;
+        case ServiceCategory1.PetSitting:
+          return Icons.pets;
+        case ServiceCategory1.Uncategorized:
+          return Icons.cleaning_services;
+      }
+    }
+
     return Row(
       children: [
         Flexible(
           child: MezButton(
-            label:
-                '${_i18n()[viewController.serviceCategory.first.toFirebaseFormatString()]}',
+            label: viewController.serviceCategory.first ==
+                    ServiceCategory1.MealPlanning
+                ? '${_i18n()["meal"]}'
+                : '${_i18n()["service"]}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
             },
-            icon: Icons.cleaning_services,
+            icon: getIcon(),
             borderRadius: 35,
             backgroundColor:
                 viewController.showBusiness.isTrue ? Color(0xFFF0F0F0) : null,

@@ -105,7 +105,9 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: '${_i18n()['product']}',
+            label: viewController.productsCategory.first == ProductCategory1.Art
+                ? '${_i18n()['art']}'
+                : '${_i18n()['product']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
