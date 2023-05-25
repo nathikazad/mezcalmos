@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
@@ -58,9 +57,9 @@ class MezDateTimePickerController {
               _getTheCLosestOpenDay().toLocal().month,
           initialDate?.toLocal().day ?? _getTheCLosestOpenDay().toLocal().day);
       hours.value = initialDate?.toLocal().hour ??
-          selectedWorkDay.value.from.first.toInt();
+          selectedWorkDay?.value.from.first.toInt();
       minutes.value = initialDate?.toLocal().minute ??
-          selectedWorkDay.value.from[1].toInt();
+          selectedWorkDay?.value.from[1].toInt();
     } else {
       periodOfTime.value = initPeriod.toLocal();
       pickedDate.value = DateTime(
@@ -95,8 +94,8 @@ class MezDateTimePickerController {
   void changeDate(DateTime newValue) {
     pickedDate.value = newValue;
     if (!pickFromPeriod) {
-      hours.value = selectedWorkDay.value.from.first.toInt();
-      minutes.value = selectedWorkDay.value.from[1].toInt();
+      hours.value = selectedWorkDay?.value.from.first.toInt();
+      minutes.value = selectedWorkDay?.value.from[1].toInt();
     } else {
       hours.value = minHours.value;
       minutes.value = minMinutes.value;
@@ -146,8 +145,9 @@ class MezDateTimePickerController {
         fixed7days ? DateTime.now().month : pickedDate.value!.month,
         fixed7days ? DateTime.now().day + i : pickedDate.value!.day + i,
       );
-      mezDbgPrint(_getServiceDates().toString());
-      if (_getServiceDates()
+
+      if (serviceSchedule
+          .getServiceDates()
           .contains(DateFormat("EEEE").format(newDate).toLowerCase())) {
         dates.add(newDate);
       }
@@ -159,10 +159,12 @@ class MezDateTimePickerController {
   List<int> getHours() {
     final List<int> hours = [];
 
-    for (int i = minHours.value ?? selectedWorkDay.value.from.first.toInt();
-        i <= (maxHours.value ?? selectedWorkDay.value.to.first);
-        i++) {
-      hours.add(i);
+    if (selectedWorkDay != null) {
+      for (int i = minHours.value ?? selectedWorkDay!.value.from.first.toInt();
+          i <= (maxHours.value ?? selectedWorkDay!.value.to.first);
+          i++) {
+        hours.add(i);
+      }
     }
 
     return hours;
@@ -170,26 +172,30 @@ class MezDateTimePickerController {
 
   List<int> getMinutes() {
     final List<int> data = [];
-    if (pickFromPeriod) {
-      for (int i = minMinutes.value!;
-          i <= ((hours.value == maxHours.value) ? maxMinutes.value! : 59);
-          i = i + 5) {
-        data.add(i);
-      }
-    } else if (hours.value == selectedWorkDay.value.from.first) {
-      for (int i = selectedWorkDay.value.from[1].toInt(); i <= 59; i = i + 5) {
-        data.add(i);
-      }
-    } else if (hours.value == selectedWorkDay.value.to.first) {
-      if (selectedWorkDay.value.to[1] != 0) {
-        for (int i = 0; i <= selectedWorkDay.value.to[1]; i = i + 5) {
+    if (selectedWorkDay != null) {
+      if (pickFromPeriod) {
+        for (int i = minMinutes.value!;
+            i <= ((hours.value == maxHours.value) ? maxMinutes.value! : 59);
+            i = i + 5) {
           data.add(i);
         }
-      } else
-        data.add(0);
-    } else {
-      for (int i = 0; i <= 59; i = i + 5) {
-        data.add(i);
+      } else if (hours.value == selectedWorkDay!.value.from.first) {
+        for (int i = selectedWorkDay!.value.from[1].toInt();
+            i <= 59;
+            i = i + 5) {
+          data.add(i);
+        }
+      } else if (hours.value == selectedWorkDay!.value.to.first) {
+        if (selectedWorkDay!.value.to[1] != 0) {
+          for (int i = 0; i <= selectedWorkDay!.value.to[1]; i = i + 5) {
+            data.add(i);
+          }
+        } else
+          data.add(0);
+      } else {
+        for (int i = 0; i <= 59; i = i + 5) {
+          data.add(i);
+        }
       }
     }
 
@@ -197,29 +203,33 @@ class MezDateTimePickerController {
   }
 
   /// Filtering and creating an array of weekdays based on service schedule
-  List<String> _getServiceDates() {
-    final List<String> data = [];
-    serviceSchedule.openHours.keys.forEach((Weekday element) {
-      if (serviceSchedule.openHours[element]!.isOpen) {
-        data.add(element.toFirebaseFormatString());
-      }
-    });
-
-    return data;
-  }
 
   bool get pickFromPeriod {
     return periodOfTime.value != null;
   }
 
   /// return the selected date on Weekday format
-  MapEntry<Weekday, OpenHours> get selectedWorkDay {
-    return serviceSchedule.openHours.entries.firstWhere(
-        (MapEntry<Weekday, OpenHours> element) =>
-            element.key.toFirebaseFormatString() ==
-            DateFormat("EEEE")
-                .format(pickedDate.value?.toLocal() ?? DateTime.now().toLocal())
-                .toLowerCase());
+  MapEntry<Weekday, OpenHours>? get selectedWorkDay {
+    if (pickedDate.value != null) {
+      final String dayName =
+          DateFormat('EEEE').format(pickedDate.value!.toLocal());
+      final Weekday? weekday = Weekday.values.firstWhereOrNull(
+        (Weekday weekday) =>
+            weekday.toFirebaseFormatString() == dayName.toLowerCase(),
+      );
+
+      if (weekday != null && serviceSchedule.openHours.containsKey(weekday)) {
+        final List<OpenHours>? openHours =
+            serviceSchedule.openHours[weekday]?.openHours;
+        bool? isOpen = serviceSchedule.openHours[weekday]?.isOpen;
+
+        if (openHours != null && isOpen != null && isOpen) {
+          return MapEntry(weekday, openHours.first);
+        }
+      }
+    }
+
+    return null;
   }
 
   DateTime _getTheCLosestOpenDay() {

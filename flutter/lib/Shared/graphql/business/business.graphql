@@ -143,15 +143,16 @@ query get_business_by_rental_category1(
         details: {
           location: {
             gps: { _st_d_within: { distance: $distance, from: $from } }
-          }, 
-          approved: {_eq: true}, 
-          open_status: {_eq: "open"}
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
         }
         rentals: { details: { category1: { _in: $categories1 } } }
       }
     }
     offset: $offset
     limit: $limit
+    order_by: { details: { referral_points: desc_nulls_last } }
   ) {
     id
     details {
@@ -186,9 +187,9 @@ query get_business_by_event_category1(
         details: {
           location: {
             gps: { _st_d_within: { distance: $distance, from: $from } }
-          }, 
-          approved: {_eq: true}, 
-          open_status: {_eq: "open"}
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
         }
         events: {
           details: { category1: { _in: $categories1 } }
@@ -198,6 +199,7 @@ query get_business_by_event_category1(
     }
     offset: $offset
     limit: $limit
+    order_by: { details: { referral_points: desc_nulls_last } }
   ) {
     id
     details {
@@ -231,15 +233,16 @@ query get_business_by_service_category1(
         details: {
           location: {
             gps: { _st_d_within: { distance: $distance, from: $from } }
-          }, 
-          approved: {_eq: true}, 
-          open_status: {_eq: "open"}
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
         }
         services: { details: { category1: { _in: $categories1 } } }
       }
     }
     offset: $offset
     limit: $limit
+    order_by: { details: { referral_points: desc_nulls_last } }
   ) {
     id
     details {
@@ -273,15 +276,16 @@ query get_business_by_product_category1(
         details: {
           location: {
             gps: { _st_d_within: { distance: $distance, from: $from } }
-          }, 
-          approved: {_eq: true}, 
-          open_status: {_eq: "open"}
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
         }
         products: { details: { category1: { _in: $categories1 } } }
       }
     }
     offset: $offset
     limit: $limit
+    order_by: { details: { referral_points: desc_nulls_last } }
   ) {
     id
     details {

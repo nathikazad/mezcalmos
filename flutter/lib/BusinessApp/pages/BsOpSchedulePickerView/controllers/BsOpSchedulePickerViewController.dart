@@ -26,6 +26,6 @@ class BsOpSchedulePickerViewController {
   void dispose() {}
 
   void saveAndBack() {
-    MezRouter.back(backResult: newSchedule.value);
+    MezRouter.back(backResult: oldSchedule.value);
   }
 }

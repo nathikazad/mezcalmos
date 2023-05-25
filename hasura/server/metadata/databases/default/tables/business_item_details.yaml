@@ -131,6 +131,25 @@ select_permissions:
             user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - additional_parameters
+        - available
+        - category1
+        - category2
+        - cost
+        - description_id
+        - image
+        - name_id
+        - position
+        - tags
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
   - role: mez_admin
     permission:
       columns:
@@ -159,23 +178,4 @@ update_permissions:
             schema: public
           _where:
             user_id:
-              _eq: X-Hasura-User-Id        
-  - role: business_operator
-    permission:
-      columns:
-        - additional_parameters
-        - available
-        - category1
-        - category2
-        - cost
-        - description_id
-        - image
-        - name_id
-        - position
-        - tags
-      filter:
-        business:
-          operators:
-            user_id:
               _eq: X-Hasura-User-Id
-      check: null

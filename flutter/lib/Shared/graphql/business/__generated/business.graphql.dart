@@ -7656,9 +7656,9 @@ const documentNodeQueryget_business_by_rental_category1 =
                         name: NameNode(value: 'open_status'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: '_eq'),
+                            name: NameNode(value: '_neq'),
                             value: StringValueNode(
-                              value: 'open',
+                              value: 'closedIndefinitely',
                               isBlock: false,
                             ),
                           )
@@ -7697,6 +7697,21 @@ const documentNodeQueryget_business_by_rental_category1 =
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value:
+                        EnumValueNode(name: NameNode(value: 'desc_nulls_last')),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -9428,9 +9443,9 @@ const documentNodeQueryget_business_by_event_category1 =
                         name: NameNode(value: 'open_status'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: '_eq'),
+                            name: NameNode(value: '_neq'),
                             value: StringValueNode(
-                              value: 'open',
+                              value: 'closedIndefinitely',
                               isBlock: false,
                             ),
                           )
@@ -9479,6 +9494,21 @@ const documentNodeQueryget_business_by_event_category1 =
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value:
+                        EnumValueNode(name: NameNode(value: 'desc_nulls_last')),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -11153,9 +11183,9 @@ const documentNodeQueryget_business_by_service_category1 =
                         name: NameNode(value: 'open_status'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: '_eq'),
+                            name: NameNode(value: '_neq'),
                             value: StringValueNode(
-                              value: 'open',
+                              value: 'closedIndefinitely',
                               isBlock: false,
                             ),
                           )
@@ -11194,6 +11224,21 @@ const documentNodeQueryget_business_by_service_category1 =
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value:
+                        EnumValueNode(name: NameNode(value: 'desc_nulls_last')),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -12873,9 +12918,9 @@ const documentNodeQueryget_business_by_product_category1 =
                         name: NameNode(value: 'open_status'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: '_eq'),
+                            name: NameNode(value: '_neq'),
                             value: StringValueNode(
-                              value: 'open',
+                              value: 'closedIndefinitely',
                               isBlock: false,
                             ),
                           )
@@ -12914,6 +12959,21 @@ const documentNodeQueryget_business_by_product_category1 =
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value:
+                        EnumValueNode(name: NameNode(value: 'desc_nulls_last')),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],

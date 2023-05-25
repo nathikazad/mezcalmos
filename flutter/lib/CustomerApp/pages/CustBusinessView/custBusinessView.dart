@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessPa
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessProductCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessRentalCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessServiceCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/controllers/cusBusinessViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
@@ -11,9 +12,12 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/RentalHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
@@ -22,10 +26,6 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
-import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/RentalHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustBusinessView'];
@@ -141,6 +141,10 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     //       PaymentType.Cash: true,
                     //       PaymentType.BankTransfer: true
                     //     }),
+                    if (_viewController.business!.details.schedule != null)
+                      MezServiceOpenHours(
+                          schedule:
+                              _viewController.business!.details.schedule!),
                     _reviewsList(context),
                   ],
                 ),
@@ -193,10 +197,10 @@ class _CustBusinessViewState extends State<CustBusinessView>
 
   Column _rentals(BuildContext context) {
     final List<Rental> surfRentals = _viewController.business!.rentals!
-        .where((element) => element.isSurf)
+        .where((Rental element) => element.isSurf)
         .toList();
     final List<Rental> vehicleRentals = _viewController.business!.rentals!
-        .where((element) => element.isVehicle)
+        .where((Rental element) => element.isVehicle)
         .toList();
 
     return Column(
@@ -251,27 +255,27 @@ class _CustBusinessViewState extends State<CustBusinessView>
 
   Column _events(BuildContext context) {
     final List<Event> scheduledEvents = _viewController.business!.events!
-        .where((element) =>
+        .where((Event element) =>
             element.scheduleType == ScheduleType.Scheduled && !element.isClass)
         .toList();
     final List<Event> oneTimeEvents = _viewController.business!.events!
-        .where((element) =>
+        .where((Event element) =>
             element.scheduleType == ScheduleType.OneTime && !element.isClass)
         .toList();
     final List<Event> onDemandEvents = _viewController.business!.events!
-        .where((element) =>
+        .where((Event element) =>
             element.scheduleType == ScheduleType.OnDemand && !element.isClass)
         .toList();
     final List<Event> scheduledClass = _viewController.business!.events!
-        .where((element) =>
+        .where((Event element) =>
             element.scheduleType == ScheduleType.Scheduled && element.isClass)
         .toList();
     final List<Event> oneTimeClass = _viewController.business!.events!
-        .where((element) =>
+        .where((Event element) =>
             element.scheduleType == ScheduleType.OneTime && element.isClass)
         .toList();
     final List<Event> onDemandClass = _viewController.business!.events!
-        .where((element) =>
+        .where((Event element) =>
             element.scheduleType == ScheduleType.OnDemand && element.isClass)
         .toList();
     return Column(
@@ -493,9 +497,9 @@ class _CustBusinessViewState extends State<CustBusinessView>
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
-          child: Builder(builder: (context) {
+          child: Builder(builder: (BuildContext context) {
             bool isLoading = false;
-            return StatefulBuilder(builder: (context, setState) {
+            return StatefulBuilder(builder: (BuildContext context, setState) {
               return Padding(
                 padding: const EdgeInsets.only(right: 4.0),
                 child: TextButton(
@@ -541,9 +545,9 @@ class _CustBusinessViewState extends State<CustBusinessView>
           }),
         ),
         Expanded(
-          child: Builder(builder: (context) {
+          child: Builder(builder: (BuildContext context) {
             bool isLoading = false;
-            return StatefulBuilder(builder: (context, setState) {
+            return StatefulBuilder(builder: (BuildContext context, setState) {
               return Padding(
                 padding: const EdgeInsets.only(left: 4.0),
                 child: TextButton(

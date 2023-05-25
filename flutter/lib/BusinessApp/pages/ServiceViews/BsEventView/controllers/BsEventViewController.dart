@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
@@ -129,6 +128,7 @@ class BsEventViewController {
 
       location.value = event!.gpsLocation;
       scheduleTypeInput.value.type = event!.scheduleType;
+
       avalaibilty.value = event!.schedule;
       startDate.value = event!.startsAt != null
           ? DateTime.parse(event!.startsAt!).toLocal()
@@ -137,6 +137,8 @@ class BsEventViewController {
           ? DateTime.parse(event!.endsAt!).toLocal()
           : null;
     }
+    mezDbgPrint("event schedule ========> ${event?.scheduleType.name}");
+    scheduleTypeInput.refresh();
   }
 
   Future<void> save() async {
@@ -156,7 +158,7 @@ class BsEventViewController {
         }
         shouldRefetch = true;
       } else {
-        Event _event = await _constructEventWithDetails();
+        final Event _event = await _constructEventWithDetails();
         await createItem(_event);
       }
     }
@@ -190,9 +192,10 @@ class BsEventViewController {
   }
 
   Future<Event> _constructEventWithDetails() async {
-    BusinessItemDetails details = await detailsController.contructDetails();
-    EventCategory1 category1 = _getCategory1();
-    Event event = Event(
+    final BusinessItemDetails details =
+        await detailsController.contructDetails();
+    final EventCategory1 category1 = _getCategory1();
+    final Event event = Event(
         category1: category1,
         scheduleType: scheduleTypeInput.value.type,
         startsAt: startDate.value?.toUtc().toString(),
@@ -205,8 +208,8 @@ class BsEventViewController {
   }
 
   Event _constructEvent() {
-    EventCategory1 category1 = _getCategory1();
-    Event event = Event(
+    final EventCategory1 category1 = _getCategory1();
+    final Event event = Event(
         category1: category1,
         scheduleType: scheduleTypeInput.value.type,
         startsAt: startDate.value?.toUtc().toString(),
@@ -499,6 +502,7 @@ class BsEventViewController {
           () => BsOpScheduleSelector(
             onScheduleSelected: (Schedule? v) {
               avalaibilty.value = v;
+              avalaibilty.refresh();
             },
             scheduleType: scheduleTypeInput.value.type,
             schedule: avalaibilty.value,
