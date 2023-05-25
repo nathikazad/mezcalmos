@@ -44,11 +44,6 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
       case MezService.Restaurants:
         CustRestaurantListView.navigate();
         break;
-      case MezService.Farmers:
-        CustFoodListView.navigate(
-          serviceCategory: ServiceCategory1.Uncategorized,
-        );
-        break;
       case MezService.LocallyMade:
         mezDbgPrint("going to locally made =======");
         CustLocallyMadeListView.navigate(
