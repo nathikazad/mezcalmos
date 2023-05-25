@@ -66,18 +66,18 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        defaultFilterInput.values.elementAt(index).length == 1
+                        defaultFilterInput.values.elementAt(index).length <= 1
                             ? SizedBox.shrink()
                             : Text(
                                 '${_i18n()[defaultFilterInput.keys.elementAt(index)]}',
                                 style: context.textTheme.bodyLarge,
                               ),
-                        defaultFilterInput.values.elementAt(index).length == 1
+                        defaultFilterInput.values.elementAt(index).length <= 1
                             ? SizedBox.shrink()
                             : SizedBox(
                                 height: 5,
                               ),
-                        defaultFilterInput.values.elementAt(index).length == 1
+                        defaultFilterInput.values.elementAt(index).length <= 1
                             ? SizedBox.shrink()
                             : Column(
                                 children: List.generate(

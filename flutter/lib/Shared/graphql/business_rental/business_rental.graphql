@@ -284,7 +284,7 @@ query number_of_rentals_by_category(
         details: {
           location: {
             gps: { _st_d_within: { distance: $distance, from: $from } }
-          }
+          }, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}
         }
       }
       details: { category1: { _eq: $category1 } }

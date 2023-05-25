@@ -121,7 +121,7 @@ query number_of_products($distance: Float!, $from: geography!) {
 }
 
 query number_of_products_by_category($distance: Float!, $from: geography!, $category1: String) {
-  business_product_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: $category1}}}) {
+  business_product_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}, details: {category1: {_eq: $category1}}}) {
     aggregate {
       count
     }

@@ -46,7 +46,7 @@ class ServiceScheduleViewController {
   Future<bool> updateSchedule() async {
     try {
       await update_service_schedule(
-          detailsId: _detailsId, schedule: newSchedule.value!);
+          detailsId: _detailsId, schedule: oldSchedule.value!);
 
       await fetchSchedule();
       return true;

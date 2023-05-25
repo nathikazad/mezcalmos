@@ -1,10 +1,14 @@
 
 export interface Schedule {
-    openHours: Record<Weekday, OpenHours>;
+    openHours: Record<Weekday, WorkingDay>;
+}
+export interface WorkingDay{
+    isOpen: boolean;
+    openHours: Array<OpenHours>;
 }
 
 export interface OpenHours {
-    isOpen: boolean;
+   
     from: Array<number>;
     to: Array<number>;
 }

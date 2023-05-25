@@ -32,7 +32,7 @@ class MezcalmosSharedWidgets {
               ),
             ),
             TextSpan(
-              text: sCalmos,
+              text: 'KALA',
               style: TextStyle(
                 fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
                 color: Color.fromARGB(255, 103, 122, 253),

@@ -60,6 +60,16 @@
         }
       },
       "services": {
+        "weekdays" : {
+          "monday": "Lunes",
+          "tuesday": "Martes",
+          "wednesday": "Miércoles",
+          "thursday": "Jueves",
+          "friday": "Viernes",
+          "saturday": "Sábado",
+          "sunday": "Domingo"
+        
+        },
         "services": "Servicios",
         "service": "Servicio",
         "serviceType": "¿Qué tipo de servicio agregarás?",
@@ -70,7 +80,9 @@
         "bodyMessage": "Al seleccionar \"Agregar servicio\", puede agregar su primer servicio y comenzar a construir su negocio en línea.",
         "event": {
           "event": "Evento",
-          "eventType": "Seleccione un tipo de evento",
+          "class": "Clase",
+          "eventType": "Tipo de evento",
+          "classType": "Tipo de clase",
           "scheduleTypeError": "Seleccione un tipo de horario",
           "scheduled": "Programada",
           "oneTime": "Una vez",
@@ -1353,6 +1365,8 @@
             "store": "Tienda",
             "services": "Servicios",
             "mealPlanning": "Planificación de comidas",
+            "service": "Servicio",
+            "meal": "Comida",
             "petSitting": "Cuidado de mascotas",
             "uncategorized": "Sin categoría",
             "cleaning": "Limpieza",
@@ -1422,7 +1436,7 @@
               "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
             },
             "locallyMade": {
-              "title": "Hecho localmente",
+              "title": "Consumible",
               "description": "Saborea el sabor de las golosinas locales."
             },
             "mealPlanning": {
@@ -1831,6 +1845,21 @@
       }
     },
     "pages": {
+      "ServiceProviderPages" : {
+        "ServiceScheduleViews" : {
+        "SingleDayScheduleView" : {
+        "open" : "Abierto",
+        "closed" : "Cerrado",
+        "save" : "Guardar",
+        "delete" : "Eliminar",
+        "time" : "Hora",
+        "startsAt" : "Comienza a las",
+        "endsAt" : "Termina a las",
+        "add" : "Agregar hora adicional",
+        "overlapError" : "La hora de inicio y finalización no pueden superponerse"
+        }
+        }
+        },
       "ServiceProfileView": {
         "profile": "Perfil",
         "info": "Información",
