@@ -92,6 +92,7 @@ class CustVolunteerListViewController {
           .map((EventCategory1 e) => e.toFirebaseFormatString())
           .toList(),
       "schedule": [
+        ScheduleType.Scheduled,
         ScheduleType.OneTime,
       ].map((ScheduleType e) => e.toFirebaseFormatString()).toList(),
     };

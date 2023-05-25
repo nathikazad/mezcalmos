@@ -133,7 +133,7 @@ class _CustEventViewState extends State<CustEventView> {
                         margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.event!.business,
-                        offeringName: viewController.event!.details.name,
+                        offering: viewController.event!.details,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],

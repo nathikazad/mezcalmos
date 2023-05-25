@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
@@ -51,12 +52,10 @@ class AuthController extends GetxController {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
-    InternetStatus internetStatus =
-        await ConnectivityHelper.instance.checkForInternet();
-    while (internetStatus == InternetStatus.Offline) {
-      mezDbgPrint(
-          "COnnection not there on authController init, so inside while loop 💕💕💕💕💕💕💕");
-      internetStatus = await ConnectivityHelper.internetStatusStream.first;
+    bool internetStatus = false;
+    while (internetStatus == false) {
+      internetStatus = await ConnectivityHelper.pingServer(firebaseAuthUrl)
+          .timeout(Duration(seconds: 10), onTimeout: () => false);
     }
     mezDbgPrint("Connection is there on authController init 💕💕💕💕💕💕💕");
     _auth.authStateChanges().listen((fireAuth.User? user) async {

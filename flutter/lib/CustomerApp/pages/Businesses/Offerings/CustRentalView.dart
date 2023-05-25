@@ -104,7 +104,7 @@ class _CustRentalViewState extends State<CustRentalView> {
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
                         business: viewController.rental!.business,
-                        offeringName: viewController.rental!.details.name,
+                        offering: viewController.rental!.details,
                       ),
                       CustBusinessNoOrderBanner(
                         margin: EdgeInsets.only(top: 15),

@@ -24,6 +24,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['VolunteerView']['CustVolunteerListView'];
@@ -206,77 +207,12 @@ class _CustVolunteerListViewState extends State<CustVolunteerListView> {
     if (viewController.volunteer.isNotEmpty) {
       return Column(
           children: List.generate(
-              viewController.volunteer.length,
-              (int index) => MezCard(
-                  elevation: 0,
-                  margin: EdgeInsets.only(bottom: 12.5),
-                  onClick: () {
-                    CustEventView.navigate(
-                      eventId:
-                          viewController.volunteer[index].details.id.toInt(),
-                    );
-                  },
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: viewController
-                                    .volunteer[index].details.firstImage ??
-                                defaultUserImgUrl,
-                            imageBuilder: (BuildContext context,
-                                    ImageProvider<Object> imageProvider) =>
-                                CircleAvatar(
-                              radius: 16.mezSp,
-                              backgroundImage: imageProvider,
-                            ),
-                          ),
-                          if (viewController
-                                  .volunteer[index].details.firstImage !=
-                              null)
-                            SizedBox(
-                              width: 10,
-                            ),
-                          Expanded(
-                            child: Text(
-                              '${viewController.volunteer[index].details.name.getTranslation(userLanguage)!.inCaps}',
-                              style: context.textTheme.displaySmall?.copyWith(
-                                  fontSize: 11.75.mezSp,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          ),
-                          Text(
-                            '${viewController.volunteer[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.volunteer[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
-                            overflow: TextOverflow.ellipsis,
-                            style: context.textTheme.bodyLarge?.copyWith(
-                                fontSize: 12.5.mezSp,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                      if (viewController.volunteer[index].schedule != null)
-                        Column(
-                          children: [
-                            Divider(),
-                            CustBusinessScheduleBuilder(
-                                showTitle: false,
-                                showIcons: false,
-                                schedule:
-                                    viewController.volunteer[index].schedule,
-                                scheduleType: viewController
-                                    .volunteer[index].scheduleType),
-                          ],
-                        ),
-                      if (viewController.volunteer[index].scheduleType ==
-                          ScheduleType.OneTime)
-                        oneTimeBuilder(viewController.volunteer[index]),
-                      Divider(),
-                      Text(viewController.volunteer[index].businessName)
-                    ],
-                  ))));
+        viewController.volunteer.length,
+        (int index) => CustBusinessEventCard(
+          event: viewController.volunteer[index],
+          needBussinessName: true,
+        ),
+      ));
     } else
       return NoServicesFound();
   }

@@ -130,6 +130,7 @@ export enum BusinessProfile {
   Volunteer = "volunteer",
   Entertainment = "entertainment",
   DanceStudio = "danceStudio",
+  MealPlanning = "mealPlanning",
 }
 export enum RentalCategory2 {
   Motorcycle = "motorcycle",

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
@@ -12,6 +13,7 @@ import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Offerings']['CustBusinessMessageCard'];
@@ -20,12 +22,12 @@ class CustBusinessMessageCard extends StatefulWidget {
   const CustBusinessMessageCard(
       {super.key,
       required this.business,
-      required this.offeringName,
+      required this.offering,
       this.contentPadding,
       this.margin = const EdgeInsets.only(bottom: 12.5)});
   final BusinessCard business;
   final EdgeInsets? contentPadding;
-  final Map<Language, String> offeringName;
+  final BusinessItemDetails offering;
   final EdgeInsets margin;
 
   @override
@@ -69,8 +71,8 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
                   } else {
                     await custChatController.initiateChat(
                       businessId: widget.business.id,
-                      businessImage: widget.business.image,
-                      offeringName: widget.offeringName,
+                      businessImage: widget.offering.firstImage ?? defaultUserImgUrl,
+                      offeringName: widget.offering.name,
                     );
                   }
                   setState(() {
