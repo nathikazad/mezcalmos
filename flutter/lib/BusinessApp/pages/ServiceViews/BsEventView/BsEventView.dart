@@ -233,10 +233,21 @@ class _BsOpEventViewState extends State<BsOpEventView>
             ),
           ),
           bigSeperator,
+          Text(
+            isClass
+                ? _i18n()["event"]["classType"]
+                : _i18n()["event"]["eventType"],
+            style: context.textTheme.bodyLarge,
+          ),
+          SizedBox(
+            height: 5,
+          ),
           Obx(
             () => BsOpScheduleTypeSelector(
               items: viewController.getScheduleType(),
-              label: _i18n()["event"]["eventType"],
+              label: isClass
+                  ? _i18n()["event"]["classType"]
+                  : _i18n()["event"]["eventType"],
               value: viewController.getScheduleType().firstWhereOrNull(
                   (ScheduleTypeInput element) =>
                       element.type == viewController.scheduleTypeInput.value),

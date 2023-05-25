@@ -69,7 +69,9 @@
         "bodyMessage": "By selecting \"Add Service\" you can add your first service and start building your business online.",
         "event": {
           "event": "Event",
-          "eventType": "Select an event type",
+          "class": "Class",
+          "eventType": "Type of event",
+          "classType": "Type of class",
           "scheduleTypeError": "Please select a schedule type",
           "scheduled": "Scheduled",
           "oneTime": "One time",
