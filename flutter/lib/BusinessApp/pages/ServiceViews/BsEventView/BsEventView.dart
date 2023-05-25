@@ -239,7 +239,8 @@ class _BsOpEventViewState extends State<BsOpEventView>
               label: _i18n()["event"]["eventType"],
               value: viewController.getScheduleType().firstWhereOrNull(
                   (ScheduleTypeInput element) =>
-                      element.type == viewController.scheduleTypeInput.value),
+                      element.type ==
+                      viewController.scheduleTypeInput.value.type),
               validator: (ScheduleTypeInput? v) {
                 if (v == null) {
                   return _i18n()["event"]["scheduleTypeError"];

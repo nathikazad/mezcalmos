@@ -60,6 +60,16 @@
         }
       },
       "services": {
+        "weekdays" : {
+          "monday": "Lunes",
+          "tuesday": "Martes",
+          "wednesday": "Miércoles",
+          "thursday": "Jueves",
+          "friday": "Viernes",
+          "saturday": "Sábado",
+          "sunday": "Domingo"
+        
+        },
         "services": "Servicios",
         "service": "Servicio",
         "serviceType": "¿Qué tipo de servicio agregarás?",
@@ -1831,6 +1841,21 @@
       }
     },
     "pages": {
+      "ServiceProviderPages" : {
+        "ServiceScheduleViews" : {
+        "SingleDayScheduleView" : {
+        "open" : "Abierto",
+        "closed" : "Cerrado",
+        "save" : "Guardar",
+        "delete" : "Eliminar",
+        "time" : "Hora",
+        "startsAt" : "Comienza a las",
+        "endsAt" : "Termina a las",
+        "add" : "Agregar hora adicional",
+        "overlapError" : "La hora de inicio y finalización no pueden superponerse"
+        }
+        }
+        },
       "ServiceProfileView": {
         "profile": "Perfil",
         "info": "Información",

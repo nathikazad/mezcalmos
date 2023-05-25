@@ -381,7 +381,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 }
 
 class Schedule {
-  Map<Weekday, OpenHours> openHours;
+  Map<Weekday, WorkingDay> openHours;
   Schedule({
     required this.openHours});
 
@@ -419,8 +419,8 @@ class ServiceProviderLanguage {
     required this.primary, this.secondary});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "primary": primary.toFirebaseFormatString(),
-      "secondary": secondary?.toFirebaseFormatString(),
+      "primary": primary,
+      "secondary": secondary,
     };
   }
 
@@ -1028,15 +1028,27 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 
 }
 
-class OpenHours {
+class WorkingDay {
   bool isOpen;
-  List<num> from;
-  List<num> to;
-  OpenHours({
-    required this.isOpen, required this.from, required this.to});
+  List<OpenHours> openHours;
+  WorkingDay({
+    required this.isOpen, required this.openHours});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "isOpen": isOpen,
+      "openHours": openHours,
+    };
+  }
+
+}
+
+class OpenHours {
+  List<num> from;
+  List<num> to;
+  OpenHours({
+    required this.from, required this.to});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
       "from": from,
       "to": to,
     };
@@ -2310,7 +2322,7 @@ extension ParseStringToProductCategory1 on String {
 }
 
 
-enum EventTag { Class, Retreat, Workshop }
+enum EventTag { Class, Workshop, Retreat }
 extension ParseEventTagToString on EventTag {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;
