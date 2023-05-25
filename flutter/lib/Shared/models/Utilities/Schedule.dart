@@ -25,14 +25,10 @@ Schedule scheduleFromData(json) {
       final Weekday weekday = Weekday.values
           .firstWhere((Weekday e) => e.toFirebaseFormatString() == weekdayKey);
       final dynamic workindDay = json[weekdayKey];
-      // this will be removed in the future
-      // if (workindDay is List) {
-      //   List<OpenHours> openHoursList = workindDay
-      //       .map<OpenHours>((hourJson) => openHoursfromJson(hourJson))
-      //       .toList();
-      //   openHours[weekday] = WorkingDay(isOpen: true, openHours: openHoursList);
-      // } else if (workindDay is Map) {
-      // the latest format
+      if (workindDay is List) {
+        throw Exception(
+            "The schedule is in the old format <Weekday : <OpenHours>[]>, please update it");
+      }
       if (workindDay["openHours"] != null) {
         List<OpenHours> openHoursList = workindDay["openHours"]
             .map<OpenHours>((hourJson) => openHoursfromJson(hourJson))
