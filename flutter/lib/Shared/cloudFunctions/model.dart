@@ -544,7 +544,7 @@ factory CancelRestaurantOrderResponse.fromFirebaseFormattedJson(json) {
   }
 }
 
-enum BusinessProfile { SurfShop, VehicleRental, YogaStudio, HomeRental, LanguageSchool, TourAgency, ArtisanalProduct, CleaningService, PetSitting, WellnessPractitioner, Volunteer, Entertainment, DanceStudio }
+enum BusinessProfile { SurfShop, VehicleRental, YogaStudio, HomeRental, LanguageSchool, TourAgency, ArtisanalProduct, CleaningService, PetSitting, WellnessPractitioner, Volunteer, Entertainment, DanceStudio, MealPlanning }
 extension ParseBusinessProfileToString on BusinessProfile {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;

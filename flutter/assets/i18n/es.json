@@ -287,6 +287,10 @@
           "serviceTitle": "Servicio de mascotas",
           "serviceSubtitle": "Anuncie su servicio de sentado para mascotas."
         },
+        "mealPlanning": {
+          "serviceTitle": "Servicio",
+          "serviceSubtitle": "Anuncie un servicio de planificación de comidas.ón de comidas."
+        },
         "wellnessPractitioner": {
           "eventTitle": "Evento",
           "eventSubtitle": "Anuncie un evento, ya sea una sesión privada, un evento de repetición semanal o un evento único.",

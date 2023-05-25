@@ -283,6 +283,10 @@
           "serviceTitle": "Service",
           "serviceSubtitle": "Advertise a service that clients can book."
         },
+        "mealPlanning": {
+          "serviceTitle": "Service",
+          "serviceSubtitle": "Advertise a meal planning service."
+        },
         "petSitting": {
           "serviceTitle": "Pet sitting service",
           "serviceSubtitle": "Advertise your pet sitting service.",
