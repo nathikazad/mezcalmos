@@ -112,7 +112,13 @@ class _CustServicesListViewState extends State<CustServicesListView> {
             onClick: () async {
               viewController.showBusiness.value = false;
             },
-            icon: Icons.cleaning_services,
+            icon: viewController.serviceCategory.first ==
+                    ServiceCategory1.MealPlanning
+                ? Icons.set_meal
+                : viewController.serviceCategory.first ==
+                        ServiceCategory1.PetSitting
+                    ? Icons.pets
+                    : Icons.cleaning_services,
             borderRadius: 35,
             backgroundColor:
                 viewController.showBusiness.isTrue ? Color(0xFFF0F0F0) : null,

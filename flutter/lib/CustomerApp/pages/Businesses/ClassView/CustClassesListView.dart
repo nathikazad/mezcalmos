@@ -104,7 +104,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
             onClick: () async {
               viewController.showBusiness.value = false;
             },
-            icon: Icons.celebration,
+            icon: Icons.class_,
             borderRadius: 35,
             backgroundColor:
                 viewController.showBusiness.isTrue ? Color(0xFFF0F0F0) : null,
@@ -303,7 +303,10 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                       ),
                     ),
                     Text(
-                      '${viewController.classes[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.classes[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
+                      viewController.classes[index].details.cost.values.first ==
+                              0
+                          ? '${_i18n()['free']}'
+                          : '${viewController.classes[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.classes[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyLarge?.copyWith(
                           fontSize: 12.5.mezSp, fontWeight: FontWeight.w600),
