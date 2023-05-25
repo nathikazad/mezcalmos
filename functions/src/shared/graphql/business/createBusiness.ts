@@ -73,6 +73,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
         throw new MezError(BusinessError.BusinessCreationError);
     }
     let business: Business = {
+        id: response.insert_business_business_one.id,
         profile: businessDetails.profile,
         details: {
             id: response.insert_business_business_one.id,

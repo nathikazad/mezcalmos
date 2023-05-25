@@ -68,6 +68,7 @@ export async function getBusiness(businessId: number): Promise<Business> {
     })
 
     return {
+        id: response.business_business_by_pk.id,
         profile: response.business_business_by_pk.profile as BusinessProfile,
         details: {
             id: businessId,
