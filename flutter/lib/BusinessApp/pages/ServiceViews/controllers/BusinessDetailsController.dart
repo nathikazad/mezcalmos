@@ -32,7 +32,7 @@ class BusinessItemDetailsController {
   RxMap<TimeUnit, TextEditingController> priceTimeUnitMap =
       RxMap<TimeUnit, TextEditingController>();
   RxList<File?> images = RxList.filled(5, null);
-  RxBool isAvailable = false.obs;
+  RxBool isAvailable = true.obs;
   RxBool isEditing = false.obs;
   Rxn<BusinessItemDetails> _details = Rxn<BusinessItemDetails>();
   Rxn<ServiceProviderLanguage> languages = Rxn();

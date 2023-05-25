@@ -80,7 +80,9 @@
         "bodyMessage": "Al seleccionar \"Agregar servicio\", puede agregar su primer servicio y comenzar a construir su negocio en línea.",
         "event": {
           "event": "Evento",
-          "eventType": "Seleccione un tipo de evento",
+          "class": "Clase",
+          "eventType": "Tipo de evento",
+          "classType": "Tipo de clase",
           "scheduleTypeError": "Seleccione un tipo de horario",
           "scheduled": "Programada",
           "oneTime": "Una vez",
