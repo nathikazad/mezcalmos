@@ -1,15 +1,15 @@
 query number_of_food_by_category($distance: Float!, $from: geography!) {
-  restaurant_restaurant_aggregate(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}) {
+  restaurant_restaurant_aggregate(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}) {
     aggregate {
       count
     }
   }
-  business_product_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: "consumable"}}}) {
+  business_product_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}, details: {category1: {_eq: "consumable"}}}) {
     aggregate {
       count
     }
   }
-  business_service_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: "mealPlanning"}}}) {
+  business_service_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}, details: {category1: {_eq: "mealPlanning"}}}) {
     aggregate {
       count
     }
@@ -17,12 +17,12 @@ query number_of_food_by_category($distance: Float!, $from: geography!) {
 }
 
 query number_of_delivery($distance: Float!, $from: geography!) {
-  delivery_company_aggregate(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}) {
+  delivery_company_aggregate(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}) {
     aggregate {
       count
     }
   }
-  laundry_store_aggregate(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}) {
+  laundry_store_aggregate(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}) {
     aggregate {
       count
     }
