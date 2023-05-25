@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 class CustAdventureListViewController {
   // variables //
@@ -39,6 +40,7 @@ class CustAdventureListViewController {
 
   final List<EventCategory1> _filterCategories = <EventCategory1>[
     EventCategory1.Adventure,
+    EventCategory1.Surf,
   ];
 
   final List<EventCategory2> _categories2 = <EventCategory2>[
@@ -46,6 +48,30 @@ class CustAdventureListViewController {
   ];
 
   RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
+
+  RxString selectedCategoriesText =
+      LanguageController().userLanguageKey == Language.EN
+          ? "All".obs
+          : "Alle".obs;
+  void _categoryStringGen() {
+    selectedCategoriesText.value = "";
+    var data = filterInput["categories"]!
+        .map((String e) => e.toEventCategory1())
+        .toList();
+    if (data.length == _filterCategories.length) {
+      selectedCategoriesText.value =
+          LanguageController().userLanguageKey == Language.EN ? 'All' : 'Alle';
+      return;
+    }
+
+    for (int idx = 0; idx < data.length; idx++) {
+      if (idx == data.length - 1) {
+        selectedCategoriesText.value += data[idx].name;
+      } else {
+        selectedCategoriesText.value += "${data[idx].name}, ";
+      }
+    }
+  }
 
   late FilterInput _filterInput;
 
@@ -177,6 +203,7 @@ class CustAdventureListViewController {
     mezDbgPrint("new data :::::::::=====>_filterInput $_filterInput");
     _resetEvents();
     _fetchTherapy();
+    _categoryStringGen();
   }
 
   void _resetEvents() {

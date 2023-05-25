@@ -2,29 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/controllers/CustAdventureListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
-import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['AdventureView']['CustAdventureListView'];
@@ -75,6 +64,8 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _viewBusinessesSwitcher(),
+                      if (viewController.showBusiness.isFalse)
+                        _filterButton(context),
                       Container(
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
@@ -203,6 +194,58 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
       return NoServicesFound();
   }
 
+  Widget _filterButton(BuildContext context) {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.only(top: 15),
+      color: Color(0xFFF0F0F0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () async {
+          // _showFilterSheet(context);
+          FilterInput? data = await cusShowBusinessFilerSheet(
+              context: context,
+              filterInput: viewController.filterInput,
+              isClass: true,
+              defaultFilterInput: viewController.defaultFilters());
+          if (data != null) {
+            viewController.filter(data);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.filter_alt,
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '${_i18n()['filter']}:',
+              ),
+              SizedBox(
+                width: 3,
+              ),
+              Flexible(
+                child: Text(
+                  (viewController.selectedCategories.length == 1)
+                      ? "${viewController.selectedCategories.first.name}"
+                      : "${viewController.selectedCategoriesText}",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildAdventure() {
     if (viewController.adventure.isNotEmpty) {
       return Column(
@@ -213,28 +256,6 @@ class _CustAdventureListViewState extends State<CustAdventureListView> {
       ));
     } else
       return NoServicesFound();
-  }
-
-  Column oneTimeBuilder(EventCard eventData) {
-    return Column(
-      children: [
-        Divider(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              eventData.period == null
-                  ? '-'
-                  : "${eventData.period?.start.toDayName().inCaps} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-            Text(eventData.period == null
-                ? '-'
-                : "${eventData.period!.formatTime(eventData.period!.start)} - ${eventData.period!.formatTime(eventData.period!.end)}"),
-          ],
-        ),
-      ],
-    );
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
