@@ -12,6 +12,7 @@ class BsOpDateTimePicker extends StatelessWidget {
       required this.onNewPeriodSelected,
       this.validator,
       this.startTime,
+      this.fillColor,
       required this.label});
 
   final DateTime? time;
@@ -19,6 +20,7 @@ class BsOpDateTimePicker extends StatelessWidget {
   final String? Function(DateTime?)? validator;
   final String label;
   final DateTime? startTime;
+  final Color? fillColor;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class BsOpDateTimePicker extends StatelessWidget {
                         horizontal: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
+                        color: fillColor ?? Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
@@ -87,11 +89,14 @@ class BsOpDateTimePicker extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 2, left: 12),
-                    child: Text(state.errorText ?? "",
-                        style: context.theme.inputDecorationTheme.errorStyle),
-                  ),
+                  state.errorText == null
+                      ? SizedBox.shrink()
+                      : Container(
+                          padding: const EdgeInsets.only(top: 2, left: 12),
+                          child: Text(state.errorText ?? "",
+                              style: context
+                                  .theme.inputDecorationTheme.errorStyle),
+                        ),
                 ],
               );
             }),
