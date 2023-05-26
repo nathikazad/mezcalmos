@@ -65,6 +65,8 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   void dispose() {
     _authStateChnagesListener?.cancel();
     _authStateChnagesListener = null;
+    _notificationsStreamListener?.cancel();
+    _notificationsStreamListener = null;
     super.dispose();
   }
 
