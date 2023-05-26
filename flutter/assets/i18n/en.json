@@ -60,7 +60,7 @@
         }
       },
       "services": {
-        "weekdays" : {
+        "weekdays": {
           "monday": "Monday",
           "tuesday": "Tuesday",
           "wednesday": "Wednesday",
@@ -68,7 +68,6 @@
           "friday": "Friday",
           "saturday": "Saturday",
           "sunday": "Sunday"
-      
         },
         "services": "Services",
         "service": "Service",
@@ -121,11 +120,11 @@
         "english": "English",
         "spanish": "Spanish",
         "name": "Name",
-        "nameHint": "Add item name",
-        "nameError": "Please add item name",
+        "nameHint": "Add a name",
+        "nameError": "Please add a name",
         "description": "Description",
-        "descriptionHint": "Enter a description for your event",
-        "descriptionError": "Please enter a description for your event",
+        "descriptionHint": "Enter a description",
+        "descriptionError": "Please enter a description",
         "image": "Image",
         "imageInfo": "You can only upload up to five images.",
         "imageError": "Please add at least one image",
@@ -287,7 +286,7 @@
           "product": "Product",
           "productSubtitle": "Advertise an item that can be bought.",
           "consumable": "Consumable",
-          "personalCare": "PersonalCare",
+          "personalCare": "Personal Care",
           "art": "Art",
           "uncategorized": "Uncategorized"
         },
@@ -1207,6 +1206,7 @@
             "organizers": "Organizer",
             "noBusinessesFound": "No businesses found",
             "noEventsFound": "No events found",
+            "free": "FREE",
             "hour": "hour",
             "day": "day",
             "week": "week",
@@ -1233,6 +1233,7 @@
             "noBusinessesFound": "No businesses found",
             "noClassesFound": "No Classes found",
             "noEventsFound": "No events found",
+            "free": "FREE",
             "hour": "hour",
             "day": "day",
             "week": "week",
@@ -1332,7 +1333,7 @@
             "meal": "Meal",
             "petSitting": "Pet sitting",
             "uncategorized": "Uncategorized",
-            "cleaning": "Cleaning",
+            "cleaning": "Service",
             "hour": "hour",
             "day": "day",
             "week": "week",
@@ -1780,22 +1781,22 @@
       }
     },
     "pages": {
-      "ServiceProviderPages" : {
-        "ServiceScheduleViews" : {
-          "SingleDayScheduleView" : {
-            "open" : "Open",
-            "closed" : "Closed",
-            "save" : "Save",
-            "delete" : "Delete",
-            "time" : "Time",
-            "startsAt" :"Starts at",
-            "endsAt" : "Ends at",
-            "add" : "Add additional time",
-            "overlapError" : "Working hours can't overlap"
+      "ServiceProviderPages": {
+        "ServiceScheduleViews": {
+          "SingleDayScheduleView": {
+            "open": "Open",
+            "closed": "Closed",
+            "save": "Save",
+            "delete": "Delete",
+            "time": "Time",
+            "startsAt": "Starts at",
+            "endsAt": "Ends at",
+            "add": "Add additional time",
+            "overlapError": "Working hours can't overlap"
           }
-          }
-        },
-      
+        }
+      },
+
       "ServiceProfileView": {
         "profile": "Profile",
         "info": "Information",
