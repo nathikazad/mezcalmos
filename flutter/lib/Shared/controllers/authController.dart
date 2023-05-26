@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
@@ -52,12 +53,14 @@ class AuthController extends GetxController {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
-    bool internetStatus = false;
-    while (internetStatus == false) {
-      internetStatus = await ConnectivityHelper.pingServer(firebaseAuthUrl)
-          .timeout(Duration(seconds: 10), onTimeout: () => false);
+    if (!kIsWeb) {
+      bool internetStatus = false;
+      while (internetStatus == false) {
+        internetStatus = await ConnectivityHelper.pingServer(firebaseAuthUrl)
+            .timeout(Duration(seconds: 10), onTimeout: () => false);
+      }
+      mezDbgPrint("Connection is there on authController init 💕💕💕💕💕💕💕");
     }
-    mezDbgPrint("Connection is there on authController init 💕💕💕💕💕💕💕");
     _auth.authStateChanges().listen((fireAuth.User? user) async {
       await authChangeCallback(user);
     });
