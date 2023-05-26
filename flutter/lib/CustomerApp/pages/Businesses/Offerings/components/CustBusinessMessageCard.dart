@@ -70,10 +70,10 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
                     await SignInView.navigateAtOrderTime();
                   } else {
                     await custChatController.initiateChat(
-                      businessId: widget.business.id,
-                      businessImage: widget.offering.firstImage ?? defaultUserImgUrl,
-                      offeringName: widget.offering.name,
-                    );
+                        businessId: widget.business.id,
+                        offeringName: widget.offering.name,
+                        offeringImage:
+                            widget.offering.firstImage ?? defaultUserImgUrl);
                   }
                   setState(() {
                     isLoading = false;
