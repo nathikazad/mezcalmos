@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Offerings']['components'];
@@ -60,6 +61,8 @@ class _CustBusinessScheduleBuilderState
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, WorkingDay> concatenatedSchedule =
+        widget.schedule!.concatenatedVersion();
     if (widget.schedule == null) {
       return SizedBox.shrink();
     }
@@ -71,95 +74,71 @@ class _CustBusinessScheduleBuilderState
             _i18n()[scheduleTypeHeading()]!,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-        // if (widget.scheduleType == ScheduleType.OneTime)
-        //   Builder(
-        //     builder: (BuildContext context) {
-        //       final List<OpenHours>? openHours =
-        //           widget.schedule!.openHours.values.toList();
-
-        //       if (openHours?.isEmpty == true) {
-        //         return SizedBox.shrink();
-        //       }
-
-        //       final OpenHours data = openHours[0];
-        //       final bool isOpen = data.isOpen;
-        //       final String fromHour = data.from[0].toString();
-        //       final String fromMinute = data.from[1].toString();
-        //       final String toHour = data.to[0].toString();
-        //       final String toMinute = data.to[1].toString();
-
-        //       return isOpen
-        //           ? Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //               children: [
-        //                 Text(
-        //                   '${_i18n()[data.day.toLowerCase()]['weekDays']}',
-        //                   style: Theme.of(context).textTheme.titleLarge,
-        //                 ),
-        //                 Text(
-        //                   "${formatTime(fromHour, fromMinute)}-${formatTime(toHour, toMinute)}",
-        //                 ),
-        //               ],
-        //             )
-        //           : SizedBox.shrink();
-        //     },
-        //   ),
-        ...widget.schedule!.openHours.entries
-            .map((MapEntry<Weekday, WorkingDay> openHours) {
+        ...concatenatedSchedule.entries
+            .map((MapEntry<String, WorkingDay> workingDays) {
           return Builder(
             builder: (BuildContext context) {
-              final bool isOpen = openHours.value.isOpen;
-
+              final bool isOpen = workingDays.value.isOpen;
+              final isLastDay =
+                  concatenatedSchedule.entries.last.key == workingDays.key;
               return isOpen
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  ? Column(
                       children: [
-                        !widget.showIcons
-                            ? Text(
-                                widget.scheduleType == ScheduleType.Scheduled
-                                    ? "${_i18n()['weekDays'][openHours.key.toFirebaseFormatString()]}s"
-                                    : "${_i18n()['weekDays'][openHours.key.toFirebaseFormatString()]}",
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              )
-                            : SizedBox(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 3),
-                                      child: Icon(
-                                        Icons.access_time_outlined,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5.0),
-                                      child: Text(
-                                        '${_i18n()['weekDays'][openHours.key.toFirebaseFormatString()]}${(widget.scheduleType == ScheduleType.Scheduled ? 's' : '')}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                        Column(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ...openHours.value.openHours.map((element) {
-                              final String fromHour =
-                                  element.from.first.toString();
-                              final String fromMinute =
-                                  element.from.last.toString();
-                              final String toHour = element.to.first.toString();
-                              final String toMinute =
-                                  element.to.last.toString();
-                              return Text(
-                                "${formatTime(fromHour, fromMinute)} - ${formatTime(toHour, toMinute)}",
-                              );
-                            }).toList(),
+                            !widget.showIcons
+                                ? Text(
+                                    _daysTranslate(workingDays.key),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600),
+                                  )
+                                : SizedBox(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 3),
+                                          child: Icon(
+                                            Icons.access_time_outlined,
+                                            size: 20,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5.0),
+                                          child: Text(
+                                            _daysTranslate(workingDays.key),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                            Column(
+                              children: [
+                                ...workingDays.value.openHours.map((element) {
+                                  final String fromHour =
+                                      element.from.first.toString();
+                                  final String fromMinute =
+                                      element.from.last.toString();
+                                  final String toHour =
+                                      element.to.first.toString();
+                                  final String toMinute =
+                                      element.to.last.toString();
+                                  return Text(
+                                    "${formatTime(fromHour, fromMinute)} - ${formatTime(toHour, toMinute)}",
+                                  );
+                                }).toList(),
+                              ],
+                            ),
                           ],
                         ),
+                        if (!isLastDay) Divider(),
                       ],
                     )
                   : SizedBox.shrink();
@@ -170,11 +149,19 @@ class _CustBusinessScheduleBuilderState
     );
   }
 
-  String _days(String day) {
-    if (Get.find<LanguageController>().langFullName == 'English') {
-      return '${day}s';
+  String _daysTranslate(String day) {
+    // Means day is combined
+    if (day.contains("-")) {
+      final List<String> twoDays = day.split("-");
+      if (widget.scheduleType == ScheduleType.Scheduled) {
+        return "${_i18n()["weekDays"][twoDays[0].toLowerCase()]}s-${_i18n()["weekDays"][twoDays[1].toLowerCase()]}s";
+      }
+      return "${_i18n()["weekDays"][twoDays[0].toLowerCase()]}-${_i18n()["weekDays"][twoDays[1].toLowerCase()]}";
     } else {
-      return 'Los ${day.toLowerCase()}';
+      if (widget.scheduleType == ScheduleType.Scheduled) {
+        return "${_i18n()["weekDays"][day.toLowerCase()]}s";
+      }
+      return "${_i18n()["weekDays"][day.toLowerCase()]}s";
     }
   }
 }

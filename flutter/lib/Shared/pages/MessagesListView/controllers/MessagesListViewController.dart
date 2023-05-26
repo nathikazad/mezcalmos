@@ -52,12 +52,12 @@ class CustMessagesListViewController extends MessagesListViewController {
 
   Future<void> initiateChat(
       {required int businessId,
-      required String businessImage,
+      required String offeringImage,
       required Map<Language, String>? offeringName}) async {
     final IncomingViewLink? viewLink = offeringName == null
         ? null
         : IncomingViewLink(
-            image: businessImage,
+            image: offeringImage,
             name: offeringName,
             url: MezRouter.currentRoute().name,
           );
