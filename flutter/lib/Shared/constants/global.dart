@@ -323,6 +323,8 @@ const String mezPackageMarker =
     "assets/images/shared/markers/packageMarker.png";
 const String mezDestinationMarker =
     "assets/images/shared/markers/destinationMarker.png";
+    const String mezHomeIconMarker =
+    "assets/images/shared/markers/homeIcon.png";
 const String mezLookingAsset = "assets/images/shared/looking.png";
 
 const String customImageUrl =

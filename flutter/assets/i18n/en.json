@@ -1149,6 +1149,9 @@
           "CustHomeRentalListView": {
             "homes": "Homes",
             "home": "Home",
+            "map": "Map",
+            "viewOnMap": "View on map",
+            "viewAsList": "View as list",
             "agency": "Agency",
             "noBusinessesFound": "No businesses found",
             "noRentalsFound": "No Rentals Found",

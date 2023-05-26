@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
@@ -37,14 +40,30 @@ class CustHomeRentalsListViewController {
 
   // getters //
   bool get isLoading => _isLoading.value;
+  bool get isMapView => _isMapView.value;
 
+  RxBool _isMapView = false.obs;
+
+  // Map view //
   List<RentalCard> get rentals => _rentals.value;
   List<BusinessCard> get businesses => _businesses.value;
+
+  LatLng _currentLocation = LatLng(19.4326, -99.1332);
+  LatLng get currentLocation => _currentLocation;
+
+  Set<Marker> _markers = <Marker>{};
+  Set<Marker> get markers => _markers;
+  // Map view //
 
 // methods //
   Future<void> init() async {
     try {
       _isLoading.value = true;
+      await locPkg.Location().getLocation().then((location) {
+        if (location.latitude != null && location.longitude != null)
+          _currentLocation = LatLng(location.latitude!, location.longitude!);
+      });
+
       // todo @ChiragKr04 fix the location thing
 
       locPkg.LocationData location = await locPkg.Location().getLocation();
@@ -53,6 +72,7 @@ class CustHomeRentalsListViewController {
             lat: location.latitude!, lng: location.longitude!, address: "");
         await _fetchRentals();
         await _fetchBusinesses();
+        _fillMapsMarkers();
         _rentalScrollController.onBottomReach(_fetchRentals, sensitivity: 500);
         _businessScrollController.onBottomReach(_fetchBusinesses,
             sensitivity: 500);
@@ -121,6 +141,21 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(e);
     } finally {
       _businessFetchingData = false;
+    }
+  }
+
+  void switchView() => _isMapView.value = !_isMapView.value;
+
+  Future<void> _fillMapsMarkers() async {
+    _markers = <Marker>{};
+    for (RentalCard rental in _rentals) {
+      markers.add(Marker(
+          icon: await bitmapDescriptorLoader(mezHomeIconMarker, 100, 100),
+          // icon: await BitmapDescriptor.fromAssetImage(
+          //     ImageConfiguration(), mezHomeIconMarker),
+          markerId: MarkerId(rental.id.toString()),
+          position: LatLng(rental.gpsLocation!.lat.toDouble(),
+              rental.gpsLocation!.lng.toDouble())));
     }
   }
 

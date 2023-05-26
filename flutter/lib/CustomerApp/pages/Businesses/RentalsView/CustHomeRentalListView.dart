@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustHomeRentalsListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -52,12 +53,33 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: '${_i18n()['homes']}',
+        title: viewController.isMapView
+            ? '${_i18n()['map']}'
+            : '${_i18n()['homes']}',
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50),
+        child: Obx(
+          () => MezButton(
+            onClick: () async {
+              viewController.switchView();
+            },
+            icon: viewController.isMapView ? Icons.list : Icons.room,
+            label: viewController.isMapView
+                ? '${_i18n()['viewAsList']}'
+                : '${_i18n()['viewOnMap']}',
+            borderRadius: 50,
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Obx(() {
         if (viewController.isLoading) {
           return const Center(child: CircularProgressIndicator());
         } else {
+          if (viewController.isMapView) {
+            return _mapView();
+          }
           return Container(
             margin: const EdgeInsets.all(16),
             child: CustomScrollView(
@@ -90,6 +112,19 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
         }
       }),
     );
+  }
+
+  GoogleMap _mapView() {
+    return GoogleMap(
+        zoomControlsEnabled: false,
+        markers: viewController.markers,
+        onMapCreated: (GoogleMapController controller) {
+          controller.setMapStyle(mezMapStyle);
+        },
+        initialCameraPosition: CameraPosition(
+          target: viewController.currentLocation,
+          zoom: 14,
+        ));
   }
 
   Widget _viewBusinessesSwitcher() {

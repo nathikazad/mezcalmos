@@ -1192,6 +1192,9 @@
           "CustHomeRentalListView": {
             "homes": "Casas",
             "home": "Hogar",
+            "map": "Mapa",
+            "viewOnMap": "Ver en el mapa",
+            "viewAsList": "Ver como lista",
             "agency": "Agencia",
             "noBusinessesFound": "No businesses found",
             "noRentalsFound": "No Rentals Found",
