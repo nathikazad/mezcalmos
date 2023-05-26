@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';

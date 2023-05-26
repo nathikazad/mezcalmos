@@ -66,6 +66,7 @@ class CustHomeRentalViewController {
       withCache: true,
     );
     _setInitialTimeCost();
+    _calcTotalOrderCost();
   }
 
   void _setInitialTimeCost() {
@@ -104,20 +105,72 @@ class CustHomeRentalViewController {
     orderString.value = "-";
     totalOrderCost.value = 0;
     _setInitialTimeCost();
+    _calcTotalOrderCost();
   }
 }
 
 class CustRentalViewController {
   // state vars //
   Rxn<RentalWithBusinessCard> _rental = Rxn<RentalWithBusinessCard>();
+  Rxn<DateTime> _startDate = Rxn();
+  Rxn<Map<TimeUnit, num>> _timeCost = Rxn();
+  Rx<int> _duration = Rx(1);
+  Rx<int> _totalGuests = Rx(1);
+  Rx<String> orderString = Rx("-");
+  Rx<double> totalOrderCost = Rx(0);
 
   // getters //
   RentalWithBusinessCard? get rental => _rental.value;
+  Rxn<DateTime> get startDate => _startDate;
+  Rxn<Map<TimeUnit, num>> get timeCost => _timeCost;
+  Rx<int> get duration => _duration;
+  Rx<int> get totalGuests => _totalGuests;
   // methods //
   Future<void> fetchData({required int rentalId}) async {
     _rental.value = await get_rental_by_id(
       id: rentalId,
       withCache: true,
     );
+    _setInitialTimeCost();
+    _calcTotalOrderCost();
+  }
+
+  void _setInitialTimeCost() {
+    final TimeUnit costKey = _rental.value!.details.cost.entries.first.key;
+    final num costValue = _rental.value!.details.cost.entries.first.value;
+    _timeCost.value = {
+      costKey: costValue,
+    };
+  }
+
+  void setTimeCost(Map<TimeUnit, num> value) {
+    _timeCost.value = value;
+    _calcTotalOrderCost();
+  }
+
+  void setDuration(int value) {
+    _duration.value = value;
+    _calcTotalOrderCost();
+  }
+
+  void setTotalGuests(int value) {
+    _totalGuests.value = value;
+    _calcTotalOrderCost();
+  }
+
+  void _calcTotalOrderCost() {
+    double newCost = 0;
+    newCost += _duration.value * (_timeCost.value!.values.first.toInt());
+    totalOrderCost.value = newCost;
+    orderString.value = "\$${totalOrderCost.value.toStringAsFixed(0)}";
+  }
+
+  Future<void> bookOffering() async {
+    _duration.value = 1;
+    _totalGuests.value = 1;
+    orderString.value = "-";
+    totalOrderCost.value = 0;
+    _setInitialTimeCost();
+    _calcTotalOrderCost();
   }
 }
