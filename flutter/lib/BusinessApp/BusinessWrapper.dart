@@ -23,14 +23,14 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
-class BusinessWarpper extends StatefulWidget {
-  const BusinessWarpper({super.key});
+class BusinessWrapper extends StatefulWidget {
+  const BusinessWrapper({super.key});
 
   @override
-  State<BusinessWarpper> createState() => _BusinessWarpperState();
+  State<BusinessWrapper> createState() => _BusinessWrapperState();
 }
 
-class _BusinessWarpperState extends State<BusinessWarpper> {
+class _BusinessWrapperState extends State<BusinessWrapper> {
   Operator? restaurantOperator;
 
   BusinessOpAuthController businessOpAuthController =
