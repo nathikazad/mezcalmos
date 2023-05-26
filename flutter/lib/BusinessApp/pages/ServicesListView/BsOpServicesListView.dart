@@ -166,6 +166,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             Text(
                               '${_i18n()['noServicesFound']}',
                               style: context.textTheme.bodyLarge,
+                              textAlign: TextAlign.center,
                             ),
                             Text(
                               '${_i18n()['bodyMessage']}',

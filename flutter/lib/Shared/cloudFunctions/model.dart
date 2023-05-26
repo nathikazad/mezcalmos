@@ -381,7 +381,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 }
 
 class Schedule {
-  Map<Weekday, OpenHours> openHours;
+  Map<Weekday, WorkingDay> openHours;
   Schedule({
     required this.openHours});
 
@@ -1330,15 +1330,27 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 
 }
 
-class OpenHours {
+class WorkingDay {
   bool isOpen;
-  List<num> from;
-  List<num> to;
-  OpenHours({
-    required this.isOpen, required this.from, required this.to});
+  List<OpenHours> openHours;
+  WorkingDay({
+    required this.isOpen, required this.openHours});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "isOpen": isOpen,
+      "openHours": openHours,
+    };
+  }
+
+}
+
+class OpenHours {
+  List<num> from;
+  List<num> to;
+  OpenHours({
+    required this.from, required this.to});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
       "from": from,
       "to": to,
     };

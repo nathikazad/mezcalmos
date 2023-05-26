@@ -60,6 +60,15 @@
         }
       },
       "services": {
+        "weekdays": {
+          "monday": "Monday",
+          "tuesday": "Tuesday",
+          "wednesday": "Wednesday",
+          "thursday": "Thursday",
+          "friday": "Friday",
+          "saturday": "Saturday",
+          "sunday": "Sunday"
+        },
         "services": "Services",
         "service": "Service",
         "serviceType": "What type of service will you add?",
@@ -69,7 +78,9 @@
         "bodyMessage": "By selecting \"Add Service\" you can add your first service and start building your business online.",
         "event": {
           "event": "Event",
-          "eventType": "Select an event type",
+          "class": "Class",
+          "eventType": "Type of event",
+          "classType": "Type of class",
           "scheduleTypeError": "Please select a schedule type",
           "scheduled": "Scheduled",
           "oneTime": "One time",
@@ -109,11 +120,11 @@
         "english": "English",
         "spanish": "Spanish",
         "name": "Name",
-        "nameHint": "Add item name",
-        "nameError": "Please add item name",
+        "nameHint": "Add a name",
+        "nameError": "Please add a name",
         "description": "Description",
-        "descriptionHint": "Enter a description for your event",
-        "descriptionError": "Please enter a description for your event",
+        "descriptionHint": "Enter a description",
+        "descriptionError": "Please enter a description",
         "image": "Image",
         "imageInfo": "You can only upload up to five images.",
         "imageError": "Please add at least one image",
@@ -275,7 +286,7 @@
           "product": "Product",
           "productSubtitle": "Advertise an item that can be bought.",
           "consumable": "Consumable",
-          "personalCare": "PersonalCare",
+          "personalCare": "Personal Care",
           "art": "Art",
           "uncategorized": "Uncategorized"
         },
@@ -1195,6 +1206,7 @@
             "organizers": "Organizer",
             "noBusinessesFound": "No businesses found",
             "noEventsFound": "No events found",
+            "free": "FREE",
             "hour": "hour",
             "day": "day",
             "week": "week",
@@ -1221,6 +1233,7 @@
             "noBusinessesFound": "No businesses found",
             "noClassesFound": "No Classes found",
             "noEventsFound": "No events found",
+            "free": "FREE",
             "hour": "hour",
             "day": "day",
             "week": "week",
@@ -1315,10 +1328,12 @@
             "noBusinessesFound": "No businesses found",
             "store": "Store",
             "services": "Services",
+            "service": "Service",
             "mealPlanning": "Meal planning",
+            "meal": "Meal",
             "petSitting": "Pet sitting",
             "uncategorized": "Uncategorized",
-            "cleaning": "Cleaning",
+            "cleaning": "Service",
             "hour": "hour",
             "day": "day",
             "week": "week",
@@ -1356,7 +1371,7 @@
               "description": "Discover most delicious dishes from the nearest restaurants."
             },
             "locallyMade": {
-              "title": "Locally Made",
+              "title": "Consumable",
               "description": "Savor the taste of locally made treats."
             },
             "mealPlanning": {
@@ -1766,6 +1781,22 @@
       }
     },
     "pages": {
+      "ServiceProviderPages": {
+        "ServiceScheduleViews": {
+          "SingleDayScheduleView": {
+            "open": "Open",
+            "closed": "Closed",
+            "save": "Save",
+            "delete": "Delete",
+            "time": "Time",
+            "startsAt": "Starts at",
+            "endsAt": "Ends at",
+            "add": "Add additional time",
+            "overlapError": "Working hours can't overlap"
+          }
+        }
+      },
+
       "ServiceProfileView": {
         "profile": "Profile",
         "info": "Information",

@@ -60,6 +60,15 @@
         }
       },
       "services": {
+        "weekdays": {
+          "monday": "Lunes",
+          "tuesday": "Martes",
+          "wednesday": "Miércoles",
+          "thursday": "Jueves",
+          "friday": "Viernes",
+          "saturday": "Sábado",
+          "sunday": "Domingo"
+        },
         "services": "Servicios",
         "service": "Servicio",
         "serviceType": "¿Qué tipo de servicio agregarás?",
@@ -70,7 +79,9 @@
         "bodyMessage": "Al seleccionar \"Agregar servicio\", puede agregar su primer servicio y comenzar a construir su negocio en línea.",
         "event": {
           "event": "Evento",
-          "eventType": "Seleccione un tipo de evento",
+          "class": "Clase",
+          "eventType": "Tipo de evento",
+          "classType": "Tipo de clase",
           "scheduleTypeError": "Seleccione un tipo de horario",
           "scheduled": "Programada",
           "oneTime": "Una vez",
@@ -109,11 +120,11 @@
         "english": "Inglés",
         "spanish": "Español",
         "name": "Nombre",
-        "nameHint": "Añadir nombre de artículo",
-        "nameError": "Por favor, añada el nombre del artículo",
+        "nameHint": "Añadir nombre",
+        "nameError": "Por favor, añada el nombre",
         "description": "Descripción",
-        "descriptionHint": "Introduzca una descripción para su evento",
-        "descriptionError": "Por favor, introduzca una descripción para su evento",
+        "descriptionHint": "Introduzca una descripción",
+        "descriptionError": "Por favor, introduzca una descripción",
         "image": "Imagen",
         "imageInfo": "Sólo puedes subir hasta cinco imágenes.",
         "imageError": "Añada al menos una imagen",
@@ -1237,6 +1248,7 @@
             "organizers": "Organizadora",
             "noBusinessesFound": "No se encontraron negocios",
             "noEventsFound": "No se encuentran eventos",
+            "free": "GRATIS",
             "hour": "hora",
             "day": "día",
             "week": "semana",
@@ -1258,6 +1270,7 @@
             "noBusinessesFound": "No se encontraron negocios",
             "noClassesFound": "No se encontraron clases",
             "noEventsFound": "No se encuentran eventos",
+            "free": "GRATIS",
             "hour": "hora",
             "day": "día",
             "week": "semana",
@@ -1353,9 +1366,11 @@
             "store": "Tienda",
             "services": "Servicios",
             "mealPlanning": "Planificación de comidas",
+            "service": "Servicio",
+            "meal": "Comida",
             "petSitting": "Cuidado de mascotas",
             "uncategorized": "Sin categoría",
-            "cleaning": "Limpieza",
+            "cleaning": "Servicio",
             "hour": "hora",
             "day": "día",
             "week": "semana",
@@ -1422,7 +1437,7 @@
               "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
             },
             "locallyMade": {
-              "title": "Hecho localmente",
+              "title": "Consumible",
               "description": "Saborea el sabor de las golosinas locales."
             },
             "mealPlanning": {
@@ -1831,6 +1846,21 @@
       }
     },
     "pages": {
+      "ServiceProviderPages": {
+        "ServiceScheduleViews": {
+          "SingleDayScheduleView": {
+            "open": "Abierto",
+            "closed": "Cerrado",
+            "save": "Guardar",
+            "delete": "Eliminar",
+            "time": "Hora",
+            "startsAt": "Comienza a las",
+            "endsAt": "Termina a las",
+            "add": "Agregar hora adicional",
+            "overlapError": "La hora de inicio y finalización no pueden superponerse"
+          }
+        }
+      },
       "ServiceProfileView": {
         "profile": "Perfil",
         "info": "Información",

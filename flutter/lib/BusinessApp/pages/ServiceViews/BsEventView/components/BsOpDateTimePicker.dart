@@ -78,7 +78,10 @@ class BsOpDateTimePicker extends StatelessWidget {
                                   size: 18,
                                 ),
                                 SizedBox(width: 5),
-                                Text(state.value?.getEstimatedTime() ?? label),
+                                Text(state.value
+                                        ?.getEstimatedTime()
+                                        .toString() ??
+                                    label),
                               ],
                             ),
                           ),
