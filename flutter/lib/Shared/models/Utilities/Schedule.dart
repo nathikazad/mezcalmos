@@ -46,7 +46,12 @@ Schedule scheduleFromData(json) {
       //  }
     }
   }
-  return Schedule(openHours: openHours);
+  List<Weekday> sortedKeys = openHours.keys.toList()
+    ..sort((Weekday a, Weekday b) => a.index.compareTo(b.index));
+
+  Map<Weekday, WorkingDay> sortedOpenHours =
+      Map.fromIterable(sortedKeys, key: (k) => k, value: (k) => openHours[k]!);
+  return Schedule(openHours: sortedOpenHours);
 }
 
 extension ScheduleFunctions on Schedule {

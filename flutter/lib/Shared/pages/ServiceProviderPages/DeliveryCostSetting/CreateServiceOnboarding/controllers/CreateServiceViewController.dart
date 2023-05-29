@@ -354,7 +354,7 @@ class CreateServiceViewController {
         "Creating business ${languages.value.toFirebaseFormattedJson()} with this paylod ====>>>\n ${_constructServiceDetails()}");
     try {
       await _setImage();
-      cModels.BusinessResponse res =
+      final cModels.BusinessResponse res =
           await CloudFunctions.business_createBusiness(
         name: serviceInput.value.serviceInfo!.name,
         image: newImageUrl.value ?? defaultUserImgUrl,
@@ -364,7 +364,7 @@ class CreateServiceViewController {
             address: serviceInput.value.serviceInfo!.location.address),
         language: languages.value,
         profile: businessProfile!,
-        schedule: serviceInput.value.schedule!,
+        schedule: oldSchedule.value,
       );
       if (res.success == false) {
         mezDbgPrint(res.error);
