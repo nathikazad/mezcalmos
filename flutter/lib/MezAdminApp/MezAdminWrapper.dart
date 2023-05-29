@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/mezAdminNodes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
@@ -35,6 +36,7 @@ class _MezAdminWrapperState extends State<MezAdminWrapper> {
 
     _adminAuthController.getMezAdmin().then((MezAdmin? admin) {
       if (admin != null) {
+        _notificationsStreamListener = initializeShowNotificationsListener();
         Get.find<ForegroundNotificationsController>()
             .startListeningForNotificationsFromFirebase(
                 mezAdminNotificationsNode(userId), mezAdminNotificationHandler);
@@ -53,6 +55,8 @@ class _MezAdminWrapperState extends State<MezAdminWrapper> {
 
   @override
   void dispose() {
+    _notificationsStreamListener?.cancel();
+    _notificationsStreamListener = null;
     super.dispose();
   }
 

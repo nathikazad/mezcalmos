@@ -61,7 +61,7 @@ class _BsOpSchedulePickerViewState extends State<BsOpSchedulePickerView> {
       ),
       bottomNavigationBar: MezButton(
           borderRadius: 0,
-          label: "Add",
+          label: "${_i18n()['save']}",
           onClick: () async {
             viewController.saveAndBack();
           }),

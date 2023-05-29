@@ -6,7 +6,6 @@ class MezWorkingHoursController {
   Schedule get workingHours => _workingHours.value!;
 
   void initialize({required Schedule schedule}) {
-    // Initialize the working hours with default values or fetch from an API
     _workingHours.value = schedule;
   }
 

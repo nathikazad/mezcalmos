@@ -336,7 +336,8 @@
       "BsOpSchedulePickerView": {
         "BsOpSchedulePickerView": {
           "schedule": "Availability",
-          "weeklySchedule": "Weekly Schedule"
+          "weeklySchedule": "Weekly Schedule",
+          "save" : "Save"
         }
       }
     }
@@ -1866,7 +1867,8 @@
               "wellnessPractitioner": "Wellness Practitioner",
               "volunteer": "Volunteer",
               "entertainment": "Event Planners",
-              "danceStudio": "Dance Studio"
+              "danceStudio": "Dance Studio",
+              "mealPlanning" : "Meal Planning"
             }
           }
         },
