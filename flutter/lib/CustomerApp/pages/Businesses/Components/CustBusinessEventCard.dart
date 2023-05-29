@@ -80,19 +80,22 @@ class CustBusinessEventCard extends StatelessWidget {
                 )
               ],
             ),
-            if (event.schedule != null &&
-                event.scheduleType != ScheduleType.OneTime &&
-                !(event.scheduleType == ScheduleType.OnDemand && event.isClass))
-              Column(
-                children: [
-                  Divider(),
-                  CustBusinessScheduleBuilder(
-                      showTitle: false,
-                      showIcons: false,
-                      schedule: event.schedule,
-                      scheduleType: event.scheduleType)
-                ],
-              ),
+            if (event.category1 == EventCategory1.Therapy &&
+                event.scheduleType != ScheduleType.OnDemand)
+              if (event.schedule != null &&
+                  event.scheduleType != ScheduleType.OneTime &&
+                  !(event.scheduleType == ScheduleType.OnDemand &&
+                      event.isClass))
+                Column(
+                  children: [
+                    Divider(),
+                    CustBusinessScheduleBuilder(
+                        showTitle: false,
+                        showIcons: false,
+                        schedule: event.schedule,
+                        scheduleType: event.scheduleType)
+                  ],
+                ),
             if (event.period != null &&
                 event.scheduleType == ScheduleType.OneTime)
               oneTimeBuilder(event),
@@ -117,7 +120,7 @@ class CustBusinessEventCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "${eventData.period?.start.toDayName()} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
+                    "${eventData.period?.start.toDayName().inCaps} ${eventData.period?.start.day} ${DateFormat.MMMM().format(eventData.period!.start)}",
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   Text(

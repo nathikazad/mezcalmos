@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -191,10 +192,8 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       color: Theme.of(context).scaffoldBackgroundColor,
                     ),
                     child: TextFormField(
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayLarge!
-                          .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          fontSize: 14.mezSp, fontWeight: FontWeight.w500),
                       autofocus: false,
                       onChanged: (String s) {
                         if (_prefixTextFieldController.text.length > 0 &&
@@ -207,7 +206,9 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                       },
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                          hintText: "Enter number", border: InputBorder.none),
+                          hintStyle: TextStyle(fontSize: 14.mezSp),
+                          hintText: "Enter number",
+                          border: InputBorder.none),
                       controller: _numberTextFieldController,
                     ),
                   ),

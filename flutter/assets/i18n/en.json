@@ -1040,7 +1040,16 @@
             "art": "Art",
             "noBusinessesFound": "No business was found",
             "store": "Store",
-            "services": "Services"
+            "services": "Services",
+            "free": "FREE",
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "merson",
+            "total": "total",
+            "unit": "unit",
+            "none": "none"
           },
           "CustLocallyMadeWrapper": {
             "locallyMade": "Made locally",

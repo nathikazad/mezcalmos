@@ -13,10 +13,14 @@ class CustBusinessScheduleBuilder extends StatefulWidget {
     required this.scheduleType,
     this.showTitle = true,
     this.showIcons = true,
+    this.icon = Icons.access_time_outlined,
+    this.isService = false,
   }) : super(key: key);
 
   final bool showTitle;
   final bool showIcons;
+  final bool isService;
+  final IconData icon;
   final Schedule? schedule;
   final ScheduleType scheduleType;
 
@@ -68,7 +72,9 @@ class _CustBusinessScheduleBuilderState
       children: [
         if (widget.showTitle)
           Text(
-            _i18n()[scheduleTypeHeading()]!,
+            widget.isService
+                ? '${_i18n()['availability']}'
+                : _i18n()[scheduleTypeHeading()]!,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         // if (widget.scheduleType == ScheduleType.OneTime)
@@ -117,7 +123,8 @@ class _CustBusinessScheduleBuilderState
                       children: [
                         !widget.showIcons
                             ? Text(
-                                widget.scheduleType == ScheduleType.Scheduled
+                                widget.scheduleType == ScheduleType.Scheduled &&
+                                        !widget.isService
                                     ? "${_i18n()['weekDays'][openHours.key.toFirebaseFormatString()]}s"
                                     : "${_i18n()['weekDays'][openHours.key.toFirebaseFormatString()]}",
                                 style: TextStyle(fontWeight: FontWeight.w600),
@@ -126,17 +133,14 @@ class _CustBusinessScheduleBuilderState
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 3),
-                                      child: Icon(
-                                        Icons.access_time_outlined,
-                                        size: 20,
-                                      ),
+                                    Icon(
+                                      widget.icon,
+                                      size: 20,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 5.0),
                                       child: Text(
-                                        '${_i18n()['weekDays'][openHours.key.toFirebaseFormatString()]}${(widget.scheduleType == ScheduleType.Scheduled ? 's' : '')}',
+                                        '${_i18n()['weekDays'][openHours.key.toFirebaseFormatString()]}${(widget.scheduleType == ScheduleType.Scheduled && !widget.isService ? 's' : '')}',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w600),
                                       ),
@@ -158,6 +162,9 @@ class _CustBusinessScheduleBuilderState
                                 "${formatTime(fromHour, fromMinute)} - ${formatTime(toHour, toMinute)}",
                               );
                             }).toList(),
+                            SizedBox(
+                              height: 5,
+                            )
                           ],
                         ),
                       ],
