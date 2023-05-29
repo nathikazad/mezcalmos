@@ -7,6 +7,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProduct
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
+import 'package:mezcalmos/BusinessApp/pages/UnAuthView/BusinessOpUnauthView.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -22,6 +23,7 @@ class BusinessOpRoutes {
   static const String kBsOpProduct = '/product/:id';
   static const String kBsOpSchedulePick = '/pickSchedule';
   static const String kDeliveryOpPastOrdersRoute = '/pastOrders';
+  static const String kUnauthorizedOperatorRoute = "/unauthorized";
 
   static const String kNotAuthorizedOperatorRoute = "/deliveryOp/unauthorized";
   static const String kOrderViewRoute = "/deliveryOrders/:orderId";
@@ -41,6 +43,11 @@ class BusinessOpRoutes {
           name: kBusniessOpTabsView,
           builder: () => BsOpTabsView(),
         ),
+        QRoute(
+          path: kUnauthorizedOperatorRoute,
+          name: kUnauthorizedOperatorRoute,
+          builder: () => BusinessOpUnauthView(),
+        )
       ] +
       sharedWitAdminRoutes +
       SharedRoutes.qRoutes +

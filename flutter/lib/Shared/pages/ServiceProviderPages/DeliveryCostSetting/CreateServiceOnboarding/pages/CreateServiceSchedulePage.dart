@@ -27,10 +27,8 @@ class _CreateServiceSchedulePageState extends State<CreateServiceSchedulePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
-            child: MezEditableWorkingHours(
-              schedule: widget.viewController.oldSchedule.value,
-            ),
+          MezEditableWorkingHours(
+            schedule: widget.viewController.oldSchedule.value,
           ),
           SizedBox(
             height: 25,
