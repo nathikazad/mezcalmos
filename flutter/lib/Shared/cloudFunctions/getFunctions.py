@@ -420,7 +420,11 @@ def getModels():
     return <String, dynamic>{
       '''
       for v in models[key]["values"]:
-        toWriteModel +=  "\""+v.replace("?","")+"\": "+v.replace("?","")+",\n      "
+        toWriteModel +=  "\""+v.replace("?","")+"\": "
+        if models[key]["values"][v] == "Language" :
+          toWriteModel += v+".toFirebaseFormatString(),\n      "
+        else:
+          toWriteModel += v.replace("?","")+",\n      "
       toWriteModel = toWriteModel[:-2]
       toWriteModel +=  "};\n  }\n"
       if "Response" in key:

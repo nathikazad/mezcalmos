@@ -50,6 +50,31 @@ export enum ParticipantType {
   BusinessOperator = "businessOperator",
 }
 
+export enum RecipientType {
+  Customer = "customer",
+  DeliveryDriver = "deliveryDriver",
+  Laundry = "laundry",
+  Restaurant = "restaurant",
+  Business = "business",
+  DeliveryCompany = "deliveryCompany",
+}
+
+export const RecipientTypeToChatInfoAppName: Record<RecipientType, ChatInfoAppName> = {
+  [RecipientType.Customer]: ChatInfoAppName.CustomerApp,
+  [RecipientType.DeliveryCompany]: ChatInfoAppName.DeliveryAdminApp,
+  [RecipientType.DeliveryDriver]: ChatInfoAppName.DeliveryApp,
+  [RecipientType.Business]: ChatInfoAppName.BusinessApp,
+  [RecipientType.Restaurant]: ChatInfoAppName.RestaurantApp,
+  [RecipientType.Laundry]: ChatInfoAppName.LaundryApp,
+}
+export const RecipientAppType: Record<RecipientType, AppType> = {
+  [RecipientType.Customer]: AppType.Customer,
+  [RecipientType.DeliveryCompany]: AppType.DeliveryAdmin,
+  [RecipientType.DeliveryDriver]: AppType.Delivery,
+  [RecipientType.Business]: AppType.Business,
+  [RecipientType.Restaurant]: AppType.Restaurant,
+  [RecipientType.Laundry]: AppType.Laundry,
+}
 
 export const AppParticipant: Record<AppType, ParticipantType> = {
   [AppType.Customer]: ParticipantType.Customer,

@@ -487,7 +487,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
       } else {
         await CustMessagesListViewController().initiateChat(
           businessId: _viewController.business!.id.toInt(),
-          businessImage: _viewController.business!.details.image,
+          offeringImage: _viewController.business!.details.image,
           offeringName: null,
         );
       }

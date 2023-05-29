@@ -55,11 +55,9 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         );
         return;
       case MezService.Rentals:
-        // CustRentalsListView.navigate(category: RentalCategory1.Vehicle);
         CustRentalWrapper.navigate(
           serviceTree: childServiceTree,
         );
-        //  RentalView.navigate();
         return;
       case MezService.Classes:
         CustClassesListView.navigate();
@@ -121,8 +119,8 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                     crossAxisCount: 2,
                     mainAxisSpacing: 14.0,
                     crossAxisSpacing: 14.0),
-                itemCount: cServiceController
-                    .serviceTreeData.value!.children.length,
+                itemCount:
+                    cServiceController.serviceTreeData.value!.children.length,
                 itemBuilder: (BuildContext context, int index) {
                   final MezService currentMezService = cServiceController
                       .serviceTreeData.value!.children[index].name;
@@ -133,8 +131,8 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                     onClick: () {
                       navigateToServices(
                         currentMezService,
-                        cServiceController.serviceTreeData.value!
-                            .children[index].children,
+                        cServiceController
+                            .serviceTreeData.value!.children[index].children,
                       );
                     },
                     content: Column(

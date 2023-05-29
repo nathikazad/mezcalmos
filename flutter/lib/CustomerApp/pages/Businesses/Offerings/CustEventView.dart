@@ -62,6 +62,10 @@ class _CustEventViewState extends State<CustEventView> {
       return '/${_i18n()[timeUnit.name.toString().toLowerCase().replaceFirst('per', '')]}';
     }
 
+    if (viewController.event!.details.cost.entries.first.value == 0) {
+      return '${_i18n()['free']}';
+    }
+
     final Map<TimeUnit, num> singleCost = viewController.event!.details.cost;
     switch (viewController.event!.scheduleType) {
       case ScheduleType.Scheduled:
@@ -109,7 +113,7 @@ class _CustEventViewState extends State<CustEventView> {
                       ),
                       Text(
                         generateCost(),
-                        style: context.textTheme.bodyLarge!.copyWith(
+                        style: context.textTheme.bodyLarge?.copyWith(
                           color: primaryBlueColor,
                           fontWeight: FontWeight.w600,
                         ),
