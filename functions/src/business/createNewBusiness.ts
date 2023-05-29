@@ -13,7 +13,8 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 
 export interface BusinessDetails {
     name: string,
-    image: string,
+  image: string,
+  phoneNumber: string,
     profile: BusinessProfile,
     location: Location,
     businessOperatorNotificationToken?: string,

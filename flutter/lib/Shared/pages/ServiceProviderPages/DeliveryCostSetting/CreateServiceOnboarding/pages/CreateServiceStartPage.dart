@@ -20,40 +20,42 @@ class CreateServiceStartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Container(
-              alignment: Alignment.center,
-              //  height: 30.h,
-              width: 70.w,
-              child: Image.asset(
-                viewController.getCreateImage,
-                fit: BoxFit.cover,
+      child: Obx(
+        () => Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Container(
+                alignment: Alignment.center,
+                //  height: 30.h,
+                width: 70.w,
+                child: Image.asset(
+                  viewController.getCreateImage,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 15),
-            child: Text(
-              '${_i18n()['subtitle']["${viewController.serviceType.toFirebaseFormatString()}"]}',
-              style: context.txt.bodyLarge,
-              textAlign: TextAlign.center,
+            Container(
+              margin: const EdgeInsets.only(top: 15),
+              child: Text(
+                '${_i18n()['subtitle']["${viewController.serviceType.toFirebaseFormatString()}"]}',
+                style: context.txt.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          MezButton(
-              label: "${_i18n()['create']}",
-              onClick: () async {
-                unawaited(viewController.handleNext());
-              }),
-          SizedBox(
-            height: 25,
-          ),
-        ],
+            SizedBox(
+              height: 25,
+            ),
+            MezButton(
+                label: "${_i18n()['create']}",
+                onClick: () async {
+                  unawaited(viewController.handleNext());
+                }),
+            SizedBox(
+              height: 25,
+            ),
+          ],
+        ),
       ),
     );
   }

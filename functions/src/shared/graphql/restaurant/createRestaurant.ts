@@ -36,6 +36,7 @@ export async function createRestaurant(
           data: {
             name: restaurantDetails.name,
             image: restaurantDetails.image,
+            phone_number: restaurantDetails.phoneNumber,
             schedule: JSON.stringify(restaurantDetails.schedule),
             firebase_id: restaurantDetails.firebaseId ?? undefined,
             language: JSON.stringify(restaurantDetails.language),

@@ -403,7 +403,7 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                           minHeight: 0,
                         ).tighten(width: 50),
                         suffixIcon: Text(
-                          "${_i18n()["vehicleRental"]["Feet"]}",
+                          "${_i18n()["vehicleRental"]["feet"]}",
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),

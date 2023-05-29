@@ -200,6 +200,7 @@ class CloudFunctions {
   static Future<RestaurantResponse> restaurant3_createRestaurant(
       {required String name,
       required String image,
+      required String phoneNumber,
       required Location location,
       required Schedule schedule,
       String? restaurantOperatorNotificationToken,
@@ -213,6 +214,7 @@ class CloudFunctions {
       parameters: <String, dynamic>{
         "name": name,
         "image": image,
+        "phoneNumber": phoneNumber,
         "location":location.toFirebaseFormattedJson(),
         "schedule":schedule.toFirebaseFormattedJson(),
         "restaurantOperatorNotificationToken": restaurantOperatorNotificationToken,
@@ -311,6 +313,7 @@ class CloudFunctions {
   static Future<BusinessResponse> business_createBusiness(
       {required String name,
       required String image,
+      required String phoneNumber,
       required BusinessProfile profile,
       required Location location,
       String? businessOperatorNotificationToken,
@@ -323,6 +326,7 @@ class CloudFunctions {
       parameters: <String, dynamic>{
         "name": name,
         "image": image,
+        "phoneNumber": phoneNumber,
         "profile":profile.toFirebaseFormatString(),
         "location":location.toFirebaseFormattedJson(),
         "businessOperatorNotificationToken": businessOperatorNotificationToken,

@@ -86,25 +86,27 @@ class _PickLocationViewState extends State<PickLocationView> {
             margin: const EdgeInsets.all(8),
             child: Text(_i18n()["pickLabele"]),
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            child: LocationSearchComponent(
-                showSearchIcon: true,
-                initialTextValue: viewController
-                    .locationPickerController.location.value?.address,
-                onClear: () {},
-                notifyParent: (MezLocation? location) {
-                  mezDbgPrint(
-                      "Location =================================>$location");
-                  if (location != null) {
-                    setState(() {
-                      viewController.locationPickerController
-                          .setLocation(location);
-                      viewController.locationPickerController.moveToNewLatLng(
-                          location.latitude, location.longitude);
-                    });
-                  }
-                }),
+          Obx(
+            () => Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              child: LocationSearchComponent(
+                  showSearchIcon: true,
+                  initialTextValue: viewController
+                      .locationPickerController.location.value?.address,
+                  onClear: () {},
+                  notifyParent: (MezLocation? location) {
+                    mezDbgPrint(
+                        "Location =================================>$location");
+                    if (location != null) {
+                      setState(() {
+                        viewController.locationPickerController
+                            .setLocation(location);
+                        viewController.locationPickerController.moveToNewLatLng(
+                            location.latitude, location.longitude);
+                      });
+                    }
+                  }),
+            ),
           ),
           SizedBox(
             height: 10,

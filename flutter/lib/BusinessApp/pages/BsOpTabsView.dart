@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
@@ -10,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:badges/badges.dart' as badge;
 
 enum BusinessOpTabView { Services, Feed, Messages, Profile }
 
@@ -91,14 +91,14 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
                 case 0:
                   currentView.value = BusinessOpTabView.Services;
                   break;
+                // case 1:
+                //   currentView.value = BusinessOpTabView.Feed;
+                //   break;
                 case 1:
-                  currentView.value = BusinessOpTabView.Feed;
-                  break;
-                case 2:
                   currentView.value = BusinessOpTabView.Messages;
 
                   break;
-                case 3:
+                case 2:
                   currentView.value = BusinessOpTabView.Profile;
 
                   break;
@@ -111,10 +111,10 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
                 icon: Icon(Icons.business_center),
                 label: '${_i18n()["services"]}',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.feed),
-                label: '${_i18n()["feed"]}',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.feed),
+              //   label: '${_i18n()["feed"]}',
+              // ),
               BottomNavigationBarItem(
                 icon: badge.Badge(
                   badgeColor: Colors.red,

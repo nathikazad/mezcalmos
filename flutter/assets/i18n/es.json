@@ -332,7 +332,8 @@
       "BsOpSchedulePickerView": {
         "BsOpSchedulePickerView": {
           "schedule": "Disponibilidad",
-          "weeklySchedule": "Programación semanal"
+          "weeklySchedule": "Programación semanal",
+          "save" : "Guardar"
         }
       }
     }
@@ -1939,7 +1940,9 @@
               "wellnessPractitioner": "Profesional de Bienestar",
               "volunteer": "Voluntariado",
               "entertainment": "Planificadores de eventos",
-              "danceStudio": "Estudio de baile"
+              "danceStudio": "Estudio de baile",
+              "mealPlanning" :"Planificación de comidas"
+
             }
           }
         },
@@ -3539,6 +3542,9 @@
         "components": {
           "ROpListDriverCard": {
             "available": "Disponible",
+            "approve" : "Aprobar",
+            "reject" : "Rechazar",
+            "owner" : "Propietario",
             "unavailable": "Indisponible",
             "rmBtn": "Sí, retire el conductor",
             "rmTitle": "Eliminar este usuario",
