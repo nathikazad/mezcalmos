@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
@@ -53,6 +54,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
     if (authController.fireAuthUser != null) {
       customerAuthController = Get.find<CustomerAuthController>();
+      _startListeningForNotifications();
     }
     startAuthListener();
     DeepLinkHandler.startDynamicLinkCheckRoutine(
@@ -63,6 +65,8 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   void dispose() {
     _authStateChnagesListener?.cancel();
     _authStateChnagesListener = null;
+    _notificationsStreamListener?.cancel();
+    _notificationsStreamListener = null;
     super.dispose();
   }
 
@@ -150,17 +154,21 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     _authStateChnagesListener =
         authController.authStateStream.listen((User? fireUser) {
       if (fireUser != null) {
-        final String? userId = Get.find<AuthController>().fireAuthUser!.uid;
-        Get.find<ForegroundNotificationsController>()
-            .startListeningForNotificationsFromFirebase(
-                customerNotificationsNode(userId!),
-                customerNotificationHandler);
+        _startListeningForNotifications();
       } else {
         _notificationsStreamListener?.cancel();
         _notificationsStreamListener = null;
         appLifeCycleController.cleanAllCallbacks();
       }
     });
+  }
+
+  Future<void> _startListeningForNotifications() async {
+    _notificationsStreamListener = initializeShowNotificationsListener();
+    final String? userId = Get.find<AuthController>().fireAuthUser!.uid;
+    Get.find<ForegroundNotificationsController>()
+        .startListeningForNotificationsFromFirebase(
+            customerNotificationsNode(userId!), customerNotificationHandler);
   }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {
