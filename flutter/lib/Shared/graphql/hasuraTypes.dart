@@ -47,6 +47,9 @@ Map<Language, String> toLanguageMap({required List translations}) {
 }
 
 ServiceProviderLanguage convertToLanguages(dynamic languages) {
+  if (languages["primary"] == null)
+    return ServiceProviderLanguage(
+        primary: Language.EN, secondary: Language.ES);
   return ServiceProviderLanguage(
     primary: languages["primary"].toString().toLanguage(),
     secondary: languages["secondary"] != null
