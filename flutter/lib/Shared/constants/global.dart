@@ -48,31 +48,7 @@ const int nSplashScreenTimer = 1;
 const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
 const int nScheduledCounterOfferValidExpireTimeInSeconds = 900; // 15mins
 const Map<String, dynamic> defaultSchedule = {
-  "friday": {
-    "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
-    ],
-  },
   "monday": {
-    "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
-    ],
-  },
-  "saturday": {
-    "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
-    ],
-  },
-  "sunday": {
-    "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
-    ],
-  },
-  "thursday": {
     "isOpen": true,
     "openHours": [
       {"from": "8:00", "isOpen": false, "to": "20:00"}
@@ -85,6 +61,30 @@ const Map<String, dynamic> defaultSchedule = {
     ],
   },
   "wednesday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "thursday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "friday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "saturday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "sunday": {
     "isOpen": true,
     "openHours": [
       {"from": "8:00", "isOpen": false, "to": "20:00"}
