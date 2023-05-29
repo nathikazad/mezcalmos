@@ -21,6 +21,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                     data: {
                         name: businessDetails.name,
                         image: businessDetails.image,
+                        phone_number: businessDetails.phoneNumber,
                         language: JSON.stringify(businessDetails.language),
                         service_provider_type: ServiceProviderType.Business,
                         firebase_id: businessDetails.firebaseId ?? undefined,

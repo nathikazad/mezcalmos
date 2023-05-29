@@ -315,6 +315,7 @@ class CreateServiceViewController {
       final RestaurantResponse res =
           await CloudFunctions.restaurant3_createRestaurant(
         name: serviceInput.value.serviceInfo!.name,
+        phoneNumber: phone.text,
         image: serviceInput.value.serviceInfo!.image,
         location: cModels.Location(
             lat: serviceInput.value.serviceInfo!.location.latitude,
@@ -358,6 +359,7 @@ class CreateServiceViewController {
           await CloudFunctions.business_createBusiness(
         name: serviceInput.value.serviceInfo!.name,
         image: newImageUrl.value ?? defaultUserImgUrl,
+        phoneNumber: phone.text,
         location: cModels.Location(
             lat: serviceInput.value.serviceInfo!.location.latitude,
             lng: serviceInput.value.serviceInfo!.location.longitude,
