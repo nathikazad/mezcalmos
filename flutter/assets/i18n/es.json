@@ -3533,6 +3533,9 @@
         "components": {
           "ROpListDriverCard": {
             "available": "Disponible",
+            "approve" : "Aprobar",
+            "reject" : "Rechazar",
+            "owner" : "Propietario",
             "unavailable": "Indisponible",
             "rmBtn": "Sí, retire el conductor",
             "rmTitle": "Eliminar este usuario",

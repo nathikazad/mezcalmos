@@ -23,14 +23,13 @@ class BusinessOpRoutes {
   static const String kBsOpProduct = '/product/:id';
   static const String kBsOpSchedulePick = '/pickSchedule';
   static const String kDeliveryOpPastOrdersRoute = '/pastOrders';
-  static const String kUnauthorizedOperatorRoute = "/unauthorized";
+  static const String kUnauthorizedOperatorRoute = "businessOp/unauthorized";
 
-  static const String kNotAuthorizedOperatorRoute = "/deliveryOp/unauthorized";
-  static const String kOrderViewRoute = "/deliveryOrders/:orderId";
+  // static const String kOrderViewRoute = "/deliveryOrders/:orderId";
 
-  static String getDvCompanyOrderRoute(int orderId) {
-    return kOrderViewRoute.replaceFirst(":orderId", "$orderId");
-  }
+  // static String getDvCompanyOrderRoute(int orderId) {
+  //   return kOrderViewRoute.replaceFirst(":orderId", "$orderId");
+  // }
 
   static final List<QRoute> mainRoutes = <QRoute>[
         QRoute(

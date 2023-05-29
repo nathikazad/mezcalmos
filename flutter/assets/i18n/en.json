@@ -3479,6 +3479,9 @@
             "available": "Available",
             "unavailable": "Unavailable",
             "rmBtn": "Yes, remove driver",
+            "approve" : "Approve",
+            "reject" : "Reject",
+            "owner" : "Owner",
             "rmTitle": "Remove user",
             "rmText": "Are you sure you want to remove this user"
           }
