@@ -103,11 +103,13 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           style: context.textTheme.bodyLarge,
                         )),
                     if (MezEnv.appLaunchMode == AppLaunchMode.stage)
-                      MezButton(
-                          label: "Change Profile",
-                          onClick: () async {
-                            viewController.changeBusiness();
-                          }),
+                      Flexible(
+                        child: MezButton(
+                            label: "Change Profile",
+                            onClick: () async {
+                              viewController.changeBusiness();
+                            }),
+                      ),
                   ],
                 ),
                 Divider(
