@@ -1041,7 +1041,16 @@
             "art": "Art",
             "noBusinessesFound": "No business was found",
             "store": "Store",
-            "services": "Services"
+            "services": "Services",
+            "free": "FREE",
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "merson",
+            "total": "total",
+            "unit": "unit",
+            "none": "none"
           },
           "CustLocallyMadeWrapper": {
             "locallyMade": "Made locally",
@@ -3479,6 +3488,9 @@
             "available": "Available",
             "unavailable": "Unavailable",
             "rmBtn": "Yes, remove driver",
+            "approve" : "Approve",
+            "reject" : "Reject",
+            "owner" : "Owner",
             "rmTitle": "Remove user",
             "rmText": "Are you sure you want to remove this user"
           }

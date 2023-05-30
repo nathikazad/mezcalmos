@@ -336,10 +336,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
             )),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noEventsFound']}'));
+      return NoServicesFound();
   }
 
   Widget oneTimeBuilder(EventCard classData) {

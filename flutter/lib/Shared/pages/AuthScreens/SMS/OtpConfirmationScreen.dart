@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -153,7 +154,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
 
               cursorColor: Colors.purpleAccent,
               keyboardType: TextInputType.number,
-              textStyle: TextStyle(fontSize: 18.sp, color: Colors.black87),
+              textStyle: TextStyle(fontSize: 18.mezSp, color: Colors.black87),
               pinTheme: PinTheme(
                 borderRadius: BorderRadius.circular(5),
                 borderWidth: 0.0,

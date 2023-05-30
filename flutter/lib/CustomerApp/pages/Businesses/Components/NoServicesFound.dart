@@ -13,30 +13,27 @@ class NoServicesFound extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: 10.h,
-        ),
-        Image.asset(
-          aNoResults,
-          height: 125.mezSp,
-          width: 125.mezSp,
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Text(
-          '${_i18n()['noServicesFound']}',
-          style: context.textTheme.bodyLarge,
-        ),
-        Text(
-          '${_i18n()['bodyMessage']}',
-          textAlign: TextAlign.center,
-        ),
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 10.h,
+          ),
+          Image.asset(
+            aNoResults,
+            height: 125.mezSp,
+            width: 125.mezSp,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text('${_i18n()['noServicesFound']}',
+              style: context.textTheme.bodyLarge, textAlign: TextAlign.center),
+          Text('${_i18n()['bodyMessage']}', textAlign: TextAlign.center),
+        ],
+      ),
     );
   }
 }

@@ -299,16 +299,19 @@ class _CustEventsListViewState extends State<CustEventsListView> {
   }
 
   Widget _buildEvents(ScheduleType scheduleType) {
-    return Column(
-        children: List.generate(
-      viewController.events.length,
-      (int index) => scheduleType != viewController.events[index].scheduleType
-          ? const SizedBox.shrink()
-          : CustBusinessEventCard(
-              event: viewController.events[index],
-              needBussinessName: true,
-            ),
-    ));
+    return viewController.events.isNotEmpty
+        ? Column(
+            children: List.generate(
+            viewController.events.length,
+            (int index) =>
+                scheduleType != viewController.events[index].scheduleType
+                    ? const SizedBox.shrink()
+                    : CustBusinessEventCard(
+                        event: viewController.events[index],
+                        needBussinessName: true,
+                      ),
+          ))
+        : NoServicesFound();
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

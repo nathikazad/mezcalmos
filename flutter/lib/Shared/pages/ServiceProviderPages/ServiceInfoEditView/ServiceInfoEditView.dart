@@ -7,6 +7,8 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceEditLocationCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceImageEditComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/controllers/ServiceInfoEditViewController.dart';
@@ -124,24 +126,35 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                               height: 15,
                             ),
                             Text(
-                              '${_i18n()['description']} ${viewController.languages.value!.primary.toFirebaseFormatString()}',
+                              '${_i18n()['description']}',
                               style: context.textTheme.bodyLarge,
                             ),
                             SizedBox(
                               height: 5,
                             ),
                             _prdescTextField(),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              '${_i18n()['description']} ${viewController.languages.value!.secondary?.toFirebaseFormatString() ?? ''}',
-                              style: context.textTheme.bodyLarge,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            _scdescTextField(),
+                            Obx(() {
+                              if (viewController.languages.value?.secondary !=
+                                  null) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Text(
+                                      '${_i18n()['description']} ${viewController.languages.value!.secondary?.toLanguageName() ?? ''}',
+                                      style: context.textTheme.bodyLarge,
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    _scdescTextField(),
+                                  ],
+                                );
+                              } else
+                                return SizedBox();
+                            }),
                             SizedBox(
                               height: 15,
                             ),
@@ -159,7 +172,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                               validator: (String? v) {
                                 if (v == null || v.isEmpty) {
                                   return null;
-                                } else if (v.toString().isPhoneNumber ==
+                                } else if (v.toString().validatePhoneNumber() ==
                                     false) {
                                   return "${_i18n()['phoneErrorText']}";
                                 }
@@ -233,6 +246,12 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                                 onChanged: (String? v) {
                                   viewController.languages.value?.secondary =
                                       v?.toLanguage() ?? null;
+                                  viewController.secondayServiceDesc.text =
+                                      viewController
+                                                  .service.value?.description?[
+                                              viewController.secLang] ??
+                                          "";
+                                  viewController.languages.refresh();
                                 }),
                           ],
                         ),

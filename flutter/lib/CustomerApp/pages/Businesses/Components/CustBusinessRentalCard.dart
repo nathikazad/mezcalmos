@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -49,7 +50,7 @@ class CustBusinessRentalCard extends StatelessWidget {
               : null,
       content: Text(
         rental.details.name.getTranslation(userLanguage)!,
-        style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.sp),
+        style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.mezSp),
         overflow: TextOverflow.ellipsis,
       ),
       action: Padding(
