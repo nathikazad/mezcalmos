@@ -337,7 +337,7 @@
         "BsOpSchedulePickerView": {
           "schedule": "Availability",
           "weeklySchedule": "Weekly Schedule",
-          "save" : "Save"
+          "save": "Save"
         }
       }
     }
@@ -551,7 +551,19 @@
           "shared": {
             "notification": {
               "today": "Today",
-              "yesterday": "Yesterday"
+              "yesterday": "Yesterday",
+              "jan": "Jan",
+              "feb": "Feb",
+              "mar": "Mar",
+              "apr": "Apr",
+              "may": "May",
+              "jun": "Jun",
+              "jul": "Jul",
+              "aug": "Aug",
+              "sep": "Sep",
+              "oct": "Oct",
+              "nov": "Nov",
+              "dec": "Dec"
             }
           },
           "orders": {
@@ -1877,7 +1889,7 @@
               "volunteer": "Volunteer",
               "entertainment": "Event Planners",
               "danceStudio": "Dance Studio",
-              "mealPlanning" : "Meal Planning"
+              "mealPlanning": "Meal Planning"
             }
           }
         },
@@ -1987,7 +1999,7 @@
         "phoneNumber": "Phone number",
         "phoneErrorText": "Please enter a valid phone number",
         "location": "Location",
-        "description": "Description in",
+        "description": "Description",
         "prLang": "Primary language",
         "sameLangErrorText": "This language is used, please enter a different language",
         "prLangErrorText": "Please enter a valid primary language",
@@ -3064,7 +3076,7 @@
         },
         "addCategory": "Add category",
         "catDesc": "Catgeory description",
-        "catDescIn": "Catgeory description in",
+        "catDescIn": "Catgeory description",
         "editCategory": "Edit category",
         "saveCategory": "Save category",
         "categoryName": "Category name",
@@ -3487,10 +3499,10 @@
           "ROpListDriverCard": {
             "available": "Available",
             "unavailable": "Unavailable",
-            "rmBtn": "Yes, remove driver",
-            "approve" : "Approve",
-            "reject" : "Reject",
-            "owner" : "Owner",
+            "rmBtn": "Yes, remove user",
+            "approve": "Approve",
+            "reject": "Reject",
+            "owner": "Owner",
             "rmTitle": "Remove user",
             "rmText": "Are you sure you want to remove this user"
           }
@@ -3577,7 +3589,7 @@
           "nameErrorText": "please provide a name",
           "defaultLanguage": "Default language",
           "secondaryLanguage": "Secondary language",
-          "description": "Description in",
+          "description": "Description",
           "location": "Location",
           "saveInfo": "Save info",
           "components": {
