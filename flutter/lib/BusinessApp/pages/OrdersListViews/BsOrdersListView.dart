@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -21,22 +20,19 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList'];
 
-class DvOpCurrentOrdersListView extends StatefulWidget {
-  const DvOpCurrentOrdersListView({Key? key, this.canGoBack = true})
-      : super(key: key);
+class BsOrdersListView extends StatefulWidget {
+  const BsOrdersListView({Key? key, this.canGoBack = true}) : super(key: key);
   final bool canGoBack;
 
   @override
-  State<DvOpCurrentOrdersListView> createState() =>
-      _DvOpCurrentOrdersListViewState();
+  State<BsOrdersListView> createState() => _BsOrdersListViewState();
 }
 
-class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
+class _BsOrdersListViewState extends State<BsOrdersListView> {
   DvOpCurrentOrdersController viewController = DvOpCurrentOrdersController();
 
   @override
   void initState() {
-    mezDbgPrint("Current orders view =====================>>>>>>>>>>>>");
     viewController.init();
 
     super.initState();
