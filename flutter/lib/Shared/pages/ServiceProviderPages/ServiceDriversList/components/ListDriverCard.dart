@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/controllers/DriversViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
@@ -109,9 +110,9 @@ class _ListDriverCardState extends State<ListDriverCard> {
                             helperText: '${_i18n()["rmText"]}',
                             primaryButtonText: '${_i18n()["rmBtn"]}',
                             onYesClick: () async {
-                          // final bool result = await widget.viewController
-                          //     .removeDriver(widget.driver.deliveryDriverId);
-                          //  if (result) MezRouter.back();
+                          final bool result = await widget.viewController
+                              .removeDriver(widget.driver.deliveryDriverId);
+                          if (result) await MezRouter.back();
                         });
                       },
                       icon: Icons.delete_outline,
