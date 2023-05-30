@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+
+import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
@@ -100,6 +103,18 @@ class CustHomeRentalViewController {
   }
 
   Future<void> bookOffering() async {
+    await CustCartView.navigate(
+      cartInfo: CartInfo(
+        duration: _duration.value,
+        itemName: _homeRental.value!.details.name,
+        unitPrice: _timeCost.value!.values.first.toDouble(),
+        totalPrice: totalOrderCost.value,
+        startTime: startDate.value ?? DateTime.now(),
+        totalPeople: _totalGuests.value,
+        image: _homeRental.value!.details.image?.first ?? defaultUserImgUrl,
+        unitDuration: _timeCost.value!.keys.first.toFirebaseFormatString(),
+      ),
+    );
     _duration.value = 1;
     _totalGuests.value = 1;
     orderString.value = "-";
@@ -173,4 +188,25 @@ class CustRentalViewController {
     _setInitialTimeCost();
     _calcTotalOrderCost();
   }
+}
+
+class CartInfo {
+  final Map<Language, String> itemName;
+  final int totalPeople;
+  final double unitPrice;
+  final double totalPrice;
+  final int duration;
+  final String unitDuration;
+  final DateTime startTime;
+  final String image;
+  CartInfo({
+    required this.itemName,
+    required this.totalPeople,
+    required this.unitPrice,
+    required this.totalPrice,
+    required this.duration,
+    required this.unitDuration,
+    required this.startTime,
+    required this.image,
+  });
 }
