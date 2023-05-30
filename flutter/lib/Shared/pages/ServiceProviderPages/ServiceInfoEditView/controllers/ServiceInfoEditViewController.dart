@@ -43,6 +43,8 @@ class ServiceInfoEditViewController {
   late ServiceProviderType serviceType;
 
   int? newDescId;
+
+  Language? get secLang => languages.value?.secondary;
 // INIT //
 
   Future<void> init({
@@ -66,8 +68,7 @@ class ServiceInfoEditViewController {
 
   void _setServiceInfo() {
     if (service.value != null) {
-      mezDbgPrint(
-          "Description id ========>>>${service.value?.languages?.toFirebaseFormattedJson()}");
+      mezDbgPrint("Description id ========>>>${service.value?.descriptionId}");
       mezDbgPrint("Description id ========>>>${service.value?.description}");
       serviceNameTxt.text = service.value?.name ?? '';
       phoneNumber.text = service.value?.phoneNumber ?? '';

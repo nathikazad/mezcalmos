@@ -3,49 +3,49 @@ import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 
-class Variables$Mutation$updateTranslationValue {
-  factory Variables$Mutation$updateTranslationValue({
-    required Input$translation_value_pk_columns_input arguments,
-    required Input$translation_value_set_input data,
+class Variables$Mutation$upsertTranslationValue {
+  factory Variables$Mutation$upsertTranslationValue({
+    required Input$translation_value_insert_input translation_value,
+    required Input$translation_value_on_conflict on_conflict,
   }) =>
-      Variables$Mutation$updateTranslationValue._({
-        r'arguments': arguments,
-        r'data': data,
+      Variables$Mutation$upsertTranslationValue._({
+        r'translation_value': translation_value,
+        r'on_conflict': on_conflict,
       });
 
-  Variables$Mutation$updateTranslationValue._(this._$data);
+  Variables$Mutation$upsertTranslationValue._(this._$data);
 
-  factory Variables$Mutation$updateTranslationValue.fromJson(
+  factory Variables$Mutation$upsertTranslationValue.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$arguments = data['arguments'];
-    result$data['arguments'] =
-        Input$translation_value_pk_columns_input.fromJson(
-            (l$arguments as Map<String, dynamic>));
-    final l$data = data['data'];
-    result$data['data'] = Input$translation_value_set_input.fromJson(
-        (l$data as Map<String, dynamic>));
-    return Variables$Mutation$updateTranslationValue._(result$data);
+    final l$translation_value = data['translation_value'];
+    result$data['translation_value'] =
+        Input$translation_value_insert_input.fromJson(
+            (l$translation_value as Map<String, dynamic>));
+    final l$on_conflict = data['on_conflict'];
+    result$data['on_conflict'] = Input$translation_value_on_conflict.fromJson(
+        (l$on_conflict as Map<String, dynamic>));
+    return Variables$Mutation$upsertTranslationValue._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  Input$translation_value_pk_columns_input get arguments =>
-      (_$data['arguments'] as Input$translation_value_pk_columns_input);
-  Input$translation_value_set_input get data =>
-      (_$data['data'] as Input$translation_value_set_input);
+  Input$translation_value_insert_input get translation_value =>
+      (_$data['translation_value'] as Input$translation_value_insert_input);
+  Input$translation_value_on_conflict get on_conflict =>
+      (_$data['on_conflict'] as Input$translation_value_on_conflict);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$arguments = arguments;
-    result$data['arguments'] = l$arguments.toJson();
-    final l$data = data;
-    result$data['data'] = l$data.toJson();
+    final l$translation_value = translation_value;
+    result$data['translation_value'] = l$translation_value.toJson();
+    final l$on_conflict = on_conflict;
+    result$data['on_conflict'] = l$on_conflict.toJson();
     return result$data;
   }
 
-  CopyWith$Variables$Mutation$updateTranslationValue<
-          Variables$Mutation$updateTranslationValue>
-      get copyWith => CopyWith$Variables$Mutation$updateTranslationValue(
+  CopyWith$Variables$Mutation$upsertTranslationValue<
+          Variables$Mutation$upsertTranslationValue>
+      get copyWith => CopyWith$Variables$Mutation$upsertTranslationValue(
             this,
             (i) => i,
           );
@@ -54,18 +54,18 @@ class Variables$Mutation$updateTranslationValue {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Mutation$updateTranslationValue) ||
+    if (!(other is Variables$Mutation$upsertTranslationValue) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$arguments = arguments;
-    final lOther$arguments = other.arguments;
-    if (l$arguments != lOther$arguments) {
+    final l$translation_value = translation_value;
+    final lOther$translation_value = other.translation_value;
+    if (l$translation_value != lOther$translation_value) {
       return false;
     }
-    final l$data = data;
-    final lOther$data = other.data;
-    if (l$data != lOther$data) {
+    final l$on_conflict = on_conflict;
+    final lOther$on_conflict = other.on_conflict;
+    if (l$on_conflict != lOther$on_conflict) {
       return false;
     }
     return true;
@@ -73,99 +73,99 @@ class Variables$Mutation$updateTranslationValue {
 
   @override
   int get hashCode {
-    final l$arguments = arguments;
-    final l$data = data;
+    final l$translation_value = translation_value;
+    final l$on_conflict = on_conflict;
     return Object.hashAll([
-      l$arguments,
-      l$data,
+      l$translation_value,
+      l$on_conflict,
     ]);
   }
 }
 
-abstract class CopyWith$Variables$Mutation$updateTranslationValue<TRes> {
-  factory CopyWith$Variables$Mutation$updateTranslationValue(
-    Variables$Mutation$updateTranslationValue instance,
-    TRes Function(Variables$Mutation$updateTranslationValue) then,
-  ) = _CopyWithImpl$Variables$Mutation$updateTranslationValue;
+abstract class CopyWith$Variables$Mutation$upsertTranslationValue<TRes> {
+  factory CopyWith$Variables$Mutation$upsertTranslationValue(
+    Variables$Mutation$upsertTranslationValue instance,
+    TRes Function(Variables$Mutation$upsertTranslationValue) then,
+  ) = _CopyWithImpl$Variables$Mutation$upsertTranslationValue;
 
-  factory CopyWith$Variables$Mutation$updateTranslationValue.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$updateTranslationValue;
+  factory CopyWith$Variables$Mutation$upsertTranslationValue.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$upsertTranslationValue;
 
   TRes call({
-    Input$translation_value_pk_columns_input? arguments,
-    Input$translation_value_set_input? data,
+    Input$translation_value_insert_input? translation_value,
+    Input$translation_value_on_conflict? on_conflict,
   });
 }
 
-class _CopyWithImpl$Variables$Mutation$updateTranslationValue<TRes>
-    implements CopyWith$Variables$Mutation$updateTranslationValue<TRes> {
-  _CopyWithImpl$Variables$Mutation$updateTranslationValue(
+class _CopyWithImpl$Variables$Mutation$upsertTranslationValue<TRes>
+    implements CopyWith$Variables$Mutation$upsertTranslationValue<TRes> {
+  _CopyWithImpl$Variables$Mutation$upsertTranslationValue(
     this._instance,
     this._then,
   );
 
-  final Variables$Mutation$updateTranslationValue _instance;
+  final Variables$Mutation$upsertTranslationValue _instance;
 
-  final TRes Function(Variables$Mutation$updateTranslationValue) _then;
+  final TRes Function(Variables$Mutation$upsertTranslationValue) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? arguments = _undefined,
-    Object? data = _undefined,
+    Object? translation_value = _undefined,
+    Object? on_conflict = _undefined,
   }) =>
-      _then(Variables$Mutation$updateTranslationValue._({
+      _then(Variables$Mutation$upsertTranslationValue._({
         ..._instance._$data,
-        if (arguments != _undefined && arguments != null)
-          'arguments': (arguments as Input$translation_value_pk_columns_input),
-        if (data != _undefined && data != null)
-          'data': (data as Input$translation_value_set_input),
+        if (translation_value != _undefined && translation_value != null)
+          'translation_value':
+              (translation_value as Input$translation_value_insert_input),
+        if (on_conflict != _undefined && on_conflict != null)
+          'on_conflict': (on_conflict as Input$translation_value_on_conflict),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Mutation$updateTranslationValue<TRes>
-    implements CopyWith$Variables$Mutation$updateTranslationValue<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$updateTranslationValue(this._res);
+class _CopyWithStubImpl$Variables$Mutation$upsertTranslationValue<TRes>
+    implements CopyWith$Variables$Mutation$upsertTranslationValue<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$upsertTranslationValue(this._res);
 
   TRes _res;
 
   call({
-    Input$translation_value_pk_columns_input? arguments,
-    Input$translation_value_set_input? data,
+    Input$translation_value_insert_input? translation_value,
+    Input$translation_value_on_conflict? on_conflict,
   }) =>
       _res;
 }
 
-class Mutation$updateTranslationValue {
-  Mutation$updateTranslationValue({
-    this.update_translation_value_by_pk,
+class Mutation$upsertTranslationValue {
+  Mutation$upsertTranslationValue({
+    this.insert_translation_value_one,
     required this.$__typename,
   });
 
-  factory Mutation$updateTranslationValue.fromJson(Map<String, dynamic> json) {
-    final l$update_translation_value_by_pk =
-        json['update_translation_value_by_pk'];
+  factory Mutation$upsertTranslationValue.fromJson(Map<String, dynamic> json) {
+    final l$insert_translation_value_one = json['insert_translation_value_one'];
     final l$$__typename = json['__typename'];
-    return Mutation$updateTranslationValue(
-      update_translation_value_by_pk: l$update_translation_value_by_pk == null
+    return Mutation$upsertTranslationValue(
+      insert_translation_value_one: l$insert_translation_value_one == null
           ? null
-          : Mutation$updateTranslationValue$update_translation_value_by_pk
+          : Mutation$upsertTranslationValue$insert_translation_value_one
               .fromJson(
-                  (l$update_translation_value_by_pk as Map<String, dynamic>)),
+                  (l$insert_translation_value_one as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$updateTranslationValue$update_translation_value_by_pk?
-      update_translation_value_by_pk;
+  final Mutation$upsertTranslationValue$insert_translation_value_one?
+      insert_translation_value_one;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$update_translation_value_by_pk = update_translation_value_by_pk;
-    _resultData['update_translation_value_by_pk'] =
-        l$update_translation_value_by_pk?.toJson();
+    final l$insert_translation_value_one = insert_translation_value_one;
+    _resultData['insert_translation_value_one'] =
+        l$insert_translation_value_one?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -173,10 +173,10 @@ class Mutation$updateTranslationValue {
 
   @override
   int get hashCode {
-    final l$update_translation_value_by_pk = update_translation_value_by_pk;
+    final l$insert_translation_value_one = insert_translation_value_one;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$update_translation_value_by_pk,
+      l$insert_translation_value_one,
       l$$__typename,
     ]);
   }
@@ -186,15 +186,14 @@ class Mutation$updateTranslationValue {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$updateTranslationValue) ||
+    if (!(other is Mutation$upsertTranslationValue) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$update_translation_value_by_pk = update_translation_value_by_pk;
-    final lOther$update_translation_value_by_pk =
-        other.update_translation_value_by_pk;
-    if (l$update_translation_value_by_pk !=
-        lOther$update_translation_value_by_pk) {
+    final l$insert_translation_value_one = insert_translation_value_one;
+    final lOther$insert_translation_value_one =
+        other.insert_translation_value_one;
+    if (l$insert_translation_value_one != lOther$insert_translation_value_one) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -206,109 +205,108 @@ class Mutation$updateTranslationValue {
   }
 }
 
-extension UtilityExtension$Mutation$updateTranslationValue
-    on Mutation$updateTranslationValue {
-  CopyWith$Mutation$updateTranslationValue<Mutation$updateTranslationValue>
-      get copyWith => CopyWith$Mutation$updateTranslationValue(
+extension UtilityExtension$Mutation$upsertTranslationValue
+    on Mutation$upsertTranslationValue {
+  CopyWith$Mutation$upsertTranslationValue<Mutation$upsertTranslationValue>
+      get copyWith => CopyWith$Mutation$upsertTranslationValue(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$updateTranslationValue<TRes> {
-  factory CopyWith$Mutation$updateTranslationValue(
-    Mutation$updateTranslationValue instance,
-    TRes Function(Mutation$updateTranslationValue) then,
-  ) = _CopyWithImpl$Mutation$updateTranslationValue;
+abstract class CopyWith$Mutation$upsertTranslationValue<TRes> {
+  factory CopyWith$Mutation$upsertTranslationValue(
+    Mutation$upsertTranslationValue instance,
+    TRes Function(Mutation$upsertTranslationValue) then,
+  ) = _CopyWithImpl$Mutation$upsertTranslationValue;
 
-  factory CopyWith$Mutation$updateTranslationValue.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$updateTranslationValue;
+  factory CopyWith$Mutation$upsertTranslationValue.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$upsertTranslationValue;
 
   TRes call({
-    Mutation$updateTranslationValue$update_translation_value_by_pk?
-        update_translation_value_by_pk,
+    Mutation$upsertTranslationValue$insert_translation_value_one?
+        insert_translation_value_one,
     String? $__typename,
   });
-  CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk<TRes>
-      get update_translation_value_by_pk;
+  CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one<TRes>
+      get insert_translation_value_one;
 }
 
-class _CopyWithImpl$Mutation$updateTranslationValue<TRes>
-    implements CopyWith$Mutation$updateTranslationValue<TRes> {
-  _CopyWithImpl$Mutation$updateTranslationValue(
+class _CopyWithImpl$Mutation$upsertTranslationValue<TRes>
+    implements CopyWith$Mutation$upsertTranslationValue<TRes> {
+  _CopyWithImpl$Mutation$upsertTranslationValue(
     this._instance,
     this._then,
   );
 
-  final Mutation$updateTranslationValue _instance;
+  final Mutation$upsertTranslationValue _instance;
 
-  final TRes Function(Mutation$updateTranslationValue) _then;
+  final TRes Function(Mutation$upsertTranslationValue) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? update_translation_value_by_pk = _undefined,
+    Object? insert_translation_value_one = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$updateTranslationValue(
-        update_translation_value_by_pk: update_translation_value_by_pk ==
-                _undefined
-            ? _instance.update_translation_value_by_pk
-            : (update_translation_value_by_pk
-                as Mutation$updateTranslationValue$update_translation_value_by_pk?),
+      _then(Mutation$upsertTranslationValue(
+        insert_translation_value_one: insert_translation_value_one == _undefined
+            ? _instance.insert_translation_value_one
+            : (insert_translation_value_one
+                as Mutation$upsertTranslationValue$insert_translation_value_one?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk<TRes>
-      get update_translation_value_by_pk {
-    final local$update_translation_value_by_pk =
-        _instance.update_translation_value_by_pk;
-    return local$update_translation_value_by_pk == null
-        ? CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk
+  CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one<TRes>
+      get insert_translation_value_one {
+    final local$insert_translation_value_one =
+        _instance.insert_translation_value_one;
+    return local$insert_translation_value_one == null
+        ? CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one
             .stub(_then(_instance))
-        : CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk(
-            local$update_translation_value_by_pk,
-            (e) => call(update_translation_value_by_pk: e));
+        : CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one(
+            local$insert_translation_value_one,
+            (e) => call(insert_translation_value_one: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$updateTranslationValue<TRes>
-    implements CopyWith$Mutation$updateTranslationValue<TRes> {
-  _CopyWithStubImpl$Mutation$updateTranslationValue(this._res);
+class _CopyWithStubImpl$Mutation$upsertTranslationValue<TRes>
+    implements CopyWith$Mutation$upsertTranslationValue<TRes> {
+  _CopyWithStubImpl$Mutation$upsertTranslationValue(this._res);
 
   TRes _res;
 
   call({
-    Mutation$updateTranslationValue$update_translation_value_by_pk?
-        update_translation_value_by_pk,
+    Mutation$upsertTranslationValue$insert_translation_value_one?
+        insert_translation_value_one,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk<TRes>
-      get update_translation_value_by_pk =>
-          CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk
+  CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one<TRes>
+      get insert_translation_value_one =>
+          CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one
               .stub(_res);
 }
 
-const documentNodeMutationupdateTranslationValue = DocumentNode(definitions: [
+const documentNodeMutationupsertTranslationValue = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.mutation,
-    name: NameNode(value: 'updateTranslationValue'),
+    name: NameNode(value: 'upsertTranslationValue'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'arguments')),
+        variable: VariableNode(name: NameNode(value: 'translation_value')),
         type: NamedTypeNode(
-          name: NameNode(value: 'translation_value_pk_columns_input'),
+          name: NameNode(value: 'translation_value_insert_input'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'data')),
+        variable: VariableNode(name: NameNode(value: 'on_conflict')),
         type: NamedTypeNode(
-          name: NameNode(value: 'translation_value_set_input'),
+          name: NameNode(value: 'translation_value_on_conflict'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -318,27 +316,20 @@ const documentNodeMutationupdateTranslationValue = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'update_translation_value_by_pk'),
+        name: NameNode(value: 'insert_translation_value_one'),
         alias: null,
         arguments: [
           ArgumentNode(
-            name: NameNode(value: 'pk_columns'),
-            value: VariableNode(name: NameNode(value: 'arguments')),
+            name: NameNode(value: 'object'),
+            value: VariableNode(name: NameNode(value: 'translation_value')),
           ),
           ArgumentNode(
-            name: NameNode(value: '_set'),
-            value: VariableNode(name: NameNode(value: 'data')),
+            name: NameNode(value: 'on_conflict'),
+            value: VariableNode(name: NameNode(value: 'on_conflict')),
           ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'value'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
           FieldNode(
             name: NameNode(value: 'language_id'),
             alias: null,
@@ -348,6 +339,13 @@ const documentNodeMutationupdateTranslationValue = DocumentNode(definitions: [
           ),
           FieldNode(
             name: NameNode(value: 'translation_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'value'),
             alias: null,
             arguments: [],
             directives: [],
@@ -366,27 +364,27 @@ const documentNodeMutationupdateTranslationValue = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Mutation$updateTranslationValue _parserFn$Mutation$updateTranslationValue(
+Mutation$upsertTranslationValue _parserFn$Mutation$upsertTranslationValue(
         Map<String, dynamic> data) =>
-    Mutation$updateTranslationValue.fromJson(data);
-typedef OnMutationCompleted$Mutation$updateTranslationValue = FutureOr<void>
+    Mutation$upsertTranslationValue.fromJson(data);
+typedef OnMutationCompleted$Mutation$upsertTranslationValue = FutureOr<void>
     Function(
   dynamic,
-  Mutation$updateTranslationValue?,
+  Mutation$upsertTranslationValue?,
 );
 
-class Options$Mutation$updateTranslationValue
-    extends graphql.MutationOptions<Mutation$updateTranslationValue> {
-  Options$Mutation$updateTranslationValue({
+class Options$Mutation$upsertTranslationValue
+    extends graphql.MutationOptions<Mutation$upsertTranslationValue> {
+  Options$Mutation$upsertTranslationValue({
     String? operationName,
-    required Variables$Mutation$updateTranslationValue variables,
+    required Variables$Mutation$upsertTranslationValue variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
     Object? optimisticResult,
     graphql.Context? context,
-    OnMutationCompleted$Mutation$updateTranslationValue? onCompleted,
-    graphql.OnMutationUpdate<Mutation$updateTranslationValue>? update,
+    OnMutationCompleted$Mutation$upsertTranslationValue? onCompleted,
+    graphql.OnMutationUpdate<Mutation$upsertTranslationValue>? update,
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
@@ -403,15 +401,15 @@ class Options$Mutation$updateTranslationValue
                     data,
                     data == null
                         ? null
-                        : _parserFn$Mutation$updateTranslationValue(data),
+                        : _parserFn$Mutation$upsertTranslationValue(data),
                   ),
           update: update,
           onError: onError,
-          document: documentNodeMutationupdateTranslationValue,
-          parserFn: _parserFn$Mutation$updateTranslationValue,
+          document: documentNodeMutationupsertTranslationValue,
+          parserFn: _parserFn$Mutation$upsertTranslationValue,
         );
 
-  final OnMutationCompleted$Mutation$updateTranslationValue?
+  final OnMutationCompleted$Mutation$upsertTranslationValue?
       onCompletedWithParsed;
 
   @override
@@ -423,11 +421,11 @@ class Options$Mutation$updateTranslationValue
       ];
 }
 
-class WatchOptions$Mutation$updateTranslationValue
-    extends graphql.WatchQueryOptions<Mutation$updateTranslationValue> {
-  WatchOptions$Mutation$updateTranslationValue({
+class WatchOptions$Mutation$upsertTranslationValue
+    extends graphql.WatchQueryOptions<Mutation$upsertTranslationValue> {
+  WatchOptions$Mutation$upsertTranslationValue({
     String? operationName,
-    required Variables$Mutation$updateTranslationValue variables,
+    required Variables$Mutation$upsertTranslationValue variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -445,65 +443,65 @@ class WatchOptions$Mutation$updateTranslationValue
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeMutationupdateTranslationValue,
+          document: documentNodeMutationupsertTranslationValue,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$updateTranslationValue,
+          parserFn: _parserFn$Mutation$upsertTranslationValue,
         );
 }
 
-extension ClientExtension$Mutation$updateTranslationValue
+extension ClientExtension$Mutation$upsertTranslationValue
     on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$updateTranslationValue>>
-      mutate$updateTranslationValue(
-              Options$Mutation$updateTranslationValue options) async =>
+  Future<graphql.QueryResult<Mutation$upsertTranslationValue>>
+      mutate$upsertTranslationValue(
+              Options$Mutation$upsertTranslationValue options) async =>
           await this.mutate(options);
-  graphql.ObservableQuery<Mutation$updateTranslationValue>
-      watchMutation$updateTranslationValue(
-              WatchOptions$Mutation$updateTranslationValue options) =>
+  graphql.ObservableQuery<Mutation$upsertTranslationValue>
+      watchMutation$upsertTranslationValue(
+              WatchOptions$Mutation$upsertTranslationValue options) =>
           this.watchMutation(options);
 }
 
-class Mutation$updateTranslationValue$update_translation_value_by_pk {
-  Mutation$updateTranslationValue$update_translation_value_by_pk({
-    required this.value,
+class Mutation$upsertTranslationValue$insert_translation_value_one {
+  Mutation$upsertTranslationValue$insert_translation_value_one({
     required this.language_id,
     required this.translation_id,
+    required this.value,
     required this.$__typename,
   });
 
-  factory Mutation$updateTranslationValue$update_translation_value_by_pk.fromJson(
+  factory Mutation$upsertTranslationValue$insert_translation_value_one.fromJson(
       Map<String, dynamic> json) {
-    final l$value = json['value'];
     final l$language_id = json['language_id'];
     final l$translation_id = json['translation_id'];
+    final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Mutation$updateTranslationValue$update_translation_value_by_pk(
-      value: (l$value as String),
+    return Mutation$upsertTranslationValue$insert_translation_value_one(
       language_id: (l$language_id as String),
       translation_id: (l$translation_id as int),
+      value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final String value;
 
   final String language_id;
 
   final int translation_id;
 
+  final String value;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$value = value;
-    _resultData['value'] = l$value;
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$translation_id = translation_id;
     _resultData['translation_id'] = l$translation_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -511,14 +509,14 @@ class Mutation$updateTranslationValue$update_translation_value_by_pk {
 
   @override
   int get hashCode {
-    final l$value = value;
     final l$language_id = language_id;
     final l$translation_id = translation_id;
+    final l$value = value;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$value,
       l$language_id,
       l$translation_id,
+      l$value,
       l$$__typename,
     ]);
   }
@@ -529,13 +527,8 @@ class Mutation$updateTranslationValue$update_translation_value_by_pk {
       return true;
     }
     if (!(other
-            is Mutation$updateTranslationValue$update_translation_value_by_pk) ||
+            is Mutation$upsertTranslationValue$insert_translation_value_one) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
       return false;
     }
     final l$language_id = language_id;
@@ -548,6 +541,11 @@ class Mutation$updateTranslationValue$update_translation_value_by_pk {
     if (l$translation_id != lOther$translation_id) {
       return false;
     }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -557,92 +555,90 @@ class Mutation$updateTranslationValue$update_translation_value_by_pk {
   }
 }
 
-extension UtilityExtension$Mutation$updateTranslationValue$update_translation_value_by_pk
-    on Mutation$updateTranslationValue$update_translation_value_by_pk {
-  CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk<
-          Mutation$updateTranslationValue$update_translation_value_by_pk>
+extension UtilityExtension$Mutation$upsertTranslationValue$insert_translation_value_one
+    on Mutation$upsertTranslationValue$insert_translation_value_one {
+  CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one<
+          Mutation$upsertTranslationValue$insert_translation_value_one>
       get copyWith =>
-          CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk(
+          CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk<
+abstract class CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one<
     TRes> {
-  factory CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk(
-    Mutation$updateTranslationValue$update_translation_value_by_pk instance,
-    TRes Function(
-            Mutation$updateTranslationValue$update_translation_value_by_pk)
+  factory CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one(
+    Mutation$upsertTranslationValue$insert_translation_value_one instance,
+    TRes Function(Mutation$upsertTranslationValue$insert_translation_value_one)
         then,
-  ) = _CopyWithImpl$Mutation$updateTranslationValue$update_translation_value_by_pk;
+  ) = _CopyWithImpl$Mutation$upsertTranslationValue$insert_translation_value_one;
 
-  factory CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk.stub(
+  factory CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$updateTranslationValue$update_translation_value_by_pk;
+      _CopyWithStubImpl$Mutation$upsertTranslationValue$insert_translation_value_one;
 
   TRes call({
-    String? value,
     String? language_id,
     int? translation_id,
+    String? value,
     String? $__typename,
   });
 }
 
-class _CopyWithImpl$Mutation$updateTranslationValue$update_translation_value_by_pk<
+class _CopyWithImpl$Mutation$upsertTranslationValue$insert_translation_value_one<
         TRes>
     implements
-        CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk<
+        CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one<
             TRes> {
-  _CopyWithImpl$Mutation$updateTranslationValue$update_translation_value_by_pk(
+  _CopyWithImpl$Mutation$upsertTranslationValue$insert_translation_value_one(
     this._instance,
     this._then,
   );
 
-  final Mutation$updateTranslationValue$update_translation_value_by_pk
-      _instance;
+  final Mutation$upsertTranslationValue$insert_translation_value_one _instance;
 
   final TRes Function(
-      Mutation$updateTranslationValue$update_translation_value_by_pk) _then;
+      Mutation$upsertTranslationValue$insert_translation_value_one) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? value = _undefined,
     Object? language_id = _undefined,
     Object? translation_id = _undefined,
+    Object? value = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$updateTranslationValue$update_translation_value_by_pk(
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
+      _then(Mutation$upsertTranslationValue$insert_translation_value_one(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
         translation_id: translation_id == _undefined || translation_id == null
             ? _instance.translation_id
             : (translation_id as int),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 }
 
-class _CopyWithStubImpl$Mutation$updateTranslationValue$update_translation_value_by_pk<
+class _CopyWithStubImpl$Mutation$upsertTranslationValue$insert_translation_value_one<
         TRes>
     implements
-        CopyWith$Mutation$updateTranslationValue$update_translation_value_by_pk<
+        CopyWith$Mutation$upsertTranslationValue$insert_translation_value_one<
             TRes> {
-  _CopyWithStubImpl$Mutation$updateTranslationValue$update_translation_value_by_pk(
+  _CopyWithStubImpl$Mutation$upsertTranslationValue$insert_translation_value_one(
       this._res);
 
   TRes _res;
 
   call({
-    String? value,
     String? language_id,
     int? translation_id,
+    String? value,
     String? $__typename,
   }) =>
       _res;

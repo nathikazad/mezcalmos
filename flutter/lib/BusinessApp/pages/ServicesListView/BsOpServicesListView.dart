@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/RentalHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -21,9 +22,8 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
+import 'package:mezcalmos/env.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -39,7 +39,7 @@ class BsOpServicesListView extends StatefulWidget {
       {required int id,
       required BusinessProfile profile,
       required int detailsId}) async {
-    String route =
+    final String route =
         BusinessOpRoutes.kBusniessOpServiceList.replaceFirst(":id", "$id");
     return MezRouter.toPath(route,
         arguments: {"profile": profile, "detailsId": detailsId});
@@ -102,34 +102,12 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           _i18n()["services"],
                           style: context.textTheme.bodyLarge,
                         )),
-                    InkWell(
-                      onTap: () {
-                        /// TODO: Only to view purpose
-                        viewController.changeBusiness();
-                      },
-                      child: Ink(
-                        padding: const EdgeInsets.all(5),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            MezIconButton(
-                                elevation: 0,
-                                iconSize: 18,
-                                padding: EdgeInsets.all(3),
-                                onTap: null,
-                                icon: Icons.low_priority_rounded),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              _i18n()["reorder"],
-                              style: context.textTheme.bodyLarge
-                                  ?.copyWith(color: primaryBlueColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    if (MezEnv.appLaunchMode == AppLaunchMode.stage)
+                      MezButton(
+                          label: "Change Profile",
+                          onClick: () async {
+                            viewController.changeBusiness();
+                          }),
                   ],
                 ),
                 Divider(
@@ -286,15 +264,18 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
 
   Widget _products(BuildContext context) {
     final RxList<ProductCard> artProducts = viewController.product
-        .where((element) => element.category1 == ProductCategory1.Art)
+        .where(
+            (ProductCard element) => element.category1 == ProductCategory1.Art)
         .toList()
         .obs;
     final RxList<ProductCard> consumableProducts = viewController.product
-        .where((element) => element.category1 == ProductCategory1.Consumable)
+        .where((ProductCard element) =>
+            element.category1 == ProductCategory1.Consumable)
         .toList()
         .obs;
     final RxList<ProductCard> careProducts = viewController.product
-        .where((element) => element.category1 == ProductCategory1.PersonalCare)
+        .where((ProductCard element) =>
+            element.category1 == ProductCategory1.PersonalCare)
         .toList()
         .obs;
     return Column(
@@ -387,15 +368,18 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
 
   Widget _services(BuildContext context) {
     final RxList<ServiceCard> cleaningService = viewController.services
-        .where((element) => element.category1 == ServiceCategory1.Cleaning)
+        .where((ServiceCard element) =>
+            element.category1 == ServiceCategory1.Cleaning)
         .toList()
         .obs;
     final RxList<ServiceCard> petSittingService = viewController.services
-        .where((element) => element.category1 == ServiceCategory1.PetSitting)
+        .where((ServiceCard element) =>
+            element.category1 == ServiceCategory1.PetSitting)
         .toList()
         .obs;
     final RxList<ServiceCard> mealPlanningService = viewController.services
-        .where((element) => element.category1 == ServiceCategory1.MealPlanning)
+        .where((ServiceCard element) =>
+            element.category1 == ServiceCategory1.MealPlanning)
         .toList()
         .obs;
     return Column(
@@ -662,10 +646,12 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   }
 
   Column _rentals(BuildContext context) {
-    final RxList<RentalCard> surfRentals =
-        viewController.rentals.where((element) => element.isSurf).toList().obs;
+    final RxList<RentalCard> surfRentals = viewController.rentals
+        .where((RentalCard element) => element.isSurf)
+        .toList()
+        .obs;
     final RxList<RentalCard> vehicleRentals = viewController.rentals
-        .where((element) => element.isVehicle)
+        .where((RentalCard element) => element.isVehicle)
         .toList()
         .obs;
     return Column(
