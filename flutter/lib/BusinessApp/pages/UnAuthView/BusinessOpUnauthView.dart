@@ -43,40 +43,15 @@ class _BusinessOpUnauthViewState extends State<BusinessOpUnauthView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(
+       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Menu,
-        showNotifications: true,
+        showNotifications: false,
       ),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
-      body: Obx(
-        () => Container(
-          margin: const EdgeInsets.all(20),
-          child: (viewController.hasStatus)
-              ? ServiceWaitingForApproval()
-              : Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      height: 35.h,
-                      width: double.infinity,
-                      child: Image.asset(
-                        aRequestWaiting,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 25),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "${_i18n()['title']}",
-                        style: context.txt.displaySmall,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-        ),
+      body: Container(
+        margin: const EdgeInsets.all(20),
+        child: ServiceWaitingForApproval(),
       ),
     );
   }
