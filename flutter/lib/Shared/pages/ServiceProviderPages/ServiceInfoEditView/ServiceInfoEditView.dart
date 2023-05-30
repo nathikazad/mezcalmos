@@ -246,6 +246,11 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                                 onChanged: (String? v) {
                                   viewController.languages.value?.secondary =
                                       v?.toLanguage() ?? null;
+                                  viewController.secondayServiceDesc.text =
+                                      viewController
+                                                  .service.value?.description?[
+                                              viewController.secLang] ??
+                                          "";
                                   viewController.languages.refresh();
                                 }),
                           ],

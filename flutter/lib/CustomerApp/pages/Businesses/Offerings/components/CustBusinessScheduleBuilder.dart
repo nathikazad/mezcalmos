@@ -105,13 +105,9 @@ class _CustBusinessScheduleBuilderState
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 3),
-                                          child: Icon(
-                                            Icons.access_time_outlined,
-                                            size: 20,
-                                          ),
+                                        Icon(
+                                          Icons.access_time_outlined,
+                                          size: 20,
                                         ),
                                         Padding(
                                           padding:

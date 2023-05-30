@@ -157,6 +157,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(

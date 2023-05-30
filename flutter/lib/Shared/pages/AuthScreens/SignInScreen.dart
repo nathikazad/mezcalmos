@@ -56,6 +56,7 @@ class _SignInViewState extends State<SignInView> {
         onWillPop: () async => false,
         child: Scaffold(
             body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Obx(
             () => Column(
               children: [
