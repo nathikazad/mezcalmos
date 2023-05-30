@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/businessDeepLinkHandler.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/notificationHandler.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -40,10 +42,13 @@ class _BusinessWrapperState extends State<BusinessWrapper> {
   @override
   void initState() {
     mezDbgPrint(" 👋👋👋👋👋👋👋 Business ::init state 👋👋👋👋👋👋👋 ");
-
-    businessOpAuthController
-        .setupBusinessOperator()
-        .whenComplete(() => handleState());
+    Future.microtask(() async {
+      await DeepLinkHandler.startDynamicLinkCheckRoutine(
+          BusinessOpDeepLinkHandler.handleDeeplink);
+      businessOpAuthController
+          .setupBusinessOperator()
+          .whenComplete(() => handleState());
+    });
 
     _setupNotifications();
     super.initState();

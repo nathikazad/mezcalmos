@@ -22,6 +22,14 @@ extension StringHelper on String {
     return this + (isPlural ? 's' : '');
   }
 
+  bool validatePhoneNumber() {
+    // Define the regular expression for a valid phone number
+    final RegExp regex = RegExp(r'^\+?\d{10,12}$');
+
+    // Check if the phone number matches the regular expression
+    return regex.hasMatch(this);
+  }
+
   String generateTwoFirstLetters() {
     String imageString = '';
     if (isNotEmpty) {

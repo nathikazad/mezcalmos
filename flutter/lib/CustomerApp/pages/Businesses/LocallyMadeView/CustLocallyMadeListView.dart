@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -245,7 +246,7 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                         ),
                       ),
                       Text(
-                        '${viewController.products[index].details.cost.values.first.toPriceString()}',
+                        '${viewController.products[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.products[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
                         overflow: TextOverflow.ellipsis,
                         style: context.textTheme.bodyLarge?.copyWith(
                             height: 2,

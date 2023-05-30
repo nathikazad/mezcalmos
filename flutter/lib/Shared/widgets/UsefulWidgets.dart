@@ -97,7 +97,7 @@ class MezcalmosSharedWidgets {
 
   static Widget fillMezkalaTitle({bool showLogo = true}) {
     return Container(
-      width: 45.w,
+      width: 45.mezW,
       //  width: ,
       child: FittedBox(
         fit: BoxFit.scaleDown,
@@ -105,8 +105,7 @@ class MezcalmosSharedWidgets {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (showLogo)
-              logo(size: getSizeRelativeToScreen(60, Get.width, Get.height)),
+            if (showLogo) logo(size: 30.mezSp),
             Padding(
               padding: EdgeInsets.only(left: 10),
               child: mezkalaTitle(),
