@@ -51,7 +51,7 @@ class _ListOperatorCardState extends State<ListOperatorCard> {
                           backgroundColor: Color(0xFFE1E4FF),
                           radius: 23,
                           child: Icon(
-                            Icons.delivery_dining,
+                            Icons.support_agent_rounded,
                             size: 30,
                             color: Color(0xFF6779FE),
                           ),
@@ -65,13 +65,22 @@ class _ListOperatorCardState extends State<ListOperatorCard> {
                   Flexible(
                     flex: 3,
                     fit: FlexFit.tight,
-                    child: Text(
-                      widget.operator.info.name,
-                      style: context.textTheme.bodyLarge,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.operator.info.name,
+                          style: context.textTheme.bodyLarge,
+                        ),
+                        //  smallSepartor,
+                        if (widget.operator.state.owner)
+                          Text("${_i18n()['owner']}"),
+                      ],
                     ),
                   ),
                   const Spacer(),
-                  if (widget.operator.isAuthorized)
+                  if (widget.operator.isAuthorized &&
+                      !widget.operator.state.owner)
                     MezIconButton(
                       onTap: () async {
                         await showConfirmationDialog(context,
@@ -100,7 +109,7 @@ class _ListOperatorCardState extends State<ListOperatorCard> {
                             children: [
                               Flexible(
                                   child: MezButton(
-                                label: "Approve",
+                                label: "${_i18n()['approve']}",
                                 height: 50,
                                 backgroundColor: primaryBlueColor,
                                 textColor: Colors.white,
@@ -121,7 +130,7 @@ class _ListOperatorCardState extends State<ListOperatorCard> {
                               ),
                               Flexible(
                                   child: MezButton(
-                                label: "Reject",
+                                label: "${_i18n()['reject']}",
                                 backgroundColor: offRedColor,
                                 height: 50,
                                 textColor: Colors.red,

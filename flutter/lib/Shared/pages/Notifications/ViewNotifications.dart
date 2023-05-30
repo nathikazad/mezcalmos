@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -180,7 +181,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     Text(
                       notification.body,
                       style: context.txt.titleMedium?.copyWith(
-                        fontSize: 12.sp,
+                        fontSize: 12.mezSp,
                       ),
                     ),
                   ],

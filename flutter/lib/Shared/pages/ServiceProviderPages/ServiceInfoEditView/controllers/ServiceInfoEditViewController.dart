@@ -85,6 +85,8 @@ class ServiceInfoEditViewController {
 
   Future<void> updateServiceDescription() async {
     if (!fd.mapEquals(service.value!.description, _contructDesc())) {
+      mezDbgPrint(
+          "Descriptions are not equal ! ${service.value!.descriptionId}");
       if (service.value!.descriptionId != null) {
         _contructDesc().forEach((Language key, String value) {
           update_translation(

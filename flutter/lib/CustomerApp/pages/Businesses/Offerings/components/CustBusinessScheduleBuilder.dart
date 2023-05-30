@@ -14,10 +14,14 @@ class CustBusinessScheduleBuilder extends StatefulWidget {
     required this.scheduleType,
     this.showTitle = true,
     this.showIcons = true,
+    this.icon = Icons.access_time_outlined,
+    this.isService = false,
   }) : super(key: key);
 
   final bool showTitle;
   final bool showIcons;
+  final bool isService;
+  final IconData icon;
   final Schedule? schedule;
   final ScheduleType scheduleType;
 
@@ -71,7 +75,9 @@ class _CustBusinessScheduleBuilderState
       children: [
         if (widget.showTitle)
           Text(
-            _i18n()[scheduleTypeHeading()]!,
+            widget.isService
+                ? '${_i18n()['availability']}'
+                : _i18n()[scheduleTypeHeading()]!,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ...concatenatedSchedule.entries

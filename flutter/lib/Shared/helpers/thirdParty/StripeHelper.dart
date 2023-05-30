@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -380,8 +381,8 @@ Future<dynamic> addCardSheet(BuildContext context) {
                         fit: FlexFit.tight,
                         child: Text(
                           '${_i18n()["addCard"]}',
-                          style:
-                              ctx.txt.displaySmall?.copyWith(fontSize: 17.sp),
+                          style: ctx.txt.displaySmall
+                              ?.copyWith(fontSize: 17.mezSp),
                         ),
                       ),
                       Get.find<LanguageController>().userLanguageKey ==

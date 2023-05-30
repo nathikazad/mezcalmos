@@ -15,6 +15,7 @@ import { Schedule } from "../shared/models/Generic/Schedule";
 export interface RestaurantDetails {
   name: string,
   image: string,
+  phoneNumber: string,
   location: Location,
   schedule: Schedule,
   restaurantOperatorNotificationToken?: string,

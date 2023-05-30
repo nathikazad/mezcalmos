@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
@@ -138,13 +139,24 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                     content: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Image.asset(
-                          cServiceController.deliveryServiceListData[
-                                  currentMezService]!["icon"]
-                              .toString(),
-                          height: 85.mezSp,
-                          width: 85.mezSp,
+                        Container(
+                          height: kIsWeb ? 115.mezSp : 85.mezSp,
+                          width: kIsWeb ? 115.mezSp : 85.mezSp,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.contain,
+                                  image: AssetImage(cServiceController
+                                      .deliveryServiceListData[
+                                          currentMezService]!["icon"]
+                                      .toString()))),
                         ),
+                        // Image.asset(
+                        //  cServiceController.deliveryServiceListData[
+                        //           currentMezService]!["icon"]
+                        //       .toString() ,
+                        //   height: kIsWeb ? 150.mezSp : 85.mezSp,
+                        //   width: kIsWeb ? 150.mezSp : 85.mezSp,
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Obx(
