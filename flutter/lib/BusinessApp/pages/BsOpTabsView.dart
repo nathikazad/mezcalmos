@@ -2,6 +2,7 @@ import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
+import 'package:mezcalmos/BusinessApp/pages/OrdersListViews/BsOrdersListView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -70,11 +71,7 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
           businessProfile: opAuthController.businessProfile,
         );
       case BusinessOpTabView.Orders:
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("Orders"),
-          ),
-        );
+        return BsOrdersListView();
       case BusinessOpTabView.Profile:
         return ServiceProfileView(
           serviceId: opAuthController.companyId,
