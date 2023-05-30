@@ -1280,7 +1280,7 @@
             "person": "persona",
             "unit": "unidadad",
             "total": "total",
-            "filter": "filtrar"
+            "filter": "Filtrar"
           }
         },
         "TherapyView": {
@@ -1413,7 +1413,16 @@
             "art": "Arte",
             "noBusinessesFound": "No se encontraron negocios",
             "store": "Almacenar",
-            "services": "Servicios"
+            "services": "Servicios",
+            "free": "GRATIS",
+            "hour": "Hora",
+            "day": "Día",
+            "week": "Semana",
+            "month": "Mes",
+            "person": "Person",
+            "total": "total",
+            "unit": "unidad",
+            "none": "ninguna"
           },
           "CustLocallyMadeWrapper": {
             "locallyMade": "Hecho localmente",

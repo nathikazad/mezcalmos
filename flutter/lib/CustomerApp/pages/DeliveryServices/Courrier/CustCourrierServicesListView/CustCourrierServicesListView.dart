@@ -238,7 +238,7 @@ Widget _detailsRow(DeliveryCompany company, BuildContext context) {
                     style: context.txt.bodySmall),
                 if (company.numberOfReviews != null)
                   Padding(
-                    padding: const EdgeInsets.only(left: 2, bottom: 3),
+                    padding: const EdgeInsets.only(left: 2),
                     child: Text(
                       "(${company.numberOfReviews})",
                       style: context.txt.bodyMedium,

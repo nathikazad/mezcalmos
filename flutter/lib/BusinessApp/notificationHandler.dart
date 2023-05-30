@@ -109,7 +109,8 @@ Notification newMessageNotification(String key, value) {
   mezDbgPrint("notification Data =================================> $value");
   return Notification(
       id: key,
-      linkUrl: SharedRoutes.getMessagesRoute(chatId: value['chatId']),
+      linkUrl:
+          SharedRoutes.getMessagesRoute(chatId: int.parse(value['chatId'])),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
