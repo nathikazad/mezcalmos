@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/UnAuthView/BusinessOpUnauthView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotifications/nativeBackgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
@@ -16,8 +17,11 @@ class BusinessOpDeepLinkHandler {
     try {
       String? token =
           await Get.find<NativeBackgroundNotificationsController>().getToken();
-      await CloudFunctions.serviceProvider_addOperator(
-          uniqueId: uniqueId, notificationToken: token);
+      final AddOperatorResponse res =
+          await CloudFunctions.serviceProvider_addOperator(
+              uniqueId: uniqueId, notificationToken: token);
+      mezDbgPrint(
+          "✅ Add operator called from deep link handler with response ${res.toFirebaseFormattedJson()}");
       // ignore: unawaited_futures
       BusinessOpUnauthView.navigate();
     } catch (e, stk) {
