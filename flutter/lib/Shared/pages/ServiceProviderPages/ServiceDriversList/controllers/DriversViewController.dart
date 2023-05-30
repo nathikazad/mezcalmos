@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class DriversViewController {
   // instances and streams subscriptions
@@ -75,7 +74,7 @@ class DriversViewController {
           await CloudFunctions.serviceProvider_authorizeDriver(
         deliveryDriverId: driverId,
         approved: approved,
-        deliveryServiceProviderType: partType,
+        deliveryServiceProviderType: deliveryServiceProviderType,
       );
       if (res.success == false) {
         mezDbgPrint(res.error);
@@ -92,19 +91,42 @@ class DriversViewController {
     }
   }
 
-  cModels.DeliveryServiceProviderType get partType {
+  cModels.DeliveryServiceProviderType get deliveryServiceProviderType {
     switch (serviceProviderType) {
       case cModels.ServiceProviderType.Restaurant:
         return cModels.DeliveryServiceProviderType.Restaurant;
-        break;
       case cModels.ServiceProviderType.Laundry:
         return cModels.DeliveryServiceProviderType.Laundry;
-        break;
       case cModels.ServiceProviderType.DeliveryCompany:
         return cModels.DeliveryServiceProviderType.DeliveryCompany;
-        break;
       default:
         return cModels.DeliveryServiceProviderType.DeliveryCompany;
+    }
+  }
+
+  Future<bool> removeDriver(int deliveryDriverId) async {
+    try {
+      final cModels.RemoveDriverResponse res =
+          await CloudFunctions.serviceProvider_removeDriver(
+        deliveryDriverId: deliveryDriverId,
+        deliveryServiceProviderType: deliveryServiceProviderType,
+      );
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+        return false;
+      }
+      await fetchDrivers();
+      return true;
+    } on FirebaseException catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar(errorText: e.message.toString());
+      return false;
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      return false;
     }
   }
 }

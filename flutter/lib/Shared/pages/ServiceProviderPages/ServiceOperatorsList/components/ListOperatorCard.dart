@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/controllers/OperatorsViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpDriversView']["components"]["ROpListDriverCard"];
@@ -79,25 +77,25 @@ class _ListOperatorCardState extends State<ListOperatorCard> {
                     ),
                   ),
                   const Spacer(),
-                  if (widget.operator.isAuthorized &&
-                      !widget.operator.state.owner)
-                    MezIconButton(
-                      onTap: () async {
-                        await showConfirmationDialog(context,
-                            title: '${_i18n()["rmTitle"]}',
-                            helperText: '${_i18n()["rmText"]}',
-                            primaryButtonText: '${_i18n()["rmBtn"]}',
-                            onYesClick: () async {
-                          // final bool result = await widget.viewController
-                          //     .removeDriver(widget.op.deliveryDriverId);
-                          //  if (result) MezRouter.back();
-                        });
-                      },
-                      icon: Icons.delete_outline,
-                      iconColor: Colors.red,
-                      iconSize: 18,
-                      backgroundColor: offRedColor,
-                    )
+                  // if (widget.operator.isAuthorized &&
+                  //     !widget.operator.state.owner)
+                  //   MezIconButton(
+                  //     onTap: () async {
+                  //       await showConfirmationDialog(context,
+                  //           title: '${_i18n()["rmTitle"]}',
+                  //           helperText: '${_i18n()["rmText"]}',
+                  //           primaryButtonText: '${_i18n()["rmBtn"]}',
+                  //           onYesClick: () async {
+                  //         // final bool result = await widget.viewController
+                  //         //     .removeDriver(widget.op.deliveryDriverId);
+                  //         //  if (result) MezRouter.back();
+                  //       });
+                  //     },
+                  //     icon: Icons.delete_outline,
+                  //     iconColor: Colors.red,
+                  //     iconSize: 18,
+                  //     backgroundColor: offRedColor,
+                  //   )
                 ]),
                 if (!widget.operator.isAuthorized)
                   Container(
