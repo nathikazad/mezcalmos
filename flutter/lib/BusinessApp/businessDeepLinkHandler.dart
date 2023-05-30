@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/UnauthrizedOpView.dart';
+import 'package:mezcalmos/BusinessApp/pages/UnAuthView/BusinessOpUnauthView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotifications/nativeBackgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -19,7 +19,7 @@ class BusinessOpDeepLinkHandler {
       await CloudFunctions.serviceProvider_addOperator(
           uniqueId: uniqueId, notificationToken: token);
       // ignore: unawaited_futures
-      ROpUnauthorizedOpView.navigate();
+      BusinessOpUnauthView.navigate();
     } catch (e, stk) {
       mezDbgPrint("Errrooooooooor =======> $e,$stk");
     }
