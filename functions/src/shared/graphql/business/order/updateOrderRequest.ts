@@ -1,36 +1,31 @@
 import { getHasura } from "../../../../utilities/hasura";
 import { MezError } from "../../../models/Generic/Generic";
-import { BusinessOrder } from "../../../models/Services/Business/BusinessOrder";
+import { BusinessOrder, BusinessOrderItem } from "../../../models/Services/Business/BusinessOrder";
 
-export async function confirmBusinessOrderFromOperator(order: BusinessOrder) {
+export async function updateBusinessOrderByAdmin(order: BusinessOrder) {
     let chain = getHasura();
 
-    let updates = order.items.map((i:any) => {
+    let updates = order.items.map((i:BusinessOrderItem) => {
         return {
             where: {
-                _and: [{
-                    service_id: {
-                        _eq: i.serviceId
-                    }
-                }, {
-                    service_type: {
-                        _eq: i.serviceType
-                    }
-                }]
+                id: {  
+                    _eq: i.id
+                }
             },
             _set: {
-                cost: JSON.stringify(i.cost)
+                parameters: JSON.stringify(i.parameters),
             }
         }
     })
     let response = await chain.mutation({
         update_business_order_request_by_pk: [{
             pk_columns: {
-                id: order.orderDetails.orderId
+                id: order.orderId
             },
             _set: {
                 status: order.status,
-                final_cost: order.finalCost
+                final_cost: order.finalCost,
+                commence_time: order.commenceTime,
             }
         }, {
             status: true
@@ -42,17 +37,17 @@ export async function confirmBusinessOrderFromOperator(order: BusinessOrder) {
         }]
     });
     if(response.update_business_order_request_by_pk == null) {
-        throw new MezError("updateStatusError");
+        throw new MezError("updateOrderError");
     }
 }
 
-export async function updateBusinessOrderRequest(order: BusinessOrder) {
+export async function updateBusinessOrderStatus(order: BusinessOrder) {
     let chain = getHasura();
 
     let response = await chain.mutation({
         update_business_order_request_by_pk: [{
             pk_columns: {
-                id: order.orderDetails.orderId
+                id: order.orderId
             },
             _set: {
                 status: order.status

@@ -106,11 +106,12 @@ export enum EventCategory2 {
   Karate = "karate",
   Uncategorized = "uncategorized",
 }
-export enum ServiceType {
-  Rental = "rental",
-  Class = "class",
-  Event = "event",
-}
+// export enum ItemType {
+//   Rental = "rental",
+//   Event = "event",
+//   Service = "service",
+//   Product = "product",
+// }
 export enum ScheduleType {
   Scheduled = "scheduled",
   OnDemand = "onDemand",

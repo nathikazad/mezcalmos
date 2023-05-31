@@ -5,11 +5,10 @@ select_permissions:
   - role: customer
     permission:
       columns:
+        - item_details_id
         - customer_id
         - id
-        - service_id
-        - cost
-        - service_type
+        - parameters
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
