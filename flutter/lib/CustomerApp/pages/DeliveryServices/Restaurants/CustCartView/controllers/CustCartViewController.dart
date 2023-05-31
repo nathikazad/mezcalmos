@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
 // import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 // controller class //
@@ -24,7 +23,8 @@ class CustCartViewController {
       Get.find<CustomerAuthController>();
   GlobalKey<FormState> formKey = GlobalKey();
 
-  CustomerCartController cartController = Get.find<CustomerCartController>();
+  CustRestaurantCartController cartController =
+      Get.find<CustRestaurantCartController>();
 
   // Obs variables //
   //Rxn<CustStripeInfo> custStripeInfo = Rxn();
