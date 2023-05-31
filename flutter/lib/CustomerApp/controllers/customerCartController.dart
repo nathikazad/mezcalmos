@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
     as cloudFunctionModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
+import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;

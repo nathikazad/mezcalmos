@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
+import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 // import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
