@@ -1,6 +1,6 @@
 import { getBusinessOperatorByUserId } from "../shared/graphql/business/operator/getBusinessOperator";
 import { getBusinessOrderRequest } from "../shared/graphql/business/order/getOrderRequest";
-import { updateBusinessOrderByAdmin } from "../shared/graphql/business/order/updateOrderRequest";
+import { updateBusinessOrderRequest } from "../shared/graphql/business/order/updateOrderRequest";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { isMezAdmin } from "../shared/helper";
 import { ParticipantType } from "../shared/models/Generic/Chat";
@@ -15,9 +15,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 
 export interface HandleRequestDetails {
     orderRequestId: number,
-    newStatus: BusinessOrderRequestStatus,
-    orderItemIdToFinalCost?: Record<number, number>;
-    orderItemIdToFinalFromTime?: Record<number, string>;
+    newStatus: BusinessOrderRequestStatus
 }
 export interface HandleRequestResponse {
     success: boolean,
@@ -43,56 +41,8 @@ export async function handleOrderRequestByAdmin(userId: number, handleRequestDet
 
         await errorChecks(userId, order, handleRequestDetails);
 
-        if(handleRequestDetails.newStatus != BusinessOrderRequestStatus.CancelledByBusiness) {
-
-            order.finalCost = 0;
-            if(handleRequestDetails.orderItemIdToFinalFromTime)
-                order.commenceTime = Object.values(handleRequestDetails.orderItemIdToFinalFromTime)[0];
-            order.items.forEach((i) => {
-                i.parameters.finalCost = (handleRequestDetails.orderItemIdToFinalCost) 
-                    ? handleRequestDetails.orderItemIdToFinalCost[i.id] ?? i.parameters.estimatedCost
-                    : i.parameters.estimatedCost;
-
-                i.parameters.finalFromTime = (handleRequestDetails.orderItemIdToFinalFromTime)
-                    ? handleRequestDetails.orderItemIdToFinalFromTime[i.id] ?? i.parameters.estimatedFromTime
-                    : i.parameters.estimatedFromTime;
-
-                order.finalCost! += i.parameters.finalCost;
-                if(new Date(i.parameters.finalFromTime).valueOf() < new Date(order.commenceTime).valueOf()) {
-                    order.commenceTime = i.parameters.finalFromTime;
-                }
-            });
-        }
         order.status = handleRequestDetails.newStatus;
-        updateBusinessOrderByAdmin(order);
-
-        // if(handleRequestDetails.requestConfirmed) {
-        //     order.status = BusinessOrderRequestStatus.ApprovedByBusiness;
-        //     let finalCost = 0;
-        //     order.items.forEach((i) => {
-        //         i.cost.finalCostPerOne = handleRequestDetails.itemIdToFinalCostPerOne![i.id];
-        //         switch (i.cost.timeUnit) {
-        //             case TimeUnit.PerHour:
-        //                 finalCost += (i.cost.finalCostPerOne 
-        //                             * Math.ceil((new Date(i.cost.fromTime).valueOf() - new Date(i.cost.toTime).valueOf()) / (1000 * 60 * 60)) 
-        //                             * i.cost.quantity);
-        //                 break;
-        //             case TimeUnit.PerDay:
-        //                 finalCost += (i.cost.finalCostPerOne 
-        //                             * Math.ceil((new Date(i.cost.fromTime).valueOf() - new Date(i.cost.toTime).valueOf()) / (1000 * 60 * 60 * 24)) 
-        //                             * i.cost.quantity);
-        //                 break;
-        //             default:
-        //                 finalCost += i.cost.finalCostPerOne * i.cost.quantity;
-        //                 break;
-        //         }
-        //     });
-        //     order.finalCost = finalCost;
-        //     confirmBusinessOrderFromOperator(order);
-        // } else {
-        //     order.status = BusinessOrderRequestStatus.CancelledByBusiness;
-        //     updateBusinessOrderRequest(order)
-        // }
+        updateBusinessOrderRequest(order);
 
         notifyCustomer(order, customer);
         return {
@@ -129,7 +79,7 @@ function notifyCustomer(order: BusinessOrder, customer: CustomerInfo) {
                 ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
             orderId: order.orderId,
         },
-        background: order.status == BusinessOrderRequestStatus.ApprovedByBusiness ? {
+        background: order.status == BusinessOrderRequestStatus.Confirmed ? {
             [Language.ES]: {
                 title: "Solicitud confirmada",
                 body: `Su solicitud de pedido ha sido confirmada`
@@ -178,12 +128,14 @@ async function errorChecks(userId: number, order: BusinessOrder, handleRequestDe
             throw new MezError(HandleRequestError.IncorrectOrderRequestId);
         }
     }
-    if (order.status != BusinessOrderRequestStatus.RequestReceived) {
-        throw new MezError(HandleRequestError.RequestAlreadyConfirmedOrCancelled);
-    }
-    if (handleRequestDetails.newStatus != BusinessOrderRequestStatus.ApprovedByBusiness 
+    if (handleRequestDetails.newStatus != BusinessOrderRequestStatus.Confirmed 
         &&  handleRequestDetails.newStatus != BusinessOrderRequestStatus.CancelledByBusiness
         &&  handleRequestDetails.newStatus != BusinessOrderRequestStatus.ModificationRequestByBusiness) {
         throw new MezError(HandleRequestError.InvalidStatus);
     }
+    if (handleRequestDetails.newStatus != BusinessOrderRequestStatus.CancelledByBusiness 
+        && order.status != BusinessOrderRequestStatus.RequestReceived) {
+        throw new MezError(HandleRequestError.RequestAlreadyConfirmedOrCancelled);
+    }
+    
 }

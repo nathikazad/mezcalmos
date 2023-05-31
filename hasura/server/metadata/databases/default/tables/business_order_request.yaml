@@ -16,3 +16,9 @@ array_relationships:
         table:
           name: order_request_item
           schema: business
+computed_fields:
+  - name: cost
+    definition:
+      function:
+        name: ordercost
+        schema: business

@@ -1,5 +1,6 @@
 import { getHasura } from "../../../../utilities/hasura";
 import { CustomerAppType, MezError } from "../../../models/Generic/Generic";
+import { OfferingType } from "../../../models/Services/Business/Business";
 import { BusinessItemParameters, BusinessOrder, BusinessOrderItem, BusinessOrderRequestStatus } from "../../../models/Services/Business/BusinessOrder";
 
 export async function getBusinessOrderRequest(orderId: number): Promise<BusinessOrder> {
@@ -9,19 +10,20 @@ export async function getBusinessOrderRequest(orderId: number): Promise<Business
         business_order_request_by_pk: [{
             id: orderId
         }, {
-            commence_time: true,
             customer_id: true,
             business_id: true,
             status: true,
             review_id: true,
             order_time: true,
             customer_app_type: true,
-            estimated_cost: true,
-            final_cost: true,
+            cost: true,
             notes: true,
             items: [{}, {
                 id: true,
-                item_details_id: true,
+                cost: true,
+                item_id : true,
+                offering_type: true,
+                time: true,
                 available: true,
                 parameters: [{}, true],
             }],
@@ -37,7 +39,11 @@ export async function getBusinessOrderRequest(orderId: number): Promise<Business
     let items: BusinessOrderItem[] = response.business_order_request_by_pk.items.map((i) => {
         return {
             id: i.id,
-            itemDetailsId: i.item_details_id,
+            itemId: i.item_id,
+            cost: i.cost,
+            offeringType: i.offering_type as OfferingType,
+            orderRequestId: orderId,
+            time: i.time,
             parameters: JSON.parse(i.parameters) as BusinessItemParameters,
             available: i.available,
         }
@@ -50,9 +56,7 @@ export async function getBusinessOrderRequest(orderId: number): Promise<Business
         businessId: response.business_order_request_by_pk.business_id,
         status: response.business_order_request_by_pk.status as BusinessOrderRequestStatus,
         items,
-        estimatedCost: response.business_order_request_by_pk.estimated_cost,
-        finalCost: response.business_order_request_by_pk.final_cost,
-        commenceTime: response.business_order_request_by_pk.commence_time,
+        cost: response.business_order_request_by_pk.cost,
         orderTime: response.business_order_request_by_pk.order_time,
     }
     return businessOrder;

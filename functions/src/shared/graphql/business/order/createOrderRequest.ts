@@ -29,16 +29,14 @@ export async function createOrderRequest(
     });
     let items = cart.items.map((i:BusinessOrderItem) => {
         return {
-            item_details_id: i.itemDetailsId,
+            item_id: i.itemId,
             parameters: JSON.stringify(i.parameters),
+            time: i.time,
+            cost: i.cost,
+            offering_type: i.offeringType,
         }
     })
-    let commenceTime: string = cart.items[0].parameters.estimatedFromTime;
-    cart.items.forEach((i:BusinessOrderItem) => {
-        if(new Date(i.parameters.estimatedFromTime).valueOf() < new Date(commenceTime).valueOf()) {
-            commenceTime = i.parameters.estimatedFromTime;
-        }
-    });
+
     let response = await chain.mutation({
         insert_business_order_request_one: [{
             object: {
@@ -47,8 +45,6 @@ export async function createOrderRequest(
                 status: BusinessOrderRequestStatus.RequestReceived,
                 customer_app_type: orderRequestDetails.customerAppType,
                 notes: orderRequestDetails.notes,
-                estimated_cost: cart.cost,
-                commence_time: commenceTime,
                 items: {
                     data: items
                 },
@@ -69,6 +65,7 @@ export async function createOrderRequest(
             id: true,
             chat_id: true,
             order_time: true,
+            cost: true,
             items: [{}, {
                 id: true
             }]
@@ -86,18 +83,20 @@ export async function createOrderRequest(
         customerAppType: orderRequestDetails.customerAppType,
         notes: orderRequestDetails.notes,
         chatId: response.insert_business_order_request_one.chat_id,
-        estimatedCost: cart.cost,
+        cost: response.insert_business_order_request_one.cost,
         orderTime: response.insert_business_order_request_one.order_time,
         status: BusinessOrderRequestStatus.RequestReceived,
-        commenceTime: commenceTime,
         items: cart.items.map((i:BusinessOrderItem) => {
             return {
                 id: 0,
-                itemDetailsId: i.itemDetailsId,
+                cost: i.cost,
+                offeringType: i.offeringType,
+                time: i.time,
+                itemId: i.itemId,
                 parameters: i.parameters,
                 orderRequestId: response.insert_business_order_request_one!.id,
             }
         })
     }
-    return businessOrder
+    return businessOrder;
 }

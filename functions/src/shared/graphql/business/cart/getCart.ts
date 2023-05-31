@@ -1,5 +1,6 @@
 import { getHasura } from "../../../../utilities/hasura";
 import { MezError } from "../../../models/Generic/Generic";
+import { OfferingType } from "../../../models/Services/Business/Business";
 import { BusinessCart, BusinessItemParameters, BusinessOrderItem } from "../../../models/Services/Business/BusinessOrder";
 
 export async function getBusinessCart(customerId: number): Promise<BusinessCart> {
@@ -11,10 +12,14 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         }, {
             business_id: true,
             discount_value: true,
+            cost: true,
             items: [{}, {
                 id: true,
-                item_details_id: true,
+                item_id: true,
                 parameters: [{}, true],
+                cost: true,
+                time: true,
+                offering_type: true,
             }]
         }]
     });
@@ -27,33 +32,17 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         return {
             id: i.id,
             customerId,
-            itemDetailsId: i.item_details_id,
+            itemId: i.item_details_id,
+            cost: i.cost,
+            time: i.time,
+            offeringType: i.offering_type as OfferingType,
             parameters: JSON.parse(i.parameters) as BusinessItemParameters,
         }
-    })
-    let cost = 0;
-    items.forEach((i:BusinessOrderItem) => {
-        cost += i.parameters.estimatedCost;
-    //     switch (i.cost.timeUnit) {
-    //         case TimeUnit.PerHour:
-    //             cost += (i.cost.estimatedCostPerOne 
-    //                         * Math.ceil((new Date(i.cost.fromTime).valueOf() - new Date(i.cost.toTime).valueOf()) / (1000 * 60 * 60)) 
-    //                         * i.cost.quantity);
-    //             break;
-    //         case TimeUnit.PerDay:
-    //             cost += (i.cost.estimatedCostPerOne 
-    //                         * Math.ceil((new Date(i.cost.fromTime).valueOf() - new Date(i.cost.toTime).valueOf()) / (1000 * 60 * 60 * 24)) 
-    //                         * i.cost.quantity);
-    //             break;
-    //         default:
-    //             cost += i.cost.estimatedCostPerOne * i.cost.quantity;
-    //             break;
-    //     }
     })
     return {
         customerId,
         businessId: response.business_cart_by_pk.business_id,
         items,
-        cost
+        cost: response.business_cart_by_pk.cost,
     }
 }
