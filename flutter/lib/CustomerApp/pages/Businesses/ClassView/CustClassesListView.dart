@@ -321,6 +321,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                     children: [
                       Divider(),
                       CustBusinessScheduleBuilder(
+                          period: viewController.classes[index].period,
                           showTitle: false,
                           showIcons: false,
                           schedule: viewController.classes[index].schedule,
