@@ -88,6 +88,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                             ),
                       _description(context),
                       CustBusinessScheduleBuilder(
+                        period: null,
                         isService: true,
                         schedule: viewController.service!.schedule,
                         scheduleType: ScheduleType.Scheduled,

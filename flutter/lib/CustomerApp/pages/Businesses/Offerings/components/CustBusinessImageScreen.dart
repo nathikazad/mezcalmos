@@ -85,21 +85,23 @@ class _CustBusinessImageScreenState extends State<CustBusinessImageScreen> {
                           : primaryBlueColor,
                       shape: BoxShape.circle,
                     ),
-                    child: InkWell(
-                      child: Icon(
-                        Icons.chevron_left,
-                        size: 25,
-                        color: _currentPage == 0 ? Colors.grey : Colors.white,
+                    child: Center(
+                      child: InkWell(
+                        child: Icon(
+                          Icons.chevron_left,
+                          size: 25,
+                          color: _currentPage == 0 ? Colors.grey : Colors.white,
+                        ),
+                        onTap: () {
+                          if (_currentPage == 0) {
+                            return;
+                          }
+                          setState(() {
+                            _currentPage--;
+                            animate();
+                          });
+                        },
                       ),
-                      onTap: () {
-                        if (_currentPage == 0) {
-                          return;
-                        }
-                        setState(() {
-                          _currentPage--;
-                          animate();
-                        });
-                      },
                     ),
                   ),
                   SizedBox(
@@ -117,23 +119,25 @@ class _CustBusinessImageScreenState extends State<CustBusinessImageScreen> {
                           : primaryBlueColor,
                       shape: BoxShape.circle,
                     ),
-                    child: InkWell(
-                      child: Icon(
-                        Icons.chevron_right,
-                        size: 25,
-                        color: _currentPage == images.length - 1
-                            ? Colors.grey
-                            : Colors.white,
+                    child: Center(
+                      child: InkWell(
+                        child: Icon(
+                          Icons.chevron_right,
+                          size: 25,
+                          color: _currentPage == images.length - 1
+                              ? Colors.grey
+                              : Colors.white,
+                        ),
+                        onTap: () {
+                          if (_currentPage == images.length - 1) {
+                            return;
+                          }
+                          setState(() {
+                            _currentPage++;
+                            animate();
+                          });
+                        },
                       ),
-                      onTap: () {
-                        if (_currentPage == images.length - 1) {
-                          return;
-                        }
-                        setState(() {
-                          _currentPage++;
-                          animate();
-                        });
-                      },
                     ),
                   ),
                 ],

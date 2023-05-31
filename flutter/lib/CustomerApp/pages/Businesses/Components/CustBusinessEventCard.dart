@@ -90,6 +90,7 @@ class CustBusinessEventCard extends StatelessWidget {
                   children: [
                     Divider(),
                     CustBusinessScheduleBuilder(
+                        period: event.period,
                         showTitle: false,
                         showIcons: false,
                         schedule: event.schedule,

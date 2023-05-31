@@ -88,6 +88,7 @@ class BsEventCard extends StatelessWidget {
                 children: [
                   Divider(),
                   CustBusinessScheduleBuilder(
+                    period: event.period,
                     schedule: event.schedule,
                     scheduleType: event.scheduleType,
                     showIcons: false,
