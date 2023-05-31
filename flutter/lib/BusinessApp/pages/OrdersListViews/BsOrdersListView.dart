@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/HomeRentalOrderView/BsHomeRentalOrderView.dart';
+import 'package:mezcalmos/BusinessApp/pages/OrdersListViews/components/BsOfferingOrderCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/OrdersListViews/components/BsOrderCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/OrdersListViews/controllers/BsOrdersListViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -46,8 +48,14 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
         children: [
           _firstTab(context),
           SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
             child: Column(
-              children: [Text("Second tab")],
+              children: [
+                Column(
+                  children:
+                      List.generate(5, (int index) => BsOfferingOrderCard()),
+                )
+              ],
             ),
           )
         ],
@@ -87,7 +95,9 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
                   (int index) => BsOrderCard(
                     imageUrl: defaultUserImgUrl,
                     customerName: 'John Doe',
-                    onTap: () {},
+                    onTap: () {
+                      BsHomeRentalOrderView.navigate(orderId: 3);
+                    },
                     time: DateTime.now(),
                     numItems: 2,
                     price: 15.99,

@@ -441,3 +441,38 @@ mutation delete_business_rental($id: Int!){
     id
   }
 }
+
+query getHomeRentalOrderRequest($orderId: Int!) {
+  business_order_request_by_pk(id: $orderId) {
+    business_id
+    chat_id
+    cost
+    status
+    review_id
+    order_time
+    notes
+    id
+    items {
+      available
+      cost
+      order_request_id
+      offering_type
+      item_id
+      id
+      parameters
+      rental {
+        id
+        details {
+          image
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+        }
+      }
+      time
+    }
+  }
+}

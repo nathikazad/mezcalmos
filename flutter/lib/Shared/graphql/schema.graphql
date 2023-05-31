@@ -564,6 +564,11 @@ columns and relationships of "business.cart"
 """
 type business_cart {
   business_id: Int!
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Int!
   discount_value: money!
 
@@ -644,6 +649,7 @@ input business_cart_bool_exp {
   _not: business_cart_bool_exp
   _or: [business_cart_bool_exp!]
   business_id: Int_comparison_exp
+  cost: money_comparison_exp
   customer_id: Int_comparison_exp
   discount_value: money_comparison_exp
   items: business_cart_item_bool_exp
@@ -683,14 +689,28 @@ input business_cart_insert_input {
 columns and relationships of "business.cart_item"
 """
 type business_cart_item {
-  cost(
+  cost: money!
+  customer_id: Int!
+
+  """An object relationship"""
+  event: business_event
+  id: Int!
+  item_id: Int!
+  offering_type: String!
+  parameters(
     """JSON select path"""
     path: String
   ): jsonb!
-  customer_id: Int!
-  id: Int!
-  service_id: Int!
-  service_type: String!
+
+  """An object relationship"""
+  product: business_product
+
+  """An object relationship"""
+  rental: business_rental
+
+  """An object relationship"""
+  service: business_service
+  time: timestamp
 }
 
 """
@@ -748,7 +768,7 @@ input business_cart_item_aggregate_order_by {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input business_cart_item_append_input {
-  cost: jsonb
+  parameters: jsonb
 }
 
 """
@@ -763,18 +783,20 @@ input business_cart_item_arr_rel_insert_input {
 
 """aggregate avg on columns"""
 type business_cart_item_avg_fields {
+  cost: Float
   customer_id: Float
   id: Float
-  service_id: Float
+  item_id: Float
 }
 
 """
 order by avg() on columns of table "business.cart_item"
 """
 input business_cart_item_avg_order_by {
+  cost: order_by
   customer_id: order_by
   id: order_by
-  service_id: order_by
+  item_id: order_by
 }
 
 """
@@ -784,22 +806,23 @@ input business_cart_item_bool_exp {
   _and: [business_cart_item_bool_exp!]
   _not: business_cart_item_bool_exp
   _or: [business_cart_item_bool_exp!]
-  cost: jsonb_comparison_exp
+  cost: money_comparison_exp
   customer_id: Int_comparison_exp
+  event: business_event_bool_exp
   id: Int_comparison_exp
-  service_id: Int_comparison_exp
-  service_type: String_comparison_exp
+  item_id: Int_comparison_exp
+  offering_type: String_comparison_exp
+  parameters: jsonb_comparison_exp
+  product: business_product_bool_exp
+  rental: business_rental_bool_exp
+  service: business_service_bool_exp
+  time: timestamp_comparison_exp
 }
 
 """
 unique or primary key constraints on table "business.cart_item"
 """
 enum business_cart_item_constraint {
-  """
-  unique or primary key constraint on columns "service_id", "service_type", "customer_id"
-  """
-  cart_item_customer_id_service_id_service_type_key
-
   """
   unique or primary key constraint on columns "id"
   """
@@ -810,7 +833,7 @@ enum business_cart_item_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input business_cart_item_delete_at_path_input {
-  cost: [String!]
+  parameters: [String!]
 }
 
 """
@@ -818,70 +841,85 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input business_cart_item_delete_elem_input {
-  cost: Int
+  parameters: Int
 }
 
 """
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input business_cart_item_delete_key_input {
-  cost: String
+  parameters: String
 }
 
 """
 input type for incrementing numeric columns in table "business.cart_item"
 """
 input business_cart_item_inc_input {
+  cost: money
   customer_id: Int
   id: Int
-  service_id: Int
+  item_id: Int
 }
 
 """
 input type for inserting data into table "business.cart_item"
 """
 input business_cart_item_insert_input {
-  cost: jsonb
+  cost: money
   customer_id: Int
+  event: business_event_obj_rel_insert_input
   id: Int
-  service_id: Int
-  service_type: String
+  item_id: Int
+  offering_type: String
+  parameters: jsonb
+  product: business_product_obj_rel_insert_input
+  rental: business_rental_obj_rel_insert_input
+  service: business_service_obj_rel_insert_input
+  time: timestamp
 }
 
 """aggregate max on columns"""
 type business_cart_item_max_fields {
+  cost: money
   customer_id: Int
   id: Int
-  service_id: Int
-  service_type: String
+  item_id: Int
+  offering_type: String
+  time: timestamp
 }
 
 """
 order by max() on columns of table "business.cart_item"
 """
 input business_cart_item_max_order_by {
+  cost: order_by
   customer_id: order_by
   id: order_by
-  service_id: order_by
-  service_type: order_by
+  item_id: order_by
+  offering_type: order_by
+  time: order_by
 }
 
 """aggregate min on columns"""
 type business_cart_item_min_fields {
+  cost: money
   customer_id: Int
   id: Int
-  service_id: Int
-  service_type: String
+  item_id: Int
+  offering_type: String
+  time: timestamp
 }
 
 """
 order by min() on columns of table "business.cart_item"
 """
 input business_cart_item_min_order_by {
+  cost: order_by
   customer_id: order_by
   id: order_by
-  service_id: order_by
-  service_type: order_by
+  item_id: order_by
+  offering_type: order_by
+  time: order_by
 }
 
 """
@@ -908,9 +946,15 @@ input business_cart_item_on_conflict {
 input business_cart_item_order_by {
   cost: order_by
   customer_id: order_by
+  event: business_event_order_by
   id: order_by
-  service_id: order_by
-  service_type: order_by
+  item_id: order_by
+  offering_type: order_by
+  parameters: order_by
+  product: business_product_order_by
+  rental: business_rental_order_by
+  service: business_service_order_by
+  time: order_by
 }
 
 """primary key columns input for table: business.cart_item"""
@@ -920,7 +964,7 @@ input business_cart_item_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input business_cart_item_prepend_input {
-  cost: jsonb
+  parameters: jsonb
 }
 
 """
@@ -937,69 +981,83 @@ enum business_cart_item_select_column {
   id
 
   """column name"""
-  service_id
+  item_id
 
   """column name"""
-  service_type
+  offering_type
+
+  """column name"""
+  parameters
+
+  """column name"""
+  time
 }
 
 """
 input type for updating data in table "business.cart_item"
 """
 input business_cart_item_set_input {
-  cost: jsonb
+  cost: money
   customer_id: Int
   id: Int
-  service_id: Int
-  service_type: String
+  item_id: Int
+  offering_type: String
+  parameters: jsonb
+  time: timestamp
 }
 
 """aggregate stddev on columns"""
 type business_cart_item_stddev_fields {
+  cost: Float
   customer_id: Float
   id: Float
-  service_id: Float
+  item_id: Float
 }
 
 """
 order by stddev() on columns of table "business.cart_item"
 """
 input business_cart_item_stddev_order_by {
+  cost: order_by
   customer_id: order_by
   id: order_by
-  service_id: order_by
+  item_id: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type business_cart_item_stddev_pop_fields {
+  cost: Float
   customer_id: Float
   id: Float
-  service_id: Float
+  item_id: Float
 }
 
 """
 order by stddev_pop() on columns of table "business.cart_item"
 """
 input business_cart_item_stddev_pop_order_by {
+  cost: order_by
   customer_id: order_by
   id: order_by
-  service_id: order_by
+  item_id: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type business_cart_item_stddev_samp_fields {
+  cost: Float
   customer_id: Float
   id: Float
-  service_id: Float
+  item_id: Float
 }
 
 """
 order by stddev_samp() on columns of table "business.cart_item"
 """
 input business_cart_item_stddev_samp_order_by {
+  cost: order_by
   customer_id: order_by
   id: order_by
-  service_id: order_by
+  item_id: order_by
 }
 
 """
@@ -1015,27 +1073,31 @@ input business_cart_item_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input business_cart_item_stream_cursor_value_input {
-  cost: jsonb
+  cost: money
   customer_id: Int
   id: Int
-  service_id: Int
-  service_type: String
+  item_id: Int
+  offering_type: String
+  parameters: jsonb
+  time: timestamp
 }
 
 """aggregate sum on columns"""
 type business_cart_item_sum_fields {
+  cost: money
   customer_id: Int
   id: Int
-  service_id: Int
+  item_id: Int
 }
 
 """
 order by sum() on columns of table "business.cart_item"
 """
 input business_cart_item_sum_order_by {
+  cost: order_by
   customer_id: order_by
   id: order_by
-  service_id: order_by
+  item_id: order_by
 }
 
 """
@@ -1052,10 +1114,16 @@ enum business_cart_item_update_column {
   id
 
   """column name"""
-  service_id
+  item_id
 
   """column name"""
-  service_type
+  offering_type
+
+  """column name"""
+  parameters
+
+  """column name"""
+  time
 }
 
 input business_cart_item_updates {
@@ -1093,50 +1161,56 @@ input business_cart_item_updates {
 
 """aggregate var_pop on columns"""
 type business_cart_item_var_pop_fields {
+  cost: Float
   customer_id: Float
   id: Float
-  service_id: Float
+  item_id: Float
 }
 
 """
 order by var_pop() on columns of table "business.cart_item"
 """
 input business_cart_item_var_pop_order_by {
+  cost: order_by
   customer_id: order_by
   id: order_by
-  service_id: order_by
+  item_id: order_by
 }
 
 """aggregate var_samp on columns"""
 type business_cart_item_var_samp_fields {
+  cost: Float
   customer_id: Float
   id: Float
-  service_id: Float
+  item_id: Float
 }
 
 """
 order by var_samp() on columns of table "business.cart_item"
 """
 input business_cart_item_var_samp_order_by {
+  cost: order_by
   customer_id: order_by
   id: order_by
-  service_id: order_by
+  item_id: order_by
 }
 
 """aggregate variance on columns"""
 type business_cart_item_variance_fields {
+  cost: Float
   customer_id: Float
   id: Float
-  service_id: Float
+  item_id: Float
 }
 
 """
 order by variance() on columns of table "business.cart_item"
 """
 input business_cart_item_variance_order_by {
+  cost: order_by
   customer_id: order_by
   id: order_by
-  service_id: order_by
+  item_id: order_by
 }
 
 """aggregate max on columns"""
@@ -1176,6 +1250,7 @@ input business_cart_on_conflict {
 """Ordering options when selecting data from "business.cart"."""
 input business_cart_order_by {
   business_id: order_by
+  cost: order_by
   customer_id: order_by
   discount_value: order_by
   items_aggregate: business_cart_item_aggregate_order_by
@@ -1317,6 +1392,7 @@ type business_event {
   ends_at: timestamptz
   gps_location: geography
   id: Int!
+  offering_type: String!
   schedule(
     """JSON select path"""
     path: String
@@ -1426,6 +1502,7 @@ input business_event_bool_exp {
   ends_at: timestamptz_comparison_exp
   gps_location: geography_comparison_exp
   id: Int_comparison_exp
+  offering_type: String_comparison_exp
   schedule: jsonb_comparison_exp
   schedule_type: String_comparison_exp
   starts_at: timestamptz_comparison_exp
@@ -1489,6 +1566,7 @@ input business_event_insert_input {
   ends_at: timestamptz
   gps_location: geography
   id: Int
+  offering_type: String
   schedule: jsonb
 
   """scheduled or OnDemand"""
@@ -1503,6 +1581,7 @@ type business_event_max_fields {
   details_id: Int
   ends_at: timestamptz
   id: Int
+  offering_type: String
 
   """scheduled or OnDemand"""
   schedule_type: String
@@ -1518,6 +1597,7 @@ input business_event_max_order_by {
   details_id: order_by
   ends_at: order_by
   id: order_by
+  offering_type: order_by
 
   """scheduled or OnDemand"""
   schedule_type: order_by
@@ -1531,6 +1611,7 @@ type business_event_min_fields {
   details_id: Int
   ends_at: timestamptz
   id: Int
+  offering_type: String
 
   """scheduled or OnDemand"""
   schedule_type: String
@@ -1546,6 +1627,7 @@ input business_event_min_order_by {
   details_id: order_by
   ends_at: order_by
   id: order_by
+  offering_type: order_by
 
   """scheduled or OnDemand"""
   schedule_type: order_by
@@ -1561,6 +1643,16 @@ type business_event_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [business_event!]!
+}
+
+"""
+input type for inserting object relation for remote table "business.event"
+"""
+input business_event_obj_rel_insert_input {
+  data: business_event_insert_input!
+
+  """upsert condition"""
+  on_conflict: business_event_on_conflict
 }
 
 """
@@ -1582,6 +1674,7 @@ input business_event_order_by {
   ends_at: order_by
   gps_location: order_by
   id: order_by
+  offering_type: order_by
   schedule: order_by
   schedule_type: order_by
   starts_at: order_by
@@ -1620,6 +1713,9 @@ enum business_event_select_column {
   id
 
   """column name"""
+  offering_type
+
+  """column name"""
   schedule
 
   """column name"""
@@ -1639,6 +1735,7 @@ input business_event_set_input {
   ends_at: timestamptz
   gps_location: geography
   id: Int
+  offering_type: String
   schedule: jsonb
 
   """scheduled or OnDemand"""
@@ -1713,6 +1810,7 @@ input business_event_stream_cursor_value_input {
   ends_at: timestamptz
   gps_location: geography
   id: Int
+  offering_type: String
   schedule: jsonb
 
   """scheduled or OnDemand"""
@@ -1757,6 +1855,9 @@ enum business_event_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  offering_type
 
   """column name"""
   schedule
@@ -3089,10 +3190,13 @@ type business_order_request {
   """An object relationship"""
   chat: chat
   chat_id: Int
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_app_type: String!
   customer_id: Int!
-  estimated_cost: money!
-  final_cost: money
   id: Int!
 
   """An array relationship"""
@@ -3166,8 +3270,6 @@ type business_order_request_avg_fields {
   business_id: Float
   chat_id: Float
   customer_id: Float
-  estimated_cost: Float
-  final_cost: Float
   id: Float
   review_id: Float
 }
@@ -3184,10 +3286,9 @@ input business_order_request_bool_exp {
   cancellation_time: timestamptz_comparison_exp
   chat: chat_bool_exp
   chat_id: Int_comparison_exp
+  cost: money_comparison_exp
   customer_app_type: String_comparison_exp
   customer_id: Int_comparison_exp
-  estimated_cost: money_comparison_exp
-  final_cost: money_comparison_exp
   id: Int_comparison_exp
   items: business_order_request_item_bool_exp
   items_aggregate: business_order_request_item_aggregate_bool_exp
@@ -3214,8 +3315,6 @@ input business_order_request_inc_input {
   business_id: Int
   chat_id: Int
   customer_id: Int
-  estimated_cost: money
-  final_cost: money
   id: Int
   review_id: Int
 }
@@ -3231,8 +3330,6 @@ input business_order_request_insert_input {
   chat_id: Int
   customer_app_type: String
   customer_id: Int
-  estimated_cost: money
-  final_cost: money
   id: Int
   items: business_order_request_item_arr_rel_insert_input
   notes: String
@@ -3246,20 +3343,28 @@ columns and relationships of "business.order_request_item"
 """
 type business_order_request_item {
   available: Boolean!
-  commence_time: timestamptz
-  cost(
+  cost: money!
+
+  """An object relationship"""
+  event: business_event
+  id: Int!
+  item_id: Int!
+  offering_type: String!
+  order_request_id: Int!
+  parameters(
     """JSON select path"""
     path: String
   ): jsonb!
 
-  """
-  A computed field, executes function "business.estcostperone"
-  """
-  estimated_cost_per_one: money
-  id: Int!
-  order_request_id: Int!
-  service_id: Int!
-  service_type: String!
+  """An object relationship"""
+  product: business_product
+
+  """An object relationship"""
+  rental: business_rental
+
+  """An object relationship"""
+  service: business_service
+  time: timestamptz
 }
 
 """
@@ -3333,7 +3438,7 @@ input business_order_request_item_aggregate_order_by {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input business_order_request_item_append_input {
-  cost: jsonb
+  parameters: jsonb
 }
 
 """
@@ -3348,18 +3453,20 @@ input business_order_request_item_arr_rel_insert_input {
 
 """aggregate avg on columns"""
 type business_order_request_item_avg_fields {
+  cost: Float
   id: Float
+  item_id: Float
   order_request_id: Float
-  service_id: Float
 }
 
 """
 order by avg() on columns of table "business.order_request_item"
 """
 input business_order_request_item_avg_order_by {
+  cost: order_by
   id: order_by
+  item_id: order_by
   order_request_id: order_by
-  service_id: order_by
 }
 
 """
@@ -3371,13 +3478,17 @@ input business_order_request_item_bool_exp {
   _not: business_order_request_item_bool_exp
   _or: [business_order_request_item_bool_exp!]
   available: Boolean_comparison_exp
-  commence_time: timestamptz_comparison_exp
-  cost: jsonb_comparison_exp
-  estimated_cost_per_one: money_comparison_exp
+  cost: money_comparison_exp
+  event: business_event_bool_exp
   id: Int_comparison_exp
+  item_id: Int_comparison_exp
+  offering_type: String_comparison_exp
   order_request_id: Int_comparison_exp
-  service_id: Int_comparison_exp
-  service_type: String_comparison_exp
+  parameters: jsonb_comparison_exp
+  product: business_product_bool_exp
+  rental: business_rental_bool_exp
+  service: business_service_bool_exp
+  time: timestamptz_comparison_exp
 }
 
 """
@@ -3394,7 +3505,7 @@ enum business_order_request_item_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input business_order_request_item_delete_at_path_input {
-  cost: [String!]
+  parameters: [String!]
 }
 
 """
@@ -3402,23 +3513,24 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input business_order_request_item_delete_elem_input {
-  cost: Int
+  parameters: Int
 }
 
 """
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input business_order_request_item_delete_key_input {
-  cost: String
+  parameters: String
 }
 
 """
 input type for incrementing numeric columns in table "business.order_request_item"
 """
 input business_order_request_item_inc_input {
+  cost: money
   id: Int
+  item_id: Int
   order_request_id: Int
-  service_id: Int
 }
 
 """
@@ -3426,52 +3538,61 @@ input type for inserting data into table "business.order_request_item"
 """
 input business_order_request_item_insert_input {
   available: Boolean
-  commence_time: timestamptz
-  cost: jsonb
+  cost: money
+  event: business_event_obj_rel_insert_input
   id: Int
+  item_id: Int
+  offering_type: String
   order_request_id: Int
-  service_id: Int
-  service_type: String
+  parameters: jsonb
+  product: business_product_obj_rel_insert_input
+  rental: business_rental_obj_rel_insert_input
+  service: business_service_obj_rel_insert_input
+  time: timestamptz
 }
 
 """aggregate max on columns"""
 type business_order_request_item_max_fields {
-  commence_time: timestamptz
+  cost: money
   id: Int
+  item_id: Int
+  offering_type: String
   order_request_id: Int
-  service_id: Int
-  service_type: String
+  time: timestamptz
 }
 
 """
 order by max() on columns of table "business.order_request_item"
 """
 input business_order_request_item_max_order_by {
-  commence_time: order_by
+  cost: order_by
   id: order_by
+  item_id: order_by
+  offering_type: order_by
   order_request_id: order_by
-  service_id: order_by
-  service_type: order_by
+  time: order_by
 }
 
 """aggregate min on columns"""
 type business_order_request_item_min_fields {
-  commence_time: timestamptz
+  cost: money
   id: Int
+  item_id: Int
+  offering_type: String
   order_request_id: Int
-  service_id: Int
-  service_type: String
+  time: timestamptz
 }
 
 """
 order by min() on columns of table "business.order_request_item"
 """
 input business_order_request_item_min_order_by {
-  commence_time: order_by
+  cost: order_by
   id: order_by
+  item_id: order_by
+  offering_type: order_by
   order_request_id: order_by
-  service_id: order_by
-  service_type: order_by
+  time: order_by
 }
 
 """
@@ -3499,13 +3620,17 @@ Ordering options when selecting data from "business.order_request_item".
 """
 input business_order_request_item_order_by {
   available: order_by
-  commence_time: order_by
   cost: order_by
-  estimated_cost_per_one: order_by
+  event: business_event_order_by
   id: order_by
+  item_id: order_by
+  offering_type: order_by
   order_request_id: order_by
-  service_id: order_by
-  service_type: order_by
+  parameters: order_by
+  product: business_product_order_by
+  rental: business_rental_order_by
+  service: business_service_order_by
+  time: order_by
 }
 
 """primary key columns input for table: business.order_request_item"""
@@ -3515,7 +3640,7 @@ input business_order_request_item_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input business_order_request_item_prepend_input {
-  cost: jsonb
+  parameters: jsonb
 }
 
 """
@@ -3526,22 +3651,25 @@ enum business_order_request_item_select_column {
   available
 
   """column name"""
-  commence_time
-
-  """column name"""
   cost
 
   """column name"""
   id
 
   """column name"""
+  item_id
+
+  """column name"""
+  offering_type
+
+  """column name"""
   order_request_id
 
   """column name"""
-  service_id
+  parameters
 
   """column name"""
-  service_type
+  time
 }
 
 """
@@ -3567,60 +3695,67 @@ input type for updating data in table "business.order_request_item"
 """
 input business_order_request_item_set_input {
   available: Boolean
-  commence_time: timestamptz
-  cost: jsonb
+  cost: money
   id: Int
+  item_id: Int
+  offering_type: String
   order_request_id: Int
-  service_id: Int
-  service_type: String
+  parameters: jsonb
+  time: timestamptz
 }
 
 """aggregate stddev on columns"""
 type business_order_request_item_stddev_fields {
+  cost: Float
   id: Float
+  item_id: Float
   order_request_id: Float
-  service_id: Float
 }
 
 """
 order by stddev() on columns of table "business.order_request_item"
 """
 input business_order_request_item_stddev_order_by {
+  cost: order_by
   id: order_by
+  item_id: order_by
   order_request_id: order_by
-  service_id: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type business_order_request_item_stddev_pop_fields {
+  cost: Float
   id: Float
+  item_id: Float
   order_request_id: Float
-  service_id: Float
 }
 
 """
 order by stddev_pop() on columns of table "business.order_request_item"
 """
 input business_order_request_item_stddev_pop_order_by {
+  cost: order_by
   id: order_by
+  item_id: order_by
   order_request_id: order_by
-  service_id: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type business_order_request_item_stddev_samp_fields {
+  cost: Float
   id: Float
+  item_id: Float
   order_request_id: Float
-  service_id: Float
 }
 
 """
 order by stddev_samp() on columns of table "business.order_request_item"
 """
 input business_order_request_item_stddev_samp_order_by {
+  cost: order_by
   id: order_by
+  item_id: order_by
   order_request_id: order_by
-  service_id: order_by
 }
 
 """
@@ -3637,28 +3772,31 @@ input business_order_request_item_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input business_order_request_item_stream_cursor_value_input {
   available: Boolean
-  commence_time: timestamptz
-  cost: jsonb
+  cost: money
   id: Int
+  item_id: Int
+  offering_type: String
   order_request_id: Int
-  service_id: Int
-  service_type: String
+  parameters: jsonb
+  time: timestamptz
 }
 
 """aggregate sum on columns"""
 type business_order_request_item_sum_fields {
+  cost: money
   id: Int
+  item_id: Int
   order_request_id: Int
-  service_id: Int
 }
 
 """
 order by sum() on columns of table "business.order_request_item"
 """
 input business_order_request_item_sum_order_by {
+  cost: order_by
   id: order_by
+  item_id: order_by
   order_request_id: order_by
-  service_id: order_by
 }
 
 """
@@ -3669,22 +3807,25 @@ enum business_order_request_item_update_column {
   available
 
   """column name"""
-  commence_time
-
-  """column name"""
   cost
 
   """column name"""
   id
 
   """column name"""
+  item_id
+
+  """column name"""
+  offering_type
+
+  """column name"""
   order_request_id
 
   """column name"""
-  service_id
+  parameters
 
   """column name"""
-  service_type
+  time
 }
 
 input business_order_request_item_updates {
@@ -3722,50 +3863,56 @@ input business_order_request_item_updates {
 
 """aggregate var_pop on columns"""
 type business_order_request_item_var_pop_fields {
+  cost: Float
   id: Float
+  item_id: Float
   order_request_id: Float
-  service_id: Float
 }
 
 """
 order by var_pop() on columns of table "business.order_request_item"
 """
 input business_order_request_item_var_pop_order_by {
+  cost: order_by
   id: order_by
+  item_id: order_by
   order_request_id: order_by
-  service_id: order_by
 }
 
 """aggregate var_samp on columns"""
 type business_order_request_item_var_samp_fields {
+  cost: Float
   id: Float
+  item_id: Float
   order_request_id: Float
-  service_id: Float
 }
 
 """
 order by var_samp() on columns of table "business.order_request_item"
 """
 input business_order_request_item_var_samp_order_by {
+  cost: order_by
   id: order_by
+  item_id: order_by
   order_request_id: order_by
-  service_id: order_by
 }
 
 """aggregate variance on columns"""
 type business_order_request_item_variance_fields {
+  cost: Float
   id: Float
+  item_id: Float
   order_request_id: Float
-  service_id: Float
 }
 
 """
 order by variance() on columns of table "business.order_request_item"
 """
 input business_order_request_item_variance_order_by {
+  cost: order_by
   id: order_by
+  item_id: order_by
   order_request_id: order_by
-  service_id: order_by
 }
 
 """aggregate max on columns"""
@@ -3775,8 +3922,6 @@ type business_order_request_max_fields {
   chat_id: Int
   customer_app_type: String
   customer_id: Int
-  estimated_cost: money
-  final_cost: money
   id: Int
   notes: String
   order_time: timestamptz
@@ -3791,8 +3936,6 @@ type business_order_request_min_fields {
   chat_id: Int
   customer_app_type: String
   customer_id: Int
-  estimated_cost: money
-  final_cost: money
   id: Int
   notes: String
   order_time: timestamptz
@@ -3827,10 +3970,9 @@ input business_order_request_order_by {
   cancellation_time: order_by
   chat: chat_order_by
   chat_id: order_by
+  cost: order_by
   customer_app_type: order_by
   customer_id: order_by
-  estimated_cost: order_by
-  final_cost: order_by
   id: order_by
   items_aggregate: business_order_request_item_aggregate_order_by
   notes: order_by
@@ -3864,12 +4006,6 @@ enum business_order_request_select_column {
   customer_id
 
   """column name"""
-  estimated_cost
-
-  """column name"""
-  final_cost
-
-  """column name"""
   id
 
   """column name"""
@@ -3894,8 +4030,6 @@ input business_order_request_set_input {
   chat_id: Int
   customer_app_type: String
   customer_id: Int
-  estimated_cost: money
-  final_cost: money
   id: Int
   notes: String
   order_time: timestamptz
@@ -3908,8 +4042,6 @@ type business_order_request_stddev_fields {
   business_id: Float
   chat_id: Float
   customer_id: Float
-  estimated_cost: Float
-  final_cost: Float
   id: Float
   review_id: Float
 }
@@ -3919,8 +4051,6 @@ type business_order_request_stddev_pop_fields {
   business_id: Float
   chat_id: Float
   customer_id: Float
-  estimated_cost: Float
-  final_cost: Float
   id: Float
   review_id: Float
 }
@@ -3930,8 +4060,6 @@ type business_order_request_stddev_samp_fields {
   business_id: Float
   chat_id: Float
   customer_id: Float
-  estimated_cost: Float
-  final_cost: Float
   id: Float
   review_id: Float
 }
@@ -3954,8 +4082,6 @@ input business_order_request_stream_cursor_value_input {
   chat_id: Int
   customer_app_type: String
   customer_id: Int
-  estimated_cost: money
-  final_cost: money
   id: Int
   notes: String
   order_time: timestamptz
@@ -3968,8 +4094,6 @@ type business_order_request_sum_fields {
   business_id: Int
   chat_id: Int
   customer_id: Int
-  estimated_cost: money
-  final_cost: money
   id: Int
   review_id: Int
 }
@@ -3992,12 +4116,6 @@ enum business_order_request_update_column {
 
   """column name"""
   customer_id
-
-  """column name"""
-  estimated_cost
-
-  """column name"""
-  final_cost
 
   """column name"""
   id
@@ -4031,8 +4149,6 @@ type business_order_request_var_pop_fields {
   business_id: Float
   chat_id: Float
   customer_id: Float
-  estimated_cost: Float
-  final_cost: Float
   id: Float
   review_id: Float
 }
@@ -4042,8 +4158,6 @@ type business_order_request_var_samp_fields {
   business_id: Float
   chat_id: Float
   customer_id: Float
-  estimated_cost: Float
-  final_cost: Float
   id: Float
   review_id: Float
 }
@@ -4053,8 +4167,6 @@ type business_order_request_variance_fields {
   business_id: Float
   chat_id: Float
   customer_id: Float
-  estimated_cost: Float
-  final_cost: Float
   id: Float
   review_id: Float
 }
@@ -4071,6 +4183,7 @@ type business_product {
   details: business_item_details!
   details_id: Int!
   id: Int!
+  offering_type: String!
 }
 
 """
@@ -4164,6 +4277,7 @@ input business_product_bool_exp {
   details: business_item_details_bool_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
+  offering_type: String_comparison_exp
 }
 
 """
@@ -4199,6 +4313,7 @@ input business_product_insert_input {
   details: business_item_details_obj_rel_insert_input
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """aggregate max on columns"""
@@ -4206,6 +4321,7 @@ type business_product_max_fields {
   business_id: Int
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """
@@ -4215,6 +4331,7 @@ input business_product_max_order_by {
   business_id: order_by
   details_id: order_by
   id: order_by
+  offering_type: order_by
 }
 
 """aggregate min on columns"""
@@ -4222,6 +4339,7 @@ type business_product_min_fields {
   business_id: Int
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """
@@ -4231,6 +4349,7 @@ input business_product_min_order_by {
   business_id: order_by
   details_id: order_by
   id: order_by
+  offering_type: order_by
 }
 
 """
@@ -4242,6 +4361,16 @@ type business_product_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [business_product!]!
+}
+
+"""
+input type for inserting object relation for remote table "business.product"
+"""
+input business_product_obj_rel_insert_input {
+  data: business_product_insert_input!
+
+  """upsert condition"""
+  on_conflict: business_product_on_conflict
 }
 
 """
@@ -4260,6 +4389,7 @@ input business_product_order_by {
   details: business_item_details_order_by
   details_id: order_by
   id: order_by
+  offering_type: order_by
 }
 
 """primary key columns input for table: business.product"""
@@ -4279,6 +4409,9 @@ enum business_product_select_column {
 
   """column name"""
   id
+
+  """column name"""
+  offering_type
 }
 
 """
@@ -4288,6 +4421,7 @@ input business_product_set_input {
   business_id: Int
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """aggregate stddev on columns"""
@@ -4354,6 +4488,7 @@ input business_product_stream_cursor_value_input {
   business_id: Int
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """aggregate sum on columns"""
@@ -4384,6 +4519,9 @@ enum business_product_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  offering_type
 }
 
 input business_product_updates {
@@ -4461,6 +4599,7 @@ type business_rental {
   """An object relationship"""
   home_rental: business_home_rental
   id: Int!
+  offering_type: String!
 }
 
 """
@@ -4556,6 +4695,7 @@ input business_rental_bool_exp {
   details_id: Int_comparison_exp
   home_rental: business_home_rental_bool_exp
   id: Int_comparison_exp
+  offering_type: String_comparison_exp
 }
 
 """
@@ -4593,6 +4733,7 @@ input business_rental_insert_input {
   details_id: Int
   home_rental: business_home_rental_obj_rel_insert_input
   id: Int
+  offering_type: String
 }
 
 """aggregate max on columns"""
@@ -4601,6 +4742,7 @@ type business_rental_max_fields {
   category3: String
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """
@@ -4611,6 +4753,7 @@ input business_rental_max_order_by {
   category3: order_by
   details_id: order_by
   id: order_by
+  offering_type: order_by
 }
 
 """aggregate min on columns"""
@@ -4619,6 +4762,7 @@ type business_rental_min_fields {
   category3: String
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """
@@ -4629,6 +4773,7 @@ input business_rental_min_order_by {
   category3: order_by
   details_id: order_by
   id: order_by
+  offering_type: order_by
 }
 
 """
@@ -4670,6 +4815,7 @@ input business_rental_order_by {
   details_id: order_by
   home_rental: business_home_rental_order_by
   id: order_by
+  offering_type: order_by
 }
 
 """primary key columns input for table: business.rental"""
@@ -4692,6 +4838,9 @@ enum business_rental_select_column {
 
   """column name"""
   id
+
+  """column name"""
+  offering_type
 }
 
 """
@@ -4702,6 +4851,7 @@ input business_rental_set_input {
   category3: String
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """aggregate stddev on columns"""
@@ -4769,6 +4919,7 @@ input business_rental_stream_cursor_value_input {
   category3: String
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """aggregate sum on columns"""
@@ -4802,6 +4953,9 @@ enum business_rental_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  offering_type
 }
 
 input business_rental_updates {
@@ -4875,6 +5029,7 @@ type business_service {
   details: business_item_details!
   details_id: Int!
   id: Int!
+  offering_type: String!
   schedule(
     """JSON select path"""
     path: String
@@ -4977,6 +5132,7 @@ input business_service_bool_exp {
   details: business_item_details_bool_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
+  offering_type: String_comparison_exp
   schedule: jsonb_comparison_exp
 }
 
@@ -5035,6 +5191,7 @@ input business_service_insert_input {
   details: business_item_details_obj_rel_insert_input
   details_id: Int
   id: Int
+  offering_type: String
   schedule: jsonb
 }
 
@@ -5043,6 +5200,7 @@ type business_service_max_fields {
   business_id: Int
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """
@@ -5052,6 +5210,7 @@ input business_service_max_order_by {
   business_id: order_by
   details_id: order_by
   id: order_by
+  offering_type: order_by
 }
 
 """aggregate min on columns"""
@@ -5059,6 +5218,7 @@ type business_service_min_fields {
   business_id: Int
   details_id: Int
   id: Int
+  offering_type: String
 }
 
 """
@@ -5068,6 +5228,7 @@ input business_service_min_order_by {
   business_id: order_by
   details_id: order_by
   id: order_by
+  offering_type: order_by
 }
 
 """
@@ -5079,6 +5240,16 @@ type business_service_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [business_service!]!
+}
+
+"""
+input type for inserting object relation for remote table "business.service"
+"""
+input business_service_obj_rel_insert_input {
+  data: business_service_insert_input!
+
+  """upsert condition"""
+  on_conflict: business_service_on_conflict
 }
 
 """
@@ -5097,6 +5268,7 @@ input business_service_order_by {
   details: business_item_details_order_by
   details_id: order_by
   id: order_by
+  offering_type: order_by
   schedule: order_by
 }
 
@@ -5124,6 +5296,9 @@ enum business_service_select_column {
   id
 
   """column name"""
+  offering_type
+
+  """column name"""
   schedule
 }
 
@@ -5134,6 +5309,7 @@ input business_service_set_input {
   business_id: Int
   details_id: Int
   id: Int
+  offering_type: String
   schedule: jsonb
 }
 
@@ -5201,6 +5377,7 @@ input business_service_stream_cursor_value_input {
   business_id: Int
   details_id: Int
   id: Int
+  offering_type: String
   schedule: jsonb
 }
 
@@ -5232,6 +5409,9 @@ enum business_service_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  offering_type
 
   """column name"""
   schedule
@@ -9004,6 +9184,8 @@ input data_consumption_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: data_consumption_set_input
+
+  """filter the rows which have to be updated"""
   where: data_consumption_bool_exp!
 }
 
@@ -17545,15 +17727,16 @@ input mez_admin_bool_exp {
 columns and relationships of "mez_admin_chat"
 """
 type mez_admin_chat {
-  app_type: String!
-
   """An object relationship"""
   chat: chat
   chat_id: Int!
+  recipient_id: Int!
+
+  """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
+  recipient_type: String!
 
   """An object relationship"""
   user: user
-  user_id: Int!
 }
 
 """
@@ -17584,7 +17767,7 @@ type mez_admin_chat_aggregate_fields {
 """aggregate avg on columns"""
 type mez_admin_chat_avg_fields {
   chat_id: Float
-  user_id: Float
+  recipient_id: Float
 }
 
 """
@@ -17594,11 +17777,11 @@ input mez_admin_chat_bool_exp {
   _and: [mez_admin_chat_bool_exp!]
   _not: mez_admin_chat_bool_exp
   _or: [mez_admin_chat_bool_exp!]
-  app_type: String_comparison_exp
   chat: chat_bool_exp
   chat_id: Int_comparison_exp
+  recipient_id: Int_comparison_exp
+  recipient_type: String_comparison_exp
   user: user_bool_exp
-  user_id: Int_comparison_exp
 }
 
 """
@@ -17609,6 +17792,11 @@ enum mez_admin_chat_constraint {
   unique or primary key constraint on columns "chat_id"
   """
   mez_admin_chat_pkey
+
+  """
+  unique or primary key constraint on columns "recipient_id", "recipient_type"
+  """
+  mez_admin_chat_recipient_id_recipient_type_key
 }
 
 """
@@ -17616,32 +17804,38 @@ input type for incrementing numeric columns in table "mez_admin_chat"
 """
 input mez_admin_chat_inc_input {
   chat_id: Int
-  user_id: Int
+  recipient_id: Int
 }
 
 """
 input type for inserting data into table "mez_admin_chat"
 """
 input mez_admin_chat_insert_input {
-  app_type: String
   chat: chat_obj_rel_insert_input
   chat_id: Int
+  recipient_id: Int
+
+  """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
+  recipient_type: String
   user: user_obj_rel_insert_input
-  user_id: Int
 }
 
 """aggregate max on columns"""
 type mez_admin_chat_max_fields {
-  app_type: String
   chat_id: Int
-  user_id: Int
+  recipient_id: Int
+
+  """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
+  recipient_type: String
 }
 
 """aggregate min on columns"""
 type mez_admin_chat_min_fields {
-  app_type: String
   chat_id: Int
-  user_id: Int
+  recipient_id: Int
+
+  """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
+  recipient_type: String
 }
 
 """
@@ -17666,11 +17860,11 @@ input mez_admin_chat_on_conflict {
 
 """Ordering options when selecting data from "mez_admin_chat"."""
 input mez_admin_chat_order_by {
-  app_type: order_by
   chat: chat_order_by
   chat_id: order_by
+  recipient_id: order_by
+  recipient_type: order_by
   user: user_order_by
-  user_id: order_by
 }
 
 """primary key columns input for table: mez_admin_chat"""
@@ -17683,40 +17877,42 @@ select columns of table "mez_admin_chat"
 """
 enum mez_admin_chat_select_column {
   """column name"""
-  app_type
-
-  """column name"""
   chat_id
 
   """column name"""
-  user_id
+  recipient_id
+
+  """column name"""
+  recipient_type
 }
 
 """
 input type for updating data in table "mez_admin_chat"
 """
 input mez_admin_chat_set_input {
-  app_type: String
   chat_id: Int
-  user_id: Int
+  recipient_id: Int
+
+  """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
+  recipient_type: String
 }
 
 """aggregate stddev on columns"""
 type mez_admin_chat_stddev_fields {
   chat_id: Float
-  user_id: Float
+  recipient_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type mez_admin_chat_stddev_pop_fields {
   chat_id: Float
-  user_id: Float
+  recipient_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type mez_admin_chat_stddev_samp_fields {
   chat_id: Float
-  user_id: Float
+  recipient_id: Float
 }
 
 """
@@ -17732,15 +17928,17 @@ input mez_admin_chat_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input mez_admin_chat_stream_cursor_value_input {
-  app_type: String
   chat_id: Int
-  user_id: Int
+  recipient_id: Int
+
+  """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
+  recipient_type: String
 }
 
 """aggregate sum on columns"""
 type mez_admin_chat_sum_fields {
   chat_id: Int
-  user_id: Int
+  recipient_id: Int
 }
 
 """
@@ -17748,13 +17946,13 @@ update columns of table "mez_admin_chat"
 """
 enum mez_admin_chat_update_column {
   """column name"""
-  app_type
-
-  """column name"""
   chat_id
 
   """column name"""
-  user_id
+  recipient_id
+
+  """column name"""
+  recipient_type
 }
 
 input mez_admin_chat_updates {
@@ -17771,19 +17969,19 @@ input mez_admin_chat_updates {
 """aggregate var_pop on columns"""
 type mez_admin_chat_var_pop_fields {
   chat_id: Float
-  user_id: Float
+  recipient_id: Float
 }
 
 """aggregate var_samp on columns"""
 type mez_admin_chat_var_samp_fields {
   chat_id: Float
-  user_id: Float
+  recipient_id: Float
 }
 
 """aggregate variance on columns"""
 type mez_admin_chat_variance_fields {
   chat_id: Float
-  user_id: Float
+  recipient_id: Float
 }
 
 """

@@ -99,7 +99,7 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
         response.parsedData?.business_rental_by_pk!;
 
     if (data != null) {
-      RentalWithBusinessCard returnedRental = RentalWithBusinessCard(
+      final RentalWithBusinessCard returnedRental = RentalWithBusinessCard(
           rental: Rental(
               id: data.id,
               category1: data.details.category1.toRentalCategory1(),
@@ -514,8 +514,8 @@ Future<Rental?> update_business_home_rental(
         "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data}");
     throwError(res.exception);
   } else if (res.parsedData?.update_business_home_rental_by_pk != null) {
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk data =
-        res.parsedData!.update_business_home_rental_by_pk!;
+    final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
+        data = res.parsedData!.update_business_home_rental_by_pk!;
     return Rental(
         id: id,
         category1: data.rental.details.category1.toRentalCategory1(),
@@ -620,4 +620,15 @@ Future<int?> delete_busines_rental({required int rentalId}) async {
     return response.parsedData?.delete_business_rental_by_pk?.id;
   }
   return null;
+}
+
+Future<void> getHomeRentalOrderReq({required int orderId}) async {
+  QueryResult<Query$getHomeRentalOrderRequest> res = await _db.graphQLClient
+      .query$getHomeRentalOrderRequest(Options$Query$getHomeRentalOrderRequest(
+          variables:
+              Variables$Query$getHomeRentalOrderRequest(orderId: orderId)));
+  if (res.hasException) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${res.exception}");
+  } 
+  
 }
