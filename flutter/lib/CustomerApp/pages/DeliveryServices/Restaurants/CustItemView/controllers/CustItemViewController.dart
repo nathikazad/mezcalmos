@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
+import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 // import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -19,7 +19,7 @@ class CustItemViewController {
   // instances //
   AuthController _auth = Get.find<AuthController>();
   TextEditingController notesController = TextEditingController();
-  CustomerCartController? cartController;
+  CustRestaurantCartController? cartController;
 
   // state variables //
   Rxn<Restaurant> restaurant = Rxn();
@@ -53,7 +53,7 @@ class CustItemViewController {
     itemRestaurantId = restaurantId;
     currentItemId = itemId;
     if (Get.find<AuthController>().isUserSignedIn) {
-      cartController = Get.find<CustomerCartController>();
+      cartController = Get.find<CustRestaurantCartController>();
     }
     await _createCart();
     // check and update cart restaurant id to current item restaurant if no cart items are there
@@ -123,7 +123,7 @@ class CustItemViewController {
   Future<int?> handleAddItem() async {
     cartItem.value?.notes = notesController.text;
     if (Get.find<AuthController>().isUserSignedIn) {
-      cartController = Get.find<CustomerCartController>();
+      cartController = Get.find<CustRestaurantCartController>();
     }
     if (cartController != null && shouldUpdateRestaurantId()) {
       await cartController!.setCartRestaurantId(itemRestaurantId!);

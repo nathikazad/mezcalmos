@@ -12,6 +12,7 @@ class BsOrderCard extends StatelessWidget {
   final DateTime time;
   final int numItems;
   final num price;
+  final void Function() onTap;
 
   const BsOrderCard({
     required this.imageUrl,
@@ -19,63 +20,67 @@ class BsOrderCard extends StatelessWidget {
     required this.time,
     required this.numItems,
     required this.price,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Flexible(
-                fit: FlexFit.tight,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      customerName,
-                      style: context.textTheme.bodyLarge,
-                    ),
-                    smallSepartor,
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.price_check_outlined,
-                          size: 18.sp,
-                          color: offShadeGreyColor,
-                        ),
-                        Text(price.toPriceString(),
-                            style: TextStyle(color: offShadeGreyColor)),
-                        hSmallSepartor,
-                        Icon(
-                          Icons.circle,
-                          size: 5.sp,
-                          color: offShadeGreyColor,
-                        ),
-                        hSmallSepartor,
-                        Text("$numItems items",
-                            style: TextStyle(color: offShadeGreyColor))
-                      ],
-                    ),
-                  ],
-                )),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(time.getOrderTime(),
-                    style: TextStyle(color: offShadeGreyColor)),
-                meduimSeperator,
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: CachedNetworkImageProvider(imageUrl),
-                ),
-              ],
-            ),
-          ],
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Flexible(
+                  fit: FlexFit.tight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        customerName,
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      smallSepartor,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.price_check_outlined,
+                            size: 18.sp,
+                            color: offShadeGreyColor,
+                          ),
+                          Text(price.toPriceString(),
+                              style: TextStyle(color: offShadeGreyColor)),
+                          hSmallSepartor,
+                          Icon(
+                            Icons.circle,
+                            size: 5.sp,
+                            color: offShadeGreyColor,
+                          ),
+                          hSmallSepartor,
+                          Text("$numItems items",
+                              style: TextStyle(color: offShadeGreyColor))
+                        ],
+                      ),
+                    ],
+                  )),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(time.getOrderTime(),
+                      style: TextStyle(color: offShadeGreyColor)),
+                  meduimSeperator,
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundImage: CachedNetworkImageProvider(imageUrl),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

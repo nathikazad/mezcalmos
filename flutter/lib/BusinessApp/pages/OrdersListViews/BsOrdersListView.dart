@@ -87,6 +87,7 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
                   (int index) => BsOrderCard(
                     imageUrl: defaultUserImgUrl,
                     customerName: 'John Doe',
+                    onTap: () {},
                     time: DateTime.now(),
                     numItems: 2,
                     price: 15.99,
@@ -123,6 +124,7 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
                   5,
                   (int index) => BsOrderCard(
                     imageUrl: defaultUserImgUrl,
+                    onTap: () {},
                     customerName: 'John Doe',
                     time: DateTime.now(),
                     numItems: 2,

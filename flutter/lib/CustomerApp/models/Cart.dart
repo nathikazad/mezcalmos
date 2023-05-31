@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
+import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';

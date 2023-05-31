@@ -4,7 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCar
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
+import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
