@@ -71,6 +71,7 @@
         },
         "services": "Servicios",
         "service": "Servicio",
+        "orders" : "Pedidos",
         "serviceType": "¿Qué tipo de servicio agregarás?",
         "addService": "Agregar servicio",
         "reorder": "Reordenar",

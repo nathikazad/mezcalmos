@@ -70,6 +70,7 @@
           "sunday": "Sunday"
         },
         "services": "Services",
+        "orders" : "Orders",
         "service": "Service",
         "serviceType": "What type of service will you add?",
         "addService": "Add Service",

@@ -291,6 +291,8 @@ extension StringToParseOrderType on String {
 // -----------STYLES CONSTANT ------------------- //
 
 const Color purpleColor = Color(0xFFAC59FC);
+const Color offPurpleColor = Color(0xFFF4EAFF);
+
 const Color primaryBlueColor = Color(0xFF6779FE);
 const Color redAccentColor = Color(0xFFE21233);
 const Color offOrangeColor = Color(0xFFFFF6E9);
@@ -347,3 +349,6 @@ Future<void> launchAppStoreLink() async {
 Widget get smallSepartor => SizedBox(height: 8);
 Widget get meduimSeperator => SizedBox(height: 15);
 Widget get bigSeperator => SizedBox(height: 25);
+Widget get hSmallSepartor => SizedBox(width: 8);
+Widget get hMeduimSeperator => SizedBox(width: 15);
+Widget get hBigSeperator => SizedBox(width: 25);

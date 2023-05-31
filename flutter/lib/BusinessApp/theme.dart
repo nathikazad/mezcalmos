@@ -137,6 +137,31 @@ class BusinessAppTheme {
             fontSize: 14.sp,
             color: Colors.white),
       ),
+      tabBarTheme: TabBarTheme(
+        labelColor: primaryBlueColor,
+        unselectedLabelColor: offLightShadeGreyColor,
+        indicatorSize: TabBarIndicatorSize.tab,
+        indicator: UnderlineTabIndicator(
+          borderRadius: BorderRadius.circular(16.0),
+          insets: EdgeInsets.symmetric(horizontal: 16.0),
+          borderSide: BorderSide(
+            width: 2,
+            color: primaryBlueColor,
+          ),
+        ),
+        labelStyle: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w600,
+          fontSize: 14.sp,
+          //color: Colors.black,
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w600,
+          fontSize: 14.sp,
+          // color: Colors.grey,
+        ),
+      ),
 
       //---------------------------------------------------- TYPOGRAPHY ------------------------------------------------------------------------//
       //---------------------------------------------------- Typography ------------------------------------------------------------------------//
