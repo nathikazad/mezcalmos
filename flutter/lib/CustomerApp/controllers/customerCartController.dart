@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
-class CustomerCartController extends GetxController {
+class CustRestaurantCartController extends GetxController {
 // instances //
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
   AuthController _auth = Get.find<AuthController>();

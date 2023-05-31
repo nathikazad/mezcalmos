@@ -14,8 +14,8 @@ class FloatingCartComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Get.find<AuthController>().isUserSignedIn) {
       return Obx(
-        () => Get.find<CustomerCartController>().cart.value != null &&
-                Get.find<CustomerCartController>()
+        () => Get.find<CustRestaurantCartController>().cart.value != null &&
+                Get.find<CustRestaurantCartController>()
                         .cart
                         .value!
                         .cartItems
@@ -27,7 +27,7 @@ class FloatingCartComponent extends StatelessWidget {
                 },
                 child: badge.Badge(
                   badgeContent: Text(
-                    Get.find<CustomerCartController>()
+                    Get.find<CustRestaurantCartController>()
                         .cart
                         .value!
                         .cartItems

@@ -12,7 +12,7 @@ class CustomerAuthHooksBase {
 
     await Get.delete<CustomerAuthController>(force: true);
 
-    await Get.delete<CustomerCartController>(force: true);
+    await Get.delete<CustRestaurantCartController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
   }
 
@@ -25,6 +25,7 @@ class CustomerAuthHooksBase {
         permanent: true);
     Get.put<CustomerAuthController>(CustomerAuthController(), permanent: true);
 
-    Get.put<CustomerCartController>(CustomerCartController(), permanent: true);
+    Get.put<CustRestaurantCartController>(CustRestaurantCartController(),
+        permanent: true);
   }
 }
