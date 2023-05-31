@@ -11,6 +11,12 @@ array_relationships:
         remote_table:
           name: cart_item
           schema: business
+computed_fields:
+  - name: cost
+    definition:
+      function:
+        name: cartcost
+        schema: business
 select_permissions:
   - role: customer
     permission:

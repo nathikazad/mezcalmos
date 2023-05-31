@@ -137,6 +137,8 @@ class EventWithBusinessCard extends Event {
           tags: event.tags,
           gpsLocation: event.gpsLocation,
           category2: event.category2,
+          startsAt: event.startsAt,
+          endsAt: event.endsAt,
         );
 }
 

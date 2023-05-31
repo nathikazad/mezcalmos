@@ -1,6 +1,6 @@
 import { getBusinessOperators } from "../shared/graphql/business/operator/getBusinessOperator";
 import { getBusinessOrderRequest } from "../shared/graphql/business/order/getOrderRequest";
-import { updateBusinessOrderStatus } from "../shared/graphql/business/order/updateOrderRequest";
+import { updateBusinessOrderRequest } from "../shared/graphql/business/order/updateOrderRequest";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { Language, MezError } from "../shared/models/Generic/Generic";
@@ -45,7 +45,7 @@ export async function handleOrderRequestFromCustomer(userId: number, handleReque
         errorChecks(order, userId, handleRequestDetails); 
 
         order.status = handleRequestDetails.newStatus;
-        updateBusinessOrderStatus(order);
+        updateBusinessOrderRequest(order);
 
         notify(mezAdmins, businessOperators, order);
 
@@ -76,14 +76,14 @@ function errorChecks(order: BusinessOrder, userId: number, handleRequestDetails:
     if (order.customerId != userId) {
         throw new MezError(CustomerHandleRequestError.IncorrectOrderRequestId);
     }
-    if (handleRequestDetails.newStatus == BusinessOrderRequestStatus.ConfirmedByCustomer 
+    if (handleRequestDetails.newStatus != BusinessOrderRequestStatus.Confirmed 
+        && handleRequestDetails.newStatus != BusinessOrderRequestStatus.CancelledByCustomer ) {
+        throw new MezError(CustomerHandleRequestError.InvalidAccess);
+    }
+    if (handleRequestDetails.newStatus == BusinessOrderRequestStatus.Confirmed 
         && order.status != BusinessOrderRequestStatus.ModificationRequestByBusiness) {
         throw new MezError(CustomerHandleRequestError.InvalidAccess);
     }
-    // if(handleRequestDetails.newStatus == BusinessOrderRequestStatus.CancelledByCustomer && 
-    //     order.status == BusinessOrderRequestStatus.ApprovedByBusiness) {
-    //     throw new MezError(CustomerHandleRequestError.Invalid);
-    // }
 }
 
 function notify(mezAdmins: MezAdmin[], businessOperators: Operator[], order: BusinessOrder) {
@@ -96,7 +96,7 @@ function notify(mezAdmins: MezAdmin[], businessOperators: Operator[], order: Bus
             notificationAction: NotificationAction.ShowPopUp,
             orderId: order.orderId
       },
-        background: order.status == BusinessOrderRequestStatus.ConfirmedByCustomer ? {
+        background: order.status == BusinessOrderRequestStatus.Confirmed ? {
             [Language.ES]: {
                 title: "Solicitud confirmada",
                 body: `La solicitud de pedido ha sido confirmada por el cliente.`

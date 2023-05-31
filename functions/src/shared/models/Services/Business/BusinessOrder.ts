@@ -1,6 +1,6 @@
 import { CustomerAppType } from "../../Generic/Generic";
 import { OrderNotification } from "../../Notification";
-import { Business, BusinessItemDetails, TimeUnit } from "./Business";
+import { Business, BusinessItemDetails, OfferingType, TimeUnit } from "./Business";
 
 export interface BusinessOrder {
     orderId: number;
@@ -10,9 +10,7 @@ export interface BusinessOrder {
     status: BusinessOrderRequestStatus;
     business?: Business;
     items: Array<BusinessOrderItem>;
-    estimatedCost: number;
-    finalCost?: number;
-    commenceTime: string;
+    cost: number;
     reviewId?: number;
     orderTime?: string;
     customerAppType: CustomerAppType;
@@ -23,30 +21,29 @@ export interface BusinessOrder {
 
 export interface BusinessOrderItem {
     id: number;
-    itemDetailsId: number;
+    itemId: number;
+    offeringType: OfferingType;
+    parameters: BusinessItemParameters;
+    cost: number;
+    time?: string;
     available?: boolean;
     item?: BusinessItemDetails;
-    parameters: BusinessItemParameters;
     orderRequestId?: number;
 }
 
 export interface BusinessItemParameters {
-    estimatedCost: number;
-    finalCost?: number;
+    previousCost?: number;
     timeUnit?: TimeUnit;
-    estimatedFromTime: string;
-    finalFromTime: string;
+    previoustime?: string;
     numberOfUnits?: number;
     guests?: number;
 }
 export enum BusinessOrderRequestStatus {
     RequestReceived = "requestReceived",
-    ApprovedByBusiness = "approvedByBusiness",
     ModificationRequestByBusiness = "modificationRequestByBusiness",
     CancelledByBusiness = "cancelledByBusiness",
-    ConfirmedByCustomer = "confirmedByCustomer",
+    Confirmed = "confirmed",
     CancelledByCustomer = "cancelledByCustomer",
-    InProgress = "inProgress",
     Completed = "completed"
 }
 

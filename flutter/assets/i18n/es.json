@@ -334,7 +334,7 @@
         "BsOpSchedulePickerView": {
           "schedule": "Disponibilidad",
           "weeklySchedule": "Programación semanal",
-          "save" : "Guardar"
+          "save": "Guardar"
         }
       }
     }
@@ -549,7 +549,19 @@
           "shared": {
             "notification": {
               "today": "Hoy",
-              "yesterday": "Ayer"
+              "yesterday": "Ayer",
+              "jan": "Jan",
+              "feb": "Feb",
+              "mar": "Mar",
+              "apr": "Abr",
+              "may": "May",
+              "jun": "Jun",
+              "jul": "Jul",
+              "aug": "Ago",
+              "sep": "Sep",
+              "oct": "Oct",
+              "nov": "Nov",
+              "dec": "Dic"
             }
           },
           "orders": {
@@ -1942,8 +1954,7 @@
               "volunteer": "Voluntariado",
               "entertainment": "Planificadores de eventos",
               "danceStudio": "Estudio de baile",
-              "mealPlanning" :"Planificación de comidas"
-
+              "mealPlanning": "Planificación de comidas"
             }
           }
         },
@@ -2282,7 +2293,7 @@
       "MezDateTimePicker": {
         "cancel": "Cancelar",
         "confirm": "Confirmar",
-        "endsAt": "Termina en",
+        "endsAt": "Termina",
         "sDate": "Seleccione fecha",
         "startsAt": "Empieza a",
         "sTime": "Tiempo de selección",
@@ -3113,7 +3124,7 @@
         "components": {
           "AddCategorySlide": {
             "categoryName": "Nombre de la categoría",
-            "categoryNameIn": "Nombre de categoría en",
+            "categoryNameIn": "Nombre de categoría",
             "categoryNameHint": "Ingrese un nombre de categoría",
             "categoryPrice": "Categoría Precios por kilogramo",
             "categoryPriceHint": "Entrar en la categoría Precios por kilogramo ..."
@@ -3122,10 +3133,10 @@
         "addCategory": "Añadir categoría",
         "editCategory": "Editar categoria",
         "catDesc": "Descripción de categoría",
-        "catDescIn": "Descripción de la categoría en",
+        "catDescIn": "Descripción de la categoría",
         "saveCategory": "Guardar categoría",
         "categoryName": "Nombre de la categoría",
-        "categoryNameIn": "Nombre de categoría en",
+        "categoryNameIn": "Nombre de categoría",
         "categoryDescHint": "Ingrese una descripción de categoría",
         "categoryNameHint": "Ingrese un nombre de categoría",
         "categoryPrice": "Categoría Precios por kilogramo",
@@ -3320,7 +3331,7 @@
         "added": "Agregada",
         "addedText": "La elección se ha agregado con éxito",
         "choiceName": "Nombre de elección",
-        "choiceNameIn": "Nombre de elección en",
+        "choiceNameIn": "Nombre de elección",
         "choicePrice": "Precio de elección",
         "deleteChoice": "Eliminar la elección",
         "yDeleteChoice": "SÍ ELECHE ELECCIÓN",
@@ -3329,7 +3340,7 @@
       "ROpReviewsView": {
         "reviews": "Reseñas",
         "review": "Revisar",
-        "base": "Basada en",
+        "base": "Basada",
         "perfomTitle": "Su rendimiento de revisión es",
         "excellent": "Excelente",
         "poor": "Pobre",
@@ -3456,7 +3467,7 @@
         "components": {
           "ROpOptionChoice": {
             "chName": "Nombre de elección",
-            "chNameIn": "Nombre de elección en",
+            "chNameIn": "Nombre de elección",
             "required": "Requerida"
           },
           "ROpOptionSelector": {
@@ -3543,11 +3554,11 @@
         "components": {
           "ROpListDriverCard": {
             "available": "Disponible",
-            "approve" : "Aprobar",
-            "reject" : "Rechazar",
-            "owner" : "Propietario",
+            "approve": "Aprobar",
+            "reject": "Rechazar",
+            "owner": "Propietario",
             "unavailable": "Indisponible",
-            "rmBtn": "Sí, retire el conductor",
+            "rmBtn": "Sí, Eliminar usuario",
             "rmTitle": "Eliminar este usuario",
             "rmText": "¿Estás seguro de que quieres eliminar este usuario?"
           }
@@ -3634,7 +3645,7 @@
           "nameErrorText": "Proporcione un nombre",
           "defaultLanguage": "Idioma predeterminado",
           "secondaryLanguage": "Lenguaje secundario",
-          "description": "Descripción en",
+          "description": "Descripción",
           "location": "Ubicación",
           "saveInfo": "Guardar información",
           "components": {

@@ -1,11 +1,52 @@
 table:
   name: cart_item
   schema: business
+object_relationships:
+  - name: event
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: event
+          schema: business
+  - name: product
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: product
+          schema: business
+  - name: rental
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: rental
+          schema: business
+  - name: service
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: service
+          schema: business
 select_permissions:
   - role: customer
     permission:
       columns:
-        - item_details_id
+        - item_id
         - customer_id
         - id
         - parameters

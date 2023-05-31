@@ -55,62 +55,60 @@ class _SignInViewState extends State<SignInView> {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-            body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: SingleChildScrollView(
-            child: Obx(
-              () => Column(
-                children: [
-                  SizedBox(
-                    height: 35,
-                  ),
-                  (mode == SignInMode.OptionalSignIn && !clickedLogin.value)
-                      ? Container(
-                          // padding: const EdgeInsets.only(top: 5),
-                          alignment: Alignment.centerRight,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              MezRouter.back();
-                            },
+            body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Obx(
+            () => Column(
+              children: [
+                SizedBox(
+                  height: 35,
+                ),
+                (mode == SignInMode.OptionalSignIn && !clickedLogin.value)
+                    ? Container(
+                        // padding: const EdgeInsets.only(top: 5),
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.black,
                           ),
-                        )
-                      : SizedBox(
-                          height: 30,
+                          onPressed: () {
+                            MezRouter.back();
+                          },
                         ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50),
-                    child: MezcalmosSharedWidgets.logo(size: 15.h),
-                  ),
-                  // SizedBox(height: 10),
-                  Container(
-                    alignment: Alignment.center,
-                    width: Get.width,
-                    child: MezcalmosSharedWidgets.mezcalmosTitle(
-                        textSize: 35.mezSp, isBold: true),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(_i18n()["title"],
-                      overflow: TextOverflow.visible,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayMedium
-                          ?.copyWith(fontWeight: FontWeight.w600)),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ...buildSignInButtons(MezEnv.appLaunchMode),
-                  SizedBox(
-                    height: 10,
-                  )
-                ],
-              ),
+                      )
+                    : SizedBox(
+                        height: 30,
+                      ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: MezcalmosSharedWidgets.logo(size: 15.h),
+                ),
+                // SizedBox(height: 10),
+                Container(
+                  alignment: Alignment.center,
+                  width: Get.width,
+                  child: MezcalmosSharedWidgets.mezcalmosTitle(
+                      textSize: 35.mezSp, isBold: true),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(_i18n()["title"],
+                    overflow: TextOverflow.visible,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(fontWeight: FontWeight.w600)),
+                SizedBox(
+                  height: 10,
+                ),
+                ...buildSignInButtons(MezEnv.appLaunchMode),
+                SizedBox(
+                  height: 10,
+                )
+              ],
             ),
           ),
         )));
