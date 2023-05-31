@@ -40,7 +40,7 @@ class _BusinessOpUnauthViewState extends State<BusinessOpUnauthView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(
+       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Menu,
         showNotifications: false,
       ),
