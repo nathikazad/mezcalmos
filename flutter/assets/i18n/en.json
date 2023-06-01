@@ -2053,7 +2053,8 @@
           "loginAs": "LOGIN AS",
           "customer": "CUSTOMER",
           "driver": "DRIVER",
-          "mezadmin": "MEZADMIN"
+          "mezadmin": "MEZADMIN",
+          "businessOp" : "Business Op"
         },
         "UnauthorizedScreen": {
           "unauthorized": "Unauthorized",

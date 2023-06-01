@@ -9,6 +9,7 @@ class BsHomeRentalOrderViewController {
   RxBool _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
   BusinessOrder? get order => _order.value;
+  UserInfo? get customer => order?.customer;
   late int orderId;
   Future<void> init({required int orderId}) async {
     _isLoading.value = true;

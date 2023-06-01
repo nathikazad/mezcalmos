@@ -50,36 +50,46 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-          title: 'Home for rent', onClick: MezRouter.back),
+          titleWidget:
+              Obx(() => Text((viewController.order?.customer.name ?? ""))),
+          onClick: MezRouter.back),
       body: Obx(() {
         if (!viewController.isLoading && viewController.order != null) {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                BsHomeRentalOrderSatusCard(),
+                BsHomeRentalOrderSatusCard(
+                  status: viewController.order!.status,
+                ),
                 meduimSeperator,
                 MezCard(
-                    firstAvatarBgImage:
-                        CachedNetworkImageProvider(defaultUserImgUrl),
+                    firstAvatarBgImage: CachedNetworkImageProvider(
+                      viewController.customer!.image!,
+                    ),
                     action: MessageButton(
                       chatId: 1,
                       onTap: () {},
                     ),
                     content: Text(
-                      "Customer name",
+                      viewController.customer!.name!,
                       style: context.textTheme.bodyLarge,
                     )),
                 meduimSeperator,
                 Column(
                   children: List.generate(
-                      2, (int index) => BsHomeRentalOrderItemCard()),
+                      viewController.order!.items.length,
+                      (int index) => BsHomeRentalOrderItemCard(
+                            item: viewController.order!.items[index],
+                          )),
                 ),
                 OrderPaymentMethod(
                     paymentType: PaymentType.Card,
                     stripeOrderPaymentInfo: null),
                 meduimSeperator,
-                OrderNoteCard(note: "note"),
+                OrderNoteCard(
+                  note: viewController.order?.notes,
+                ),
                 meduimSeperator,
                 OrderSummaryCard(
                     showNullValues: false,
@@ -87,8 +97,8 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
                         deliveryCost: null,
                         refundAmmount: null,
                         tax: null,
-                        orderItemsCost: 5,
-                        totalCost: 5),
+                        orderItemsCost: viewController.order?.cost,
+                        totalCost: viewController.order?.cost),
                     stripeOrderPaymentInfo: null),
                 meduimSeperator,
                 MezButton(

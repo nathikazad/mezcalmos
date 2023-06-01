@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 
 class BsHomeRentalOrderItemCard extends StatelessWidget {
-  const BsHomeRentalOrderItemCard({super.key});
+  const BsHomeRentalOrderItemCard({super.key, required this.item});
+  final BusinessOrderItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +31,13 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                   height: 52,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        item.item?.firstImage ?? "",
+                      ),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  child: FlutterLogo(size: 52),
                 ),
                 SizedBox(width: 10),
                 Flexible(
@@ -36,13 +47,8 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Home for rent in Av Juan...",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.w600,
-                        ),
+                        item.item?.name[userLangCode] ?? "error",
+                        style: context.textTheme.bodyLarge,
                       ),
                       SizedBox(height: 9),
                       Row(
@@ -89,12 +95,8 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                           Text(
                             "Edit",
                             textAlign: TextAlign.right,
-                            style: TextStyle(
-                              color: Color(0xff6779fe),
-                              fontSize: 15,
-                              fontFamily: "Montserrat",
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: context.textTheme.bodyLarge
+                                ?.copyWith(color: primaryBlueColor),
                           ),
                         ],
                       ),
@@ -121,27 +123,17 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                       Icon(Icons.watch_later),
                       SizedBox(width: 8),
                       Text(
-                        "10 Apr, 08:00 AM",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.w600,
-                        ),
+                        item.time ?? "timeError",
+                        style: context.textTheme.bodyLarge,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(width: 169),
                 Text(
                   "Edit",
                   textAlign: TextAlign.right,
-                  style: TextStyle(
-                    color: Color(0xff6779fe),
-                    fontSize: 15,
-                    fontFamily: "Montserrat",
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: context.textTheme.bodyLarge
+                      ?.copyWith(color: primaryBlueColor),
                 ),
               ],
             ),

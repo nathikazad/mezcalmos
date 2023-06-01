@@ -2115,7 +2115,8 @@
           "loginAs": "INICIAR SESIÓN COMO",
           "customer": "CLIENTE",
           "driver": "CONDUCTORA",
-          "mezadmin": "MEZADMIN"
+          "mezadmin": "MEZADMIN",
+          "businessOp" : "Business Op"
         },
         "UnauthorizedScreen": {
           "unauthorized": "No autorizado",
