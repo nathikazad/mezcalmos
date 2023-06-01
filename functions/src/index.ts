@@ -44,7 +44,7 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
 
 export const user2 = {
   processSignUp: userChanges.processSignUp,
-  // deleteUserAccount: authenticatedCall((userId, data) => userChanges.deleteAccount(userId, data))
+  deleteUserAccount: authenticatedCall((_, context) => userChanges.deleteAccount(context.auth?.uid, null)),
   addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth?.uid, null))
 }
 

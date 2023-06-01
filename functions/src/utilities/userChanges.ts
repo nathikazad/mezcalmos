@@ -26,15 +26,17 @@ export const processSignUp = functions.auth.user().onCreate(async user => {
   await addHasuraClaim(user.uid, null);
 });
 
-// export async function deleteAccount(userId: string, data: any) {
+export async function deleteAccount(uid: string | undefined, _: any) {
 
-//   let response = isSignedIn(userId);
-//   if (response != undefined) {
-//     return response;
-//   }
-//   await firebase.auth().updateUser(userId, { disabled: true });
-//   return { status: ServerResponseStatus.Success }
-// };
+  if (!uid) {
+    throw new HttpsError(
+      "unauthenticated",
+      "Request was not authenticated.",
+    );
+  }
+  await firebase.auth().deleteUser(uid);
+  return { status: "success" }
+};
 
 
 
