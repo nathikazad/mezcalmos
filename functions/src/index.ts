@@ -44,8 +44,8 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
 
 export const user2 = {
   processSignUp: userChanges.processSignUp,
-  deleteUserAccount: authenticatedCall((_, context) => userChanges.deleteAccount(context.auth?.uid, null)),
-  addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth?.uid, null))
+  deleteUserAccount: authenticatedCall((userId, data) => userChanges.deleteAccount(userId, data)),
+  addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth!.uid, null))
 }
 
 export const otp3 = {
@@ -132,12 +132,12 @@ function authenticatedCall(func:AuthenticatedFunction) {
       );
     }
     let firebaseUser = await firebase.auth().getUser(context.auth!.uid)
-    console.log("Custom claims",firebaseUser.customClaims)
     if(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"] == null) {
       await userChanges.addHasuraClaim(context.auth?.uid, null);
       firebaseUser = await firebase.auth().getUser(context.auth!.uid)
     }
-   
+    data = data || {};
+    data.firebaseId = context.auth!.uid;
     return await func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
   });
 }
