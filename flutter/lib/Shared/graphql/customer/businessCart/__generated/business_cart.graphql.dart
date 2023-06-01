@@ -9361,3 +9361,591 @@ class _CopyWithStubImpl$Mutation$addItemToBusinessCart$insert_business_cart_item
   }) =>
       _res;
 }
+
+class Variables$Mutation$set_cart_business_id {
+  factory Variables$Mutation$set_cart_business_id({
+    required int business_id,
+    required int customer_id,
+  }) =>
+      Variables$Mutation$set_cart_business_id._({
+        r'business_id': business_id,
+        r'customer_id': customer_id,
+      });
+
+  Variables$Mutation$set_cart_business_id._(this._$data);
+
+  factory Variables$Mutation$set_cart_business_id.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$business_id = data['business_id'];
+    result$data['business_id'] = (l$business_id as int);
+    final l$customer_id = data['customer_id'];
+    result$data['customer_id'] = (l$customer_id as int);
+    return Variables$Mutation$set_cart_business_id._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get business_id => (_$data['business_id'] as int);
+  int get customer_id => (_$data['customer_id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$business_id = business_id;
+    result$data['business_id'] = l$business_id;
+    final l$customer_id = customer_id;
+    result$data['customer_id'] = l$customer_id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$set_cart_business_id<
+          Variables$Mutation$set_cart_business_id>
+      get copyWith => CopyWith$Variables$Mutation$set_cart_business_id(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$set_cart_business_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_id = business_id;
+    final lOther$business_id = other.business_id;
+    if (l$business_id != lOther$business_id) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_id = business_id;
+    final l$customer_id = customer_id;
+    return Object.hashAll([
+      l$business_id,
+      l$customer_id,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$set_cart_business_id<TRes> {
+  factory CopyWith$Variables$Mutation$set_cart_business_id(
+    Variables$Mutation$set_cart_business_id instance,
+    TRes Function(Variables$Mutation$set_cart_business_id) then,
+  ) = _CopyWithImpl$Variables$Mutation$set_cart_business_id;
+
+  factory CopyWith$Variables$Mutation$set_cart_business_id.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$set_cart_business_id;
+
+  TRes call({
+    int? business_id,
+    int? customer_id,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$set_cart_business_id<TRes>
+    implements CopyWith$Variables$Mutation$set_cart_business_id<TRes> {
+  _CopyWithImpl$Variables$Mutation$set_cart_business_id(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$set_cart_business_id _instance;
+
+  final TRes Function(Variables$Mutation$set_cart_business_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_id = _undefined,
+    Object? customer_id = _undefined,
+  }) =>
+      _then(Variables$Mutation$set_cart_business_id._({
+        ..._instance._$data,
+        if (business_id != _undefined && business_id != null)
+          'business_id': (business_id as int),
+        if (customer_id != _undefined && customer_id != null)
+          'customer_id': (customer_id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$set_cart_business_id<TRes>
+    implements CopyWith$Variables$Mutation$set_cart_business_id<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$set_cart_business_id(this._res);
+
+  TRes _res;
+
+  call({
+    int? business_id,
+    int? customer_id,
+  }) =>
+      _res;
+}
+
+class Mutation$set_cart_business_id {
+  Mutation$set_cart_business_id({
+    this.update_business_cart_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$set_cart_business_id.fromJson(Map<String, dynamic> json) {
+    final l$update_business_cart_by_pk = json['update_business_cart_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$set_cart_business_id(
+      update_business_cart_by_pk: l$update_business_cart_by_pk == null
+          ? null
+          : Mutation$set_cart_business_id$update_business_cart_by_pk.fromJson(
+              (l$update_business_cart_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$set_cart_business_id$update_business_cart_by_pk?
+      update_business_cart_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_cart_by_pk = update_business_cart_by_pk;
+    _resultData['update_business_cart_by_pk'] =
+        l$update_business_cart_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_cart_by_pk = update_business_cart_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_cart_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$set_cart_business_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_cart_by_pk = update_business_cart_by_pk;
+    final lOther$update_business_cart_by_pk = other.update_business_cart_by_pk;
+    if (l$update_business_cart_by_pk != lOther$update_business_cart_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$set_cart_business_id
+    on Mutation$set_cart_business_id {
+  CopyWith$Mutation$set_cart_business_id<Mutation$set_cart_business_id>
+      get copyWith => CopyWith$Mutation$set_cart_business_id(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$set_cart_business_id<TRes> {
+  factory CopyWith$Mutation$set_cart_business_id(
+    Mutation$set_cart_business_id instance,
+    TRes Function(Mutation$set_cart_business_id) then,
+  ) = _CopyWithImpl$Mutation$set_cart_business_id;
+
+  factory CopyWith$Mutation$set_cart_business_id.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$set_cart_business_id;
+
+  TRes call({
+    Mutation$set_cart_business_id$update_business_cart_by_pk?
+        update_business_cart_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk<TRes>
+      get update_business_cart_by_pk;
+}
+
+class _CopyWithImpl$Mutation$set_cart_business_id<TRes>
+    implements CopyWith$Mutation$set_cart_business_id<TRes> {
+  _CopyWithImpl$Mutation$set_cart_business_id(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$set_cart_business_id _instance;
+
+  final TRes Function(Mutation$set_cart_business_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_cart_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$set_cart_business_id(
+        update_business_cart_by_pk: update_business_cart_by_pk == _undefined
+            ? _instance.update_business_cart_by_pk
+            : (update_business_cart_by_pk
+                as Mutation$set_cart_business_id$update_business_cart_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk<TRes>
+      get update_business_cart_by_pk {
+    final local$update_business_cart_by_pk =
+        _instance.update_business_cart_by_pk;
+    return local$update_business_cart_by_pk == null
+        ? CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk(
+            local$update_business_cart_by_pk,
+            (e) => call(update_business_cart_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$set_cart_business_id<TRes>
+    implements CopyWith$Mutation$set_cart_business_id<TRes> {
+  _CopyWithStubImpl$Mutation$set_cart_business_id(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$set_cart_business_id$update_business_cart_by_pk?
+        update_business_cart_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk<TRes>
+      get update_business_cart_by_pk =>
+          CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationset_cart_business_id = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'set_cart_business_id'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'business_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_cart_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'customer_id'),
+                value: VariableNode(name: NameNode(value: 'customer_id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business_id'),
+                value: VariableNode(name: NameNode(value: 'business_id')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'business_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$set_cart_business_id _parserFn$Mutation$set_cart_business_id(
+        Map<String, dynamic> data) =>
+    Mutation$set_cart_business_id.fromJson(data);
+typedef OnMutationCompleted$Mutation$set_cart_business_id = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$set_cart_business_id?,
+);
+
+class Options$Mutation$set_cart_business_id
+    extends graphql.MutationOptions<Mutation$set_cart_business_id> {
+  Options$Mutation$set_cart_business_id({
+    String? operationName,
+    required Variables$Mutation$set_cart_business_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$set_cart_business_id? onCompleted,
+    graphql.OnMutationUpdate<Mutation$set_cart_business_id>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$set_cart_business_id(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationset_cart_business_id,
+          parserFn: _parserFn$Mutation$set_cart_business_id,
+        );
+
+  final OnMutationCompleted$Mutation$set_cart_business_id?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$set_cart_business_id
+    extends graphql.WatchQueryOptions<Mutation$set_cart_business_id> {
+  WatchOptions$Mutation$set_cart_business_id({
+    String? operationName,
+    required Variables$Mutation$set_cart_business_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationset_cart_business_id,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$set_cart_business_id,
+        );
+}
+
+extension ClientExtension$Mutation$set_cart_business_id
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$set_cart_business_id>>
+      mutate$set_cart_business_id(
+              Options$Mutation$set_cart_business_id options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$set_cart_business_id>
+      watchMutation$set_cart_business_id(
+              WatchOptions$Mutation$set_cart_business_id options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$set_cart_business_id$update_business_cart_by_pk {
+  Mutation$set_cart_business_id$update_business_cart_by_pk({
+    this.business_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$set_cart_business_id$update_business_cart_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$business_id = json['business_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$set_cart_business_id$update_business_cart_by_pk(
+      business_id: (l$business_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int? business_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_id = business_id;
+    _resultData['business_id'] = l$business_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_id = business_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$set_cart_business_id$update_business_cart_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_id = business_id;
+    final lOther$business_id = other.business_id;
+    if (l$business_id != lOther$business_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$set_cart_business_id$update_business_cart_by_pk
+    on Mutation$set_cart_business_id$update_business_cart_by_pk {
+  CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk<
+          Mutation$set_cart_business_id$update_business_cart_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk(
+    Mutation$set_cart_business_id$update_business_cart_by_pk instance,
+    TRes Function(Mutation$set_cart_business_id$update_business_cart_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$set_cart_business_id$update_business_cart_by_pk;
+
+  factory CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$set_cart_business_id$update_business_cart_by_pk;
+
+  TRes call({
+    int? business_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$set_cart_business_id$update_business_cart_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$set_cart_business_id$update_business_cart_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$set_cart_business_id$update_business_cart_by_pk _instance;
+
+  final TRes Function(Mutation$set_cart_business_id$update_business_cart_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$set_cart_business_id$update_business_cart_by_pk(
+        business_id: business_id == _undefined
+            ? _instance.business_id
+            : (business_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$set_cart_business_id$update_business_cart_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$set_cart_business_id$update_business_cart_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$set_cart_business_id$update_business_cart_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? business_id,
+    String? $__typename,
+  }) =>
+      _res;
+}

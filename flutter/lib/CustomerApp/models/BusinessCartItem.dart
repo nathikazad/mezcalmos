@@ -14,11 +14,13 @@ class BusinessCartItem {
   Event? event;
   Service? service;
   Product? product;
+  int? businessId;
   BusinessCartItem(
       {required this.itemId,
       required this.offeringType,
       required this.parameters,
       required this.cost,
+      this.businessId,
       this.time,
       this.available,
       this.item,
@@ -30,6 +32,8 @@ class BusinessCartItem {
       this.orderRequestId});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
+      "id": id,
+      "businessId": businessId,
       "itemId": itemId,
       "offeringType": offeringType,
       "parameters": parameters,

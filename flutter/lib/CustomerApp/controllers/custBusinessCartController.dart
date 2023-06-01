@@ -30,7 +30,7 @@ class CustBusinessCartController extends GetxController {
 
   Future<void> _initCart() async {
     await fetchCart();
-    // await _handlerRestaurantId();
+    await _handlerBusinessId();
   }
 
   Future<void> fetchCart() async {
@@ -46,28 +46,31 @@ class CustBusinessCartController extends GetxController {
     }
   }
 
-  // Future<void> _handlerRestaurantId() async {
-  //   if (cart.value != null &&
-  //       cart.value?.restaurant == null &&
-  //       cart.value!.items.isNotEmpty) {
-  //     // await setCartRestaurantId(cart.value!.items.first.restaurantId);
-  //   }
-  // }
+  Future<void> _handlerBusinessId() async {
+    if (cart.value != null &&
+        cart.value?.businessId == null &&
+        cart.value!.items.isNotEmpty) {
+      await setCartBusinessId(cart.value!.businessId?.toInt() ?? null);
+    }
+  }
 
-  // Future<int?> setCartRestaurantId(int restaurantId) async {
-  //   try {
-  //     final int res = await set_cart_restaurant_id(
-  //       customer_id: _auth.hasuraUserId!,
-  //       restaurant_id: restaurantId,
-  //     );
-  //     return res;
-  //   } catch (e, stk) {
-  //     mezDbgPrint(e);
-  //     mezDbgPrint(stk);
-  //   }
-  //   return null;
-  // }
+  Future<int?> setCartBusinessId(int? businessId) async {
+    try {
+      final int res = await set_cart_business_id(
+        customer_id: _auth.hasuraUserId!,
+        business_id: businessId,
+      );
+      return res;
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+    return null;
+  }
+
   Future<int?> addCartItem(BusinessCartItem cartItem) async {
+    await setCartBusinessId(cartItem.businessId!.toInt());
+
     try {
       final int res = await add_item_to_business_cart(
         cartItem: cartItem,
