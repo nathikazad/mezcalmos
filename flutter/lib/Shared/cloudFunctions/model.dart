@@ -1211,7 +1211,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 class UserInfo {
   num id;
   String? image;
-  String firebaseId;
+  String? firebaseId;
   String? name;
   Language language;
   String? email;
@@ -1219,7 +1219,7 @@ class UserInfo {
   bool? deleted;
   String? creationTime;
   UserInfo({
-    required this.id, this.image, required this.firebaseId, this.name, required this.language, this.email, this.phoneNumber, this.deleted, this.creationTime});
+    required this.id, this.image, this.firebaseId, this.name, required this.language, this.email, this.phoneNumber, this.deleted, this.creationTime});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -2369,8 +2369,9 @@ class BusinessOrder {
   String? notes;
   num? chatId;
   String? cancellationTime;
+  UserInfo customer;
   BusinessOrder({
-    required this.orderId, required this.customerId, required this.businessId, required this.spDetailsId, required this.status, this.business, required this.items, required this.cost, this.reviewId, this.orderTime, required this.customerAppType, this.notes, this.chatId, this.cancellationTime});
+    required this.orderId, required this.customerId, required this.businessId, required this.spDetailsId, required this.status, this.business, required this.items, required this.cost, this.reviewId, this.orderTime, required this.customerAppType, this.notes, this.chatId, this.cancellationTime, required this.customer});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "orderId": orderId,
@@ -2387,6 +2388,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "notes": notes,
       "chatId": chatId,
       "cancellationTime": cancellationTime,
+      "customer": customer,
     };
   }
 

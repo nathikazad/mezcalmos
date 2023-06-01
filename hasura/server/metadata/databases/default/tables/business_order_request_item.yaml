@@ -42,3 +42,37 @@ object_relationships:
         remote_table:
           name: service
           schema: business
+select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - available
+        - id
+        - item_id
+        - order_request_id
+        - parameters
+        - cost
+        - offering_type
+        - time
+      filter:
+        _or:
+          - rental:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - event:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - product:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - service:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id

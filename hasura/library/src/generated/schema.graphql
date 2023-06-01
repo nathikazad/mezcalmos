@@ -3195,6 +3195,9 @@ type business_order_request {
   A computed field, executes function "business.ordercost"
   """
   cost: money
+
+  """An object relationship"""
+  customer: customer_customer!
   customer_app_type: String!
   customer_id: Int!
   id: Int!
@@ -3287,6 +3290,7 @@ input business_order_request_bool_exp {
   chat: chat_bool_exp
   chat_id: Int_comparison_exp
   cost: money_comparison_exp
+  customer: customer_customer_bool_exp
   customer_app_type: String_comparison_exp
   customer_id: Int_comparison_exp
   id: Int_comparison_exp
@@ -3328,6 +3332,7 @@ input business_order_request_insert_input {
   cancellation_time: timestamptz
   chat: chat_obj_rel_insert_input
   chat_id: Int
+  customer: customer_customer_obj_rel_insert_input
   customer_app_type: String
   customer_id: Int
   id: Int
@@ -3971,6 +3976,7 @@ input business_order_request_order_by {
   chat: chat_order_by
   chat_id: order_by
   cost: order_by
+  customer: customer_customer_order_by
   customer_app_type: order_by
   customer_id: order_by
   id: order_by

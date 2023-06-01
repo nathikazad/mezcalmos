@@ -1,3 +1,4 @@
+import { UserInfo } from "firebase-functions/v1/auth";
 import { CustomerAppType } from "../../Generic/Generic";
 import { OrderNotification } from "../../Notification";
 import { Business, BusinessItemDetails, OfferingType, TimeUnit } from "./Business";
@@ -17,6 +18,7 @@ export interface BusinessOrder {
     notes?: string;
     chatId?: number;
     cancellationTime?: string;
+    customer: UserInfo,
 }
 
 export interface BusinessOrderItem {

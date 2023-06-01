@@ -8,6 +8,9 @@ object_relationships:
   - name: chat
     using:
       foreign_key_constraint_on: chat_id
+  - name: customer
+    using:
+      foreign_key_constraint_on: customer_id
 array_relationships:
   - name: items
     using:
@@ -22,3 +25,24 @@ computed_fields:
       function:
         name: ordercost
         schema: business
+select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - business_id
+        - chat_id
+        - customer_id
+        - id
+        - review_id
+        - customer_app_type
+        - notes
+        - status
+        - cancellation_time
+        - order_time
+      computed_fields:
+        - cost
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id

@@ -636,6 +636,11 @@ Future<BusinessOrder?> get_home_rental_order_req({required int orderId}) async {
       res.parsedData!.business_order_request_by_pk!;
   return BusinessOrder(
       orderId: data.id,
+      customer: UserInfo(
+          id: data.customer.user_id,
+          language: Language.EN,
+          name: data.customer.user.name,
+          image: data.customer.user.image),
       customerId: data.customer_id,
       businessId: data.business_id,
       spDetailsId: data.business.details_id,
