@@ -1,0 +1,172 @@
+query getBusinessCart($customer_id: Int!) {
+  business_cart(where: { customer_id: { _eq: $customer_id } }) {
+    items {
+      id
+      parameters
+      cost
+      item_id
+      offering_type
+      time
+      rental {
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        home_rental {
+          address
+          bathrooms
+          bedrooms
+          gps_location
+          home_type
+        }
+        business {
+          details {
+            name
+            currency
+            id
+          }
+        }
+      }
+      product {
+        business {
+          details {
+            name
+            currency
+            id
+          }
+        }
+        details {
+          additional_parameters
+          available
+          category1
+          category2
+          name_id
+          description_id
+          cost
+          tags
+          description {
+            translations {
+              language_id
+              value
+            }
+          }
+          id
+          image
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+        }
+      }
+      service {
+        business {
+          details {
+            name
+            currency
+            id
+          }
+        }
+        details {
+          additional_parameters
+          available
+          category1
+          name_id
+          description_id
+          category2
+          cost
+          tags
+          description {
+            translations {
+              language_id
+              value
+            }
+          }
+          id
+          image
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+        }
+      }
+      event {
+        business {
+          details {
+            name
+            currency
+            id
+          }
+        }
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        id
+        schedule_type
+        schedule
+        starts_at
+        ends_at
+      }
+    }
+    business_id
+    discount_value
+    customer_id
+    cost
+  }
+}
+
+mutation insert_business_cart($cart: business_cart_insert_input!) {
+  insert_business_cart_one(
+    object: $cart
+    on_conflict: { constraint: cart_pkey, update_columns: business_id }
+  ) {
+    customer_id
+    business_id
+  }
+}
+
+mutation addItemToBusinessCart($item: business_cart_item_insert_input!) {
+  insert_business_cart_item_one(object: $item) {
+    id
+    customer_id
+    time
+    parameters
+    offering_type
+    item_id
+    cost
+  }
+}

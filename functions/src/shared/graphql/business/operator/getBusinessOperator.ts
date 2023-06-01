@@ -31,7 +31,7 @@ export async function getBusinessOperatorByUserId(businessOperatorUserId: number
       }
     }]
   });
-  if(response.business_operator == null) {
+  if(response.business_operator.length == 0) {
     throw new MezError("businessOperatorNotFound");
   }
   return {

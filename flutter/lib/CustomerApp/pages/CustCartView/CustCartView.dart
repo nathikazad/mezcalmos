@@ -13,6 +13,8 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 
 class CustCartView extends StatefulWidget {
   const CustCartView({super.key});
@@ -29,11 +31,13 @@ class CustCartView extends StatefulWidget {
 
 class _CustCartViewState extends State<CustCartView> {
   final CustCartViewController viewController = CustCartViewController();
+  final CustBusinessCartController custBusinessCartController =
+      Get.find<CustBusinessCartController>();
   late CartInfo cartInfo;
 
   @override
   void initState() {
-    viewController.init();
+    // viewController.init();
     cartInfo = MezRouter.bodyArguments!["cartInfo"] as CartInfo;
     super.initState();
   }

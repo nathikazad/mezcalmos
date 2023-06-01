@@ -32,7 +32,7 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         return {
             id: i.id,
             customerId,
-            itemId: i.item_details_id,
+            itemId: i.item_id,
             cost: i.cost,
             time: i.time,
             offeringType: i.offering_type as OfferingType,
