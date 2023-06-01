@@ -46,19 +46,12 @@ class AuthController extends GetxController {
   AuthController(this._onSignInCallback, this._onSignOutCallback);
   String? _previousUserValue = "init";
   bool userRedirectFinish = false;
+
   @override
   Future<void> onInit() async {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
-    // if (!kIsWeb) {
-    //   bool internetStatus = false;
-    //   while (internetStatus == false) {
-    //     internetStatus = await ConnectivityHelper.pingServer(firebaseAuthUrl)
-    //         .timeout(Duration(seconds: 10), onTimeout: () => false);
-    //   }
-    //   mezDbgPrint("Connection is there on authController init 💕💕💕💕💕💕💕");
-    // }
     _auth.authStateChanges().listen((fireAuth.User? user) async {
       await authChangeCallback(user);
     });
