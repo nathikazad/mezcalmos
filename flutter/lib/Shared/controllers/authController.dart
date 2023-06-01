@@ -53,14 +53,14 @@ class AuthController extends GetxController {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
-    if (!kIsWeb) {
-      bool internetStatus = false;
-      while (internetStatus == false) {
-        internetStatus = await ConnectivityHelper.pingServer(firebaseAuthUrl)
-            .timeout(Duration(seconds: 10), onTimeout: () => false);
-      }
-      mezDbgPrint("Connection is there on authController init 💕💕💕💕💕💕💕");
-    }
+    // if (!kIsWeb) {
+    //   bool internetStatus = false;
+    //   while (internetStatus == false) {
+    //     internetStatus = await ConnectivityHelper.pingServer(firebaseAuthUrl)
+    //         .timeout(Duration(seconds: 10), onTimeout: () => false);
+    //   }
+    //   mezDbgPrint("Connection is there on authController init 💕💕💕💕💕💕💕");
+    // }
     _auth.authStateChanges().listen((fireAuth.User? user) async {
       await authChangeCallback(user);
     });
