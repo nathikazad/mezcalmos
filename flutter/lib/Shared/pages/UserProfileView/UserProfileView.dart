@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/components/UserProfileImage.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
@@ -105,7 +106,16 @@ class _UserProfileViewState extends State<UserProfileView> {
                       backgroundColor: offRedColor,
                       textColor: redAccentColor,
                       onClick: () async {
-                        
+                        await showConfirmationDialog(
+                          context,
+                          title: '${_i18n()["deleteTitle"]}',
+                          primaryButtonText: "${_i18n()["deletePrBtn"]}",
+                          secondaryButtonText: "${_i18n()["deleteScBtn"]}",
+                          helperText: "${_i18n()["deleteHelper"]}",
+                          onYesClick: () async {
+                            await viewController.deleteAccount(context);
+                          },
+                        );
                       },
                     ),
                 ],
