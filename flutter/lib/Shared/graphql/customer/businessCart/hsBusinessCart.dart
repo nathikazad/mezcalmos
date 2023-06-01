@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 final HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -49,7 +50,9 @@ Future<BusinessCart?> get_business_cart({required int customerId}) async {
                   numberOfUnits: data.parameters?["numberOfUnits"],
                   previousCost: data.parameters?["previousCost"],
                   previoustime: data.parameters?["previoustime"],
-                  timeUnit: data.parameters?["timeUnit"],
+                  timeUnit:
+                      data.parameters?["timeUnit"]?.toString().toTimeUnit() ??
+                          null,
                 ),
                 rental: RentalCard(
                     businessName: data.rental!.business.details.name,
