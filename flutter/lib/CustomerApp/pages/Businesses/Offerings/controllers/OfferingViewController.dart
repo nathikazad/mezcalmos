@@ -109,8 +109,10 @@ class CustHomeRentalViewController {
   Future<void> bookOffering() async {
     await custBusinessCartController.addCartItem(
       BusinessCartItem(
-        itemId: _homeRental.value!.details.id,
+        businessId: _homeRental.value!.business.id,
+        itemId: _homeRental.value!.id!,
         offeringType: OfferingType.Rental,
+        time: startDate.value!.toString(),
         parameters: BusinessItemParameters(
           guests: _totalGuests.value,
           numberOfUnits: _duration.value,

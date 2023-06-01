@@ -170,3 +170,12 @@ mutation addItemToBusinessCart($item: business_cart_item_insert_input!) {
     cost
   }
 }
+
+mutation set_cart_business_id($business_id: Int!, $customer_id: Int!) {
+  update_business_cart_by_pk(
+    pk_columns: { customer_id: $customer_id }
+    _set: { business_id: $business_id }
+  ) {
+    business_id
+  }
+}
