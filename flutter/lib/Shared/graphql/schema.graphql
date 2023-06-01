@@ -561,7 +561,7 @@ type business_business_variance_fields {
 columns and relationships of "business.cart"
 """
 type business_cart {
-  business_id: Int!
+  business_id: Int
 
   """
   A computed field, executes function "business.cartcost"

@@ -8,6 +8,8 @@ import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
+import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 
 class CustServiceViewController {
   // state vars //
@@ -47,6 +49,8 @@ class CustEventViewController {
 }
 
 class CustHomeRentalViewController {
+  final CustBusinessCartController custBusinessCartController =
+      Get.find<CustBusinessCartController>();
   // state vars //
   Rxn<RentalWithBusinessCard> _homeRental = Rxn<RentalWithBusinessCard>();
   Rxn<DateTime> _startDate = Rxn();
@@ -103,6 +107,19 @@ class CustHomeRentalViewController {
   }
 
   Future<void> bookOffering() async {
+    await custBusinessCartController.addCartItem(
+      BusinessCartItem(
+        itemId: _homeRental.value!.details.id,
+        offeringType: OfferingType.Rental,
+        parameters: BusinessItemParameters(
+          guests: _totalGuests.value,
+          numberOfUnits: _duration.value,
+          timeUnit: timeCost.value!.keys.first.toFirebaseFormatString(),
+        ),
+        cost: totalOrderCost.value,
+        rental: _homeRental.value,
+      ),
+    );
     await CustCartView.navigate(
       cartInfo: CartInfo(
         duration: _duration.value,

@@ -2418,6 +2418,10 @@ class BusinessOrderItem {
   bool? available;
   BusinessItemDetails? item;
   num? orderRequestId;
+  Rental? rental;
+  Event? event;
+  Service? service;
+  Product? product;
   BusinessOrderItem(
       {required this.id,
       required this.itemId,
@@ -2427,6 +2431,10 @@ class BusinessOrderItem {
       this.time,
       this.available,
       this.item,
+      this.rental,
+      this.event,
+      this.service,
+      this.product,
       this.orderRequestId});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
@@ -2445,7 +2453,7 @@ class BusinessOrderItem {
 
 class BusinessItemParameters {
   num? previousCost;
-  TimeUnit? timeUnit;
+  String? timeUnit;
   String? previoustime;
   num? numberOfUnits;
   num? guests;
@@ -2468,8 +2476,8 @@ class BusinessItemParameters {
 
 class BusinessCart {
   num customerId;
-  num businessId;
-  num cost;
+  num? businessId;
+  double cost;
   List<BusinessOrderItem> items;
   num? discountValue;
   BusinessCart(
