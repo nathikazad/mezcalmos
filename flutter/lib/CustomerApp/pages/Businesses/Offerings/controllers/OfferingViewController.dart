@@ -116,7 +116,7 @@ class CustHomeRentalViewController {
         parameters: BusinessItemParameters(
           guests: _totalGuests.value,
           numberOfUnits: _duration.value,
-          timeUnit: timeCost.value!.keys.first.toFirebaseFormatString(),
+          timeUnit: timeCost.value!.keys.first,
         ),
         cost: totalOrderCost.value,
         rental: _homeRental.value,
