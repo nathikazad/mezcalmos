@@ -21933,6 +21933,35 @@ const documentNodeQuerygetHomeRentalOrderRequest = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'customer_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'business'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'chat_id'),
             alias: null,
             arguments: [],
@@ -22056,7 +22085,7 @@ const documentNodeQuerygetHomeRentalOrderRequest = DocumentNode(definitions: [
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
-                        name: NameNode(value: 'image'),
+                        name: NameNode(value: 'id'),
                         alias: null,
                         arguments: [],
                         directives: [],
@@ -22105,6 +22134,55 @@ const documentNodeQuerygetHomeRentalOrderRequest = DocumentNode(definitions: [
                             selectionSet: null,
                           ),
                         ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
                       ),
                       FieldNode(
                         name: NameNode(value: '__typename'),
@@ -22270,6 +22348,8 @@ extension ClientExtension$Query$getHomeRentalOrderRequest
 class Query$getHomeRentalOrderRequest$business_order_request_by_pk {
   Query$getHomeRentalOrderRequest$business_order_request_by_pk({
     required this.business_id,
+    required this.customer_id,
+    required this.business,
     this.chat_id,
     this.cost,
     required this.status,
@@ -22284,6 +22364,8 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk {
   factory Query$getHomeRentalOrderRequest$business_order_request_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$business_id = json['business_id'];
+    final l$customer_id = json['customer_id'];
+    final l$business = json['business'];
     final l$chat_id = json['chat_id'];
     final l$cost = json['cost'];
     final l$status = json['status'];
@@ -22295,6 +22377,10 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk {
     final l$$__typename = json['__typename'];
     return Query$getHomeRentalOrderRequest$business_order_request_by_pk(
       business_id: (l$business_id as int),
+      customer_id: (l$customer_id as int),
+      business:
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$business
+              .fromJson((l$business as Map<String, dynamic>)),
       chat_id: (l$chat_id as int?),
       cost: l$cost == null ? null : moneyFromJson(l$cost),
       status: (l$status as String),
@@ -22312,6 +22398,11 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk {
   }
 
   final int business_id;
+
+  final int customer_id;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$business
+      business;
 
   final int? chat_id;
 
@@ -22336,6 +22427,10 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk {
     final _resultData = <String, dynamic>{};
     final l$business_id = business_id;
     _resultData['business_id'] = l$business_id;
+    final l$customer_id = customer_id;
+    _resultData['customer_id'] = l$customer_id;
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
     final l$chat_id = chat_id;
     _resultData['chat_id'] = l$chat_id;
     final l$cost = cost;
@@ -22360,6 +22455,8 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk {
   @override
   int get hashCode {
     final l$business_id = business_id;
+    final l$customer_id = customer_id;
+    final l$business = business;
     final l$chat_id = chat_id;
     final l$cost = cost;
     final l$status = status;
@@ -22371,6 +22468,8 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$business_id,
+      l$customer_id,
+      l$business,
       l$chat_id,
       l$cost,
       l$status,
@@ -22396,6 +22495,16 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk {
     final l$business_id = business_id;
     final lOther$business_id = other.business_id;
     if (l$business_id != lOther$business_id) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
       return false;
     }
     final l$chat_id = chat_id;
@@ -22479,6 +22588,9 @@ abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_b
 
   TRes call({
     int? business_id,
+    int? customer_id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$business?
+        business,
     int? chat_id,
     double? cost,
     String? status,
@@ -22490,6 +22602,8 @@ abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_b
         items,
     String? $__typename,
   });
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business<
+      TRes> get business;
   TRes items(
       Iterable<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items> Function(
               Iterable<
@@ -22517,6 +22631,8 @@ class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk
 
   TRes call({
     Object? business_id = _undefined,
+    Object? customer_id = _undefined,
+    Object? business = _undefined,
     Object? chat_id = _undefined,
     Object? cost = _undefined,
     Object? status = _undefined,
@@ -22531,6 +22647,13 @@ class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk
         business_id: business_id == _undefined || business_id == null
             ? _instance.business_id
             : (business_id as int),
+        customer_id: customer_id == _undefined || customer_id == null
+            ? _instance.customer_id
+            : (customer_id as int),
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$business),
         chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
         cost: cost == _undefined ? _instance.cost : (cost as double?),
         status: status == _undefined || status == null
@@ -22551,6 +22674,13 @@ class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business<
+      TRes> get business {
+    final local$business = _instance.business;
+    return CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business(
+        local$business, (e) => call(business: e));
+  }
+
   TRes items(
           Iterable<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items> Function(
                   Iterable<
@@ -22577,6 +22707,9 @@ class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_b
 
   call({
     int? business_id,
+    int? customer_id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$business?
+        business,
     int? chat_id,
     double? cost,
     String? status,
@@ -22589,7 +22722,157 @@ class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_b
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business<
+          TRes>
+      get business =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business
+              .stub(_res);
   items(_fn) => _res;
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$business {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$business({
+    required this.details_id,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$details_id = json['details_id'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$business(
+      details_id: (l$details_id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int details_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details_id = details_id;
+    _resultData['details_id'] = l$details_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details_id = details_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details_id = details_id;
+    final lOther$details_id = other.details_id;
+    if (l$details_id != lOther$details_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$business {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$business>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$business
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$business)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business;
+
+  TRes call({
+    int? details_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$business
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$business)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$business(
+        details_id: details_id == _undefined || details_id == null
+            ? _instance.details_id
+            : (details_id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? details_id,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items {
@@ -23098,38 +23381,91 @@ class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_b
 
 class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details {
   Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details({
-    this.image,
+    required this.id,
     required this.name,
+    this.additional_parameters,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
     required this.$__typename,
   });
 
   factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details.fromJson(
       Map<String, dynamic> json) {
-    final l$image = json['image'];
+    final l$id = json['id'];
     final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
     final l$$__typename = json['__typename'];
     return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details(
-      image: l$image == null ? null : mapFromJson(l$image),
+      id: (l$id as int),
       name:
           Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details$name
               .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final dynamic? image;
+  final int id;
 
   final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details$name
       name;
+
+  final dynamic? additional_parameters;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$image = image;
-    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -23137,12 +23473,26 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$
 
   @override
   int get hashCode {
-    final l$image = image;
+    final l$id = id;
     final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$image,
+      l$id,
       l$name,
+      l$additional_parameters,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
       l$$__typename,
     ]);
   }
@@ -23157,14 +23507,49 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -23202,9 +23587,16 @@ abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_b
       _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details;
 
   TRes call({
-    dynamic? image,
+    int? id,
     Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details$name?
         name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
     String? $__typename,
   });
   CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details$name<
@@ -23231,17 +23623,43 @@ class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk
   static const _undefined = {};
 
   TRes call({
-    Object? image = _undefined,
+    Object? id = _undefined,
     Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details(
-        image: image == _undefined ? _instance.image : (image as dynamic?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
             : (name
                 as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -23265,9 +23683,16 @@ class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_b
   TRes _res;
 
   call({
-    dynamic? image,
+    int? id,
     Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental$details$name?
         name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
     String? $__typename,
   }) =>
       _res;

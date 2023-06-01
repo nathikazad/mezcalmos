@@ -445,6 +445,12 @@ mutation delete_business_rental($id: Int!){
 query getHomeRentalOrderRequest($orderId: Int!) {
   business_order_request_by_pk(id: $orderId) {
     business_id
+
+    customer_id
+    customerAppType
+     business {
+      details_id
+    }
     chat_id
     cost
     status
@@ -463,13 +469,22 @@ query getHomeRentalOrderRequest($orderId: Int!) {
       rental {
         id
         details {
-          image
-          name {
-            translations {
-              language_id
-              value
-            }
-          }
+   
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+     
+      category1
+      category2
+      cost
+      image
+      position
+      tags
         }
       }
       time

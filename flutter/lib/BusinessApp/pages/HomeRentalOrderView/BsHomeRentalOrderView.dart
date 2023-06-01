@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/HomeRentalOrderView/components/BsHomeRentalOrderItemCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/HomeRentalOrderView/components/BsHomeRentalOrderSatusCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/HomeRentalOrderView/controllers/BsHomeRentalOrderViewController.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -29,6 +30,8 @@ class BsHomeRentalOrderView extends StatefulWidget {
 }
 
 class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
+  BsHomeRentalOrderViewController viewController =
+      BsHomeRentalOrderViewController();
   int? orderId;
   @override
   void initState() {
@@ -36,6 +39,8 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
     if (orderId == null) {
       showErrorSnackBar(
           errorText: "Invalid order id", duration: const Duration(seconds: 3));
+    } else {
+      viewController.init(orderId: orderId!);
     }
 
     super.initState();
@@ -46,52 +51,59 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           title: 'Home for rent', onClick: MezRouter.back),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            BsHomeRentalOrderSatusCard(),
-            meduimSeperator,
-            MezCard(
-                firstAvatarBgImage:
-                    CachedNetworkImageProvider(defaultUserImgUrl),
-                action: MessageButton(
-                  chatId: 1,
-                  onTap: () {},
+      body: Obx(() {
+        if (!viewController.isLoading && viewController.order != null) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                BsHomeRentalOrderSatusCard(),
+                meduimSeperator,
+                MezCard(
+                    firstAvatarBgImage:
+                        CachedNetworkImageProvider(defaultUserImgUrl),
+                    action: MessageButton(
+                      chatId: 1,
+                      onTap: () {},
+                    ),
+                    content: Text(
+                      "Customer name",
+                      style: context.textTheme.bodyLarge,
+                    )),
+                meduimSeperator,
+                Column(
+                  children: List.generate(
+                      2, (int index) => BsHomeRentalOrderItemCard()),
                 ),
-                content: Text(
-                  "Customer name",
-                  style: context.textTheme.bodyLarge,
-                )),
-            meduimSeperator,
-            Column(
-              children:
-                  List.generate(2, (int index) => BsHomeRentalOrderItemCard()),
+                OrderPaymentMethod(
+                    paymentType: PaymentType.Card,
+                    stripeOrderPaymentInfo: null),
+                meduimSeperator,
+                OrderNoteCard(note: "note"),
+                meduimSeperator,
+                OrderSummaryCard(
+                    showNullValues: false,
+                    costs: OrderCosts(
+                        deliveryCost: null,
+                        refundAmmount: null,
+                        tax: null,
+                        orderItemsCost: 5,
+                        totalCost: 5),
+                    stripeOrderPaymentInfo: null),
+                meduimSeperator,
+                MezButton(
+                  label: "Cancel order",
+                  onClick: () async {},
+                  backgroundColor: offRedColor,
+                  textColor: redAccentColor,
+                )
+              ],
             ),
-            OrderPaymentMethod(
-                paymentType: PaymentType.Card, stripeOrderPaymentInfo: null),
-            meduimSeperator,
-            OrderNoteCard(note: "note"),
-            meduimSeperator,
-            OrderSummaryCard(
-                showNullValues: false,
-                costs: OrderCosts(
-                    deliveryCost: null,
-                    refundAmmount: null,
-                    tax: null,
-                    orderItemsCost: 5,
-                    totalCost: 5),
-                stripeOrderPaymentInfo: null),
-            meduimSeperator,
-            MezButton(
-              label: "Cancel order",
-              onClick: () async {},
-              backgroundColor: offRedColor,
-              textColor: redAccentColor,
-            )
-          ],
-        ),
-      ),
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      }),
     );
   }
 }

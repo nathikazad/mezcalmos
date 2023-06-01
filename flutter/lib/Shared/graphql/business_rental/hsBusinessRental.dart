@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/__generated/business_rental.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -622,13 +623,51 @@ Future<int?> delete_busines_rental({required int rentalId}) async {
   return null;
 }
 
-Future<void> getHomeRentalOrderReq({required int orderId}) async {
+Future<BusinessOrder?> get_home_rental_order_req({required int orderId}) async {
   QueryResult<Query$getHomeRentalOrderRequest> res = await _db.graphQLClient
       .query$getHomeRentalOrderRequest(Options$Query$getHomeRentalOrderRequest(
           variables:
               Variables$Query$getHomeRentalOrderRequest(orderId: orderId)));
-  if (res.hasException) {
+  if (res.hasException ||
+      res.parsedData?.business_order_request_by_pk == null) {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${res.exception}");
-  } 
-  
+  }
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk data =
+      res.parsedData!.business_order_request_by_pk!;
+  return BusinessOrder(
+      orderId: data.id,
+      customerId: data.customer_id,
+      businessId: data.business_id,
+      spDetailsId: data.business.details_id,
+      status: data.status.toBusinessOrderRequestStatus(),
+      items: data.items
+          .map(
+              (Query$getHomeRentalOrderRequest$business_order_request_by_pk$items
+                      item) =>
+                  BusinessOrderItem(
+                    id: item.id,
+                    cost: item.cost,
+                    itemId: item.id,
+                    offeringType: item.offering_type.toOfferingType(),
+                    parameters: businessItemParamsFromData(item.parameters),
+                    item: BusinessItemDetails(
+                      id: item.id,
+                      name: toLanguageMap(
+                          translations: item.rental!.details.name.translations),
+                      position: item.rental!.details.position,
+                      businessId: data.business_id,
+                      available: item.available,
+                      image: item.rental?.details.image
+                              ?.map<String>((e) => e.toString())
+                              .toList() ??
+                          [],
+                      cost: constructBusinessServiceCost(
+                          item.rental!.details.cost),
+                      additionalParameters:
+                          item.rental!.details.additional_parameters,
+                    ),
+                  ))
+          .toList(),
+      cost: data.cost?.toDouble() ?? 0,
+      customerAppType: CustomerAppType.Native);
 }
