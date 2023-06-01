@@ -16,18 +16,18 @@ class CloudFunctions {
     return response.data;
   }
 
-  static Future<void> user2_deleteUserAccount(
+  static Future<DeleteAccountResponse> user2_deleteUserAccount(
   ) async {
-    return await callCloudFunction(
+    return DeleteAccountResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "user2-deleteUserAccount",
-      parameters: <String, dynamic>{});
+      parameters: <String, dynamic>{}));
   }
 
-  static Future<void> user2_addHasuraClaim(
+  static Future<HasuraClaimResponse> user2_addHasuraClaim(
   ) async {
-    return await callCloudFunction(
+    return HasuraClaimResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "user2-addHasuraClaim",
-      parameters: <String, dynamic>{});
+      parameters: <String, dynamic>{}));
   }
 
   static Future<SendOtpResponse> otp3_sendOTPForLogin(
