@@ -161,7 +161,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             onClick: () {
               _drawerController.closeMenu();
               if (controller.isUserSignedIn) {
-                signOut();
+                logOut();
               } else
                 SignInView.navigateAtOrderTime();
             },

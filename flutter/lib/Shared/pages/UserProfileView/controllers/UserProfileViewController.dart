@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -115,7 +116,7 @@ class UserProfileViewController {
   Future<void> deleteAccount(BuildContext context) async {
     await CloudFunctions.user2_deleteUserAccount();
     Navigator.pop(context);
-    await _authController.signOut();
+    unawaited(_authController.signOut());
   }
 
   void dispose() {}
