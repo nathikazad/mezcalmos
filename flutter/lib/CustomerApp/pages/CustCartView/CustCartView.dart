@@ -123,59 +123,59 @@ class _CustCartViewState extends State<CustCartView> {
                                       children: [
                                         Row(
                                           children: [
-                                            Container(
-                                              padding: EdgeInsets.all(4),
-                                              child: CachedNetworkImage(
-                                                width: 65,
-                                                height: 65,
-                                                imageUrl: item.rental!.details.image!.first,
-                                                imageBuilder: (_,
-                                                    ImageProvider
-                                                        imageProvider) {
-                                                  return Container(
-                                                    width: 65,
-                                                    height: 65,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.rectangle,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: imageProvider,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                errorWidget: (_, __, ___) =>
-                                                    Container(
-                                                  width: 65,
-                                                  height: 65,
-                                                  child: Container(
-                                                    width: 65,
-                                                    height: 65,
-                                                    decoration: BoxDecoration(
-                                                        shape:
-                                                            BoxShape.rectangle,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        image: DecorationImage(
-                                                            image: AssetImage(
-                                                                aNoImage))),
-                                                  ),
-                                                ),
-                                                placeholder: (_, __) =>
-                                                    Container(
-                                                  width: 80,
-                                                  height: 60,
-                                                  child: Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+                                            // Container(
+                                            //   padding: EdgeInsets.all(4),
+                                            //   child: CachedNetworkImage(
+                                            //     width: 65,
+                                            //     height: 65,
+                                            //     imageUrl: item.rental!.details.image!.first,
+                                            //     imageBuilder: (_,
+                                            //         ImageProvider
+                                            //             imageProvider) {
+                                            //       return Container(
+                                            //         width: 65,
+                                            //         height: 65,
+                                            //         decoration: BoxDecoration(
+                                            //           shape: BoxShape.rectangle,
+                                            //           borderRadius:
+                                            //               BorderRadius.circular(
+                                            //                   10),
+                                            //           image: DecorationImage(
+                                            //             fit: BoxFit.cover,
+                                            //             image: imageProvider,
+                                            //           ),
+                                            //         ),
+                                            //       );
+                                            //     },
+                                            //     errorWidget: (_, __, ___) =>
+                                            //         Container(
+                                            //       width: 65,
+                                            //       height: 65,
+                                            //       child: Container(
+                                            //         width: 65,
+                                            //         height: 65,
+                                            //         decoration: BoxDecoration(
+                                            //             shape:
+                                            //                 BoxShape.rectangle,
+                                            //             borderRadius:
+                                            //                 BorderRadius
+                                            //                     .circular(10),
+                                            //             image: DecorationImage(
+                                            //                 image: AssetImage(
+                                            //                     aNoImage))),
+                                            //       ),
+                                            //     ),
+                                            //     placeholder: (_, __) =>
+                                            //         Container(
+                                            //       width: 80,
+                                            //       height: 60,
+                                            //       child: Center(
+                                            //         child:
+                                            //             CircularProgressIndicator(),
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            // ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8.0),
@@ -183,13 +183,13 @@ class _CustCartViewState extends State<CustCartView> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    "${item.rental!.details.name.getTranslation(userLanguage)!.inCaps}",
-                                                    style: context
-                                                        .textTheme.bodyLarge,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
+                                                  // Text(
+                                                  //   "${item.rental!.details.name.getTranslation(userLanguage)!.inCaps}",
+                                                  //   style: context
+                                                  //       .textTheme.bodyLarge,
+                                                  //   overflow:
+                                                  //       TextOverflow.ellipsis,
+                                                  // ),
                                                   Row(
                                                     children: [
                                                       Icon(
