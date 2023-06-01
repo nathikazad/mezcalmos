@@ -16,6 +16,13 @@ class CloudFunctions {
     return response.data;
   }
 
+  static Future<void> user2_deleteUserAccount(
+  ) async {
+    return await callCloudFunction(
+      functionName: "user2-deleteUserAccount",
+      parameters: <String, dynamic>{});
+  }
+
   static Future<void> user2_addHasuraClaim(
   ) async {
     return await callCloudFunction(

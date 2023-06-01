@@ -5,6 +5,7 @@ import * as firebase from "firebase-admin";
 // import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "./hasura";
+import { MezError } from "../shared/models/Generic/Generic";
 
 // Customer Canceling
 export const processSignUp = functions.auth.user().onCreate(async user => {
@@ -26,19 +27,44 @@ export const processSignUp = functions.auth.user().onCreate(async user => {
   await addHasuraClaim(user.uid, null);
 });
 
-export async function deleteAccount(uid: string | undefined, _: any) {
+export interface DeleteAccountResponse {
+  success: boolean,
+  error?: DeleteAccountError
+  unhandledError?: string
+}
+enum DeleteAccountError {
+  UnhandledError = "unhandledError",
+  Unauthenticated = "unauthenticated",
+}
 
-  if (!uid) {
-    throw new HttpsError(
-      "unauthenticated",
-      "Request was not authenticated.",
-    );
-  }
-  await firebase.auth().deleteUser(uid);
-  return { status: "success" }
+export async function deleteAccount(uid: string | undefined, _: any): Promise<DeleteAccountResponse> {
+    try {
+      if (!uid) {
+        throw new MezError(DeleteAccountError.Unauthenticated);
+      }
+      await firebase.auth().deleteUser(uid);
+      return {
+          success: true
+      }
+    } catch (e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(DeleteAccountError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: DeleteAccountError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
+    }
 };
-
-
 
 export async function addHasuraClaim(uid: string | undefined, _:null) {
   try {
