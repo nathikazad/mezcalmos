@@ -46,10 +46,13 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - item_id
         - customer_id
         - id
+        - item_id
         - parameters
+        - cost
+        - offering_type
+        - time
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
