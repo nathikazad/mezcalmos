@@ -1896,8 +1896,8 @@
         "share": "Compartir",
         "privacyPolicies": "Políticas de privacidad",
         "logout": "Cerrar sesión",
-        "openService": "Servicio abierto",
-        "closeService": "Servicio cerrado",
+        "openService": "Abrir servicio",
+        "closeService": "Cerrar para siempre",
         "serviceClosed": "El servicio está cerrado indefinidamente",
         "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación."
       },
