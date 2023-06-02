@@ -9364,11 +9364,11 @@ class _CopyWithStubImpl$Mutation$addItemToBusinessCart$insert_business_cart_item
 
 class Variables$Mutation$set_cart_business_id {
   factory Variables$Mutation$set_cart_business_id({
-    required int business_id,
+    int? business_id,
     required int customer_id,
   }) =>
       Variables$Mutation$set_cart_business_id._({
-        r'business_id': business_id,
+        if (business_id != null) r'business_id': business_id,
         r'customer_id': customer_id,
       });
 
@@ -9377,8 +9377,10 @@ class Variables$Mutation$set_cart_business_id {
   factory Variables$Mutation$set_cart_business_id.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$business_id = data['business_id'];
-    result$data['business_id'] = (l$business_id as int);
+    if (data.containsKey('business_id')) {
+      final l$business_id = data['business_id'];
+      result$data['business_id'] = (l$business_id as int?);
+    }
     final l$customer_id = data['customer_id'];
     result$data['customer_id'] = (l$customer_id as int);
     return Variables$Mutation$set_cart_business_id._(result$data);
@@ -9386,12 +9388,14 @@ class Variables$Mutation$set_cart_business_id {
 
   Map<String, dynamic> _$data;
 
-  int get business_id => (_$data['business_id'] as int);
+  int? get business_id => (_$data['business_id'] as int?);
   int get customer_id => (_$data['customer_id'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$business_id = business_id;
-    result$data['business_id'] = l$business_id;
+    if (_$data.containsKey('business_id')) {
+      final l$business_id = business_id;
+      result$data['business_id'] = l$business_id;
+    }
     final l$customer_id = customer_id;
     result$data['customer_id'] = l$customer_id;
     return result$data;
@@ -9414,6 +9418,10 @@ class Variables$Mutation$set_cart_business_id {
     }
     final l$business_id = business_id;
     final lOther$business_id = other.business_id;
+    if (_$data.containsKey('business_id') !=
+        other._$data.containsKey('business_id')) {
+      return false;
+    }
     if (l$business_id != lOther$business_id) {
       return false;
     }
@@ -9430,7 +9438,7 @@ class Variables$Mutation$set_cart_business_id {
     final l$business_id = business_id;
     final l$customer_id = customer_id;
     return Object.hashAll([
-      l$business_id,
+      _$data.containsKey('business_id') ? l$business_id : const {},
       l$customer_id,
     ]);
   }
@@ -9470,8 +9478,7 @@ class _CopyWithImpl$Variables$Mutation$set_cart_business_id<TRes>
   }) =>
       _then(Variables$Mutation$set_cart_business_id._({
         ..._instance._$data,
-        if (business_id != _undefined && business_id != null)
-          'business_id': (business_id as int),
+        if (business_id != _undefined) 'business_id': (business_id as int?),
         if (customer_id != _undefined && customer_id != null)
           'customer_id': (customer_id as int),
       }));
@@ -9649,7 +9656,7 @@ const documentNodeMutationset_cart_business_id = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'business_id')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
-          isNonNull: true,
+          isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],

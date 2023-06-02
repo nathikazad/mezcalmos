@@ -14,7 +14,7 @@ class CustBusinessCartController extends GetxController {
   // HasuraDb _hasuraDb = Get.find<HasuraDb>();
   AuthController _auth = Get.find<AuthController>();
   //
-  Rxn<BusinessCart> cart = Rxn<BusinessCart>();
+  Rxn<CustBusinessCart> cart = Rxn<CustBusinessCart>();
   // streams //
   // StreamSubscription<BusinessCart?>? cartStream;
   // String? subscriptionId;
@@ -35,10 +35,10 @@ class CustBusinessCartController extends GetxController {
 
   Future<void> fetchCart() async {
     if (_auth.hasuraUserId != null) {
-      final BusinessCart? value = await get_business_cart(
+      final CustBusinessCart? value = await get_business_cart(
         customerId: _auth.hasuraUserId!,
       );
-      if (value != null) {
+      if (value != null && value.items.isNotEmpty && value.businessId != null) {
         cart.value = value;
       } else {
         await create_business_cart();

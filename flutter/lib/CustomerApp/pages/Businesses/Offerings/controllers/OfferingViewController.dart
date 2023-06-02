@@ -122,18 +122,7 @@ class CustHomeRentalViewController {
         rental: _homeRental.value,
       ),
     );
-    await CustCartView.navigate(
-      cartInfo: CartInfo(
-        duration: _duration.value,
-        itemName: _homeRental.value!.details.name,
-        unitPrice: _timeCost.value!.values.first.toDouble(),
-        totalPrice: totalOrderCost.value,
-        startTime: startDate.value ?? DateTime.now(),
-        totalPeople: _totalGuests.value,
-        image: _homeRental.value!.details.image?.first ?? defaultUserImgUrl,
-        unitDuration: _timeCost.value!.keys.first.toFirebaseFormatString(),
-      ),
-    );
+    await CustCartView.navigate();
     _duration.value = 1;
     _totalGuests.value = 1;
     orderString.value = "-";

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
+import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
@@ -19,6 +20,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
@@ -38,6 +40,9 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   AppLifeCycleController appLifeCycleController =
       Get.find<AppLifeCycleController>();
+
+  final CustBusinessCartController custBusinessCartController =
+      Get.find<CustBusinessCartController>();
 
   DateTime? appClosedTime;
 
@@ -74,6 +79,21 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Obx(
+        () => custBusinessCartController.cart.value != null &&
+                custBusinessCartController.cart.value!.items.isNotEmpty
+            ? FloatingActionButton(
+                child: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                ),
+                backgroundColor: primaryBlueColor,
+                onPressed: () async {
+                  await CustCartView.navigate();
+                },
+              )
+            : SizedBox(),
+      ),
       bottomNavigationBar: _navBar(),
       body: Obx(() {
         if (authController.user != null) {
