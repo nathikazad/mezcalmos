@@ -24,6 +24,8 @@ select_permissions:
         - customer_id
         - business_id
         - discount_value
+      computed_fields:
+        - cost
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
