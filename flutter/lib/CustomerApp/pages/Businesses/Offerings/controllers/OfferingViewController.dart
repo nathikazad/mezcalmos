@@ -138,7 +138,6 @@ class CustRentalViewController {
   Rxn<DateTime> _startDate = Rxn();
   Rxn<Map<TimeUnit, num>> _timeCost = Rxn();
   Rx<int> _duration = Rx(1);
-  Rx<int> _totalGuests = Rx(1);
   Rx<String> orderString = Rx("-");
   Rx<double> totalOrderCost = Rx(0);
 
@@ -147,7 +146,6 @@ class CustRentalViewController {
   Rxn<DateTime> get startDate => _startDate;
   Rxn<Map<TimeUnit, num>> get timeCost => _timeCost;
   Rx<int> get duration => _duration;
-  Rx<int> get totalGuests => _totalGuests;
   // methods //
   Future<void> fetchData({required int rentalId}) async {
     _rental.value = await get_rental_by_id(
@@ -176,11 +174,6 @@ class CustRentalViewController {
     _calcTotalOrderCost();
   }
 
-  void setTotalGuests(int value) {
-    _totalGuests.value = value;
-    _calcTotalOrderCost();
-  }
-
   void _calcTotalOrderCost() {
     double newCost = 0;
     newCost += _duration.value * (_timeCost.value!.values.first.toInt());
@@ -189,8 +182,24 @@ class CustRentalViewController {
   }
 
   Future<void> bookOffering() async {
+    final CustBusinessCartController custBusinessCartController =
+        Get.find<CustBusinessCartController>();
+    await custBusinessCartController.addCartItem(
+      BusinessCartItem(
+        businessId: _rental.value!.business.id,
+        itemId: _rental.value!.id!,
+        offeringType: OfferingType.Rental,
+        time: startDate.value!.toString(),
+        parameters: BusinessItemParameters(
+          numberOfUnits: _duration.value,
+          timeUnit: timeCost.value!.keys.first,
+        ),
+        cost: totalOrderCost.value,
+        rental: _rental.value,
+      ),
+    );
+    await CustCartView.navigate();
     _duration.value = 1;
-    _totalGuests.value = 1;
     orderString.value = "-";
     totalOrderCost.value = 0;
     _setInitialTimeCost();

@@ -154,18 +154,6 @@ class _CustRentalViewState extends State<CustRentalView> {
                         },
                       ),
                       bigSeperator,
-                      CustGuestPicker(
-                        label: isSurf
-                            ? "Boards"
-                            : viewController.rental!.category2!.name.inCaps,
-                        icon: isSurf ? Icons.surfing : _getIcon(),
-                        onNewGuestSelected: (int v) {
-                          viewController.setTotalGuests(v);
-                        },
-                        value: viewController.totalGuests.value,
-                        lowestValue: 1,
-                      ),
-                      bigSeperator,
                       Text(
                         "Notes",
                         style: context.textTheme.bodyLarge,

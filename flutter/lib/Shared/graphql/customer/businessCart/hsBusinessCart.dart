@@ -82,14 +82,14 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                     additionalParameters:
                         data.rental!.details.additional_parameters,
                   ),
-                  bathrooms: data.rental?.home_rental!.bathrooms,
-                  bedrooms: data.rental?.home_rental!.bedrooms,
+                  bathrooms: data.rental?.home_rental?.bathrooms,
+                  bedrooms: data.rental?.home_rental?.bedrooms,
                   gpsLocation: Location(
-                      lat: data.rental?.home_rental!.gps_location.latitude ?? 0,
+                      lat: data.rental?.home_rental?.gps_location.latitude ?? 0,
                       lng:
-                          data.rental?.home_rental!.gps_location.longitude ?? 0,
-                      address: data.rental?.home_rental!.address ?? ''),
-                  homeType: data.rental?.home_rental!.home_type.toHomeType(),
+                          data.rental?.home_rental?.gps_location.longitude ?? 0,
+                      address: data.rental?.home_rental?.address ?? ''),
+                  homeType: data.rental?.home_rental?.home_type.toHomeType(),
                 )),
             event: data.event != null
                 ? EventCard(
