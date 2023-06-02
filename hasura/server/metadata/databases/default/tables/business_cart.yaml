@@ -17,6 +17,15 @@ computed_fields:
       function:
         name: cartcost
         schema: business
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - business_id
+        - customer_id
 select_permissions:
   - role: customer
     permission:
