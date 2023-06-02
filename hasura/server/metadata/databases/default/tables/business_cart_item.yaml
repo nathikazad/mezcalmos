@@ -70,3 +70,9 @@ select_permissions:
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
+delete_permissions:
+  - role: customer
+    permission:
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id

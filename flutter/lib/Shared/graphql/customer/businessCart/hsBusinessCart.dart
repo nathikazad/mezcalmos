@@ -39,26 +39,24 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
 
   return CustBusinessCart(
     customerId: cartData.customer_id,
-    businessId: cartData.business_id!,
+    businessId: cartData.business_id?.toInt(),
     cost: cartData.cost ?? 0,
     items: cartData.items
-            .map(
-              (Query$getBusinessCart$business_cart$items data) =>
-                  BusinessCartItem(
-                id: data.id,
-                itemId: data.item_id,
-                cost: data.cost,
+        .map(
+          (Query$getBusinessCart$business_cart$items data) => BusinessCartItem(
+            id: data.id,
+            itemId: data.item_id,
+            cost: data.cost,
             time: data.time,
-                offeringType: data.offering_type.toOfferingType(),
-                parameters: BusinessItemParameters(
-                  guests: data.parameters?["guests"],
-                  numberOfUnits: data.parameters?["numberOfUnits"],
-                  previousCost: data.parameters?["previousCost"],
-                  previoustime: data.parameters?["previoustime"],
-                  timeUnit:
-                      data.parameters?["timeUnit"]?.toString().toTimeUnit() ??
-                          null,
-                ),
+            offeringType: data.offering_type.toOfferingType(),
+            parameters: BusinessItemParameters(
+              guests: data.parameters?["guests"],
+              numberOfUnits: data.parameters?["numberOfUnits"],
+              previousCost: data.parameters?["previousCost"],
+              previoustime: data.parameters?["previoustime"],
+              timeUnit:
+                  data.parameters?["timeUnit"]?.toString().toTimeUnit() ?? null,
+            ),
             rental: RentalCard(
                 businessName: data.rental!.business.details.name,
                 currency: data.rental!.business.details.currency.toCurrency(),
@@ -250,6 +248,29 @@ Future<int> add_item_to_business_cart(
     mezDbgPrint(
         "🚨 graphql::add_item_to_cart::success :: ${addItemResult.parsedData!.insert_business_cart_item_one!.id}");
     return addItemResult.parsedData!.insert_business_cart_item_one!.id;
+  }
+}
+
+Future<int> delete_item_to_business_cart({required int itemId}) async {
+  final QueryResult<Mutation$delete_business_cart_item> deleteItemResult =
+      await _hasuraDb.graphQLClient.mutate$delete_business_cart_item(
+    Options$Mutation$delete_business_cart_item(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Mutation$delete_business_cart_item(
+        $_id: itemId,
+      ),
+    ),
+  );
+
+  if (deleteItemResult.parsedData?.delete_business_cart_item?.affected_rows ==
+      null) {
+    throw Exception(
+        "🚨 graphql::delete_item_to_business_cart::exception :: ${deleteItemResult.exception}");
+  } else {
+    mezDbgPrint(
+        "🚨 graphql::delete_item_to_business_cart::success :: ${deleteItemResult.parsedData!.delete_business_cart_item!.affected_rows}");
+    return deleteItemResult
+        .parsedData!.delete_business_cart_item!.affected_rows;
   }
 }
 

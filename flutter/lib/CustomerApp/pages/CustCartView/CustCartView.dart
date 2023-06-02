@@ -74,21 +74,25 @@ class _CustCartViewState extends State<CustCartView> {
                                 return RentalCartItemCard(
                                   index: index,
                                   item: item,
+                                  controller: custBusinessCartController,
                                 );
                               case OfferingType.Event:
                                 return RentalCartItemCard(
                                   index: index,
                                   item: item,
+                                  controller: custBusinessCartController,
                                 );
                               case OfferingType.Service:
                                 return RentalCartItemCard(
                                   index: index,
                                   item: item,
+                                  controller: custBusinessCartController,
                                 );
                               case OfferingType.Product:
                                 return RentalCartItemCard(
                                   index: index,
                                   item: item,
+                                  controller: custBusinessCartController,
                                 );
                             }
                           },

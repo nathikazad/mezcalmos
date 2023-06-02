@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/CartItemImage.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -14,10 +15,12 @@ class RentalCartItemCard extends StatelessWidget {
     super.key,
     required this.index,
     required this.item,
+    required this.controller,
   });
 
   final int index;
   final BusinessCartItem item;
+  final CustBusinessCartController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +36,8 @@ class RentalCartItemCard extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {
-                
+              onTap: () async{
+                await controller.deleteCartItem(item.id!.toInt());
               },
               child: Row(
                 children: [
@@ -75,6 +78,7 @@ class RentalCartItemCard extends StatelessWidget {
                               "${item.rental!.details.name.getTranslation(userLanguage)!.inCaps}",
                               style: context.textTheme.bodyLarge,
                               overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                             Row(
                               children: [

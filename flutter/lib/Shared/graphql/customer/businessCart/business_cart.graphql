@@ -179,3 +179,9 @@ mutation set_cart_business_id($business_id: Int, $customer_id: Int!) {
     business_id
   }
 }
+
+mutation delete_business_cart_item($_id: Int!) {
+  delete_business_cart_item(where: { id: { _eq: $_id } }) {
+    affected_rows
+  }
+}
