@@ -31,12 +31,11 @@ Future<void> saveReferral(String referralCode) async {
 }
 
 Future<void> incrementReferralIfItExists() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
   final User? user = FirebaseAuth.instance.currentUser;
   if (user == null) return;
-  final IdTokenResult tokenResult = await user.getIdTokenResult(true);
 
   // Check if the IP address exists in local storage
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
   if (!prefs.containsKey('ip_address')) {
     print('IP address not found in local storage.');
     return;
@@ -45,15 +44,15 @@ Future<void> incrementReferralIfItExists() async {
   // Retrieve the IP address from local storage
   final String? ipAddress = prefs.getString('ip_address');
 
-  // TODO: @sanchit add for staging
-  String functionUrl =
-      'https://us-central1-mezcalmos-31f1c.cloudfunctions.net/incrementReferralCount?uid=${user.uid}';
-  if (ipAddress != null) functionUrl += '&ip=$ipAddress';
-
+  final IdTokenResult tokenResult = await user.getIdTokenResult(true);
   // Check if the referral increment has already been applied in custom claims
   final bool isReferralCodeUsed =
       tokenResult.claims?['isReferralCodeUsed'] ?? false;
 
+  // TODO: @sanchit add for staging
+  String functionUrl =
+      'https://us-central1-mezcalmos-31f1c.cloudfunctions.net/incrementReferralCount?uid=${user.uid}';
+  if (ipAddress != null) functionUrl += '&ip=$ipAddress';
   if (!isReferralCodeUsed) {
     final Uri url = Uri.parse(functionUrl);
     final http.Response response = await http.get(url);
