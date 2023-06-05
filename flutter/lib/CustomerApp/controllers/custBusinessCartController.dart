@@ -1,20 +1,18 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/customer/businessCart/hsBusinessCart.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 class CustBusinessCartController extends GetxController {
 // instances //
   // HasuraDb _hasuraDb = Get.find<HasuraDb>();
   AuthController _auth = Get.find<AuthController>();
   //
-  Rxn<BusinessCart> cart = Rxn<BusinessCart>();
+  Rxn<CustBusinessCart> cart = Rxn<CustBusinessCart>();
   // streams //
   // StreamSubscription<BusinessCart?>? cartStream;
   // String? subscriptionId;
@@ -35,10 +33,10 @@ class CustBusinessCartController extends GetxController {
 
   Future<void> fetchCart() async {
     if (_auth.hasuraUserId != null) {
-      final BusinessCart? value = await get_business_cart(
+      final CustBusinessCart? value = await get_business_cart(
         customerId: _auth.hasuraUserId!,
       );
-      if (value != null) {
+      if (value != null && value.items.isNotEmpty && value.businessId != null) {
         cart.value = value;
       } else {
         await create_business_cart();
@@ -81,5 +79,19 @@ class CustBusinessCartController extends GetxController {
       mezDbgPrint(stk);
     }
     return null;
+  }
+
+  Future<bool?> deleteCartItem(int cartItemId) async {
+    final BusinessCartItem? cartItem = cart.value!.items.firstWhereOrNull(
+        (BusinessCartItem element) => element.id == cartItemId);
+    if (cartItem != null) {
+      await delete_item_to_business_cart(itemId: cartItemId);
+      await fetchCart();
+      showSavedSnackBar(
+        title: "Item removed",
+      );
+      return true;
+    } else
+      return false;
   }
 }

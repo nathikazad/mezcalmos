@@ -9364,11 +9364,11 @@ class _CopyWithStubImpl$Mutation$addItemToBusinessCart$insert_business_cart_item
 
 class Variables$Mutation$set_cart_business_id {
   factory Variables$Mutation$set_cart_business_id({
-    required int business_id,
+    int? business_id,
     required int customer_id,
   }) =>
       Variables$Mutation$set_cart_business_id._({
-        r'business_id': business_id,
+        if (business_id != null) r'business_id': business_id,
         r'customer_id': customer_id,
       });
 
@@ -9377,8 +9377,10 @@ class Variables$Mutation$set_cart_business_id {
   factory Variables$Mutation$set_cart_business_id.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$business_id = data['business_id'];
-    result$data['business_id'] = (l$business_id as int);
+    if (data.containsKey('business_id')) {
+      final l$business_id = data['business_id'];
+      result$data['business_id'] = (l$business_id as int?);
+    }
     final l$customer_id = data['customer_id'];
     result$data['customer_id'] = (l$customer_id as int);
     return Variables$Mutation$set_cart_business_id._(result$data);
@@ -9386,12 +9388,14 @@ class Variables$Mutation$set_cart_business_id {
 
   Map<String, dynamic> _$data;
 
-  int get business_id => (_$data['business_id'] as int);
+  int? get business_id => (_$data['business_id'] as int?);
   int get customer_id => (_$data['customer_id'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$business_id = business_id;
-    result$data['business_id'] = l$business_id;
+    if (_$data.containsKey('business_id')) {
+      final l$business_id = business_id;
+      result$data['business_id'] = l$business_id;
+    }
     final l$customer_id = customer_id;
     result$data['customer_id'] = l$customer_id;
     return result$data;
@@ -9414,6 +9418,10 @@ class Variables$Mutation$set_cart_business_id {
     }
     final l$business_id = business_id;
     final lOther$business_id = other.business_id;
+    if (_$data.containsKey('business_id') !=
+        other._$data.containsKey('business_id')) {
+      return false;
+    }
     if (l$business_id != lOther$business_id) {
       return false;
     }
@@ -9430,7 +9438,7 @@ class Variables$Mutation$set_cart_business_id {
     final l$business_id = business_id;
     final l$customer_id = customer_id;
     return Object.hashAll([
-      l$business_id,
+      _$data.containsKey('business_id') ? l$business_id : const {},
       l$customer_id,
     ]);
   }
@@ -9470,8 +9478,7 @@ class _CopyWithImpl$Variables$Mutation$set_cart_business_id<TRes>
   }) =>
       _then(Variables$Mutation$set_cart_business_id._({
         ..._instance._$data,
-        if (business_id != _undefined && business_id != null)
-          'business_id': (business_id as int),
+        if (business_id != _undefined) 'business_id': (business_id as int?),
         if (customer_id != _undefined && customer_id != null)
           'customer_id': (customer_id as int),
       }));
@@ -9649,7 +9656,7 @@ const documentNodeMutationset_cart_business_id = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'business_id')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
-          isNonNull: true,
+          isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -9945,6 +9952,553 @@ class _CopyWithStubImpl$Mutation$set_cart_business_id$update_business_cart_by_pk
 
   call({
     int? business_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$delete_business_cart_item {
+  factory Variables$Mutation$delete_business_cart_item({required int $_id}) =>
+      Variables$Mutation$delete_business_cart_item._({
+        r'_id': $_id,
+      });
+
+  Variables$Mutation$delete_business_cart_item._(this._$data);
+
+  factory Variables$Mutation$delete_business_cart_item.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$$_id = data['_id'];
+    result$data['_id'] = (l$$_id as int);
+    return Variables$Mutation$delete_business_cart_item._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get $_id => (_$data['_id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$$_id = $_id;
+    result$data['_id'] = l$$_id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$delete_business_cart_item<
+          Variables$Mutation$delete_business_cart_item>
+      get copyWith => CopyWith$Variables$Mutation$delete_business_cart_item(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$delete_business_cart_item) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$$_id = $_id;
+    final lOther$$_id = other.$_id;
+    if (l$$_id != lOther$$_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$$_id = $_id;
+    return Object.hashAll([l$$_id]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$delete_business_cart_item<TRes> {
+  factory CopyWith$Variables$Mutation$delete_business_cart_item(
+    Variables$Mutation$delete_business_cart_item instance,
+    TRes Function(Variables$Mutation$delete_business_cart_item) then,
+  ) = _CopyWithImpl$Variables$Mutation$delete_business_cart_item;
+
+  factory CopyWith$Variables$Mutation$delete_business_cart_item.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$delete_business_cart_item;
+
+  TRes call({int? $_id});
+}
+
+class _CopyWithImpl$Variables$Mutation$delete_business_cart_item<TRes>
+    implements CopyWith$Variables$Mutation$delete_business_cart_item<TRes> {
+  _CopyWithImpl$Variables$Mutation$delete_business_cart_item(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$delete_business_cart_item _instance;
+
+  final TRes Function(Variables$Mutation$delete_business_cart_item) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? $_id = _undefined}) =>
+      _then(Variables$Mutation$delete_business_cart_item._({
+        ..._instance._$data,
+        if ($_id != _undefined && $_id != null) '_id': ($_id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$delete_business_cart_item<TRes>
+    implements CopyWith$Variables$Mutation$delete_business_cart_item<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$delete_business_cart_item(this._res);
+
+  TRes _res;
+
+  call({int? $_id}) => _res;
+}
+
+class Mutation$delete_business_cart_item {
+  Mutation$delete_business_cart_item({
+    this.delete_business_cart_item,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_business_cart_item.fromJson(
+      Map<String, dynamic> json) {
+    final l$delete_business_cart_item = json['delete_business_cart_item'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_business_cart_item(
+      delete_business_cart_item: l$delete_business_cart_item == null
+          ? null
+          : Mutation$delete_business_cart_item$delete_business_cart_item
+              .fromJson((l$delete_business_cart_item as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$delete_business_cart_item$delete_business_cart_item?
+      delete_business_cart_item;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delete_business_cart_item = delete_business_cart_item;
+    _resultData['delete_business_cart_item'] =
+        l$delete_business_cart_item?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delete_business_cart_item = delete_business_cart_item;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delete_business_cart_item,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$delete_business_cart_item) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delete_business_cart_item = delete_business_cart_item;
+    final lOther$delete_business_cart_item = other.delete_business_cart_item;
+    if (l$delete_business_cart_item != lOther$delete_business_cart_item) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_business_cart_item
+    on Mutation$delete_business_cart_item {
+  CopyWith$Mutation$delete_business_cart_item<
+          Mutation$delete_business_cart_item>
+      get copyWith => CopyWith$Mutation$delete_business_cart_item(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$delete_business_cart_item<TRes> {
+  factory CopyWith$Mutation$delete_business_cart_item(
+    Mutation$delete_business_cart_item instance,
+    TRes Function(Mutation$delete_business_cart_item) then,
+  ) = _CopyWithImpl$Mutation$delete_business_cart_item;
+
+  factory CopyWith$Mutation$delete_business_cart_item.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$delete_business_cart_item;
+
+  TRes call({
+    Mutation$delete_business_cart_item$delete_business_cart_item?
+        delete_business_cart_item,
+    String? $__typename,
+  });
+  CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item<TRes>
+      get delete_business_cart_item;
+}
+
+class _CopyWithImpl$Mutation$delete_business_cart_item<TRes>
+    implements CopyWith$Mutation$delete_business_cart_item<TRes> {
+  _CopyWithImpl$Mutation$delete_business_cart_item(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_business_cart_item _instance;
+
+  final TRes Function(Mutation$delete_business_cart_item) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delete_business_cart_item = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_business_cart_item(
+        delete_business_cart_item: delete_business_cart_item == _undefined
+            ? _instance.delete_business_cart_item
+            : (delete_business_cart_item
+                as Mutation$delete_business_cart_item$delete_business_cart_item?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item<TRes>
+      get delete_business_cart_item {
+    final local$delete_business_cart_item = _instance.delete_business_cart_item;
+    return local$delete_business_cart_item == null
+        ? CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item
+            .stub(_then(_instance))
+        : CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item(
+            local$delete_business_cart_item,
+            (e) => call(delete_business_cart_item: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$delete_business_cart_item<TRes>
+    implements CopyWith$Mutation$delete_business_cart_item<TRes> {
+  _CopyWithStubImpl$Mutation$delete_business_cart_item(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$delete_business_cart_item$delete_business_cart_item?
+        delete_business_cart_item,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item<TRes>
+      get delete_business_cart_item =>
+          CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item
+              .stub(_res);
+}
+
+const documentNodeMutationdelete_business_cart_item =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'delete_business_cart_item'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: '_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delete_business_cart_item'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: '_id')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$delete_business_cart_item _parserFn$Mutation$delete_business_cart_item(
+        Map<String, dynamic> data) =>
+    Mutation$delete_business_cart_item.fromJson(data);
+typedef OnMutationCompleted$Mutation$delete_business_cart_item = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$delete_business_cart_item?,
+);
+
+class Options$Mutation$delete_business_cart_item
+    extends graphql.MutationOptions<Mutation$delete_business_cart_item> {
+  Options$Mutation$delete_business_cart_item({
+    String? operationName,
+    required Variables$Mutation$delete_business_cart_item variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$delete_business_cart_item? onCompleted,
+    graphql.OnMutationUpdate<Mutation$delete_business_cart_item>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$delete_business_cart_item(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationdelete_business_cart_item,
+          parserFn: _parserFn$Mutation$delete_business_cart_item,
+        );
+
+  final OnMutationCompleted$Mutation$delete_business_cart_item?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$delete_business_cart_item
+    extends graphql.WatchQueryOptions<Mutation$delete_business_cart_item> {
+  WatchOptions$Mutation$delete_business_cart_item({
+    String? operationName,
+    required Variables$Mutation$delete_business_cart_item variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationdelete_business_cart_item,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$delete_business_cart_item,
+        );
+}
+
+extension ClientExtension$Mutation$delete_business_cart_item
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$delete_business_cart_item>>
+      mutate$delete_business_cart_item(
+              Options$Mutation$delete_business_cart_item options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$delete_business_cart_item>
+      watchMutation$delete_business_cart_item(
+              WatchOptions$Mutation$delete_business_cart_item options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$delete_business_cart_item$delete_business_cart_item {
+  Mutation$delete_business_cart_item$delete_business_cart_item({
+    required this.affected_rows,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_business_cart_item$delete_business_cart_item.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_business_cart_item$delete_business_cart_item(
+      affected_rows: (l$affected_rows as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$delete_business_cart_item$delete_business_cart_item) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_business_cart_item$delete_business_cart_item
+    on Mutation$delete_business_cart_item$delete_business_cart_item {
+  CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item<
+          Mutation$delete_business_cart_item$delete_business_cart_item>
+      get copyWith =>
+          CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item<
+    TRes> {
+  factory CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item(
+    Mutation$delete_business_cart_item$delete_business_cart_item instance,
+    TRes Function(Mutation$delete_business_cart_item$delete_business_cart_item)
+        then,
+  ) = _CopyWithImpl$Mutation$delete_business_cart_item$delete_business_cart_item;
+
+  factory CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$delete_business_cart_item$delete_business_cart_item;
+
+  TRes call({
+    int? affected_rows,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$delete_business_cart_item$delete_business_cart_item<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item<
+            TRes> {
+  _CopyWithImpl$Mutation$delete_business_cart_item$delete_business_cart_item(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_business_cart_item$delete_business_cart_item _instance;
+
+  final TRes Function(
+      Mutation$delete_business_cart_item$delete_business_cart_item) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_business_cart_item$delete_business_cart_item(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$delete_business_cart_item$delete_business_cart_item<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_business_cart_item$delete_business_cart_item<
+            TRes> {
+  _CopyWithStubImpl$Mutation$delete_business_cart_item$delete_business_cart_item(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
     String? $__typename,
   }) =>
       _res;

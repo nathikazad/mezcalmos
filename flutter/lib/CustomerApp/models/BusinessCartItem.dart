@@ -1,5 +1,28 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
+class CustBusinessCart {
+  num customerId;
+  num? businessId;
+  num cost;
+  List<BusinessCartItem> items;
+  num? discountValue;
+  CustBusinessCart(
+      {required this.customerId,
+      required this.businessId,
+      required this.cost,
+      required this.items,
+      this.discountValue});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "customerId": customerId,
+      "businessId": businessId,
+      "cost": cost,
+      "items": items,
+      "discountValue": discountValue,
+    };
+  }
+}
+
 class BusinessCartItem {
   num? id;
   num itemId;
