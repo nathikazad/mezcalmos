@@ -77,7 +77,7 @@ class DeliveryDriver {
         DeliveryDriverUserInfo.fromData(deliveryDriverData['info']);
 
     /// driverLocation
-    final dynamic? driverLocation = deliveryDriverData['location'] == null
+    final dynamic driverLocation = deliveryDriverData['location'] == null
         ? null
         : LatLng(deliveryDriverData["location"]["position"]["lat"],
             deliveryDriverData["location"]["position"]["lng"]);

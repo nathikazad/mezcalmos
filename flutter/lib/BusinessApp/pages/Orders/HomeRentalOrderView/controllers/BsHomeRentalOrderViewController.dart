@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/buisness_order/hsBusinessOrder.dart';
@@ -20,6 +22,12 @@ class BsHomeRentalOrderViewController {
   bool get isLoading => _isLoading.value;
   BusinessOrder? get order => _order.value;
   UserInfo? get customer => order?.customer;
+  bool get hasChanges =>
+      (order?.items.any((BusinessOrderItem element) =>
+              element.parameters.previousCost != null ||
+              element.parameters.previoustime != null) ??
+          false) &&
+      order?.status == BusinessOrderRequestStatus.RequestReceived;
   // stream //
   StreamSubscription<BusinessOrder?>? orderStream;
   String? subscriptionId;
@@ -96,5 +104,23 @@ class BsHomeRentalOrderViewController {
             parameters: item.parameters.copyWith(
               previousCost: item.cost,
             )));
+  }
+
+  Future<void> requestChanges() async {
+    try {
+      final HandleRequestResponse res =
+          await CloudFunctions.business_handleOrderRequestByAdmin(
+              orderRequestId: orderId,
+              newStatus:
+                  BusinessOrderRequestStatus.ModificationRequestByBusiness);
+    } on FirebaseException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message ?? "Error");
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 }

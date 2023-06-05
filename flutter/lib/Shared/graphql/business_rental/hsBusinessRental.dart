@@ -640,6 +640,7 @@ Future<BusinessOrder?> get_home_rental_order_req(
   return BusinessOrder(
       orderId: data.id,
       customer: UserInfo(
+          firebaseId: data.customer.user.firebase_id,
           id: data.customer.user_id,
           language: Language.EN,
           name: data.customer.user.name,
@@ -696,6 +697,7 @@ Stream<BusinessOrder?> listen_home_rental_order_req({required int id}) {
           orderId: data.id,
           customer: UserInfo(
               id: data.customer.user_id,
+              firebaseId: data.customer.user.firebase_id,
               language: Language.EN,
               name: data.customer.user.name,
               image: data.customer.user.image),

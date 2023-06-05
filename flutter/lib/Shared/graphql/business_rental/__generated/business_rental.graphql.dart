@@ -21995,6 +21995,13 @@ const documentNodeQuerygetHomeRentalOrderRequest = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'firebase_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'image'),
                     alias: null,
                     arguments: [],
@@ -23181,6 +23188,7 @@ class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_b
 class Query$getHomeRentalOrderRequest$business_order_request_by_pk$customer$user {
   Query$getHomeRentalOrderRequest$business_order_request_by_pk$customer$user({
     this.name,
+    required this.firebase_id,
     this.image,
     required this.$__typename,
   });
@@ -23188,16 +23196,20 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$customer$user
   factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$customer$user.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
+    final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Query$getHomeRentalOrderRequest$business_order_request_by_pk$customer$user(
       name: (l$name as String?),
+      firebase_id: (l$firebase_id as String),
       image: (l$image as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final String? name;
+
+  final String firebase_id;
 
   final String? image;
 
@@ -23207,6 +23219,8 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$customer$user
     final _resultData = <String, dynamic>{};
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$$__typename = $__typename;
@@ -23217,10 +23231,12 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$customer$user
   @override
   int get hashCode {
     final l$name = name;
+    final l$firebase_id = firebase_id;
     final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
+      l$firebase_id,
       l$image,
       l$$__typename,
     ]);
@@ -23239,6 +23255,11 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$customer$user
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
       return false;
     }
     final l$image = image;
@@ -23282,6 +23303,7 @@ abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_b
 
   TRes call({
     String? name,
+    String? firebase_id,
     String? image,
     String? $__typename,
   });
@@ -23308,12 +23330,16 @@ class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk
 
   TRes call({
     Object? name = _undefined,
+    Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Query$getHomeRentalOrderRequest$business_order_request_by_pk$customer$user(
         name: name == _undefined ? _instance.name : (name as String?),
+        firebase_id: firebase_id == _undefined || firebase_id == null
+            ? _instance.firebase_id
+            : (firebase_id as String),
         image: image == _undefined ? _instance.image : (image as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
@@ -23333,6 +23359,7 @@ class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_b
 
   call({
     String? name,
+    String? firebase_id,
     String? image,
     String? $__typename,
   }) =>
@@ -24874,6 +24901,13 @@ const documentNodeSubscriptionlistenHomeRentalOrderRequest =
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'firebase_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'image'),
                     alias: null,
                     arguments: [],
@@ -26035,6 +26069,7 @@ class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order
 class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$customer$user {
   Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$customer$user({
     this.name,
+    required this.firebase_id,
     this.image,
     required this.$__typename,
   });
@@ -26042,16 +26077,20 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$cus
   factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$customer$user.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
+    final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$customer$user(
       name: (l$name as String?),
+      firebase_id: (l$firebase_id as String),
       image: (l$image as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final String? name;
+
+  final String firebase_id;
 
   final String? image;
 
@@ -26061,6 +26100,8 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$cus
     final _resultData = <String, dynamic>{};
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$$__typename = $__typename;
@@ -26071,10 +26112,12 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$cus
   @override
   int get hashCode {
     final l$name = name;
+    final l$firebase_id = firebase_id;
     final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
+      l$firebase_id,
       l$image,
       l$$__typename,
     ]);
@@ -26093,6 +26136,11 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$cus
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
       return false;
     }
     final l$image = image;
@@ -26136,6 +26184,7 @@ abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order
 
   TRes call({
     String? name,
+    String? firebase_id,
     String? image,
     String? $__typename,
   });
@@ -26162,12 +26211,16 @@ class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_req
 
   TRes call({
     Object? name = _undefined,
+    Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$customer$user(
         name: name == _undefined ? _instance.name : (name as String?),
+        firebase_id: firebase_id == _undefined || firebase_id == null
+            ? _instance.firebase_id
+            : (firebase_id as String),
         image: image == _undefined ? _instance.image : (image as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
@@ -26187,6 +26240,7 @@ class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order
 
   call({
     String? name,
+    String? firebase_id,
     String? image,
     String? $__typename,
   }) =>

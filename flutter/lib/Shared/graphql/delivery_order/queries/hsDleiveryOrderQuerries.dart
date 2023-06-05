@@ -434,8 +434,8 @@ Future<UserInfo?> get_order_driver_info({required int orderId}) async {
     throwError(res.exception);
   }
   if (res.parsedData!.delivery_order_by_pk!.delivery_driver != null) {
-    Query$get_order_driver_info$delivery_order_by_pk$delivery_driver data =
-        res.parsedData!.delivery_order_by_pk!.delivery_driver!;
+    final Query$get_order_driver_info$delivery_order_by_pk$delivery_driver
+        data = res.parsedData!.delivery_order_by_pk!.delivery_driver!;
     return UserInfo(
         hasuraId: data.user.id, name: data.user.name, image: data.user.image);
   }
@@ -488,7 +488,7 @@ ServiceInfo? _getServiceInfo(
           image: orderData.restaurant_order!.restaurant.details!.image,
           name: orderData.restaurant_order!.restaurant.details!.name);
     case cModels.OrderType.Laundry:
-      dynamic laundryOrder =
+      final dynamic laundryOrder =
           orderData.laundry_pickup_order ?? orderData.laundry_delivery_order;
       mezDbgPrint("laundry order =============>$laundryOrder");
       return ServiceInfo(

@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
@@ -174,8 +174,8 @@ class IOrderViewController {
         price: price,
         taxiUserInfo: UserInfo(
           firebaseId: authController.user!.firebaseId,
-          name: authController.user!.name!,
-          image: authController.user!.image!,
+          name: authController.user!.name,
+          image: authController.user!.image,
         ),
       ),
     );

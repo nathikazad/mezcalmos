@@ -4,7 +4,7 @@ import { Language, NotificationInfo } from "./Generic";
 export interface UserInfo {
   id: number;
   image?: string;
-  firebaseId: string;
+  firebaseId?: string;
   name?: string;
   language: Language;
   email?: string;

@@ -21,13 +21,13 @@ Future<Operator?> get_laundry_operator({required int userId}) async {
     throw Exception("Get restaurant operator exceptions =>${res.exception}");
   }
   if (res.parsedData!.laundry_operator.isNotEmpty) {
-    Query$getLaundryOperatorByUserId$laundry_operator data =
+    final Query$getLaundryOperatorByUserId$laundry_operator data =
         res.parsedData!.laundry_operator.first;
     return Operator(
         state: OperatorState(
             deliveryDetailsId: data.store.delivery_details_id,
             serviceProviderDetailsId: data.store.details_id,
-             serviceLinkId: data.store.details!.service_link_id,
+            serviceLinkId: data.store.details!.service_link_id,
             operatorState: data.operator_details.status.toAgentStatus(),
             owner: data.operator_details.owner,
             serviceProviderId: data.store_id),
@@ -82,7 +82,7 @@ Future<List<Operator>?> get_laundry_operators(
           state: OperatorState(
               deliveryDetailsId: opData.store.delivery_details_id,
               owner: opData.operator_details.owner,
-               serviceLinkId: opData.store.details!.service_link_id,
+              serviceLinkId: opData.store.details!.service_link_id,
               operatorState: opData.operator_details.status.toAgentStatus(),
               serviceProviderId: opData.store_id,
               serviceProviderDetailsId: opData.store.details_id),

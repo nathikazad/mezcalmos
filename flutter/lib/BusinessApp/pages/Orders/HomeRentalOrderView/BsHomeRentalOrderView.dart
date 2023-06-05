@@ -51,8 +51,17 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           titleWidget:
-              Obx(() => Text((viewController.order?.customer.name ?? ""))),
+              Obx(() => Text((viewController.order?.customer?.name ?? ""))),
           onClick: MezRouter.back),
+      bottomNavigationBar: Obx(() => viewController.hasChanges
+          ? MezButton(
+              label: "Request changes",
+              withGradient: true,
+              onClick: () async {
+                await viewController.requestChanges();
+              },
+            )
+          : SizedBox.shrink()),
       body: Obx(() {
         if (!viewController.isLoading && viewController.order != null) {
           return SingleChildScrollView(

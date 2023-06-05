@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
