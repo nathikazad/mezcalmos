@@ -55,6 +55,7 @@ select_permissions:
         - id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -77,6 +78,7 @@ select_permissions:
         - id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -100,6 +102,7 @@ select_permissions:
         - id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -122,6 +125,7 @@ select_permissions:
         - id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -142,6 +146,7 @@ select_permissions:
         - id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -162,6 +167,7 @@ select_permissions:
         - id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -182,6 +188,7 @@ select_permissions:
         - id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -210,6 +217,7 @@ select_permissions:
         - id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -227,6 +235,7 @@ update_permissions:
         - description_id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -252,6 +261,7 @@ update_permissions:
         - description_id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -271,6 +281,7 @@ update_permissions:
         - description_id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
@@ -320,6 +331,7 @@ update_permissions:
         - description_id
         - image
         - language
+        - last_active_time
         - location_id
         - name
         - open_status
