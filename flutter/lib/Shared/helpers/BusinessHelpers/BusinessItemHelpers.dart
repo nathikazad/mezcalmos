@@ -19,6 +19,20 @@ BusinessItemParameters businessItemParamsFromData(Map<String, dynamic> map) {
   );
 }
 
-// extension BusinessItemParamsHelper on BusinessItemParameters {
-
-// }
+extension BusinessItemParamsHelper on BusinessItemParameters {
+  BusinessItemParameters copyWith({
+    num? previousCost,
+    TimeUnit? timeUnit,
+    String? previoustime,
+    num? numberOfUnits,
+    num? guests,
+  }) {
+    return BusinessItemParameters(
+      previousCost: previousCost ?? this.previousCost,
+      timeUnit: timeUnit ?? this.timeUnit,
+      previoustime: previoustime ?? this.previoustime,
+      numberOfUnits: numberOfUnits ?? this.numberOfUnits,
+      guests: guests ?? this.guests,
+    );
+  }
+}

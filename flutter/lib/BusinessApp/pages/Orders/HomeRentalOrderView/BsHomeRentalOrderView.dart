@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/BusinessApp/pages/HomeRentalOrderView/components/BsHomeRentalOrderItemCard.dart';
-import 'package:mezcalmos/BusinessApp/pages/HomeRentalOrderView/components/BsHomeRentalOrderSatusCard.dart';
-import 'package:mezcalmos/BusinessApp/pages/HomeRentalOrderView/controllers/BsHomeRentalOrderViewController.dart';
+import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/components/BsHomeRentalOrderItemCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/components/BsHomeRentalOrderSatusCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/controllers/BsHomeRentalOrderViewController.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -81,6 +81,7 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
                       viewController.order!.items.length,
                       (int index) => BsHomeRentalOrderItemCard(
                             item: viewController.order!.items[index],
+                            viewController: viewController,
                           )),
                 ),
                 OrderPaymentMethod(

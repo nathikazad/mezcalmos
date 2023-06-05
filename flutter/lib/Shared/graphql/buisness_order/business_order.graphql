@@ -1,0 +1,12 @@
+mutation updateBsOrderItem($id: Int!,$data :business_order_request_item_set_input!) {
+  update_business_order_request_item_by_pk(pk_columns: {id: $id}, _set:$data) {
+    available
+    cost
+    id
+    item_id
+    parameters
+    order_request_id
+    offering_type
+    time
+  }
+}

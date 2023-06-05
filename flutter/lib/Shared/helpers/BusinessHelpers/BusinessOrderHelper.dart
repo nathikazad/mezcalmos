@@ -40,3 +40,24 @@ extension BusinessOrderRequestStatusExtensions on BusinessOrderRequestStatus {
     }
   }
 }
+
+extension BsOrderItemHelper on BusinessOrderItem {
+  BusinessOrderItem copyWith({
+    BusinessItemParameters? parameters,
+    num? cost,
+    String? time,
+    bool? available,
+  }) {
+    return BusinessOrderItem(
+      id: id,
+      itemId: itemId,
+      offeringType: offeringType,
+      parameters: parameters ?? this.parameters,
+      cost: cost ?? this.cost,
+      time: time ?? this.time,
+      available: available ?? this.available,
+      item: item,
+      orderRequestId: orderRequestId,
+    );
+  }
+}

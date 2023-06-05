@@ -107,6 +107,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                         child: MezButton(
                             label: "Change Profile",
                             onClick: () async {
+                              mezDbgPrint(DateTime.now().toUtc().toString());
                               viewController.changeBusiness();
                             }),
                       ),

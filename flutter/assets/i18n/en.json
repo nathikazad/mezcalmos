@@ -1,6 +1,27 @@
 {
   "BusinessApp": {
     "pages": {
+      "Orders" : {
+        "HomeRentalOrderView" : {
+          "components" : {
+            "BsHomeRentalOrderItemCard" : {
+              "error": "Error",
+              "edit": "Edit",
+              "markAsUnavailable": "Mark as Unavailable",
+              "updatePrice": "Update Price",
+              "required": "Required",
+              "notValid": "Not Valid",
+              "save": "Save",
+              "cancel": "Cancel",
+              "startFrom": "Start From",
+              
+             
+            
+              "updateTimeTitle": "Update Time"
+            }
+          }
+        }
+      },
       "Components": {
         "BsRentalCard": {
           "hour": "hour",

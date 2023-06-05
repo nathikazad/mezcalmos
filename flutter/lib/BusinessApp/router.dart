@@ -1,7 +1,7 @@
 import 'package:mezcalmos/BusinessApp/BusinessWrapper.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/BsOpSchedulePickerView.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpTabsView.dart';
-import 'package:mezcalmos/BusinessApp/pages/HomeRentalOrderView/BsHomeRentalOrderView.dart';
+import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/BsHomeRentalOrderView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';

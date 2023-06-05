@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/BusinessApp/pages/HomeRentalOrderView/BsHomeRentalOrderView.dart';
+import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/BsHomeRentalOrderView.dart';
 import 'package:mezcalmos/BusinessApp/pages/OrdersListViews/components/BsOfferingOrderCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/OrdersListViews/components/BsOrderCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/OrdersListViews/controllers/BsOrdersListViewController.dart';
