@@ -1,0 +1,20 @@
+[
+  {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+          "namespace": "android_app",
+          "package_name": "com.mezcalmos.customer",
+          "sha256_cert_fingerprints":
+          ["1F:32:E4:04:B2:86:80:FB:F6:D3:72:34:6A:43:62:9B:F5:C4:30:C7:D9:56:C9:DE:99:BA:65:A1:23:1A:BB:F5"]
+      }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+        "namespace": "android_app",
+        "package_name": "com.mezcalmos.customer",
+        "sha256_cert_fingerprints":
+        ["45:CA:C1:85:5F:04:03:A6:71:98:E8:60:09:BF:BA:46:62:03:C1:F0:B2:3C:D3:45:6A:A6:57:C6:F8:80:83:34"]
+    }
+}
+]

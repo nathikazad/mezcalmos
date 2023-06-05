@@ -8,7 +8,8 @@ import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/hsSavedLocation.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/helpers/ReferralsHelper.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
@@ -22,6 +23,14 @@ class CustomerAuthController extends GetxController {
     super.onInit();
 
     if (authController.fireAuthUser?.uid != null) {
+      final fireAuth.UserMetadata metadata =
+          fireAuth.FirebaseAuth.instance.currentUser!.metadata;
+      if (metadata.creationTime == metadata.lastSignInTime) {
+        print('This user just signed up');
+        await incrementReferralIfItExists();
+      } else {
+        print('This user has signed in before');
+      }
       // ignore: unawaited_futures
       Customer? value =
           await get_customer(user_id: authController.hasuraUserId!);

@@ -331,7 +331,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
           : BotToastInit(),
       debugShowCheckedModeBanner: false,
       // onInit: () async => _initializeConfig(),
-      title: MezEnv.appType.toShortString(),
+      title: "Mezkala",
       theme: appTheme,
       color: Colors.white,
 
