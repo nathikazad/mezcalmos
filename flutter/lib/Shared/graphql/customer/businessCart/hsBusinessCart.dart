@@ -301,3 +301,229 @@ Future<int> set_cart_business_id({
     return newRestId;
   }
 }
+
+Stream<List<CustBusinessCart>?> listen_on_business_order_request(
+    {required int customerId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_business_order_request(
+    Options$Subscription$listen_on_business_order_request(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Subscription$listen_on_business_order_request(
+        $_id: customerId,
+      ),
+    ),
+  )
+      .map(
+    (QueryResult<Subscription$listen_on_business_order_request> cart) {
+      if (cart.hasException) {
+        throw Exception(
+            "🛑🛑🛑🛑 listen_on_business_order_request :: exception ===> ${cart.exception}!");
+      } else {
+        mezDbgPrint(
+            "🚨 graphql::listen_on_business_order_request::success :: ${cart.data}");
+        final Subscription$listen_on_business_order_request$business_order_request?
+            parsedCart =
+            (cart.parsedData?.business_order_request.isNotEmpty == true)
+                ? cart.parsedData?.business_order_request.first
+                : null;
+        if (parsedCart != null) {
+          final List<
+                  Subscription$listen_on_business_order_request$business_order_request>
+              _res = cart.parsedData!.business_order_request;
+          return _res
+              .map((e) => CustBusinessCart(
+                    id: e.id,
+                    customerId: e.customer_id,
+                    businessId: e.business_id,
+                    cost: e.cost ?? 0,
+                    cancellationTime: e.cancellation_time,
+                    status: e.status.toBusinessOrderRequestStatus(),
+                    items: e.items
+                        .map(
+                          (data) => BusinessCartItem(
+                            id: data.id,
+                            itemId: data.item_id,
+                            cost: data.cost ?? 0,
+                            time: data.time,
+                            offeringType: data.offering_type.toOfferingType(),
+                            parameters: BusinessItemParameters(
+                              guests: data.parameters?["guests"],
+                              numberOfUnits: data.parameters?["numberOfUnits"],
+                              previousCost: data.parameters?["previousCost"],
+                              previoustime: data.parameters?["previoustime"],
+                              timeUnit: data.parameters?["timeUnit"]
+                                      ?.toString()
+                                      .toTimeUnit() ??
+                                  null,
+                            ),
+                            rental: RentalCard(
+                                businessName:
+                                    data.rental!.business.details.name,
+                                currency: data.rental!.business.details.currency
+                                    .toCurrency(),
+                                rental: Rental(
+                                  category1: data.rental!.details.category1
+                                      .toRentalCategory1(),
+                                  details: BusinessItemDetails(
+                                    id: data.rental!.details.id,
+                                    nameId: data.rental!.details.name_id,
+                                    descriptionId:
+                                        data.rental!.details.description_id,
+                                    name: toLanguageMap(
+                                        translations: data
+                                            .rental!.details.name.translations),
+                                    position: data.rental!.details.position,
+                                    businessId:
+                                        data.rental!.business.details.id,
+                                    available: data.rental!.details.available,
+                                    image: data.rental!.details.image
+                                            ?.map<String>((e) => e.toString())
+                                            .toList() ??
+                                        [],
+                                    cost: constructBusinessServiceCost(
+                                        data.rental!.details.cost),
+                                    additionalParameters: data
+                                        .rental!.details.additional_parameters,
+                                  ),
+                                  bathrooms:
+                                      data.rental?.home_rental?.bathrooms,
+                                  bedrooms: data.rental?.home_rental?.bedrooms,
+                                  gpsLocation: Location(
+                                      lat: data.rental?.home_rental
+                                              ?.gps_location.latitude ??
+                                          0,
+                                      lng: data.rental?.home_rental
+                                              ?.gps_location.longitude ??
+                                          0,
+                                      address:
+                                          data.rental?.home_rental?.address ??
+                                              ''),
+                                  homeType: data.rental?.home_rental?.home_type
+                                      .toHomeType(),
+                                )),
+                            event: data.event != null
+                                ? EventCard(
+                                    businessName:
+                                        data.event!.business.details.name,
+                                    currency: data
+                                        .event!.business.details.currency
+                                        .toCurrency(),
+                                    event: Event(
+                                      scheduleType: data.event!.schedule_type
+                                          .toScheduleType(),
+                                      startsAt: data.event!.starts_at,
+                                      endsAt: data.event!.ends_at,
+                                      schedule: (data.event!.schedule != null)
+                                          ? scheduleFromData(
+                                              data.event!.schedule)
+                                          : null,
+                                      category1: data.event!.details.category1
+                                          .toEventCategory1(),
+                                      details: BusinessItemDetails(
+                                        id: data.event!.details.id,
+                                        nameId: data.event!.details.name_id,
+                                        descriptionId:
+                                            data.event!.details.description_id,
+                                        name: toLanguageMap(
+                                            translations: data.event!.details
+                                                .name.translations),
+                                        position: data.event!.details.position,
+                                        businessId:
+                                            data.event!.business.details.id,
+                                        available:
+                                            data.event!.details.available,
+                                        image: data.event!.details.image
+                                                ?.map<String>(
+                                                    (e) => e.toString())
+                                                .toList() ??
+                                            [],
+                                        cost: constructBusinessServiceCost(
+                                            data.event!.details.cost),
+                                        additionalParameters: data.event!
+                                            .details.additional_parameters,
+                                      ),
+                                    ),
+                                  )
+                                : null,
+                            service: data.service != null
+                                ? ServiceCard(
+                                    businessName:
+                                        data.service!.business.details.name,
+                                    currency: data
+                                        .service!.business.details.currency
+                                        .toCurrency(),
+                                    service: Service(
+                                      category1: data.service!.details.category1
+                                          .toServiceCategory1(),
+                                      details: BusinessItemDetails(
+                                        id: data.service!.details.id,
+                                        nameId: data.service!.details.name_id,
+                                        descriptionId: data
+                                            .service!.details.description_id,
+                                        name: toLanguageMap(
+                                            translations: data.service!.details
+                                                .name.translations),
+                                        businessId:
+                                            data.service!.business.details.id,
+                                        available:
+                                            data.service!.details.available,
+                                        image: data.service!.details.image
+                                                ?.map<String>(
+                                                    (e) => e.toString())
+                                                .toList() ??
+                                            [],
+                                        cost: constructBusinessServiceCost(
+                                            data.service!.details.cost),
+                                        additionalParameters: data.service!
+                                            .details.additional_parameters,
+                                      ),
+                                    ),
+                                  )
+                                : null,
+                            product: data.product != null
+                                ? ProductCard(
+                                    businessName:
+                                        data.product!.business.details.name,
+                                    currency: data
+                                        .product!.business.details.currency
+                                        .toCurrency(),
+                                    product: Product(
+                                      category1: data.product!.details.category1
+                                          .toProductCategory1(),
+                                      details: BusinessItemDetails(
+                                        id: data.product!.details.id,
+                                        nameId: data.product!.details.name_id,
+                                        descriptionId: data
+                                            .product!.details.description_id,
+                                        name: toLanguageMap(
+                                            translations: data.product!.details
+                                                .name.translations),
+                                        businessId:
+                                            data.product!.business.details.id,
+                                        available:
+                                            data.product!.details.available,
+                                        image: data.product!.details.image
+                                                ?.map<String>(
+                                                    (e) => e.toString())
+                                                .toList() ??
+                                            [],
+                                        cost: constructBusinessServiceCost(
+                                            data.product!.details.cost),
+                                        additionalParameters: data.product!
+                                            .details.additional_parameters,
+                                      ),
+                                    ),
+                                  )
+                                : null,
+                          ),
+                        )
+                        .toList(),
+                  ))
+              .toList();
+        } else {
+          return [];
+        }
+      }
+    },
+  );
+}

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/RentalCartItemCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -12,26 +11,28 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
-class CustCartView extends StatefulWidget {
-  const CustCartView({super.key});
+class CustOrderView extends StatefulWidget {
+  const CustOrderView({super.key});
 
   @override
-  State<CustCartView> createState() => _CustCartViewState();
+  State<CustOrderView> createState() => _CustOrderViewState();
 
-  static Future<void> navigate() {
-    return MezRouter.toPath(CustBusinessRoutes.custCartRoute);
+  static Future<void> navigate({required int orderId}) {
+    return MezRouter.toPath(CustBusinessRoutes.custOrderViewRoute,
+        arguments: {"orderId": orderId});
   }
 }
 
-class _CustCartViewState extends State<CustCartView> {
-  final CustCartViewController viewController = CustCartViewController();
+class _CustOrderViewState extends State<CustOrderView> {
   final CustBusinessCartController custBusinessCartController =
       Get.find<CustBusinessCartController>();
 
+  late int orderId;
+
   @override
   void initState() {
-    // viewController.init();
-    custBusinessCartController.fetchCart();
+    orderId = MezRouter.bodyArguments!["orderId"] as int;
+    custBusinessCartController.setCurrentOrderInView(orderId);
     super.initState();
   }
 
@@ -41,30 +42,29 @@ class _CustCartViewState extends State<CustCartView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "My Cart",
-      ),
-      bottomNavigationBar: MezButton(
-        label: "Request",
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await custBusinessCartController.requestOrder();
-        },
+        title: "Order",
       ),
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
-            child: (custBusinessCartController.cart.value == null)
+            child: (custBusinessCartController.currentOrderInView.value == null)
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      MezCard(
+                        content: Text(
+                          custBusinessCartController
+                              .currentOrderInView.value!.status!.name,
+                        ),
+                      ),
                       if (custBusinessCartController
-                          .cart.value!.items.isNotEmpty)
-                        ...custBusinessCartController.cart.value!.items
+                          .currentOrderInView.value!.items.isNotEmpty)
+                        ...custBusinessCartController
+                            .currentOrderInView.value!.items
                             .asMap()
                             .entries
                             .map(
@@ -77,24 +77,28 @@ class _CustCartViewState extends State<CustCartView> {
                                   index: index,
                                   item: item,
                                   controller: custBusinessCartController,
+                                  isEditable: false,
                                 );
                               case OfferingType.Event:
                                 return RentalCartItemCard(
                                   index: index,
                                   item: item,
                                   controller: custBusinessCartController,
+                                  isEditable: false,
                                 );
                               case OfferingType.Service:
                                 return RentalCartItemCard(
                                   index: index,
                                   item: item,
                                   controller: custBusinessCartController,
+                                  isEditable: false,
                                 );
                               case OfferingType.Product:
                                 return RentalCartItemCard(
                                   index: index,
                                   item: item,
                                   controller: custBusinessCartController,
+                                  isEditable: false,
                                 );
                             }
                           },
@@ -131,7 +135,7 @@ class _CustCartViewState extends State<CustCartView> {
                                   style: context.textTheme.bodyMedium,
                                 ),
                                 Text(
-                                  "\$${custBusinessCartController.cart.value?.cost.toDouble().toStringAsFixed(0)}",
+                                  "\$${custBusinessCartController.currentOrderInView.value?.cost.toDouble().toStringAsFixed(0)}",
                                   style: context.textTheme.bodyMedium,
                                 ),
                               ],

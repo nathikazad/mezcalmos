@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -40,9 +41,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   AppLifeCycleController appLifeCycleController =
       Get.find<AppLifeCycleController>();
-
-  final CustBusinessCartController custBusinessCartController =
-      Get.find<CustBusinessCartController>();
 
   DateTime? appClosedTime;
 
@@ -79,21 +77,56 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Obx(
-        () => custBusinessCartController.cart.value != null &&
-                custBusinessCartController.cart.value!.items.isNotEmpty
-            ? FloatingActionButton(
-                child: Icon(
-                  Icons.shopping_cart,
-                  color: Colors.white,
+      floatingActionButton: Get.find<AuthController>().isUserSignedIn
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Obx(
+                  () => Get.find<CustBusinessCartController>().cart.value !=
+                              null &&
+                          Get.find<CustBusinessCartController>()
+                              .cart
+                              .value!
+                              .items
+                              .isNotEmpty
+                      ? FloatingActionButton(
+                          heroTag: "cart",
+                          child: Icon(
+                            Icons.shopping_cart,
+                            color: Colors.white,
+                          ),
+                          backgroundColor: primaryBlueColor,
+                          onPressed: () async {
+                            await CustCartView.navigate();
+                          },
+                        )
+                      : SizedBox(),
                 ),
-                backgroundColor: primaryBlueColor,
-                onPressed: () async {
-                  await CustCartView.navigate();
-                },
-              )
-            : SizedBox(),
-      ),
+                Obx(
+                  () => Get.find<CustBusinessCartController>()
+                                  .previousOrders
+                                  .value !=
+                              null &&
+                          Get.find<CustBusinessCartController>()
+                              .previousOrders
+                              .value!
+                              .isNotEmpty
+                      ? FloatingActionButton(
+                          heroTag: "orders",
+                          child: Icon(
+                            Icons.access_time_outlined,
+                            color: Colors.white,
+                          ),
+                          backgroundColor: primaryBlueColor,
+                          onPressed: () async {
+                            await CustOrderListView.navigate();
+                          },
+                        )
+                      : SizedBox(),
+                ),
+              ],
+            )
+          : null,
       bottomNavigationBar: _navBar(),
       body: Obx(() {
         if (authController.user != null) {

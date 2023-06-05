@@ -185,3 +185,156 @@ mutation delete_business_cart_item($_id: Int!) {
     affected_rows
   }
 }
+
+subscription listen_on_business_order_request($_id: Int!) {
+  business_order_request(where: { customer_id: { _eq: $_id } }) {
+    items {
+      id
+      parameters
+      cost
+      item_id
+      offering_type
+      time
+      rental {
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        home_rental {
+          address
+          bathrooms
+          bedrooms
+          gps_location
+          home_type
+        }
+        business {
+          details {
+            name
+            currency
+            id
+          }
+        }
+      }
+      product {
+        business {
+          details {
+            name
+            currency
+            id
+          }
+        }
+        details {
+          additional_parameters
+          available
+          category1
+          category2
+          name_id
+          description_id
+          cost
+          tags
+          description {
+            translations {
+              language_id
+              value
+            }
+          }
+          id
+          image
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+        }
+      }
+      service {
+        business {
+          details {
+            name
+            currency
+            id
+          }
+        }
+        details {
+          additional_parameters
+          available
+          category1
+          name_id
+          description_id
+          category2
+          cost
+          tags
+          description {
+            translations {
+              language_id
+              value
+            }
+          }
+          id
+          image
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+        }
+      }
+      event {
+        business {
+          details {
+            name
+            currency
+            id
+          }
+        }
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        id
+        schedule_type
+        schedule
+        starts_at
+        ends_at
+      }
+    }
+    business_id
+    status
+    customer_id
+    cost
+    cancellation_time
+    id
+  }
+}
