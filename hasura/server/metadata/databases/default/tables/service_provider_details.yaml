@@ -55,7 +55,6 @@ select_permissions:
         - id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
@@ -78,7 +77,6 @@ select_permissions:
         - id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
@@ -102,7 +100,6 @@ select_permissions:
         - id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
@@ -125,7 +122,6 @@ select_permissions:
         - id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
@@ -146,16 +142,13 @@ select_permissions:
         - id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
         - phone_number
-        - referral_points
         - schedule
         - service_link_id
         - service_provider_type
-        - unique_id
       filter: {}
   - role: laundry_operator
     permission:
@@ -169,16 +162,13 @@ select_permissions:
         - id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
         - phone_number
-        - referral_points
         - schedule
         - service_link_id
         - service_provider_type
-        - unique_id
       filter: {}
   - role: mez_admin
     permission:
@@ -192,17 +182,14 @@ select_permissions:
         - id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
         - phone_number
-        - referral_points
         - schedule
         - service_link_id
         - service_provider_type
         - stripe_id
-        - unique_id
       filter:
         _exists:
           _table:
@@ -223,16 +210,13 @@ select_permissions:
         - id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
         - phone_number
-        - referral_points
         - schedule
         - service_link_id
         - service_provider_type
-        - unique_id
       filter: {}
 update_permissions:
   - role: business_operator
@@ -243,7 +227,6 @@ update_permissions:
         - description_id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
@@ -269,7 +252,6 @@ update_permissions:
         - description_id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
@@ -289,7 +271,6 @@ update_permissions:
         - description_id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
@@ -339,7 +320,6 @@ update_permissions:
         - description_id
         - image
         - language
-        - last_active_time
         - location_id
         - name
         - open_status
