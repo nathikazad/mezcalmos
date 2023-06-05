@@ -147,3 +147,5 @@ export interface ParticipantAgoraDetails {
 export interface ParticipantWithAgora extends Participant {
   agora: ParticipantAgoraDetails
 }
+
+export const chatInfoImage: string = "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";

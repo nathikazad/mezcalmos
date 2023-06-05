@@ -1,7 +1,7 @@
 import { service_provider_customer_chat_constraint } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../utilities/hasura";
-import { DirectChatDetails, MezAdminChatDetails } from "../../chat/createChat";
-import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName, ChatInfo, RecipientTypeToChatInfoAppName, RecipientType, RecipientAppType } from "../../models/Generic/Chat";
+import { DirectChatDetails, MezAdminChatDetails, MezAdminChatError } from "../../chat/createChat";
+import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName, ChatInfo, RecipientTypeToChatInfoAppName, RecipientType, RecipientAppType, chatInfoImage } from "../../models/Generic/Chat";
 import { AppType, MezError } from "../../models/Generic/Generic";
 import { CustomerInfo, MezAdmin, UserInfo } from "../../models/Generic/User";
 import { ServiceProvider, ServiceProviderToAppType } from "../../models/Services/Service";
@@ -97,7 +97,7 @@ export async function createDirectChat(user1: UserInfo, user2: UserInfo, directC
         }]
     });
 }
-export async function createMezAdminChat(recipients: number[], mezAdminChatDetails: MezAdminChatDetails, mezAdmins: MezAdmin[], name?: string, image?: string) {
+export async function createMezAdminChat(recipients: number[], mezAdminChatDetails: MezAdminChatDetails, mezAdmins: MezAdmin[], name?: string, image?: string): Promise<number> {
     let chain = getHasura();
 
     let mezAdminsDetails = mezAdmins.map((m:any) => {
@@ -123,7 +123,7 @@ export async function createMezAdminChat(recipients: number[], mezAdminChatDetai
             break;
     }
 
-    await chain.mutation({
+    const response = await chain.mutation({
         insert_mez_admin_chat_one: [{
             object: {
                 recipient_id: mezAdminChatDetails.recipientId,
@@ -133,7 +133,7 @@ export async function createMezAdminChat(recipients: number[], mezAdminChatDetai
                         chat_info: JSON.stringify({
                             [RecipientTypeToChatInfoAppName[mezAdminChatDetails.recipientType]]: {
                                 chatTitle: "Mez Admin",
-                                chatImage: "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d",
+                                chatImage: chatInfoImage,
                             },
                             [ChatInfoAppName.MezAdminApp]: {
                                 chatTitle: name ?? nameSub,
@@ -153,4 +153,8 @@ export async function createMezAdminChat(recipients: number[], mezAdminChatDetai
             chat_id: true,
         }]
     })
+    if(response.insert_mez_admin_chat_one == null) {
+        throw new MezError(MezAdminChatError.ChatCreationError);
+    }
+    return response.insert_mez_admin_chat_one.chat_id
 }

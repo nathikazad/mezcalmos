@@ -197,6 +197,28 @@ class CloudFunctions {
       }));
   }
 
+  static Future<DeleteServiceProviderResponse> serviceProvider_deleteServiceProvider(
+      {required ServiceProviderType serviceProviderType,
+      required num serviceProviderId}  ) async {
+    return DeleteServiceProviderResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "serviceProvider-deleteServiceProvider",
+      parameters: <String, dynamic>{
+        "serviceProviderType":serviceProviderType.toFirebaseFormatString(),
+        "serviceProviderId": serviceProviderId,
+      }));
+  }
+
+  static Future<MezAdminChatResponse> serviceProvider_createMezAdminChat(
+      {required num recipientId,
+      required RecipientType recipientType}  ) async {
+    return MezAdminChatResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "serviceProvider-createMezAdminChat",
+      parameters: <String, dynamic>{
+        "recipientId": recipientId,
+        "recipientType":recipientType.toFirebaseFormatString(),
+      }));
+  }
+
   static Future<RestaurantResponse> restaurant3_createRestaurant(
       {required String name,
       required String image,

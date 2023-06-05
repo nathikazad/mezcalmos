@@ -8,7 +8,7 @@ import { AuthorizeDriverNotification, DeliveryDriver } from "../shared/models/Ge
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Operator, ServiceProvider, ServiceProviderType } from "../shared/models/Services/Service";
 import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
-import { getServiceProviderFromUniqueId } from "../shared/graphql/getServiceProvider";
+import { getServiceProviderFromUniqueId } from "../shared/graphql/serviceProvider/getServiceProvider";
 
 export interface AddDriverDetails {
     uniqueId: string,

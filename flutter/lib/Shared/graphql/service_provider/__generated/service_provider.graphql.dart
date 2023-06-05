@@ -10760,3 +10760,565 @@ class _CopyWithStubImpl$Query$getServiceLanguage$service_provider_details_by_pk<
   }) =>
       _res;
 }
+
+class Variables$Mutation$setLastActiveTime {
+  factory Variables$Mutation$setLastActiveTime({required int id}) =>
+      Variables$Mutation$setLastActiveTime._({
+        r'id': id,
+      });
+
+  Variables$Mutation$setLastActiveTime._(this._$data);
+
+  factory Variables$Mutation$setLastActiveTime.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Mutation$setLastActiveTime._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$setLastActiveTime<
+          Variables$Mutation$setLastActiveTime>
+      get copyWith => CopyWith$Variables$Mutation$setLastActiveTime(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$setLastActiveTime) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$setLastActiveTime<TRes> {
+  factory CopyWith$Variables$Mutation$setLastActiveTime(
+    Variables$Mutation$setLastActiveTime instance,
+    TRes Function(Variables$Mutation$setLastActiveTime) then,
+  ) = _CopyWithImpl$Variables$Mutation$setLastActiveTime;
+
+  factory CopyWith$Variables$Mutation$setLastActiveTime.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$setLastActiveTime;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Mutation$setLastActiveTime<TRes>
+    implements CopyWith$Variables$Mutation$setLastActiveTime<TRes> {
+  _CopyWithImpl$Variables$Mutation$setLastActiveTime(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$setLastActiveTime _instance;
+
+  final TRes Function(Variables$Mutation$setLastActiveTime) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Mutation$setLastActiveTime._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$setLastActiveTime<TRes>
+    implements CopyWith$Variables$Mutation$setLastActiveTime<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$setLastActiveTime(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Mutation$setLastActiveTime {
+  Mutation$setLastActiveTime({
+    this.update_service_provider_details_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$setLastActiveTime.fromJson(Map<String, dynamic> json) {
+    final l$update_service_provider_details_by_pk =
+        json['update_service_provider_details_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$setLastActiveTime(
+      update_service_provider_details_by_pk:
+          l$update_service_provider_details_by_pk == null
+              ? null
+              : Mutation$setLastActiveTime$update_service_provider_details_by_pk
+                  .fromJson((l$update_service_provider_details_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$setLastActiveTime$update_service_provider_details_by_pk?
+      update_service_provider_details_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_service_provider_details_by_pk =
+        update_service_provider_details_by_pk;
+    _resultData['update_service_provider_details_by_pk'] =
+        l$update_service_provider_details_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_service_provider_details_by_pk =
+        update_service_provider_details_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_service_provider_details_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$setLastActiveTime) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_service_provider_details_by_pk =
+        update_service_provider_details_by_pk;
+    final lOther$update_service_provider_details_by_pk =
+        other.update_service_provider_details_by_pk;
+    if (l$update_service_provider_details_by_pk !=
+        lOther$update_service_provider_details_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$setLastActiveTime
+    on Mutation$setLastActiveTime {
+  CopyWith$Mutation$setLastActiveTime<Mutation$setLastActiveTime>
+      get copyWith => CopyWith$Mutation$setLastActiveTime(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$setLastActiveTime<TRes> {
+  factory CopyWith$Mutation$setLastActiveTime(
+    Mutation$setLastActiveTime instance,
+    TRes Function(Mutation$setLastActiveTime) then,
+  ) = _CopyWithImpl$Mutation$setLastActiveTime;
+
+  factory CopyWith$Mutation$setLastActiveTime.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$setLastActiveTime;
+
+  TRes call({
+    Mutation$setLastActiveTime$update_service_provider_details_by_pk?
+        update_service_provider_details_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk<
+      TRes> get update_service_provider_details_by_pk;
+}
+
+class _CopyWithImpl$Mutation$setLastActiveTime<TRes>
+    implements CopyWith$Mutation$setLastActiveTime<TRes> {
+  _CopyWithImpl$Mutation$setLastActiveTime(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$setLastActiveTime _instance;
+
+  final TRes Function(Mutation$setLastActiveTime) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_service_provider_details_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$setLastActiveTime(
+        update_service_provider_details_by_pk:
+            update_service_provider_details_by_pk == _undefined
+                ? _instance.update_service_provider_details_by_pk
+                : (update_service_provider_details_by_pk
+                    as Mutation$setLastActiveTime$update_service_provider_details_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk<
+      TRes> get update_service_provider_details_by_pk {
+    final local$update_service_provider_details_by_pk =
+        _instance.update_service_provider_details_by_pk;
+    return local$update_service_provider_details_by_pk == null
+        ? CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk(
+            local$update_service_provider_details_by_pk,
+            (e) => call(update_service_provider_details_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$setLastActiveTime<TRes>
+    implements CopyWith$Mutation$setLastActiveTime<TRes> {
+  _CopyWithStubImpl$Mutation$setLastActiveTime(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$setLastActiveTime$update_service_provider_details_by_pk?
+        update_service_provider_details_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk<
+          TRes>
+      get update_service_provider_details_by_pk =>
+          CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationsetLastActiveTime = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'setLastActiveTime'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_service_provider_details_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'last_active_time'),
+                value: StringValueNode(
+                  value: 'now()',
+                  isBlock: false,
+                ),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'last_active_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$setLastActiveTime _parserFn$Mutation$setLastActiveTime(
+        Map<String, dynamic> data) =>
+    Mutation$setLastActiveTime.fromJson(data);
+typedef OnMutationCompleted$Mutation$setLastActiveTime = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$setLastActiveTime?,
+);
+
+class Options$Mutation$setLastActiveTime
+    extends graphql.MutationOptions<Mutation$setLastActiveTime> {
+  Options$Mutation$setLastActiveTime({
+    String? operationName,
+    required Variables$Mutation$setLastActiveTime variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$setLastActiveTime? onCompleted,
+    graphql.OnMutationUpdate<Mutation$setLastActiveTime>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$setLastActiveTime(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationsetLastActiveTime,
+          parserFn: _parserFn$Mutation$setLastActiveTime,
+        );
+
+  final OnMutationCompleted$Mutation$setLastActiveTime? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$setLastActiveTime
+    extends graphql.WatchQueryOptions<Mutation$setLastActiveTime> {
+  WatchOptions$Mutation$setLastActiveTime({
+    String? operationName,
+    required Variables$Mutation$setLastActiveTime variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationsetLastActiveTime,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$setLastActiveTime,
+        );
+}
+
+extension ClientExtension$Mutation$setLastActiveTime on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$setLastActiveTime>>
+      mutate$setLastActiveTime(
+              Options$Mutation$setLastActiveTime options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$setLastActiveTime>
+      watchMutation$setLastActiveTime(
+              WatchOptions$Mutation$setLastActiveTime options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$setLastActiveTime$update_service_provider_details_by_pk {
+  Mutation$setLastActiveTime$update_service_provider_details_by_pk({
+    this.last_active_time,
+    required this.$__typename,
+  });
+
+  factory Mutation$setLastActiveTime$update_service_provider_details_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$last_active_time = json['last_active_time'];
+    final l$$__typename = json['__typename'];
+    return Mutation$setLastActiveTime$update_service_provider_details_by_pk(
+      last_active_time: (l$last_active_time as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? last_active_time;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$last_active_time = last_active_time;
+    _resultData['last_active_time'] = l$last_active_time;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$last_active_time = last_active_time;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$last_active_time,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$setLastActiveTime$update_service_provider_details_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$last_active_time = last_active_time;
+    final lOther$last_active_time = other.last_active_time;
+    if (l$last_active_time != lOther$last_active_time) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$setLastActiveTime$update_service_provider_details_by_pk
+    on Mutation$setLastActiveTime$update_service_provider_details_by_pk {
+  CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk<
+          Mutation$setLastActiveTime$update_service_provider_details_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk(
+    Mutation$setLastActiveTime$update_service_provider_details_by_pk instance,
+    TRes Function(
+            Mutation$setLastActiveTime$update_service_provider_details_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$setLastActiveTime$update_service_provider_details_by_pk;
+
+  factory CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$setLastActiveTime$update_service_provider_details_by_pk;
+
+  TRes call({
+    String? last_active_time,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$setLastActiveTime$update_service_provider_details_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$setLastActiveTime$update_service_provider_details_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$setLastActiveTime$update_service_provider_details_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$setLastActiveTime$update_service_provider_details_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? last_active_time = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$setLastActiveTime$update_service_provider_details_by_pk(
+        last_active_time: last_active_time == _undefined
+            ? _instance.last_active_time
+            : (last_active_time as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$setLastActiveTime$update_service_provider_details_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$setLastActiveTime$update_service_provider_details_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$setLastActiveTime$update_service_provider_details_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? last_active_time,
+    String? $__typename,
+  }) =>
+      _res;
+}

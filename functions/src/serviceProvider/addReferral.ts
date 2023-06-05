@@ -1,4 +1,4 @@
-import { addReferral } from "../shared/graphql/referral"
+import { addReferral } from "../shared/graphql/serviceProvider/referral"
 import { MezError } from "../shared/models/Generic/Generic";
 
 export interface AddReferralDetails {

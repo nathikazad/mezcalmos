@@ -16,7 +16,7 @@ export enum NotificationType {
   NewLaundry = "newLaundry",
   NewDriver = "newDriver",
   DriverApproved = "driverApproved",
- 
+  ServiceProviderDeleted = "serviceProviderDeleted",
   NewBusiness = "newBusiness",
   PriceChange = "priceChange",
  

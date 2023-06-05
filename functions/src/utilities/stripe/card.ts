@@ -12,7 +12,7 @@ import { verifyCustomerIdForServiceAccount } from './serviceProvider';
 import { ServiceProvider } from '../../shared/models/Services/Service';
 import { getCustomerLaundryOrders } from '../../shared/graphql/laundry/order/getLaundryOrder';
 import { LaundryOrder, LaundryOrderStatus } from '../../shared/models/Services/Laundry/LaundryOrder';
-import { getServiceProviderDetails } from '../../shared/graphql/getServiceProvider';
+import { getServiceProviderDetails } from '../../shared/graphql/serviceProvider/getServiceProvider';
 import { MezError } from '../../shared/models/Generic/Generic';
 let keys: Keys = getKeys();
 

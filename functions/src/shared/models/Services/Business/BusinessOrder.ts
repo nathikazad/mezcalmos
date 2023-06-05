@@ -18,7 +18,7 @@ export interface BusinessOrder {
     notes?: string;
     chatId?: number;
     cancellationTime?: string;
-    customer: UserInfo,
+    customer?: UserInfo,
 }
 
 export interface BusinessOrderItem {
@@ -51,7 +51,7 @@ export enum BusinessOrderRequestStatus {
 
 export interface BusinessCart {
     customerId: number;
-    businessId: number;
+    businessId?: number;
     cost: number;
     items: Array<BusinessOrderItem>;
     discountValue?: number;

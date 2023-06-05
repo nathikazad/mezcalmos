@@ -1,7 +1,7 @@
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { createDeliveryOperator } from "../shared/graphql/delivery/operator/createDeliveryOperator";
 import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
-import { getServiceProviderFromUniqueId } from "../shared/graphql/getServiceProvider";
+import { getServiceProviderFromUniqueId } from "../shared/graphql/serviceProvider/getServiceProvider";
 import { createLaundryOperator } from "../shared/graphql/laundry/operator/createLaundryOperator";
 import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
 import { createRestaurantOperator } from "../shared/graphql/restaurant/operators/createRestaurantOperator";
