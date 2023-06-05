@@ -7,8 +7,8 @@ import { CustomerInfo } from '../../shared/models/Generic/User';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
 import { Operator, ServiceProvider } from '../../shared/models/Services/Service';
 import { AuthorizationStatus, MezError } from "../../shared/models/Generic/Generic"
-import { getServiceProviderDetails } from '../../shared/graphql/getServiceProvider';
-import { createServiceProviderStripe, updateServiceProviderPayment, updateServiceProviderStripe } from '../../shared/graphql/updateServiceProvider';
+import { getServiceProviderDetails } from '../../shared/graphql/serviceProvider/getServiceProvider';
+import { createServiceProviderStripe, updateServiceProviderPayment, updateServiceProviderStripe } from '../../shared/graphql/serviceProvider/updateServiceProvider';
 
 let keys: Keys = getKeys();
 

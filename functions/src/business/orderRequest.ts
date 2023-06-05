@@ -91,7 +91,7 @@ function errorChecks(business: Business, cart: BusinessCart) {
   if(business.details.openStatus != "open") {
     throw new MezError(OrderReqError.BusinessClosed);
   }
-  if((cart.items.length ?? 0) == 0) {
+  if(cart.businessId == null || (cart.items.length ?? 0) == 0) {
     throw new MezError(OrderReqError.EmptyCart);
   }
 }
