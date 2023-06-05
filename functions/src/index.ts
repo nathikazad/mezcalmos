@@ -32,6 +32,7 @@ import { createServiceProviderChat } from "./shared/chat/createChat";
 import { addNewReferral } from "./serviceProvider/addReferral";
 import { authorizeDriver } from "./serviceProvider/authorizeDriver";
 import { removeDriver } from "./delivery/removeDriver";
+import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -46,6 +47,11 @@ export const user2 = {
   processSignUp: userChanges.processSignUp,
   deleteUserAccount: authenticatedCall((userId, data) => userChanges.deleteAccount(userId, data)),
   addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth!.uid, null))
+}
+
+export const referral = {
+  incrementReferralCount: functions.https.onRequest(async (request, response) => incrementReferralCount(request, response)),
+  saveIpReferral: functions.https.onRequest(async (request, response) => saveIpReferral(request, response))
 }
 
 export const otp3 = {

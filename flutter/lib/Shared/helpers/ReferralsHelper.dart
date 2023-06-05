@@ -13,7 +13,7 @@ Future<void> saveReferral(String referralCode) async {
 
   // TODO: @sanchit url add for staging
   final Uri url = Uri.parse(
-      'https://us-central1-mezcalmos-31f1c.cloudfunctions.net/saveIpReferral');
+      'https://us-central1-mezcalmos-31f1c.cloudfunctions.net/referral-saveIpReferral');
 
   // Send the referral code to the cloud function
   final http.Response response =
@@ -51,7 +51,7 @@ Future<void> incrementReferralIfItExists() async {
 
   // TODO: @sanchit add for staging
   String functionUrl =
-      'https://us-central1-mezcalmos-31f1c.cloudfunctions.net/incrementReferralCount?uid=${user.uid}';
+      'https://us-central1-mezcalmos-31f1c.cloudfunctions.net/referral-incrementReferralCount?uid=${user.uid}';
   if (ipAddress != null) functionUrl += '&ip=$ipAddress';
   if (!isReferralCodeUsed) {
     final Uri url = Uri.parse(functionUrl);

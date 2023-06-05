@@ -15,7 +15,7 @@ const getClientIp = (req: functions.Request): string => {
 
 
 // Cloud function to save IP and referral code
-export const saveIpReferral = functions.https.onRequest(async (request, response) => {
+export async function saveIpReferral(request: functions.https.Request, response: functions.Response) {
   const referralCode = request.query.referral_code;
   const ipAddress = getClientIp(request);
 
@@ -29,10 +29,10 @@ export const saveIpReferral = functions.https.onRequest(async (request, response
   };
 
   response.json(responseData);
-});
+};
 
 // Cloud function to increment referral code count
-export const incrementReferralCount = functions.https.onRequest(async (request, response) => {
+export async function incrementReferralCount(request: functions.https.Request, response: functions.Response) {
   const ipAddress: string = request.query.ip as string || getClientIp(request);
   const uid: string = request.query.uid as string; // assuming you're passing the user id in the request query
 
@@ -69,5 +69,5 @@ export const incrementReferralCount = functions.https.onRequest(async (request, 
   } else {
     response.send(`No referral code found for IP: ${ipAddress}`);
   }
-});
+};
 
