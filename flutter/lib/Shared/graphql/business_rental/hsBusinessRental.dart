@@ -205,6 +205,7 @@ Future<List<RentalCard>> get_home_rentals(
           businessName: data.rental.business.details.name,
           currency: data.rental.business.details.currency.toCurrency(),
           rental: Rental(
+            id: data.rental.id,
             category1: data.rental.details.category1.toRentalCategory1(),
             details: BusinessItemDetails(
               id: data.rental.id,

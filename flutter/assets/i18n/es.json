@@ -1102,6 +1102,16 @@
       },
       "Businesses": {
         "components": {
+          "OnMapRentalCard": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "bedrooms": "dormitorios",
+            "bathrooms": "baños"
+          },
           "CustBusinessRentalCard": {
             "hour": "hora",
             "day": "día",
@@ -1203,6 +1213,10 @@
             "week": "semana",
             "month": "mes",
             "person": "persona",
+            "perHour": "Per hour",
+            "perDay": "Por día",
+            "perWeek": "Por semanana",
+            "perMonth": "Por mes",
             "total": "Total",
             "bedrooms": "Dormitorios",
             "bathrooms": "Baños"

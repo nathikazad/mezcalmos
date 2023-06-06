@@ -1059,6 +1059,16 @@
           }
         },
         "components": {
+          "OnMapRentalCard": {
+            "hour": "hour",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "Total",
+            "bedrooms": "Bedrooms",
+            "bathrooms": "Bathrooms"
+          },
           "CustBusinessRentalCard": {
             "hour": "hour",
             "day": "day",
@@ -1160,6 +1170,10 @@
             "week": "week",
             "month": "month",
             "person": "person",
+            "perHour": "Per hour",
+            "perDay": "Per day",
+            "perWeek": "Per week",
+            "perMonth": "Per month",
             "total": "Total",
             "bedrooms": "Bedrooms",
             "bathrooms": "Bathrooms"

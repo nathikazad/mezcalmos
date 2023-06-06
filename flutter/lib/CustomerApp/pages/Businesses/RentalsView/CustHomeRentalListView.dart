@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/C
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
@@ -42,7 +43,8 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
 
   @override
   void initState() {
-    viewController.init();
+    //this.
+    viewController.init(context);
 
     super.initState();
   }
@@ -58,9 +60,10 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
             : '${_i18n()['homes']}',
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 100),
         child: Obx(
           () => MezButton(
+            height: 42.5,
             onClick: () async {
               viewController.switchView();
             },
@@ -68,7 +71,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
             label: viewController.isMapView
                 ? '${_i18n()['viewAsList']}'
                 : '${_i18n()['viewOnMap']}',
-            borderRadius: 50,
+            borderRadius: 25,
           ),
         ),
       ),
@@ -114,10 +117,209 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
     );
   }
 
-  GoogleMap _mapView() {
+  Widget _mapView() {
+    final List<TimeUnit> timeUnits = <TimeUnit>[
+      // TimeUnit.PerHour,
+      TimeUnit.PerDay,
+      TimeUnit.PerWeek,
+      TimeUnit.PerMonth
+    ];
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Text(
+              'Show cost',
+              style: context.textTheme.bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
+
+            Row(
+                children: List.generate(
+                    timeUnits.length,
+                    (int index) => Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  shape: StadiumBorder(
+                                      side: BorderSide(
+                                          color: viewController.filterTag ==
+                                                  timeUnits[index]
+                                              ? Colors.transparent
+                                              : Colors.black54)),
+                                  backgroundColor: viewController.filterTag ==
+                                          timeUnits[index]
+                                      ? primaryBlueColor
+                                      : Colors.white,
+                                  shadowColor: Colors.transparent,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 4.25),
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  minimumSize: Size.zero),
+                              onPressed: () {
+                                viewController.setFilter(timeUnits[index]);
+                                setState(() {});
+                              },
+                              child: Text(
+                                '${_i18n()[timeUnits[index].toFirebaseFormatString()]}',
+                                style: TextStyle(
+                                  color: viewController.filterTag ==
+                                          timeUnits[index]
+                                      ? Colors.white
+                                      : Colors.black54,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 11.mezSp,
+                                ),
+                              )),
+                        )))
+
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 10),
+            //   child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //           shape: StadiumBorder(
+            //               side: BorderSide(
+            //                   color: viewController.filterTag == TimeUnit.PerDay
+            //                       ? Colors.transparent
+            //                       : Colors.black54)),
+            //           backgroundColor: viewController.filterTag == TimeUnit.PerDay
+            //               ? primaryBlueColor
+            //               : Colors.white,
+            //           shadowColor: Colors.transparent,
+            //           padding:
+            //               EdgeInsets.symmetric(horizontal: 12, vertical: 4.25),
+            //           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            //           minimumSize: Size.zero),
+            //       onPressed: () => viewController.setFilter(TimeUnit.PerDay),
+            //       child: Text(
+            //         'Per day',
+            //         style: TextStyle(
+            //           color: viewController.filterTag == TimeUnit.PerDay
+            //               ? Colors.white
+            //               : Colors.black54,
+            //           fontWeight: FontWeight.w600,
+            //           fontSize: 11.mezSp,
+            //         ),
+            //       )),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 10),
+            //   child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //           shape: StadiumBorder(
+            //               side: BorderSide(
+            //                   color: viewController.filterTag == TimeUnit.PerDay
+            //                       ? Colors.transparent
+            //                       : Colors.black54)),
+            //           backgroundColor: viewController.filterTag == TimeUnit.PerDay
+            //               ? primaryBlueColor
+            //               : Colors.white,
+            //           shadowColor: Colors.transparent,
+            //           padding:
+            //               EdgeInsets.symmetric(horizontal: 12, vertical: 4.25),
+            //           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            //           minimumSize: Size.zero),
+            //       onPressed: () => viewController.setFilter(TimeUnit.PerDay),
+            //       child: Text(
+            //         'Per day',
+            //         style: TextStyle(
+            //           color: viewController.filterTag == TimeUnit.PerDay
+            //               ? Colors.white
+            //               : Colors.black54,
+            //           fontWeight: FontWeight.w600,
+            //           fontSize: 11.mezSp,
+            //         ),
+            //       )),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 10),
+            //   child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //           shape: StadiumBorder(
+            //               side: BorderSide(
+            //                   color: viewController.filterTag == TimeUnit.PerWeek
+            //                       ? Colors.transparent
+            //                       : Colors.black54)),
+            //           backgroundColor:
+            //               viewController.filterTag == TimeUnit.PerWeek
+            //                   ? primaryBlueColor
+            //                   : Colors.white,
+            //           shadowColor: Colors.transparent,
+            //           padding:
+            //               EdgeInsets.symmetric(horizontal: 12, vertical: 4.25),
+            //           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            //           minimumSize: Size.zero),
+            //       onPressed: () => viewController.setFilter(TimeUnit.PerWeek),
+            //       child: Text(
+            //         'Per week',
+            //         style: TextStyle(
+            //           color: viewController.filterTag == TimeUnit.PerWeek
+            //               ? Colors.white
+            //               : Colors.black54,
+            //           fontWeight: FontWeight.w600,
+            //           fontSize: 11.mezSp,
+            //         ),
+            //       )),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 10),
+            //   child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //           shape: StadiumBorder(
+            //               side: BorderSide(
+            //                   color: viewController.filterTag == TimeUnit.PerMonth
+            //                       ? Colors.transparent
+            //                       : Colors.black54)),
+            //           backgroundColor:
+            //               viewController.filterTag == TimeUnit.PerMonth
+            //                   ? primaryBlueColor
+            //                   : Colors.white,
+            //           shadowColor: Colors.transparent,
+            //           padding:
+            //               EdgeInsets.symmetric(horizontal: 12, vertical: 4.25),
+            //           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            //           minimumSize: Size.zero),
+            //       onPressed: () => viewController.setFilter(TimeUnit.PerMonth),
+            //       child: Text(
+            //         'Per month',
+            //         style: TextStyle(
+            //           color: viewController.filterTag == TimeUnit.PerMonth
+            //               ? Colors.white
+            //               : Colors.black54,
+            //           fontWeight: FontWeight.w600,
+            //           fontSize: 11.mezSp,
+            //         ),
+            //       )),
+            // ),
+          ]),
+        ),
+      ),
+      Expanded(child: _googleMap())
+    ]);
+  }
+
+  GoogleMap _googleMap() {
+    Set<Marker> getMarkersList() {
+      switch (viewController.filterTag) {
+        // case TimeUnit.PerHour:
+        //   return viewController.perHourMarkers;
+        case TimeUnit.PerDay:
+          return viewController.perDayMarkers;
+        case TimeUnit.PerWeek:
+          return viewController.perWeekMarkers;
+        default:
+          return viewController.perMonthMarkers;
+      }
+    }
+
     return GoogleMap(
+        compassEnabled: false,
+        mapToolbarEnabled: false,
         zoomControlsEnabled: false,
-        markers: viewController.markers,
+        markers: getMarkersList(),
         onMapCreated: (GoogleMapController controller) {
           controller.setMapStyle(mezMapStyle);
         },
