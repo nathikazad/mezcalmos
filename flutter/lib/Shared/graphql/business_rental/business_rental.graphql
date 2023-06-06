@@ -136,30 +136,8 @@ query get_rental_by_id($id: Int!) {
   }
 }
 
-query get_home_rentals(
-  $distance: Float!
-  $from: geography!
-  $limit: Int
-  $offset: Int
-) {
-  business_home_rental(
-    where: {
-      gps_location: { _st_d_within: { distance: $distance, from: $from } }
-      rental: {
-        business: {
-          details: {
-            approved: { _eq: true }
-            open_status: { _neq: "closedIndefinitely" }
-          }
-        }
-      }
-    }
-    limit: $limit
-    offset: $offset
-    order_by: {
-      rental: { business: { details: { referral_points: desc_nulls_last } } }
-    }
-  ) {
+query get_home_rentals($location: geography, $limit: Int, $offset: Int) {
+  business_get_home_rentals(args: {location: $location}, limit: $limit, offset: $offset, where: {rental: {business: {details: {approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}}}) {
     bathrooms
     bedrooms
     gps_location
@@ -204,6 +182,7 @@ query get_home_rentals(
     }
   }
 }
+
 query get_business_home_rentals($businessId: Int!, $limit: Int, $offset: Int) {
   business_home_rental(
     where: { rental: { business_id: { _eq: $businessId } } }
