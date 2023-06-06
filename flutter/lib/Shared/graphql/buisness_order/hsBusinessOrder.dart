@@ -37,39 +37,62 @@ Future<List<MinimumBsOrder>?> get_bs_orders(
   }).toList();
 }
 
-Future<List<MinimumBusinessItem>> get_rental_orders_items(
-    {required int businessId, required int offset, required int limit}) async {
-  QueryResult<Query$getBsRentalOrdersItems> res = await _db.graphQLClient
-      .query$getBsRentalOrdersItems(Options$Query$getBsRentalOrdersItems(
-          variables: Variables$Query$getBsRentalOrdersItems(
-              rentalBusinessId: businessId, offset: offset, limit: limit)));
+Future<List<MinimumBusinessItem>> get_upcoming_rental_orders_items(
+    {required int businessId,
+    required int offset,
+    required int limit,
+    bool withCache = true}) async {
+  QueryResult<Query$getBsRentalUpcomingOrdersItems> res =
+      await _db.graphQLClient.query$getBsRentalUpcomingOrdersItems(
+          Options$Query$getBsRentalUpcomingOrdersItems(
+              fetchPolicy:
+                  withCache ? FetchPolicy.cacheFirst : FetchPolicy.networkOnly,
+              variables: Variables$Query$getBsRentalUpcomingOrdersItems(
+                  rentalBusinessId: businessId, offset: offset, limit: limit)));
   if (res.hasException || res.parsedData?.business_order_request_item == null) {
     throw res.exception!;
   }
   mezDbgPrint(res.data);
   return res.parsedData!.business_order_request_item.map<MinimumBusinessItem>(
-      (Query$getBsRentalOrdersItems$business_order_request_item data) {
+      (Query$getBsRentalUpcomingOrdersItems$business_order_request_item data) {
     return MinimumBusinessItem(
       orderId: data.order_request_id,
       time: DateTime.parse(data.time!),
       parameters: businessItemParamsFromData(data.parameters),
-      cost: data.cost.toDouble(), customerName: '',
+      cost: data.cost.toDouble(),
+      customerName: data.order.customer.user.name!,
       image: data.rental!.details.image!.first.toString(),
       name: toLanguageMap(translations: data.rental!.details.name.translations),
-      // available: data.available,
-      // itemId: data.item_id,
-      // item: BusinessItemDetails(
-      //   id: data.rental!.details.id,
-      //   image: data.rental!.details.image
-      //           ?.map<String>((e) => e.toString())
-      //           .toList() ??
-      //       [],
-      //   name:
-      //       toLanguageMap(translations: data.rental!.details.name.translations),
-      //   businessId: businessId,
-      //   available: data.rental!.details.available,
-      //   cost: constructBusinessServiceCost(data.rental!.details.cost),
-      // ),
+    );
+  }).toList();
+}
+
+Future<List<MinimumBusinessItem>> get_past_rental_orders_items(
+    {required int businessId,
+    required int offset,
+    required int limit,
+    bool withCache = true}) async {
+  QueryResult<Query$getBsRentalPastOrdersItems> res = await _db.graphQLClient
+      .query$getBsRentalPastOrdersItems(
+          Options$Query$getBsRentalPastOrdersItems(
+              fetchPolicy:
+                  withCache ? FetchPolicy.cacheFirst : FetchPolicy.networkOnly,
+              variables: Variables$Query$getBsRentalPastOrdersItems(
+                  rentalBusinessId: businessId, offset: offset, limit: limit)));
+  if (res.hasException || res.parsedData?.business_order_request_item == null) {
+    throw res.exception!;
+  }
+  mezDbgPrint(res.data);
+  return res.parsedData!.business_order_request_item.map<MinimumBusinessItem>(
+      (Query$getBsRentalPastOrdersItems$business_order_request_item data) {
+    return MinimumBusinessItem(
+      orderId: data.order_request_id,
+      time: DateTime.parse(data.time!),
+      parameters: businessItemParamsFromData(data.parameters),
+      cost: data.cost.toDouble(),
+      customerName: data.order.customer.user.name!,
+      image: data.rental!.details.image!.first.toString(),
+      name: toLanguageMap(translations: data.rental!.details.name.translations),
     );
   }).toList();
 }

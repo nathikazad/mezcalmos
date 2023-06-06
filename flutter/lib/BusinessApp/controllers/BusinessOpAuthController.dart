@@ -45,8 +45,8 @@ class BusinessOpAuthController extends GetxController {
     mezDbgPrint("BusinessAuth: init $hashCode");
     mezDbgPrint("BusinessAuth: calling handle state change first time");
 
-    setupBusinessOperator();
-    checkAndSetLastActive();
+    setupBusinessOperator().then((value) => checkAndSetLastActive());
+
     _appLifeCycleResumeCallbackId = _appLifeCycleController.attachCallback(
         Material.AppLifecycleState.resumed, checkAndSetLastActive);
     super.onInit();
@@ -54,7 +54,8 @@ class BusinessOpAuthController extends GetxController {
 
   void checkAndSetLastActive() {
     mezDbgPrint("Inside checkAndSetLastActive");
-    if (-lastSavedActiveTime.difference(DateTime.now()) > Duration(hours: 6)) {
+    if (-lastSavedActiveTime.difference(DateTime.now()) > Duration(hours: 6) &&
+        _companyDetailsId.value != null) {
       // set last active time of business;
       set_last_active_time(detailsId: _companyDetailsId.value!);
     }

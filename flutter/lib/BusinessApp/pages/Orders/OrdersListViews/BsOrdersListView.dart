@@ -5,10 +5,9 @@ import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/BsHomeRen
 import 'package:mezcalmos/BusinessApp/pages/Orders/OrdersListViews/components/BsOfferingOrderCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/Orders/OrdersListViews/components/BsOrderCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/Orders/OrdersListViews/controllers/BsOrdersListViewController.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
+import 'package:mezcalmos/Shared/graphql/buisness_order/models/MinimumBsOrder.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -111,24 +110,22 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
               style: context.textTheme.bodyLarge,
             ),
             meduimSeperator,
-            GroupedListView<BusinessOrderItem, DateTime>(
+            GroupedListView<MinimumBusinessItem, DateTime>(
               shrinkWrap: true,
               elements: viewController.upcomingItems,
-              groupBy: (BusinessOrderItem element) => DateTime(
-                  element.dateTime.year,
-                  element.dateTime.month,
-                  element.dateTime.day),
+              groupBy: (MinimumBusinessItem element) => DateTime(
+                  element.time.year, element.time.month, element.time.day),
               groupComparator: (DateTime value1, DateTime value2) =>
                   value2.compareTo(value1),
-              itemComparator:
-                  (BusinessOrderItem element1, BusinessOrderItem element2) =>
-                      element2.dateTime.compareTo(element1.dateTime),
+              itemComparator: (MinimumBusinessItem element1,
+                      MinimumBusinessItem element2) =>
+                  element2.time.compareTo(element1.time),
               physics: NeverScrollableScrollPhysics(),
-              groupHeaderBuilder: (BusinessOrderItem element) {
+              groupHeaderBuilder: (MinimumBusinessItem element) {
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
-                    element.dateTime
+                    element.time
                         .toLocal()
                         .toDayName(withDateNumber: true)
                         .inCaps,
@@ -139,7 +136,7 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
               separator: SizedBox(
                 height: 5,
               ),
-              itemBuilder: (BuildContext context, BusinessOrderItem item) {
+              itemBuilder: (BuildContext context, MinimumBusinessItem item) {
                 return BsOfferingOrderCard(item: item);
               },
             ),

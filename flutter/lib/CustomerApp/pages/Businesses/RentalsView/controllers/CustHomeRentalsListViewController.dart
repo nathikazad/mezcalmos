@@ -47,7 +47,8 @@ class CustHomeRentalsListViewController {
       _isLoading.value = true;
       // todo @ChiragKr04 fix the location thing
 
-      locPkg.LocationData location = await locPkg.Location().getLocation();
+      final locPkg.LocationData location =
+          await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation = Location(
             lat: location.latitude!, lng: location.longitude!, address: "");
@@ -74,7 +75,7 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(
           "👋 _fetchRentals called  \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
       List<RentalCard> newList = await get_home_rentals(
-        distance: 1000000000000,
+        // distance: 1000000000000,
         fromLocation: _fromLocation!,
 
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],

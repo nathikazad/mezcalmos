@@ -2,10 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
+import 'package:mezcalmos/Shared/graphql/buisness_order/models/MinimumBsOrder.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
@@ -13,7 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class BsOfferingOrderCard extends StatelessWidget {
   const BsOfferingOrderCard({super.key, required this.item});
-  final BusinessOrderItem item;
+  final MinimumBusinessItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +36,19 @@ class BsOfferingOrderCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if (item.item!.firstImage != null)
-                        Container(
-                          width: 45,
-                          height: 45,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: CachedNetworkImageProvider(
-                                      item.item!.firstImage!))),
-                        ),
+                      Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: CachedNetworkImageProvider(item.image))),
+                      ),
                       SizedBox(width: 8),
                       Flexible(
                         child: Text(
-                          item.item?.name.getTranslation(userLanguage) ?? "",
+                          item.name.getTranslation(userLanguage) ?? "",
                           maxLines: 2,
                           style: context.textTheme.bodyLarge,
                         ),
@@ -82,7 +78,7 @@ class BsOfferingOrderCard extends StatelessWidget {
                     Flexible(
                       fit: FlexFit.tight,
                       child: Text(
-                        "Anna Rodrigo",
+                        item.customerName,
                       ),
                     ),
                     Row(
@@ -91,7 +87,7 @@ class BsOfferingOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          DateFormat("HH:mm aa").format(item.dateTime),
+                          DateFormat("HH:mm aa").format(item.time),
                           textAlign: TextAlign.right,
                         ),
                         SizedBox(width: 5),

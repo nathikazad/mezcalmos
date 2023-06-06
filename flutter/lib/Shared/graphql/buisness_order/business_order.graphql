@@ -182,12 +182,20 @@ query getBsOrders($busnessId: Int!, $status: String) {
     }
   }
 }
-query getBsRentalOrdersItems($rentalBusinessId: Int!,$offset:Int!,$limit:Int!) {
-  business_order_request_item(where: {rental: {business_id: {_eq:   $rentalBusinessId}}}, limit: $limit, offset: $offset) {
+query getBsRentalUpcomingOrdersItems($rentalBusinessId: Int!,$offset:Int!,$limit:Int!) {
+  business_order_request_item(where: {rental: {business_id: {_eq:   $rentalBusinessId}}, time: { _gte: "now()" }}, limit: $limit, offset: $offset) {
     cost
-    id
+    
     order_request_id
     parameters
+    order {
+      customer {
+        user{
+          name
+          
+        }
+      }
+    }
     time
     rental {
       details {
@@ -198,13 +206,42 @@ query getBsRentalOrdersItems($rentalBusinessId: Int!,$offset:Int!,$limit:Int!) {
             value
           }
         }
-        cost
-        id
-        available
+       
+        
       }
     }
-    item_id
-    offering_type
-    available
+   
+  }
+}
+
+query getBsRentalPastOrdersItems($rentalBusinessId: Int!,$offset:Int!,$limit:Int!) {
+  business_order_request_item(where: {rental: {business_id: {_eq:   $rentalBusinessId}}, time: { _lte: "now()" }}, limit: $limit, offset: $offset) {
+    cost
+    
+    order_request_id
+    parameters
+    order {
+      customer {
+        user{
+          name
+          
+        }
+      }
+    }
+    time
+    rental {
+      details {
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+       
+        
+      }
+    }
+   
   }
 }
