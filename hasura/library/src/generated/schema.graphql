@@ -3356,6 +3356,9 @@ type business_order_request_item {
   id: Int!
   item_id: Int!
   offering_type: String!
+
+  """An object relationship"""
+  order: business_order_request!
   order_request_id: Int!
   parameters(
     """JSON select path"""
@@ -3489,6 +3492,7 @@ input business_order_request_item_bool_exp {
   id: Int_comparison_exp
   item_id: Int_comparison_exp
   offering_type: String_comparison_exp
+  order: business_order_request_bool_exp
   order_request_id: Int_comparison_exp
   parameters: jsonb_comparison_exp
   product: business_product_bool_exp
@@ -3549,6 +3553,7 @@ input business_order_request_item_insert_input {
   id: Int
   item_id: Int
   offering_type: String
+  order: business_order_request_obj_rel_insert_input
   order_request_id: Int
   parameters: jsonb
   product: business_product_obj_rel_insert_input
@@ -3631,6 +3636,7 @@ input business_order_request_item_order_by {
   id: order_by
   item_id: order_by
   offering_type: order_by
+  order: business_order_request_order_by
   order_request_id: order_by
   parameters: order_by
   product: business_product_order_by
@@ -3958,6 +3964,16 @@ type business_order_request_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [business_order_request!]!
+}
+
+"""
+input type for inserting object relation for remote table "business.order_request"
+"""
+input business_order_request_obj_rel_insert_input {
+  data: business_order_request_insert_input!
+
+  """upsert condition"""
+  on_conflict: business_order_request_on_conflict
 }
 
 """

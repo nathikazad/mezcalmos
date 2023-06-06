@@ -6,7 +6,9 @@ import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/RentalCartIt
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -44,6 +46,21 @@ class _CustOrderViewState extends State<CustOrderView> {
         onClick: MezRouter.back,
         title: "Order",
       ),
+      bottomNavigationBar: Obx(() {
+        if (custBusinessCartController.currentOrderInView.value!.status ==
+                BusinessOrderRequestStatus.Confirmed ||
+            custBusinessCartController.currentOrderInView.value!.status ==
+                BusinessOrderRequestStatus.Completed) {
+          return MezButton(
+            label: "Write a review",
+            withGradient: true,
+            borderRadius: 0,
+            onClick: () async {},
+          );
+        } else {
+          return SizedBox.shrink();
+        }
+      }),
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.all(8.0),
@@ -55,12 +72,40 @@ class _CustOrderViewState extends State<CustOrderView> {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      orderStatusCard(),
+                      smallSepartor,
                       MezCard(
-                        content: Text(
-                          custBusinessCartController
-                              .currentOrderInView.value!.status!.name,
-                        ),
-                      ),
+                          content: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              custBusinessCartController.currentOrderInView
+                                  .value!.items.first.rental!.business.image,
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                custBusinessCartController.currentOrderInView
+                                    .value!.items.first.rental!.business.name,
+                                style: context.textTheme.bodyLarge,
+                              ),
+                            ),
+                          ),
+                          MessageButton(
+                            chatId: custBusinessCartController
+                                .currentOrderInView.value!.chatId!
+                                .toInt(),
+                            onTap: () async {
+                              await BaseMessagingScreen.navigate(
+                                  chatId: custBusinessCartController
+                                      .currentOrderInView.value!.chatId!
+                                      .toInt());
+                            },
+                          ),
+                        ],
+                      )),
                       if (custBusinessCartController
                           .currentOrderInView.value!.items.isNotEmpty)
                         ...custBusinessCartController
@@ -143,9 +188,147 @@ class _CustOrderViewState extends State<CustOrderView> {
                           ],
                         ),
                       ),
+                      smallSepartor,
+                      bottomButtons(context),
                     ],
                   ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget bottomButtons(BuildContext context) {
+    if (custBusinessCartController.currentOrderInView.value!.status ==
+            BusinessOrderRequestStatus.CancelledByCustomer ||
+        custBusinessCartController.currentOrderInView.value!.status ==
+            BusinessOrderRequestStatus.CancelledByBusiness) {
+      return SizedBox.shrink();
+    }
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (custBusinessCartController.currentOrderInView.value!.status !=
+                BusinessOrderRequestStatus.Confirmed &&
+            custBusinessCartController.currentOrderInView.value!.status !=
+                BusinessOrderRequestStatus.Completed)
+          MezCard(
+            content: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(
+                    Icons.info_outline,
+                    color: primaryBlueColor,
+                  ),
+                ),
+                if (custBusinessCartController
+                        .currentOrderInView.value!.status ==
+                    BusinessOrderRequestStatus.RequestReceived)
+                  Expanded(
+                    child: Text(
+                      "Reservation not confirmed yet",
+                      style: context.textTheme.bodyMedium!.copyWith(
+                        color: primaryBlueColor,
+                      ),
+                    ),
+                  ),
+                if (custBusinessCartController
+                        .currentOrderInView.value!.status ==
+                    BusinessOrderRequestStatus.ModificationRequestByBusiness)
+                  Expanded(
+                    child: Text(
+                      "Business has made modifications, please revise if everything okay click on accept.",
+                      style: context.textTheme.bodyMedium!.copyWith(
+                        color: primaryBlueColor,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        smallSepartor,
+        if (custBusinessCartController.currentOrderInView.value!.status ==
+            BusinessOrderRequestStatus.ModificationRequestByBusiness)
+          MezButton(
+            label: "Accept Change",
+            onClick: () async {
+              await custBusinessCartController.acceptOrderRequest();
+            },
+          ),
+        smallSepartor,
+        if (custBusinessCartController.currentOrderInView.value!.status ==
+                BusinessOrderRequestStatus.RequestReceived ||
+            custBusinessCartController.currentOrderInView.value!.status ==
+                BusinessOrderRequestStatus.ModificationRequestByBusiness)
+          MezButton(
+            label: "Cancel Request",
+            textColor: Colors.red,
+            backgroundColor: Colors.red.shade100,
+            onClick: () async {
+              await custBusinessCartController.cancelOrderRequest();
+            },
+          ),
+      ],
+    );
+  }
+
+  Widget orderStatusCard() {
+    Icon getIcon() {
+      switch (custBusinessCartController.currentOrderInView.value!.status) {
+        case BusinessOrderRequestStatus.RequestReceived:
+          return Icon(
+            Icons.pending,
+            color: primaryBlueColor,
+          );
+        case BusinessOrderRequestStatus.ModificationRequestByBusiness:
+          return Icon(
+            Icons.hourglass_top,
+            color: primaryBlueColor,
+          );
+        case BusinessOrderRequestStatus.CancelledByBusiness:
+          return Icon(
+            Icons.cancel,
+            color: Colors.red,
+          );
+        case BusinessOrderRequestStatus.Confirmed:
+          return Icon(
+            Icons.check,
+            color: primaryBlueColor,
+          );
+        case BusinessOrderRequestStatus.CancelledByCustomer:
+          return Icon(
+            Icons.cancel,
+            color: Colors.red,
+          );
+        case BusinessOrderRequestStatus.Completed:
+          return Icon(
+            Icons.check,
+            color: primaryBlueColor,
+          );
+        case null:
+          return Icon(
+            Icons.pending,
+            color: primaryBlueColor,
+          );
+      }
+    }
+
+    return MezCard(
+      content: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          children: [
+            getIcon(),
+            Expanded(
+              child: Text(
+                custBusinessCartController
+                    .currentOrderInView.value!.status!.name,
+                style: context.textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
       ),
     );

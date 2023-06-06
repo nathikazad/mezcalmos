@@ -95,7 +95,8 @@ class CustHomeRentalsListViewController {
 
       // todo @ChiragKr04 fix the location thing
 
-      locPkg.LocationData location = await locPkg.Location().getLocation();
+      final locPkg.LocationData location =
+          await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation = Location(
             lat: location.latitude!, lng: location.longitude!, address: "");

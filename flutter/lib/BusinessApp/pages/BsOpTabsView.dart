@@ -2,7 +2,7 @@ import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
-import 'package:mezcalmos/BusinessApp/pages/OrdersListViews/BsOrdersListView.dart';
+import 'package:mezcalmos/BusinessApp/pages/Orders/OrdersListViews/BsOrdersListView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';

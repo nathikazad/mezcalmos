@@ -1,6 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
+extension BusinessOrderHelper on BusinessOrder {
+  DateTime get furtherItemDate {
+    return items.map((BusinessOrderItem e) => DateTime.parse(e.time!)).reduce(
+        (DateTime value, DateTime element) =>
+            value.toLocal().isAfter(element.toLocal()) ? value : element);
+  }
+
+  bool get isPending => status == BusinessOrderRequestStatus.RequestReceived;
+  bool get isUpcoming =>
+      status != BusinessOrderRequestStatus.CancelledByBusiness &&
+      status != BusinessOrderRequestStatus.CancelledByCustomer &&
+      furtherItemDate.isAfter(DateTime.now().toLocal());
+  bool get isPast =>
+      status == BusinessOrderRequestStatus.CancelledByBusiness ||
+      status == BusinessOrderRequestStatus.CancelledByCustomer ||
+      (status == BusinessOrderRequestStatus.Confirmed &&
+          furtherItemDate.isBefore(DateTime.now().toLocal()));
+}
+
 extension BusinessOrderRequestStatusExtensions on BusinessOrderRequestStatus {
   String toReadableString() {
     switch (this) {
@@ -42,6 +61,7 @@ extension BusinessOrderRequestStatusExtensions on BusinessOrderRequestStatus {
 }
 
 extension BsOrderItemHelper on BusinessOrderItem {
+  DateTime get dateTime => DateTime.parse(time!);
   BusinessOrderItem copyWith({
     BusinessItemParameters? parameters,
     num? cost,

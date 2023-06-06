@@ -12,6 +12,9 @@ object_relationships:
         remote_table:
           name: event
           schema: business
+  - name: order
+    using:
+      foreign_key_constraint_on: order_request_id
   - name: product
     using:
       manual_configuration:
@@ -76,6 +79,18 @@ select_permissions:
                 operators:
                   user_id:
                     _eq: X-Hasura-User-Id
+  - role: customer
+    permission:
+      columns:
+        - available
+        - id
+        - item_id
+        - order_request_id
+        - parameters
+        - cost
+        - offering_type
+        - time
+      filter: {}
 update_permissions:
   - role: business_operator
     permission:

@@ -53,12 +53,16 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
           titleWidget:
               Obx(() => Text((viewController.order?.customer?.name ?? ""))),
           onClick: MezRouter.back),
-      bottomNavigationBar: Obx(() => viewController.hasChanges
+      bottomNavigationBar: Obx(() => viewController.orderIsRequested
           ? MezButton(
-              label: "Request changes",
+              height: 75,
+              borderRadius: 0,
+              label: (viewController.hasChanges)
+                  ? "Request changes"
+                  : "Accept order",
               withGradient: true,
               onClick: () async {
-                await viewController.requestChanges();
+                await viewController.handleRequestedOrder();
               },
             )
           : SizedBox.shrink()),
@@ -111,12 +115,13 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
                         totalCost: viewController.order?.cost),
                     stripeOrderPaymentInfo: null),
                 meduimSeperator,
-                MezButton(
-                  label: "Cancel order",
-                  onClick: () async {},
-                  backgroundColor: offRedColor,
-                  textColor: redAccentColor,
-                )
+                if (viewController.canCancel)
+                  MezButton(
+                    label: "Cancel order",
+                    onClick: () async {},
+                    backgroundColor: offRedColor,
+                    textColor: redAccentColor,
+                  )
               ],
             ),
           );

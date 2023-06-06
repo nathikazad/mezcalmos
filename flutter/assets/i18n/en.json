@@ -14,7 +14,6 @@
               "save": "Save",
               "cancel": "Cancel",
               "startFrom": "Start From",
-
               "updateTimeTitle": "Update Time"
             }
           }
@@ -963,10 +962,11 @@
           "car": "Car",
           "bicycle": "Bicycle"
         },
-
         "service": "Services",
-        "deliveries": { "title": "Deliveries", "shared": {} },
-
+        "deliveries": {
+          "title": "Deliveries",
+          "shared": {}
+        },
         "classes": {
           "title": "Class",
           "shared": {
@@ -1009,7 +1009,6 @@
             "noBusinessesFound": "No businesses found",
             "noTherapyFound": "No therapy found"
           },
-
           "parties": {
             "title": "Parties",
             "description": "Discover most delicious dishes from the nearest restaurants."
@@ -1768,6 +1767,15 @@
       }
     },
     "helpers": {
+      "TimeUnitHelper": {
+        "hour": "Hour",
+        "day": "Day",
+        "week": "Week",
+        "month": "Month",
+        "person": "Person",
+        "unit": "Unit",
+        "total": "Total"
+      },
       "DeliveryOrderHelper": {
         "status": {
           "ready": "Package ready",
@@ -1857,7 +1865,6 @@
           }
         }
       },
-
       "ServiceProfileView": {
         "profile": "Profile",
         "info": "Information",

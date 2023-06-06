@@ -6300,25 +6300,24 @@ class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk$home_rental
 
 class Variables$Query$get_home_rentals {
   factory Variables$Query$get_home_rentals({
-    Geography? location,
+    required Geography location,
     int? limit,
     int? offset,
+    required double distance,
   }) =>
       Variables$Query$get_home_rentals._({
-        if (location != null) r'location': location,
+        r'location': location,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
+        r'distance': distance,
       });
 
   Variables$Query$get_home_rentals._(this._$data);
 
   factory Variables$Query$get_home_rentals.fromJson(Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    if (data.containsKey('location')) {
-      final l$location = data['location'];
-      result$data['location'] =
-          l$location == null ? null : geographyFromJson(l$location);
-    }
+    final l$location = data['location'];
+    result$data['location'] = geographyFromJson(l$location);
     if (data.containsKey('limit')) {
       final l$limit = data['limit'];
       result$data['limit'] = (l$limit as int?);
@@ -6327,21 +6326,21 @@ class Variables$Query$get_home_rentals {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
     }
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
     return Variables$Query$get_home_rentals._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  Geography? get location => (_$data['location'] as Geography?);
+  Geography get location => (_$data['location'] as Geography);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
+  double get distance => (_$data['distance'] as double);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    if (_$data.containsKey('location')) {
-      final l$location = location;
-      result$data['location'] =
-          l$location == null ? null : geographyToJson(l$location);
-    }
+    final l$location = location;
+    result$data['location'] = geographyToJson(l$location);
     if (_$data.containsKey('limit')) {
       final l$limit = limit;
       result$data['limit'] = l$limit;
@@ -6350,6 +6349,8 @@ class Variables$Query$get_home_rentals {
       final l$offset = offset;
       result$data['offset'] = l$offset;
     }
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
     return result$data;
   }
 
@@ -6369,10 +6370,6 @@ class Variables$Query$get_home_rentals {
     }
     final l$location = location;
     final lOther$location = other.location;
-    if (_$data.containsKey('location') !=
-        other._$data.containsKey('location')) {
-      return false;
-    }
     if (l$location != lOther$location) {
       return false;
     }
@@ -6392,6 +6389,11 @@ class Variables$Query$get_home_rentals {
     if (l$offset != lOther$offset) {
       return false;
     }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (l$distance != lOther$distance) {
+      return false;
+    }
     return true;
   }
 
@@ -6400,10 +6402,12 @@ class Variables$Query$get_home_rentals {
     final l$location = location;
     final l$limit = limit;
     final l$offset = offset;
+    final l$distance = distance;
     return Object.hashAll([
-      _$data.containsKey('location') ? l$location : const {},
+      l$location,
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
+      l$distance,
     ]);
   }
 }
@@ -6421,6 +6425,7 @@ abstract class CopyWith$Variables$Query$get_home_rentals<TRes> {
     Geography? location,
     int? limit,
     int? offset,
+    double? distance,
   });
 }
 
@@ -6441,12 +6446,16 @@ class _CopyWithImpl$Variables$Query$get_home_rentals<TRes>
     Object? location = _undefined,
     Object? limit = _undefined,
     Object? offset = _undefined,
+    Object? distance = _undefined,
   }) =>
       _then(Variables$Query$get_home_rentals._({
         ..._instance._$data,
-        if (location != _undefined) 'location': (location as Geography?),
+        if (location != _undefined && location != null)
+          'location': (location as Geography),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
       }));
 }
 
@@ -6460,6 +6469,7 @@ class _CopyWithStubImpl$Variables$Query$get_home_rentals<TRes>
     Geography? location,
     int? limit,
     int? offset,
+    double? distance,
   }) =>
       _res;
 }
@@ -6636,7 +6646,7 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'location')),
         type: NamedTypeNode(
           name: NameNode(value: 'geography'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -6655,6 +6665,15 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
           isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -6721,7 +6740,25 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
                     ]),
                   )
                 ]),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'gps_location'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_st_d_within'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'distance'),
+                        value: VariableNode(name: NameNode(value: 'distance')),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'from'),
+                        value: VariableNode(name: NameNode(value: 'location')),
+                      ),
+                    ]),
+                  )
+                ]),
+              ),
             ]),
           ),
         ],
@@ -7050,7 +7087,7 @@ class Options$Query$get_home_rentals
     extends graphql.QueryOptions<Query$get_home_rentals> {
   Options$Query$get_home_rentals({
     String? operationName,
-    Variables$Query$get_home_rentals? variables,
+    required Variables$Query$get_home_rentals variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -7058,7 +7095,7 @@ class Options$Query$get_home_rentals
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -7075,7 +7112,7 @@ class WatchOptions$Query$get_home_rentals
     extends graphql.WatchQueryOptions<Query$get_home_rentals> {
   WatchOptions$Query$get_home_rentals({
     String? operationName,
-    Variables$Query$get_home_rentals? variables,
+    required Variables$Query$get_home_rentals variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -7086,7 +7123,7 @@ class WatchOptions$Query$get_home_rentals
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -7105,44 +7142,44 @@ class WatchOptions$Query$get_home_rentals
 class FetchMoreOptions$Query$get_home_rentals extends graphql.FetchMoreOptions {
   FetchMoreOptions$Query$get_home_rentals({
     required graphql.UpdateQuery updateQuery,
-    Variables$Query$get_home_rentals? variables,
+    required Variables$Query$get_home_rentals variables,
   }) : super(
           updateQuery: updateQuery,
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           document: documentNodeQueryget_home_rentals,
         );
 }
 
 extension ClientExtension$Query$get_home_rentals on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$get_home_rentals>> query$get_home_rentals(
-          [Options$Query$get_home_rentals? options]) async =>
-      await this.query(options ?? Options$Query$get_home_rentals());
+          Options$Query$get_home_rentals options) async =>
+      await this.query(options);
   graphql.ObservableQuery<Query$get_home_rentals> watchQuery$get_home_rentals(
-          [WatchOptions$Query$get_home_rentals? options]) =>
-      this.watchQuery(options ?? WatchOptions$Query$get_home_rentals());
+          WatchOptions$Query$get_home_rentals options) =>
+      this.watchQuery(options);
   void writeQuery$get_home_rentals({
     required Query$get_home_rentals data,
-    Variables$Query$get_home_rentals? variables,
+    required Variables$Query$get_home_rentals variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
           operation:
               graphql.Operation(document: documentNodeQueryget_home_rentals),
-          variables: variables?.toJson() ?? const {},
+          variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
   Query$get_home_rentals? readQuery$get_home_rentals({
-    Variables$Query$get_home_rentals? variables,
+    required Variables$Query$get_home_rentals variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
         operation:
             graphql.Operation(document: documentNodeQueryget_home_rentals),
-        variables: variables?.toJson() ?? const {},
+        variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );
