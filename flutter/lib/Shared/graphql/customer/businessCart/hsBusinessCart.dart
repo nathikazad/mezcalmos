@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/graphql/customer/businessCart/__generated/busin
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 final HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -57,43 +58,72 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
               timeUnit:
                   data.parameters?["timeUnit"]?.toString().toTimeUnit() ?? null,
             ),
-            rental: RentalCard(
-                businessName: data.rental!.business.details.name,
-                currency: data.rental!.business.details.currency.toCurrency(),
-                rental: Rental(
-                  category1: data.rental!.details.category1.toRentalCategory1(),
-                  details: BusinessItemDetails(
-                    id: data.rental!.details.id,
-                    nameId: data.rental!.details.name_id,
-                    descriptionId: data.rental!.details.description_id,
-                    name: toLanguageMap(
-                        translations: data.rental!.details.name.translations),
-                    position: data.rental!.details.position,
-                    businessId: data.rental!.business.details.id,
-                    available: data.rental!.details.available,
-                    image: data.rental!.details.image
-                            ?.map<String>((e) => e.toString())
-                            .toList() ??
-                        [],
-                    cost:
-                        constructBusinessServiceCost(data.rental!.details.cost),
-                    additionalParameters:
-                        data.rental!.details.additional_parameters,
-                  ),
-                  bathrooms: data.rental?.home_rental?.bathrooms,
-                  bedrooms: data.rental?.home_rental?.bedrooms,
-                  gpsLocation: Location(
-                      lat: data.rental?.home_rental?.gps_location.latitude ?? 0,
-                      lng:
-                          data.rental?.home_rental?.gps_location.longitude ?? 0,
-                      address: data.rental?.home_rental?.address ?? ''),
-                  homeType: data.rental?.home_rental?.home_type.toHomeType(),
-                )),
+            rental: data.rental != null
+                ? RentalWithBusinessCard(
+                    business: BusinessCard(
+                      id: data.rental!.business.details.id,
+                      name: data.rental!.business.details.name,
+                      currency:
+                          data.rental!.business.details.currency.toCurrency(),
+                      acceptedPayments: PaymentInfo.fromData(
+                              stripeInfo: {},
+                              acceptedPayments: data
+                                  .rental!.business.details.accepted_payments)
+                          .acceptedPayments,
+                      detailsId: data.rental!.business.details.id,
+                      image: data.rental!.business.details.image,
+                    ),
+                    rental: Rental(
+                      category1:
+                          data.rental!.details.category1.toRentalCategory1(),
+                      details: BusinessItemDetails(
+                        id: data.rental!.details.id,
+                        nameId: data.rental!.details.name_id,
+                        descriptionId: data.rental!.details.description_id,
+                        name: toLanguageMap(
+                            translations:
+                                data.rental!.details.name.translations),
+                        position: data.rental!.details.position,
+                        businessId: data.rental!.business.details.id,
+                        available: data.rental!.details.available,
+                        image: data.rental!.details.image
+                                ?.map<String>((e) => e.toString())
+                                .toList() ??
+                            [],
+                        cost: constructBusinessServiceCost(
+                            data.rental!.details.cost),
+                        additionalParameters:
+                            data.rental!.details.additional_parameters,
+                      ),
+                      bathrooms: data.rental?.home_rental?.bathrooms,
+                      bedrooms: data.rental?.home_rental?.bedrooms,
+                      gpsLocation: Location(
+                          lat:
+                              data.rental?.home_rental?.gps_location.latitude ??
+                                  0,
+                          lng: data.rental?.home_rental?.gps_location
+                                  .longitude ??
+                              0,
+                          address: data.rental?.home_rental?.address ?? ''),
+                      homeType:
+                          data.rental?.home_rental?.home_type.toHomeType(),
+                    ))
+                : null,
             event: data.event != null
-                ? EventCard(
-                    businessName: data.event!.business.details.name,
-                    currency:
-                        data.event!.business.details.currency.toCurrency(),
+                ? EventWithBusinessCard(
+                    business: BusinessCard(
+                      id: data.event!.business.details.id,
+                      name: data.event!.business.details.name,
+                      currency:
+                          data.event!.business.details.currency.toCurrency(),
+                      acceptedPayments: PaymentInfo.fromData(
+                              stripeInfo: {},
+                              acceptedPayments: data
+                                  .event!.business.details.accepted_payments)
+                          .acceptedPayments,
+                      detailsId: data.event!.business.details.id,
+                      image: data.event!.business.details.image,
+                    ),
                     event: Event(
                       scheduleType: data.event!.schedule_type.toScheduleType(),
                       startsAt: data.event!.starts_at,
@@ -126,10 +156,20 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                   )
                 : null,
             service: data.service != null
-                ? ServiceCard(
-                    businessName: data.service!.business.details.name,
-                    currency:
-                        data.service!.business.details.currency.toCurrency(),
+                ? ServiceWithBusinessCard(
+                    business: BusinessCard(
+                      id: data.service!.business.details.id,
+                      name: data.service!.business.details.name,
+                      currency:
+                          data.service!.business.details.currency.toCurrency(),
+                      acceptedPayments: PaymentInfo.fromData(
+                              stripeInfo: {},
+                              acceptedPayments: data
+                                  .service!.business.details.accepted_payments)
+                          .acceptedPayments,
+                      detailsId: data.service!.business.details.id,
+                      image: data.service!.business.details.image,
+                    ),
                     service: Service(
                       category1:
                           data.service!.details.category1.toServiceCategory1(),
@@ -155,10 +195,20 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                   )
                 : null,
             product: data.product != null
-                ? ProductCard(
-                    businessName: data.product!.business.details.name,
-                    currency:
-                        data.product!.business.details.currency.toCurrency(),
+                ? ProductWithBusinessCard(
+                    business: BusinessCard(
+                      id: data.product!.business.details.id,
+                      name: data.product!.business.details.name,
+                      currency:
+                          data.product!.business.details.currency.toCurrency(),
+                      acceptedPayments: PaymentInfo.fromData(
+                              stripeInfo: {},
+                              acceptedPayments: data
+                                  .product!.business.details.accepted_payments)
+                          .acceptedPayments,
+                      detailsId: data.product!.business.details.id,
+                      image: data.product!.business.details.image,
+                    ),
                     product: Product(
                       category1:
                           data.product!.details.category1.toProductCategory1(),
@@ -338,6 +388,7 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                     cost: e.cost ?? 0,
                     cancellationTime: e.cancellation_time,
                     status: e.status.toBusinessOrderRequestStatus(),
+                    chatId: e.chat_id,
                     items: e.items
                         .map(
                           (data) => BusinessCartItem(
@@ -356,58 +407,92 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                       .toTimeUnit() ??
                                   null,
                             ),
-                            rental: RentalCard(
-                                businessName:
-                                    data.rental!.business.details.name,
-                                currency: data.rental!.business.details.currency
-                                    .toCurrency(),
-                                rental: Rental(
-                                  category1: data.rental!.details.category1
-                                      .toRentalCategory1(),
-                                  details: BusinessItemDetails(
-                                    id: data.rental!.details.id,
-                                    nameId: data.rental!.details.name_id,
-                                    descriptionId:
-                                        data.rental!.details.description_id,
-                                    name: toLanguageMap(
-                                        translations: data
-                                            .rental!.details.name.translations),
-                                    position: data.rental!.details.position,
-                                    businessId:
-                                        data.rental!.business.details.id,
-                                    available: data.rental!.details.available,
-                                    image: data.rental!.details.image
-                                            ?.map<String>((e) => e.toString())
-                                            .toList() ??
-                                        [],
-                                    cost: constructBusinessServiceCost(
-                                        data.rental!.details.cost),
-                                    additionalParameters: data
-                                        .rental!.details.additional_parameters,
-                                  ),
-                                  bathrooms:
-                                      data.rental?.home_rental?.bathrooms,
-                                  bedrooms: data.rental?.home_rental?.bedrooms,
-                                  gpsLocation: Location(
-                                      lat: data.rental?.home_rental
-                                              ?.gps_location.latitude ??
-                                          0,
-                                      lng: data.rental?.home_rental
-                                              ?.gps_location.longitude ??
-                                          0,
-                                      address:
-                                          data.rental?.home_rental?.address ??
+                            rental: data.rental != null
+                                ? RentalWithBusinessCard(
+                                    business: BusinessCard(
+                                      id: data.rental!.business.details.id,
+                                      name: data.rental!.business.details.name,
+                                      currency: data
+                                          .rental!.business.details.currency
+                                          .toCurrency(),
+                                      acceptedPayments: PaymentInfo.fromData(
+                                              stripeInfo: {},
+                                              acceptedPayments: data
+                                                  .rental!
+                                                  .business
+                                                  .details
+                                                  .accepted_payments)
+                                          .acceptedPayments,
+                                      detailsId:
+                                          data.rental!.business.details.id,
+                                      image:
+                                          data.rental!.business.details.image,
+                                    ),
+                                    rental: Rental(
+                                      category1: data.rental!.details.category1
+                                          .toRentalCategory1(),
+                                      details: BusinessItemDetails(
+                                        id: data.rental!.details.id,
+                                        nameId: data.rental!.details.name_id,
+                                        descriptionId:
+                                            data.rental!.details.description_id,
+                                        name: toLanguageMap(
+                                            translations: data.rental!.details
+                                                .name.translations),
+                                        position: data.rental!.details.position,
+                                        businessId:
+                                            data.rental!.business.details.id,
+                                        available:
+                                            data.rental!.details.available,
+                                        image: data.rental!.details.image
+                                                ?.map<String>(
+                                                    (e) => e.toString())
+                                                .toList() ??
+                                            [],
+                                        cost: constructBusinessServiceCost(
+                                            data.rental!.details.cost),
+                                        additionalParameters: data.rental!
+                                            .details.additional_parameters,
+                                      ),
+                                      bathrooms:
+                                          data.rental?.home_rental?.bathrooms,
+                                      bedrooms:
+                                          data.rental?.home_rental?.bedrooms,
+                                      gpsLocation: Location(
+                                          lat: data.rental?.home_rental
+                                                  ?.gps_location.latitude ??
+                                              0,
+                                          lng: data.rental?.home_rental
+                                                  ?.gps_location.longitude ??
+                                              0,
+                                          address: data.rental?.home_rental
+                                                  ?.address ??
                                               ''),
-                                  homeType: data.rental?.home_rental?.home_type
-                                      .toHomeType(),
-                                )),
+                                      homeType: data
+                                          .rental?.home_rental?.home_type
+                                          .toHomeType(),
+                                    ))
+                                : null,
                             event: data.event != null
-                                ? EventCard(
-                                    businessName:
-                                        data.event!.business.details.name,
-                                    currency: data
-                                        .event!.business.details.currency
-                                        .toCurrency(),
+                                ? EventWithBusinessCard(
+                                    business: BusinessCard(
+                                      id: data.event!.business.details.id,
+                                      name: data.event!.business.details.name,
+                                      currency: data
+                                          .event!.business.details.currency
+                                          .toCurrency(),
+                                      acceptedPayments: PaymentInfo.fromData(
+                                              stripeInfo: {},
+                                              acceptedPayments: data
+                                                  .event!
+                                                  .business
+                                                  .details
+                                                  .accepted_payments)
+                                          .acceptedPayments,
+                                      detailsId:
+                                          data.event!.business.details.id,
+                                      image: data.event!.business.details.image,
+                                    ),
                                     event: Event(
                                       scheduleType: data.event!.schedule_type
                                           .toScheduleType(),
@@ -446,12 +531,25 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                   )
                                 : null,
                             service: data.service != null
-                                ? ServiceCard(
-                                    businessName:
-                                        data.service!.business.details.name,
-                                    currency: data
-                                        .service!.business.details.currency
-                                        .toCurrency(),
+                                ? ServiceWithBusinessCard(
+                                    business: BusinessCard(
+                                      id: data.service!.business.details.id,
+                                      name: data.service!.business.details.name,
+                                      currency: data
+                                          .service!.business.details.currency
+                                          .toCurrency(),
+                                      acceptedPayments: PaymentInfo.fromData(
+                                              stripeInfo: {},
+                                              acceptedPayments: data
+                                                  .service!
+                                                  .business
+                                                  .details
+                                                  .accepted_payments)
+                                          .acceptedPayments,
+                                      detailsId:
+                                          data.service!.business.details.id,
+                                      image: data.service!.business.details.image,
+                                    ),
                                     service: Service(
                                       category1: data.service!.details.category1
                                           .toServiceCategory1(),
@@ -481,12 +579,25 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                   )
                                 : null,
                             product: data.product != null
-                                ? ProductCard(
-                                    businessName:
-                                        data.product!.business.details.name,
-                                    currency: data
-                                        .product!.business.details.currency
-                                        .toCurrency(),
+                                ? ProductWithBusinessCard(
+                                    business: BusinessCard(
+                                      id: data.product!.business.details.id,
+                                      name: data.product!.business.details.name,
+                                      currency: data
+                                          .product!.business.details.currency
+                                          .toCurrency(),
+                                      acceptedPayments: PaymentInfo.fromData(
+                                              stripeInfo: {},
+                                              acceptedPayments: data
+                                                  .product!
+                                                  .business
+                                                  .details
+                                                  .accepted_payments)
+                                          .acceptedPayments,
+                                      detailsId:
+                                          data.product!.business.details.id,
+                                      image: data.product!.business.details.image,
+                                    ),
                                     product: Product(
                                       category1: data.product!.details.category1
                                           .toProductCategory1(),

@@ -565,6 +565,20 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: '__typename'),
                             alias: null,
                             arguments: [],
@@ -625,6 +639,20 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                           ),
                           FieldNode(
                             name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -870,6 +898,20 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: '__typename'),
                             alias: null,
                             arguments: [],
@@ -1103,6 +1145,20 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                           ),
                           FieldNode(
                             name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -3376,6 +3432,8 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
     required this.name,
     required this.currency,
     required this.id,
+    required this.accepted_payments,
+    required this.image,
     required this.$__typename,
   });
 
@@ -3384,11 +3442,15 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$rental$business$details(
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -3398,6 +3460,10 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
   final String currency;
 
   final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
 
   final String $__typename;
 
@@ -3409,6 +3475,10 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3419,11 +3489,15 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
       l$currency,
       l$id,
+      l$accepted_payments,
+      l$image,
       l$$__typename,
     ]);
   }
@@ -3451,6 +3525,16 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3490,6 +3574,8 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$rental$busines
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   });
 }
@@ -3516,6 +3602,8 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$rental$business$de
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$rental$business$details(
@@ -3526,6 +3614,13 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$rental$business$de
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3546,6 +3641,8 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$rental$busines
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   }) =>
       _res;
@@ -3897,6 +3994,8 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
     required this.name,
     required this.currency,
     required this.id,
+    required this.accepted_payments,
+    required this.image,
     required this.$__typename,
   });
 
@@ -3905,11 +4004,15 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$product$business$details(
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -3919,6 +4022,10 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
   final String currency;
 
   final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
 
   final String $__typename;
 
@@ -3930,6 +4037,10 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3940,11 +4051,15 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
       l$currency,
       l$id,
+      l$accepted_payments,
+      l$image,
       l$$__typename,
     ]);
   }
@@ -3972,6 +4087,16 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -4011,6 +4136,8 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$product$busine
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   });
 }
@@ -4037,6 +4164,8 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$product$business$d
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$product$business$details(
@@ -4047,6 +4176,13 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$product$business$d
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -4067,6 +4203,8 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$product$busine
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   }) =>
       _res;
@@ -5504,6 +5642,8 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
     required this.name,
     required this.currency,
     required this.id,
+    required this.accepted_payments,
+    required this.image,
     required this.$__typename,
   });
 
@@ -5512,11 +5652,15 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$service$business$details(
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -5526,6 +5670,10 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
   final String currency;
 
   final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
 
   final String $__typename;
 
@@ -5537,6 +5685,10 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -5547,11 +5699,15 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
       l$currency,
       l$id,
+      l$accepted_payments,
+      l$image,
       l$$__typename,
     ]);
   }
@@ -5579,6 +5735,16 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -5618,6 +5784,8 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$service$busine
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   });
 }
@@ -5644,6 +5812,8 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$service$business$d
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$service$business$details(
@@ -5654,6 +5824,13 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$service$business$d
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -5674,6 +5851,8 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$service$busine
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   }) =>
       _res;
@@ -7200,6 +7379,8 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
     required this.name,
     required this.currency,
     required this.id,
+    required this.accepted_payments,
+    required this.image,
     required this.$__typename,
   });
 
@@ -7208,11 +7389,15 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$event$business$details(
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -7222,6 +7407,10 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
   final String currency;
 
   final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
 
   final String $__typename;
 
@@ -7233,6 +7422,10 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -7243,11 +7436,15 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
       l$currency,
       l$id,
+      l$accepted_payments,
+      l$image,
       l$$__typename,
     ]);
   }
@@ -7275,6 +7472,16 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -7314,6 +7521,8 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$event$business
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   });
 }
@@ -7340,6 +7549,8 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$event$business$det
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$event$business$details(
@@ -7350,6 +7561,13 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$event$business$det
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -7370,6 +7588,8 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$event$business
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   }) =>
       _res;
@@ -11093,6 +11313,20 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: '__typename'),
                             alias: null,
                             arguments: [],
@@ -11153,6 +11387,20 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                           ),
                           FieldNode(
                             name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -11398,6 +11646,20 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: '__typename'),
                             alias: null,
                             arguments: [],
@@ -11631,6 +11893,20 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                           ),
                           FieldNode(
                             name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -11886,6 +12162,13 @@ const documentNodeSubscriptionlisten_on_business_order_request =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'chat_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -11991,6 +12274,7 @@ class Subscription$listen_on_business_order_request$business_order_request {
     this.cost,
     this.cancellation_time,
     required this.id,
+    this.chat_id,
     required this.$__typename,
   });
 
@@ -12003,6 +12287,7 @@ class Subscription$listen_on_business_order_request$business_order_request {
     final l$cost = json['cost'];
     final l$cancellation_time = json['cancellation_time'];
     final l$id = json['id'];
+    final l$chat_id = json['chat_id'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request(
       items: (l$items as List<dynamic>)
@@ -12016,6 +12301,7 @@ class Subscription$listen_on_business_order_request$business_order_request {
       cost: l$cost == null ? null : moneyFromJson(l$cost),
       cancellation_time: (l$cancellation_time as String?),
       id: (l$id as int),
+      chat_id: (l$chat_id as int?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -12036,6 +12322,8 @@ class Subscription$listen_on_business_order_request$business_order_request {
 
   final int id;
 
+  final int? chat_id;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -12054,6 +12342,8 @@ class Subscription$listen_on_business_order_request$business_order_request {
     _resultData['cancellation_time'] = l$cancellation_time;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$chat_id = chat_id;
+    _resultData['chat_id'] = l$chat_id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -12068,6 +12358,7 @@ class Subscription$listen_on_business_order_request$business_order_request {
     final l$cost = cost;
     final l$cancellation_time = cancellation_time;
     final l$id = id;
+    final l$chat_id = chat_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       Object.hashAll(l$items.map((v) => v)),
@@ -12077,6 +12368,7 @@ class Subscription$listen_on_business_order_request$business_order_request {
       l$cost,
       l$cancellation_time,
       l$id,
+      l$chat_id,
       l$$__typename,
     ]);
   }
@@ -12133,6 +12425,11 @@ class Subscription$listen_on_business_order_request$business_order_request {
     if (l$id != lOther$id) {
       return false;
     }
+    final l$chat_id = chat_id;
+    final lOther$chat_id = other.chat_id;
+    if (l$chat_id != lOther$chat_id) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -12176,6 +12473,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     double? cost,
     String? cancellation_time,
     int? id,
+    int? chat_id,
     String? $__typename,
   });
   TRes items(
@@ -12213,6 +12511,7 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? cost = _undefined,
     Object? cancellation_time = _undefined,
     Object? id = _undefined,
+    Object? chat_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -12235,6 +12534,7 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             ? _instance.cancellation_time
             : (cancellation_time as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -12272,6 +12572,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     double? cost,
     String? cancellation_time,
     int? id,
+    int? chat_id,
     String? $__typename,
   }) =>
       _res;
@@ -14066,6 +14367,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     required this.name,
     required this.currency,
     required this.id,
+    required this.accepted_payments,
+    required this.image,
     required this.$__typename,
   });
 
@@ -14074,11 +14377,15 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$rental$business$details(
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -14088,6 +14395,10 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final String currency;
 
   final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
 
   final String $__typename;
 
@@ -14099,6 +14410,10 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -14109,11 +14424,15 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
       l$currency,
       l$id,
+      l$accepted_payments,
+      l$image,
       l$$__typename,
     ]);
   }
@@ -14141,6 +14460,16 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -14181,6 +14510,8 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   });
 }
@@ -14208,6 +14539,8 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -14219,6 +14552,13 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -14239,6 +14579,8 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   }) =>
       _res;
@@ -14617,6 +14959,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     required this.name,
     required this.currency,
     required this.id,
+    required this.accepted_payments,
+    required this.image,
     required this.$__typename,
   });
 
@@ -14625,11 +14969,15 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$product$business$details(
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -14639,6 +14987,10 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final String currency;
 
   final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
 
   final String $__typename;
 
@@ -14650,6 +15002,10 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -14660,11 +15016,15 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
       l$currency,
       l$id,
+      l$accepted_payments,
+      l$image,
       l$$__typename,
     ]);
   }
@@ -14692,6 +15052,16 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -14732,6 +15102,8 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   });
 }
@@ -14759,6 +15131,8 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -14770,6 +15144,13 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -14790,6 +15171,8 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   }) =>
       _res;
@@ -16268,6 +16651,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     required this.name,
     required this.currency,
     required this.id,
+    required this.accepted_payments,
+    required this.image,
     required this.$__typename,
   });
 
@@ -16276,11 +16661,15 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$service$business$details(
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -16290,6 +16679,10 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final String currency;
 
   final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
 
   final String $__typename;
 
@@ -16301,6 +16694,10 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -16311,11 +16708,15 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
       l$currency,
       l$id,
+      l$accepted_payments,
+      l$image,
       l$$__typename,
     ]);
   }
@@ -16343,6 +16744,16 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -16383,6 +16794,8 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   });
 }
@@ -16410,6 +16823,8 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -16421,6 +16836,13 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -16441,6 +16863,8 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   }) =>
       _res;
@@ -18016,6 +18440,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     required this.name,
     required this.currency,
     required this.id,
+    required this.accepted_payments,
+    required this.image,
     required this.$__typename,
   });
 
@@ -18024,11 +18450,15 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$event$business$details(
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -18038,6 +18468,10 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final String currency;
 
   final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
 
   final String $__typename;
 
@@ -18049,6 +18483,10 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -18059,11 +18497,15 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
       l$currency,
       l$id,
+      l$accepted_payments,
+      l$image,
       l$$__typename,
     ]);
   }
@@ -18091,6 +18533,16 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -18131,6 +18583,8 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   });
 }
@@ -18158,6 +18612,8 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -18169,6 +18625,13 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -18189,6 +18652,8 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    dynamic? accepted_payments,
+    String? image,
     String? $__typename,
   }) =>
       _res;

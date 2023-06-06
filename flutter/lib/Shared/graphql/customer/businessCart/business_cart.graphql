@@ -39,6 +39,8 @@ query getBusinessCart($customer_id: Int!) {
             name
             currency
             id
+            accepted_payments
+            image
           }
         }
       }
@@ -48,6 +50,8 @@ query getBusinessCart($customer_id: Int!) {
             name
             currency
             id
+            accepted_payments
+            image
           }
         }
         details {
@@ -81,6 +85,8 @@ query getBusinessCart($customer_id: Int!) {
             name
             currency
             id
+            accepted_payments
+            image
           }
         }
         details {
@@ -114,6 +120,8 @@ query getBusinessCart($customer_id: Int!) {
             name
             currency
             id
+            accepted_payments
+            image
           }
         }
         details {
@@ -227,6 +235,8 @@ subscription listen_on_business_order_request($_id: Int!) {
             name
             currency
             id
+            accepted_payments
+            image
           }
         }
       }
@@ -236,6 +246,8 @@ subscription listen_on_business_order_request($_id: Int!) {
             name
             currency
             id
+            accepted_payments
+            image
           }
         }
         details {
@@ -269,6 +281,8 @@ subscription listen_on_business_order_request($_id: Int!) {
             name
             currency
             id
+            accepted_payments
+            image
           }
         }
         details {
@@ -302,6 +316,8 @@ subscription listen_on_business_order_request($_id: Int!) {
             name
             currency
             id
+            accepted_payments
+            image
           }
         }
         details {
@@ -336,5 +352,6 @@ subscription listen_on_business_order_request($_id: Int!) {
     cost
     cancellation_time
     id
+    chat_id
   }
 }

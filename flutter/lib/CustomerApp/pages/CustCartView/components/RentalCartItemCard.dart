@@ -103,13 +103,7 @@ class RentalCartItemCard extends StatelessWidget {
                                 SizedBox(
                                   width: 8,
                                 ),
-                                Image.asset(aPriceCheck),
-                                Text(
-                                  "\$${item.cost.toDouble().toStringAsFixed(0)}",
-                                  style: context.textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                                costBuilder(context)
                               ],
                             )
                           ],
@@ -118,24 +112,7 @@ class RentalCartItemCard extends StatelessWidget {
                     ],
                   ),
                   Divider(),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Icon(
-                          Icons.access_time_filled,
-                        ),
-                      ),
-                      Text(
-                        item.time == null
-                            ? "No Date"
-                            : "${DateTime.parse(item.time!).getOrderTime()}",
-                        style: context.textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  )
+                  timeBuilder(context),
                 ],
               ),
             ),
@@ -162,6 +139,105 @@ class RentalCartItemCard extends StatelessWidget {
                   )
                 : SizedBox.shrink(),
           ],
+        ),
+      ],
+    );
+  }
+
+  Widget costBuilder(BuildContext context) {
+    if (item.parameters.previousCost != null) {
+      return Row(
+        children: [
+          Text(
+            "\$${item.parameters.previousCost!.toDouble().toStringAsFixed(0)}",
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.lineThrough,
+              decorationThickness: 2.0,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Icon(Icons.arrow_forward),
+          ),
+          Text(
+            "\$${item.cost.toDouble().toStringAsFixed(0)}",
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      );
+    }
+    return Row(
+      children: [
+        Image.asset(aPriceCheck),
+        Text(
+          "\$${item.cost.toDouble().toStringAsFixed(0)}",
+          style: context.textTheme.bodyMedium!.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget timeBuilder(BuildContext context) {
+    if (item.parameters.previoustime != null) {
+      return Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(
+              Icons.event_busy,
+            ),
+          ),
+          Text(
+            item.parameters.previoustime == null
+                ? "No Date"
+                : "${DateTime.parse(item.parameters.previoustime!).getOrderTime()}",
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.lineThrough,
+              decorationThickness: 2.0,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Icon(Icons.arrow_forward),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(
+              Icons.event_available,
+            ),
+          ),
+          Text(
+            item.time == null
+                ? "No Date"
+                : "${DateTime.parse(item.time!).getOrderTime()}",
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      );
+    }
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: Icon(
+            Icons.access_time_filled,
+          ),
+        ),
+        Text(
+          item.time == null
+              ? "No Date"
+              : "${DateTime.parse(item.time!).getOrderTime()}",
+          style: context.textTheme.bodyMedium!.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );

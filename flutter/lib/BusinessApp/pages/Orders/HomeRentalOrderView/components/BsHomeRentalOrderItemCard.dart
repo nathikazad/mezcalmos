@@ -11,9 +11,11 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["BusinessApp"]["pages"]["Orders"]
@@ -72,18 +74,22 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.people),
-                          SizedBox(width: 5),
-                          Text(
-                              item.parameters.guests?.toString() ??
-                                  "${_i18n()['error']}",
-                              style: context.textTheme.bodyLarge),
-                          SizedBox(width: 10),
-                          Icon(Icons.calendar_today),
-                          Text(
-                              "${item.parameters.numberOfUnits} ${item.parameters.timeUnit.toString()}",
-                              style: context.textTheme.bodyLarge),
-                          SizedBox(width: 10),
+                          if (item.parameters.guests != null) ...[
+                            Icon(Icons.people),
+                            SizedBox(width: 5),
+                            Text(
+                                item.parameters.guests?.toString() ??
+                                    "${_i18n()['error']}",
+                                style: context.textTheme.bodyLarge),
+                            SizedBox(width: 10),
+                          ],
+                          if (item.parameters.numberOfUnits != null &&
+                              item.parameters.numberOfUnits != null) ...[
+                            Icon(Icons.calendar_today),
+                            Text(
+                                "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toReadableString()}",
+                                style: context.textTheme.bodyLarge),
+                          ]
                         ],
                       ),
                     ],
@@ -91,7 +97,6 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                 ),
               ],
             ),
-            // SizedBox(height: 11),
             Divider(),
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -128,20 +133,19 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                MezInkwell(
-                  label: "${_i18n()['edit']}",
-                  backgroundColor: secondaryLightBlueColor,
-                  textColor: primaryBlueColor,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-                  onClick: () async {
-                    await _showPriceSheet(context, item.cost);
+                MezIconButton(
+                  onTap: () async {
+                    await _showPriceSheet(
+                        context: context, initPrice: item.cost.toDouble());
                   },
-                ),
+                  icon: Icons.edit_outlined,
+                  elevation: 0,
+                  backgroundColor: Colors.grey.shade300,
+                  iconColor: Colors.black,
+                )
               ],
             ),
             Divider(),
-            // SizedBox(height: 7),
             Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -149,65 +153,78 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
               children: [
                 Flexible(
                   fit: FlexFit.tight,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.start,
+                    runSpacing: 5,
                     children: [
-                      if (item.parameters.previoustime != null) ...[
-                        Icon(
-                          Icons.event_busy,
-                          color: offLightShadeGreyColor,
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          DateTime.tryParse(item.parameters.previoustime!)
-                                  ?.getOrderTime() ??
-                              "${_i18n()['error']}",
-                          style: context.textTheme.bodyLarge?.copyWith(
+                      if (item.parameters.previoustime != null)
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.event_busy,
                               color: offLightShadeGreyColor,
-                              decoration: TextDecoration.lineThrough),
+                            ),
+                            SizedBox(width: 3),
+                            Text(
+                              DateTime.tryParse(item.parameters.previoustime!)
+                                      ?.getOrderTime() ??
+                                  "${_i18n()['error']}",
+                              style: context.textTheme.bodyLarge?.copyWith(
+                                  color: offLightShadeGreyColor,
+                                  decoration: TextDecoration.lineThrough),
+                            ),
+                          ],
                         ),
-                        Icon(Icons.arrow_forward),
-                      ],
-                      Icon(Icons.event_available_rounded),
-                      SizedBox(width: 3),
-                      Text(
-                        DateTime.tryParse(item.time ?? "")?.getOrderTime() ??
-                            "${_i18n()['error']}",
-                        style: context.textTheme.bodyLarge,
+                      Row(
+                        children: [
+                          if (item.parameters.previoustime != null)
+                            Icon(Icons.arrow_forward),
+                          Icon(Icons.event_available_rounded),
+                          SizedBox(width: 3),
+                          Text(
+                            DateTime.tryParse(item.time ?? "")
+                                    ?.getOrderTime() ??
+                                "${_i18n()['error']}",
+                            style: context.textTheme.bodyLarge,
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                MezInkwell(
-                  label: "${_i18n()['edit']}",
-                  backgroundColor: secondaryLightBlueColor,
-                  textColor: primaryBlueColor,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-                  onClick: () async {
+                MezIconButton(
+                  onTap: () async {
                     await _showTimeSheet(
                         context: context,
                         initDate: DateTime.tryParse(item.time ?? "") ??
                             DateTime.now());
                   },
-                ),
+                  icon: Icons.edit_outlined,
+                  backgroundColor: Colors.grey.shade300,
+                  iconColor: Colors.black,
+                  elevation: 0,
+                )
               ],
             ),
-            // SizedBox(height: 6),
             Divider(),
-            MezInkwell(
-              label: "${_i18n()['markAsUnavailable']}",
-              onClick: () async {},
-            )
+            if (item.available == true)
+              MezInkwell(
+                icon: Icons.remove_circle_outlined,
+                label: "${_i18n()['markAsUnavailable']}",
+                onClick: () async {
+                  await viewController.updateItemAvailability(
+                      itemId: item.itemId, newAvailability: false);
+                },
+              )
           ],
         ),
       ),
     );
   }
 
-  Future<dynamic> _showPriceSheet(BuildContext context, num initPrice) {
+  Future<dynamic> _showPriceSheet(
+      {required BuildContext context, required num initPrice}) {
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final TextEditingController priceText = TextEditingController();
     priceText.text = initPrice.toString();
@@ -296,7 +313,6 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                               textColor: Colors.red,
                               onClick: () async {
                                 Navigator.pop(context);
-                                // await MezRouter.back();
                               },
                             ),
                           ),
@@ -429,7 +445,6 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                               textColor: Colors.red,
                               onClick: () async {
                                 Navigator.pop(context);
-                                // await MezRouter.back();
                               },
                             ),
                           ),

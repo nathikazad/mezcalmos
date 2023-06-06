@@ -1815,6 +1815,16 @@
       }
     },
     "helpers": {
+      "TimeUnitHelper" : {
+        "hour": "Hora",
+        "day": "Día",
+        "week": "Semana",
+        "month": "Mes",
+        "person": "Persona",
+        "unit": "Unidad",
+        "total": "Total"
+    
+      },
       "DeliveryOrderHelper": {
         "status": {
           "ready": "Paquete listo",
