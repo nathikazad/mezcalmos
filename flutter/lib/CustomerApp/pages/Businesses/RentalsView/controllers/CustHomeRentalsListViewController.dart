@@ -120,7 +120,6 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(
           "👋 _fetchRentals called  \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
       List<RentalCard> newList = await get_home_rentals(
-        distance: 1000000000000,
         fromLocation: _fromLocation!,
 
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
@@ -177,7 +176,6 @@ class CustHomeRentalsListViewController {
     try {
       if (currentPostitionBased) {
         _mapViewRentals.value = await get_home_rentals(
-          distance: 25000,
           fromLocation: _fromLocation!,
           offset: 0,
           limit: 25,
@@ -185,7 +183,6 @@ class CustHomeRentalsListViewController {
         );
       } else {
         _mapViewRentals.value = await get_home_rentals(
-          distance: 25000,
           fromLocation: _fromLocation!,
           offset: 0,
           limit: 25,
