@@ -9082,6 +9082,8 @@ input data_consumption_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: data_consumption_set_input
+
+  """filter the rows which have to be updated"""
   where: data_consumption_bool_exp!
 }
 

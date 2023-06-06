@@ -25,7 +25,7 @@
     "singleProjectMode": true
   },
   "hosting": {
-    "site": "mez-site-hs",
+    "site": "mezkala",
     "public": "flutter/build/web",
     "ignore": [
       "firebase.json",

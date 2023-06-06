@@ -6,6 +6,8 @@ import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsV
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/admin/service_providers/hsAdminServiceProviders.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -15,68 +17,134 @@ class AdminServicesViewController {
   late AdminTabsViewController adminTabsViewController;
   ScrollController scrollController = ScrollController();
   // obs //
-  Rxn<List<Restaurant>> _restaurants = Rxn();
-  Rxn<List<Laundry>> _laundries = Rxn();
-  Rxn<List<DeliveryCompany>> _dvCompanies = Rxn();
-  Rxn<List<cModels.Business>> _businesses = Rxn();
+  RxList<Restaurant> _restaurants = RxList.empty();
+  RxList<Laundry> _laundries = RxList.empty();
+  RxList<DeliveryCompany> _dvCompanies = RxList.empty();
+  RxList<cModels.Business> _businesses = RxList.empty();
   RxBool isFetching = RxBool(false);
-  RxInt restLimit = RxInt(10);
-  RxInt dvLimit = RxInt(10);
-  RxInt bsLimit = RxInt(100);
-  RxInt laundryLimit = RxInt(10);
+
+  RxInt laundryLimit = RxInt(3);
+  final int businessFetchSize = 10;
+  int _businessCurrentOffset = 0;
+  bool _businessFetchingData = false;
+  bool _businessReachedEndOfData = false;
+  final int laundryFetchSize = 10;
+  int _laundryCurrentOffset = 0;
+  bool _laundryFetchingData = false;
+  bool _laundryReachedEndOfData = false;
+  final int restFetchSize = 10;
+  int _restCurrentOffset = 0;
+  bool _restFetchingData = false;
+  bool _restReachedEndOfData = false;
+  final int dvFetchSize = 10;
+  int _dvCurrentOffset = 0;
+  bool _dvFetchingData = false;
+  bool _dvReachedEndOfData = false;
+
 // getters //
-  bool get hasData => _dvCompanies.value != null && _restaurants.value != null;
+
   cModels.ServiceProviderType get currentService =>
       adminTabsViewController.selectedServiceProviderType.value;
-  List<Restaurant>? get restaurants => _restaurants.value;
-  List<DeliveryCompany>? get companies => _dvCompanies.value;
-  List<Laundry>? get laundries => _laundries.value;
-  List<cModels.Business>? get businesses => _businesses.value;
+  List<Restaurant> get restaurants => _restaurants;
+  List<DeliveryCompany> get companies => _dvCompanies;
+  List<Laundry> get laundries => _laundries;
+  List<cModels.Business>? get businesses => _businesses;
 
   Future<void> init(
       {required AdminTabsViewController adminTabsViewController}) async {
     this.adminTabsViewController = adminTabsViewController;
-    // await fetchRestaurants();
-    // await fetchLaundries();
-    // await fetchCompanies();
+
     await Future.wait([
       fetchRestaurants(),
       fetchLaundries(),
       fetchCompanies(),
       fetchBusiness()
     ]);
+    scrollController.onBottomReach(fetchCurrent, sensitivity: 500);
   }
 
   Future<void> fetchCompanies() async {
     isFetching.value = true;
-    _dvCompanies.value?.clear();
-    _dvCompanies.value =
-        await admin_get_dv_companies(withCache: false, limit: dvLimit.value);
+    if (_dvFetchingData || _dvReachedEndOfData) {
+      return;
+    }
+    _dvFetchingData = true;
+    mezDbgPrint("fetching companies from admin controller");
+    List<DeliveryCompany> newList = await admin_get_dv_companies(
+        withCache: false, limit: dvFetchSize, offset: _dvCurrentOffset);
+    _dvCompanies.value += newList;
+    _dvCompanies.refresh();
+    if (newList.length == 0) {
+      _dvReachedEndOfData = true;
+    }
+    _dvCurrentOffset += dvFetchSize;
+    _dvFetchingData = false;
     isFetching.value = false;
   }
 
   Future<void> fetchBusiness() async {
     isFetching.value = true;
-    _businesses.value?.clear();
-    _businesses.value =
-        await admin_get_businesses(withCache: false, limit: bsLimit.value);
+    if (_businessFetchingData || _businessReachedEndOfData) {
+      return;
+    }
+    _businessFetchingData = true;
+    mezDbgPrint("fetching businesses from admin controller");
+    List<cModels.Business> newList = await admin_get_businesses(
+        withCache: false,
+        limit: businessFetchSize,
+        offset: _businessCurrentOffset);
+    _businesses.value += newList;
+    _businesses.refresh();
+    if (newList.length == 0) {
+      _businessReachedEndOfData = true;
+    }
+
+    _businessCurrentOffset += businessFetchSize;
+    _businessFetchingData = false;
     isFetching.value = false;
   }
 
   Future<void> fetchLaundries() async {
     isFetching.value = true;
-    _laundries.value?.clear();
-    _laundries.value =
-        await admin_get_laundries(withCache: false, limit: laundryLimit.value);
+    if (_laundryFetchingData || _laundryReachedEndOfData) {
+      return;
+    }
+    _laundryFetchingData = true;
+    mezDbgPrint("fetching laundries from admin controller");
+    List<Laundry> newList = await admin_get_laundries(
+        withCache: false,
+        limit: laundryFetchSize,
+        offset: _laundryCurrentOffset);
+    _laundries.value += newList;
+    _laundries.refresh();
+    if (newList.length == 0) {
+      _laundryReachedEndOfData = true;
+    }
+    _laundryCurrentOffset += laundryFetchSize;
+
+    _laundryFetchingData = false;
     isFetching.value = false;
   }
 
   Future<void> fetchRestaurants() async {
     isFetching.value = true;
-    _restaurants.value?.clear();
-    _restaurants.value =
-        await admin_get_restaurants(withCache: false, limit: restLimit.value);
+    if (_restFetchingData || _restReachedEndOfData) {
+      return;
+    }
+    _restFetchingData = true;
+    mezDbgPrint("fetching restaurants from admin controller");
+    List<Restaurant> newList = await admin_get_restaurants(
+        withCache: false, limit: restFetchSize, offset: _restCurrentOffset);
+    _restaurants.value += newList;
+    _restaurants.refresh();
+    if (newList.length == 0) {
+      _restReachedEndOfData = true;
+    }
+    _restCurrentOffset += restFetchSize;
+
+    _restFetchingData = false;
     isFetching.value = false;
+    mezDbgPrint("restaurant length =======>${_restaurants.value.length}");
   }
 
   Future<void> switchServiceStatus(
@@ -90,22 +158,18 @@ class AdminServicesViewController {
     fetchCurrent();
   }
 
-  void fetchCurrent({int? increaseLimit}) {
+  void fetchCurrent() {
     switch (currentService) {
       case cModels.ServiceProviderType.Laundry:
-        laundryLimit.value += increaseLimit ?? 0;
         unawaited(fetchLaundries());
         break;
       case cModels.ServiceProviderType.Restaurant:
-        restLimit.value += increaseLimit ?? 0;
         unawaited(fetchRestaurants());
         break;
       case cModels.ServiceProviderType.DeliveryCompany:
-        dvLimit.value += increaseLimit ?? 0;
         unawaited(fetchCompanies());
         break;
       case cModels.ServiceProviderType.Business:
-        dvLimit.value += increaseLimit ?? 0;
         unawaited(fetchBusiness());
         break;
       default:
@@ -115,13 +179,13 @@ class AdminServicesViewController {
   int get currentServiceLength {
     switch (currentService) {
       case cModels.ServiceProviderType.Laundry:
-        return _laundries.value?.length ?? 0;
+        return _laundries.value.length ?? 0;
       case cModels.ServiceProviderType.Restaurant:
-        return _restaurants.value?.length ?? 0;
+        return _restaurants.value.length ?? 0;
       case cModels.ServiceProviderType.DeliveryCompany:
-        return _dvCompanies.value?.length ?? 0;
+        return _dvCompanies.value.length ?? 0;
       case cModels.ServiceProviderType.Business:
-        return _businesses.value?.length ?? 0;
+        return _businesses.value.length ?? 0;
       default:
         throw Exception("Service type not found");
     }
