@@ -42,14 +42,37 @@ object_relationships:
         remote_table:
           name: service
           schema: business
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - id
+        - item_id
+        - customer_id
+        - parameters
+        - offering_type
+        - time
+        - cost
 select_permissions:
   - role: customer
     permission:
       columns:
-        - item_id
+        - cost
         - customer_id
         - id
+        - item_id
+        - offering_type
         - parameters
+        - time
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+delete_permissions:
+  - role: customer
+    permission:
       filter:
         customer_id:
           _eq: X-Hasura-User-Id

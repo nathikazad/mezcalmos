@@ -52,7 +52,7 @@ Future<void> signIn(String email, String password) async {
   }
 }
 
-Future<void> signOut() async {
+Future<void> logOut() async {
   try {
     mezDbgPrint("AuthController: Sign out function");
     mezDbgPrint("AuthController: Sign out callbacks finished");
@@ -71,7 +71,7 @@ Future<void> signOut() async {
 
 Future<SendOtpResponse?> sendOTPForLogin(String phoneNumber) async {
   try {
-    SendOtpResponse res = await CloudFunctions.otp3_sendOTPForLogin(
+    final SendOtpResponse res = await CloudFunctions.otp3_sendOTPForLogin(
         language: sDefaultLanguage.toFirebaseFormatString(),
         phoneNumber: phoneNumber);
     return res;

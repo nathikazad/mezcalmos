@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -13,11 +12,9 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
@@ -73,20 +70,16 @@ class MezSideMenu extends GetWidget<AuthController> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // SideMenuItem(
-        //   icon: Icons.person,
+        if (controller.isUserSignedIn)
+          SideMenuItem(
+            icon: Icons.person,
+            title: "${_i18n()["profile"]}",
+            onClick: () {
+              _drawerController.closeMenu();
 
-        //   title: (controller.isUserSignedIn)
-        //       ? "${_i18n()["profile"]}"
-        //       : "${_i18n()["login"]}", // _i18n()["userInfo"],
-        //   onClick: () {
-        //     _drawerController.closeMenu();
-        //     if (controller.isUserSignedIn) {
-        //       UserProfileView.navigate();
-        //     } else
-        //       SignInView.navigateAtOrderTime();
-        //   },
-        // ),
+              UserProfileView.navigate();
+            },
+          ),
         // if (_drawerController.pastOrdersRoute != null)
         //   SideMenuItem(
         //     icon: Icons.restore,
@@ -168,7 +161,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             onClick: () {
               _drawerController.closeMenu();
               if (controller.isUserSignedIn) {
-                signOut();
+                logOut();
               } else
                 SignInView.navigateAtOrderTime();
             },

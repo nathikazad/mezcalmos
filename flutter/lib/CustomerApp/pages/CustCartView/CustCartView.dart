@@ -47,7 +47,9 @@ class _CustCartViewState extends State<CustCartView> {
         label: "Request",
         withGradient: true,
         borderRadius: 0,
-        onClick: () async {},
+        onClick: () async {
+          await custBusinessCartController.requestOrder();
+        },
       ),
       body: Obx(
         () => Padding(

@@ -7,14 +7,11 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -231,63 +228,7 @@ class _CustProfileViewState extends State<CustProfileView> {
               height: 10,
             ),
             InkWell(
-              onTap: () async {
-                await showConfirmationDialog(
-                  context,
-                  title: '${_i18n()["deleteTitle"]}',
-                  primaryButtonText: "${_i18n()["deletePrBtn"]}",
-                  secondaryButtonText: "${_i18n()["deleteScBtn"]}",
-                  helperText: "${_i18n()["deleteHelper"]}",
-                  onYesClick: () async {
-                    final ServerResponse res =
-                        await _authController.deleteAccount();
-                    if (!res.success) {
-                      MezSnackbar(
-                        "Oops",
-                        res.errorMessage ?? "Server problem!",
-                      );
-                    }
-                  },
-                );
-              },
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.person_off,
-                    color: Colors.grey.shade400,
-                    size: 25,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${_i18n()['deleteAccount']}',
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        '${_i18n()['accountWillBeDeleted']}',
-                        style: TextStyle(fontSize: 12.5),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Divider(
-              color: Colors.grey.shade400,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () async => signOut(),
+              onTap: () async => logOut(),
               child: Row(
                 children: [
                   Icon(

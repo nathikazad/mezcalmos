@@ -16,11 +16,13 @@ class RentalCartItemCard extends StatelessWidget {
     required this.index,
     required this.item,
     required this.controller,
+    this.isEditable = true,
   });
 
   final int index;
   final BusinessCartItem item;
   final CustBusinessCartController controller;
+  final bool isEditable;
 
   @override
   Widget build(BuildContext context) {
@@ -35,26 +37,28 @@ class RentalCartItemCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            InkWell(
-              onTap: () async{
-                await controller.deleteCartItem(item.id!.toInt());
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
-                  Text(
-                    "Remove",
-                    style: context.textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red,
+            isEditable
+                ? InkWell(
+                    onTap: () async {
+                      await controller.deleteCartItem(item.id!.toInt());
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                        Text(
+                          "Remove",
+                          style: context.textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            )
+                  )
+                : SizedBox.shrink(),
           ],
         ),
         Stack(
@@ -135,26 +139,28 @@ class RentalCartItemCard extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              top: 4,
-              right: 4,
-              child: InkWell(
-                child: Container(
-                  width: 25,
-                  height: 25,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: secondaryLightBlueColor,
-                  ),
-                  child: const Icon(
-                    Icons.edit_outlined,
-                    size: 14,
-                    color: primaryBlueColor,
-                  ),
-                ),
-                onTap: () {},
-              ),
-            ),
+            isEditable
+                ? Positioned(
+                    top: 4,
+                    right: 4,
+                    child: InkWell(
+                      child: Container(
+                        width: 25,
+                        height: 25,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: secondaryLightBlueColor,
+                        ),
+                        child: const Icon(
+                          Icons.edit_outlined,
+                          size: 14,
+                          color: primaryBlueColor,
+                        ),
+                      ),
+                      onTap: () {},
+                    ),
+                  )
+                : SizedBox.shrink(),
           ],
         ),
       ],

@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/components/UserProfileImage.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -14,7 +13,6 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileView"];
@@ -36,7 +34,7 @@ class _UserProfileViewState extends State<UserProfileView> {
 
   @override
   void initState() {
-    UserProfileViewMode initMode =
+    final UserProfileViewMode initMode =
         MezRouter.bodyArguments?["mode"] as UserProfileViewMode? ??
             UserProfileViewMode.None;
     viewController.initProfileView(initMode);
@@ -83,6 +81,7 @@ class _UserProfileViewState extends State<UserProfileView> {
               padding: const EdgeInsets.all(22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   UserProfileImage(
                     viewController: viewController,
@@ -100,7 +99,25 @@ class _UserProfileViewState extends State<UserProfileView> {
                   ),
                   if (!viewController.isEditingInfo)
                     _editAndDeleteBtns(context),
-                  if (viewController.isEditingInfo) _userNameInput()
+                  if (viewController.isEditingInfo) _userNameInput(),
+                  if (!viewController.isEditingInfo)
+                    MezButton(
+                      label: "Delete account",
+                      backgroundColor: offRedColor,
+                      textColor: redAccentColor,
+                      onClick: () async {
+                        await showConfirmationDialog(
+                          context,
+                          title: '${_i18n()["deleteTitle"]}',
+                          primaryButtonText: "${_i18n()["deletePrBtn"]}",
+                          secondaryButtonText: "${_i18n()["deleteScBtn"]}",
+                          helperText: "${_i18n()["deleteHelper"]}",
+                          onYesClick: () async {
+                            await viewController.deleteAccount(context);
+                          },
+                        );
+                      },
+                    ),
                 ],
               ),
             )));

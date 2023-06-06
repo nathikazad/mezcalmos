@@ -3,9 +3,13 @@ import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class Variables$Query$admin_get_dv_companies {
-  factory Variables$Query$admin_get_dv_companies({required int limit}) =>
+  factory Variables$Query$admin_get_dv_companies({
+    required int limit,
+    required int offset,
+  }) =>
       Variables$Query$admin_get_dv_companies._({
         r'limit': limit,
+        r'offset': offset,
       });
 
   Variables$Query$admin_get_dv_companies._(this._$data);
@@ -15,16 +19,21 @@ class Variables$Query$admin_get_dv_companies {
     final result$data = <String, dynamic>{};
     final l$limit = data['limit'];
     result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
     return Variables$Query$admin_get_dv_companies._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
     return result$data;
   }
 
@@ -48,13 +57,22 @@ class Variables$Query$admin_get_dv_companies {
     if (l$limit != lOther$limit) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$limit = limit;
-    return Object.hashAll([l$limit]);
+    final l$offset = offset;
+    return Object.hashAll([
+      l$limit,
+      l$offset,
+    ]);
   }
 }
 
@@ -67,7 +85,10 @@ abstract class CopyWith$Variables$Query$admin_get_dv_companies<TRes> {
   factory CopyWith$Variables$Query$admin_get_dv_companies.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_dv_companies;
 
-  TRes call({int? limit});
+  TRes call({
+    int? limit,
+    int? offset,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_dv_companies<TRes>
@@ -83,10 +104,14 @@ class _CopyWithImpl$Variables$Query$admin_get_dv_companies<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? limit = _undefined}) =>
+  TRes call({
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_dv_companies._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
       }));
 }
 
@@ -96,7 +121,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_dv_companies<TRes>
 
   TRes _res;
 
-  call({int? limit}) => _res;
+  call({
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_dv_companies {
@@ -269,7 +298,16 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -280,7 +318,11 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -1634,9 +1676,13 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details$lo
 }
 
 class Variables$Query$admin_get_laundries {
-  factory Variables$Query$admin_get_laundries({required int limit}) =>
+  factory Variables$Query$admin_get_laundries({
+    required int limit,
+    required int offset,
+  }) =>
       Variables$Query$admin_get_laundries._({
         r'limit': limit,
+        r'offset': offset,
       });
 
   Variables$Query$admin_get_laundries._(this._$data);
@@ -1646,16 +1692,21 @@ class Variables$Query$admin_get_laundries {
     final result$data = <String, dynamic>{};
     final l$limit = data['limit'];
     result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
     return Variables$Query$admin_get_laundries._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
     return result$data;
   }
 
@@ -1679,13 +1730,22 @@ class Variables$Query$admin_get_laundries {
     if (l$limit != lOther$limit) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$limit = limit;
-    return Object.hashAll([l$limit]);
+    final l$offset = offset;
+    return Object.hashAll([
+      l$limit,
+      l$offset,
+    ]);
   }
 }
 
@@ -1698,7 +1758,10 @@ abstract class CopyWith$Variables$Query$admin_get_laundries<TRes> {
   factory CopyWith$Variables$Query$admin_get_laundries.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_laundries;
 
-  TRes call({int? limit});
+  TRes call({
+    int? limit,
+    int? offset,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_laundries<TRes>
@@ -1714,10 +1777,14 @@ class _CopyWithImpl$Variables$Query$admin_get_laundries<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? limit = _undefined}) =>
+  TRes call({
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_laundries._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
       }));
 }
 
@@ -1727,7 +1794,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_laundries<TRes>
 
   TRes _res;
 
-  call({int? limit}) => _res;
+  call({
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_laundries {
@@ -1898,7 +1969,16 @@ const documentNodeQueryadmin_get_laundries = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -1909,7 +1989,11 @@ const documentNodeQueryadmin_get_laundries = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -2793,9 +2877,13 @@ class _CopyWithStubImpl$Query$admin_get_laundries$laundry_store$details$location
 }
 
 class Variables$Query$admin_get_businesses {
-  factory Variables$Query$admin_get_businesses({required int limit}) =>
+  factory Variables$Query$admin_get_businesses({
+    required int limit,
+    required int offset,
+  }) =>
       Variables$Query$admin_get_businesses._({
         r'limit': limit,
+        r'offset': offset,
       });
 
   Variables$Query$admin_get_businesses._(this._$data);
@@ -2805,16 +2893,21 @@ class Variables$Query$admin_get_businesses {
     final result$data = <String, dynamic>{};
     final l$limit = data['limit'];
     result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
     return Variables$Query$admin_get_businesses._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
     return result$data;
   }
 
@@ -2838,13 +2931,22 @@ class Variables$Query$admin_get_businesses {
     if (l$limit != lOther$limit) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$limit = limit;
-    return Object.hashAll([l$limit]);
+    final l$offset = offset;
+    return Object.hashAll([
+      l$limit,
+      l$offset,
+    ]);
   }
 }
 
@@ -2857,7 +2959,10 @@ abstract class CopyWith$Variables$Query$admin_get_businesses<TRes> {
   factory CopyWith$Variables$Query$admin_get_businesses.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_businesses;
 
-  TRes call({int? limit});
+  TRes call({
+    int? limit,
+    int? offset,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_businesses<TRes>
@@ -2873,10 +2978,14 @@ class _CopyWithImpl$Variables$Query$admin_get_businesses<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? limit = _undefined}) =>
+  TRes call({
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_businesses._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
       }));
 }
 
@@ -2886,7 +2995,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_businesses<TRes>
 
   TRes _res;
 
-  call({int? limit}) => _res;
+  call({
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_businesses {
@@ -3059,7 +3172,16 @@ const documentNodeQueryadmin_get_businesses = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -3070,7 +3192,11 @@ const documentNodeQueryadmin_get_businesses = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -3959,9 +4085,13 @@ class _CopyWithStubImpl$Query$admin_get_businesses$business_business$details$loc
 }
 
 class Variables$Query$admin_get_restaurants {
-  factory Variables$Query$admin_get_restaurants({required int limit}) =>
+  factory Variables$Query$admin_get_restaurants({
+    required int limit,
+    required int offset,
+  }) =>
       Variables$Query$admin_get_restaurants._({
         r'limit': limit,
+        r'offset': offset,
       });
 
   Variables$Query$admin_get_restaurants._(this._$data);
@@ -3971,16 +4101,21 @@ class Variables$Query$admin_get_restaurants {
     final result$data = <String, dynamic>{};
     final l$limit = data['limit'];
     result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
     return Variables$Query$admin_get_restaurants._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
     return result$data;
   }
 
@@ -4004,13 +4139,22 @@ class Variables$Query$admin_get_restaurants {
     if (l$limit != lOther$limit) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$limit = limit;
-    return Object.hashAll([l$limit]);
+    final l$offset = offset;
+    return Object.hashAll([
+      l$limit,
+      l$offset,
+    ]);
   }
 }
 
@@ -4023,7 +4167,10 @@ abstract class CopyWith$Variables$Query$admin_get_restaurants<TRes> {
   factory CopyWith$Variables$Query$admin_get_restaurants.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_restaurants;
 
-  TRes call({int? limit});
+  TRes call({
+    int? limit,
+    int? offset,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_restaurants<TRes>
@@ -4039,10 +4186,14 @@ class _CopyWithImpl$Variables$Query$admin_get_restaurants<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? limit = _undefined}) =>
+  TRes call({
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_restaurants._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
       }));
 }
 
@@ -4052,7 +4203,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_restaurants<TRes>
 
   TRes _res;
 
-  call({int? limit}) => _res;
+  call({
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_restaurants {
@@ -4230,7 +4385,16 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -4241,7 +4405,11 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [

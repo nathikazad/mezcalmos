@@ -179,8 +179,7 @@ Future<int?> get_number_of_rental(
 }
 
 Future<List<RentalCard>> get_home_rentals(
-    {required double distance,
-    required Location fromLocation,
+    {required Location fromLocation,
     int? offset,
     int? limit,
     required bool withCache}) async {
@@ -191,17 +190,16 @@ Future<List<RentalCard>> get_home_rentals(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables: Variables$Query$get_home_rentals(
-              distance: distance,
-              from: Geography(
+              location: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               offset: offset,
               limit: limit)));
 
   mezDbgPrint("get_home_rentals $response");
 
-  if (response.parsedData?.business_home_rental != null) {
-    response.parsedData?.business_home_rental
-        .forEach((Query$get_home_rentals$business_home_rental data) async {
+  if (response.parsedData?.business_get_home_rentals != null) {
+    response.parsedData?.business_get_home_rentals
+        .forEach((Query$get_home_rentals$business_get_home_rentals data) async {
       _homes.add(RentalCard(
           businessName: data.rental.business.details.name,
           currency: data.rental.business.details.currency.toCurrency(),

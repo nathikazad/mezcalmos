@@ -7,10 +7,8 @@ import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminLaundry
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminRestaurantServiceCard.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
     ["AdminServicesView"]["AdminServicesView"];
@@ -33,47 +31,28 @@ class _AdminServicesViewState extends State<AdminServicesView> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      controller: viewController.scrollController,
-      child: Column(
-        children: [
-          Obx(() => Column(
-                children: [
-                  _searchInput(),
-                  viewController.hasData
-                      ? _buildRestaurants()
-                      : Container(
-                          alignment: Alignment.center,
-                          child: Center(child: CircularProgressIndicator())),
-                ],
-              )),
-        ],
-      ),
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            controller: viewController.scrollController,
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Obx(() => Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [_searchInput(), _buildServices()],
+                    )),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildServices() {
-    switch (viewController.currentService) {
-      case ServiceProviderType.Restaurant:
-        return _buildRestaurants();
-      case ServiceProviderType.Laundry:
-        return _buildLaundries();
-      case ServiceProviderType.DeliveryCompany:
-        return _buildCompanies();
-      case ServiceProviderType.Business:
-        return _buildBusiness();
-      default:
-        throw Exception("Service type not found");
-    }
-  }
-
-  Widget _buildRestaurants() {
-    // viewController.scrollController.addListener(() {
-    //   if (viewController.scrollController.position.maxScrollExtent ==
-    //       viewController.scrollController.position.pixels) {
-    //     viewController.fetchCurrent(increaseLimit: 10);
-    //   }
-    // });
     return ListView.builder(
         itemCount: viewController.currentServiceLength,
         physics: NeverScrollableScrollPhysics(),
@@ -81,29 +60,6 @@ class _AdminServicesViewState extends State<AdminServicesView> {
         itemBuilder: (BuildContext context, int index) => Container(
               child: _getServiceCard(index),
             ));
-
-    // return Column(
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   children: [
-    //     Column(
-    //         children: List.generate(
-    //             viewController.restaurants!.length,
-    //             (int index) => AdminRestaurantServiceCard(
-    //                 viewController: viewController,
-    //                 restaurant: viewController.restaurants![index]))),
-    //     if (viewController.restaurants!.length ==
-    //         viewController.restLimit.value)
-    //       MezButton(
-    //         label: "View more",
-    //         backgroundColor: secondaryLightBlueColor,
-    //         textColor: primaryBlueColor,
-    //         onClick: () async {
-    //           viewController.restLimit.value += 5;
-    //           await viewController.fetchRestaurants();
-    //         },
-    //       )
-    //   ],
-    // );
   }
 
   Widget _getServiceCard(int index) {
@@ -111,17 +67,17 @@ class _AdminServicesViewState extends State<AdminServicesView> {
       case ServiceProviderType.Restaurant:
         return AdminRestaurantServiceCard(
             viewController: viewController,
-            restaurant: viewController.restaurants![index]);
+            restaurant: viewController.restaurants[index]);
 
       case ServiceProviderType.Laundry:
         return AdminLaundryServiceCard(
             viewController: viewController,
-            laundry: viewController.laundries![index]);
+            laundry: viewController.laundries[index]);
 
       case ServiceProviderType.DeliveryCompany:
         return AdminDeliveryCompanyServiceCard(
             viewController: viewController,
-            company: viewController.companies![index]);
+            company: viewController.companies[index]);
       case ServiceProviderType.Business:
         return AdminBsServiceCard(
             viewController: viewController,
@@ -132,90 +88,13 @@ class _AdminServicesViewState extends State<AdminServicesView> {
     }
   }
 
-  Column _buildLaundries() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-            children: List.generate(
-                viewController.laundries!.length,
-                (int index) => AdminLaundryServiceCard(
-                    viewController: viewController,
-                    laundry: viewController.laundries![index]))),
-        if (viewController.restaurants!.length ==
-            viewController.restLimit.value)
-          MezButton(
-            label: "View more",
-            backgroundColor: secondaryLightBlueColor,
-            textColor: primaryBlueColor,
-            onClick: () async {
-              viewController.laundryLimit.value += 5;
-              await viewController.fetchLaundries();
-            },
-          )
-      ],
-    );
-  }
-
-  Column _buildBusiness() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Column(
-        //     children: List.generate(
-        //         viewController.businesses!.length,
-        //         (int index) => AdminLaundryServiceCard(
-        //             viewController: viewController,
-        //             laundry: viewController.businesses![index]))),
-        if (viewController.businesses!.length == viewController.bsLimit.value)
-          MezButton(
-            label: "View more",
-            backgroundColor: secondaryLightBlueColor,
-            textColor: primaryBlueColor,
-            onClick: () async {
-              viewController.bsLimit.value += 5;
-              await viewController.fetchBusiness();
-            },
-          )
-      ],
-    );
-  }
-
-  Column _buildCompanies() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-            children: List.generate(
-                viewController.companies!.length,
-                (int index) => AdminDeliveryCompanyServiceCard(
-                    viewController: viewController,
-                    company: viewController.companies![index]))),
-        if (viewController.companies!.length == viewController.dvLimit.value)
-          MezButton(
-            label: "View more",
-            backgroundColor: secondaryLightBlueColor,
-            textColor: primaryBlueColor,
-            onClick: () async {
-              viewController.dvLimit.value += 5;
-              await viewController.fetchCompanies();
-            },
-          )
-      ],
-    );
-  }
-
   Widget _searchInput() {
     return Container(
       margin: const EdgeInsets.all(8),
       child: TextFormField(
         textAlignVertical: TextAlignVertical.center,
         style: context.txt.bodyLarge,
-        onChanged: (String value) {
-          // viewController.searchQuery.value = value;
-          // viewController.filter();
-          //    mezDbgPrint(viewController.searchQuery);
-        },
+        onChanged: (String value) {},
         decoration: InputDecoration(
             fillColor: Colors.white,
             prefixIcon: Icon(
