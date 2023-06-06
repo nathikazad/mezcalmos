@@ -628,13 +628,15 @@ Future<BusinessOrder?> get_home_rental_order_req(
   QueryResult<Query$getHomeRentalOrderRequest> res = await _db.graphQLClient
       .query$getHomeRentalOrderRequest(Options$Query$getHomeRentalOrderRequest(
           fetchPolicy:
-              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
           variables:
               Variables$Query$getHomeRentalOrderRequest(orderId: orderId)));
   if (res.hasException ||
       res.parsedData?.business_order_request_by_pk == null) {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${res.exception}");
   }
+  mezDbgPrint(
+      "✅✅✅✅ Hasura query success $orderId =====>${res.parsedData?.business_order_request_by_pk?.items.length}");
   final Query$getHomeRentalOrderRequest$business_order_request_by_pk data =
       res.parsedData!.business_order_request_by_pk!;
   return BusinessOrder(
@@ -657,6 +659,7 @@ Future<BusinessOrder?> get_home_rental_order_req(
                     id: item.id,
                     cost: item.cost,
                     time: item.time,
+                    available: item.available,
                     itemId: item.id,
                     offeringType: item.offering_type.toOfferingType(),
                     parameters: businessItemParamsFromData(item.parameters),
@@ -714,6 +717,7 @@ Stream<BusinessOrder?> listen_home_rental_order_req({required int id}) {
                         cost: item.cost,
                         time: item.time,
                         itemId: item.id,
+                        available: item.available,
                         offeringType: item.offering_type.toOfferingType(),
                         parameters: businessItemParamsFromData(item.parameters),
                         item: BusinessItemDetails(

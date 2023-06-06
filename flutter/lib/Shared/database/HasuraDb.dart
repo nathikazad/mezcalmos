@@ -3,9 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/graphql/data_consumption/hsDataConsumption.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:graphql/client.dart' as gqClient;
 import 'package:jaguar_jwt/jaguar_jwt.dart';
@@ -14,6 +11,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/graphql/data_consumption/hsDataConsumption.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart'
     show logLongString, logToken, mezDbgPrint;
@@ -232,7 +230,7 @@ class HasuraDb {
         Timer.periodic(new Duration(seconds: 300), (Timer timer) async {
       if (dataConsumption.isNotEmpty &&
           Get.find<AuthController>().hasuraUserId != null) {
-        dataConsumption.forEach((key, value) {
+        dataConsumption.forEach((String key, List<int> value) {
           updateSubscriptionDataConsumption(
               nameOfSubscription: key,
               totalSize: value[0],

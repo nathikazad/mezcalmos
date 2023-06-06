@@ -1,10 +1,10 @@
 {
   "BusinessApp": {
     "pages": {
-      "Orders" : {
-        "HomeRentalOrderView" : {
-          "components" : {
-            "BsHomeRentalOrderItemCard" : {
+      "Orders": {
+        "HomeRentalOrderView": {
+          "components": {
+            "BsHomeRentalOrderItemCard": {
               "error": "Error",
               "edit": "Edit",
               "markAsUnavailable": "Mark as Unavailable",
@@ -14,9 +14,6 @@
               "save": "Save",
               "cancel": "Cancel",
               "startFrom": "Start From",
-              
-             
-            
               "updateTimeTitle": "Update Time"
             }
           }
@@ -91,7 +88,7 @@
           "sunday": "Sunday"
         },
         "services": "Services",
-        "orders" : "Orders",
+        "orders": "Orders",
         "service": "Service",
         "serviceType": "What type of service will you add?",
         "addService": "Add Service",
@@ -965,10 +962,11 @@
           "car": "Car",
           "bicycle": "Bicycle"
         },
-
         "service": "Services",
-        "deliveries": { "title": "Deliveries", "shared": {} },
-
+        "deliveries": {
+          "title": "Deliveries",
+          "shared": {}
+        },
         "classes": {
           "title": "Class",
           "shared": {
@@ -1011,7 +1009,6 @@
             "noBusinessesFound": "No businesses found",
             "noTherapyFound": "No therapy found"
           },
-
           "parties": {
             "title": "Parties",
             "description": "Discover most delicious dishes from the nearest restaurants."
@@ -1752,6 +1749,15 @@
       }
     },
     "helpers": {
+      "TimeUnitHelper": {
+        "hour": "Hour",
+        "day": "Day",
+        "week": "Week",
+        "month": "Month",
+        "person": "Person",
+        "unit": "Unit",
+        "total": "Total"
+      },
       "DeliveryOrderHelper": {
         "status": {
           "ready": "Package ready",
@@ -1841,7 +1847,6 @@
           }
         }
       },
-
       "ServiceProfileView": {
         "profile": "Profile",
         "info": "Information",
@@ -2075,7 +2080,7 @@
           "customer": "CUSTOMER",
           "driver": "DRIVER",
           "mezadmin": "MEZADMIN",
-          "businessOp" : "Business Op"
+          "businessOp": "Business Op"
         },
         "UnauthorizedScreen": {
           "unauthorized": "Unauthorized",
