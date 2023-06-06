@@ -179,7 +179,8 @@ Future<int?> get_number_of_rental(
 }
 
 Future<List<RentalCard>> get_home_rentals(
-    {required Location fromLocation,
+    {required double distance,
+    required Location fromLocation,
     int? offset,
     int? limit,
     required bool withCache}) async {
@@ -190,6 +191,7 @@ Future<List<RentalCard>> get_home_rentals(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables: Variables$Query$get_home_rentals(
+              distance: distance,
               location: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               offset: offset,
