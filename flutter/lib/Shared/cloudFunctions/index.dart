@@ -16,11 +16,18 @@ class CloudFunctions {
     return response.data;
   }
 
-  static Future<void> user2_addHasuraClaim(
+  static Future<DeleteAccountResponse> user2_deleteUserAccount(
   ) async {
-    return await callCloudFunction(
+    return DeleteAccountResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "user2-deleteUserAccount",
+      parameters: <String, dynamic>{}));
+  }
+
+  static Future<HasuraClaimResponse> user2_addHasuraClaim(
+  ) async {
+    return HasuraClaimResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "user2-addHasuraClaim",
-      parameters: <String, dynamic>{});
+      parameters: <String, dynamic>{}));
   }
 
   static Future<SendOtpResponse> otp3_sendOTPForLogin(
@@ -200,6 +207,7 @@ class CloudFunctions {
   static Future<RestaurantResponse> restaurant3_createRestaurant(
       {required String name,
       required String image,
+      required String phoneNumber,
       required Location location,
       required Schedule schedule,
       String? restaurantOperatorNotificationToken,
@@ -213,6 +221,7 @@ class CloudFunctions {
       parameters: <String, dynamic>{
         "name": name,
         "image": image,
+        "phoneNumber": phoneNumber,
         "location":location.toFirebaseFormattedJson(),
         "schedule":schedule.toFirebaseFormattedJson(),
         "restaurantOperatorNotificationToken": restaurantOperatorNotificationToken,
@@ -311,6 +320,7 @@ class CloudFunctions {
   static Future<BusinessResponse> business_createBusiness(
       {required String name,
       required String image,
+      required String phoneNumber,
       required BusinessProfile profile,
       required Location location,
       String? businessOperatorNotificationToken,
@@ -323,6 +333,7 @@ class CloudFunctions {
       parameters: <String, dynamic>{
         "name": name,
         "image": image,
+        "phoneNumber": phoneNumber,
         "profile":profile.toFirebaseFormatString(),
         "location":location.toFirebaseFormattedJson(),
         "businessOperatorNotificationToken": businessOperatorNotificationToken,

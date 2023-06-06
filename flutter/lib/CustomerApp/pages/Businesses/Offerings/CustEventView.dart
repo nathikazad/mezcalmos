@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/Off
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -120,7 +121,7 @@ class _CustEventViewState extends State<CustEventView> {
                       ),
 
                       _description(context),
-                      if (viewController.event?.schedule != null) _schedule(),
+                      _schedule(),
 
                       if (viewController.event?.gpsLocation != null)
                         ServiceLocationCard(
@@ -160,6 +161,8 @@ class _CustEventViewState extends State<CustEventView> {
           height: 15,
         ),
         CustBusinessScheduleBuilder(
+          period: viewController.event!.period,
+          icon: Icons.calendar_today,
           schedule: viewController.event!.schedule,
           scheduleType: viewController.event!.scheduleType,
         )

@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:collection/collection.dart';
 
 extension AddDayOfWeekToDateTime on DateTime {
   Weekday getDayOfWeek() {
@@ -46,7 +48,12 @@ Schedule scheduleFromData(json) {
       //  }
     }
   }
-  return Schedule(openHours: openHours);
+  List<Weekday> sortedKeys = openHours.keys.toList()
+    ..sort((Weekday a, Weekday b) => a.index.compareTo(b.index));
+
+  Map<Weekday, WorkingDay> sortedOpenHours =
+      Map.fromIterable(sortedKeys, key: (k) => k, value: (k) => openHours[k]!);
+  return Schedule(openHours: sortedOpenHours);
 }
 
 extension ScheduleFunctions on Schedule {
@@ -131,71 +138,53 @@ extension ScheduleFunctions on Schedule {
     return json;
   }
 
-  // Map<String, OpenHours> concatenatedVersion() {
-  //   final Map<String, OpenHours> json = <String, OpenHours>{};
-  //   final List<Weekday> weekdays = Weekday.values;
-  //   String? previousDayOpenHours;
-  //   String? currentStringKey;
-  //   for (int i = 0; i < weekdays.length; i++) {
-  //     final Weekday weekday = weekdays[i];
-  //     if (openHours[weekday] == null) continue;
-  //     if (previousDayOpenHours != openHours[weekday].toString()) {
-  //       currentStringKey = weekday.toFirebaseFormatString();
-  //       if (openHours[weekday]!.isOpen) {
-  //         json[currentStringKey] = openHours[weekday]!;
-  //         previousDayOpenHours = openHours[weekday].toString();
-  //       } else {
-  //         previousDayOpenHours = null;
-  //       }
-  //     } else {
-  //       json.remove(currentStringKey);
-  //       currentStringKey =
-  //           "${currentStringKey!.split('-')[0].inCaps}-${weekday.toFirebaseFormatString().inCaps}";
-  //       json[currentStringKey] = openHours[weekday]!;
-  //     }
-  //   }
-  //   return json;
-  // }
-  // Map<String, OpenHours> concatenatedVersion() {
-  //   final Map<String, OpenHours> json = {};
-  //   final List<Weekday> weekdays = Weekday.values;
-  //   OpenHours? previousOpenHours;
-  //   String? currentStringKey;
+  Map<String, WorkingDay> concatenatedVersion() {
+    final Map<String, WorkingDay> json = <String, WorkingDay>{};
+    final List<Weekday> weekdays = Weekday.values;
+    String? previousDayOpenHours;
+    String? currentStringKey;
 
-  //   for (final Weekday weekday in weekdays) {
-  //     final List<OpenHours> hours = openHours[weekday] ?? [];
+    for (int i = 0; i < weekdays.length; i++) {
+      final Weekday weekday = weekdays[i];
+      if (openHours[weekday] == null) continue;
 
-  //     if (hours.isEmpty) continue;
+      if (previousDayOpenHours != openHours[weekday].toString()) {
+        currentStringKey = weekday.toFirebaseFormatString().inCaps;
+        if (openHours[weekday]!.isOpen) {
+          json[currentStringKey] = openHours[weekday]!;
+          previousDayOpenHours = openHours[weekday].toString();
+        } else {
+          previousDayOpenHours = null;
+        }
+      } else {
+        final WorkingDay currentWorkingDay = openHours[weekday]!;
+        final WorkingDay previousWorkingDay = json[currentStringKey]!;
 
-  //     final OpenHours currentOpenHours = hours.first;
+        if (areWorkingDaysEqual(currentWorkingDay, previousWorkingDay)) {
+          json.remove(currentStringKey);
+          currentStringKey =
+              "${currentStringKey!.split('-')[0].toString().inCaps}-${weekday.toFirebaseFormatString().inCaps}";
+          json[currentStringKey] = openHours[weekday]!;
+        } else {
+          currentStringKey = "${weekday.toFirebaseFormatString().inCaps}";
+          json[currentStringKey] = openHours[weekday]!;
+        }
+      }
+    }
+    return json;
+  }
 
-  //     if (previousOpenHours != currentOpenHours) {
-  //       currentStringKey = weekday.toFirebaseFormatString();
+  bool areWorkingDaysEqual(WorkingDay day1, WorkingDay day2) {
+    if (day1.isOpen != day2.isOpen) return false;
+    if (day1.openHours.length != day2.openHours.length) return false;
 
-  //       if (currentOpenHours.isOpen) {
-  //         json[currentStringKey] = currentOpenHours;
-  //         previousOpenHours = currentOpenHours;
-  //       } else {
-  //         previousOpenHours = null;
-  //       }
-  //     } else {
-  //       json.remove(currentStringKey);
-
-  //       final String firstPart = currentStringKey!.split('-')[0].inCaps;
-  //       final String secondPart = weekday.toFirebaseFormatString().inCaps;
-  //       currentStringKey = "$firstPart-$secondPart";
-
-  //       final OpenHours? openHoursWithIsOpen =
-  //           hours.firstWhereOrNull((OpenHours hour) => hour.isOpen);
-  //       if (openHoursWithIsOpen != null) {
-  //         json[currentStringKey] = openHoursWithIsOpen;
-  //       }
-  //     }
-  //   }
-  //   mezDbgPrint("printing the json inside concatenatedVersion $json");
-
-  //   return json;
-  // }
+    for (int i = 0; i < day1.openHours.length; i++) {
+      final OpenHours openHours1 = day1.openHours[i];
+      final OpenHours openHours2 = day2.openHours[i];
+      if (DeepCollectionEquality().equals(openHours1, openHours2)) return false;
+    }
+    return true;
+  }
 
   Schedule clone() {
     final Map<Weekday, WorkingDay> clonedOpenHours =

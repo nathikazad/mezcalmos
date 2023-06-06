@@ -6,13 +6,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
-import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
@@ -47,17 +46,12 @@ class AuthController extends GetxController {
   AuthController(this._onSignInCallback, this._onSignOutCallback);
   String? _previousUserValue = "init";
   bool userRedirectFinish = false;
+
   @override
   Future<void> onInit() async {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
-    bool internetStatus = false;
-    while (internetStatus == false) {
-      internetStatus = await ConnectivityHelper.pingServer(firebaseAuthUrl)
-          .timeout(Duration(seconds: 10), onTimeout: () => false);
-    }
-    mezDbgPrint("Connection is there on authController init 💕💕💕💕💕💕💕");
     _auth.authStateChanges().listen((fireAuth.User? user) async {
       await authChangeCallback(user);
     });
@@ -148,8 +142,8 @@ class AuthController extends GetxController {
       'deliverer',
       'delivery_operator',
       'delivery_driver',
-      'laundry_operator'
-          'business_operator',
+      'laundry_operator',
+      'business_operator',
     ];
 
     final List<String> difference =
@@ -240,7 +234,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    await logOut();
   }
 
   Future<cModels.Language> changeLanguage(cModels.Language newLanguage) async {

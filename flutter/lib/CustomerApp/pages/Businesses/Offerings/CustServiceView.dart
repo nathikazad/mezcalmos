@@ -88,6 +88,8 @@ class _CustServiceViewState extends State<CustServiceView> {
                             ),
                       _description(context),
                       CustBusinessScheduleBuilder(
+                        period: null,
+                        isService: true,
                         schedule: viewController.service!.schedule,
                         scheduleType: ScheduleType.Scheduled,
                       ),
@@ -128,6 +130,9 @@ class _CustServiceViewState extends State<CustServiceView> {
                   ?.trim() ??
               _i18n()['noDescription'],
           style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        SizedBox(
+          height: 15,
         ),
       ],
     );

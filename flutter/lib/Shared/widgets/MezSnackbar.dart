@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:sizer/sizer.dart';
 
 void MezSnackbar(String title, String? msg,
@@ -18,7 +19,7 @@ void MezSnackbar(String title, String? msg,
       style: TextStyle(
         fontFamily: "Montserrat",
         fontWeight: FontWeight.w600,
-        fontSize: 12.sp,
+        fontSize: 12.mezSp,
         color: textColor,
       ),
     ),
@@ -30,7 +31,7 @@ void MezSnackbar(String title, String? msg,
                 style: TextStyle(
                   fontFamily: "Montserrat",
                   fontWeight: FontWeight.w500,
-                  fontSize: 10.sp,
+                  fontSize: 10.mezSp,
                   color: textColor,
                 ),
               ),
@@ -61,7 +62,7 @@ void customSnackBar(
       style: TextStyle(
         fontFamily: "Montserrat",
         fontWeight: FontWeight.w600,
-        fontSize: 12.sp,
+        fontSize: 12.mezSp,
         color: textColor,
       ),
     ),
@@ -73,7 +74,7 @@ void customSnackBar(
                 style: TextStyle(
                   fontFamily: "Montserrat",
                   fontWeight: FontWeight.w500,
-                  fontSize: 10.sp,
+                  fontSize: 10.mezSp,
                   color: textColor,
                 ),
               ),

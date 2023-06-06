@@ -1,6 +1,6 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotifications/nativeBackgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -10,7 +10,7 @@ class DeliveryDeepLinkHandler {
   static Future<void> handleDeeplink(Uri deepLink) async {
     mezDbgPrint("here");
     final List<String> frags = deepLink.path.split("/");
-    if (frags.length == 4 && frags[1] == "dr") _addDriver(frags[2]);
+    if (frags.length == 4 && frags[1] == "dr") await _addDriver(frags[2]);
   }
 
   static Future<void> _addDriver(String uniqueId) async {

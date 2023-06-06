@@ -180,10 +180,6 @@ class _CustFoodListViewState extends State<CustFoodListView> {
                 .inCaps)),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text(
-              '${_i18n()['no${viewController.serviceCategory.first.name}Found']}'));
+      return NoServicesFound();
   }
 }

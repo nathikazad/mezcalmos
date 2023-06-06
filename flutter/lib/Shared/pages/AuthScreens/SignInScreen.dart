@@ -56,55 +56,61 @@ class _SignInViewState extends State<SignInView> {
         onWillPop: () async => false,
         child: Scaffold(
             body: SingleChildScrollView(
-          child: Container(
-              padding: const EdgeInsets.all(8.0),
-              width: Get.width,
-              height: Get.height,
-              alignment: Alignment.center,
-              child: Obx(
-                () => Column(
-                  children: [
-                    SizedBox(
-                      height: 35,
-                    ),
-                    (mode == SignInMode.OptionalSignIn && !clickedLogin.value)
-                        ? Container(
-                            // padding: const EdgeInsets.only(top: 5),
-                            alignment: Alignment.centerRight,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.close,
-                                color: Colors.black,
-                              ),
-                              onPressed: () {
-                                MezRouter.back();
-                              },
-                            ),
-                          )
-                        : SizedBox(
-                            height: 30,
-                          ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 50),
-                      child: MezcalmosSharedWidgets.logo(size: 15.h),
-                    ),
-                    SizedBox(height: 10),
-                    MezcalmosSharedWidgets.mezcalmosTitle(
-                        textSize: 35.mezSp, isBold: true),
-                    Spacer(),
-                    Text(_i18n()["title"],
-                        overflow: TextOverflow.visible,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium
-                            ?.copyWith(fontWeight: FontWeight.w600)),
-                    Spacer(),
-                    ...buildSignInButtons(MezEnv.appLaunchMode),
-                    Spacer(),
-                  ],
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Obx(
+            () => Column(
+              children: [
+                SizedBox(
+                  height: 35,
                 ),
-              )),
+                (mode == SignInMode.OptionalSignIn && !clickedLogin.value)
+                    ? Container(
+                        // padding: const EdgeInsets.only(top: 5),
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            MezRouter.back();
+                          },
+                        ),
+                      )
+                    : SizedBox(
+                        height: 30,
+                      ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: MezcalmosSharedWidgets.logo(size: 15.h),
+                ),
+                // SizedBox(height: 10),
+                Container(
+                  alignment: Alignment.center,
+                  width: Get.width,
+                  child: MezcalmosSharedWidgets.mezcalmosTitle(
+                      textSize: 35.mezSp, isBold: true),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(_i18n()["title"],
+                    overflow: TextOverflow.visible,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(fontWeight: FontWeight.w600)),
+                SizedBox(
+                  height: 10,
+                ),
+                ...buildSignInButtons(MezEnv.appLaunchMode),
+                SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
+          ),
         )));
   }
 

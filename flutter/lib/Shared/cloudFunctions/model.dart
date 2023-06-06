@@ -1,3 +1,37 @@
+class DeleteAccountResponse {
+  bool success;
+  DeleteAccountError? error;
+  String? unhandledError;
+  DeleteAccountResponse(this.success, this.error, this.unhandledError);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+factory DeleteAccountResponse.fromFirebaseFormattedJson(json) { 
+   return DeleteAccountResponse(json["success"], json["error"]?.toString().toDeleteAccountError(), json["unhandledError"]);
+  }
+}
+
+class HasuraClaimResponse {
+  bool success;
+  HasuraClaimError? error;
+  String? unhandledError;
+  HasuraClaimResponse(this.success, this.error, this.unhandledError);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+factory HasuraClaimResponse.fromFirebaseFormattedJson(json) { 
+   return HasuraClaimResponse(json["success"], json["error"]?.toString().toHasuraClaimError(), json["unhandledError"]);
+  }
+}
+
 class SendOtpResponse {
   bool success;
   SendOtpError? error;
@@ -2464,6 +2498,38 @@ extension ParseStringToRestaurantOrderStatus on String {
     return RestaurantOrderStatus.values.firstWhere(
         (RestaurantOrderStatus restaurantOrderStatus) =>
             restaurantOrderStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum DeleteAccountError { UnhandledError, Unauthenticated }
+extension ParseDeleteAccountErrorToString on DeleteAccountError {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToDeleteAccountError on String {
+  DeleteAccountError toDeleteAccountError() {
+    return DeleteAccountError.values.firstWhere(
+        (DeleteAccountError deleteAccountError) =>
+            deleteAccountError.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum HasuraClaimError { UnhandledError, Unauthenticated }
+extension ParseHasuraClaimErrorToString on HasuraClaimError {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToHasuraClaimError on String {
+  HasuraClaimError toHasuraClaimError() {
+    return HasuraClaimError.values.firstWhere(
+        (HasuraClaimError hasuraClaimError) =>
+            hasuraClaimError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 

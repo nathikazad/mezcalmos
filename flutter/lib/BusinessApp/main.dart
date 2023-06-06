@@ -10,9 +10,6 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
-const String defaultDb = "test";
-const String defaultLaunchMode = "stage";
-
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
 List<QRoute> routes = BusinessOpRoutes.mainRoutes;

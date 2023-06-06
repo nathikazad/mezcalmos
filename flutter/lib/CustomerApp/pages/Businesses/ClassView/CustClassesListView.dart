@@ -157,6 +157,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -320,6 +321,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                     children: [
                       Divider(),
                       CustBusinessScheduleBuilder(
+                          period: viewController.classes[index].period,
                           showTitle: false,
                           showIcons: false,
                           schedule: viewController.classes[index].schedule,
@@ -336,10 +338,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
             )),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text('${_i18n()['noEventsFound']}'));
+      return NoServicesFound();
   }
 
   Widget oneTimeBuilder(EventCard classData) {

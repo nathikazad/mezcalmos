@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/components/CreateServiceImageComponent.dart';
@@ -107,7 +108,9 @@ class CreateServiceInfoPage extends StatelessWidget {
                     controller: viewController.phone,
                     keyboardType: TextInputType.phone,
                     validator: (String? v) {
-                      if (v == null || v.isEmpty || v.isPhoneNumber == false) {
+                      if (v == null ||
+                          v.isEmpty ||
+                          v.validatePhoneNumber() == false) {
                         return "${_i18n()['phoneTextError']}";
                       }
                       return null;

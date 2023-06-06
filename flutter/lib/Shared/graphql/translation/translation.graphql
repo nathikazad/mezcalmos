@@ -1,8 +1,8 @@
-mutation updateTranslationValue($arguments: translation_value_pk_columns_input!, $data: translation_value_set_input!) {
-  update_translation_value_by_pk(pk_columns: $arguments, _set: $data) {
-    value
+mutation upsertTranslationValue($translation_value: translation_value_insert_input!, $on_conflict: translation_value_on_conflict!) {
+  insert_translation_value_one(object: $translation_value, on_conflict: $on_conflict) {
     language_id
     translation_id
+    value
   }
 }
 mutation insertTranslationValue($data :  translation_insert_input!){

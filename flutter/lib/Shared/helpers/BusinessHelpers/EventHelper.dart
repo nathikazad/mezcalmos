@@ -20,3 +20,17 @@ extension EventCardHelper on EventCard {
   bool get isAdventure => category1 == EventCategory1.Adventure;
   bool get isTherapy => category1 == EventCategory1.Therapy;
 }
+
+extension EventBusinessHelper on EventWithBusinessCard {
+  PeriodOfTime? get period {
+    if (startsAt != null && endsAt != null) {
+      return PeriodOfTime(
+          start: DateTime.parse(startsAt!), end: DateTime.parse(endsAt!));
+    }
+    return null;
+  }
+
+  bool get isClass => tags?.contains(EventTag.Class) == true;
+  bool get isAdventure => category1 == EventCategory1.Adventure;
+  bool get isTherapy => category1 == EventCategory1.Therapy;
+}

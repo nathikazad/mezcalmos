@@ -81,12 +81,14 @@ class BsEventCard extends StatelessWidget {
                 ),
               ],
             ),
+            // these conditions are a bit confusing please try to extracted them to getters with meaningful names
             if (event.schedule != null &&
                 !(event.isClass && event.scheduleType == ScheduleType.OnDemand))
               Column(
                 children: [
                   Divider(),
                   CustBusinessScheduleBuilder(
+                    period: event.period,
                     schedule: event.schedule,
                     scheduleType: event.scheduleType,
                     showIcons: false,

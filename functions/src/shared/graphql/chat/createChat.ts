@@ -1,7 +1,7 @@
 import { service_provider_customer_chat_constraint } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../utilities/hasura";
 import { DirectChatDetails, MezAdminChatDetails } from "../../chat/createChat";
-import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName, ChatInfo, RecipientTypeToChatInfoAppName, RecipientType, RecipientAppType } from "../../models/Generic/Chat";
+import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName, ChatInfo, RecipientTypeToChatInfoAppName, RecipientType, RecipientAppType, ParticipantType } from "../../models/Generic/Chat";
 import { AppType, MezError } from "../../models/Generic/Generic";
 import { CustomerInfo, MezAdmin, UserInfo } from "../../models/Generic/User";
 import { ServiceProvider, ServiceProviderToAppType } from "../../models/Services/Service";
@@ -18,10 +18,14 @@ export async function createServiceProviderCustomerChat(serviceProvider: Service
         [ChatInfoAppName.CustomerApp]: {
             chatTitle: serviceProvider.name,
             chatImage: serviceProvider.image,
+            phoneNumber: serviceProvider.phoneNumber,
+            participantType: AppParticipant[ServiceProviderToAppType[serviceProvider.serviceProviderType]],
         },
         [AppTypeToChatInfoAppName[ServiceProviderToAppType[serviceProvider.serviceProviderType]]]: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
+            phoneNumber: customer.phoneNumber,
+            participantType: ParticipantType.Customer,
         },
     }
 

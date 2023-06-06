@@ -1,10 +1,7 @@
 import * as functions from "firebase-functions";
 import * as firebase from "firebase-admin";
-// import { setUserInfo } from "../shared/controllers/rootController";
-// import { isSignedIn } from "../shared/helper/authorizer";
-// import { ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "./hasura";
+import { MezError } from "../shared/models/Generic/Generic";
 
 // Customer Canceling
 export const processSignUp = functions.auth.user().onCreate(async user => {
@@ -26,28 +23,45 @@ export const processSignUp = functions.auth.user().onCreate(async user => {
   await addHasuraClaim(user.uid, null);
 });
 
-// export async function deleteAccount(userId: string, data: any) {
+export interface DeleteAccountResponse {
+  success: boolean,
+  error?: DeleteAccountError
+  unhandledError?: string
+}
+enum DeleteAccountError {
+  UnhandledError = "unhandledError",
+}
 
-//   let response = isSignedIn(userId);
-//   if (response != undefined) {
-//     return response;
-//   }
-//   await firebase.auth().updateUser(userId, { disabled: true });
-//   return { status: ServerResponseStatus.Success }
-// };
+export async function deleteAccount(uid: number, data: any): Promise<DeleteAccountResponse> {
+  try {
+    await firebase.auth().deleteUser(data.firebaseId);
+    return {
+      success: true
+    }
+  } catch (e: any) {
+    return {
+      success: false,
+      error: DeleteAccountError.UnhandledError,
+      unhandledError: e.message as any
+    }
 
+  }
+};
 
+export interface HasuraClaimResponse {
+  success: boolean,
+  error?: HasuraClaimError
+  unhandledError?: string
+}
+enum HasuraClaimError {
+  UnhandledError = "unhandledError",
+  Unauthenticated = "unauthenticated",
+}
 
-export async function addHasuraClaim(uid: string | undefined, _:null) {
+export async function addHasuraClaim(uid: string, _:null): Promise<HasuraClaimResponse> {
   try {
     console.log("[+] User Id ===> ", uid);
     functions.logger.info("[+] User Id ===> ", uid);
-    if (!uid) {
-      throw new HttpsError(
-        "unauthenticated",
-        "Request was not authenticated.",
-      );
-    }
 
     let chain = getHasura();
     let response = await chain.query({
@@ -93,9 +107,10 @@ export async function addHasuraClaim(uid: string | undefined, _:null) {
               customer_id: secondResponse.insert_user_one?.id
             }
           }, {
-            customer_id:true
+            customer_id: true
           }
-        ]});
+        ]
+      });
       hasuraUserId = secondResponse.insert_user_one?.id
     } else {
       hasuraUserId = response.user[0].id
@@ -103,15 +118,31 @@ export async function addHasuraClaim(uid: string | undefined, _:null) {
     const customClaims = {
       "https://hasura.io/jwt/claims": {
         "x-hasura-default-role": "anonymous",
-        "x-hasura-allowed-roles": ["anonymous", "restaurant_operator", "customer", "mez_admin", "deliverer", "delivery_operator","delivery_driver","laundry_operator","business_operator"], // add admin role for admin users
+        "x-hasura-allowed-roles": ["anonymous", "restaurant_operator", "customer", "mez_admin", "deliverer", "delivery_operator", "delivery_driver", "laundry_operator", "business_operator"], // add admin role for admin users
         "x-hasura-user-id": hasuraUserId?.toString()
       }
     };
     await firebase.auth().setCustomUserClaims(uid, customClaims)
-    return { status: "success" }
-  } catch (error) {
-    console
-    return { status: "failure", message: error }
+    return {
+      success: true
+    }
+  } catch (e: any) {
+      if (e instanceof MezError) {
+          if (Object.values(HasuraClaimError).includes(e.message as any)) {
+              return {
+                  success: false,
+                  error: e.message as any
+              }
+          } else {
+              return {
+                  success: false,
+                  error: HasuraClaimError.UnhandledError,
+                  unhandledError: e.message as any
+              }
+          }
+      } else {
+          throw e
+      }
   }
 }
 
