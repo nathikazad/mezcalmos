@@ -347,21 +347,20 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
               target: viewController.currentLocation,
               zoom: 14,
             )),
-        if (viewController.showFetchButton.value)
-          Obx(
-            () => Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20, bottom: 20),
-                child: MezIconButton(
-                  icon: Icons.my_location,
-                  iconColor: Colors.black,
-                  backgroundColor: Colors.white,
-                  onTap: () {},
-                ),
-              ),
-            ),
-          )
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20, bottom: 20),
+            child: viewController.showFetchButton.value
+                ? MezIconButton(
+                    icon: Icons.my_location,
+                    iconColor: Colors.black,
+                    backgroundColor: Colors.white,
+                    onTap: () => viewController.fetchMapViewRentals(),
+                  )
+                : SizedBox.shrink(),
+          ),
+        )
       ],
     );
   }

@@ -176,7 +176,6 @@ class CustHomeRentalsListViewController {
   Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
     try {
       if (currentPostitionBased) {
-        _showFetchButton.value = false;
         _mapViewRentals.value = await get_home_rentals(
           distance: 25000,
           fromLocation: _fromLocation!,
@@ -275,6 +274,11 @@ class CustHomeRentalsListViewController {
 
   void onCameraMove() {
     _showFetchButton.value = true;
+  }
+
+  void fetchMapViewRentals() {
+    _fetchMapViewRentals(currentPostitionBased: false);
+    _showFetchButton.value = false;
   }
 
   void setFilter(TimeUnit tag) => _filterTag.value = tag;
