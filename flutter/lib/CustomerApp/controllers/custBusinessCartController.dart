@@ -171,9 +171,7 @@ class CustBusinessCartController extends GetxController {
         if (requestData.success) {
           cart.value = null;
           cart.refresh();
-          await CustOrderView.navigate(
-            orderId: requestData.orderId!.toInt(),
-          );
+          await MezRouter.back();
         }
         return requestData.success;
       }
@@ -181,5 +179,25 @@ class CustBusinessCartController extends GetxController {
       return null;
     }
     return null;
+  }
+
+  Future<void> acceptOrderRequest() async {
+    await CloudFunctions.business_handleOrderRequestFromCustomer(
+      orderRequestId: currentOrderIdInView.value!,
+      newStatus: BusinessOrderRequestStatus.Confirmed,
+    );
+    showSavedSnackBar(
+      title: "You have accepted the order request",
+    );
+  }
+
+  Future<void> cancelOrderRequest() async {
+    await CloudFunctions.business_handleOrderRequestFromCustomer(
+      orderRequestId: currentOrderIdInView.value!,
+      newStatus: BusinessOrderRequestStatus.CancelledByCustomer,
+    );
+    showSavedSnackBar(
+      title: "You have cancelled the order request",
+    );
   }
 }

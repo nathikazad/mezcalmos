@@ -46,3 +46,22 @@ select_permissions:
           operators:
             user_id:
               _eq: X-Hasura-User-Id
+  - role: customer
+    permission:
+      columns:
+        - business_id
+        - chat_id
+        - customer_id
+        - id
+        - review_id
+        - customer_app_type
+        - notes
+        - status
+        - cancellation_time
+        - order_time
+      computed_fields:
+        - cost
+      filter:
+        customer:
+          user_id:
+            _eq: X-Hasura-User-Id

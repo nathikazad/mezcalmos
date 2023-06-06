@@ -1,4 +1,5 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class CustBusinessCart {
   int? id;
@@ -9,12 +10,14 @@ class CustBusinessCart {
   num? discountValue;
   String? cancellationTime;
   BusinessOrderRequestStatus? status;
+  int? chatId;
   CustBusinessCart(
       {required this.customerId,
       required this.businessId,
       required this.cost,
       required this.items,
       this.id,
+      this.chatId,
       this.cancellationTime,
       this.status,
       this.discountValue});
@@ -39,10 +42,10 @@ class BusinessCartItem {
   bool? available;
   BusinessItemDetails? item;
   num? orderRequestId;
-  Rental? rental;
-  Event? event;
-  Service? service;
-  Product? product;
+  RentalWithBusinessCard? rental;
+  EventWithBusinessCard? event;
+  ServiceWithBusinessCard? service;
+  ProductWithBusinessCard? product;
   int? businessId;
   BusinessCartItem(
       {required this.itemId,

@@ -75,7 +75,6 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(
           "👋 _fetchRentals called  \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
       List<RentalCard> newList = await get_home_rentals(
-        // distance: 1000000000000,
         fromLocation: _fromLocation!,
 
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
