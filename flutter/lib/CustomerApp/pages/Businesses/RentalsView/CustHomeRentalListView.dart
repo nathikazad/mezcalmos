@@ -21,6 +21,7 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['RentalsView']['CustHomeRentalListView'];
@@ -59,6 +60,22 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
             ? '${_i18n()['map']}'
             : '${_i18n()['homes']}',
       ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 100),
+      //   child: Obx(
+      //     () => MezButton(
+      //       height: 42.5,
+      //       onClick: () async {
+      //         viewController.switchView();
+      //       },
+      //       icon: viewController.isMapView ? Icons.list : Icons.room,
+      //       label: viewController.isMapView
+      //           ? '${_i18n()['viewAsList']}'
+      //           : '${_i18n()['viewOnMap']}',
+      //       borderRadius: 25,
+      //     ),
+      //   ),
+      // ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 100),
         child: Obx(
@@ -301,7 +318,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
     ]);
   }
 
-  GoogleMap _googleMap() {
+  Widget _googleMap() {
     Set<Marker> getMarkersList() {
       switch (viewController.filterTag) {
         // case TimeUnit.PerHour:
@@ -315,18 +332,38 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
       }
     }
 
-    return GoogleMap(
-        compassEnabled: false,
-        mapToolbarEnabled: false,
-        zoomControlsEnabled: false,
-        markers: getMarkersList(),
-        onMapCreated: (GoogleMapController controller) {
-          controller.setMapStyle(mezMapStyle);
-        },
-        initialCameraPosition: CameraPosition(
-          target: viewController.currentLocation,
-          zoom: 14,
-        ));
+    return Stack(
+      children: [
+        GoogleMap(
+            compassEnabled: false,
+            mapToolbarEnabled: false,
+            zoomControlsEnabled: false,
+            markers: getMarkersList(),
+            onMapCreated: (GoogleMapController controller) {
+              controller.setMapStyle(mezMapStyle);
+            },
+            onCameraMove: (position) => viewController.onCameraMove(),
+            initialCameraPosition: CameraPosition(
+              target: viewController.currentLocation,
+              zoom: 14,
+            )),
+        if (viewController.showFetchButton.value)
+          Obx(
+            () => Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20, bottom: 20),
+                child: MezIconButton(
+                  icon: Icons.my_location,
+                  iconColor: Colors.black,
+                  backgroundColor: Colors.white,
+                  onTap: () {},
+                ),
+              ),
+            ),
+          )
+      ],
+    );
   }
 
   Widget _viewBusinessesSwitcher() {

@@ -55,6 +55,8 @@ class CustHomeRentalsListViewController {
   List<BusinessCard> get businesses => _businesses.value;
 
   // Map view //
+  RxBool _showFetchButton = false.obs;
+  RxBool get showFetchButton => _showFetchButton;
   LatLng _currentLocation = LatLng(19.4326, -99.1332);
   LatLng get currentLocation => _currentLocation;
 
@@ -171,15 +173,26 @@ class CustHomeRentalsListViewController {
   // Map view //
   void switchView() => _isMapView.value = !_isMapView.value;
 
-  Future<void> _fetchMapViewRentals() async {
+  Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
     try {
-      _mapViewRentals.value = await get_home_rentals(
-        distance: 25000,
-        fromLocation: _fromLocation!,
-        offset: 0,
-        limit: 25,
-        withCache: false,
-      );
+      if (currentPostitionBased) {
+        _showFetchButton.value = false;
+        _mapViewRentals.value = await get_home_rentals(
+          distance: 25000,
+          fromLocation: _fromLocation!,
+          offset: 0,
+          limit: 25,
+          withCache: false,
+        );
+      } else {
+        _mapViewRentals.value = await get_home_rentals(
+          distance: 25000,
+          fromLocation: _fromLocation!,
+          offset: 0,
+          limit: 25,
+          withCache: false,
+        );
+      }
     } catch (e) {
       mezDbgPrint(e);
     } finally {
@@ -258,6 +271,10 @@ class CustHomeRentalsListViewController {
       // await _perMonthMarkers.addLabelMarker(marker);
       // }
     }
+  }
+
+  void onCameraMove() {
+    _showFetchButton.value = true;
   }
 
   void setFilter(TimeUnit tag) => _filterTag.value = tag;
