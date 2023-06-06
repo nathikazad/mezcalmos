@@ -9,11 +9,63 @@ import 'dart:ui' as ui;
 
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
+class LabelMarker {
+  final String? label;
+  final String? altIconPath;
+  final MarkerId markerId;
+  final LatLng position;
+  final Color backgroundColor;
+  final TextStyle textStyle;
+  final double alpha;
+  final Offset anchor;
+  final bool consumeTapEvents;
+  final bool draggable;
+  final bool flat;
+  final BitmapDescriptor icon;
+  final InfoWindow infoWindow;
+  final double rotation;
+  final bool visible;
+  final double zIndex;
+  final VoidCallback? onTap;
+  final ValueChanged<LatLng>? onDragStart;
+  final ValueChanged<LatLng>? onDragEnd;
+  final ValueChanged<LatLng>? onDrag;
+
+  LabelMarker({
+    required this.label,
+    this.altIconPath,
+    required this.markerId,
+    required this.position,
+    this.backgroundColor = softPurple,
+    this.textStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontWeight: FontWeight.w600,
+      fontSize: 45,
+      color: primaryBlueColor,
+    ),
+    this.alpha = 1.0,
+    this.anchor = const Offset(0.5, 1.0),
+    this.consumeTapEvents = false,
+    this.draggable = false,
+    this.flat = false,
+    this.icon = BitmapDescriptor.defaultMarker,
+    this.infoWindow = InfoWindow.noText,
+    this.rotation = 0.0,
+    this.visible = true,
+    this.zIndex = 0.0,
+    this.onTap,
+    this.onDrag,
+    this.onDragStart,
+    this.onDragEnd,
+  });
+}
+
 extension AddExtension on Set<Marker> {
   Future<bool> addLabelMarker(LabelMarker labelMarker) async {
     bool result = false;
     await createCustomMarkerBitmap(
-      labelMarker.label,
+      title: labelMarker.label,
+      altIconPath: labelMarker.altIconPath,
       backgroundColor: labelMarker.backgroundColor,
       textStyle: labelMarker.textStyle,
     ).then((value) {
@@ -40,8 +92,10 @@ extension AddExtension on Set<Marker> {
   }
 }
 
-Future<BitmapDescriptor> createCustomMarkerBitmap(String? title,
-    {required TextStyle textStyle,
+Future<BitmapDescriptor> createCustomMarkerBitmap(
+    {String? title,
+    String? altIconPath,
+    required TextStyle textStyle,
     Color backgroundColor = Colors.blueAccent}) async {
   final TextSpan span = TextSpan(
     style: textStyle,
@@ -183,54 +237,7 @@ Future<BitmapDescriptor> createCustomMarkerBitmap(String? title,
   // return BitmapDescriptor.fromBytes(data);
 }
 
-class LabelMarker {
-  final String? label;
-  final MarkerId markerId;
-  final LatLng position;
-  final Color backgroundColor;
-  final TextStyle textStyle;
-  final double alpha;
-  final Offset anchor;
-  final bool consumeTapEvents;
-  final bool draggable;
-  final bool flat;
-  final BitmapDescriptor icon;
-  final InfoWindow infoWindow;
-  final double rotation;
-  final bool visible;
-  final double zIndex;
-  final VoidCallback? onTap;
-  final ValueChanged<LatLng>? onDragStart;
-  final ValueChanged<LatLng>? onDragEnd;
-  final ValueChanged<LatLng>? onDrag;
 
-  LabelMarker({
-    required this.label,
-    required this.markerId,
-    required this.position,
-    this.backgroundColor = softPurple,
-    this.textStyle = const TextStyle(
-      fontFamily: "Poppins",
-      fontWeight: FontWeight.w600,
-      fontSize: 45,
-      color: primaryBlueColor,
-    ),
-    this.alpha = 1.0,
-    this.anchor = const Offset(0.5, 1.0),
-    this.consumeTapEvents = false,
-    this.draggable = false,
-    this.flat = false,
-    this.icon = BitmapDescriptor.defaultMarker,
-    this.infoWindow = InfoWindow.noText,
-    this.rotation = 0.0,
-    this.visible = true,
-    this.zIndex = 0.0,
-    this.onTap,
-    this.onDrag,
-    this.onDragStart,
-    this.onDragEnd,
-  });
-}
 
 // class MarkerPainter extends CustomPainter {
 //   @override

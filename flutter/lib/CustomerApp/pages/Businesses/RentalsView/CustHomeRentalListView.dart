@@ -41,6 +41,7 @@ class CustHomeRentalListView extends StatefulWidget {
 class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
   CustHomeRentalsListViewController viewController =
       CustHomeRentalsListViewController();
+  GoogleMapController? _googleMapController;
 
   @override
   void initState() {
@@ -60,22 +61,6 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
             ? '${_i18n()['map']}'
             : '${_i18n()['homes']}',
       ),
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.symmetric(horizontal: 100),
-      //   child: Obx(
-      //     () => MezButton(
-      //       height: 42.5,
-      //       onClick: () async {
-      //         viewController.switchView();
-      //       },
-      //       icon: viewController.isMapView ? Icons.list : Icons.room,
-      //       label: viewController.isMapView
-      //           ? '${_i18n()['viewAsList']}'
-      //           : '${_i18n()['viewOnMap']}',
-      //       borderRadius: 25,
-      //     ),
-      //   ),
-      // ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 100),
         child: Obx(
@@ -340,25 +325,53 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
             zoomControlsEnabled: false,
             markers: getMarkersList(),
             onMapCreated: (GoogleMapController controller) {
+              _googleMapController = controller;
               controller.setMapStyle(mezMapStyle);
             },
-            onCameraMove: (position) => viewController.onCameraMove(),
+            onCameraMove: (CameraPosition position) {
+              viewController.onCameraMove(position.target);
+            },
             initialCameraPosition: CameraPosition(
               target: viewController.currentLocation,
               zoom: 14,
             )),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Obx(
+              () => viewController.showFetchButton.value
+                  ? InkWell(
+                      onTap: () => viewController
+                          .fetchMapViewRentals(_googleMapController!),
+                      child: Material(
+                          color: Colors.white,
+                          elevation: 1,
+                          borderRadius: BorderRadius.circular(25),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 20),
+                            child: Text(
+                              '${_i18n()['fetchHomesInThisArea']}',
+                              style: context.textTheme.bodyLarge
+                                  ?.copyWith(color: primaryBlueColor),
+                            ),
+                          )),
+                    )
+                  : SizedBox.shrink(),
+            ),
+          ),
+        ),
         Align(
           alignment: Alignment.bottomRight,
           child: Padding(
             padding: const EdgeInsets.only(right: 20, bottom: 20),
-            child: viewController.showFetchButton.value
-                ? MezIconButton(
-                    icon: Icons.my_location,
-                    iconColor: Colors.black,
-                    backgroundColor: Colors.white,
-                    onTap: () => viewController.fetchMapViewRentals(),
-                  )
-                : SizedBox.shrink(),
+            child: MezIconButton(
+              icon: Icons.my_location,
+              iconColor: Colors.black,
+              backgroundColor: Colors.white,
+              onTap: () {},
+            ),
           ),
         )
       ],

@@ -1,10 +1,10 @@
 {
   "BusinessApp": {
     "pages": {
-      "Orders" : {
-        "HomeRentalOrderView" : {
-          "components" : {
-            "BsHomeRentalOrderItemCard" : {
+      "Orders": {
+        "HomeRentalOrderView": {
+          "components": {
+            "BsHomeRentalOrderItemCard": {
               "error": "Error",
               "edit": "Editar",
               "markAsUnavailable": "Marcar como no disponible",
@@ -14,9 +14,9 @@
               "save": "Guardar",
               "cancel": "Cancelar",
               "startFrom": "Comienza desde",
-             
+
               "updateTimeTitle": "Tiempo de actualizacion"
-              }
+            }
           }
         }
       },
@@ -90,7 +90,7 @@
         },
         "services": "Servicios",
         "service": "Servicio",
-        "orders" : "Pedidos",
+        "orders": "Pedidos",
         "serviceType": "¿Qué tipo de servicio agregarás?",
         "addService": "Agregar servicio",
         "reorder": "Reordenar",
@@ -1238,6 +1238,7 @@
             "map": "Mapa",
             "viewOnMap": "Ver en el mapa",
             "viewAsList": "Ver como lista",
+            "fetchHomesInThisArea": "Buscar casas en esta área",
             "agency": "Agencia",
             "noBusinessesFound": "No businesses found",
             "noRentalsFound": "No Rentals Found",
@@ -2152,7 +2153,7 @@
           "customer": "CLIENTE",
           "driver": "CONDUCTORA",
           "mezadmin": "MEZADMIN",
-          "businessOp" : "Business Op"
+          "businessOp": "Business Op"
         },
         "UnauthorizedScreen": {
           "unauthorized": "No autorizado",

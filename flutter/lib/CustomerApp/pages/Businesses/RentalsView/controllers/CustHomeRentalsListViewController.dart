@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -6,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRentalCar
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
@@ -57,14 +60,14 @@ class CustHomeRentalsListViewController {
   // Map view //
   RxBool _showFetchButton = false.obs;
   RxBool get showFetchButton => _showFetchButton;
+
   LatLng _currentLocation = LatLng(19.4326, -99.1332);
   LatLng get currentLocation => _currentLocation;
 
+  LatLng? _screenToWorldPosition;
+
   List<RentalCard> get mapViewRentals => _rentals.value;
   RxList<RentalCard> _mapViewRentals = <RentalCard>[].obs;
-
-  RxSet<Marker> _perHourMarkers = <Marker>{}.obs;
-  Set<Marker> get perHourMarkers => _perHourMarkers;
 
   RxSet<Marker> _perDayMarkers = <Marker>{}.obs;
   Set<Marker> get perDayMarkers => _perDayMarkers;
@@ -149,7 +152,7 @@ class CustHomeRentalsListViewController {
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_rental_category1(
           categories1: [RentalCategory1.Home],
-          distance: 1000000000000,
+          distance: 25000,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,
@@ -172,7 +175,9 @@ class CustHomeRentalsListViewController {
   // Map view //
   void switchView() => _isMapView.value = !_isMapView.value;
 
-  Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
+  Future<void> _fetchMapViewRentals(
+      {bool currentPostitionBased = true,
+      GoogleMapController? googleMapController}) async {
     try {
       if (currentPostitionBased) {
         _mapViewRentals.value = await get_home_rentals(
@@ -183,7 +188,11 @@ class CustHomeRentalsListViewController {
         );
       } else {
         _mapViewRentals.value = await get_home_rentals(
-          fromLocation: _fromLocation!,
+          // address: _calculateDistance(await googleMapController!.getVisibleRegion())
+          fromLocation: Location(
+              lat: _screenToWorldPosition!.latitude,
+              lng: _screenToWorldPosition!.longitude,
+              address: ''),
           offset: 0,
           limit: 25,
           withCache: false,
@@ -196,7 +205,12 @@ class CustHomeRentalsListViewController {
     }
   }
 
-  Future<void> _fillMapsMarkers() async {
+  Future<void> _fillMapsMarkers(
+      {GoogleMapController? googleMapController}) async {
+    _perDayMarkers = <Marker>{}.obs;
+    _perWeekMarkers = <Marker>{}.obs;
+    _perMonthMarkers = <Marker>{}.obs;
+
     for (RentalCard rental in _mapViewRentals) {
       // final LabelMarker marker = LabelMarker(
       //   flat: true,
@@ -225,6 +239,7 @@ class CustHomeRentalsListViewController {
         label: rental.details.cost[TimeUnit.PerDay] != null
             ? rental.details.cost[TimeUnit.PerDay]?.toPriceString()
             : null,
+        altIconPath: mezHomeIconMarker,
         markerId: MarkerId(rental.id.toString()),
         backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(rental),
@@ -269,12 +284,14 @@ class CustHomeRentalsListViewController {
     }
   }
 
-  void onCameraMove() {
+  void onCameraMove(LatLng position) {
+    _screenToWorldPosition = position;
     _showFetchButton.value = true;
   }
 
-  void fetchMapViewRentals() {
-    _fetchMapViewRentals(currentPostitionBased: false);
+  void fetchMapViewRentals(GoogleMapController googleMapController) {
+    _fetchMapViewRentals(
+        currentPostitionBased: false, googleMapController: googleMapController);
     _showFetchButton.value = false;
   }
 
@@ -288,6 +305,24 @@ class CustHomeRentalsListViewController {
         builder: (BuildContext context) {
           return OnMapRentalCard(rental: rental);
         });
+  }
+
+  double _calculateDistance(
+      LatLngBounds bounds, double lat1, double lon1, double lat2, double lon2) {
+    final double centerLat =
+        (bounds.northeast.latitude + bounds.southwest.latitude) / 2;
+    final double centerLng =
+        (bounds.northeast.longitude + bounds.southwest.longitude) / 2;
+    final LatLng center = LatLng(centerLat, centerLng);
+
+    final double p = 0.017453292519943295;
+    final double a = 0.5 -
+        cos((bounds.northeast.latitude - center.latitude) * p) / 2 +
+        cos(center.latitude * p) *
+            cos(bounds.northeast.latitude * p) *
+            (1 - cos((bounds.northeast.longitude - center.longitude) * p)) /
+            2;
+    return 12742 * asin(sqrt(a));
   }
 
   // Map view //

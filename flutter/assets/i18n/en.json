@@ -1,10 +1,10 @@
 {
   "BusinessApp": {
     "pages": {
-      "Orders" : {
-        "HomeRentalOrderView" : {
-          "components" : {
-            "BsHomeRentalOrderItemCard" : {
+      "Orders": {
+        "HomeRentalOrderView": {
+          "components": {
+            "BsHomeRentalOrderItemCard": {
               "error": "Error",
               "edit": "Edit",
               "markAsUnavailable": "Mark as Unavailable",
@@ -14,9 +14,7 @@
               "save": "Save",
               "cancel": "Cancel",
               "startFrom": "Start From",
-              
-             
-            
+
               "updateTimeTitle": "Update Time"
             }
           }
@@ -91,7 +89,7 @@
           "sunday": "Sunday"
         },
         "services": "Services",
-        "orders" : "Orders",
+        "orders": "Orders",
         "service": "Service",
         "serviceType": "What type of service will you add?",
         "addService": "Add Service",
@@ -1206,6 +1204,7 @@
             "map": "Map",
             "viewOnMap": "View on map",
             "viewAsList": "View as list",
+            "fetchHomesInThisArea": "Fetch homes in this area",
             "agency": "Agency",
             "noBusinessesFound": "No businesses found",
             "noRentalsFound": "No Rentals Found",
@@ -2092,7 +2091,7 @@
           "customer": "CUSTOMER",
           "driver": "DRIVER",
           "mezadmin": "MEZADMIN",
-          "businessOp" : "Business Op"
+          "businessOp": "Business Op"
         },
         "UnauthorizedScreen": {
           "unauthorized": "Unauthorized",
