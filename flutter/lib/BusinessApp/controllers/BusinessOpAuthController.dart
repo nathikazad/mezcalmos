@@ -54,7 +54,7 @@ class BusinessOpAuthController extends GetxController {
 
   void checkAndSetLastActive() {
     mezDbgPrint("Inside checkAndSetLastActive");
-    if (lastSavedActiveTime.difference(DateTime.now()) > Duration(hours: 6)) {
+    if (-lastSavedActiveTime.difference(DateTime.now()) > Duration(hours: 6)) {
       // set last active time of business;
       set_last_active_time(detailsId: _companyDetailsId.value!);
     }
