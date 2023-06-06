@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
 // import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 // controller class //
@@ -24,7 +23,8 @@ class CustCartViewController {
       Get.find<CustomerAuthController>();
   GlobalKey<FormState> formKey = GlobalKey();
 
-  CustomerCartController cartController = Get.find<CustomerCartController>();
+  CustRestaurantCartController cartController =
+      Get.find<CustRestaurantCartController>();
 
   // Obs variables //
   //Rxn<CustStripeInfo> custStripeInfo = Rxn();
@@ -70,6 +70,7 @@ class CustCartViewController {
 
   // init //
   Future<void> init() async {
+    mezDbgPrint("SUPER INIT");
     if (customerAuthController.customer?.stripeInfo?.cards.isNotEmpty == true)
       savedCardChoice =
           customerAuthController.customer?.stripeInfo?.cards.first;
@@ -77,7 +78,6 @@ class CustCartViewController {
     if (cart.cartPeriod != null) {
       cart.deliveryTime = cart.cartPeriod?.start;
     }
-    await customerAuthController.fetchSavedLocations();
     orderToLocation.value =
         customerAuthController.customer?.defaultLocation?.location;
     if (orderToLocation.value != null) {
@@ -94,12 +94,14 @@ class CustCartViewController {
     if (_cartRxn.value?.toLocation != null) {
       await updateShippingPrice();
     }
+    await customerAuthController.fetchSavedLocations();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => _cartRxn.refresh());
     hasData.value = true;
   }
 
   Future<void> _setDefaultOptions() async {
+    mezDbgPrint("SUPER _setDefaultOptions");
     options.add({PickerChoice.Cash: null});
     // if (await isApplePaySupported()) {
     //   options.add({PickerChoice.ApplePay: null});
@@ -336,7 +338,6 @@ class CustCartViewController {
 
   Future<bool> updateShippingPrice() async {
     isShippingSet.value = false;
-    
 
     if (cart.toLocation != null && cart.restaurant != null) {
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(

@@ -1,6 +1,27 @@
 {
   "BusinessApp": {
     "pages": {
+      "Orders" : {
+        "HomeRentalOrderView" : {
+          "components" : {
+            "BsHomeRentalOrderItemCard" : {
+              "error": "Error",
+              "edit": "Edit",
+              "markAsUnavailable": "Mark as Unavailable",
+              "updatePrice": "Update Price",
+              "required": "Required",
+              "notValid": "Not Valid",
+              "save": "Save",
+              "cancel": "Cancel",
+              "startFrom": "Start From",
+              
+             
+            
+              "updateTimeTitle": "Update Time"
+            }
+          }
+        }
+      },
       "Components": {
         "BsRentalCard": {
           "hour": "hour",
@@ -70,6 +91,7 @@
           "sunday": "Sunday"
         },
         "services": "Services",
+        "orders" : "Orders",
         "service": "Service",
         "serviceType": "What type of service will you add?",
         "addService": "Add Service",
@@ -2069,7 +2091,8 @@
           "loginAs": "LOGIN AS",
           "customer": "CUSTOMER",
           "driver": "DRIVER",
-          "mezadmin": "MEZADMIN"
+          "mezadmin": "MEZADMIN",
+          "businessOp" : "Business Op"
         },
         "UnauthorizedScreen": {
           "unauthorized": "Unauthorized",

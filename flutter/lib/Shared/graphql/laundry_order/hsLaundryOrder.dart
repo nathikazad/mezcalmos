@@ -100,7 +100,7 @@ Future<LaundryOrder?> get_laundry_order_by_id(
   if (res.parsedData?.laundry_order_by_pk == null) {
     throwError(res.exception);
   }
-  Query$get_laundry_order_by_id$laundry_order_by_pk orderData =
+  final Query$get_laundry_order_by_id$laundry_order_by_pk orderData =
       res.parsedData!.laundry_order_by_pk!;
   return LaundryOrder(
     deliveryProviderType: orderData.to_customer_delivery?.service_provider_type
@@ -249,8 +249,8 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
       }
       mezDbgPrint(
           "✅✅✅✅✅listen_on_laundry_order_by_id: ${Get.find<HasuraDb>().dataConsumption["listen_on_laundry_order_by_id"]}");
-      Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk orderData =
-          event.parsedData!.laundry_order_by_pk!;
+      final Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk
+          orderData = event.parsedData!.laundry_order_by_pk!;
       return LaundryOrder(
         deliveryProviderType: orderData
                 .to_customer_delivery?.service_provider_type

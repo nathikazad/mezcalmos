@@ -1,6 +1,7 @@
 import 'package:mezcalmos/BusinessApp/BusinessWrapper.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/BsOpSchedulePickerView.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpTabsView.dart';
+import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/BsHomeRentalOrderView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
@@ -17,6 +18,7 @@ class BusinessOpRoutes {
   static const String kBusniessOpTabsView = '/tabsView';
   static const String kBusniessOpServiceList = '/services/:id';
   static const String kBsOpHomeRental = '/homeRental/:id';
+  static const String kBsOpHomeRentalOrder = '/homeRentalOrder/:id';
   static const String kBsOpRental = '/rental/:id';
   static const String kBsOpEvent = '/event/:id';
   static const String kBsOpService = '/service/:id';
@@ -46,7 +48,12 @@ class BusinessOpRoutes {
           path: kUnauthorizedOperatorRoute,
           name: kUnauthorizedOperatorRoute,
           builder: () => BusinessOpUnauthView(),
-        )
+        ),
+        QRoute(
+          path: kBsOpHomeRentalOrder,
+          name: kBsOpHomeRentalOrder,
+          builder: () => BsHomeRentalOrderView(),
+        ),
       ] +
       sharedWitAdminRoutes +
       SharedRoutes.qRoutes +

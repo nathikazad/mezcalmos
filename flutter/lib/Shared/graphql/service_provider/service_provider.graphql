@@ -182,3 +182,9 @@ query getServiceLanguage($serviceDetailsId: Int!) {
     language
   }
 }
+
+mutation setLastActiveTime($id: Int!) {
+  update_service_provider_details_by_pk(pk_columns: {id: $id}, _set: {last_active_time: "now()"}) {
+    last_active_time
+  }
+}

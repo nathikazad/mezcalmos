@@ -92,46 +92,86 @@ export async function createNewDirectChat(userId1: number, directChatDetails: Di
 }
 
 export interface MezAdminChatDetails {
-    userAppType: AppType,
     recipientId: number,
     recipientType: RecipientType
 }
-export async function createNewMezAdminChat(userId: number, mezAdminChatDetails: MezAdminChatDetails) {
+export interface MezAdminChatResponse {
+    success: boolean,
+    error?: MezAdminChatError
+    unhandledError?: string,
+    chatId?: number
+}
+export enum MezAdminChatError {
+    UnhandledError = "unhandledError",
+    InvalidAccess = "invalidAccess",
+    UserNotFound = "userNotFound",
+    RestaurantNotFound = "restaurantNotFound",
+    LaundryStoreNotfound = "laundryStoreNotfound",
+    BusinessNotFound = "businessNotFound",
+    DeliveryCompanyNotFound = "deliveryCompanyNotFound",
+    ChatCreationError = "chatCreationError"
+}
+export async function createNewMezAdminChat(userId: number, mezAdminChatDetails: MezAdminChatDetails): Promise<MezAdminChatResponse> {
+    try {
+        let mezAdmins: MezAdmin[] = await getMezAdmins();
+        let serviceProvider: ServiceProvider | undefined;
+        let recipients: number[] = [];
+        let name: string | undefined;
+        let image: string | undefined;
 
-    let mezAdmins: MezAdmin[] = await getMezAdmins();
-    let serviceProvider: ServiceProvider | undefined;
-    let recipients: number[] = [];
-    let name: string | undefined;
-    let image: string | undefined;
-    
-    switch (mezAdminChatDetails.recipientType) {
-        case RecipientType.Customer:
-        case RecipientType.DeliveryDriver:
-            recipients.push(mezAdminChatDetails.recipientId);
-            const user: UserInfo = await getUser(mezAdminChatDetails.recipientId);
-            name = user.name;
-            image = user.image;
-            break;
-        case RecipientType.Restaurant:
-            serviceProvider = await getRestaurant(mezAdminChatDetails.recipientId);
-            break;
-        case RecipientType.Laundry:
-            serviceProvider = await getLaundryStore(mezAdminChatDetails.recipientId);
-            break;
-        case RecipientType.Business:
-            serviceProvider = (await getBusiness(mezAdminChatDetails.recipientId)).details;
-            break;
-        case RecipientType.DeliveryCompany:
-            serviceProvider = await getDeliveryCompany(mezAdminChatDetails.recipientId);
-            break;
-        default:
-            break;
-    }
-    if(serviceProvider) {
-        recipients = serviceProvider.operators!.map(operator => operator.userId);
-        name = serviceProvider.name;
-        image = serviceProvider.image;
-    }
+        switch (mezAdminChatDetails.recipientType) {
+            case RecipientType.Customer:
+            case RecipientType.DeliveryDriver:
+                recipients.push(mezAdminChatDetails.recipientId);
+                const user: UserInfo = await getUser(mezAdminChatDetails.recipientId);
+                name = user.name;
+                image = user.image;
+                break;
+            case RecipientType.Restaurant:
+                serviceProvider = await getRestaurant(mezAdminChatDetails.recipientId);
+                break;
+            case RecipientType.Laundry:
+                serviceProvider = await getLaundryStore(mezAdminChatDetails.recipientId);
+                break;
+            case RecipientType.Business:
+                serviceProvider = (await getBusiness(mezAdminChatDetails.recipientId)).details;
+                break;
+            case RecipientType.DeliveryCompany:
+                serviceProvider = await getDeliveryCompany(mezAdminChatDetails.recipientId);
+                break;
+            default:
+                break;
+        }
+        if(serviceProvider) {
+            recipients = serviceProvider.operators!.map(operator => operator.userId);
+            name = serviceProvider.name;
+            image = serviceProvider.image;
+        }
+        if(mezAdmins.find(mezAdmin => mezAdmin.id == userId) == undefined && recipients.includes(userId) == false) {
+            throw new MezError(MezAdminChatError.InvalidAccess);
+        }
 
-    createMezAdminChat(recipients, mezAdminChatDetails, mezAdmins, name, image);
+        const chatId: number = await createMezAdminChat(recipients, mezAdminChatDetails, mezAdmins, name, image);
+        return {
+            success: true,
+            chatId
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(MezAdminChatError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: MezAdminChatError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
+    }
 }

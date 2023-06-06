@@ -1950,6 +1950,10 @@ input business_event_variance_order_by {
   id: order_by
 }
 
+input business_get_home_rentals_args {
+  location: geography
+}
+
 """
 columns and relationships of "business.home_rental"
 """
@@ -1965,9 +1969,6 @@ type business_home_rental {
   rental_id: Int!
 }
 
-"""
-aggregated selection of "business.home_rental"
-"""
 type business_home_rental_aggregate {
   aggregate: business_home_rental_aggregate_fields
   nodes: [business_home_rental!]!
@@ -24241,6 +24242,56 @@ type query_root {
   business_event_by_pk(id: Int!): business_event
 
   """
+  execute function "business.get_home_rentals" which returns "business.home_rental"
+  """
+  business_get_home_rentals(
+    """
+    input parameters for function "business_get_home_rentals"
+    """
+    args: business_get_home_rentals_args!
+
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): [business_home_rental!]!
+
+  """
+  execute function "business.get_home_rentals" and query aggregates on result of table type "business.home_rental"
+  """
+  business_get_home_rentals_aggregate(
+    """
+    input parameters for function "business_get_home_rentals_aggregate"
+    """
+    args: business_get_home_rentals_args!
+
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): business_home_rental_aggregate!
+
+  """
   fetch data from the table: "business.home_rental"
   """
   business_home_rental(
@@ -35635,6 +35686,7 @@ type service_provider_details {
     """JSON select path"""
     path: String
   ): jsonb!
+  last_active_time: timestamp
 
   """An object relationship"""
   laundry_store: laundry_store
@@ -35728,6 +35780,7 @@ input service_provider_details_bool_exp {
   id: Int_comparison_exp
   image: String_comparison_exp
   language: jsonb_comparison_exp
+  last_active_time: timestamp_comparison_exp
   laundry_store: laundry_store_bool_exp
   location: service_provider_location_bool_exp
   location_id: Int_comparison_exp
@@ -35839,6 +35892,7 @@ input service_provider_details_insert_input {
 
   """Record <language_id, bool>"""
   language: jsonb
+  last_active_time: timestamp
   laundry_store: laundry_store_obj_rel_insert_input
   location: service_provider_location_obj_rel_insert_input
   location_id: Int
@@ -35864,6 +35918,7 @@ type service_provider_details_max_fields {
   firebase_id: String
   id: Int
   image: String
+  last_active_time: timestamp
   location_id: Int
   name: String
   open_status: String
@@ -35883,6 +35938,7 @@ type service_provider_details_min_fields {
   firebase_id: String
   id: Int
   image: String
+  last_active_time: timestamp
   location_id: Int
   name: String
   open_status: String
@@ -35938,6 +35994,7 @@ input service_provider_details_order_by {
   id: order_by
   image: order_by
   language: order_by
+  last_active_time: order_by
   laundry_store: laundry_store_order_by
   location: service_provider_location_order_by
   location_id: order_by
@@ -36001,6 +36058,9 @@ enum service_provider_details_select_column {
   language
 
   """column name"""
+  last_active_time
+
+  """column name"""
   location_id
 
   """column name"""
@@ -36046,6 +36106,7 @@ input service_provider_details_set_input {
 
   """Record <language_id, bool>"""
   language: jsonb
+  last_active_time: timestamp
   location_id: Int
   name: String
   open_status: String
@@ -36112,6 +36173,7 @@ input service_provider_details_stream_cursor_value_input {
 
   """Record <language_id, bool>"""
   language: jsonb
+  last_active_time: timestamp
   location_id: Int
   name: String
   open_status: String
@@ -36164,6 +36226,9 @@ enum service_provider_details_update_column {
 
   """column name"""
   language
+
+  """column name"""
+  last_active_time
 
   """column name"""
   location_id
@@ -38709,6 +38774,56 @@ type subscription_root {
     """filter the rows returned"""
     where: business_event_bool_exp
   ): [business_event!]!
+
+  """
+  execute function "business.get_home_rentals" which returns "business.home_rental"
+  """
+  business_get_home_rentals(
+    """
+    input parameters for function "business_get_home_rentals"
+    """
+    args: business_get_home_rentals_args!
+
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): [business_home_rental!]!
+
+  """
+  execute function "business.get_home_rentals" and query aggregates on result of table type "business.home_rental"
+  """
+  business_get_home_rentals_aggregate(
+    """
+    input parameters for function "business_get_home_rentals_aggregate"
+    """
+    args: business_get_home_rentals_args!
+
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): business_home_rental_aggregate!
 
   """
   fetch data from the table: "business.home_rental"

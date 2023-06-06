@@ -2,6 +2,7 @@ import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
+import 'package:mezcalmos/BusinessApp/pages/OrdersListViews/BsOrdersListView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -12,7 +13,7 @@ import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
-enum BusinessOpTabView { Services, Feed, Messages, Profile }
+enum BusinessOpTabView { Services, Feed, Messages, Profile, Orders }
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -31,6 +32,19 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
 
   Rx<BusinessOpTabView> currentView = Rx(BusinessOpTabView.Services);
   RxInt currentIndex = 0.obs;
+  bool get haveOrders =>
+      opAuthController.businessProfile == BusinessProfile.HomeRental;
+  late List<BusinessOpTabView> _visibleTabs;
+  @override
+  void initState() {
+    _visibleTabs = [
+      BusinessOpTabView.Services,
+      if (haveOrders) BusinessOpTabView.Orders,
+      BusinessOpTabView.Messages,
+      BusinessOpTabView.Profile,
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +70,8 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
           businessDetailsId: opAuthController.businessDetailsId,
           businessProfile: opAuthController.businessProfile,
         );
+      case BusinessOpTabView.Orders:
+        return BsOrdersListView();
       case BusinessOpTabView.Profile:
         return ServiceProfileView(
           serviceId: opAuthController.companyId,
@@ -85,25 +101,9 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
             unselectedLabelStyle: context.txt.bodyMedium,
             selectedItemColor: primaryBlueColor,
             currentIndex: currentIndex.value,
-            onTap: (int v) {
-              currentIndex.value = v;
-              switch (v) {
-                case 0:
-                  currentView.value = BusinessOpTabView.Services;
-                  break;
-                // case 1:
-                //   currentView.value = BusinessOpTabView.Feed;
-                //   break;
-                case 1:
-                  currentView.value = BusinessOpTabView.Messages;
-
-                  break;
-                case 2:
-                  currentView.value = BusinessOpTabView.Profile;
-
-                  break;
-                default:
-              }
+            onTap: (int index) {
+              currentView.value = _visibleTabs[index];
+              currentIndex.value = index;
             },
             type: BottomNavigationBarType.fixed,
             items: [
@@ -111,10 +111,11 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
                 icon: Icon(Icons.business_center),
                 label: '${_i18n()["services"]}',
               ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(Icons.feed),
-              //   label: '${_i18n()["feed"]}',
-              // ),
+              if (haveOrders)
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.watch_later_outlined),
+                  label: '${_i18n()["orders"]}',
+                ),
               BottomNavigationBarItem(
                 icon: badge.Badge(
                   badgeColor: Colors.red,

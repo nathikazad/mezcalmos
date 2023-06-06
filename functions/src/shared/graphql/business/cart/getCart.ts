@@ -1,8 +1,7 @@
 import { getHasura } from "../../../../utilities/hasura";
 import { MezError } from "../../../models/Generic/Generic";
-import { ServiceType, TimeUnit } from "../../../models/Services/Business/Business";
-import { BusinessItemCost } from "../../../models/Services/Business/BusinessOrder";
-import { BusinessCart, BusinessCartItem } from "../../../models/Services/Business/Cart";
+import { OfferingType } from "../../../models/Services/Business/Business";
+import { BusinessCart, BusinessItemParameters, BusinessOrderItem } from "../../../models/Services/Business/BusinessOrder";
 
 export async function getBusinessCart(customerId: number): Promise<BusinessCart> {
     let chain = getHasura();
@@ -13,12 +12,14 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         }, {
             business_id: true,
             discount_value: true,
-
+            cost: true,
             items: [{}, {
                 id: true,
-                cost: [{}, true],
-                service_id: true,
-                service_type: true,
+                item_id: true,
+                parameters: [{}, true],
+                cost: true,
+                time: true,
+                offering_type: true,
             }]
         }]
     });
@@ -27,37 +28,21 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         throw new MezError("cartNotFound");
     }
     
-    let items: BusinessCartItem[] = response.business_cart_by_pk.items.map((i:any) => {
+    let items: BusinessOrderItem[] = response.business_cart_by_pk.items.map((i: any) => {
         return {
-            cartItemId: i.id,
+            id: i.id,
             customerId,
-            serviceId: i.service_id,
-            serviceType: i.service_type as ServiceType,
-            cost: JSON.parse(i.cost) as BusinessItemCost,
-        }
-    })
-    let cost = 0;
-    items.forEach((i:any) => {
-        switch (i.cost.timeUnit) {
-            case TimeUnit.PerHour:
-                cost += (i.cost.estimatedCostPerOne 
-                            * Math.ceil((new Date(i.cost.fromTime).valueOf() - new Date(i.cost.toTime).valueOf()) / (1000 * 60 * 60)) 
-                            * i.cost.quantity);
-                break;
-            case TimeUnit.PerDay:
-                cost += (i.cost.estimatedCostPerOne 
-                            * Math.ceil((new Date(i.cost.fromTime).valueOf() - new Date(i.cost.toTime).valueOf()) / (1000 * 60 * 60 * 24)) 
-                            * i.cost.quantity);
-                break;
-            default:
-                cost += i.cost.estimatedCostPerOne * i.cost.quantity;
-                break;
+            itemId: i.item_id,
+            cost: i.cost,
+            time: i.time,
+            offeringType: i.offering_type as OfferingType,
+            parameters: JSON.parse(i.parameters) as BusinessItemParameters,
         }
     })
     return {
         customerId,
         businessId: response.business_cart_by_pk.business_id,
         items,
-        cost
+        cost: response.business_cart_by_pk.cost,
     }
 }

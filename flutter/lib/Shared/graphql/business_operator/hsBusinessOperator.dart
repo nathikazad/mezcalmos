@@ -22,8 +22,10 @@ Future<Operator?> get_business_operator({required int userId}) async {
     throw Exception("🟥 Get business operator exceptions =>${res.exception}");
   }
   if (res.parsedData!.business_operator.isNotEmpty) {
-    Query$getBusinessOperatorByUserId$business_operator data =
+    final Query$getBusinessOperatorByUserId$business_operator data =
         res.parsedData!.business_operator.first;
+    mezDbgPrint(
+        "🟩 Get business operator $userId business id =>${data.business_id}");
     return Operator(
         detailsId: data.details_id,
         id: data.id,
@@ -48,9 +50,9 @@ Future<BusinessProfile?> get_operator_business_profile(
   if (res.parsedData?.business_operator == null) {
     throw Exception("🟥 Get business operator exceptions =>${res.exception}");
   }
-  mezDbgPrint2("🟩 Get business operator response =>${res.data}");
+
   if (res.parsedData!.business_operator.isNotEmpty) {
-    Query$getOperatorBusinessProfile$business_operator data =
+    final Query$getOperatorBusinessProfile$business_operator data =
         res.parsedData!.business_operator.first;
     return data.business.profile.toBusinessProfile();
   }
@@ -64,7 +66,7 @@ Future<List<dartModel.Operator>> get_business_ops(
           fetchPolicy: FetchPolicy.noCache,
           variables:
               Variables$Query$getBusinessOperators(businessId: businessId)));
-  mezDbgPrint("🟩 Get business operator response =>${res.data}");
+  mezDbgPrint("🟩 Get business operator $businessId response =>${res.data}");
   if (res.parsedData?.business_business_by_pk == null) {
     throw Exception("🟥 Get business operator exceptions =>${res.exception}");
   }

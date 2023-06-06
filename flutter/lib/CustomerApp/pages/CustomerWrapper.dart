@@ -4,10 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
+import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -19,6 +21,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
@@ -74,6 +77,56 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Get.find<AuthController>().isUserSignedIn
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Obx(
+                  () => Get.find<CustBusinessCartController>().cart.value !=
+                              null &&
+                          Get.find<CustBusinessCartController>()
+                              .cart
+                              .value!
+                              .items
+                              .isNotEmpty
+                      ? FloatingActionButton(
+                          heroTag: "cart",
+                          child: Icon(
+                            Icons.shopping_cart,
+                            color: Colors.white,
+                          ),
+                          backgroundColor: primaryBlueColor,
+                          onPressed: () async {
+                            await CustCartView.navigate();
+                          },
+                        )
+                      : SizedBox(),
+                ),
+                Obx(
+                  () => Get.find<CustBusinessCartController>()
+                                  .previousOrders
+                                  .value !=
+                              null &&
+                          Get.find<CustBusinessCartController>()
+                              .previousOrders
+                              .value!
+                              .isNotEmpty
+                      ? FloatingActionButton(
+                          heroTag: "orders",
+                          child: Icon(
+                            Icons.access_time_outlined,
+                            color: Colors.white,
+                          ),
+                          backgroundColor: primaryBlueColor,
+                          onPressed: () async {
+                            await CustOrderListView.navigate();
+                          },
+                        )
+                      : SizedBox(),
+                ),
+              ],
+            )
+          : null,
       bottomNavigationBar: _navBar(),
       body: Obx(() {
         if (authController.user != null) {

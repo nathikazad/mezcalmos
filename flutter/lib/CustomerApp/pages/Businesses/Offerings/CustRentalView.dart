@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/Cust
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -13,11 +14,15 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
@@ -52,8 +57,18 @@ class _CustRentalViewState extends State<CustRentalView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: MezButton(
+        label: "Add to cart",
+        withGradient: true,
+        borderRadius: 0,
+        onClick: () async {
+          await viewController.bookOffering();
+        },
+      ),
       body: Obx(() {
         if (viewController.rental != null) {
+          final bool isSurf =
+              viewController.rental!.category1 == RentalCategory1.Surf;
           return CustomScrollView(
             slivers: [
               CustBusinessItemAppbar(
@@ -106,8 +121,55 @@ class _CustRentalViewState extends State<CustRentalView> {
                         business: viewController.rental!.business,
                         offering: viewController.rental!.details,
                       ),
-                      CustBusinessNoOrderBanner(
-                        margin: EdgeInsets.only(top: 15),
+
+                      /// Bookings
+                      bigSeperator,
+                      BsOpDateTimePicker(
+                        fillColor: Colors.white,
+                        onNewPeriodSelected: (DateTime v) {
+                          viewController.startDate.value = v;
+                        },
+                        label: "Start Date",
+                        validator: (DateTime? p0) {
+                          if (p0 == null) return "Please select a time";
+
+                          return null;
+                        },
+                        time: viewController.startDate.value,
+                      ),
+                      bigSeperator,
+                      CustBusinessDurationPicker(
+                        costUnits: viewController.rental!.details.cost,
+                        label: "Duration",
+                        value: viewController.duration.value,
+                        validator: (TimeUnit? p0) {
+                          if (p0 == null) return "Please select a time";
+                          return null;
+                        },
+                        onNewCostUnitSelected: (Map<TimeUnit, num> v) {
+                          viewController.setTimeCost(v);
+                        },
+                        onNewDurationSelected: (int v) {
+                          viewController.setDuration(v);
+                        },
+                      ),
+                      bigSeperator,
+                      Text(
+                        "Notes",
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      smallSepartor,
+                      TextFormField(
+                        maxLines: 7,
+                        minLines: 5,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          hintText: "Write your notes here.",
+                        ),
+                      ),
+                      bigSeperator,
+                      CustOrderCostCard(
+                        orderCostString: viewController.orderString.value,
                       ),
                     ],
                   ),
@@ -120,6 +182,21 @@ class _CustRentalViewState extends State<CustRentalView> {
         }
       }),
     );
+  }
+
+  IconData _getIcon() {
+    switch (viewController.rental!.category2) {
+      case RentalCategory2.Motorcycle:
+        return Icons.two_wheeler;
+      case RentalCategory2.Car:
+        return Icons.directions_car;
+      case RentalCategory2.ATB:
+        return Icons.two_wheeler;
+      case RentalCategory2.Bicycle:
+        return Icons.pedal_bike;
+      default:
+        return Icons.two_wheeler;
+    }
   }
 
   Column _description(BuildContext context) {

@@ -14,7 +14,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 
 interface CustomerHandleRequestDetails {
     orderRequestId: number,
-    requestConfirmed: boolean,
+    newStatus: BusinessOrderRequestStatus,
 }
 export interface CustomerHandleRequestResponse {
     success: boolean,
@@ -26,7 +26,7 @@ enum CustomerHandleRequestError {
     OrderRequestNotFound = "orderRequestNotFound",
     BusinessNotFound = "businessNotFound",
     IncorrectOrderRequestId = "incorrectOrderRequestId",
-    RequestAlreadyConfirmedOrCancelled = "requestAlreadyConfirmedOrCancelled",
+    InvalidAccess = "invalidAccess",
     UpdateStatusError = "updateStatusError"
 }
 
@@ -44,11 +44,7 @@ export async function handleOrderRequestFromCustomer(userId: number, handleReque
 
         errorChecks(order, userId, handleRequestDetails); 
 
-        if(handleRequestDetails.requestConfirmed) {
-            order.status = BusinessOrderRequestStatus.ConfirmedByCustomer;
-        } else {
-            order.status = BusinessOrderRequestStatus.CancelledByCustomer;
-        }
+        order.status = handleRequestDetails.newStatus;
         updateBusinessOrderRequest(order);
 
         notify(mezAdmins, businessOperators, order);
@@ -77,11 +73,16 @@ export async function handleOrderRequestFromCustomer(userId: number, handleReque
 }
 
 function errorChecks(order: BusinessOrder, userId: number, handleRequestDetails: CustomerHandleRequestDetails) {
-    if (order.orderDetails.customerId != userId) {
+    if (order.customerId != userId) {
         throw new MezError(CustomerHandleRequestError.IncorrectOrderRequestId);
     }
-    if (handleRequestDetails.requestConfirmed && order.status != BusinessOrderRequestStatus.ApprovedByBusiness) {
-        throw new MezError(CustomerHandleRequestError.RequestAlreadyConfirmedOrCancelled);
+    if (handleRequestDetails.newStatus != BusinessOrderRequestStatus.Confirmed 
+        && handleRequestDetails.newStatus != BusinessOrderRequestStatus.CancelledByCustomer ) {
+        throw new MezError(CustomerHandleRequestError.InvalidAccess);
+    }
+    if (handleRequestDetails.newStatus == BusinessOrderRequestStatus.Confirmed 
+        && order.status != BusinessOrderRequestStatus.ModificationRequestByBusiness) {
+        throw new MezError(CustomerHandleRequestError.InvalidAccess);
     }
 }
 
@@ -93,9 +94,9 @@ function notify(mezAdmins: MezAdmin[], businessOperators: Operator[], order: Bus
             notificationType: NotificationType.OrderStatusChange,
             orderType: OrderType.Business,
             notificationAction: NotificationAction.ShowPopUp,
-            orderId: order.orderDetails.orderId
+            orderId: order.orderId
       },
-        background: order.status == BusinessOrderRequestStatus.ConfirmedByCustomer ? {
+        background: order.status == BusinessOrderRequestStatus.Confirmed ? {
             [Language.ES]: {
                 title: "Solicitud confirmada",
                 body: `La solicitud de pedido ha sido confirmada por el cliente.`
@@ -114,7 +115,7 @@ function notify(mezAdmins: MezAdmin[], businessOperators: Operator[], order: Bus
                 body: `Order request has been cancelled by the customer`
             }
         },
-        linkUrl: orderUrl(OrderType.Business, order.orderDetails.orderId)
+        linkUrl: orderUrl(OrderType.Business, order.orderId)
     };
     mezAdmins.forEach((m) => {
         pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
@@ -122,6 +123,5 @@ function notify(mezAdmins: MezAdmin[], businessOperators: Operator[], order: Bus
     businessOperators.forEach((r) => {
         pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.BusinessOperator);
     });
-    return notification;
-  }
+}
   

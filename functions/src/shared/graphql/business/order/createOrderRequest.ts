@@ -1,11 +1,9 @@
 import { OrderRequestDetails } from "../../../../business/orderRequest";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, MezError } from "../../../models/Generic/Generic";
-import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
 import { Business } from "../../../models/Services/Business/Business";
-import { BusinessOrder, BusinessOrderRequestStatus } from "../../../models/Services/Business/BusinessOrder";
-import { BusinessCart } from "../../../models/Services/Business/Cart";
+import { BusinessCart, BusinessOrder, BusinessOrderItem, BusinessOrderRequestStatus } from "../../../models/Services/Business/BusinessOrder";
 
 export async function createOrderRequest(
     customerId: number,
@@ -29,14 +27,16 @@ export async function createOrderRequest(
           app_type_id: AppType.MezAdmin
         };
     });
-    let items = cart.items.map((i:any) => {
+    let items = cart.items.map((i:BusinessOrderItem) => {
         return {
-            service_id: i.serviceId,
-            service_type: i.serviceType,
-            commence_time: i.cost.fromTime,
-            cost: JSON.stringify(i.cost),
+            item_id: i.itemId,
+            parameters: JSON.stringify(i.parameters),
+            time: i.time,
+            cost: i.cost,
+            offering_type: i.offeringType,
         }
     })
+
     let response = await chain.mutation({
         insert_business_order_request_one: [{
             object: {
@@ -45,7 +45,6 @@ export async function createOrderRequest(
                 status: BusinessOrderRequestStatus.RequestReceived,
                 customer_app_type: orderRequestDetails.customerAppType,
                 notes: orderRequestDetails.notes,
-                estimated_cost: cart.cost,
                 items: {
                     data: items
                 },
@@ -66,6 +65,7 @@ export async function createOrderRequest(
             id: true,
             chat_id: true,
             order_time: true,
+            cost: true,
             items: [{}, {
                 id: true
             }]
@@ -75,29 +75,28 @@ export async function createOrderRequest(
     if(response.insert_business_order_request_one == null) {
         throw new MezError("orderCreationError");
     }
-
     let businessOrder: BusinessOrder = {
-        orderDetails: {
-            orderId: response.insert_business_order_request_one.id,
-            customerId,
-            spDetailsId: business.details.serviceProviderDetailsId,
-            paymentType: PaymentType.Cash,
-            deliveryType: DeliveryType.Pickup,
-            customerAppType: orderRequestDetails.customerAppType,
-            deliveryCost: 0,
-            notes: orderRequestDetails.notes,
-            chatId: response.insert_business_order_request_one.chat_id,
-        },
+        orderId: response.insert_business_order_request_one.id,
+        customerId,
         businessId: orderRequestDetails.businessId,
-        
+        spDetailsId: business.details.serviceProviderDetailsId,
+        customerAppType: orderRequestDetails.customerAppType,
+        notes: orderRequestDetails.notes,
+        chatId: response.insert_business_order_request_one.chat_id,
+        cost: response.insert_business_order_request_one.cost,
+        orderTime: response.insert_business_order_request_one.order_time,
         status: BusinessOrderRequestStatus.RequestReceived,
-        estimatedCost: cart.cost,
-        items: cart.items.map((i:any) => {
+        items: cart.items.map((i:BusinessOrderItem) => {
             return {
                 id: 0,
-                ...i
+                cost: i.cost,
+                offeringType: i.offeringType,
+                time: i.time,
+                itemId: i.itemId,
+                parameters: i.parameters,
+                orderRequestId: response.insert_business_order_request_one!.id,
             }
         })
     }
-    return businessOrder
+    return businessOrder;
 }

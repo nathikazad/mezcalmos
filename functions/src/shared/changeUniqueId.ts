@@ -1,5 +1,5 @@
-import { getServiceProviderFromUniqueId } from "./graphql/getServiceProvider"
-import { updateUniqueIdAndServiceLinks } from "./graphql/updateServiceProvider";
+import { getServiceProviderFromUniqueId } from "./graphql/serviceProvider/getServiceProvider"
+import { updateUniqueIdAndServiceLinks } from "./graphql/serviceProvider/updateServiceProvider";
 import { MezError } from "./models/Generic/Generic";
 import { Operator, ServiceProvider } from "./models/Services/Service"
 

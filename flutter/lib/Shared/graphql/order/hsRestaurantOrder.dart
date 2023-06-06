@@ -422,7 +422,6 @@ Future<List<MinimalOrder>?> get_current_restaurant_orders(
 
     final List<MinimalOrder> orders = ordersData
         .map((Query$get_restaurant_current_orders$restaurant_order orderData) {
-     
       return MinimalOrder(
           id: orderData.id,
           orderType: cModels.OrderType.Restaurant,

@@ -11,7 +11,7 @@ import { getCustomer } from '../../shared/graphql/user/customer/getCustomer';
 import { CustomerInfo } from '../../shared/models/Generic/User';
 import { ServiceProvider, ServiceProviderType } from '../../shared/models/Services/Service';
 import { updateLaundryOrderStripe } from '../../shared/graphql/laundry/order/updateOrder';
-import { getServiceProviderDetails } from '../../shared/graphql/getServiceProvider';
+import { getServiceProviderDetails } from '../../shared/graphql/serviceProvider/getServiceProvider';
 import { MezError } from '../../shared/models/Generic/Generic';
 
 let keys: Keys = getKeys();

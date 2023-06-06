@@ -10,8 +10,7 @@ import { OrderType } from "../shared/models/Generic/Order";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { Business } from "../shared/models/Services/Business/Business";
-import { BusinessOrder, NewBusinessOrderRequestNotification } from "../shared/models/Services/Business/BusinessOrder";
-import { BusinessCart } from "../shared/models/Services/Business/Cart";
+import { BusinessCart, BusinessOrder, NewBusinessOrderRequestNotification } from "../shared/models/Services/Business/BusinessOrder";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { clearBusinessCart } from "../shared/graphql/business/cart/clearCart";
@@ -63,7 +62,7 @@ export async function requestOrder(customerId: number, orderRequestDetails: Orde
     
     return {
       success: true,
-      orderId: order.orderDetails.orderId
+      orderId: order.orderId
     }
   } catch (e: any) {
     if (e instanceof MezError) {
@@ -92,7 +91,7 @@ function errorChecks(business: Business, cart: BusinessCart) {
   if(business.details.openStatus != "open") {
     throw new MezError(OrderReqError.BusinessClosed);
   }
-  if((cart.items.length ?? 0) == 0) {
+  if(cart.businessId == null || (cart.items.length ?? 0) == 0) {
     throw new MezError(OrderReqError.EmptyCart);
   }
 }
@@ -104,7 +103,7 @@ async function notify(order: BusinessOrder, business: Business, mezAdmins: MezAd
             time: (new Date()).toISOString(),
             notificationType: NotificationType.NewOrder,
             orderType: OrderType.Business,
-            orderId: order.orderDetails.orderId,
+            orderId: order.orderId,
             notificationAction: NotificationAction.ShowSnackBarAlways,
             business: {
                 name: business.details.name,
@@ -122,7 +121,7 @@ async function notify(order: BusinessOrder, business: Business, mezAdmins: MezAd
                 body: `There is a new business order`
             }
         },
-        linkUrl: orderUrl(OrderType.Business, order.orderDetails.orderId)
+        linkUrl: orderUrl(OrderType.Business, order.orderId)
     }
     mezAdmins.forEach((m) => {
         pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);

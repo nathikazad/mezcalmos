@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/business_operator/hsBusinessOperator.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class BusinessOpAuthController extends GetxController {
@@ -13,15 +14,17 @@ class BusinessOpAuthController extends GetxController {
   final int operatorUserId = Get.find<AuthController>().hasuraUserId!;
 
   RxnInt _companyId = RxnInt();
+  RxnInt _companyDetailsId = RxnInt();
   int? get companyId => _companyId.value;
+  int? get companyDetailsId => _companyDetailsId.value;
 
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
 
   /// TODO: Just for testing
   late BusinessProfile? _businessProfile;
-  String? _appLifeCyclePauseCallbackId;
   String? _appLifeCycleResumeCallbackId;
+  DateTime lastSavedActiveTime = DateTime.fromMicrosecondsSinceEpoch(0);
 
   /// this getter should be used only after the operator is set
   /// otherwise it will throw an exception
@@ -43,8 +46,18 @@ class BusinessOpAuthController extends GetxController {
     mezDbgPrint("BusinessAuth: calling handle state change first time");
 
     setupBusinessOperator();
-
+    checkAndSetLastActive();
+    _appLifeCycleResumeCallbackId = _appLifeCycleController.attachCallback(
+        Material.AppLifecycleState.resumed, checkAndSetLastActive);
     super.onInit();
+  }
+
+  void checkAndSetLastActive() {
+    mezDbgPrint("Inside checkAndSetLastActive");
+    if (-lastSavedActiveTime.difference(DateTime.now()) > Duration(hours: 6)) {
+      // set last active time of business;
+      set_last_active_time(detailsId: _companyDetailsId.value!);
+    }
   }
 
   Future<void> setupBusinessOperator() async {
@@ -58,6 +71,8 @@ class BusinessOpAuthController extends GetxController {
       mezDbgPrint("_businessProfile $_businessProfile");
       if (operator.value != null) {
         _companyId.value = operator.value!.serviceProviderId.toInt();
+        _companyDetailsId.value =
+            operator.value!.serviceProviderDetailsId!.toInt();
         _businessProfile =
             await get_operator_business_profile(userId: operatorUserId);
         mezDbgPrint("_businessProfile $_businessProfile");
@@ -77,9 +92,6 @@ class BusinessOpAuthController extends GetxController {
   void onClose() {
     mezDbgPrint(
         "[+] BusinessAuthController::dispose ---------> Was invoked ! $hashCode");
-    if (_appLifeCyclePauseCallbackId != null)
-      _appLifeCycleController.removeCallbackIdOfState(
-          Material.AppLifecycleState.paused, _appLifeCyclePauseCallbackId);
     if (_appLifeCycleResumeCallbackId != null)
       _appLifeCycleController.removeCallbackIdOfState(
           Material.AppLifecycleState.resumed, _appLifeCycleResumeCallbackId);

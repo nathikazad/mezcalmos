@@ -417,3 +417,17 @@ Future<cModels.ServiceProviderLanguage?> get_service_lang(
   }
   return null;
 }
+
+Future<void> set_last_active_time({required int detailsId}) async {
+  QueryResult<Mutation$setLastActiveTime> res =
+      await _db.graphQLClient.mutate$setLastActiveTime(
+    Options$Mutation$setLastActiveTime(
+      variables: Variables$Mutation$setLastActiveTime(id: detailsId),
+    ),
+  );
+  if (res.parsedData?.update_service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  // Mutation$setLastActiveTime$update_service_provider_details_by_pk? data =
+  //     res.parsedData!.update_service_provider_details_by_pk;
+}

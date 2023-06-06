@@ -1,42 +1,60 @@
-import { Order } from "../../Generic/Order";
+import { UserInfo } from "firebase-functions/v1/auth";
+import { CustomerAppType } from "../../Generic/Generic";
 import { OrderNotification } from "../../Notification";
-import { Business, BusinessItemDetails, ServiceType, TimeUnit } from "./Business";
+import { Business, BusinessItemDetails, OfferingType, TimeUnit } from "./Business";
 
 export interface BusinessOrder {
+    orderId: number;
+    customerId: number;
     businessId: number;
+    spDetailsId: number;
     status: BusinessOrderRequestStatus;
     business?: Business;
-    items: Array<BusinessOrderRequestItem>;
-    estimatedCost: number;
-    finalCost?: number;
-    commenceTime?: string;
-    orderDetails: Order;
+    items: Array<BusinessOrderItem>;
+    cost: number;
+    reviewId?: number;
+    orderTime?: string;
+    customerAppType: CustomerAppType;
+    notes?: string;
+    chatId?: number;
+    cancellationTime?: string;
+    customer?: UserInfo,
 }
 
-export interface BusinessOrderRequestItem {
-    serviceId: number;
-    serviceType: ServiceType;
+export interface BusinessOrderItem {
     id: number;
+    itemId: number;
+    offeringType: OfferingType;
+    parameters: BusinessItemParameters;
+    cost: number;
+    time?: string;
     available?: boolean;
-    service?: BusinessItemDetails;
-    cost: BusinessItemCost;
+    item?: BusinessItemDetails;
+    orderRequestId?: number;
 }
-export interface BusinessItemCost {
-    estimatedCostPerOne: number;
-    finalCostPerOne?: number;
+
+export interface BusinessItemParameters {
+    previousCost?: number;
     timeUnit?: TimeUnit;
-    fromTime: string;
-    toTime: string;
-    quantity: number;
+    previoustime?: string;
+    numberOfUnits?: number;
+    guests?: number;
 }
 export enum BusinessOrderRequestStatus {
     RequestReceived = "requestReceived",
-    ApprovedByBusiness = "approvedByBusiness",
+    ModificationRequestByBusiness = "modificationRequestByBusiness",
     CancelledByBusiness = "cancelledByBusiness",
-    ConfirmedByCustomer = "confirmedByCustomer",
+    Confirmed = "confirmed",
     CancelledByCustomer = "cancelledByCustomer",
-    InProgress = "inProgress",
     Completed = "completed"
+}
+
+export interface BusinessCart {
+    customerId: number;
+    businessId?: number;
+    cost: number;
+    items: Array<BusinessOrderItem>;
+    discountValue?: number;
 }
 
 export interface NewBusinessOrderRequestNotification extends OrderNotification {

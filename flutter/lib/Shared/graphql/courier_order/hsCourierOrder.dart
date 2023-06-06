@@ -33,7 +33,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
   if (res.parsedData?.delivery_courier_order_by_pk == null) {
     throwError(res.exception);
   } else {
-    Query$get_courier_order_by_id$delivery_courier_order_by_pk orderData =
+    final Query$get_courier_order_by_id$delivery_courier_order_by_pk orderData =
         res.parsedData!.delivery_courier_order_by_pk!;
     StripeOrderPaymentInfo? _paymentInfo;
     if (orderData.stripe_info != null) {
@@ -199,7 +199,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
       .map<CourierOrder?>(
           (QueryResult<Subscription$listen_on_courier_order_by_id> event) {
     if (event.parsedData?.delivery_courier_order_by_pk != null) {
-      Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk
+      final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk
           orderData = event.parsedData!.delivery_courier_order_by_pk!;
       StripeOrderPaymentInfo? _paymentInfo;
       if (orderData.stripe_info != null) {
@@ -424,7 +424,7 @@ Future<CourierOrdeItem?> update_courier_order_item(
   if (res.parsedData?.update_delivery_courier_order_item_by_pk == null) {
     throwError(res.exception);
   } else {
-    Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk
+    final Mutation$updateCourierOrderItem$update_delivery_courier_order_item_by_pk
         data = res.parsedData!.update_delivery_courier_order_item_by_pk!;
     return CourierOrdeItem(
         unavailable: data.unavailable,

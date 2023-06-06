@@ -1,6 +1,25 @@
 {
   "BusinessApp": {
     "pages": {
+      "Orders" : {
+        "HomeRentalOrderView" : {
+          "components" : {
+            "BsHomeRentalOrderItemCard" : {
+              "error": "Error",
+              "edit": "Editar",
+              "markAsUnavailable": "Marcar como no disponible",
+              "updatePrice": "Actualizar precio",
+              "required": "Requerido",
+              "notValid": "No válido",
+              "save": "Guardar",
+              "cancel": "Cancelar",
+              "startFrom": "Comienza desde",
+             
+              "updateTimeTitle": "Tiempo de actualizacion"
+              }
+          }
+        }
+      },
       "Components": {
         "BsRentalCard": {
           "hour": "hora",
@@ -71,6 +90,7 @@
         },
         "services": "Servicios",
         "service": "Servicio",
+        "orders" : "Pedidos",
         "serviceType": "¿Qué tipo de servicio agregarás?",
         "addService": "Agregar servicio",
         "reorder": "Reordenar",
@@ -2131,7 +2151,8 @@
           "loginAs": "INICIAR SESIÓN COMO",
           "customer": "CLIENTE",
           "driver": "CONDUCTORA",
-          "mezadmin": "MEZADMIN"
+          "mezadmin": "MEZADMIN",
+          "businessOp" : "Business Op"
         },
         "UnauthorizedScreen": {
           "unauthorized": "No autorizado",

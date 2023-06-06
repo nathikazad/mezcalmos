@@ -176,15 +176,16 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                         SizedBox(
                           height: 12,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            "\$${widget.itemPrice}",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: context.txt.bodyLarge,
+                        if (widget.itemPrice != null)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              "\$${widget.itemPrice}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.txt.bodyLarge,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ],

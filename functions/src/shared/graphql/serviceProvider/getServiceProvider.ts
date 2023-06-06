@@ -1,6 +1,6 @@
-import { getHasura } from "../../utilities/hasura";
-import { AuthorizationStatus, AppType, Language, MezError } from "../models/Generic/Generic";
-import { ServiceProvider, Operator, OpenStatus, ServiceProviderType } from "../models/Services/Service";
+import { getHasura } from "../../../utilities/hasura";
+import { AuthorizationStatus, AppType, Language, MezError } from "../../models/Generic/Generic";
+import { ServiceProvider, Operator, OpenStatus, ServiceProviderType } from "../../models/Services/Service";
 
 export async function getServiceProviderDetails(serviceProviderDetailsId: number): Promise<ServiceProvider> {
     let chain = getHasura();

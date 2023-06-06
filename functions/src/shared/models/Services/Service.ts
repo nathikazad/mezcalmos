@@ -111,3 +111,9 @@ export const ServiceProviderToAppType: Record<ServiceProviderType, AppType> = {
   [ServiceProviderType.Customer]: AppType.Customer,
   [ServiceProviderType.DeliveryDriver]: AppType.Delivery,
 }
+
+export interface ServiceProviderDeletedNotification extends ForegroundNotification {
+  serviceProviderName?: string,
+  serviceProviderId: number,
+  serviceProviderType: ServiceProviderType,
+}

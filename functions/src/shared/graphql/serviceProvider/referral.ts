@@ -1,11 +1,11 @@
-import { service_provider_referral_constraint } from "../../../../hasura/library/src/generated/graphql-zeus";
-import { AddReferralError } from "../../serviceProvider/addReferral";
-import { getHasura } from "../../utilities/hasura";
-import { MezError } from "../models/Generic/Generic";
-import { ServiceProviderType } from "../models/Services/Service";
+import { service_provider_referral_constraint } from "../../../../../hasura/library/src/generated/graphql-zeus";
+import { AddReferralError } from "../../../serviceProvider/addReferral";
+import { getHasura } from "../../../utilities/hasura";
+import { MezError } from "../../models/Generic/Generic";
+import { ServiceProviderType } from "../../models/Services/Service";
 
 
-export async function addReferral(customerId: number, uniqueId: string,) {
+export async function addReferral(customerId: number, uniqueId: string) {
     let chain = getHasura();
 
     let response = await chain.query({

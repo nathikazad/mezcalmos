@@ -28,10 +28,11 @@ import { createNewBusiness } from "./business/createNewBusiness";
 import { requestOrder } from "./business/orderRequest";
 import { handleOrderRequestByAdmin } from "./business/adminHandleRequest";
 import { handleOrderRequestFromCustomer } from "./business/customerHandleRequest";
-import { createServiceProviderChat } from "./shared/chat/createChat";
+import { createNewMezAdminChat, createServiceProviderChat } from "./shared/chat/createChat";
 import { addNewReferral } from "./serviceProvider/addReferral";
 import { authorizeDriver } from "./serviceProvider/authorizeDriver";
 import { removeDriver } from "./delivery/removeDriver";
+import { deleteServiceProvider } from "./serviceProvider/deleteServiceProvider";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -73,6 +74,8 @@ export const serviceProvider = {
   createServiceProviderChat: authenticatedCall((userId, data) => createServiceProviderChat(userId, data)),
   addReferral: authenticatedCall((userId, data) => addNewReferral(userId, data)),
   removeDriver: authenticatedCall((userId, data) => removeDriver(userId, data)),
+  deleteServiceProvider: authenticatedCall((userId, data) => deleteServiceProvider(userId, data)),
+  createMezAdminChat: authenticatedCall((userId, data) => createNewMezAdminChat(userId, data)),
 }
 
 export const restaurant3 = {

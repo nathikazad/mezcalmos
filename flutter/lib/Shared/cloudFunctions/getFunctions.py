@@ -100,6 +100,8 @@ def getArguments(corresponding):
       for line in f:
         if searchFor in line:
           interface = line.split(")")[0].split("(")[1].split(",")[1].split(":")[1].strip()
+          if interface == "any":
+            return None
           with open(fileName+".ts", 'r') as f2:
             found = False
             arguments = {}

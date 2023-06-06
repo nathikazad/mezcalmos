@@ -67,6 +67,10 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
           IgnorePointer(
             ignoring: true,
             child: Card(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Container(
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),

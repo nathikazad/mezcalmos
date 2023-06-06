@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/Cust
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -13,11 +14,15 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
@@ -52,6 +57,14 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: MezButton(
+        label: "Add to cart",
+        withGradient: true,
+        borderRadius: 0,
+        onClick: () async {
+          await viewController.bookOffering();
+        },
+      ),
       body: Obx(() {
         if (viewController.homeRental != null) {
           return CustomScrollView(
@@ -104,7 +117,66 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                         business: viewController.homeRental!.business,
                         offering: viewController.homeRental!.details,
                       ),
-                      CustBusinessNoOrderBanner(),
+                      
+                      /// Bookings
+                      bigSeperator,
+                      BsOpDateTimePicker(
+                        fillColor: Colors.white,
+                        onNewPeriodSelected: (DateTime v) {
+                          viewController.startDate.value = v;
+                        },
+                        label: "Start Date",
+                        validator: (DateTime? p0) {
+                          if (p0 == null) return "Please select a time";
+
+                          return null;
+                        },
+                        time: viewController.startDate.value,
+                      ),
+                      bigSeperator,
+                      CustBusinessDurationPicker(
+                        costUnits: viewController.homeRental!.details.cost,
+                        label: "Duration",
+                        value: viewController.duration.value,
+                        validator: (TimeUnit? p0) {
+                          if (p0 == null) return "Please select a time";
+                          return null;
+                        },
+                        onNewCostUnitSelected: (Map<TimeUnit, num> v) {
+                          viewController.setTimeCost(v);
+                        },
+                        onNewDurationSelected: (int v) {
+                          viewController.setDuration(v);
+                        },
+                      ),
+                      bigSeperator,
+                      CustGuestPicker(
+                        label: "Guests",
+                        icon: Icons.person,
+                        onNewGuestSelected: (int v) {
+                          viewController.setTotalGuests(v);
+                        },
+                        value: viewController.totalGuests.value,
+                        lowestValue: 1,
+                      ),
+                      bigSeperator,
+                      Text(
+                        "Notes",
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      smallSepartor,
+                      TextFormField(
+                        maxLines: 7,
+                        minLines: 5,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          hintText: "Write your notes here.",
+                        ),
+                      ),
+                      bigSeperator,
+                      CustOrderCostCard(
+                        orderCostString: viewController.orderString.value,
+                      ),
                     ],
                   ),
                 ),

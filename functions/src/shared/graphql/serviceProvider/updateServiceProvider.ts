@@ -1,10 +1,10 @@
-import { getHasura } from "../../utilities/hasura";
-import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../utilities/links/deeplink";
-import { ServiceProviderStripeInfo } from "../models/stripe";
-import { SetupStripeError, UpdateStripeError } from "../../utilities/stripe/serviceProvider";
-import { ChangeUniqueIdError } from "../changeUniqueId";
-import { AppType, MezError } from "../models/Generic/Generic";
-import { ServiceProvider, ServiceProviderType } from "../models/Services/Service";
+import { getHasura } from "../../../utilities/hasura";
+import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../../utilities/links/deeplink";
+import { ServiceProviderStripeInfo } from "../../models/stripe";
+import { SetupStripeError, UpdateStripeError } from "../../../utilities/stripe/serviceProvider";
+import { ChangeUniqueIdError } from "../../changeUniqueId";
+import { AppType, MezError } from "../../models/Generic/Generic";
+import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 
 export async function createServiceProviderStripe(serviceProvider: ServiceProvider) {
     let chain = getHasura();

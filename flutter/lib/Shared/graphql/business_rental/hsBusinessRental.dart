@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/__generated/business_rental.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -99,7 +100,7 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
         response.parsedData?.business_rental_by_pk!;
 
     if (data != null) {
-      RentalWithBusinessCard returnedRental = RentalWithBusinessCard(
+      final RentalWithBusinessCard returnedRental = RentalWithBusinessCard(
           rental: Rental(
               id: data.id,
               category1: data.details.category1.toRentalCategory1(),
@@ -178,8 +179,7 @@ Future<int?> get_number_of_rental(
 }
 
 Future<List<RentalCard>> get_home_rentals(
-    {required double distance,
-    required Location fromLocation,
+    {required Location fromLocation,
     int? offset,
     int? limit,
     required bool withCache}) async {
@@ -190,17 +190,16 @@ Future<List<RentalCard>> get_home_rentals(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables: Variables$Query$get_home_rentals(
-              distance: distance,
-              from: Geography(
+              location: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               offset: offset,
               limit: limit)));
 
   mezDbgPrint("get_home_rentals $response");
 
-  if (response.parsedData?.business_home_rental != null) {
-    response.parsedData?.business_home_rental
-        .forEach((Query$get_home_rentals$business_home_rental data) async {
+  if (response.parsedData?.business_get_home_rentals != null) {
+    response.parsedData?.business_get_home_rentals
+        .forEach((Query$get_home_rentals$business_get_home_rentals data) async {
       _homes.add(RentalCard(
           businessName: data.rental.business.details.name,
           currency: data.rental.business.details.currency.toCurrency(),
@@ -515,8 +514,8 @@ Future<Rental?> update_business_home_rental(
         "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data}");
     throwError(res.exception);
   } else if (res.parsedData?.update_business_home_rental_by_pk != null) {
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk data =
-        res.parsedData!.update_business_home_rental_by_pk!;
+    final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
+        data = res.parsedData!.update_business_home_rental_by_pk!;
     return Rental(
         id: id,
         category1: data.rental.details.category1.toRentalCategory1(),
@@ -621,4 +620,123 @@ Future<int?> delete_busines_rental({required int rentalId}) async {
     return response.parsedData?.delete_business_rental_by_pk?.id;
   }
   return null;
+}
+
+Future<BusinessOrder?> get_home_rental_order_req(
+    {required int orderId, bool withCache = true}) async {
+  QueryResult<Query$getHomeRentalOrderRequest> res = await _db.graphQLClient
+      .query$getHomeRentalOrderRequest(Options$Query$getHomeRentalOrderRequest(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables:
+              Variables$Query$getHomeRentalOrderRequest(orderId: orderId)));
+  if (res.hasException ||
+      res.parsedData?.business_order_request_by_pk == null) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${res.exception}");
+  }
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk data =
+      res.parsedData!.business_order_request_by_pk!;
+  return BusinessOrder(
+      orderId: data.id,
+      customer: UserInfo(
+          firebaseId: data.customer.user.firebase_id,
+          id: data.customer.user_id,
+          language: Language.EN,
+          name: data.customer.user.name,
+          image: data.customer.user.image),
+      customerId: data.customer_id,
+      businessId: data.business_id,
+      spDetailsId: data.business.details_id,
+      status: data.status.toBusinessOrderRequestStatus(),
+      items: data.items
+          .map(
+              (Query$getHomeRentalOrderRequest$business_order_request_by_pk$items
+                      item) =>
+                  BusinessOrderItem(
+                    id: item.id,
+                    cost: item.cost,
+                    time: item.time,
+                    itemId: item.id,
+                    offeringType: item.offering_type.toOfferingType(),
+                    parameters: businessItemParamsFromData(item.parameters),
+                    item: BusinessItemDetails(
+                      id: item.id,
+                      name: toLanguageMap(
+                          translations: item.rental!.details.name.translations),
+                      position: item.rental!.details.position,
+                      businessId: data.business_id,
+                      available: item.available,
+                      image: item.rental?.details.image
+                              ?.map<String>((e) => e.toString())
+                              .toList() ??
+                          [],
+                      cost: constructBusinessServiceCost(
+                          item.rental!.details.cost),
+                      additionalParameters:
+                          item.rental!.details.additional_parameters,
+                    ),
+                  ))
+          .toList(),
+      cost: data.cost?.toDouble() ?? 0,
+      customerAppType: CustomerAppType.Native);
+}
+
+Stream<BusinessOrder?> listen_home_rental_order_req({required int id}) {
+  return _db.graphQLClient
+      .subscribe$listenHomeRentalOrderRequest(
+          Options$Subscription$listenHomeRentalOrderRequest(
+              variables: Variables$Subscription$listenHomeRentalOrderRequest(
+                  orderId: id)))
+      .map<BusinessOrder?>(
+          (QueryResult<Subscription$listenHomeRentalOrderRequest> event) {
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk?
+        data = event.parsedData?.business_order_request_by_pk;
+    if (data != null) {
+      return BusinessOrder(
+          orderId: data.id,
+          customer: UserInfo(
+              id: data.customer.user_id,
+              firebaseId: data.customer.user.firebase_id,
+              language: Language.EN,
+              name: data.customer.user.name,
+              image: data.customer.user.image),
+          customerId: data.customer_id,
+          businessId: data.business_id,
+          spDetailsId: data.business.details_id,
+          status: data.status.toBusinessOrderRequestStatus(),
+          items: data.items
+              .map(
+                  (Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items
+                          item) =>
+                      BusinessOrderItem(
+                        id: item.id,
+                        cost: item.cost,
+                        time: item.time,
+                        itemId: item.id,
+                        offeringType: item.offering_type.toOfferingType(),
+                        parameters: businessItemParamsFromData(item.parameters),
+                        item: BusinessItemDetails(
+                          id: item.id,
+                          name: toLanguageMap(
+                              translations:
+                                  item.rental!.details.name.translations),
+                          position: item.rental!.details.position,
+                          businessId: data.business_id,
+                          available: item.available,
+                          image: item.rental?.details.image
+                                  ?.map<String>((e) => e.toString())
+                                  .toList() ??
+                              [],
+                          cost: constructBusinessServiceCost(
+                              item.rental!.details.cost),
+                          additionalParameters:
+                              item.rental!.details.additional_parameters,
+                        ),
+                      ))
+              .toList(),
+          cost: data.cost?.toDouble() ?? 0,
+          customerAppType: CustomerAppType.Native);
+    }
+    return null;
+  });
 }
