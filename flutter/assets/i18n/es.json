@@ -8,6 +8,7 @@
               "error": "Error",
               "edit": "Editar",
               "markAsUnavailable": "Marcar como no disponible",
+              "markAsAvailable": "Marcar como disponible",
               "updatePrice": "Actualizar precio",
               "required": "Requerido",
               "notValid": "No válido",

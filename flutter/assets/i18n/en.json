@@ -7,7 +7,8 @@
             "BsHomeRentalOrderItemCard": {
               "error": "Error",
               "edit": "Edit",
-              "markAsUnavailable": "Mark as Unavailable",
+              "markAsUnavailable": "Mark as unavailable",
+              "markAsAvailable": "Mark as available",
               "updatePrice": "Update Price",
               "required": "Required",
               "notValid": "Not Valid",

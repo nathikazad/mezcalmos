@@ -66,7 +66,14 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                       Text(
                         item.item?.name.getTranslation(userLanguage) ??
                             "${_i18n()['error']}",
-                        style: context.textTheme.bodyLarge,
+                        style: context.textTheme.bodyLarge?.copyWith(
+                          decoration: (item.available == true)
+                              ? null
+                              : TextDecoration.lineThrough,
+                          color: (item.available == true)
+                              ? Colors.black
+                              : Colors.grey.shade400,
+                        ),
                       ),
                       SizedBox(height: 9),
                       Row(
@@ -80,7 +87,11 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                             Text(
                                 item.parameters.guests?.toString() ??
                                     "${_i18n()['error']}",
-                                style: context.textTheme.bodyLarge),
+                                style: context.textTheme.bodyLarge?.copyWith(
+                                  color: (item.available == true)
+                                      ? Colors.black
+                                      : Colors.grey.shade400,
+                                )),
                             SizedBox(width: 10),
                           ],
                           if (item.parameters.numberOfUnits != null &&
@@ -88,7 +99,11 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                             Icon(Icons.calendar_today),
                             Text(
                                 "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toReadableString()}",
-                                style: context.textTheme.bodyLarge),
+                                style: context.textTheme.bodyLarge?.copyWith(
+                                  color: (item.available == true)
+                                      ? Colors.black
+                                      : Colors.grey.shade400,
+                                )),
                           ]
                         ],
                       ),
@@ -124,11 +139,20 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                         ),
                         Icon(Icons.arrow_forward),
                       ],
-                      Icon(Icons.price_check),
+                      Icon(
+                        Icons.price_check,
+                        color: (item.available == true)
+                            ? Colors.black
+                            : Colors.grey.shade400,
+                      ),
                       SizedBox(width: 3),
                       Text(
                         item.cost.toPriceString(),
-                        style: context.textTheme.bodyLarge,
+                        style: context.textTheme.bodyLarge?.copyWith(
+                          color: (item.available == true)
+                              ? Colors.black
+                              : Colors.grey.shade400,
+                        ),
                       ),
                     ],
                   ),
@@ -163,7 +187,9 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.event_busy,
-                              color: offLightShadeGreyColor,
+                              color: (item.available == true)
+                                  ? offLightShadeGreyColor
+                                  : Colors.grey.shade400,
                             ),
                             SizedBox(width: 3),
                             Text(
@@ -171,7 +197,9 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                                       ?.getOrderTime() ??
                                   "${_i18n()['error']}",
                               style: context.textTheme.bodyLarge?.copyWith(
-                                  color: offLightShadeGreyColor,
+                                  color: (item.available == true)
+                                      ? offLightShadeGreyColor
+                                      : Colors.grey.shade400,
                                   decoration: TextDecoration.lineThrough),
                             ),
                           ],
@@ -179,14 +207,28 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                       Row(
                         children: [
                           if (item.parameters.previoustime != null)
-                            Icon(Icons.arrow_forward),
-                          Icon(Icons.event_available_rounded),
+                            Icon(
+                              Icons.arrow_forward,
+                              color: (item.available == true)
+                                  ? Colors.black
+                                  : Colors.grey.shade400,
+                            ),
+                          Icon(
+                            Icons.event_available_rounded,
+                            color: (item.available == true)
+                                ? Colors.black
+                                : Colors.grey.shade400,
+                          ),
                           SizedBox(width: 3),
                           Text(
                             DateTime.tryParse(item.time ?? "")
                                     ?.getOrderTime() ??
                                 "${_i18n()['error']}",
-                            style: context.textTheme.bodyLarge,
+                            style: context.textTheme.bodyLarge?.copyWith(
+                              color: (item.available == true)
+                                  ? Colors.black
+                                  : Colors.grey.shade400,
+                            ),
                           ),
                         ],
                       ),
@@ -208,15 +250,19 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
               ],
             ),
             Divider(),
-            if (item.available == true)
-              MezInkwell(
-                icon: Icons.remove_circle_outlined,
-                label: "${_i18n()['markAsUnavailable']}",
-                onClick: () async {
-                  await viewController.updateItemAvailability(
-                      itemId: item.itemId, newAvailability: false);
-                },
-              )
+            MezInkwell(
+              icon: Icons.remove_circle_outlined,
+              textColor: (item.available == true) ? null : redAccentColor,
+              backgroundColor: (item.available == true) ? null : offRedColor,
+              label: (item.available == true)
+                  ? "${_i18n()['markAsUnavailable']}"
+                  : "${_i18n()['markAsAvailable']}",
+              onClick: () async {
+                await viewController.updateItemAvailability(
+                    itemId: item.itemId,
+                    newAvailability: !(item.available == true));
+              },
+            )
           ],
         ),
       ),
