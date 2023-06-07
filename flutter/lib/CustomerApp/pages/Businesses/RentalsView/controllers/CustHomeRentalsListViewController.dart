@@ -76,7 +76,7 @@ class CustHomeRentalsListViewController {
           "👋 _fetchRentals called  \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
       List<RentalCard> newList = await get_home_rentals(
         fromLocation: _fromLocation!,
-
+        distance: 1000000000000,
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
         withCache: false,
         offset: _rentalCurrentOffset,
