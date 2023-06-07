@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/EventCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/RentalCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -78,17 +79,13 @@ class _CustOrderViewState extends State<CustOrderView> {
                           content: Row(
                         children: [
                           CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              custBusinessCartController.currentOrderInView
-                                  .value!.items.first.rental!.business.image,
-                            ),
+                            backgroundImage: NetworkImage(getBusinessImage()),
                           ),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
-                                custBusinessCartController.currentOrderInView
-                                    .value!.items.first.rental!.business.name,
+                                getBusinessName(),
                                 style: context.textTheme.bodyLarge,
                               ),
                             ),
@@ -125,7 +122,7 @@ class _CustOrderViewState extends State<CustOrderView> {
                                   isEditable: false,
                                 );
                               case OfferingType.Event:
-                                return RentalCartItemCard(
+                                return EventCartItemCard(
                                   index: index,
                                   item: item,
                                   controller: custBusinessCartController,
@@ -196,6 +193,42 @@ class _CustOrderViewState extends State<CustOrderView> {
         ),
       ),
     );
+  }
+
+  String getBusinessImage() {
+    switch (custBusinessCartController
+        .currentOrderInView.value!.items.first.offeringType) {
+      case OfferingType.Rental:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.rental!.business.image;
+      case OfferingType.Event:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.event!.business.image;
+      case OfferingType.Service:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.service!.business.image;
+      case OfferingType.Product:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.product!.business.image;
+    }
+  }
+
+  String getBusinessName() {
+    switch (custBusinessCartController
+        .currentOrderInView.value!.items.first.offeringType) {
+      case OfferingType.Rental:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.rental!.business.name;
+      case OfferingType.Event:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.event!.business.name;
+      case OfferingType.Service:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.service!.business.name;
+      case OfferingType.Product:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.product!.business.name;
+    }
   }
 
   Widget bottomButtons(BuildContext context) {

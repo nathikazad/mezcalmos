@@ -136,8 +136,8 @@ query get_rental_by_id($id: Int!) {
   }
 }
 
-query get_home_rentals($location: geography, $limit: Int, $offset: Int) {
-  business_get_home_rentals(args: {location: $location}, limit: $limit, offset: $offset, where: {rental: {business: {details: {approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}}}) {
+query get_home_rentals($location: geography!, $limit: Int, $offset: Int, $distance: Float!) {
+  business_get_home_rentals(args: {location: $location}, limit: $limit, offset: $offset, where: {rental: {business: {details: {approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}}, gps_location: {_st_d_within: {distance: $distance, from: $location}}}) {
     bathrooms
     bedrooms
     gps_location
