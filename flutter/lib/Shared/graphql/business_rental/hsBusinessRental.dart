@@ -146,6 +146,10 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
             avgRating: double.tryParse(
                 data.business.reviews_aggregate.aggregate?.avg.toString() ??
                     '0.0'),
+            location: Location(
+                lat: data.business.details.location.gps.latitude,
+                lng: data.business.details.location.gps.longitude,
+                address: data.business.details.location.address),
             reviewCount: data.business.reviews_aggregate.aggregate?.count,
           ));
       returnedRental.id = id;

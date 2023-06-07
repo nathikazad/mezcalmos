@@ -10,6 +10,7 @@ class BusinessCard {
   Currency currency;
   double? avgRating;
   int? reviewCount;
+  Location? location;
 
   BusinessCard(
       {required this.id,
@@ -19,6 +20,7 @@ class BusinessCard {
       required this.acceptedPayments,
       required this.currency,
       this.avgRating,
+      this.location,
       this.reviewCount});
 }
 
