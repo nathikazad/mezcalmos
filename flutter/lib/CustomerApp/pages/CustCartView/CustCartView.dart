@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dar
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/EventCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/RentalCartItemCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ServiceCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -86,7 +87,7 @@ class _CustCartViewState extends State<CustCartView> {
                                   controller: custBusinessCartController,
                                 );
                               case OfferingType.Service:
-                                return RentalCartItemCard(
+                                return ServiceCartItemCard(
                                   index: index,
                                   item: item,
                                   controller: custBusinessCartController,

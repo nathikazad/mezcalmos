@@ -178,7 +178,7 @@ class _CustEventViewState extends State<CustEventView> {
                               label: "Hours",
                               icon: Icons.hourglass_bottom,
                               onNewGuestSelected: (int v) {
-                                viewController.setTotalGuests(v);
+                                viewController.setTotalHours(v);
                               },
                               value: viewController.totalHours.value,
                               lowestValue: 1,

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
@@ -12,17 +11,84 @@ import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dar
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 
 class CustServiceViewController {
+  final CustBusinessCartController custBusinessCartController =
+      Get.find<CustBusinessCartController>();
   // state vars //
   Rxn<ServiceWithBusinessCard> _service = Rxn<ServiceWithBusinessCard>();
+  Rxn<DateTime> _startDate = Rxn();
+  Rx<int> _totalHours = Rx(1);
+  Rxn<Map<TimeUnit, num>> _timeCost = Rxn();
+  Rx<double> totalOrderCost = Rx(0);
+  Rx<String> orderString = Rx("-");
 
   // getters //
   ServiceWithBusinessCard? get service => _service.value;
+  Rxn<DateTime> get startDate => _startDate;
+  Rx<int> get totalHours => _totalHours;
+  Rxn<Map<TimeUnit, num>> get timeCost => _timeCost;
   // methods //
   Future<void> fetchData({required int serviceId}) async {
     _service.value = await get_service_by_id(id: serviceId, withCache: false);
+    _setInitialTimeCost();
+    _calcTotalOrderCost();
+  }
+
+  void _setInitialTimeCost() {
+    final TimeUnit costKey = _service.value!.details.cost.entries.first.key;
+    final num costValue = _service.value!.details.cost.entries.first.value;
+    _timeCost.value = {
+      costKey: costValue,
+    };
+  }
+
+  void _calcTotalOrderCost() {
+    double newCost = 0;
+    newCost += (totalHours.value) * (_timeCost.value!.values.first.toInt());
+    totalOrderCost.value = newCost;
+    if (totalOrderCost.value == 0.0) {
+      orderString.value = "Free";
+      return;
+    }
+    if (_service.value!.category1 != ServiceCategory1.MealPlanning) {
+      orderString.value =
+          "\$${_timeCost.value!.values.first.toInt()} x $totalHours = \$${totalOrderCost.value.toStringAsFixed(0)}";
+    } else {
+      orderString.value = "\$${totalOrderCost.value.toStringAsFixed(0)}";
+    }
+  }
+
+  void setTotalHours(int value) {
+    totalHours.value = value;
+    _calcTotalOrderCost();
+  }
+
+  void setTimeCost(Map<TimeUnit, num> value) {
+    _timeCost.value = value;
+    _calcTotalOrderCost();
+  }
+
+  Future<void> bookOffering() async {
+    await custBusinessCartController.addCartItem(
+      BusinessCartItem(
+        businessId: _service.value!.business.id,
+        itemId: _service.value!.id!,
+        offeringType: OfferingType.Service,
+        time: startDate.value!.toString(),
+        parameters: BusinessItemParameters(
+          numberOfUnits: totalHours.value,
+          timeUnit: timeCost.value!.keys.first,
+        ),
+        cost: totalOrderCost.value,
+        service: _service.value,
+      ),
+    );
+    await CustCartView.navigate();
+    orderString.value = "-";
+    totalOrderCost.value = 0;
+    _setInitialTimeCost();
+    _calcTotalOrderCost();
   }
 }
-//
 
 class CustProductViewController {
   // state vars //
@@ -83,7 +149,7 @@ class CustEventViewController {
     }
   }
 
-  void setTotalGuests(int value) {
+  void setTotalHours(int value) {
     totalHours.value = value;
     _calcTotalOrderCost();
   }
