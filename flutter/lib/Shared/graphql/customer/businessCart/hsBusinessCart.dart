@@ -548,7 +548,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                           .acceptedPayments,
                                       detailsId:
                                           data.service!.business.details.id,
-                                      image: data.service!.business.details.image,
+                                      image:
+                                          data.service!.business.details.image,
                                     ),
                                     service: Service(
                                       category1: data.service!.details.category1
@@ -596,7 +597,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                           .acceptedPayments,
                                       detailsId:
                                           data.product!.business.details.id,
-                                      image: data.product!.business.details.image,
+                                      image:
+                                          data.product!.business.details.image,
                                     ),
                                     product: Product(
                                       category1: data.product!.details.category1

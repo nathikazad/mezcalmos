@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessAdditionalData.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -18,6 +21,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/Cust
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:sizer/sizer.dart';
@@ -83,6 +87,14 @@ class _CustEventViewState extends State<CustEventView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: MezButton(
+        label: "Add to cart",
+        withGradient: true,
+        borderRadius: 0,
+        onClick: () async {
+          await viewController.bookOffering();
+        },
+      ),
       body: Obx(() {
         if (viewController.event != null) {
           mezDbgPrint(
@@ -140,7 +152,64 @@ class _CustEventViewState extends State<CustEventView> {
                         business: viewController.event!.business,
                         offering: viewController.event!.details,
                       ),
-                      CustBusinessNoOrderBanner(),
+                      // CustBusinessNoOrderBanner(),
+
+                      /// Booking
+                      if (viewController.event!.scheduleType !=
+                          ScheduleType.OneTime)
+                        BsOpDateTimePicker(
+                          fillColor: Colors.white,
+                          onNewPeriodSelected: (DateTime v) {
+                            viewController.startDate.value = v;
+                          },
+                          label: "Start Date",
+                          validator: (DateTime? p0) {
+                            if (p0 == null) return "Please select a time";
+
+                            return null;
+                          },
+                          time: viewController.startDate.value,
+                        ),
+                      if (viewController.event!.scheduleType ==
+                          ScheduleType.OnDemand)
+                        Column(
+                          children: [
+                            CustGuestPicker(
+                              label: "Hours",
+                              icon: Icons.hourglass_bottom,
+                              onNewGuestSelected: (int v) {
+                                viewController.setTotalGuests(v);
+                              },
+                              value: viewController.totalHours.value,
+                              lowestValue: 1,
+                            ),
+                            bigSeperator,
+                          ],
+                        ),
+                      if (viewController.event!.scheduleType ==
+                          ScheduleType.OnDemand)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Notes",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            smallSepartor,
+                            TextFormField(
+                              maxLines: 5,
+                              minLines: 3,
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                hintText: "Write your notes here.",
+                              ),
+                            ),
+                          ],
+                        ),
+                      bigSeperator,
+                      CustOrderCostCard(
+                        orderCostString: viewController.orderString.value,
+                      ),
                     ],
                   ),
                 ),

@@ -37,14 +37,79 @@ class CustProductViewController {
 }
 
 class CustEventViewController {
+  final CustBusinessCartController custBusinessCartController =
+      Get.find<CustBusinessCartController>();
   // state vars //
   Rxn<EventWithBusinessCard> _event = Rxn<EventWithBusinessCard>();
+  Rxn<DateTime> _startDate = Rxn();
+  Rx<String> orderString = Rx("-");
+  Rxn<Map<TimeUnit, num>> _timeCost = Rxn();
+  Rx<double> totalOrderCost = Rx(0);
+  Rx<int> _totalHours = Rx(1);
 
   // getters //
   EventWithBusinessCard? get event => _event.value;
+  Rxn<DateTime> get startDate => _startDate;
+  Rxn<Map<TimeUnit, num>> get timeCost => _timeCost;
+  Rx<int> get totalHours => _totalHours;
   // methods //
   Future<void> fetchData({required int eventId}) async {
     _event.value = await get_event_by_id(id: eventId, withCache: false);
+    _setInitialTimeCost();
+    _calcTotalOrderCost();
+  }
+
+  void _setInitialTimeCost() {
+    final TimeUnit costKey = _event.value!.details.cost.entries.first.key;
+    final num costValue = _event.value!.details.cost.entries.first.value;
+    _timeCost.value = {
+      costKey: costValue,
+    };
+  }
+
+  void _calcTotalOrderCost() {
+    double newCost = 0;
+    newCost += (totalHours.value) * (_timeCost.value!.values.first.toInt());
+    totalOrderCost.value = newCost;
+    if (totalOrderCost.value == 0.0) {
+      orderString.value = "Free";
+      return;
+    }
+    if (_event.value!.scheduleType == ScheduleType.OnDemand) {
+      orderString.value =
+          "\$${_timeCost.value!.values.first.toInt()} x $totalHours = \$${totalOrderCost.value.toStringAsFixed(0)}";
+    } else {
+      orderString.value = "\$${totalOrderCost.value.toStringAsFixed(0)}";
+    }
+  }
+
+  void setTotalGuests(int value) {
+    totalHours.value = value;
+    _calcTotalOrderCost();
+  }
+
+  Future<void> bookOffering() async {
+    await custBusinessCartController.addCartItem(
+      BusinessCartItem(
+        businessId: _event.value!.business.id,
+        itemId: _event.value!.id!,
+        offeringType: OfferingType.Event,
+        time: _event.value!.scheduleType == ScheduleType.OneTime
+            ? _event.value!.startsAt
+            : startDate.value!.toString(),
+        parameters: BusinessItemParameters(
+          numberOfUnits: totalHours.value,
+          timeUnit: timeCost.value!.keys.first,
+        ),
+        cost: totalOrderCost.value,
+        event: _event.value,
+      ),
+    );
+    await CustCartView.navigate();
+    orderString.value = "-";
+    totalOrderCost.value = 0;
+    _setInitialTimeCost();
+    _calcTotalOrderCost();
   }
 }
 

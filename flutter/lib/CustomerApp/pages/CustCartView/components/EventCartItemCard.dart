@@ -10,8 +10,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
-class RentalCartItemCard extends StatelessWidget {
-  const RentalCartItemCard({
+class EventCartItemCard extends StatelessWidget {
+  const EventCartItemCard({
     super.key,
     required this.index,
     required this.item,
@@ -71,7 +71,7 @@ class RentalCartItemCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      CartItemImage(image: item.rental!.details.image?.first),
+                      CartItemImage(image: item.event!.details.image?.first),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Column(
@@ -79,33 +79,39 @@ class RentalCartItemCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "${item.rental!.details.name.getTranslation(userLanguage)!.inCaps}",
+                              "${item.event!.details.name.getTranslation(userLanguage)!.inCaps}",
                               style: context.textTheme.bodyLarge,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
                             Row(
                               children: [
-                                if (item.parameters.guests != null)
-                                  _guestBuilder(context),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 4.0),
-                                  child: Icon(
-                                    Icons.calendar_today,
+                                if (item.event!.scheduleType ==
+                                    ScheduleType.OnDemand)
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 4.0),
+                                        child: Icon(
+                                          Icons.calendar_today,
+                                        ),
+                                      ),
+                                      Text(
+                                        "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toFirebaseFormatString()}",
+                                        style: context.textTheme.bodyMedium!
+                                            .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Text(
-                                  "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toFirebaseFormatString()}",
-                                  style: context.textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                costBuilder(context)
+                                costBuilder(context),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       )
@@ -239,25 +245,6 @@ class RentalCartItemCard extends StatelessWidget {
           style: context.textTheme.bodyMedium!.copyWith(
             fontWeight: FontWeight.bold,
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _guestBuilder(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          Icons.person,
-        ),
-        Text(
-          "${item.parameters.guests}",
-          style: context.textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(
-          width: 8,
         ),
       ],
     );
