@@ -121,6 +121,7 @@ class RentalWithBusinessCard extends Rental {
           bedrooms: rental.bedrooms,
           homeType: rental.homeType,
           gpsLocation: rental.gpsLocation,
+          id: rental.id,
         );
 }
 
@@ -139,6 +140,7 @@ class EventWithBusinessCard extends Event {
           category2: event.category2,
           startsAt: event.startsAt,
           endsAt: event.endsAt,
+          id: event.id,
         );
 }
 
@@ -150,6 +152,7 @@ class ProductWithBusinessCard extends Product {
   }) : super(
           category1: product.category1,
           details: product.details,
+          id: product.id,
         );
 }
 
@@ -162,5 +165,6 @@ class ServiceWithBusinessCard extends Service {
           category1: service.category1,
           details: service.details,
           schedule: service.schedule,
+          id: service.id,
         );
 }

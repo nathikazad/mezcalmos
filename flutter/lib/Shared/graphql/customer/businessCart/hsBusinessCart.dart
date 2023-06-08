@@ -352,6 +352,37 @@ Future<int> set_cart_business_id({
   }
 }
 
+Future<int> update_product_item_count({
+  required int id,
+  required BusinessItemParameters parameters,
+  required double cost,
+}) async {
+  final QueryResult<Mutation$update_product_item_count> _cart =
+      await _hasuraDb.graphQLClient.mutate$update_product_item_count(
+    Options$Mutation$update_product_item_count(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Mutation$update_product_item_count(
+        id: id,
+        parameters: parameters.toFirebaseFormattedJson(),
+        cost: cost,
+      ),
+    ),
+  );
+  mezDbgPrint(
+      "[🛑] called :: update_product_item_count :: data :: ${_cart.data}");
+
+  if (_cart.parsedData!.update_business_cart_item?.affected_rows == null) {
+    throw Exception(
+        "[🛑] called :: update_product_item_count :: exception :: ${_cart.hasException} ${_cart.exception}");
+  } else {
+    final int newRestId =
+        _cart.parsedData!.update_business_cart_item!.affected_rows;
+    mezDbgPrint(
+        "[🛑] called :: update_product_item_count :: success :: $newRestId");
+    return newRestId;
+  }
+}
+
 Stream<List<CustBusinessCart>?> listen_on_business_order_request(
     {required int customerId}) {
   return _hasuraDb.graphQLClient
