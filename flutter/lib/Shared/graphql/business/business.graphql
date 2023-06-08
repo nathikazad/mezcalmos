@@ -161,6 +161,10 @@ query get_business_by_rental_category1(
       image
       name
       currency
+      location {
+        address
+        gps
+      }
     }
     reviews_aggregate {
       aggregate {

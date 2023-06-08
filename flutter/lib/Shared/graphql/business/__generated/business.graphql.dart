@@ -7765,6 +7765,35 @@ const documentNodeQueryget_business_by_rental_category1 =
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'location'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -8182,6 +8211,7 @@ class Query$get_business_by_rental_category1$business_business$details {
     required this.image,
     required this.name,
     required this.currency,
+    required this.location,
     required this.$__typename,
   });
 
@@ -8192,6 +8222,7 @@ class Query$get_business_by_rental_category1$business_business$details {
     final l$image = json['image'];
     final l$name = json['name'];
     final l$currency = json['currency'];
+    final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Query$get_business_by_rental_category1$business_business$details(
       id: (l$id as int),
@@ -8199,6 +8230,9 @@ class Query$get_business_by_rental_category1$business_business$details {
       image: (l$image as String),
       name: (l$name as String),
       currency: (l$currency as String),
+      location:
+          Query$get_business_by_rental_category1$business_business$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -8212,6 +8246,9 @@ class Query$get_business_by_rental_category1$business_business$details {
   final String name;
 
   final String currency;
+
+  final Query$get_business_by_rental_category1$business_business$details$location
+      location;
 
   final String $__typename;
 
@@ -8227,6 +8264,8 @@ class Query$get_business_by_rental_category1$business_business$details {
     _resultData['name'] = l$name;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8239,6 +8278,7 @@ class Query$get_business_by_rental_category1$business_business$details {
     final l$image = image;
     final l$name = name;
     final l$currency = currency;
+    final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -8246,6 +8286,7 @@ class Query$get_business_by_rental_category1$business_business$details {
       l$image,
       l$name,
       l$currency,
+      l$location,
       l$$__typename,
     ]);
   }
@@ -8283,6 +8324,11 @@ class Query$get_business_by_rental_category1$business_business$details {
     final l$currency = currency;
     final lOther$currency = other.currency;
     if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -8324,8 +8370,12 @@ abstract class CopyWith$Query$get_business_by_rental_category1$business_business
     String? image,
     String? name,
     String? currency,
+    Query$get_business_by_rental_category1$business_business$details$location?
+        location,
     String? $__typename,
   });
+  CopyWith$Query$get_business_by_rental_category1$business_business$details$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Query$get_business_by_rental_category1$business_business$details<
@@ -8352,6 +8402,7 @@ class _CopyWithImpl$Query$get_business_by_rental_category1$business_business$det
     Object? image = _undefined,
     Object? name = _undefined,
     Object? currency = _undefined,
+    Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_business_by_rental_category1$business_business$details(
@@ -8369,10 +8420,20 @@ class _CopyWithImpl$Query$get_business_by_rental_category1$business_business$det
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_business_by_rental_category1$business_business$details$location),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_business_by_rental_category1$business_business$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_business_by_rental_category1$business_business$details$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_business_by_rental_category1$business_business$details<
@@ -8391,6 +8452,178 @@ class _CopyWithStubImpl$Query$get_business_by_rental_category1$business_business
     String? image,
     String? name,
     String? currency,
+    Query$get_business_by_rental_category1$business_business$details$location?
+        location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_by_rental_category1$business_business$details$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_business_by_rental_category1$business_business$details$location
+              .stub(_res);
+}
+
+class Query$get_business_by_rental_category1$business_business$details$location {
+  Query$get_business_by_rental_category1$business_business$details$location({
+    required this.address,
+    required this.gps,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_by_rental_category1$business_business$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$address = json['address'];
+    final l$gps = json['gps'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_by_rental_category1$business_business$details$location(
+      address: (l$address as String),
+      gps: geographyFromJson(l$gps),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String address;
+
+  final Geography gps;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$address = address;
+    final l$gps = gps;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$address,
+      l$gps,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_by_rental_category1$business_business$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_by_rental_category1$business_business$details$location
+    on Query$get_business_by_rental_category1$business_business$details$location {
+  CopyWith$Query$get_business_by_rental_category1$business_business$details$location<
+          Query$get_business_by_rental_category1$business_business$details$location>
+      get copyWith =>
+          CopyWith$Query$get_business_by_rental_category1$business_business$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_by_rental_category1$business_business$details$location<
+    TRes> {
+  factory CopyWith$Query$get_business_by_rental_category1$business_business$details$location(
+    Query$get_business_by_rental_category1$business_business$details$location
+        instance,
+    TRes Function(
+            Query$get_business_by_rental_category1$business_business$details$location)
+        then,
+  ) = _CopyWithImpl$Query$get_business_by_rental_category1$business_business$details$location;
+
+  factory CopyWith$Query$get_business_by_rental_category1$business_business$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_by_rental_category1$business_business$details$location;
+
+  TRes call({
+    String? address,
+    Geography? gps,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_by_rental_category1$business_business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_by_rental_category1$business_business$details$location<
+            TRes> {
+  _CopyWithImpl$Query$get_business_by_rental_category1$business_business$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_by_rental_category1$business_business$details$location
+      _instance;
+
+  final TRes Function(
+          Query$get_business_by_rental_category1$business_business$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? address = _undefined,
+    Object? gps = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_by_rental_category1$business_business$details$location(
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_by_rental_category1$business_business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_by_rental_category1$business_business$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_by_rental_category1$business_business$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? address,
+    Geography? gps,
     String? $__typename,
   }) =>
       _res;

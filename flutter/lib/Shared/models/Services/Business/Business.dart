@@ -22,7 +22,8 @@ class BusinessCard {
       required this.currency,
       this.avgRating,
       this.lastActive,
-      this.reviewCount, this.location});
+      this.reviewCount,
+      this.location});
 }
 
 Map<TimeUnit, num> constructBusinessServiceCost(cost) {

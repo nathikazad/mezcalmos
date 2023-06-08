@@ -52,6 +52,8 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
         acceptedPayments: _paymentInfo.acceptedPayments,
         avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
         reviewCount: data.reviews_aggregate.aggregate?.count,
+        location: constructLocation(
+                data.details.location.gps, data.details.location.address),
       ));
     });
     return _businesses;

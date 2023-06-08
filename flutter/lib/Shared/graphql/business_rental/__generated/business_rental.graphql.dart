@@ -1,4 +1,5 @@
 import '../../__generated/schema.graphql.dart';
+import '../../buisness_order/__generated/business_order.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
