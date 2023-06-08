@@ -82,7 +82,12 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           if (item.parameters.guests != null) ...[
-                            Icon(Icons.people),
+                            Icon(
+                              Icons.people,
+                              color: (item.available == true)
+                                  ? Colors.black
+                                  : Colors.grey.shade400,
+                            ),
                             SizedBox(width: 5),
                             Text(
                                 item.parameters.guests?.toString() ??
@@ -96,9 +101,15 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                           ],
                           if (item.parameters.numberOfUnits != null &&
                               item.parameters.numberOfUnits != null) ...[
-                            Icon(Icons.calendar_today),
+                            Icon(
+                              Icons.calendar_today,
+                              color: (item.available == true)
+                                  ? Colors.black
+                                  : Colors.grey.shade400,
+                            ),
+                            SizedBox(width: 5),
                             Text(
-                                "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toReadableString()}",
+                                "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toReadableString().toPlural(isPlural: item.parameters.numberOfUnits! > 1)}",
                                 style: context.textTheme.bodyLarge?.copyWith(
                                   color: (item.available == true)
                                       ? Colors.black
@@ -157,16 +168,17 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                MezIconButton(
-                  onTap: () async {
-                    await _showPriceSheet(
-                        context: context, initPrice: item.cost.toDouble());
-                  },
-                  icon: Icons.edit_outlined,
-                  elevation: 0,
-                  backgroundColor: Colors.grey.shade300,
-                  iconColor: Colors.black,
-                )
+                if (viewController.orderIsRequested && item.available == true)
+                  MezIconButton(
+                    onTap: () async {
+                      await _showPriceSheet(
+                          context: context, initPrice: item.cost.toDouble());
+                    },
+                    icon: Icons.edit_outlined,
+                    elevation: 0,
+                    backgroundColor: Colors.grey.shade300,
+                    iconColor: Colors.black,
+                  )
               ],
             ),
             Divider(),
@@ -235,34 +247,37 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                MezIconButton(
-                  onTap: () async {
-                    await _showTimeSheet(
-                        context: context,
-                        initDate: DateTime.tryParse(item.time ?? "") ??
-                            DateTime.now());
-                  },
-                  icon: Icons.edit_outlined,
-                  backgroundColor: Colors.grey.shade300,
-                  iconColor: Colors.black,
-                  elevation: 0,
-                )
+                if (viewController.orderIsRequested && item.available == true)
+                  MezIconButton(
+                    onTap: () async {
+                      await _showTimeSheet(
+                          context: context,
+                          initDate: DateTime.tryParse(item.time ?? "") ??
+                              DateTime.now());
+                    },
+                    icon: Icons.edit_outlined,
+                    backgroundColor: Colors.grey.shade300,
+                    iconColor: Colors.black,
+                    elevation: 0,
+                  )
               ],
             ),
-            Divider(),
-            MezInkwell(
-              icon: Icons.remove_circle_outlined,
-              textColor: (item.available == true) ? null : redAccentColor,
-              backgroundColor: (item.available == true) ? null : offRedColor,
-              label: (item.available == true)
-                  ? "${_i18n()['markAsUnavailable']}"
-                  : "${_i18n()['markAsAvailable']}",
-              onClick: () async {
-                await viewController.updateItemAvailability(
-                    itemId: item.itemId,
-                    newAvailability: !(item.available == true));
-              },
-            )
+            if (viewController.orderIsRequested) ...[
+              Divider(),
+              MezInkwell(
+                icon: Icons.remove_circle_outlined,
+                textColor: (item.available != true) ? null : redAccentColor,
+                backgroundColor: (item.available != true) ? null : offRedColor,
+                label: (item.available == true)
+                    ? "${_i18n()['markAsUnavailable']}"
+                    : "${_i18n()['markAsAvailable']}",
+                onClick: () async {
+                  await viewController.updateItemAvailability(
+                      itemId: item.itemId,
+                      newAvailability: !(item.available == true));
+                },
+              )
+            ]
           ],
         ),
       ),

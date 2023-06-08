@@ -1816,6 +1816,8 @@ class Order {
   }
 }
 
+
+
 class WorkingDay {
   bool isOpen;
   List<OpenHours> openHours;

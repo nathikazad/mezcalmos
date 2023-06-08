@@ -30,6 +30,12 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
   }
 
   @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: MezSideMenu(),
@@ -100,6 +106,8 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
 
   SingleChildScrollView _upcomingTab(BuildContext context) {
     return SingleChildScrollView(
+        controller: viewController.upcomingScrollController,
+        physics: AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,6 +156,8 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
 
   SingleChildScrollView _pastTab(BuildContext context) {
     return SingleChildScrollView(
+        controller: viewController.pastScrollController,
+        physics: AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.all(15),
         child: Obx(
           () => Column(

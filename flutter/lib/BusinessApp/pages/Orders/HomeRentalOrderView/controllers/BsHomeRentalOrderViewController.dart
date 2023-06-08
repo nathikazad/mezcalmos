@@ -40,7 +40,7 @@ class BsHomeRentalOrderViewController {
     if (maxTime == null) return false;
     final DateTime now = DateTime.now();
     final Duration diff = maxTime.difference(now);
-    return diff.inDays <= 2;
+    return diff.inDays > 2 && order?.inProcess == true;
   }
 
   // stream //
@@ -149,6 +149,26 @@ class BsHomeRentalOrderViewController {
           await CloudFunctions.business_handleOrderRequestByAdmin(
               orderRequestId: orderId,
               newStatus: BusinessOrderRequestStatus.Confirmed);
+      if (res.success) {
+        showSavedSnackBar();
+      }
+    } on FirebaseException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message ?? "Error");
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
+
+  Future<void> cancelOrder() async {
+    try {
+      final HandleRequestResponse res =
+          await CloudFunctions.business_handleOrderRequestByAdmin(
+              orderRequestId: orderId,
+              newStatus: BusinessOrderRequestStatus.CancelledByBusiness);
       if (res.success) {
         showSavedSnackBar();
       }

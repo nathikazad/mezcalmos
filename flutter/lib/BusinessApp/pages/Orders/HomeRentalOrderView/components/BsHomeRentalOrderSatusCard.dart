@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
 
 class BsHomeRentalOrderSatusCard extends StatelessWidget {
@@ -22,11 +23,11 @@ class BsHomeRentalOrderSatusCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 18,
-              backgroundColor: (5 == 7) ? Colors.grey.shade400 : null,
+              backgroundColor: (status.isCancelled) ? offRedColor : null,
               child: Icon(
                 status.getIcon(),
                 size: 15,
-                color: Colors.white,
+                color: status.isCancelled ? redAccentColor : Colors.white,
               ),
             ),
             Expanded(

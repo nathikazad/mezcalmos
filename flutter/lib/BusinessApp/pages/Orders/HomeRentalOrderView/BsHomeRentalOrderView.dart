@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,17 +7,16 @@ import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/component
 import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/components/BsHomeRentalOrderSatusCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/controllers/BsHomeRentalOrderViewController.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 
 class BsHomeRentalOrderView extends StatefulWidget {
@@ -80,10 +81,16 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
                     firstAvatarBgImage: CachedNetworkImageProvider(
                       viewController.customer!.image!,
                     ),
-                    action: MessageButton(
-                      chatId: 1,
-                      onTap: () {},
-                    ),
+                    action: (viewController.order?.chatId != null)
+                        ? MessageButton(
+                            chatId: viewController.order!.chatId!.toInt(),
+                            onTap: () {
+                              BaseMessagingScreen.navigate(
+                                  chatId:
+                                      viewController.order!.chatId!.toInt());
+                            },
+                          )
+                        : null,
                     content: Text(
                       viewController.customer!.name!,
                       style: context.textTheme.bodyLarge,
@@ -97,9 +104,9 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
                             viewController: viewController,
                           )),
                 ),
-                OrderPaymentMethod(
-                    paymentType: PaymentType.Card,
-                    stripeOrderPaymentInfo: null),
+                // OrderPaymentMethod(
+                //     paymentType: PaymentType.Card,
+                //     stripeOrderPaymentInfo: null),
                 meduimSeperator,
                 OrderNoteCard(
                   note: viewController.order?.notes,
@@ -118,7 +125,13 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
                 if (viewController.canCancel)
                   MezButton(
                     label: "Cancel order",
-                    onClick: () async {},
+                    onClick: () async {
+                      unawaited(
+                          showConfirmationDialog(context, onYesClick: () async {
+                        await viewController.cancelOrder();
+                        Navigator.pop(context);
+                      }));
+                    },
                     backgroundColor: offRedColor,
                     textColor: redAccentColor,
                   )

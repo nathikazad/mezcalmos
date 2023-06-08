@@ -1751,13 +1751,13 @@
     },
     "helpers": {
       "TimeUnitHelper": {
-        "hour": "Hour",
-        "day": "Day",
-        "week": "Week",
-        "month": "Month",
-        "person": "Person",
-        "unit": "Unit",
-        "total": "Total"
+        "perHour": "Hour",
+        "perDay": "Day",
+        "perWeek": "Week",
+        "perMonth": "Month",
+        "perPerson": "Person",
+        "unit": "Unit"
+       
       },
       "DeliveryOrderHelper": {
         "status": {

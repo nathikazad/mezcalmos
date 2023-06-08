@@ -1817,13 +1817,12 @@
     },
     "helpers": {
       "TimeUnitHelper" : {
-        "hour": "Hora",
-        "day": "Día",
-        "week": "Semana",
-        "month": "Mes",
-        "person": "Persona",
-        "unit": "Unidad",
-        "total": "Total"
+        "perHour": "Hora",
+        "perDay": "Día",
+        "perWeek": "Semana",
+        "perMonth": "Mes",
+        "perPerson": "Persona",
+        "unit": "Unidad"
     
       },
       "DeliveryOrderHelper": {
