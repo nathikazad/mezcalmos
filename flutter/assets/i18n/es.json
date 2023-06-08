@@ -1799,6 +1799,9 @@
       "authController": {
         "failedOTPConfirmRequest": "La confirmación del código OTP falló :(",
         "setNameAndImage": "Establezca su nombre e imagen antes de continuar "
+      },
+      "SideMenuDrawerController" : {
+        "contactAdmin" :"Contactar a administrador"
       }
     },
     "models": {
@@ -2443,6 +2446,7 @@
         "login": "Acceso",
         "contact": "Contáctenos",
         "language": "Idioma",
+        "contactAdmin" : "Contactar a administrador",
         "logout": "Cerrar sesión",
         "legal": "Política de privacidad"
       }

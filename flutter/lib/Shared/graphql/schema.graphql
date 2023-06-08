@@ -35697,12 +35697,17 @@ type service_provider_details {
   id: Int!
   image: String!
 
+  """
+  A computed field, executes function "service_provider.is_open"
+  """
+  is_open: Boolean
+
   """Record <language_id, bool>"""
   language(
     """JSON select path"""
     path: String
   ): jsonb!
-  last_active_time: timestamp
+  last_active_time: timestamp!
 
   """An object relationship"""
   laundry_store: laundry_store
@@ -35730,6 +35735,7 @@ type service_provider_details {
 
   """An object relationship"""
   stripe_info: service_provider_stripe_info
+  time_zone: String
   unique_id: String
 }
 
@@ -35795,6 +35801,7 @@ input service_provider_details_bool_exp {
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
+  is_open: Boolean_comparison_exp
   language: jsonb_comparison_exp
   last_active_time: timestamp_comparison_exp
   laundry_store: laundry_store_bool_exp
@@ -35811,6 +35818,7 @@ input service_provider_details_bool_exp {
   service_provider_type: String_comparison_exp
   stripe_id: Int_comparison_exp
   stripe_info: service_provider_stripe_info_bool_exp
+  time_zone: String_comparison_exp
   unique_id: String_comparison_exp
 }
 
@@ -35923,6 +35931,7 @@ input service_provider_details_insert_input {
   service_provider_type: String
   stripe_id: Int
   stripe_info: service_provider_stripe_info_obj_rel_insert_input
+  time_zone: String
   unique_id: String
 }
 
@@ -35943,6 +35952,7 @@ type service_provider_details_max_fields {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -35963,6 +35973,7 @@ type service_provider_details_min_fields {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -36009,6 +36020,7 @@ input service_provider_details_order_by {
   firebase_id: order_by
   id: order_by
   image: order_by
+  is_open: order_by
   language: order_by
   last_active_time: order_by
   laundry_store: laundry_store_order_by
@@ -36025,6 +36037,7 @@ input service_provider_details_order_by {
   service_provider_type: order_by
   stripe_id: order_by
   stripe_info: service_provider_stripe_info_order_by
+  time_zone: order_by
   unique_id: order_by
 }
 
@@ -36104,6 +36117,9 @@ enum service_provider_details_select_column {
   stripe_id
 
   """column name"""
+  time_zone
+
+  """column name"""
   unique_id
 }
 
@@ -36132,6 +36148,7 @@ input service_provider_details_set_input {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -36199,6 +36216,7 @@ input service_provider_details_stream_cursor_value_input {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -36272,6 +36290,9 @@ enum service_provider_details_update_column {
 
   """column name"""
   stripe_id
+
+  """column name"""
+  time_zone
 
   """column name"""
   unique_id

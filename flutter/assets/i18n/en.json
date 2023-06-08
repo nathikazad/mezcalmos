@@ -1733,6 +1733,9 @@
       "authController": {
         "failedOTPConfirmRequest": "OTP Code confirmation failed :(",
         "setNameAndImage": "Please set your name and image before proceeding"
+      },
+      "SideMenuDrawerController" : {
+        "contactAdmin" : "Contact Admin"
       }
     },
     "models": {
@@ -2374,6 +2377,7 @@
         "login": "Login",
         "language": "Language",
         "contact": "Contact us",
+        "contactAdmin" : "Contact Admin",
         "logout": "Logout",
         "legal": "Privacy policy"
       }

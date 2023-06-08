@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_operator/hsLaundryOperator.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
@@ -25,6 +27,9 @@ class LaundryOpAuthController extends GetxController {
     operator.value = await get_laundry_operator(userId: operatorUserId);
     if (operator.value != null) {
       _laundryId.value = operator.value!.state.serviceProviderId;
+
+      Get.find<SideMenuDrawerController>().addContactAdminItem(
+          id: laundryId!, type: cm.RecipientType.Restaurant);
     }
 
     mezDbgPrint("👑👑 laundry Operator :: ${operator.value?.toJson()}");

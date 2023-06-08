@@ -26,6 +26,12 @@ query get_service_provider_customer_chat($customer_id: Int, $service_provider_id
     }
   }
 }
+query getMezAdminChat($recipient_id: Int!, $recipient_type: String!) {
+  mez_admin_chat(where: {recipient_id: {_eq: $recipient_id}, recipient_type: {_eq: $recipient_type}}) {
+    chat_id
+  }
+}
+
 
 query get_customer_chats($customer_id: Int) {
   service_provider_customer_chat(where: {customer_id: {_eq: $customer_id}}, order_by: {chat: {last_message_sent: desc}}) {

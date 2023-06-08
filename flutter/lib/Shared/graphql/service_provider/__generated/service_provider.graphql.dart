@@ -11183,7 +11183,7 @@ extension ClientExtension$Mutation$setLastActiveTime on graphql.GraphQLClient {
 
 class Mutation$setLastActiveTime$update_service_provider_details_by_pk {
   Mutation$setLastActiveTime$update_service_provider_details_by_pk({
-    this.last_active_time,
+    required this.last_active_time,
     required this.$__typename,
   });
 
@@ -11192,12 +11192,12 @@ class Mutation$setLastActiveTime$update_service_provider_details_by_pk {
     final l$last_active_time = json['last_active_time'];
     final l$$__typename = json['__typename'];
     return Mutation$setLastActiveTime$update_service_provider_details_by_pk(
-      last_active_time: (l$last_active_time as String?),
+      last_active_time: (l$last_active_time as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final String? last_active_time;
+  final String last_active_time;
 
   final String $__typename;
 
@@ -11297,9 +11297,10 @@ class _CopyWithImpl$Mutation$setLastActiveTime$update_service_provider_details_b
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$setLastActiveTime$update_service_provider_details_by_pk(
-        last_active_time: last_active_time == _undefined
-            ? _instance.last_active_time
-            : (last_active_time as String?),
+        last_active_time:
+            last_active_time == _undefined || last_active_time == null
+                ? _instance.last_active_time
+                : (last_active_time as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

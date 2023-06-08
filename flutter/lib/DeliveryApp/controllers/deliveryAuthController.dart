@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -52,6 +54,11 @@ class DeliveryAuthController extends GetxController {
     mezDbgPrint("DeliveryAuthController: handle state change user value");
     _driver.value = await get_driver_by_user_id(
         userId: _authController.hasuraUserId!, withCache: false);
+    if (_driver.value != null) {
+      Get.find<SideMenuDrawerController>().addContactAdminItem(
+          id: _driver.value!.deliveryDriverId,
+          type: cm.RecipientType.DeliveryDriver);
+    }
   }
 
   Timer _listenForLocation() {
