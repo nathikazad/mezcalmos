@@ -5,6 +5,7 @@ query get_service_by_id($id: Int!) {
     business {
       id
       details {
+        last_active_time
         id
         accepted_payments
         image

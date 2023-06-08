@@ -305,6 +305,13 @@ const documentNodeQueryget_service_by_id = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'last_active_time'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
                     arguments: [],
@@ -1138,6 +1145,7 @@ class _CopyWithStubImpl$Query$get_service_by_id$business_service_by_pk$business<
 
 class Query$get_service_by_id$business_service_by_pk$business$details {
   Query$get_service_by_id$business_service_by_pk$business$details({
+    this.last_active_time,
     required this.id,
     required this.accepted_payments,
     required this.image,
@@ -1148,6 +1156,7 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
 
   factory Query$get_service_by_id$business_service_by_pk$business$details.fromJson(
       Map<String, dynamic> json) {
+    final l$last_active_time = json['last_active_time'];
     final l$id = json['id'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
@@ -1155,6 +1164,7 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
     final l$currency = json['currency'];
     final l$$__typename = json['__typename'];
     return Query$get_service_by_id$business_service_by_pk$business$details(
+      last_active_time: (l$last_active_time as String?),
       id: (l$id as int),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
@@ -1163,6 +1173,8 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? last_active_time;
 
   final int id;
 
@@ -1178,6 +1190,8 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$last_active_time = last_active_time;
+    _resultData['last_active_time'] = l$last_active_time;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$accepted_payments = accepted_payments;
@@ -1195,6 +1209,7 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
 
   @override
   int get hashCode {
+    final l$last_active_time = last_active_time;
     final l$id = id;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
@@ -1202,6 +1217,7 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
     final l$currency = currency;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$last_active_time,
       l$id,
       l$accepted_payments,
       l$image,
@@ -1219,6 +1235,11 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
     if (!(other
             is Query$get_service_by_id$business_service_by_pk$business$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$last_active_time = last_active_time;
+    final lOther$last_active_time = other.last_active_time;
+    if (l$last_active_time != lOther$last_active_time) {
       return false;
     }
     final l$id = id;
@@ -1280,6 +1301,7 @@ abstract class CopyWith$Query$get_service_by_id$business_service_by_pk$business$
       _CopyWithStubImpl$Query$get_service_by_id$business_service_by_pk$business$details;
 
   TRes call({
+    String? last_active_time,
     int? id,
     dynamic? accepted_payments,
     String? image,
@@ -1308,6 +1330,7 @@ class _CopyWithImpl$Query$get_service_by_id$business_service_by_pk$business$deta
   static const _undefined = {};
 
   TRes call({
+    Object? last_active_time = _undefined,
     Object? id = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
@@ -1316,6 +1339,9 @@ class _CopyWithImpl$Query$get_service_by_id$business_service_by_pk$business$deta
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_service_by_id$business_service_by_pk$business$details(
+        last_active_time: last_active_time == _undefined
+            ? _instance.last_active_time
+            : (last_active_time as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
@@ -1347,6 +1373,7 @@ class _CopyWithStubImpl$Query$get_service_by_id$business_service_by_pk$business$
   TRes _res;
 
   call({
+    String? last_active_time,
     int? id,
     dynamic? accepted_payments,
     String? image,

@@ -3130,6 +3130,13 @@ const documentNodeQueryget_rental_by_id = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'last_active_time'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
@@ -4067,6 +4074,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     required this.name,
     required this.currency,
     required this.image,
+    this.last_active_time,
     required this.location,
     required this.accepted_payments,
     required this.$__typename,
@@ -4078,6 +4086,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$image = json['image'];
+    final l$last_active_time = json['last_active_time'];
     final l$location = json['location'];
     final l$accepted_payments = json['accepted_payments'];
     final l$$__typename = json['__typename'];
@@ -4086,6 +4095,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
       name: (l$name as String),
       currency: (l$currency as String),
       image: (l$image as String),
+      last_active_time: (l$last_active_time as String?),
       location:
           Query$get_rental_by_id$business_rental_by_pk$business$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -4101,6 +4111,8 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
   final String currency;
 
   final String image;
+
+  final String? last_active_time;
 
   final Query$get_rental_by_id$business_rental_by_pk$business$details$location
       location;
@@ -4119,6 +4131,8 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     _resultData['currency'] = l$currency;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$last_active_time = last_active_time;
+    _resultData['last_active_time'] = l$last_active_time;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$accepted_payments = accepted_payments;
@@ -4134,6 +4148,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     final l$name = name;
     final l$currency = currency;
     final l$image = image;
+    final l$last_active_time = last_active_time;
     final l$location = location;
     final l$accepted_payments = accepted_payments;
     final l$$__typename = $__typename;
@@ -4142,6 +4157,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
       l$name,
       l$currency,
       l$image,
+      l$last_active_time,
       l$location,
       l$accepted_payments,
       l$$__typename,
@@ -4176,6 +4192,11 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$last_active_time = last_active_time;
+    final lOther$last_active_time = other.last_active_time;
+    if (l$last_active_time != lOther$last_active_time) {
       return false;
     }
     final l$location = location;
@@ -4225,6 +4246,7 @@ abstract class CopyWith$Query$get_rental_by_id$business_rental_by_pk$business$de
     String? name,
     String? currency,
     String? image,
+    String? last_active_time,
     Query$get_rental_by_id$business_rental_by_pk$business$details$location?
         location,
     dynamic? accepted_payments,
@@ -4256,6 +4278,7 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$business$detail
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? image = _undefined,
+    Object? last_active_time = _undefined,
     Object? location = _undefined,
     Object? accepted_payments = _undefined,
     Object? $__typename = _undefined,
@@ -4271,6 +4294,9 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$business$detail
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        last_active_time: last_active_time == _undefined
+            ? _instance.last_active_time
+            : (last_active_time as String?),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -4306,6 +4332,7 @@ class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk$business$de
     String? name,
     String? currency,
     String? image,
+    String? last_active_time,
     Query$get_rental_by_id$business_rental_by_pk$business$details$location?
         location,
     dynamic? accepted_payments,

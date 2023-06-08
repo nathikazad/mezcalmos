@@ -1,9 +1,9 @@
 query get_event_by_id($id: Int!) {
   business_event_by_pk(id: $id) {
-    
     business {
       id
       details {
+        last_active_time
         id
         accepted_payments
         image
