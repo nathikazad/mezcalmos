@@ -101,10 +101,14 @@ class CustBusinessCartController extends GetxController {
       final CustBusinessCart? value = await get_business_cart(
         customerId: _auth.hasuraUserId!,
       );
+      mezDbgPrint("Cart value ============> $value");
       if (value != null && value.items.isNotEmpty && value.businessId != null) {
         cart.value = value;
+        cart.refresh();
       } else {
-        await create_business_cart();
+        cart.value = value;
+        cart.refresh();
+        await create_business_cart(businessId: value?.businessId?.toInt());
       }
     }
   }
