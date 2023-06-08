@@ -21,6 +21,16 @@ class _MezImageSliderState extends State<MezImageSlider> {
     _pageController = PageController(initialPage: _currentPage);
   }
 
+  void animate() {
+    _pageController.animateToPage(
+      _currentPage,
+      duration: Duration(
+        milliseconds: 400,
+      ),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -46,15 +56,23 @@ class _MezImageSliderState extends State<MezImageSlider> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(widget.images.length, (int index) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                width: 8.0,
-                height: 8.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _currentPage == index
-                      ? Colors.white
-                      : Colors.grey.shade400,
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _currentPage = index;
+                    animate();
+                  });
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                  width: 8.0,
+                  height: 8.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _currentPage == index
+                        ? Colors.white
+                        : Colors.grey.shade400,
+                  ),
                 ),
               );
             }),
