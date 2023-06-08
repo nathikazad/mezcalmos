@@ -1,13 +1,12 @@
-import { service_provider_referral_constraint } from "../../../../hasura/library/src/generated/graphql-zeus";
 import { AddReferralError } from "../../serviceProvider/addReferral";
 import { getHasura } from "../../utilities/hasura";
 import { MezError } from "../models/Generic/Generic";
 import { ServiceProviderType } from "../models/Services/Service";
 
 
-export async function addReferral(customerId: number, uniqueId: string,) {
+export async function addReferral(customerId: number, uniqueId: string) {
     let chain = getHasura();
-
+    
     let response = await chain.query({
         service_provider_details: [{
             where: {
@@ -67,10 +66,6 @@ export async function addReferral(customerId: number, uniqueId: string,) {
                 customer_id: customerId,
                 service_provider_id: serviceProviderId,
                 service_provider_type: serviceProviderType
-            },
-            on_conflict: {
-                constraint: service_provider_referral_constraint.referral_pkey,
-                update_columns: []
             }
         }, {
             customer_id: true,

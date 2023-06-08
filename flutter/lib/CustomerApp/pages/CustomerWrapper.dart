@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
@@ -17,6 +19,7 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
@@ -174,37 +177,43 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   }
 
   Future<void> _startListeningForLinks() async {
+    mezDbgPrint("startListeningForLinks");
     String? initialLink;
     try {
       initialLink = await getInitialLink();
     } catch (error) {
       // Handle error
     }
-
     // Parse the initial link (if it exists)
     if (initialLink != null) {
       final Uri initialUri = Uri.parse(initialLink);
-      final String? referralCode = initialUri.queryParameters['referral'];
-      if (referralCode != null) {
-        await saveReferral(referralCode);
-        // todo: @Sanchit Uke call routing function CustomerDeepLinkHandler.handleDeepLink
-      }
-    }
-
-    // Subscribe to incoming links
-    linkStream.listen((String? link) {
-      // Parse the link
-      if (link != null) {
-        final Uri uri = Uri.parse(link);
-        final String? referralCode = uri.queryParameters['referral'];
+      if (initialUri.pathSegments.length > 0) {
+        final String? referralCode = initialUri.pathSegments[0];
         if (referralCode != null) {
-          saveReferral(referralCode);
+          await saveReferral(referralCode);
           // todo: @Sanchit Uke call routing function CustomerDeepLinkHandler.handleDeepLink
         }
       }
-    }, onError: (err) {
-      // Handle error
-    });
+      CustomerDeepLinkHandler.handleDeepLink(initialUri);
+    }
+
+    // Subscribe to incoming links
+    if (kIsWeb == false) {
+      linkStream.listen((String? link) {
+        // Parse the link
+        if (link != null) {
+          final Uri uri = Uri.parse(link);
+          final String? referralCode = uri.path;
+          if (referralCode != null) {
+            saveReferral(referralCode);
+            // todo: @Sanchit Uke call routing function CustomerDeepLinkHandler.handleDeepLink
+          }
+          CustomerDeepLinkHandler.handleDeepLink(uri);
+        }
+      }, onError: (err) {
+        // Handle error
+      });
+    }
   }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {
