@@ -86,9 +86,8 @@ Future<ProductWithBusinessCard?> get_product_by_id(
 
     if (data != null) {
       return ProductWithBusinessCard(
-        
           product: Product(
-            id: data.id,
+              id: data.id,
               category1: data.details.category1.toProductCategory1(),
               details: BusinessItemDetails(
                 id: data.details.id,
@@ -108,6 +107,9 @@ Future<ProductWithBusinessCard?> get_product_by_id(
                     [],
               )),
           business: BusinessCard(
+            lastActive: data.business.details.last_active_time != null
+                ? DateTime.parse(data.business.details.last_active_time!)
+                : null,
             id: data.business.id,
             detailsId: data.business.details.id,
             name: data.business.details.name,

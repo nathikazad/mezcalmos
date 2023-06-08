@@ -134,6 +134,9 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
                       address: data.home_rental!.address)
                   : null),
           business: BusinessCard(
+            lastActive: data.business.details.last_active_time != null
+                ? DateTime.parse(data.business.details.last_active_time!)
+                : null,
             id: data.business.id,
             detailsId: data.business.details.id,
             name: data.business.details.name,
