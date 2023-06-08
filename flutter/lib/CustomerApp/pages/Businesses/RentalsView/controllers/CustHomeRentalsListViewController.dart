@@ -143,7 +143,7 @@ class CustHomeRentalsListViewController {
       List<RentalCard> newList = await get_home_rentals(
         distance: 25000,
         fromLocation: _fromLocation!,
-        distance: 1000000000000,
+        // distance: 1000000000000,
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
         withCache: false,
         offset: _rentalCurrentOffset,

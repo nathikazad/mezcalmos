@@ -1,10 +1,18 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -25,6 +33,32 @@ class CustRestaurantListViewController {
   RxBool showOnlyOpen = RxBool(true);
   RxString searchQuery = RxString("");
   LocationData? customerLocation;
+
+  // Map view //
+  RxBool _isMapView = false.obs;
+  bool get isMapView => _isMapView.value;
+
+  RxBool _showOnlyOpenOnMap = RxBool(true);
+  bool get showOnlyOpenOnMap => _showOnlyOpenOnMap.value;
+
+  GoogleMapController? _googleMapController;
+
+  RxBool _showFetchButton = false.obs;
+  RxBool get showFetchButton => _showFetchButton;
+
+  LatLng _currentLocation = LatLng(19.4326, -99.1332);
+  LatLng get currentLocation => _currentLocation;
+
+  LatLng? _screenToWorldPosition;
+
+  RxList<Restaurant> _mapViewRestaurants = <Restaurant>[].obs;
+  List<Restaurant> get mapViewRestaurants => _mapViewRestaurants;
+
+  RxSet<Marker> _restaurantsMarkers = <Marker>{}.obs;
+  RxSet<Marker> get restaurantsMarkers => _restaurantsMarkers;
+
+  BuildContext? ctx;
+  // Map view //
 
   final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
@@ -100,6 +134,94 @@ class CustRestaurantListViewController {
         lang: userLanguage,
         withCache: false);
   }
+
+  // Map view //
+  void switchView() => _isMapView.value = !_isMapView.value;
+
+  Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
+    try {
+      if (currentPostitionBased) {
+        _mapViewRestaurants.value = await fetch_restaurants(withCache: false);
+      } else {
+        _mapViewRestaurants.value = await fetch_restaurants(withCache: false);
+      }
+    } catch (e) {
+      mezDbgPrint(e);
+    } finally {
+      await _fillMapsMarkers();
+    }
+  }
+
+  Future<void> _fillMapsMarkers() async {
+    _restaurantsMarkers = <Marker>{}.obs;
+
+    for (Restaurant restaurant in _mapViewRestaurants) {
+      await _restaurantsMarkers.addLabelMarker(LabelMarker(
+        flat: true,
+        label: null,
+        altIconPath: mezVehicleRentalIconMarker,
+        markerId: MarkerId(restaurant.info.hasuraId.toString()),
+        backgroundColor: Colors.white,
+        onTap: () => _onSelectRentalTag(restaurant),
+        position: LatLng(restaurant.info.location.position.latitude!,
+            restaurant.info.location.position.longitude!),
+      ));
+    }
+  }
+
+  void fetchMapViewRentals() {
+    _fetchMapViewRentals(currentPostitionBased: false);
+    _showFetchButton.value = false;
+  }
+
+  void recenterMap() {
+    _googleMapController?.moveCamera(CameraUpdate.newLatLng(_currentLocation));
+  }
+
+  void setOnlyOpenOnMap() =>
+      _showOnlyOpenOnMap.value = !_showOnlyOpenOnMap.value;
+
+  Future<void> onMapCreated(GoogleMapController? gMapController) async {
+    _googleMapController = gMapController;
+    await _googleMapController?.setMapStyle(mezMapStyle);
+    await _fetchMapViewRentals();
+  }
+
+  void onCameraMove(CameraPosition cameraPosition) {
+    _screenToWorldPosition = cameraPosition.target;
+    _showFetchButton.value = true;
+  }
+
+  void _onSelectRentalTag(Restaurant business) {
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.transparent,
+        context: ctx!,
+        builder: (BuildContext context) {
+          return Text('dqsdqsdqsdqsdsqdsq');
+          // return OnMapBusinessCard(business: business);
+        });
+  }
+
+  double _calculateDistance(LatLngBounds bounds) {
+    final double centerLat =
+        (bounds.northeast.latitude + bounds.southwest.latitude) / 2;
+    final double centerLng =
+        (bounds.northeast.longitude + bounds.southwest.longitude) / 2;
+    final LatLng center = LatLng(centerLat, centerLng);
+
+    final double p = 0.017453292519943295;
+    final double a = 0.5 -
+        cos((bounds.northeast.latitude - center.latitude) * p) / 2 +
+        cos(center.latitude * p) *
+            cos(bounds.northeast.latitude * p) *
+            (1 - cos((bounds.northeast.longitude - center.longitude) * p)) /
+            2;
+
+    return (12742 * asin(sqrt(a))) * 1000;
+  }
+
+  // Map view //
 
   void dispose() {
     isLoading.value = false;
