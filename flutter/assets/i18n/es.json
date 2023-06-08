@@ -1238,6 +1238,7 @@
             "map": "Mapa",
             "viewOnMap": "Ver en el mapa",
             "viewAsList": "Ver como lista",
+            "showCost": "Costo de exhibición",
             "fetchHomesInThisArea": "Buscar casas en esta área",
             "agency": "Agencia",
             "noBusinessesFound": "No businesses found",
@@ -1271,6 +1272,12 @@
             }
           },
           "CustRentalsListView": {
+            "home": "Hogar",
+            "map": "Mapa",
+            "viewOnMap": "Ver en el mapa",
+            "viewAsList": "Ver como lista",
+            "showCost": "Costo de exhibición",
+            "fetchHomesInThisArea": "Buscar casas en esta área",
             "uncategorized": "Sin categoría",
             "surf": "Surf",
             "homes": "Casas",
@@ -1282,13 +1289,17 @@
             "cancel": "Cancelar",
             "filter": "Filtrar",
             "store": "Tienda",
+            "unit": "unidad",
             "hour": "hora",
             "day": "día",
             "week": "semana",
             "month": "mes",
             "person": "persona",
-            "total": "total",
-            "unit": "unidad",
+            "perHour": "Por hora",
+            "perDay": "Por día",
+            "perWeek": "Por semana",
+            "perMonth": "Por mes",
+            "total": "Total",
             "motorcycle": "Motocicleta",
             "car": "Auto",
             "bicycle": "Bicicleta"
@@ -1833,7 +1844,7 @@
       }
     },
     "helpers": {
-      "TimeUnitHelper" : {
+      "TimeUnitHelper": {
         "hour": "Hora",
         "day": "Día",
         "week": "Semana",
@@ -1841,7 +1852,6 @@
         "person": "Persona",
         "unit": "Unidad",
         "total": "Total"
-    
       },
       "DeliveryOrderHelper": {
         "status": {

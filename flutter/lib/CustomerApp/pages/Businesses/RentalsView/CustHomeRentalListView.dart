@@ -41,7 +41,6 @@ class CustHomeRentalListView extends StatefulWidget {
 class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
   CustHomeRentalsListViewController viewController =
       CustHomeRentalsListViewController();
-  GoogleMapController? _googleMapController;
 
   @override
   void initState() {
@@ -121,7 +120,6 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
 
   Widget _mapView() {
     final List<TimeUnit> timeUnits = <TimeUnit>[
-      // TimeUnit.PerHour,
       TimeUnit.PerDay,
       TimeUnit.PerWeek,
       TimeUnit.PerMonth
@@ -133,11 +131,10 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
           scrollDirection: Axis.horizontal,
           child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Text(
-              'Show cost',
+              '${_i18n()['showCost']}',
               style: context.textTheme.bodyMedium
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
-
             Row(
                 children: List.generate(
                     timeUnits.length,
@@ -177,205 +174,67 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                 ),
                               )),
                         )))
-
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 10),
-            //   child: ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //           shape: StadiumBorder(
-            //               side: BorderSide(
-            //                   color: viewController.filterTag == TimeUnit.PerDay
-            //                       ? Colors.transparent
-            //                       : Colors.black54)),
-            //           backgroundColor: viewController.filterTag == TimeUnit.PerDay
-            //               ? primaryBlueColor
-            //               : Colors.white,
-            //           shadowColor: Colors.transparent,
-            //           padding:
-            //               EdgeInsets.symmetric(horizontal: 12, vertical: 4.25),
-            //           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            //           minimumSize: Size.zero),
-            //       onPressed: () => viewController.setFilter(TimeUnit.PerDay),
-            //       child: Text(
-            //         'Per day',
-            //         style: TextStyle(
-            //           color: viewController.filterTag == TimeUnit.PerDay
-            //               ? Colors.white
-            //               : Colors.black54,
-            //           fontWeight: FontWeight.w600,
-            //           fontSize: 11.mezSp,
-            //         ),
-            //       )),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 10),
-            //   child: ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //           shape: StadiumBorder(
-            //               side: BorderSide(
-            //                   color: viewController.filterTag == TimeUnit.PerDay
-            //                       ? Colors.transparent
-            //                       : Colors.black54)),
-            //           backgroundColor: viewController.filterTag == TimeUnit.PerDay
-            //               ? primaryBlueColor
-            //               : Colors.white,
-            //           shadowColor: Colors.transparent,
-            //           padding:
-            //               EdgeInsets.symmetric(horizontal: 12, vertical: 4.25),
-            //           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            //           minimumSize: Size.zero),
-            //       onPressed: () => viewController.setFilter(TimeUnit.PerDay),
-            //       child: Text(
-            //         'Per day',
-            //         style: TextStyle(
-            //           color: viewController.filterTag == TimeUnit.PerDay
-            //               ? Colors.white
-            //               : Colors.black54,
-            //           fontWeight: FontWeight.w600,
-            //           fontSize: 11.mezSp,
-            //         ),
-            //       )),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 10),
-            //   child: ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //           shape: StadiumBorder(
-            //               side: BorderSide(
-            //                   color: viewController.filterTag == TimeUnit.PerWeek
-            //                       ? Colors.transparent
-            //                       : Colors.black54)),
-            //           backgroundColor:
-            //               viewController.filterTag == TimeUnit.PerWeek
-            //                   ? primaryBlueColor
-            //                   : Colors.white,
-            //           shadowColor: Colors.transparent,
-            //           padding:
-            //               EdgeInsets.symmetric(horizontal: 12, vertical: 4.25),
-            //           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            //           minimumSize: Size.zero),
-            //       onPressed: () => viewController.setFilter(TimeUnit.PerWeek),
-            //       child: Text(
-            //         'Per week',
-            //         style: TextStyle(
-            //           color: viewController.filterTag == TimeUnit.PerWeek
-            //               ? Colors.white
-            //               : Colors.black54,
-            //           fontWeight: FontWeight.w600,
-            //           fontSize: 11.mezSp,
-            //         ),
-            //       )),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 10),
-            //   child: ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //           shape: StadiumBorder(
-            //               side: BorderSide(
-            //                   color: viewController.filterTag == TimeUnit.PerMonth
-            //                       ? Colors.transparent
-            //                       : Colors.black54)),
-            //           backgroundColor:
-            //               viewController.filterTag == TimeUnit.PerMonth
-            //                   ? primaryBlueColor
-            //                   : Colors.white,
-            //           shadowColor: Colors.transparent,
-            //           padding:
-            //               EdgeInsets.symmetric(horizontal: 12, vertical: 4.25),
-            //           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            //           minimumSize: Size.zero),
-            //       onPressed: () => viewController.setFilter(TimeUnit.PerMonth),
-            //       child: Text(
-            //         'Per month',
-            //         style: TextStyle(
-            //           color: viewController.filterTag == TimeUnit.PerMonth
-            //               ? Colors.white
-            //               : Colors.black54,
-            //           fontWeight: FontWeight.w600,
-            //           fontSize: 11.mezSp,
-            //         ),
-            //       )),
-            // ),
           ]),
         ),
       ),
-      Expanded(child: _googleMap())
+      Expanded(
+          child: Stack(
+        children: [
+          Obx(() {
+            viewController.allMarkers.isNotEmpty;
+            return GoogleMap(
+                compassEnabled: false,
+                mapToolbarEnabled: false,
+                zoomControlsEnabled: false,
+                markers: viewController.getMarkersList,
+                onMapCreated: viewController.onMapCreated,
+                onCameraMove: viewController.onCameraMove,
+                initialCameraPosition: CameraPosition(
+                  target: viewController.currentLocation,
+                  zoom: 14,
+                ));
+          }),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Obx(
+                () => viewController.showFetchButton.value
+                    ? InkWell(
+                        onTap: () => viewController.fetchMapViewRentals(),
+                        child: Material(
+                            color: Colors.white,
+                            elevation: 1,
+                            borderRadius: BorderRadius.circular(25),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 20),
+                              child: Text(
+                                '${_i18n()['fetchHomesInThisArea']}',
+                                style: context.textTheme.bodyLarge
+                                    ?.copyWith(color: primaryBlueColor),
+                              ),
+                            )),
+                      )
+                    : SizedBox.shrink(),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20, bottom: 20),
+              child: MezIconButton(
+                icon: Icons.my_location,
+                iconColor: Colors.black,
+                backgroundColor: Colors.white,
+                onTap: () => viewController.recenterMap(),
+              ),
+            ),
+          )
+        ],
+      ))
     ]);
-  }
-
-  Widget _googleMap() {
-    Set<Marker> getMarkersList() {
-      switch (viewController.filterTag) {
-        // case TimeUnit.PerHour:
-        //   return viewController.perHourMarkers;
-        case TimeUnit.PerDay:
-          return viewController.perDayMarkers;
-        case TimeUnit.PerWeek:
-          return viewController.perWeekMarkers;
-        default:
-          return viewController.perMonthMarkers;
-      }
-    }
-
-    return Stack(
-      children: [
-        GoogleMap(
-            compassEnabled: false,
-            mapToolbarEnabled: false,
-            zoomControlsEnabled: false,
-            markers: getMarkersList(),
-            onMapCreated: (GoogleMapController controller) {
-              _googleMapController = controller;
-              controller.setMapStyle(mezMapStyle);
-            },
-            onCameraMove: (CameraPosition position) {
-              viewController.onCameraMove(position.target);
-            },
-            initialCameraPosition: CameraPosition(
-              target: viewController.currentLocation,
-              zoom: 14,
-            )),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Obx(
-              () => viewController.showFetchButton.value
-                  ? InkWell(
-                      onTap: () => viewController
-                          .fetchMapViewRentals(_googleMapController!),
-                      child: Material(
-                          color: Colors.white,
-                          elevation: 1,
-                          borderRadius: BorderRadius.circular(25),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 20),
-                            child: Text(
-                              '${_i18n()['fetchHomesInThisArea']}',
-                              style: context.textTheme.bodyLarge
-                                  ?.copyWith(color: primaryBlueColor),
-                            ),
-                          )),
-                    )
-                  : SizedBox.shrink(),
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 20, bottom: 20),
-            child: MezIconButton(
-              icon: Icons.my_location,
-              iconColor: Colors.black,
-              backgroundColor: Colors.white,
-              onTap: () {},
-            ),
-          ),
-        )
-      ],
-    );
   }
 
   Widget _viewBusinessesSwitcher() {

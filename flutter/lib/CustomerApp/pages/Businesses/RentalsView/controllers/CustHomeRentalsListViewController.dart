@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalV
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
@@ -58,6 +59,8 @@ class CustHomeRentalsListViewController {
   List<BusinessCard> get businesses => _businesses.value;
 
   // Map view //
+  GoogleMapController? _googleMapController;
+
   RxBool _showFetchButton = false.obs;
   RxBool get showFetchButton => _showFetchButton;
 
@@ -69,18 +72,32 @@ class CustHomeRentalsListViewController {
   List<RentalCard> get mapViewRentals => _rentals.value;
   RxList<RentalCard> _mapViewRentals = <RentalCard>[].obs;
 
+  RxSet<Marker> _allMarkers = <Marker>{}.obs;
+  RxSet<Marker> get allMarkers => _allMarkers;
+
   RxSet<Marker> _perDayMarkers = <Marker>{}.obs;
-  Set<Marker> get perDayMarkers => _perDayMarkers;
+  RxSet<Marker> get perDayMarkers => _perDayMarkers;
 
   RxSet<Marker> _perWeekMarkers = <Marker>{}.obs;
-  Set<Marker> get perWeekMarkers => _perWeekMarkers;
+  RxSet<Marker> get perWeekMarkers => _perWeekMarkers;
 
   RxSet<Marker> _perMonthMarkers = <Marker>{}.obs;
-  Set<Marker> get perMonthMarkers => _perMonthMarkers;
+  RxSet<Marker> get perMonthMarkers => _perMonthMarkers;
 
   Rx<TimeUnit> _filterTag = TimeUnit.PerDay.obs;
   TimeUnit get filterTag => _filterTag.value;
   BuildContext? ctx;
+
+  Set<Marker> get getMarkersList {
+    switch (filterTag) {
+      case TimeUnit.PerDay:
+        return perDayMarkers;
+      case TimeUnit.PerWeek:
+        return perWeekMarkers;
+      default:
+        return perMonthMarkers;
+    }
+  }
   // Map view //
 
 // methods //
@@ -102,7 +119,7 @@ class CustHomeRentalsListViewController {
             lat: location.latitude!, lng: location.longitude!, address: "");
         await _fetchRentals();
         await _fetchBusinesses();
-        await _fetchMapViewRentals();
+
         _rentalScrollController.onBottomReach(_fetchRentals, sensitivity: 500);
         _businessScrollController.onBottomReach(_fetchBusinesses,
             sensitivity: 500);
@@ -124,6 +141,7 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(
           "👋 _fetchRentals called  \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
       List<RentalCard> newList = await get_home_rentals(
+        distance: 25000,
         fromLocation: _fromLocation!,
 
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
@@ -176,20 +194,21 @@ class CustHomeRentalsListViewController {
   // Map view //
   void switchView() => _isMapView.value = !_isMapView.value;
 
-  Future<void> _fetchMapViewRentals(
-      {bool currentPostitionBased = true,
-      GoogleMapController? googleMapController}) async {
+  Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
     try {
       if (currentPostitionBased) {
         _mapViewRentals.value = await get_home_rentals(
+          distance: 25000,
           fromLocation: _fromLocation!,
           offset: 0,
           limit: 25,
           withCache: false,
         );
       } else {
+        print('ddddddddddddddd');
         _mapViewRentals.value = await get_home_rentals(
-          // address: _calculateDistance(await googleMapController!.getVisibleRegion())
+          distance: _calculateDistance(
+              await _googleMapController!.getVisibleRegion()),
           fromLocation: Location(
               lat: _screenToWorldPosition!.latitude,
               lng: _screenToWorldPosition!.longitude,
@@ -206,35 +225,24 @@ class CustHomeRentalsListViewController {
     }
   }
 
-  Future<void> _fillMapsMarkers(
-      {GoogleMapController? googleMapController}) async {
+  Future<void> _fillMapsMarkers() async {
     _perDayMarkers = <Marker>{}.obs;
     _perWeekMarkers = <Marker>{}.obs;
     _perMonthMarkers = <Marker>{}.obs;
 
     for (RentalCard rental in _mapViewRentals) {
-      // final LabelMarker marker = LabelMarker(
-      //   flat: true,
-      //   label: rental.details.cost.values.first.toPriceString(),
-      //   markerId: MarkerId(rental.id.toString()),
-      //   backgroundColor: Colors.white,
-      //   onTap: () => _onSelectRentalTag(rental),
-      //   position: LatLng(rental.gpsLocation!.lat.toDouble(),
-      //       rental.gpsLocation!.lng.toDouble()),
-      // );
-
-      // if (rental.details.cost.keys.first == TimeUnit.PerDay) {
-      //   await _perDayMarkers.addLabelMarker(marker);
-      // }
-
-      // if (rental.details.cost.keys.first == TimeUnit.PerWeek) {
-      //   await _perWeekMarkers.addLabelMarker(marker);
-      // }
-      // if (rental.details.cost.keys.first == TimeUnit.PerMonth) {
-      //   await _perMonthMarkers.addLabelMarker(marker);
-      // }
-
-      // if (rental.details.cost[TimeUnit.PerDay] == null) {
+      await _allMarkers.addLabelMarker(LabelMarker(
+        flat: true,
+        label: rental.details.cost[TimeUnit.PerDay] != null
+            ? rental.details.cost[TimeUnit.PerDay]?.toPriceString()
+            : null,
+        altIconPath: mezHomeIconMarker,
+        markerId: MarkerId(rental.id.toString()),
+        backgroundColor: Colors.white,
+        onTap: () => _onSelectRentalTag(rental),
+        position: LatLng(rental.gpsLocation!.lat.toDouble(),
+            rental.gpsLocation!.lng.toDouble()),
+      ));
       await _perDayMarkers.addLabelMarker(LabelMarker(
         flat: true,
         label: rental.details.cost[TimeUnit.PerDay] != null
@@ -247,56 +255,60 @@ class CustHomeRentalsListViewController {
         position: LatLng(rental.gpsLocation!.lat.toDouble(),
             rental.gpsLocation!.lng.toDouble()),
       ));
-      // } else {
-      // await _perDayMarkers.addLabelMarker(marker);
-      // }
 
-      // if (rental.details.cost[TimeUnit.PerWeek] == null) {
       await _perWeekMarkers.addLabelMarker(LabelMarker(
         flat: true,
         label: rental.details.cost[TimeUnit.PerWeek] != null
             ? rental.details.cost[TimeUnit.PerWeek]?.toPriceString()
             : null,
+        altIconPath: mezHomeIconMarker,
         markerId: MarkerId(rental.id.toString()),
         backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(rental),
         position: LatLng(rental.gpsLocation!.lat.toDouble(),
             rental.gpsLocation!.lng.toDouble()),
       ));
-      // } else {
-      // await _perWeekMarkers.addLabelMarker(marker);
-      // }
 
-      // if (rental.details.cost[TimeUnit.PerMonth] == null) {
       await _perMonthMarkers.addLabelMarker(LabelMarker(
         flat: true,
         label: rental.details.cost[TimeUnit.PerMonth] != null
             ? rental.details.cost[TimeUnit.PerMonth]?.toPriceString()
             : null,
+        altIconPath: mezHomeIconMarker,
         markerId: MarkerId(rental.id.toString()),
         backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(rental),
         position: LatLng(rental.gpsLocation!.lat.toDouble(),
             rental.gpsLocation!.lng.toDouble()),
       ));
-      // } else {
-      // await _perMonthMarkers.addLabelMarker(marker);
-      // }
     }
   }
 
-  void onCameraMove(LatLng position) {
-    _screenToWorldPosition = position;
-    _showFetchButton.value = true;
-  }
+  // onMapCreated(GoogleMapController? controller) {
+  //   _googleMapController = controller;
+  // }
 
-  void fetchMapViewRentals(GoogleMapController googleMapController) {
-    _fetchMapViewRentals(
-        currentPostitionBased: false, googleMapController: googleMapController);
+  void fetchMapViewRentals() {
+    _fetchMapViewRentals(currentPostitionBased: false);
     _showFetchButton.value = false;
   }
 
+  void recenterMap() {
+    _googleMapController?.moveCamera(CameraUpdate.newLatLng(_currentLocation));
+  }
+
   void setFilter(TimeUnit tag) => _filterTag.value = tag;
+
+  Future<void> onMapCreated(GoogleMapController? gMapController) async {
+    _googleMapController = gMapController;
+    await _googleMapController?.setMapStyle(mezMapStyle);
+    await _fetchMapViewRentals();
+  }
+
+  void onCameraMove(CameraPosition cameraPosition) {
+    _screenToWorldPosition = cameraPosition.target;
+    _showFetchButton.value = true;
+  }
 
   void _onSelectRentalTag(RentalCard rental) {
     showModalBottomSheet(
@@ -308,8 +320,7 @@ class CustHomeRentalsListViewController {
         });
   }
 
-  double _calculateDistance(
-      LatLngBounds bounds, double lat1, double lon1, double lat2, double lon2) {
+  double _calculateDistance(LatLngBounds bounds) {
     final double centerLat =
         (bounds.northeast.latitude + bounds.southwest.latitude) / 2;
     final double centerLng =
@@ -323,7 +334,8 @@ class CustHomeRentalsListViewController {
             cos(bounds.northeast.latitude * p) *
             (1 - cos((bounds.northeast.longitude - center.longitude) * p)) /
             2;
-    return 12742 * asin(sqrt(a));
+
+    return (12742 * asin(sqrt(a))) * 1000;
   }
 
   // Map view //
