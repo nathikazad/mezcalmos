@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
@@ -48,6 +49,14 @@ class _CustProductViewState extends State<CustProductView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: MezButton(
+        label: "Add to cart",
+        withGradient: true,
+        borderRadius: 0,
+        onClick: () async {
+          await viewController.bookOffering();
+        },
+      ),
       body: Obx(() {
         if (viewController.product != null) {
           return CustomScrollView(

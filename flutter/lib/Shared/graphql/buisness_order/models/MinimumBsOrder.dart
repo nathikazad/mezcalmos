@@ -2,14 +2,14 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
-class MinimumBsOrder {
+class MinimalBsOrder {
   int id;
   String customerName;
   String customerImage;
   DateTime time;
   num cost;
   int numberOfItems;
-  MinimumBsOrder({
+  MinimalBsOrder({
     required this.id,
     required this.customerName,
     required this.customerImage,

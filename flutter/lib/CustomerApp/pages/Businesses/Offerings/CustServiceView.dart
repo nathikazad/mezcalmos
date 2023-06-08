@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -18,6 +22,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/Cust
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
@@ -52,6 +57,14 @@ class _CustServiceViewState extends State<CustServiceView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: MezButton(
+        label: "Add to cart",
+        withGradient: true,
+        borderRadius: 0,
+        onClick: () async {
+          await viewController.bookOffering();
+        },
+      ),
       body: Obx(() {
         if (viewController.service != null) {
           final Map<TimeUnit, num> costData =
@@ -100,6 +113,64 @@ class _CustServiceViewState extends State<CustServiceView> {
                         offering: viewController.service!.details,
                       ),
                       CustBusinessNoOrderBanner(),
+
+                      /// Booking
+                      bigSeperator,
+                      BsOpDateTimePicker(
+                        fillColor: Colors.white,
+                        onNewPeriodSelected: (DateTime v) {
+                          viewController.startDate.value = v;
+                        },
+                        label: "Choose Time",
+                        validator: (DateTime? p0) {
+                          if (p0 == null) return "Please select a time";
+
+                          return null;
+                        },
+                        time: viewController.startDate.value,
+                      ),
+                      bigSeperator,
+                      if (viewController.service!.category1 ==
+                          ServiceCategory1.Cleaning)
+                        Column(
+                          children: [
+                            CustGuestPicker(
+                              label: "Hours",
+                              icon: Icons.hourglass_bottom,
+                              onNewGuestSelected: (int v) {
+                                viewController.setTotalHours(v);
+                              },
+                              value: viewController.totalHours.value,
+                              lowestValue: 1,
+                            ),
+                            bigSeperator,
+                          ],
+                        ),
+                      if (viewController.service!.category1 ==
+                          ServiceCategory1.PetSitting)
+                        Column(
+                          children: [
+                            CustBusinessDurationPicker(
+                              costUnits: viewController.service!.details.cost,
+                              label: "Duration",
+                              value: viewController.totalHours.value,
+                              validator: (TimeUnit? p0) {
+                                if (p0 == null) return "Please select a time";
+                                return null;
+                              },
+                              onNewCostUnitSelected: (Map<TimeUnit, num> v) {
+                                viewController.setTimeCost(v);
+                              },
+                              onNewDurationSelected: (int v) {
+                                viewController.setTotalHours(v);
+                              },
+                            ),
+                            bigSeperator,
+                          ],
+                        ),
+                      CustOrderCostCard(
+                        orderCostString: viewController.orderString.value,
+                      ),
                     ],
                   ),
                 ),

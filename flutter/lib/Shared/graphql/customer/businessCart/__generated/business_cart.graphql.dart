@@ -19388,3 +19388,641 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
   }) =>
       _res;
 }
+
+class Variables$Mutation$update_product_item_count {
+  factory Variables$Mutation$update_product_item_count({
+    required int id,
+    required dynamic parameters,
+    required double cost,
+  }) =>
+      Variables$Mutation$update_product_item_count._({
+        r'id': id,
+        r'parameters': parameters,
+        r'cost': cost,
+      });
+
+  Variables$Mutation$update_product_item_count._(this._$data);
+
+  factory Variables$Mutation$update_product_item_count.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$parameters = data['parameters'];
+    result$data['parameters'] = mapFromJson(l$parameters);
+    final l$cost = data['cost'];
+    result$data['cost'] = moneyFromJson(l$cost);
+    return Variables$Mutation$update_product_item_count._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  dynamic get parameters => (_$data['parameters'] as dynamic);
+  double get cost => (_$data['cost'] as double);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$parameters = parameters;
+    result$data['parameters'] = mapToJson(l$parameters);
+    final l$cost = cost;
+    result$data['cost'] = moneyToJson(l$cost);
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_product_item_count<
+          Variables$Mutation$update_product_item_count>
+      get copyWith => CopyWith$Variables$Mutation$update_product_item_count(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_product_item_count) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$parameters = parameters;
+    final lOther$parameters = other.parameters;
+    if (l$parameters != lOther$parameters) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$parameters = parameters;
+    final l$cost = cost;
+    return Object.hashAll([
+      l$id,
+      l$parameters,
+      l$cost,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_product_item_count<TRes> {
+  factory CopyWith$Variables$Mutation$update_product_item_count(
+    Variables$Mutation$update_product_item_count instance,
+    TRes Function(Variables$Mutation$update_product_item_count) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_product_item_count;
+
+  factory CopyWith$Variables$Mutation$update_product_item_count.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_product_item_count;
+
+  TRes call({
+    int? id,
+    dynamic? parameters,
+    double? cost,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_product_item_count<TRes>
+    implements CopyWith$Variables$Mutation$update_product_item_count<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_product_item_count(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_product_item_count _instance;
+
+  final TRes Function(Variables$Mutation$update_product_item_count) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? parameters = _undefined,
+    Object? cost = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_product_item_count._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (parameters != _undefined && parameters != null)
+          'parameters': (parameters as dynamic),
+        if (cost != _undefined && cost != null) 'cost': (cost as double),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_product_item_count<TRes>
+    implements CopyWith$Variables$Mutation$update_product_item_count<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_product_item_count(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? parameters,
+    double? cost,
+  }) =>
+      _res;
+}
+
+class Mutation$update_product_item_count {
+  Mutation$update_product_item_count({
+    this.update_business_cart_item,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_product_item_count.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_business_cart_item = json['update_business_cart_item'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_product_item_count(
+      update_business_cart_item: l$update_business_cart_item == null
+          ? null
+          : Mutation$update_product_item_count$update_business_cart_item
+              .fromJson((l$update_business_cart_item as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_product_item_count$update_business_cart_item?
+      update_business_cart_item;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_cart_item = update_business_cart_item;
+    _resultData['update_business_cart_item'] =
+        l$update_business_cart_item?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_cart_item = update_business_cart_item;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_cart_item,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_product_item_count) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_cart_item = update_business_cart_item;
+    final lOther$update_business_cart_item = other.update_business_cart_item;
+    if (l$update_business_cart_item != lOther$update_business_cart_item) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_product_item_count
+    on Mutation$update_product_item_count {
+  CopyWith$Mutation$update_product_item_count<
+          Mutation$update_product_item_count>
+      get copyWith => CopyWith$Mutation$update_product_item_count(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_product_item_count<TRes> {
+  factory CopyWith$Mutation$update_product_item_count(
+    Mutation$update_product_item_count instance,
+    TRes Function(Mutation$update_product_item_count) then,
+  ) = _CopyWithImpl$Mutation$update_product_item_count;
+
+  factory CopyWith$Mutation$update_product_item_count.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_product_item_count;
+
+  TRes call({
+    Mutation$update_product_item_count$update_business_cart_item?
+        update_business_cart_item,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_product_item_count$update_business_cart_item<TRes>
+      get update_business_cart_item;
+}
+
+class _CopyWithImpl$Mutation$update_product_item_count<TRes>
+    implements CopyWith$Mutation$update_product_item_count<TRes> {
+  _CopyWithImpl$Mutation$update_product_item_count(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_product_item_count _instance;
+
+  final TRes Function(Mutation$update_product_item_count) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_cart_item = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_product_item_count(
+        update_business_cart_item: update_business_cart_item == _undefined
+            ? _instance.update_business_cart_item
+            : (update_business_cart_item
+                as Mutation$update_product_item_count$update_business_cart_item?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_product_item_count$update_business_cart_item<TRes>
+      get update_business_cart_item {
+    final local$update_business_cart_item = _instance.update_business_cart_item;
+    return local$update_business_cart_item == null
+        ? CopyWith$Mutation$update_product_item_count$update_business_cart_item
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_product_item_count$update_business_cart_item(
+            local$update_business_cart_item,
+            (e) => call(update_business_cart_item: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_product_item_count<TRes>
+    implements CopyWith$Mutation$update_product_item_count<TRes> {
+  _CopyWithStubImpl$Mutation$update_product_item_count(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_product_item_count$update_business_cart_item?
+        update_business_cart_item,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_product_item_count$update_business_cart_item<TRes>
+      get update_business_cart_item =>
+          CopyWith$Mutation$update_product_item_count$update_business_cart_item
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_product_item_count =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_product_item_count'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'parameters')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'jsonb'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'cost')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'money'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_cart_item'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'offering_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'product',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              ),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'parameters'),
+                value: VariableNode(name: NameNode(value: 'parameters')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'cost'),
+                value: VariableNode(name: NameNode(value: 'cost')),
+              ),
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_product_item_count _parserFn$Mutation$update_product_item_count(
+        Map<String, dynamic> data) =>
+    Mutation$update_product_item_count.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_product_item_count = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_product_item_count?,
+);
+
+class Options$Mutation$update_product_item_count
+    extends graphql.MutationOptions<Mutation$update_product_item_count> {
+  Options$Mutation$update_product_item_count({
+    String? operationName,
+    required Variables$Mutation$update_product_item_count variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_product_item_count? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_product_item_count>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_product_item_count(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_product_item_count,
+          parserFn: _parserFn$Mutation$update_product_item_count,
+        );
+
+  final OnMutationCompleted$Mutation$update_product_item_count?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_product_item_count
+    extends graphql.WatchQueryOptions<Mutation$update_product_item_count> {
+  WatchOptions$Mutation$update_product_item_count({
+    String? operationName,
+    required Variables$Mutation$update_product_item_count variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_product_item_count,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_product_item_count,
+        );
+}
+
+extension ClientExtension$Mutation$update_product_item_count
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_product_item_count>>
+      mutate$update_product_item_count(
+              Options$Mutation$update_product_item_count options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_product_item_count>
+      watchMutation$update_product_item_count(
+              WatchOptions$Mutation$update_product_item_count options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_product_item_count$update_business_cart_item {
+  Mutation$update_product_item_count$update_business_cart_item({
+    required this.affected_rows,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_product_item_count$update_business_cart_item.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_product_item_count$update_business_cart_item(
+      affected_rows: (l$affected_rows as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_product_item_count$update_business_cart_item) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_product_item_count$update_business_cart_item
+    on Mutation$update_product_item_count$update_business_cart_item {
+  CopyWith$Mutation$update_product_item_count$update_business_cart_item<
+          Mutation$update_product_item_count$update_business_cart_item>
+      get copyWith =>
+          CopyWith$Mutation$update_product_item_count$update_business_cart_item(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_product_item_count$update_business_cart_item<
+    TRes> {
+  factory CopyWith$Mutation$update_product_item_count$update_business_cart_item(
+    Mutation$update_product_item_count$update_business_cart_item instance,
+    TRes Function(Mutation$update_product_item_count$update_business_cart_item)
+        then,
+  ) = _CopyWithImpl$Mutation$update_product_item_count$update_business_cart_item;
+
+  factory CopyWith$Mutation$update_product_item_count$update_business_cart_item.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_product_item_count$update_business_cart_item;
+
+  TRes call({
+    int? affected_rows,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_product_item_count$update_business_cart_item<
+        TRes>
+    implements
+        CopyWith$Mutation$update_product_item_count$update_business_cart_item<
+            TRes> {
+  _CopyWithImpl$Mutation$update_product_item_count$update_business_cart_item(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_product_item_count$update_business_cart_item _instance;
+
+  final TRes Function(
+      Mutation$update_product_item_count$update_business_cart_item) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_product_item_count$update_business_cart_item(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_product_item_count$update_business_cart_item<
+        TRes>
+    implements
+        CopyWith$Mutation$update_product_item_count$update_business_cart_item<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_product_item_count$update_business_cart_item(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
+    String? $__typename,
+  }) =>
+      _res;
+}

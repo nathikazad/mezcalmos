@@ -92,10 +92,8 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _getAcceptedPaymentIcons(widget.business.acceptedPayments),
-                SizedBox(
-                  width: 15,
-                ),
+                businessLastActiveTimeAgo(),
+                // _getAcceptedPaymentIcons(widget.business.acceptedPayments),
                 Flexible(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,6 +122,34 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
             )
           ],
         ));
+  }
+
+  Widget businessLastActiveTimeAgo() {
+    String createTimeAgoString() {
+      if (widget.business.lastActive == null) {
+        return '';
+      }
+      final DateTime now = DateTime.now();
+      final DateTime lastActiveTime = widget.business.lastActive!;
+      final Duration difference = now.difference(lastActiveTime);
+      if (difference.inDays > 0) {
+        return '${difference.inDays} days';
+      } else if (difference.inHours > 0) {
+        return '${difference.inHours} hours';
+      } else if (difference.inMinutes > 0) {
+        return '${difference.inMinutes} min';
+      } else {
+        return '${difference.inMinutes} min';
+      }
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(right: 12.0),
+      child: Text(
+        'Active ${createTimeAgoString()} ago',
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {

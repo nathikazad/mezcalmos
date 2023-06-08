@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 extension BusinessOrderHelper on BusinessOrder {
+  bool get inProcess =>
+      status != BusinessOrderRequestStatus.CancelledByBusiness &&
+      status != BusinessOrderRequestStatus.CancelledByCustomer &&
+      status != BusinessOrderRequestStatus.Completed;
   DateTime get furtherItemDate {
     return items.map((BusinessOrderItem e) => DateTime.parse(e.time!)).reduce(
         (DateTime value, DateTime element) =>
@@ -21,6 +25,9 @@ extension BusinessOrderHelper on BusinessOrder {
 }
 
 extension BusinessOrderRequestStatusExtensions on BusinessOrderRequestStatus {
+  bool get isCancelled =>
+      this == BusinessOrderRequestStatus.CancelledByBusiness ||
+      this == BusinessOrderRequestStatus.CancelledByCustomer;
   String toReadableString() {
     switch (this) {
       case BusinessOrderRequestStatus.RequestReceived:

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/businessCart/hsBusinessCart.dart';
@@ -101,10 +101,14 @@ class CustBusinessCartController extends GetxController {
       final CustBusinessCart? value = await get_business_cart(
         customerId: _auth.hasuraUserId!,
       );
+      mezDbgPrint("Cart value ============> $value");
       if (value != null && value.items.isNotEmpty && value.businessId != null) {
         cart.value = value;
+        cart.refresh();
       } else {
-        await create_business_cart();
+        cart.value = value;
+        cart.refresh();
+        await create_business_cart(businessId: value?.businessId?.toInt());
       }
     }
   }
@@ -199,5 +203,17 @@ class CustBusinessCartController extends GetxController {
     showSavedSnackBar(
       title: "You have cancelled the order request",
     );
+  }
+
+  Future<void> updateProductItemCount({
+    required BusinessCartItem item,
+    required int count,
+  }) async {
+    await update_product_item_count(
+      id: item.id!.toInt(),
+      parameters: item.parameters.copyWith(numberOfUnits: count),
+      cost: item.product!.details.cost.entries.first.value.toDouble() * count,
+    );
+    await fetchCart();
   }
 }

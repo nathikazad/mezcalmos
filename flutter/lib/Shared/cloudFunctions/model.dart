@@ -1816,6 +1816,8 @@ class Order {
   }
 }
 
+
+
 class WorkingDay {
   bool isOpen;
   List<OpenHours> openHours;
@@ -2570,7 +2572,7 @@ class BusinessItemParameters {
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "previousCost": previousCost,
-      "timeUnit": timeUnit,
+      "timeUnit": timeUnit?.toFirebaseFormatString(),
       "previoustime": previoustime,
       "numberOfUnits": numberOfUnits,
       "guests": guests,

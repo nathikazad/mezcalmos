@@ -66,7 +66,14 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                       Text(
                         item.item?.name.getTranslation(userLanguage) ??
                             "${_i18n()['error']}",
-                        style: context.textTheme.bodyLarge,
+                        style: context.textTheme.bodyLarge?.copyWith(
+                          decoration: (item.available == true)
+                              ? null
+                              : TextDecoration.lineThrough,
+                          color: (item.available == true)
+                              ? Colors.black
+                              : Colors.grey.shade400,
+                        ),
                       ),
                       SizedBox(height: 9),
                       Row(
@@ -75,20 +82,39 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           if (item.parameters.guests != null) ...[
-                            Icon(Icons.people),
+                            Icon(
+                              Icons.people,
+                              color: (item.available == true)
+                                  ? Colors.black
+                                  : Colors.grey.shade400,
+                            ),
                             SizedBox(width: 5),
                             Text(
                                 item.parameters.guests?.toString() ??
                                     "${_i18n()['error']}",
-                                style: context.textTheme.bodyLarge),
+                                style: context.textTheme.bodyLarge?.copyWith(
+                                  color: (item.available == true)
+                                      ? Colors.black
+                                      : Colors.grey.shade400,
+                                )),
                             SizedBox(width: 10),
                           ],
                           if (item.parameters.numberOfUnits != null &&
                               item.parameters.numberOfUnits != null) ...[
-                            Icon(Icons.calendar_today),
+                            Icon(
+                              Icons.calendar_today,
+                              color: (item.available == true)
+                                  ? Colors.black
+                                  : Colors.grey.shade400,
+                            ),
+                            SizedBox(width: 5),
                             Text(
-                                "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toReadableString()}",
-                                style: context.textTheme.bodyLarge),
+                                "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toReadableString().toPlural(isPlural: item.parameters.numberOfUnits! > 1)}",
+                                style: context.textTheme.bodyLarge?.copyWith(
+                                  color: (item.available == true)
+                                      ? Colors.black
+                                      : Colors.grey.shade400,
+                                )),
                           ]
                         ],
                       ),
@@ -124,25 +150,35 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                         ),
                         Icon(Icons.arrow_forward),
                       ],
-                      Icon(Icons.price_check),
+                      Icon(
+                        Icons.price_check,
+                        color: (item.available == true)
+                            ? Colors.black
+                            : Colors.grey.shade400,
+                      ),
                       SizedBox(width: 3),
                       Text(
                         item.cost.toPriceString(),
-                        style: context.textTheme.bodyLarge,
+                        style: context.textTheme.bodyLarge?.copyWith(
+                          color: (item.available == true)
+                              ? Colors.black
+                              : Colors.grey.shade400,
+                        ),
                       ),
                     ],
                   ),
                 ),
-                MezIconButton(
-                  onTap: () async {
-                    await _showPriceSheet(
-                        context: context, initPrice: item.cost.toDouble());
-                  },
-                  icon: Icons.edit_outlined,
-                  elevation: 0,
-                  backgroundColor: Colors.grey.shade300,
-                  iconColor: Colors.black,
-                )
+                if (viewController.orderIsRequested && item.available == true)
+                  MezIconButton(
+                    onTap: () async {
+                      await _showPriceSheet(
+                          context: context, initPrice: item.cost.toDouble());
+                    },
+                    icon: Icons.edit_outlined,
+                    elevation: 0,
+                    backgroundColor: Colors.grey.shade300,
+                    iconColor: Colors.black,
+                  )
               ],
             ),
             Divider(),
@@ -163,7 +199,9 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.event_busy,
-                              color: offLightShadeGreyColor,
+                              color: (item.available == true)
+                                  ? offLightShadeGreyColor
+                                  : Colors.grey.shade400,
                             ),
                             SizedBox(width: 3),
                             Text(
@@ -171,7 +209,9 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                                       ?.getOrderTime() ??
                                   "${_i18n()['error']}",
                               style: context.textTheme.bodyLarge?.copyWith(
-                                  color: offLightShadeGreyColor,
+                                  color: (item.available == true)
+                                      ? offLightShadeGreyColor
+                                      : Colors.grey.shade400,
                                   decoration: TextDecoration.lineThrough),
                             ),
                           ],
@@ -179,44 +219,65 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                       Row(
                         children: [
                           if (item.parameters.previoustime != null)
-                            Icon(Icons.arrow_forward),
-                          Icon(Icons.event_available_rounded),
+                            Icon(
+                              Icons.arrow_forward,
+                              color: (item.available == true)
+                                  ? Colors.black
+                                  : Colors.grey.shade400,
+                            ),
+                          Icon(
+                            Icons.event_available_rounded,
+                            color: (item.available == true)
+                                ? Colors.black
+                                : Colors.grey.shade400,
+                          ),
                           SizedBox(width: 3),
                           Text(
                             DateTime.tryParse(item.time ?? "")
                                     ?.getOrderTime() ??
                                 "${_i18n()['error']}",
-                            style: context.textTheme.bodyLarge,
+                            style: context.textTheme.bodyLarge?.copyWith(
+                              color: (item.available == true)
+                                  ? Colors.black
+                                  : Colors.grey.shade400,
+                            ),
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                MezIconButton(
-                  onTap: () async {
-                    await _showTimeSheet(
-                        context: context,
-                        initDate: DateTime.tryParse(item.time ?? "") ??
-                            DateTime.now());
-                  },
-                  icon: Icons.edit_outlined,
-                  backgroundColor: Colors.grey.shade300,
-                  iconColor: Colors.black,
-                  elevation: 0,
-                )
+                if (viewController.orderIsRequested && item.available == true)
+                  MezIconButton(
+                    onTap: () async {
+                      await _showTimeSheet(
+                          context: context,
+                          initDate: DateTime.tryParse(item.time ?? "") ??
+                              DateTime.now());
+                    },
+                    icon: Icons.edit_outlined,
+                    backgroundColor: Colors.grey.shade300,
+                    iconColor: Colors.black,
+                    elevation: 0,
+                  )
               ],
             ),
-            Divider(),
-            if (item.available == true)
+            if (viewController.orderIsRequested) ...[
+              Divider(),
               MezInkwell(
                 icon: Icons.remove_circle_outlined,
-                label: "${_i18n()['markAsUnavailable']}",
+                textColor: (item.available != true) ? null : redAccentColor,
+                backgroundColor: (item.available != true) ? null : offRedColor,
+                label: (item.available == true)
+                    ? "${_i18n()['markAsUnavailable']}"
+                    : "${_i18n()['markAsAvailable']}",
                 onClick: () async {
                   await viewController.updateItemAvailability(
-                      itemId: item.itemId, newAvailability: false);
+                      itemId: item.itemId,
+                      newAvailability: !(item.available == true));
                 },
               )
+            ]
           ],
         ),
       ),

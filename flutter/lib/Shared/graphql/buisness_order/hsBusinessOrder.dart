@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dar
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
-Future<List<MinimumBsOrder>?> get_bs_orders(
+Future<List<MinimalBsOrder>?> get_bs_orders(
     {required int businessId,
     required BusinessOrderRequestStatus status,
     bool withCache = true}) async {
@@ -25,8 +25,8 @@ Future<List<MinimumBsOrder>?> get_bs_orders(
   }
   mezDbgPrint(res.data);
   return res.parsedData!.business_order_request
-      .map<MinimumBsOrder>((Query$getBsOrders$business_order_request data) {
-    return MinimumBsOrder(
+      .map<MinimalBsOrder>((Query$getBsOrders$business_order_request data) {
+    return MinimalBsOrder(
       id: data.id,
       customerImage: data.customer.user.image!,
       customerName: data.customer.user.name!,
@@ -35,6 +35,33 @@ Future<List<MinimumBsOrder>?> get_bs_orders(
       numberOfItems: data.items.length,
     );
   }).toList();
+}
+
+Stream<List<MinimalBsOrder>?> listen_on_bs_orders({
+  required int businessId,
+  required BusinessOrderRequestStatus status,
+}) {
+  return _db.graphQLClient
+      .subscribe$listenToBsOrders(Options$Subscription$listenToBsOrders(
+          variables: Variables$Subscription$listenToBsOrders(
+              busnessId: businessId, status: status.toFirebaseFormatString())))
+      .map((QueryResult<Subscription$listenToBsOrders> event) {
+    if (event.hasException) {
+      throw event.exception!;
+    }
+
+    return event.parsedData!.business_order_request.map<MinimalBsOrder>(
+        (Subscription$listenToBsOrders$business_order_request data) {
+      return MinimalBsOrder(
+        id: data.id,
+        customerImage: data.customer.user.image!,
+        customerName: data.customer.user.name!,
+        time: DateTime.parse(data.order_time),
+        cost: data.cost?.toDouble() ?? 0,
+        numberOfItems: data.items.length,
+      );
+    }).toList();
+  });
 }
 
 Future<List<MinimumBusinessItem>> get_upcoming_rental_orders_items(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustIconButton.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/CartItemImage.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -9,9 +10,10 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 
-class RentalCartItemCard extends StatelessWidget {
-  const RentalCartItemCard({
+class ProductCartItemCard extends StatelessWidget {
+  const ProductCartItemCard({
     super.key,
     required this.index,
     required this.item,
@@ -71,7 +73,7 @@ class RentalCartItemCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      CartItemImage(image: item.rental!.details.image?.first),
+                      CartItemImage(image: item.product!.details.image?.first),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Column(
@@ -79,43 +81,105 @@ class RentalCartItemCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "${item.rental!.details.name.getTranslation(userLanguage)!.inCaps}",
+                              "${item.product!.details.name.getTranslation(userLanguage)!.inCaps}",
                               style: context.textTheme.bodyLarge,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
-                            Row(
-                              children: [
-                                if (item.parameters.guests != null)
-                                  _guestBuilder(context),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 4.0),
-                                  child: Icon(
-                                    Icons.calendar_today,
+                            if (isEditable)
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  SizedBox(
+                                    child: Builder(builder: (context) {
+                                      int durationCount = item
+                                          .parameters.numberOfUnits!
+                                          .toInt();
+                                      return StatefulBuilder(
+                                          builder: (context, setState) {
+                                        return Row(children: [
+                                          CustIconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                durationCount--;
+                                              });
+                                              controller.updateProductItemCount(
+                                                item: item,
+                                                count: durationCount,
+                                              );
+                                            },
+                                            isEnabled: durationCount > 1,
+                                            icon: Icons.remove,
+                                          ),
+                                          Text(
+                                            "$durationCount",
+                                            style: context.textTheme.bodyMedium!
+                                                .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          CustIconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                durationCount++;
+                                              });
+                                              controller.updateProductItemCount(
+                                                item: item,
+                                                count: durationCount,
+                                              );
+                                            },
+                                            isEnabled: true,
+                                            icon: Icons.add,
+                                          ),
+                                        ]);
+                                      });
+                                    }),
                                   ),
-                                ),
-                                Text(
-                                  "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toFirebaseFormatString()}",
-                                  style: context.textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.bold,
+                                ],
+                              ),
+                            if (!isEditable)
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 4.0),
+                                    child: Icon(
+                                      Icons.local_offer,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                costBuilder(context)
-                              ],
-                            )
+                                  Text(
+                                    "${item.parameters.numberOfUnits} item",
+                                    style:
+                                        context.textTheme.bodyMedium!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  costBuilder(context),
+                                ],
+                              ),
                           ],
                         ),
                       )
                     ],
                   ),
-                  Divider(),
-                  timeBuilder(context),
                 ],
               ),
             ),
+            isEditable
+                ? Positioned(
+                    bottom: 16,
+                    right: 5,
+                    child: Text(
+                      "\$${item.cost}",
+                      style: context.textTheme.bodyLarge,
+                      textAlign: TextAlign.end,
+                    ),
+                  )
+                : SizedBox.shrink(),
             isEditable
                 ? Positioned(
                     top: 4,
@@ -178,86 +242,6 @@ class RentalCartItemCard extends StatelessWidget {
           style: context.textTheme.bodyMedium!.copyWith(
             fontWeight: FontWeight.bold,
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget timeBuilder(BuildContext context) {
-    if (item.parameters.previoustime != null) {
-      return Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Icon(
-              Icons.event_busy,
-            ),
-          ),
-          Text(
-            item.parameters.previoustime == null
-                ? "No Date"
-                : "${DateTime.parse(item.parameters.previoustime!).getOrderTime()}",
-            style: context.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.lineThrough,
-              decorationThickness: 2.0,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: Icon(Icons.arrow_forward),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Icon(
-              Icons.event_available,
-            ),
-          ),
-          Text(
-            item.time == null
-                ? "No Date"
-                : "${DateTime.parse(item.time!).getOrderTime()}",
-            style: context.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      );
-    }
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: Icon(
-            Icons.access_time_filled,
-          ),
-        ),
-        Text(
-          item.time == null
-              ? "No Date"
-              : "${DateTime.parse(item.time!).getOrderTime()}",
-          style: context.textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _guestBuilder(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          Icons.person,
-        ),
-        Text(
-          "${item.parameters.guests}",
-          style: context.textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(
-          width: 8,
         ),
       ],
     );

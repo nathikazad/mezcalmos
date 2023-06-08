@@ -85,6 +85,7 @@ query get_rental_by_id($id: Int!) {
         name
         currency
         image
+        last_active_time
         location {
           gps
           address

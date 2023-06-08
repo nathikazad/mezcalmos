@@ -7,7 +7,8 @@
             "BsHomeRentalOrderItemCard": {
               "error": "Error",
               "edit": "Edit",
-              "markAsUnavailable": "Mark as Unavailable",
+              "markAsUnavailable": "Mark as unavailable",
+              "markAsAvailable": "Mark as available",
               "updatePrice": "Update Price",
               "required": "Required",
               "notValid": "Not Valid",
@@ -1779,13 +1780,13 @@
     },
     "helpers": {
       "TimeUnitHelper": {
-        "hour": "Hour",
-        "day": "Day",
-        "week": "Week",
-        "month": "Month",
-        "person": "Person",
-        "unit": "Unit",
-        "total": "Total"
+        "perHour": "Hour",
+        "perDay": "Day",
+        "perWeek": "Week",
+        "perMonth": "Month",
+        "perPerson": "Person",
+        "unit": "Unit"
+       
       },
       "DeliveryOrderHelper": {
         "status": {

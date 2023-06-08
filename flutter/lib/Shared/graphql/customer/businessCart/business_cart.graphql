@@ -355,3 +355,12 @@ subscription listen_on_business_order_request($_id: Int!) {
     chat_id
   }
 }
+
+mutation update_product_item_count($id: Int!, $parameters: jsonb!, $cost: money!) {
+  update_business_cart_item(
+    where: { id: { _eq: $id }, offering_type: { _eq: "product" } }
+    _set: { parameters: $parameters, cost: $cost }
+  ) {
+    affected_rows
+  }
+}
