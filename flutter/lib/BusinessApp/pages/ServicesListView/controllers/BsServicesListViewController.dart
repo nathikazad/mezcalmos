@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsOtherServiceView/controller/BsOtherServiceViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
@@ -16,6 +17,7 @@ import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsOtherServiceView/BsOtherServiceView.dart';
 
 enum BusinessServiceType {
   Rental,
@@ -117,6 +119,47 @@ class BsServicesListViewController {
     currentBottomSheetData = _returnSheetValues();
   }
 
+  BusinessProfileItem otherServices() {
+    OtherServiceType getSimilarType() {
+      switch (businessProfile) {
+        case BusinessProfile.SurfShop:
+        case BusinessProfile.VehicleRental:
+          return OtherServiceType.Rental;
+
+        case BusinessProfile.HomeRental:
+          return OtherServiceType.HomeRental;
+
+        case BusinessProfile.YogaStudio:
+        case BusinessProfile.LanguageSchool:
+        case BusinessProfile.TourAgency:
+        case BusinessProfile.WellnessPractitioner:
+        case BusinessProfile.Volunteer:
+        case BusinessProfile.Entertainment:
+        case BusinessProfile.DanceStudio:
+          return OtherServiceType.Event;
+
+        case BusinessProfile.ArtisanalProduct:
+          return OtherServiceType.Item;
+
+        case BusinessProfile.CleaningService:
+        case BusinessProfile.PetSitting:
+        case BusinessProfile.MealPlanning:
+          return OtherServiceType.Service;
+      }
+    }
+
+    return BusinessProfileItem(
+      title: "otherServicesTitle",
+      subtitle: "otherServicesSubtitle",
+      route: () async {
+        await BsOtherServiceView.navigate(
+          profileName: getSimilarType(),
+          controller: this,
+        );
+      },
+    );
+  }
+
   List<BusinessProfileItem> _returnSheetValues() {
     final String rentalTitleLangKey = "rentalTitle";
     final String rentalSubtitleLangKey = "rentalSubtitle";
@@ -153,6 +196,7 @@ class BsServicesListViewController {
               await navigateToEvent(isClass: false);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.VehicleRental:
         return [
@@ -163,6 +207,7 @@ class BsServicesListViewController {
               await navigateToRental(rentalCategory: RentalCategory1.Vehicle);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.HomeRental:
         return [
@@ -174,6 +219,7 @@ class BsServicesListViewController {
               await navigateToHomeRental();
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.WellnessPractitioner:
         return [
@@ -184,6 +230,7 @@ class BsServicesListViewController {
               await navigateToEvent(isClass: false);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.Volunteer:
         return [
@@ -194,6 +241,7 @@ class BsServicesListViewController {
               await navigateToEvent(isClass: false);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.TourAgency:
         return [
@@ -204,6 +252,7 @@ class BsServicesListViewController {
               await navigateToEvent(isClass: false, id: null);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.YogaStudio:
         return [
@@ -221,6 +270,7 @@ class BsServicesListViewController {
               await navigateToEvent(isClass: true);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.LanguageSchool:
         return [
@@ -238,6 +288,7 @@ class BsServicesListViewController {
               await navigateToEvent(isClass: true);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.ArtisanalProduct:
         return [
@@ -248,6 +299,7 @@ class BsServicesListViewController {
               await navigateToProduct();
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.CleaningService:
         return [
@@ -259,6 +311,7 @@ class BsServicesListViewController {
                   serviceCategory: ServiceCategory1.Cleaning);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.PetSitting:
         return [
@@ -270,6 +323,7 @@ class BsServicesListViewController {
                   serviceCategory: ServiceCategory1.PetSitting);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.Entertainment:
         return [
@@ -280,6 +334,7 @@ class BsServicesListViewController {
               await navigateToEvent(isClass: false);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.DanceStudio:
         return [
@@ -297,6 +352,7 @@ class BsServicesListViewController {
               await navigateToEvent(isClass: true);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.MealPlanning:
         return [
@@ -308,6 +364,7 @@ class BsServicesListViewController {
                   serviceCategory: ServiceCategory1.MealPlanning);
             },
           ),
+          otherServices(),
         ];
     }
   }
