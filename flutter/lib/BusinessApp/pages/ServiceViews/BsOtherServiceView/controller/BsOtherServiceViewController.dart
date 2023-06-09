@@ -6,7 +6,6 @@ enum OtherServiceType {
   Class,
   Event,
   Rental,
-  HomeRental,
   Service,
   Item,
 }
@@ -36,7 +35,6 @@ class OtherCategoryItems {
 class BsOtherServiceViewController {
   late BsServicesListViewController controller;
   Map<OtherServiceType, OtherServiceItems> possibleServiceTypeMap = {};
-  Map<OtherServiceType, OtherServiceItems> _allServiceTypeMap = {};
   Rxn<OtherServiceItems> selectedServiceType = Rxn<OtherServiceItems>();
   RxList<OtherCategoryItems> selectedCategory = RxList<OtherCategoryItems>();
   Rxn<OtherCategoryItems> selectedCategoryItem = Rxn<OtherCategoryItems>();
@@ -46,26 +44,26 @@ class BsOtherServiceViewController {
     BsServicesListViewController controller,
   ) {
     this.controller = controller;
-    _allServiceTypeMap = {
+    possibleServiceTypeMap = {
       OtherServiceType.Class: OtherServiceItems(
         type: OtherServiceType.Class,
         title: "class",
         category: [
           OtherCategoryItems(
             title: "surf",
-            navigate: () => _navigateToClass(),
+            navigate: () => _navigateToClass(EventCategory1.Surf),
           ),
           OtherCategoryItems(
             title: "yoga",
-            navigate: () => _navigateToClass(),
+            navigate: () => _navigateToClass(EventCategory1.Yoga),
           ),
           OtherCategoryItems(
             title: "language",
-            navigate: () => _navigateToClass(),
+            navigate: () => _navigateToClass(EventCategory1.LanguageSchool),
           ),
           OtherCategoryItems(
             title: "uncategorized",
-            navigate: () => _navigateToClass(),
+            navigate: () => _navigateToClass(EventCategory1.Uncategorized),
           ),
         ],
         subTitle: "classSub",
@@ -76,39 +74,39 @@ class BsOtherServiceViewController {
         category: [
           OtherCategoryItems(
             title: "therapy",
-            navigate: () => _navigateToEvent(),
+            navigate: () => _navigateToEvent(EventCategory1.Therapy),
           ),
           OtherCategoryItems(
             title: "yoga",
-            navigate: () => _navigateToEvent(),
+            navigate: () => _navigateToEvent(EventCategory1.Yoga),
           ),
           OtherCategoryItems(
             title: "surf",
-            navigate: () => _navigateToEvent(),
+            navigate: () => _navigateToEvent(EventCategory1.Surf),
           ),
           OtherCategoryItems(
             title: "volunteer",
-            navigate: () => _navigateToEvent(),
+            navigate: () => _navigateToEvent(EventCategory1.Volunteer),
           ),
           OtherCategoryItems(
             title: "adventure",
-            navigate: () => _navigateToEvent(),
+            navigate: () => _navigateToEvent(EventCategory1.Adventure),
           ),
           OtherCategoryItems(
             title: "social",
-            navigate: () => _navigateToEvent(),
+            navigate: () => _navigateToEvent(EventCategory1.Social),
           ),
           OtherCategoryItems(
             title: "dance",
-            navigate: () => _navigateToEvent(),
+            navigate: () => _navigateToEvent(EventCategory1.Dance),
           ),
           OtherCategoryItems(
             title: "language",
-            navigate: () => _navigateToEvent(),
+            navigate: () => _navigateToEvent(EventCategory1.LanguageSchool),
           ),
           OtherCategoryItems(
             title: "uncategorized",
-            navigate: () => _navigateToEvent(),
+            navigate: () => _navigateToEvent(EventCategory1.Uncategorized),
           ),
         ],
         subTitle: "eventSub",
@@ -123,23 +121,16 @@ class BsOtherServiceViewController {
                 _navigateToRental(rentalCategory: RentalCategory1.Surf),
           ),
           OtherCategoryItems(
+            title: "home",
+            navigate: () => _navigateToHomeRental(),
+          ),
+          OtherCategoryItems(
             title: "vehicle",
             navigate: () =>
                 _navigateToRental(rentalCategory: RentalCategory1.Vehicle),
           ),
         ],
         subTitle: "rentalSub",
-      ),
-      OtherServiceType.HomeRental: OtherServiceItems(
-        type: OtherServiceType.HomeRental,
-        title: "home",
-        category: [
-          OtherCategoryItems(
-            title: "home",
-            navigate: () => _navigateToHomeRental(),
-          ),
-        ],
-        subTitle: "homeSub",
       ),
       OtherServiceType.Service: OtherServiceItems(
         type: OtherServiceType.Service,
@@ -183,8 +174,6 @@ class BsOtherServiceViewController {
         subTitle: "itemSub",
       ),
     };
-    possibleServiceTypeMap = {..._allServiceTypeMap};
-    possibleServiceTypeMap.remove(profileName);
     selectedServiceType.value = possibleServiceTypeMap.entries.first.value;
     selectedCategory.value =
         possibleServiceTypeMap.entries.first.value.category;
@@ -192,12 +181,12 @@ class BsOtherServiceViewController {
         possibleServiceTypeMap.entries.first.value.category.first;
   }
 
-  void _navigateToClass() {
-    controller.navigateToEvent(isClass: true);
+  void _navigateToClass(EventCategory1 eventCategory) {
+    controller.navigateToEvent(isClass: true, eventCategory: eventCategory);
   }
 
-  void _navigateToEvent() {
-    controller.navigateToEvent(isClass: false);
+  void _navigateToEvent(EventCategory1 eventCategory) {
+    controller.navigateToEvent(isClass: false, eventCategory: eventCategory);
   }
 
   void _navigateToRental({required RentalCategory1 rentalCategory}) {

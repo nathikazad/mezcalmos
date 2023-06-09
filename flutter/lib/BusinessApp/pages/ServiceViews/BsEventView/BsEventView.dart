@@ -26,7 +26,7 @@ class BsOpEventView extends StatefulWidget {
       required bool isClass,
       required int businessId,
       required int businessDetailsId,
-      required BusinessProfile profile}) async {
+      required EventCategory1 eventCategory}) async {
     String route = BusinessOpRoutes.kBsOpEvent;
     route = route.replaceFirst(":id", id?.toString() ?? "add");
     await MezRouter.toPath(
@@ -34,7 +34,7 @@ class BsOpEventView extends StatefulWidget {
       arguments: {
         "class": isClass,
         "businessDetailsId": businessDetailsId,
-        "profile": profile,
+        "eventCategory": eventCategory,
         "businessId": businessId,
       },
     );
@@ -50,19 +50,19 @@ class _BsOpEventViewState extends State<BsOpEventView>
   BsEventViewController viewController = BsEventViewController();
   int? detailsId;
   int? businessId;
-  BusinessProfile? profile;
+  EventCategory1? eventCategory;
   bool isClass = false;
   int? eventId;
   @override
   void initState() {
     _assignValues();
-    if (detailsId == null || profile == null || businessId == null) {
+    if (detailsId == null || eventCategory == null || businessId == null) {
       throw Exception("detailsId or businessId or profile is null");
     }
     viewController.init(
       thickerProvider: this,
       businessId: businessId!,
-      profile: profile!,
+      eventCategory: eventCategory!,
       eventId: eventId,
       detailsId: detailsId!,
       isClass: isClass,
@@ -76,7 +76,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
         MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
     businessId =
         int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
-    profile = MezRouter.bodyArguments?["profile"] as BusinessProfile?;
+    eventCategory = MezRouter.bodyArguments?["eventCategory"] as EventCategory1?;
     isClass = MezRouter.bodyArguments?["class"] ?? false;
     eventId = int.tryParse(MezRouter.urlArguments["id"].toString());
   }
