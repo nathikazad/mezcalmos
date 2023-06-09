@@ -102,6 +102,7 @@ Future<Service?> get_service_details_by_id(
       acceptedPayments: data.accepted_payments, stripeInfo: data.stripe_info);
 
   return MainService(
+      isOpen: data.is_open ?? false,
       deliveryCost: null,
       info: ServiceInfo(
           descriptionId: data.description_id,
@@ -416,4 +417,16 @@ Future<cModels.ServiceProviderLanguage?> get_service_lang(
         response.parsedData?.service_provider_details_by_pk!.language);
   }
   return null;
+}
+
+Future<bool?> get_service_is_open({required int detailsId}) async {
+  final QueryResult<Query$getServiceIsOpen> res = await _db.graphQLClient
+      .query$getServiceIsOpen(Options$Query$getServiceIsOpen(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables:
+              Variables$Query$getServiceIsOpen(serviceDetailsId: detailsId)));
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  return res.parsedData?.service_provider_details_by_pk?.is_open;
 }

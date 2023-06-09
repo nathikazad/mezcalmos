@@ -670,7 +670,6 @@ Future<int?> addReviewDialog(
           ),
         );
       });
-  return null;
 }
 
 Widget radioCircleButton(
@@ -757,6 +756,7 @@ void showSavedSnackBar({String? title, String? subtitle}) {
         color: Colors.green,
       ));
 }
+
 void showAddedSnackBar({String? title, String? subtitle}) {
   return customSnackBar(
       title: title ?? _i18n()['added'],
@@ -793,6 +793,18 @@ void showErrorSnackBar(
       title: errorTitle,
       subTitle: errorText,
       duration: duration ?? Duration(seconds: 2),
+      icon: Icon(
+        Icons.cancel,
+        size: 40,
+        color: Colors.redAccent,
+      ));
+}
+
+void showServiceClosedSnackBar() {
+  return customSnackBar(
+      title: "${_i18n()['closed']}",
+      subTitle: "${_i18n()['closedSubtitle']}",
+      duration: Duration(seconds: 2),
       icon: Icon(
         Icons.cancel,
         size: 40,

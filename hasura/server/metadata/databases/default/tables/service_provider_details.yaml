@@ -42,6 +42,12 @@ object_relationships:
   - name: stripe_info
     using:
       foreign_key_constraint_on: stripe_id
+computed_fields:
+  - name: is_open
+    definition:
+      function:
+        name: is_open
+        schema: service_provider
 select_permissions:
   - role: anonymous
     permission:
@@ -64,6 +70,8 @@ select_permissions:
         - service_link_id
         - service_provider_type
         - unique_id
+      computed_fields:
+        - is_open
       filter: {}
   - role: business_operator
     permission:
@@ -87,6 +95,8 @@ select_permissions:
         - service_provider_type
         - stripe_id
         - unique_id
+      computed_fields:
+        - is_open
       filter: {}
   - role: customer
     permission:
@@ -109,6 +119,8 @@ select_permissions:
         - service_link_id
         - service_provider_type
         - unique_id
+      computed_fields:
+        - is_open
       filter: {}
   - role: delivery_driver
     permission:
@@ -129,6 +141,8 @@ select_permissions:
         - schedule
         - service_link_id
         - service_provider_type
+      computed_fields:
+        - is_open
       filter: {}
   - role: delivery_operator
     permission:
@@ -149,6 +163,8 @@ select_permissions:
         - schedule
         - service_link_id
         - service_provider_type
+      computed_fields:
+        - is_open
       filter: {}
   - role: laundry_operator
     permission:
@@ -169,6 +185,8 @@ select_permissions:
         - schedule
         - service_link_id
         - service_provider_type
+      computed_fields:
+        - is_open
       filter: {}
   - role: mez_admin
     permission:
@@ -190,6 +208,8 @@ select_permissions:
         - service_link_id
         - service_provider_type
         - stripe_id
+      computed_fields:
+        - is_open
       filter:
         _exists:
           _table:
@@ -217,6 +237,8 @@ select_permissions:
         - schedule
         - service_link_id
         - service_provider_type
+      computed_fields:
+        - is_open
       filter: {}
 update_permissions:
   - role: business_operator

@@ -225,10 +225,10 @@ class _RestaurantCardState extends State<RestaurantCard> {
               ),
             ),
             Container(
-              color: widget.restaurant.isOpen()
+              color: widget.restaurant.isOpen
                   ? null
                   : Colors.black.withOpacity(0.5),
-              child: widget.restaurant.isOpen()
+              child: widget.restaurant.isOpen
                   ? null
                   : Center(
                       child: Text(

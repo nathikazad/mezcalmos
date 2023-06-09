@@ -1950,6 +1950,10 @@ input business_event_variance_order_by {
   id: order_by
 }
 
+input business_get_home_rentals_args {
+  location: geography
+}
+
 """
 columns and relationships of "business.home_rental"
 """
@@ -1965,9 +1969,6 @@ type business_home_rental {
   rental_id: Int!
 }
 
-"""
-aggregated selection of "business.home_rental"
-"""
 type business_home_rental_aggregate {
   aggregate: business_home_rental_aggregate_fields
   nodes: [business_home_rental!]!
@@ -3355,6 +3356,9 @@ type business_order_request_item {
   id: Int!
   item_id: Int!
   offering_type: String!
+
+  """An object relationship"""
+  order: business_order_request!
   order_request_id: Int!
   parameters(
     """JSON select path"""
@@ -3488,6 +3492,7 @@ input business_order_request_item_bool_exp {
   id: Int_comparison_exp
   item_id: Int_comparison_exp
   offering_type: String_comparison_exp
+  order: business_order_request_bool_exp
   order_request_id: Int_comparison_exp
   parameters: jsonb_comparison_exp
   product: business_product_bool_exp
@@ -3548,6 +3553,7 @@ input business_order_request_item_insert_input {
   id: Int
   item_id: Int
   offering_type: String
+  order: business_order_request_obj_rel_insert_input
   order_request_id: Int
   parameters: jsonb
   product: business_product_obj_rel_insert_input
@@ -3630,6 +3636,7 @@ input business_order_request_item_order_by {
   id: order_by
   item_id: order_by
   offering_type: order_by
+  order: business_order_request_order_by
   order_request_id: order_by
   parameters: order_by
   product: business_product_order_by
@@ -3957,6 +3964,16 @@ type business_order_request_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [business_order_request!]!
+}
+
+"""
+input type for inserting object relation for remote table "business.order_request"
+"""
+input business_order_request_obj_rel_insert_input {
+  data: business_order_request_insert_input!
+
+  """upsert condition"""
+  on_conflict: business_order_request_on_conflict
 }
 
 """
@@ -17734,12 +17751,24 @@ columns and relationships of "mez_admin_chat"
 """
 type mez_admin_chat {
   """An object relationship"""
+  business: business_business
+
+  """An object relationship"""
   chat: chat
   chat_id: Int!
+
+  """An object relationship"""
+  delivery_company: delivery_company
+
+  """An object relationship"""
+  laundry: laundry_store
   recipient_id: Int!
 
   """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
   recipient_type: String!
+
+  """An object relationship"""
+  restaurant: restaurant_restaurant
 
   """An object relationship"""
   user: user
@@ -17783,10 +17812,14 @@ input mez_admin_chat_bool_exp {
   _and: [mez_admin_chat_bool_exp!]
   _not: mez_admin_chat_bool_exp
   _or: [mez_admin_chat_bool_exp!]
+  business: business_business_bool_exp
   chat: chat_bool_exp
   chat_id: Int_comparison_exp
+  delivery_company: delivery_company_bool_exp
+  laundry: laundry_store_bool_exp
   recipient_id: Int_comparison_exp
   recipient_type: String_comparison_exp
+  restaurant: restaurant_restaurant_bool_exp
   user: user_bool_exp
 }
 
@@ -17817,12 +17850,16 @@ input mez_admin_chat_inc_input {
 input type for inserting data into table "mez_admin_chat"
 """
 input mez_admin_chat_insert_input {
+  business: business_business_obj_rel_insert_input
   chat: chat_obj_rel_insert_input
   chat_id: Int
+  delivery_company: delivery_company_obj_rel_insert_input
+  laundry: laundry_store_obj_rel_insert_input
   recipient_id: Int
 
   """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
   recipient_type: String
+  restaurant: restaurant_restaurant_obj_rel_insert_input
   user: user_obj_rel_insert_input
 }
 
@@ -17866,10 +17903,14 @@ input mez_admin_chat_on_conflict {
 
 """Ordering options when selecting data from "mez_admin_chat"."""
 input mez_admin_chat_order_by {
+  business: business_business_order_by
   chat: chat_order_by
   chat_id: order_by
+  delivery_company: delivery_company_order_by
+  laundry: laundry_store_order_by
   recipient_id: order_by
   recipient_type: order_by
+  restaurant: restaurant_restaurant_order_by
   user: user_order_by
 }
 
@@ -24239,6 +24280,56 @@ type query_root {
 
   """fetch data from the table: "business.event" using primary key columns"""
   business_event_by_pk(id: Int!): business_event
+
+  """
+  execute function "business.get_home_rentals" which returns "business.home_rental"
+  """
+  business_get_home_rentals(
+    """
+    input parameters for function "business_get_home_rentals"
+    """
+    args: business_get_home_rentals_args!
+
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): [business_home_rental!]!
+
+  """
+  execute function "business.get_home_rentals" and query aggregates on result of table type "business.home_rental"
+  """
+  business_get_home_rentals_aggregate(
+    """
+    input parameters for function "business_get_home_rentals_aggregate"
+    """
+    args: business_get_home_rentals_args!
+
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): business_home_rental_aggregate!
 
   """
   fetch data from the table: "business.home_rental"
@@ -35630,11 +35721,17 @@ type service_provider_details {
   id: Int!
   image: String!
 
+  """
+  A computed field, executes function "service_provider.is_open"
+  """
+  is_open: Boolean
+
   """Record <language_id, bool>"""
   language(
     """JSON select path"""
     path: String
   ): jsonb!
+  last_active_time: timestamp!
 
   """An object relationship"""
   laundry_store: laundry_store
@@ -35662,6 +35759,7 @@ type service_provider_details {
 
   """An object relationship"""
   stripe_info: service_provider_stripe_info
+  time_zone: String
   unique_id: String
 }
 
@@ -35727,7 +35825,9 @@ input service_provider_details_bool_exp {
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
+  is_open: Boolean_comparison_exp
   language: jsonb_comparison_exp
+  last_active_time: timestamp_comparison_exp
   laundry_store: laundry_store_bool_exp
   location: service_provider_location_bool_exp
   location_id: Int_comparison_exp
@@ -35742,6 +35842,7 @@ input service_provider_details_bool_exp {
   service_provider_type: String_comparison_exp
   stripe_id: Int_comparison_exp
   stripe_info: service_provider_stripe_info_bool_exp
+  time_zone: String_comparison_exp
   unique_id: String_comparison_exp
 }
 
@@ -35839,6 +35940,7 @@ input service_provider_details_insert_input {
 
   """Record <language_id, bool>"""
   language: jsonb
+  last_active_time: timestamp
   laundry_store: laundry_store_obj_rel_insert_input
   location: service_provider_location_obj_rel_insert_input
   location_id: Int
@@ -35853,6 +35955,7 @@ input service_provider_details_insert_input {
   service_provider_type: String
   stripe_id: Int
   stripe_info: service_provider_stripe_info_obj_rel_insert_input
+  time_zone: String
   unique_id: String
 }
 
@@ -35864,6 +35967,7 @@ type service_provider_details_max_fields {
   firebase_id: String
   id: Int
   image: String
+  last_active_time: timestamp
   location_id: Int
   name: String
   open_status: String
@@ -35872,6 +35976,7 @@ type service_provider_details_max_fields {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -35883,6 +35988,7 @@ type service_provider_details_min_fields {
   firebase_id: String
   id: Int
   image: String
+  last_active_time: timestamp
   location_id: Int
   name: String
   open_status: String
@@ -35891,6 +35997,7 @@ type service_provider_details_min_fields {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -35937,7 +36044,9 @@ input service_provider_details_order_by {
   firebase_id: order_by
   id: order_by
   image: order_by
+  is_open: order_by
   language: order_by
+  last_active_time: order_by
   laundry_store: laundry_store_order_by
   location: service_provider_location_order_by
   location_id: order_by
@@ -35952,6 +36061,7 @@ input service_provider_details_order_by {
   service_provider_type: order_by
   stripe_id: order_by
   stripe_info: service_provider_stripe_info_order_by
+  time_zone: order_by
   unique_id: order_by
 }
 
@@ -36001,6 +36111,9 @@ enum service_provider_details_select_column {
   language
 
   """column name"""
+  last_active_time
+
+  """column name"""
   location_id
 
   """column name"""
@@ -36028,6 +36141,9 @@ enum service_provider_details_select_column {
   stripe_id
 
   """column name"""
+  time_zone
+
+  """column name"""
   unique_id
 }
 
@@ -36046,6 +36162,7 @@ input service_provider_details_set_input {
 
   """Record <language_id, bool>"""
   language: jsonb
+  last_active_time: timestamp
   location_id: Int
   name: String
   open_status: String
@@ -36055,6 +36172,7 @@ input service_provider_details_set_input {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -36112,6 +36230,7 @@ input service_provider_details_stream_cursor_value_input {
 
   """Record <language_id, bool>"""
   language: jsonb
+  last_active_time: timestamp
   location_id: Int
   name: String
   open_status: String
@@ -36121,6 +36240,7 @@ input service_provider_details_stream_cursor_value_input {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -36166,6 +36286,9 @@ enum service_provider_details_update_column {
   language
 
   """column name"""
+  last_active_time
+
+  """column name"""
   location_id
 
   """column name"""
@@ -36191,6 +36314,9 @@ enum service_provider_details_update_column {
 
   """column name"""
   stripe_id
+
+  """column name"""
+  time_zone
 
   """column name"""
   unique_id
@@ -38709,6 +38835,56 @@ type subscription_root {
     """filter the rows returned"""
     where: business_event_bool_exp
   ): [business_event!]!
+
+  """
+  execute function "business.get_home_rentals" which returns "business.home_rental"
+  """
+  business_get_home_rentals(
+    """
+    input parameters for function "business_get_home_rentals"
+    """
+    args: business_get_home_rentals_args!
+
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): [business_home_rental!]!
+
+  """
+  execute function "business.get_home_rentals" and query aggregates on result of table type "business.home_rental"
+  """
+  business_get_home_rentals_aggregate(
+    """
+    input parameters for function "business_get_home_rentals_aggregate"
+    """
+    args: business_get_home_rentals_args!
+
+    """distinct select on columns"""
+    distinct_on: [business_home_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_rental_bool_exp
+  ): business_home_rental_aggregate!
 
   """
   fetch data from the table: "business.home_rental"

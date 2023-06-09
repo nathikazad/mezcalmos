@@ -445,6 +445,13 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'is_open'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'image'),
                 alias: null,
                 arguments: [],
@@ -2408,6 +2415,7 @@ class Query$getLaundries$laundry_store$details {
   Query$getLaundries$laundry_store$details({
     required this.id,
     required this.location_id,
+    this.is_open,
     required this.image,
     required this.language,
     required this.name,
@@ -2426,6 +2434,7 @@ class Query$getLaundries$laundry_store$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$location_id = json['location_id'];
+    final l$is_open = json['is_open'];
     final l$image = json['image'];
     final l$language = json['language'];
     final l$name = json['name'];
@@ -2441,6 +2450,7 @@ class Query$getLaundries$laundry_store$details {
     return Query$getLaundries$laundry_store$details(
       id: (l$id as int),
       location_id: (l$location_id as int),
+      is_open: (l$is_open as bool?),
       image: (l$image as String),
       language: mapFromJson(l$language),
       name: (l$name as String),
@@ -2466,6 +2476,8 @@ class Query$getLaundries$laundry_store$details {
   final int id;
 
   final int location_id;
+
+  final bool? is_open;
 
   final String image;
 
@@ -2497,6 +2509,8 @@ class Query$getLaundries$laundry_store$details {
     _resultData['id'] = l$id;
     final l$location_id = location_id;
     _resultData['location_id'] = l$location_id;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$language = language;
@@ -2528,6 +2542,7 @@ class Query$getLaundries$laundry_store$details {
   int get hashCode {
     final l$id = id;
     final l$location_id = location_id;
+    final l$is_open = is_open;
     final l$image = image;
     final l$language = language;
     final l$name = name;
@@ -2543,6 +2558,7 @@ class Query$getLaundries$laundry_store$details {
     return Object.hashAll([
       l$id,
       l$location_id,
+      l$is_open,
       l$image,
       l$language,
       l$name,
@@ -2575,6 +2591,11 @@ class Query$getLaundries$laundry_store$details {
     final l$location_id = location_id;
     final lOther$location_id = other.location_id;
     if (l$location_id != lOther$location_id) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$image = image;
@@ -2663,6 +2684,7 @@ abstract class CopyWith$Query$getLaundries$laundry_store$details<TRes> {
   TRes call({
     int? id,
     int? location_id,
+    bool? is_open,
     String? image,
     dynamic? language,
     String? name,
@@ -2699,6 +2721,7 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$details<TRes>
   TRes call({
     Object? id = _undefined,
     Object? location_id = _undefined,
+    Object? is_open = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
     Object? name = _undefined,
@@ -2717,6 +2740,7 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$details<TRes>
         location_id: location_id == _undefined || location_id == null
             ? _instance.location_id
             : (location_id as int),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -2794,6 +2818,7 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store$details<TRes>
   call({
     int? id,
     int? location_id,
+    bool? is_open,
     String? image,
     dynamic? language,
     String? name,
@@ -4056,6 +4081,13 @@ const documentNodeQuerygetLaundryStoreById = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
                 name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'is_open'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -5610,6 +5642,7 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_d
 class Query$getLaundryStoreById$laundry_store_by_pk$details {
   Query$getLaundryStoreById$laundry_store_by_pk$details({
     required this.id,
+    this.is_open,
     required this.location_id,
     required this.currency,
     required this.image,
@@ -5629,6 +5662,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
   factory Query$getLaundryStoreById$laundry_store_by_pk$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$is_open = json['is_open'];
     final l$location_id = json['location_id'];
     final l$currency = json['currency'];
     final l$image = json['image'];
@@ -5645,6 +5679,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$$__typename = json['__typename'];
     return Query$getLaundryStoreById$laundry_store_by_pk$details(
       id: (l$id as int),
+      is_open: (l$is_open as bool?),
       location_id: (l$location_id as int),
       currency: (l$currency as String),
       image: (l$image as String),
@@ -5670,6 +5705,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
   }
 
   final int id;
+
+  final bool? is_open;
 
   final int location_id;
 
@@ -5705,6 +5742,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$location_id = location_id;
     _resultData['location_id'] = l$location_id;
     final l$currency = currency;
@@ -5739,6 +5778,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
   @override
   int get hashCode {
     final l$id = id;
+    final l$is_open = is_open;
     final l$location_id = location_id;
     final l$currency = currency;
     final l$image = image;
@@ -5755,6 +5795,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$is_open,
       l$location_id,
       l$currency,
       l$image,
@@ -5784,6 +5825,11 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$location_id = location_id;
@@ -5884,6 +5930,7 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details<
 
   TRes call({
     int? id,
+    bool? is_open,
     int? location_id,
     String? currency,
     String? image,
@@ -5926,6 +5973,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? is_open = _undefined,
     Object? location_id = _undefined,
     Object? currency = _undefined,
     Object? image = _undefined,
@@ -5943,6 +5991,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
   }) =>
       _then(Query$getLaundryStoreById$laundry_store_by_pk$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         location_id: location_id == _undefined || location_id == null
             ? _instance.location_id
             : (location_id as int),
@@ -6029,6 +6078,7 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<
 
   call({
     int? id,
+    bool? is_open,
     int? location_id,
     String? currency,
     String? image,
@@ -9350,6 +9400,13 @@ const documentNodeMutationupdateLaundryInfo = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'is_open'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'language'),
                 alias: null,
                 arguments: [],
@@ -10256,6 +10313,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     required this.id,
     required this.location_id,
     required this.image,
+    this.is_open,
     required this.language,
     required this.currency,
     required this.location,
@@ -10274,6 +10332,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     final l$id = json['id'];
     final l$location_id = json['location_id'];
     final l$image = json['image'];
+    final l$is_open = json['is_open'];
     final l$language = json['language'];
     final l$currency = json['currency'];
     final l$location = json['location'];
@@ -10289,6 +10348,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
       id: (l$id as int),
       location_id: (l$location_id as int),
       image: (l$image as String),
+      is_open: (l$is_open as bool?),
       language: mapFromJson(l$language),
       currency: (l$currency as String),
       location:
@@ -10316,6 +10376,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
   final int location_id;
 
   final String image;
+
+  final bool? is_open;
 
   final dynamic language;
 
@@ -10350,6 +10412,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     _resultData['location_id'] = l$location_id;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
     final l$currency = currency;
@@ -10380,6 +10444,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     final l$id = id;
     final l$location_id = location_id;
     final l$image = image;
+    final l$is_open = is_open;
     final l$language = language;
     final l$currency = currency;
     final l$location = location;
@@ -10395,6 +10460,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
       l$id,
       l$location_id,
       l$image,
+      l$is_open,
       l$language,
       l$currency,
       l$location,
@@ -10432,6 +10498,11 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$language = language;
@@ -10520,6 +10591,7 @@ abstract class CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
     int? id,
     int? location_id,
     String? image,
+    bool? is_open,
     dynamic? language,
     String? currency,
     Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location?
@@ -10564,6 +10636,7 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$detail
     Object? id = _undefined,
     Object? location_id = _undefined,
     Object? image = _undefined,
+    Object? is_open = _undefined,
     Object? language = _undefined,
     Object? currency = _undefined,
     Object? location = _undefined,
@@ -10584,6 +10657,7 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$detail
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
@@ -10664,6 +10738,7 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
     int? id,
     int? location_id,
     String? image,
+    bool? is_open,
     dynamic? language,
     String? currency,
     Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location?

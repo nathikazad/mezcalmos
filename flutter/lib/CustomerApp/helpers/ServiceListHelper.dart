@@ -9,7 +9,7 @@ extension RestaurantFilters<T extends Service> on List<Service> {
 
   List<Service> showOnlyOpen(bool value) {
     if (value == true) {
-      return where((Service restaurant) => restaurant.isOpen() == true)
+      return where((Service restaurant) => restaurant.isOpen == true)
           .toList();
     } else {
       return where(
@@ -20,9 +20,9 @@ extension RestaurantFilters<T extends Service> on List<Service> {
 
   void sortByOpen() {
     sort((Service a, Service b) {
-      if (a.isOpen() && !b.isOpen()) {
+      if (a.isOpen && !b.isOpen) {
         return -1;
-      } else if (!a.isOpen() && b.isOpen()) {
+      } else if (!a.isOpen && b.isOpen) {
         return 1;
       } else
         return 0;

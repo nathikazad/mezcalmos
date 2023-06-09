@@ -1,4 +1,5 @@
 import '../../__generated/schema.graphql.dart';
+import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -374,6 +375,13 @@ const documentNodeQuerygetDeliveryCompanyById = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'schedule'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'is_open'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -1192,6 +1200,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
   Query$getDeliveryCompanyById$delivery_company_by_pk$details({
     required this.id,
     this.schedule,
+    this.is_open,
     required this.approved,
     this.description_id,
     required this.image,
@@ -1211,6 +1220,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$schedule = json['schedule'];
+    final l$is_open = json['is_open'];
     final l$approved = json['approved'];
     final l$description_id = json['description_id'];
     final l$image = json['image'];
@@ -1227,6 +1237,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     return Query$getDeliveryCompanyById$delivery_company_by_pk$details(
       id: (l$id as int),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+      is_open: (l$is_open as bool?),
       approved: (l$approved as bool),
       description_id: (l$description_id as int?),
       image: (l$image as String),
@@ -1251,6 +1262,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
   final int id;
 
   final dynamic? schedule;
+
+  final bool? is_open;
 
   final bool approved;
 
@@ -1286,6 +1299,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     _resultData['id'] = l$id;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$description_id = description_id;
@@ -1319,6 +1334,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
   int get hashCode {
     final l$id = id;
     final l$schedule = schedule;
+    final l$is_open = is_open;
     final l$approved = approved;
     final l$description_id = description_id;
     final l$image = image;
@@ -1335,6 +1351,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     return Object.hashAll([
       l$id,
       l$schedule,
+      l$is_open,
       l$approved,
       l$description_id,
       l$image,
@@ -1369,6 +1386,11 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$schedule = schedule;
     final lOther$schedule = other.schedule;
     if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$approved = approved;
@@ -1466,6 +1488,7 @@ abstract class CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
   TRes call({
     int? id,
     dynamic? schedule,
+    bool? is_open,
     bool? approved,
     int? description_id,
     String? image,
@@ -1508,6 +1531,7 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
   TRes call({
     Object? id = _undefined,
     Object? schedule = _undefined,
+    Object? is_open = _undefined,
     Object? approved = _undefined,
     Object? description_id = _undefined,
     Object? image = _undefined,
@@ -1527,6 +1551,7 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -1601,6 +1626,7 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
   call({
     int? id,
     dynamic? schedule,
+    bool? is_open,
     bool? approved,
     int? description_id,
     String? image,
@@ -2488,6 +2514,13 @@ const documentNodeQuerygetDeliveryCompanies = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'schedule'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'is_open'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -3802,6 +3835,7 @@ class Query$getDeliveryCompanies$delivery_company$details {
   Query$getDeliveryCompanies$delivery_company$details({
     required this.id,
     this.schedule,
+    this.is_open,
     required this.approved,
     this.description_id,
     required this.image,
@@ -3820,6 +3854,7 @@ class Query$getDeliveryCompanies$delivery_company$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$schedule = json['schedule'];
+    final l$is_open = json['is_open'];
     final l$approved = json['approved'];
     final l$description_id = json['description_id'];
     final l$image = json['image'];
@@ -3835,6 +3870,7 @@ class Query$getDeliveryCompanies$delivery_company$details {
     return Query$getDeliveryCompanies$delivery_company$details(
       id: (l$id as int),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+      is_open: (l$is_open as bool?),
       approved: (l$approved as bool),
       description_id: (l$description_id as int?),
       image: (l$image as String),
@@ -3858,6 +3894,8 @@ class Query$getDeliveryCompanies$delivery_company$details {
   final int id;
 
   final dynamic? schedule;
+
+  final bool? is_open;
 
   final bool approved;
 
@@ -3890,6 +3928,8 @@ class Query$getDeliveryCompanies$delivery_company$details {
     _resultData['id'] = l$id;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$description_id = description_id;
@@ -3921,6 +3961,7 @@ class Query$getDeliveryCompanies$delivery_company$details {
   int get hashCode {
     final l$id = id;
     final l$schedule = schedule;
+    final l$is_open = is_open;
     final l$approved = approved;
     final l$description_id = description_id;
     final l$image = image;
@@ -3936,6 +3977,7 @@ class Query$getDeliveryCompanies$delivery_company$details {
     return Object.hashAll([
       l$id,
       l$schedule,
+      l$is_open,
       l$approved,
       l$description_id,
       l$image,
@@ -3968,6 +4010,11 @@ class Query$getDeliveryCompanies$delivery_company$details {
     final l$schedule = schedule;
     final lOther$schedule = other.schedule;
     if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$approved = approved;
@@ -4059,6 +4106,7 @@ abstract class CopyWith$Query$getDeliveryCompanies$delivery_company$details<
   TRes call({
     int? id,
     dynamic? schedule,
+    bool? is_open,
     bool? approved,
     int? description_id,
     String? image,
@@ -4097,6 +4145,7 @@ class _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$details<TRes>
   TRes call({
     Object? id = _undefined,
     Object? schedule = _undefined,
+    Object? is_open = _undefined,
     Object? approved = _undefined,
     Object? description_id = _undefined,
     Object? image = _undefined,
@@ -4115,6 +4164,7 @@ class _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$details<TRes>
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -4185,6 +4235,7 @@ class _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$details<
   call({
     int? id,
     dynamic? schedule,
+    bool? is_open,
     bool? approved,
     int? description_id,
     String? image,
@@ -5143,6 +5194,13 @@ const documentNodeQuerygetNearByCompanies = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'is_open'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'image'),
                 alias: null,
                 arguments: [],
@@ -5945,6 +6003,7 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
     required this.id,
     required this.approved,
     this.description_id,
+    this.is_open,
     required this.image,
     required this.location_id,
     required this.name,
@@ -5963,6 +6022,7 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
     final l$id = json['id'];
     final l$approved = json['approved'];
     final l$description_id = json['description_id'];
+    final l$is_open = json['is_open'];
     final l$image = json['image'];
     final l$location_id = json['location_id'];
     final l$name = json['name'];
@@ -5978,6 +6038,7 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
       id: (l$id as int),
       approved: (l$approved as bool),
       description_id: (l$description_id as int?),
+      is_open: (l$is_open as bool?),
       image: (l$image as String),
       location_id: (l$location_id as int),
       name: (l$name as String),
@@ -6002,6 +6063,8 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
   final bool approved;
 
   final int? description_id;
+
+  final bool? is_open;
 
   final String image;
 
@@ -6035,6 +6098,8 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
     _resultData['approved'] = l$approved;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$location_id = location_id;
@@ -6065,6 +6130,7 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
     final l$id = id;
     final l$approved = approved;
     final l$description_id = description_id;
+    final l$is_open = is_open;
     final l$image = image;
     final l$location_id = location_id;
     final l$name = name;
@@ -6080,6 +6146,7 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
       l$id,
       l$approved,
       l$description_id,
+      l$is_open,
       l$image,
       l$location_id,
       l$name,
@@ -6117,6 +6184,11 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
     final l$description_id = description_id;
     final lOther$description_id = other.description_id;
     if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$image = image;
@@ -6206,6 +6278,7 @@ abstract class CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies
     int? id,
     bool? approved,
     int? description_id,
+    bool? is_open,
     String? image,
     int? location_id,
     String? name,
@@ -6248,6 +6321,7 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$det
     Object? id = _undefined,
     Object? approved = _undefined,
     Object? description_id = _undefined,
+    Object? is_open = _undefined,
     Object? image = _undefined,
     Object? location_id = _undefined,
     Object? name = _undefined,
@@ -6268,6 +6342,7 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$det
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -6337,6 +6412,7 @@ class _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies
     int? id,
     bool? approved,
     int? description_id,
+    bool? is_open,
     String? image,
     int? location_id,
     String? name,
@@ -6888,6 +6964,546 @@ class _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies
   call({
     Geography? gps,
     String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Subscription$listen_on_details_open_status {
+  factory Variables$Subscription$listen_on_details_open_status(
+          {required int id}) =>
+      Variables$Subscription$listen_on_details_open_status._({
+        r'id': id,
+      });
+
+  Variables$Subscription$listen_on_details_open_status._(this._$data);
+
+  factory Variables$Subscription$listen_on_details_open_status.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Subscription$listen_on_details_open_status._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$listen_on_details_open_status<
+          Variables$Subscription$listen_on_details_open_status>
+      get copyWith =>
+          CopyWith$Variables$Subscription$listen_on_details_open_status(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$listen_on_details_open_status) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$listen_on_details_open_status<
+    TRes> {
+  factory CopyWith$Variables$Subscription$listen_on_details_open_status(
+    Variables$Subscription$listen_on_details_open_status instance,
+    TRes Function(Variables$Subscription$listen_on_details_open_status) then,
+  ) = _CopyWithImpl$Variables$Subscription$listen_on_details_open_status;
+
+  factory CopyWith$Variables$Subscription$listen_on_details_open_status.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$listen_on_details_open_status;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Subscription$listen_on_details_open_status<TRes>
+    implements
+        CopyWith$Variables$Subscription$listen_on_details_open_status<TRes> {
+  _CopyWithImpl$Variables$Subscription$listen_on_details_open_status(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$listen_on_details_open_status _instance;
+
+  final TRes Function(Variables$Subscription$listen_on_details_open_status)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Subscription$listen_on_details_open_status._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$listen_on_details_open_status<
+        TRes>
+    implements
+        CopyWith$Variables$Subscription$listen_on_details_open_status<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$listen_on_details_open_status(
+      this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Subscription$listen_on_details_open_status {
+  Subscription$listen_on_details_open_status({
+    this.service_provider_details_by_pk,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_details_open_status.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_provider_details_by_pk =
+        json['service_provider_details_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_details_open_status(
+      service_provider_details_by_pk: l$service_provider_details_by_pk == null
+          ? null
+          : Subscription$listen_on_details_open_status$service_provider_details_by_pk
+              .fromJson(
+                  (l$service_provider_details_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Subscription$listen_on_details_open_status$service_provider_details_by_pk?
+      service_provider_details_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    _resultData['service_provider_details_by_pk'] =
+        l$service_provider_details_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_provider_details_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$listen_on_details_open_status) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    final lOther$service_provider_details_by_pk =
+        other.service_provider_details_by_pk;
+    if (l$service_provider_details_by_pk !=
+        lOther$service_provider_details_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_details_open_status
+    on Subscription$listen_on_details_open_status {
+  CopyWith$Subscription$listen_on_details_open_status<
+          Subscription$listen_on_details_open_status>
+      get copyWith => CopyWith$Subscription$listen_on_details_open_status(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_details_open_status<TRes> {
+  factory CopyWith$Subscription$listen_on_details_open_status(
+    Subscription$listen_on_details_open_status instance,
+    TRes Function(Subscription$listen_on_details_open_status) then,
+  ) = _CopyWithImpl$Subscription$listen_on_details_open_status;
+
+  factory CopyWith$Subscription$listen_on_details_open_status.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_details_open_status;
+
+  TRes call({
+    Subscription$listen_on_details_open_status$service_provider_details_by_pk?
+        service_provider_details_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk<
+      TRes> get service_provider_details_by_pk;
+}
+
+class _CopyWithImpl$Subscription$listen_on_details_open_status<TRes>
+    implements CopyWith$Subscription$listen_on_details_open_status<TRes> {
+  _CopyWithImpl$Subscription$listen_on_details_open_status(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_details_open_status _instance;
+
+  final TRes Function(Subscription$listen_on_details_open_status) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_details_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listen_on_details_open_status(
+        service_provider_details_by_pk: service_provider_details_by_pk ==
+                _undefined
+            ? _instance.service_provider_details_by_pk
+            : (service_provider_details_by_pk
+                as Subscription$listen_on_details_open_status$service_provider_details_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk<
+      TRes> get service_provider_details_by_pk {
+    final local$service_provider_details_by_pk =
+        _instance.service_provider_details_by_pk;
+    return local$service_provider_details_by_pk == null
+        ? CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk(
+            local$service_provider_details_by_pk,
+            (e) => call(service_provider_details_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_details_open_status<TRes>
+    implements CopyWith$Subscription$listen_on_details_open_status<TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_details_open_status(this._res);
+
+  TRes _res;
+
+  call({
+    Subscription$listen_on_details_open_status$service_provider_details_by_pk?
+        service_provider_details_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk<
+          TRes>
+      get service_provider_details_by_pk =>
+          CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk
+              .stub(_res);
+}
+
+const documentNodeSubscriptionlisten_on_details_open_status =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'listen_on_details_open_status'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_details_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'is_open'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$listen_on_details_open_status
+    _parserFn$Subscription$listen_on_details_open_status(
+            Map<String, dynamic> data) =>
+        Subscription$listen_on_details_open_status.fromJson(data);
+
+class Options$Subscription$listen_on_details_open_status extends graphql
+    .SubscriptionOptions<Subscription$listen_on_details_open_status> {
+  Options$Subscription$listen_on_details_open_status({
+    String? operationName,
+    required Variables$Subscription$listen_on_details_open_status variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlisten_on_details_open_status,
+          parserFn: _parserFn$Subscription$listen_on_details_open_status,
+        );
+}
+
+class WatchOptions$Subscription$listen_on_details_open_status extends graphql
+    .WatchQueryOptions<Subscription$listen_on_details_open_status> {
+  WatchOptions$Subscription$listen_on_details_open_status({
+    String? operationName,
+    required Variables$Subscription$listen_on_details_open_status variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlisten_on_details_open_status,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$listen_on_details_open_status,
+        );
+}
+
+class FetchMoreOptions$Subscription$listen_on_details_open_status
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$listen_on_details_open_status({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$listen_on_details_open_status variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeSubscriptionlisten_on_details_open_status,
+        );
+}
+
+extension ClientExtension$Subscription$listen_on_details_open_status
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$listen_on_details_open_status>>
+      subscribe$listen_on_details_open_status(
+              Options$Subscription$listen_on_details_open_status options) =>
+          this.subscribe(options);
+  graphql.ObservableQuery<Subscription$listen_on_details_open_status>
+      watchSubscription$listen_on_details_open_status(
+              WatchOptions$Subscription$listen_on_details_open_status
+                  options) =>
+          this.watchQuery(options);
+}
+
+class Subscription$listen_on_details_open_status$service_provider_details_by_pk {
+  Subscription$listen_on_details_open_status$service_provider_details_by_pk({
+    this.is_open,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_details_open_status$service_provider_details_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$is_open = json['is_open'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_details_open_status$service_provider_details_by_pk(
+      is_open: (l$is_open as bool?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool? is_open;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$is_open = is_open;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$is_open,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_details_open_status$service_provider_details_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_details_open_status$service_provider_details_by_pk
+    on Subscription$listen_on_details_open_status$service_provider_details_by_pk {
+  CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk<
+          Subscription$listen_on_details_open_status$service_provider_details_by_pk>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk(
+    Subscription$listen_on_details_open_status$service_provider_details_by_pk
+        instance,
+    TRes Function(
+            Subscription$listen_on_details_open_status$service_provider_details_by_pk)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_details_open_status$service_provider_details_by_pk;
+
+  factory CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_details_open_status$service_provider_details_by_pk;
+
+  TRes call({
+    bool? is_open,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_details_open_status$service_provider_details_by_pk<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_details_open_status$service_provider_details_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_details_open_status$service_provider_details_by_pk
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_details_open_status$service_provider_details_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? is_open = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_details_open_status$service_provider_details_by_pk(
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_details_open_status$service_provider_details_by_pk<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_details_open_status$service_provider_details_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_details_open_status$service_provider_details_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? is_open,
     String? $__typename,
   }) =>
       _res;

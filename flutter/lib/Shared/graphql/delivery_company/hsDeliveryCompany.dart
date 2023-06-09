@@ -29,6 +29,7 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
   final Query$getDeliveryCompanyById$delivery_company_by_pk data =
       res.parsedData!.delivery_company_by_pk!;
   return DeliveryCompany(
+      isOpen: data.details!.is_open ?? false,
       deliveryCost: DeliveryCost(
         id: data.delivery_details.id,
         selfDelivery: data.delivery_details.self_delivery,
@@ -124,6 +125,7 @@ Future<List<DeliveryCompany>> get_nearby_companies(
   returnedList = dataList
       .map((Query$getNearByCompanies$delivery_get_delivery_companies data) {
     return DeliveryCompany(
+      isOpen: data.details!.is_open ?? false,
       deliveryCost: DeliveryCost(
         id: data.delivery_details.id,
         selfDelivery: data.delivery_details.self_delivery,
@@ -175,6 +177,7 @@ Future<List<DeliveryCompany>?> get_dv_companies() async {
   returnedList =
       dataList.map((Query$getDeliveryCompanies$delivery_company data) {
     return DeliveryCompany(
+      isOpen: data.details!.is_open ?? false,
       schedule: scheduleFromData(data.details!.schedule),
       rate: data.reviews_aggregate.aggregate?.avg?.rating,
       numberOfReviews: data.reviews_aggregate.aggregate?.count,
@@ -235,3 +238,4 @@ Future<List<DeliveryCompany>?> get_dv_companies() async {
 //     return data.details!.open_status.toServiceStatus();
 //   }
 // }
+

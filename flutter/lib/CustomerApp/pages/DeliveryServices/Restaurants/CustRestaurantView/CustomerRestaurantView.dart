@@ -61,7 +61,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       extendBodyBehindAppBar: true,
       floatingActionButton: FloatingCartComponent(),
       bottomSheet: Obx(
-        () => (_viewController.restaurant.value?.isOpen() == false)
+        () => (_viewController.restaurant.value?.isOpen == false)
             ? _schedulingOrdersBottomWidget()
             : SizedBox(),
       ),
