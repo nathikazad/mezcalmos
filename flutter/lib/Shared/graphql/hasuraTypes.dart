@@ -69,7 +69,7 @@ T mapFromJson<T>(jsonString) {
 }
 
 /// Stringify a Map object
-String mapToJson(map) {
-  // mezDbgPrint("map =======>$map");
-  return jsonEncode(map);
+dynamic mapToJson(map) {
+  mezDbgPrint("map =======>$map");
+  return map;
 }

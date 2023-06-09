@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsOtherServiceView/controller/BsOtherServiceViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
@@ -16,6 +17,7 @@ import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsOtherServiceView/BsOtherServiceView.dart';
 
 enum BusinessServiceType {
   Rental,
@@ -117,6 +119,45 @@ class BsServicesListViewController {
     currentBottomSheetData = _returnSheetValues();
   }
 
+  BusinessProfileItem otherServices() {
+    OtherServiceType getSimilarType() {
+      switch (businessProfile) {
+        case BusinessProfile.SurfShop:
+        case BusinessProfile.VehicleRental:
+        case BusinessProfile.HomeRental:
+          return OtherServiceType.Rental;
+
+        case BusinessProfile.YogaStudio:
+        case BusinessProfile.LanguageSchool:
+        case BusinessProfile.TourAgency:
+        case BusinessProfile.WellnessPractitioner:
+        case BusinessProfile.Volunteer:
+        case BusinessProfile.Entertainment:
+        case BusinessProfile.DanceStudio:
+          return OtherServiceType.Event;
+
+        case BusinessProfile.ArtisanalProduct:
+          return OtherServiceType.Item;
+
+        case BusinessProfile.CleaningService:
+        case BusinessProfile.PetSitting:
+        case BusinessProfile.MealPlanning:
+          return OtherServiceType.Service;
+      }
+    }
+
+    return BusinessProfileItem(
+      title: "otherServicesTitle",
+      subtitle: "otherServicesSubtitle",
+      route: () async {
+        await BsOtherServiceView.navigate(
+          profileName: getSimilarType(),
+          controller: this,
+        );
+      },
+    );
+  }
+
   List<BusinessProfileItem> _returnSheetValues() {
     final String rentalTitleLangKey = "rentalTitle";
     final String rentalSubtitleLangKey = "rentalSubtitle";
@@ -143,16 +184,23 @@ class BsServicesListViewController {
             title: classTitleLangKey,
             subtitle: classSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: true);
+              await navigateToEvent(
+                isClass: true,
+                eventCategory: EventCategory1.Surf,
+              );
             },
           ),
           BusinessProfileItem(
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: false);
+              await navigateToEvent(
+                isClass: false,
+                eventCategory: EventCategory1.Surf,
+              );
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.VehicleRental:
         return [
@@ -163,6 +211,7 @@ class BsServicesListViewController {
               await navigateToRental(rentalCategory: RentalCategory1.Vehicle);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.HomeRental:
         return [
@@ -174,6 +223,7 @@ class BsServicesListViewController {
               await navigateToHomeRental();
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.WellnessPractitioner:
         return [
@@ -181,9 +231,13 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: false);
+              await navigateToEvent(
+                isClass: false,
+                eventCategory: EventCategory1.Therapy,
+              );
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.Volunteer:
         return [
@@ -191,9 +245,13 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: false);
+              await navigateToEvent(
+                isClass: false,
+                eventCategory: EventCategory1.Volunteer,
+              );
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.TourAgency:
         return [
@@ -201,9 +259,14 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: false, id: null);
+              await navigateToEvent(
+                isClass: false,
+                id: null,
+                eventCategory: EventCategory1.Adventure,
+              );
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.YogaStudio:
         return [
@@ -211,16 +274,23 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: false);
+              await navigateToEvent(
+                isClass: false,
+                eventCategory: EventCategory1.Yoga,
+              );
             },
           ),
           BusinessProfileItem(
             title: classTitleLangKey,
             subtitle: classSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: true);
+              await navigateToEvent(
+                isClass: true,
+                eventCategory: EventCategory1.Yoga,
+              );
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.LanguageSchool:
         return [
@@ -228,16 +298,23 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: false);
+              await navigateToEvent(
+                isClass: false,
+                eventCategory: EventCategory1.LanguageSchool,
+              );
             },
           ),
           BusinessProfileItem(
             title: classTitleLangKey,
             subtitle: classSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: true);
+              await navigateToEvent(
+                isClass: true,
+                eventCategory: EventCategory1.LanguageSchool,
+              );
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.ArtisanalProduct:
         return [
@@ -248,6 +325,7 @@ class BsServicesListViewController {
               await navigateToProduct();
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.CleaningService:
         return [
@@ -259,6 +337,7 @@ class BsServicesListViewController {
                   serviceCategory: ServiceCategory1.Cleaning);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.PetSitting:
         return [
@@ -270,6 +349,7 @@ class BsServicesListViewController {
                   serviceCategory: ServiceCategory1.PetSitting);
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.Entertainment:
         return [
@@ -277,9 +357,13 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: false);
+              await navigateToEvent(
+                isClass: false,
+                eventCategory: EventCategory1.Social,
+              );
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.DanceStudio:
         return [
@@ -287,16 +371,23 @@ class BsServicesListViewController {
             title: eventTitleLangKey,
             subtitle: eventSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: false);
+              await navigateToEvent(
+                isClass: false,
+                eventCategory: EventCategory1.Dance,
+              );
             },
           ),
           BusinessProfileItem(
             title: classTitleLangKey,
             subtitle: classSubtitleLangKey,
             route: () async {
-              await navigateToEvent(isClass: true);
+              await navigateToEvent(
+                isClass: true,
+                eventCategory: EventCategory1.Dance,
+              );
             },
           ),
+          otherServices(),
         ];
       case BusinessProfile.MealPlanning:
         return [
@@ -308,6 +399,7 @@ class BsServicesListViewController {
                   serviceCategory: ServiceCategory1.MealPlanning);
             },
           ),
+          otherServices(),
         ];
     }
   }
@@ -315,11 +407,12 @@ class BsServicesListViewController {
   Future<void> navigateToEvent({
     int? id,
     required bool isClass,
+    required EventCategory1 eventCategory,
   }) async {
     bool? refetch = await BsOpEventView.navigate(
         businessDetailsId: businessDetailsId,
         businessId: businessId,
-        profile: businessProfile,
+        eventCategory: eventCategory,
         id: id,
         isClass: isClass);
     if (refetch == true) unawaited(_fetchEvents());

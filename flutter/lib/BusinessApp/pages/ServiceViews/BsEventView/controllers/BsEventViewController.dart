@@ -30,7 +30,7 @@ class BsEventViewController {
       BusinessItemDetailsController();
   // vars //
   int? _eventId;
-  late BusinessProfile businessProfile;
+  late EventCategory1 eventCategory;
   bool shouldRefetch = false;
   bool get isClass => _isClass.value;
   RxBool _isClass = false.obs;
@@ -68,17 +68,17 @@ class BsEventViewController {
           detailsController.priceTimeUnitMap.keys.contains(element) == false)
       .toList();
   bool get showLocation {
-    switch (businessProfile) {
-      case BusinessProfile.SurfShop:
+    switch (eventCategory) {
+      case EventCategory1.Surf:
         return scheduleTypeInput.value.type == ScheduleType.OneTime;
-      case BusinessProfile.TourAgency:
-      case BusinessProfile.Volunteer:
-      case BusinessProfile.Entertainment:
+      case EventCategory1.Adventure:
+      case EventCategory1.Volunteer:
+      case EventCategory1.Social:
         return true;
 
-      case BusinessProfile.WellnessPractitioner:
+      case EventCategory1.Therapy:
         return scheduleTypeInput.value.type != ScheduleType.OnDemand;
-      case BusinessProfile.YogaStudio:
+      case EventCategory1.Yoga:
         return scheduleTypeInput.value.type == ScheduleType.OneTime;
       default:
         return false;
@@ -94,10 +94,10 @@ class BsEventViewController {
       required int detailsId,
       required int businessId,
       int? eventId,
-      required BusinessProfile profile}) async {
+      required EventCategory1 eventCategory}) async {
     _eventId = eventId;
     _isClass.value = isClass;
-    businessProfile = profile;
+    this.eventCategory = eventCategory;
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
@@ -194,7 +194,7 @@ class BsEventViewController {
   Future<Event> _constructEventWithDetails() async {
     final BusinessItemDetails details =
         await detailsController.contructDetails();
-    final EventCategory1 category1 = _getCategory1();
+    final EventCategory1 category1 = eventCategory;
     final Event event = Event(
         category1: category1,
         scheduleType: scheduleTypeInput.value.type,
@@ -208,7 +208,7 @@ class BsEventViewController {
   }
 
   Event _constructEvent() {
-    final EventCategory1 category1 = _getCategory1();
+    final EventCategory1 category1 = eventCategory;
     final Event event = Event(
         category1: category1,
         scheduleType: scheduleTypeInput.value.type,
@@ -222,45 +222,45 @@ class BsEventViewController {
     return event;
   }
 
-  EventCategory1 _getCategory1() {
-    EventCategory1 category1 = EventCategory1.Uncategorized;
-    switch (businessProfile) {
-      case BusinessProfile.YogaStudio:
-        category1 = EventCategory1.Yoga;
-        break;
-      case BusinessProfile.SurfShop:
-        category1 = EventCategory1.Surf;
-        break;
-      // case BusinessProfile.MartialArt:
-      //   category1 = EventCategory1.MartialArt;
-      //   break;
-      // case BusinessProfile.:
-      //   category1 = EventCategory1.Party;
-      //   break;
-      // case BusinessProfile.:
-      //   category1 = EventCategory1.Dance;
-      //   break;
-      case BusinessProfile.Entertainment:
-        category1 = EventCategory1.Social;
-        break;
-      case BusinessProfile.WellnessPractitioner:
-        category1 = EventCategory1.Therapy;
-        break;
-      // case BusinessProfile.:
-      //   category1 = EventCategory1.Fitness;
-      //   break;
-      case BusinessProfile.TourAgency:
-        category1 = EventCategory1.Adventure;
-        break;
-      case BusinessProfile.Volunteer:
-        category1 = EventCategory1.Volunteer;
-        break;
-      case BusinessProfile.DanceStudio:
-        category1 = EventCategory1.Dance;
-        break;
-    }
-    return category1;
-  }
+  // EventCategory1 _getCategory1() {
+  //   EventCategory1 category1 = EventCategory1.Uncategorized;
+  //   switch (eventcategory) {
+  //     case EventCategory1.Yoga:
+  //       category1 = EventCategory1.Yoga;
+  //       break;
+  //     case BusinessProfile.SurfShop:
+  //       category1 = EventCategory1.Surf;
+  //       break;
+  //     // case BusinessProfile.MartialArt:
+  //     //   category1 = EventCategory1.MartialArt;
+  //     //   break;
+  //     // case BusinessProfile.:
+  //     //   category1 = EventCategory1.Party;
+  //     //   break;
+  //     // case BusinessProfile.:
+  //     //   category1 = EventCategory1.Dance;
+  //     //   break;
+  //     case BusinessProfile.Entertainment:
+  //       category1 = EventCategory1.Social;
+  //       break;
+  //     case BusinessProfile.WellnessPractitioner:
+  //       category1 = EventCategory1.Therapy;
+  //       break;
+  //     // case BusinessProfile.:
+  //     //   category1 = EventCategory1.Fitness;
+  //     //   break;
+  //     case BusinessProfile.TourAgency:
+  //       category1 = EventCategory1.Adventure;
+  //       break;
+  //     case BusinessProfile.Volunteer:
+  //       category1 = EventCategory1.Volunteer;
+  //       break;
+  //     case BusinessProfile.DanceStudio:
+  //       category1 = EventCategory1.Dance;
+  //       break;
+  //   }
+  //   return category1;
+  // }
 
   // special methods //
   void switchScheduleType(ScheduleTypeInput inputType) {
@@ -269,226 +269,231 @@ class BsEventViewController {
   }
 
   List<ScheduleTypeInput> getScheduleType() {
-    final String businessFB = businessProfile.toFirebaseFormatString();
-    switch (businessProfile) {
-      case BusinessProfile.Entertainment:
+    switch (eventCategory) {
+      case EventCategory1.Social:
         return [
           ScheduleTypeInput(
-              title: _i18n()[businessFB]["weeklyEvent"],
-              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+              title: "${_i18n()["entertainment"]["weeklyEvent"]}",
+              subtitle: "${_i18n()["entertainment"]["weeklyEventLabel"]}",
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: _i18n()[businessFB]["oneTimeEvent"],
-              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+              title: "${_i18n()["entertainment"]["oneTimeEvent"]}",
+              subtitle: "${_i18n()["entertainment"]["oneTimeEventLabel"]}",
               type: ScheduleType.OneTime),
         ];
-      case BusinessProfile.Volunteer:
+      case EventCategory1.Volunteer:
         return [
           ScheduleTypeInput(
-              title: _i18n()[businessFB]["weeklyEvent"],
-              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+              title: "${_i18n()["volunteer"]["weeklyEvent"]}",
+              subtitle: "${_i18n()["volunteer"]["weeklyEventLabel"]}",
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: _i18n()[businessFB]["oneTimeEvent"],
-              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+              title: "${_i18n()["volunteer"]["oneTimeEvent"]}",
+              subtitle: "${_i18n()["volunteer"]["oneTimeEventLabel"]}",
               type: ScheduleType.OneTime),
         ];
-      case BusinessProfile.WellnessPractitioner:
+      case EventCategory1.Therapy:
         return [
           ScheduleTypeInput(
-              title: _i18n()[businessFB]["onDemand"],
-              subtitle: _i18n()[businessFB]["onDemandLabel"],
+              title: "${_i18n()["wellnessPractitioner"]["onDemand"]}",
+              subtitle: _i18n()["wellnessPractitioner"]["onDemandLabel"],
               type: ScheduleType.OnDemand),
           ScheduleTypeInput(
-              title: _i18n()[businessFB]["weeklyEvent"],
-              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+              title: "${_i18n()["wellnessPractitioner"]["weeklyEvent"]}",
+              subtitle:
+                  "${_i18n()["wellnessPractitioner"]["weeklyEventLabel"]}",
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: _i18n()[businessFB]["oneTimeEvent"],
-              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+              title: "${_i18n()["wellnessPractitioner"]["oneTimeEvent"]}",
+              subtitle:
+                  "${_i18n()["wellnessPractitioner"]["oneTimeEventLabel"]}",
               type: ScheduleType.OneTime),
         ];
-      case BusinessProfile.TourAgency:
+      case EventCategory1.Adventure:
         return [
           ScheduleTypeInput(
-              title: _i18n()[businessFB]["onDemand"],
-              subtitle: _i18n()[businessFB]["onDemandLabel"],
+              title: "${_i18n()["tourAgency"]["onDemand"]}",
+              subtitle: "${_i18n()["tourAgency"]["onDemandLabel"]}",
               type: ScheduleType.OnDemand),
           ScheduleTypeInput(
-              title: _i18n()[businessFB]["weeklyEvent"],
-              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+              title: "${_i18n()["tourAgency"]["weeklyEvent"]}",
+              subtitle: "${_i18n()["tourAgency"]["weeklyEventLabel"]}",
               type: ScheduleType.Scheduled),
           ScheduleTypeInput(
-              title: _i18n()[businessFB]["oneTimeEvent"],
-              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+              title: "${_i18n()["tourAgency"]["oneTimeEvent"]}",
+              subtitle: "${_i18n()["tourAgency"]["oneTimeEventLabel"]}",
               type: ScheduleType.OneTime),
         ];
-      case BusinessProfile.YogaStudio:
+      case EventCategory1.Yoga:
         return isClass
             ? [
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["onDemandClass"],
-                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    title: "${_i18n()["yogaStudio"]["onDemandClass"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["onDemandClassLabel"]}",
                     tags: [EventTag.Class],
                     type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["weeklyClass"],
-                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    title: "${_i18n()["yogaStudio"]["weeklyClass"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["weeklyClassLabel"]}",
                     tags: [EventTag.Class],
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["oneTimeClass"],
-                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    title: "${_i18n()["yogaStudio"]["oneTimeClass"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["oneTimeClassLabel"]}",
                     tags: [EventTag.Class, EventTag.Workshop],
                     type: ScheduleType.OneTime),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["retreat"],
-                    subtitle: _i18n()[businessFB]["retreatLabel"],
+                    title: "${_i18n()["yogaStudio"]["retreat"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["retreatLabel"]}",
                     tags: [EventTag.Class, EventTag.Retreat],
                     type: ScheduleType.OneTime),
               ]
             : [
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["weeklyEvent"],
-                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    title: "${_i18n()["yogaStudio"]["weeklyEvent"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["weeklyEventLabel"]}",
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["oneTimeEvent"],
-                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    title: "${_i18n()["yogaStudio"]["oneTimeEvent"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["oneTimeEventLabel"]}",
                     type: ScheduleType.OneTime),
               ];
-      case BusinessProfile.DanceStudio:
+      case EventCategory1.Dance:
         return isClass
             ? [
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["onDemandClass"],
-                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    title: "${_i18n()["danceStudio"]["onDemandClass"]}",
+                    subtitle: "${_i18n()["danceStudio"]["onDemandClassLabel"]}",
                     tags: [EventTag.Class],
                     type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["weeklyClass"],
-                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    title: "${_i18n()["danceStudio"]["weeklyClass"]}",
+                    subtitle: "${_i18n()["danceStudio"]["weeklyClassLabel"]}",
                     tags: [EventTag.Class],
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["oneTimeClass"],
-                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    title: "${_i18n()["danceStudio"]["oneTimeClass"]}",
+                    subtitle: "${_i18n()["danceStudio"]["oneTimeClassLabel"]}",
                     tags: [EventTag.Class, EventTag.Workshop],
                     type: ScheduleType.OneTime),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["retreat"],
-                    subtitle: _i18n()[businessFB]["retreatLabel"],
+                    title: "${_i18n()["danceStudio"]["retreat"]}",
+                    subtitle: "${_i18n()["danceStudio"]["retreatLabel"]}",
                     tags: [EventTag.Class, EventTag.Retreat],
                     type: ScheduleType.OneTime),
               ]
             : [
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["weeklyEvent"],
-                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    title: "${_i18n()["danceStudio"]["weeklyEvent"]}",
+                    subtitle: "${_i18n()["danceStudio"]["weeklyEventLabel"]}",
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["oneTimeEvent"],
-                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    title: "${_i18n()["danceStudio"]["oneTimeEvent"]}",
+                    subtitle: "${_i18n()["danceStudio"]["oneTimeEventLabel"]}",
                     type: ScheduleType.OneTime),
               ];
-      case BusinessProfile.PetSitting:
-        return [
-          ScheduleTypeInput(
-              title: _i18n()[businessFB]["weeklyEvent"],
-              subtitle: _i18n()[businessFB]["weeklyEventLabel"],
-              type: ScheduleType.Scheduled),
-          ScheduleTypeInput(
-              title: _i18n()[businessFB]["oneTimeEvent"],
-              subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
-              type: ScheduleType.OneTime),
-        ];
-      case BusinessProfile.LanguageSchool:
+      case EventCategory1.LanguageSchool:
         return isClass
             ? [
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["onDemandClass"],
-                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    title: "${_i18n()["languageSchool"]["onDemandClass"]}",
+                    subtitle:
+                        "${_i18n()["languageSchool"]["onDemandClassLabel"]}",
                     tags: [EventTag.Class],
                     type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["weeklyClass"],
-                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    title: "${_i18n()["languageSchool"]["weeklyClass"]}",
+                    subtitle:
+                        "${_i18n()["languageSchool"]["weeklyClassLabel"]}",
                     tags: [EventTag.Class],
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["oneTimeClass"],
-                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    title: "${_i18n()["languageSchool"]["oneTimeClass"]}",
+                    subtitle:
+                        "${_i18n()["languageSchool"]["oneTimeClassLabel"]}",
                     tags: [EventTag.Class, EventTag.Workshop],
                     type: ScheduleType.OneTime),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["retreat"],
-                    subtitle: _i18n()[businessFB]["retreatLabel"],
+                    title: "${_i18n()["languageSchool"]["retreat"]}",
+                    subtitle: "${_i18n()["languageSchool"]["retreatLabel"]}",
                     tags: [EventTag.Class, EventTag.Retreat],
                     type: ScheduleType.OneTime),
               ]
             : [
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["weeklyEvent"],
-                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    title: "${_i18n()["languageSchool"]["weeklyEvent"]}",
+                    subtitle:
+                        "${_i18n()["languageSchool"]["weeklyEventLabel"]}",
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["oneTimeEvent"],
-                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    title: "${_i18n()["languageSchool"]["oneTimeEvent"]}",
+                    subtitle:
+                        "${_i18n()["languageSchool"]["oneTimeEventLabel"]}",
                     type: ScheduleType.OneTime),
               ];
-      case BusinessProfile.SurfShop:
+      case EventCategory1.Surf:
         return isClass
             ? [
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["onDemandClass"],
-                    subtitle: _i18n()[businessFB]["onDemandClassLabel"],
+                    title: "${_i18n()["surfShop"]["onDemandClass"]}",
+                    subtitle: "${_i18n()["surfShop"]["onDemandClassLabel"]}",
                     tags: [EventTag.Class],
                     type: ScheduleType.OnDemand),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["weeklyClass"],
-                    subtitle: _i18n()[businessFB]["weeklyClassLabel"],
+                    title: "${_i18n()["surfShop"]["weeklyClass"]}",
+                    subtitle: "${_i18n()["surfShop"]["weeklyClassLabel"]}",
                     tags: [EventTag.Class],
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["oneTimeClass"],
-                    subtitle: _i18n()[businessFB]["oneTimeClassLabel"],
+                    title: "${_i18n()["surfShop"]["oneTimeClass"]}",
+                    subtitle: "${_i18n()["surfShop"]["oneTimeClassLabel"]}",
                     tags: [EventTag.Class],
                     type: ScheduleType.OneTime),
               ]
             : [
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["weeklyEvent"],
-                    subtitle: _i18n()[businessFB]["weeklyEventLabel"],
+                    title: "${_i18n()["surfShop"]["weeklyEvent"]}",
+                    subtitle: "${_i18n()["surfShop"]["weeklyEventLabel"]}",
                     type: ScheduleType.Scheduled),
                 ScheduleTypeInput(
-                    title: _i18n()[businessFB]["oneTimeEvent"],
-                    subtitle: _i18n()[businessFB]["oneTimeEventLabel"],
+                    title: "${_i18n()["surfShop"]["oneTimeEvent"]}",
+                    subtitle: "${_i18n()["surfShop"]["oneTimeEventLabel"]}",
                     type: ScheduleType.OneTime),
               ];
       default:
-        return [
-          ScheduleTypeInput(
-              title: _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
-                  ["onDemandClass"],
-              subtitle:
-                  _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
-                      ["onDemandClassLabel"],
-              type: ScheduleType.OnDemand),
-          ScheduleTypeInput(
-              title: _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
-                  ["weeklyClass"],
-              subtitle:
-                  _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
-                      ["weeklyClassLabel"],
-              type: ScheduleType.Scheduled),
-          ScheduleTypeInput(
-              title: _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
-                  ["oneTimeClass"],
-              subtitle:
-                  _i18n()[BusinessProfile.SurfShop.toFirebaseFormatString()]
-                      ["oneTimeClassLabel"],
-              type: ScheduleType.OneTime),
-        ];
+        return isClass
+            ? [
+                ScheduleTypeInput(
+                    title: "${_i18n()["yogaStudio"]["onDemandClass"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["onDemandClassLabel"]}",
+                    tags: [EventTag.Class],
+                    type: ScheduleType.OnDemand),
+                ScheduleTypeInput(
+                    title: "${_i18n()["yogaStudio"]["weeklyClass"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["weeklyClassLabel"]}",
+                    tags: [EventTag.Class],
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: "${_i18n()["yogaStudio"]["oneTimeClass"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["oneTimeClassLabel"]}",
+                    tags: [EventTag.Class, EventTag.Workshop],
+                    type: ScheduleType.OneTime),
+                ScheduleTypeInput(
+                    title: "${_i18n()["yogaStudio"]["retreat"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["retreatLabel"]}",
+                    tags: [EventTag.Class, EventTag.Retreat],
+                    type: ScheduleType.OneTime),
+              ]
+            : [
+                ScheduleTypeInput(
+                    title: "${_i18n()["yogaStudio"]["weeklyEvent"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["weeklyEventLabel"]}",
+                    type: ScheduleType.Scheduled),
+                ScheduleTypeInput(
+                    title: "${_i18n()["yogaStudio"]["oneTimeEvent"]}",
+                    subtitle: "${_i18n()["yogaStudio"]["oneTimeEventLabel"]}",
+                    type: ScheduleType.OneTime),
+              ];
       // throw StateError(
       //     "BusinessProfile ${businessProfile.name} not supported");
     }
@@ -558,7 +563,7 @@ class BsEventViewController {
     detailsController.clearPrices();
     mezDbgPrint("setPrices : ${scheduleTypeInput.value}");
     if (scheduleTypeInput.value.type == ScheduleType.OnDemand &&
-        businessProfile != BusinessProfile.TourAgency) {
+        eventCategory != EventCategory1.Adventure) {
       detailsController.addPriceTimeUnit(
         timeUnit: TimeUnit.PerHour,
       );
