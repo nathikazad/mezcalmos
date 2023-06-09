@@ -1,5 +1,4 @@
 import '../../__generated/schema.graphql.dart';
-import '../../buisness_order/__generated/business_order.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -4075,7 +4074,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     required this.name,
     required this.currency,
     required this.image,
-    this.last_active_time,
+    required this.last_active_time,
     required this.location,
     required this.accepted_payments,
     required this.$__typename,
@@ -4096,7 +4095,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
       name: (l$name as String),
       currency: (l$currency as String),
       image: (l$image as String),
-      last_active_time: (l$last_active_time as String?),
+      last_active_time: (l$last_active_time as String),
       location:
           Query$get_rental_by_id$business_rental_by_pk$business$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -4113,7 +4112,7 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
 
   final String image;
 
-  final String? last_active_time;
+  final String last_active_time;
 
   final Query$get_rental_by_id$business_rental_by_pk$business$details$location
       location;
@@ -4295,9 +4294,10 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$business$detail
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
-        last_active_time: last_active_time == _undefined
-            ? _instance.last_active_time
-            : (last_active_time as String?),
+        last_active_time:
+            last_active_time == _undefined || last_active_time == null
+                ? _instance.last_active_time
+                : (last_active_time as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
