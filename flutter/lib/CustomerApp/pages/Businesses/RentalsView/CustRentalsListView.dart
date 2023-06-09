@@ -127,19 +127,18 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
     return Stack(
       children: [
         Obx(() {
-          return viewController.buisinessesMarkers.isEmpty
-              ? GoogleMap(
-                  compassEnabled: false,
-                  mapToolbarEnabled: false,
-                  zoomControlsEnabled: false,
-                  markers: viewController.buisinessesMarkers,
-                  onMapCreated: viewController.onMapCreated,
-                  onCameraMove: viewController.onCameraMove,
-                  initialCameraPosition: CameraPosition(
-                    target: viewController.currentLocation,
-                    zoom: 14,
-                  ))
-              : Text('dsqdqsdqsdqsd');
+          viewController.allMarkers.isNotEmpty;
+          return GoogleMap(
+              compassEnabled: false,
+              mapToolbarEnabled: false,
+              zoomControlsEnabled: false,
+              markers: viewController.buisinessesMarkers,
+              onMapCreated: viewController.onMapCreated,
+              onCameraMove: viewController.onCameraMove,
+              initialCameraPosition: CameraPosition(
+                target: viewController.currentLocation,
+                zoom: 14,
+              ));
         }),
         Padding(
           padding: const EdgeInsets.only(top: 10),

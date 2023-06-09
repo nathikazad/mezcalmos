@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/CustShowOnlyOpenService.dart';
 import 'package:mezcalmos/CustomerApp/components/NoOpenServiceComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/components/CustomerLaundrySelectCard.dart';
@@ -9,6 +10,8 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["LaundriesListView"];
@@ -30,7 +33,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
 
   @override
   void initState() {
-    viewController.init();
+    viewController.init(context);
     super.initState();
   }
 
@@ -42,26 +45,123 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
         onClick: MezRouter.back,
         title: '${_i18n()["laundries"]}',
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Obx(() {
-              if (viewController.isLoading.value == false) {
-                return _buildLaundries();
-              } else {
-                return Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.all(15),
-                  child: CircularProgressIndicator(),
-                );
-              }
-            })
-          ],
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 100),
+        child: Obx(
+          () => MezButton(
+            height: 42.5,
+            onClick: () async {
+              viewController.switchView();
+            },
+            icon: viewController.isMapView ? Icons.list : Icons.room,
+            label: viewController.isMapView
+                ? '${_i18n()['viewAsList']}'
+                : '${_i18n()['viewOnMap']}',
+            borderRadius: 25,
+          ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: Obx(() {
+        if (viewController.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          if (viewController.isMapView) {
+            return _mapView();
+          }
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Obx(() {
+                  if (viewController.isLoading.value == false) {
+                    return _buildLaundries();
+                  } else {
+                    return Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(15),
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                })
+              ],
+            ),
+          );
+        }
+      }),
     );
+  }
+
+  Widget _mapView() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Obx(() => Expanded(
+                child: CustSwitchOpenService(
+                  label: '${_i18n()["showOnlyOpenLaundries"]}',
+                  showOnlyOpen: viewController.showOnlyOpen.value,
+                  onChange: (bool value) {},
+                ),
+              ))),
+      Expanded(
+          child: Stack(
+        children: [
+          Obx(() {
+            viewController.allMarkers.isNotEmpty;
+            return GoogleMap(
+                compassEnabled: false,
+                mapToolbarEnabled: false,
+                zoomControlsEnabled: false,
+                markers: viewController.laundriesMarkers,
+                onMapCreated: viewController.onMapCreated,
+                onCameraMove: viewController.onCameraMove,
+                initialCameraPosition: CameraPosition(
+                  target: viewController.currentLocation,
+                  zoom: 14,
+                ));
+          }),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Obx(
+                () => viewController.showFetchButton.value
+                    ? InkWell(
+                        onTap: () => viewController.fetchMapViewLaundries(),
+                        child: Material(
+                            color: Colors.white,
+                            elevation: 1,
+                            borderRadius: BorderRadius.circular(25),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 20),
+                              child: Text(
+                                '${_i18n()['fetchLaundriesInThisArea']}',
+                                style: context.textTheme.bodyLarge
+                                    ?.copyWith(color: primaryBlueColor),
+                              ),
+                            )),
+                      )
+                    : SizedBox.shrink(),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20, bottom: 20),
+              child: MezIconButton(
+                icon: Icons.my_location,
+                iconColor: Colors.black,
+                backgroundColor: Colors.white,
+                onTap: () => viewController.recenterMap(),
+              ),
+            ),
+          )
+        ],
+      ))
+    ]);
   }
 
   Widget _buildLaundries() {

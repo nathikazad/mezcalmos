@@ -617,7 +617,12 @@
             "noOpenRestaurant": "No hay restaurantes abiertos",
             "meals": "Comidas",
             "noItemTitle": "No se han encontrado resultados",
-            "noItemDesc": "Lo siento, no pudimos encontrar lo que está buscando, por favor, pruebe una nueva palabra clave."
+            "noItemDesc": "Lo siento, no pudimos encontrar lo que está buscando, por favor, pruebe una nueva palabra clave.",
+            "map": "Mapa",
+            "viewOnMap": "Ver en el mapa",
+            "viewAsList": "Ver como lista",
+            "showCost": "Costo de exhibición",
+            "fetchHomesInThisArea": "Buscar restaurantes en esta área"
           }
         },
         "ViewCartScreen": {
@@ -1278,7 +1283,7 @@
             "viewOnMap": "Ver en el mapa",
             "viewAsList": "Ver como lista",
             "showCost": "Costo de exhibición",
-            "fetchHomesInThisArea": "Buscar casas en esta área",
+            "fetchHomesInThisArea": "Buscar alquileres en esta área",
             "uncategorized": "Sin categoría",
             "surf": "Surf",
             "homes": "Casas",
@@ -1728,6 +1733,11 @@
           "title": "Lavanderías a tu alrededor",
           "noLaundaryFound": "No se encontró lavandería",
           "showOnlyOpenLaundries": "Mostrar solo lavas abiertas",
+          "map": "Mapa",
+          "viewOnMap": "Ver en el mapa",
+          "viewAsList": "Ver como lista",
+          "showCost": "Costo de exhibición",
+          "fetchHomesInThisArea": "Buscar lavandería en esta área",
           "components": {
             "laundrySelectCard": {
               "available": "Available",

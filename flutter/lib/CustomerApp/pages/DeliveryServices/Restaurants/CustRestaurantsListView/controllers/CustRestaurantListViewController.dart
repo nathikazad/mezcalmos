@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRestaurantCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
@@ -35,6 +37,9 @@ class CustRestaurantListViewController {
   LocationData? customerLocation;
 
   // Map view //
+  LatLng _currentLocation = LatLng(19.4326, -99.1332);
+  LatLng get currentLocation => _currentLocation;
+
   RxBool _isMapView = false.obs;
   bool get isMapView => _isMapView.value;
 
@@ -46,9 +51,6 @@ class CustRestaurantListViewController {
   RxBool _showFetchButton = false.obs;
   RxBool get showFetchButton => _showFetchButton;
 
-  LatLng _currentLocation = LatLng(19.4326, -99.1332);
-  LatLng get currentLocation => _currentLocation;
-
   LatLng? _screenToWorldPosition;
 
   RxList<Restaurant> _mapViewRestaurants = <Restaurant>[].obs;
@@ -57,13 +59,23 @@ class CustRestaurantListViewController {
   RxSet<Marker> _restaurantsMarkers = <Marker>{}.obs;
   RxSet<Marker> get restaurantsMarkers => _restaurantsMarkers;
 
+  RxSet<Marker> _allMarkers = <Marker>{}.obs;
+  RxSet<Marker> get allMarkers => _allMarkers;
+
   BuildContext? ctx;
   // Map view //
 
   final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
-  void init() {
+  void init({required BuildContext context}) async {
+    ctx = context;
+
+    await locPkg.Location().getLocation().then((location) {
+      if (location.latitude != null && location.longitude != null)
+        _currentLocation = LatLng(location.latitude!, location.longitude!);
+    });
+
     isLoading.value = true;
 
     fetch_restaurants(withCache: false).then((List<Restaurant> list) {
@@ -156,10 +168,20 @@ class CustRestaurantListViewController {
     _restaurantsMarkers = <Marker>{}.obs;
 
     for (Restaurant restaurant in _mapViewRestaurants) {
+      await _allMarkers.addLabelMarker(LabelMarker(
+        flat: true,
+        label: null,
+        altIconPath: mezRestaurantIcon,
+        markerId: MarkerId(restaurant.info.hasuraId.toString()),
+        backgroundColor: Colors.white,
+        onTap: () => _onSelectRentalTag(restaurant),
+        position: LatLng(restaurant.info.location.position.latitude!,
+            restaurant.info.location.position.longitude!),
+      ));
       await _restaurantsMarkers.addLabelMarker(LabelMarker(
         flat: true,
         label: null,
-        altIconPath: mezVehicleRentalIconMarker,
+        altIconPath: mezRestaurantIcon,
         markerId: MarkerId(restaurant.info.hasuraId.toString()),
         backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(restaurant),
@@ -192,14 +214,13 @@ class CustRestaurantListViewController {
     _showFetchButton.value = true;
   }
 
-  void _onSelectRentalTag(Restaurant business) {
+  void _onSelectRentalTag(Restaurant restaurant) {
     showModalBottomSheet(
         backgroundColor: Colors.transparent,
         barrierColor: Colors.transparent,
         context: ctx!,
         builder: (BuildContext context) {
-          return Text('dqsdqsdqsdqsdsqdsq');
-          // return OnMapBusinessCard(business: business);
+          return OnMapRestaurantCard(restaurant: restaurant);
         });
   }
 

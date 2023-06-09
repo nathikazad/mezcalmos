@@ -41,7 +41,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
 
   @override
   void initState() {
-    viewController.init();
+    viewController.init(context: context);
     super.initState();
   }
 
@@ -132,7 +132,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
           child: Stack(
         children: [
           Obx(() {
-            viewController.restaurantsMarkers.isNotEmpty;
+            viewController.allMarkers.isNotEmpty;
             return GoogleMap(
                 compassEnabled: false,
                 mapToolbarEnabled: false,

@@ -621,7 +621,12 @@
             "noOpenRestaurant": "No open restaurants founds",
             "meals": "Meals",
             "noItemTitle": "No result found",
-            "noItemDesc": "Sorry, we couldn’t find what you’re looking for please try a new keyword."
+            "noItemDesc": "Sorry, we couldn’t find what you’re looking for please try a new keyword.",
+            "map": "Map",
+            "viewOnMap": "View on map",
+            "viewAsList": "View as list",
+            "showCost": "Show cost",
+            "fetchHomesInThisArea": "Fetch restaurants in this area"
           }
         },
         "ViewCartScreen": {
@@ -1243,7 +1248,7 @@
             "viewOnMap": "View on map",
             "viewAsList": "View as list",
             "showCost": "Show cost",
-            "fetchHomesInThisArea": "Fetch homes in this area",
+            "fetchHomesInThisArea": "Fetch rentals in this area",
             "uncategorized": "Uncategorized",
             "surf": "Surf",
             "homes": "Homes",
@@ -1659,7 +1664,12 @@
           "title": "Laundries arround you ",
           "noLaundaryFound": "No laundry found",
           "showOnlyOpenLaundries": "Show only open laundries",
-          "search": "Search"
+          "search": "Search",
+          "map": "Map",
+          "viewOnMap": "View on map",
+          "viewAsList": "View as list",
+          "showCost": "Show cost",
+          "fetchLaundriesInThisArea": "Fetch laundries in this area"
         },
         "SingleLaundryScreen": {
           "startingFrom": "Starting from ",
@@ -1786,7 +1796,6 @@
         "perMonth": "Month",
         "perPerson": "Person",
         "unit": "Unit"
-       
       },
       "DeliveryOrderHelper": {
         "status": {

@@ -122,7 +122,7 @@ Future<BitmapDescriptor> createCustomMarkerBitmap(
 
   myPaint.color = Colors.white;
 
-  final imageData = await rootBundle.load(mezHomeIconMarker);
+  final imageData = await rootBundle.load(altIconPath!);
   final ui.Image assetImage =
       await decodeImageFromList(imageData.buffer.asUint8List());
 

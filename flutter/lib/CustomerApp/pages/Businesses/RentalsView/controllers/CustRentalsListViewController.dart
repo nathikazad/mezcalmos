@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapBusinessCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRentalCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -17,7 +16,6 @@ import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 
 class CustRentalsListViewController {
   // variables //
@@ -88,6 +86,9 @@ class CustRentalsListViewController {
 
   RxSet<Marker> _buisinessesMarkers = <Marker>{}.obs;
   RxSet<Marker> get buisinessesMarkers => _buisinessesMarkers;
+
+  RxSet<Marker> _allMarkers = <Marker>{}.obs;
+  RxSet<Marker> get allMarkers => _allMarkers;
 
   BuildContext? ctx;
   // Map view //
@@ -306,12 +307,20 @@ class CustRentalsListViewController {
   Future<void> _fillMapsMarkers() async {
     _buisinessesMarkers = <Marker>{}.obs;
 
-    String iconPath = _currentRentalCategory == RentalCategory1.Surf
+    final String iconPath = _currentRentalCategory == RentalCategory1.Surf
         ? mezSurfIconMarker
         : mezVehicleRentalIconMarker;
     for (BusinessCard business in _mapViewBusinesses) {
-      print(
-          'dddddddddddddddddddd ${business.location!.lat} ${business.location!.lng}');
+      await _allMarkers.addLabelMarker(LabelMarker(
+        flat: true,
+        label: null,
+        altIconPath: iconPath,
+        markerId: MarkerId(business.id.toString()),
+        backgroundColor: Colors.white,
+        onTap: () => _onSelectRentalTag(business),
+        position: LatLng(business.location!.lat.toDouble(),
+            business.location!.lng.toDouble()),
+      ));
       await _buisinessesMarkers.addLabelMarker(LabelMarker(
         flat: true,
         label: null,
@@ -323,7 +332,8 @@ class CustRentalsListViewController {
             business.location!.lng.toDouble()),
       ));
     }
-    print(_buisinessesMarkers.length);
+    _buisinessesMarkers.update((value) {});
+    _buisinessesMarkers.refresh();
   }
 
   void fetchMapViewRentals() {
