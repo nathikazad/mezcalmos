@@ -89,35 +89,7 @@ class CustRentalsListViewController {
   RxSet<Marker> _buisinessesMarkers = <Marker>{}.obs;
   RxSet<Marker> get buisinessesMarkers => _buisinessesMarkers;
 
-  RxSet<Marker> _allMarkers = <Marker>{}.obs;
-  RxSet<Marker> get allMarkers => _allMarkers;
-
-  RxSet<Marker> _perHourMarkers = <Marker>{}.obs;
-  RxSet<Marker> get perHourMarkers => _perHourMarkers;
-
-  RxSet<Marker> _perDayMarkers = <Marker>{}.obs;
-  RxSet<Marker> get perDayMarkers => _perDayMarkers;
-
-  RxSet<Marker> _perWeekMarkers = <Marker>{}.obs;
-  RxSet<Marker> get perWeekMarkers => _perWeekMarkers;
-
-  RxSet<Marker> _perMonthMarkers = <Marker>{}.obs;
-  RxSet<Marker> get perMonthMarkers => _perMonthMarkers;
-
-  Rx<TimeUnit> _filterTag = TimeUnit.PerDay.obs;
-  TimeUnit get filterTag => _filterTag.value;
   BuildContext? ctx;
-
-  Set<Marker> get getMarkersList {
-    switch (filterTag) {
-      case TimeUnit.PerDay:
-        return perDayMarkers;
-      case TimeUnit.PerWeek:
-        return perWeekMarkers;
-      default:
-        return perMonthMarkers;
-    }
-  }
   // Map view //
 
   // getters //
@@ -332,19 +304,17 @@ class CustRentalsListViewController {
   }
 
   Future<void> _fillMapsMarkers() async {
-    _perHourMarkers = <Marker>{}.obs;
-    _perDayMarkers = <Marker>{}.obs;
-    _perWeekMarkers = <Marker>{}.obs;
-    _perMonthMarkers = <Marker>{}.obs;
+    _buisinessesMarkers = <Marker>{}.obs;
 
     String iconPath = _currentRentalCategory == RentalCategory1.Surf
         ? mezSurfIconMarker
         : mezVehicleRentalIconMarker;
     for (BusinessCard business in _mapViewBusinesses) {
-      print('dddddddddddddddddddd ${business.location}');
-      await _allMarkers.addLabelMarker(LabelMarker(
+      print(
+          'dddddddddddddddddddd ${business.location!.lat} ${business.location!.lng}');
+      await _buisinessesMarkers.addLabelMarker(LabelMarker(
         flat: true,
-        label: '    ',
+        label: null,
         altIconPath: iconPath,
         markerId: MarkerId(business.id.toString()),
         backgroundColor: Colors.white,
@@ -352,62 +322,9 @@ class CustRentalsListViewController {
         position: LatLng(business.location!.lat.toDouble(),
             business.location!.lng.toDouble()),
       ));
-      // await _perHourMarkers.addLabelMarker(LabelMarker(
-      //   flat: true,
-      //   label: rental.details.cost[TimeUnit.PerHour] != null
-      //       ? rental.details.cost[TimeUnit.PerHour]?.toPriceString()
-      //       : null,
-      //   altIconPath: iconPath,
-      //   markerId: MarkerId(rental.id.toString()),
-      //   backgroundColor: Colors.white,
-      //   onTap: () => _onSelectRentalTag(rental),
-      //   position: LatLng(rental.gpsLocation!.lat.toDouble(),
-      //       rental.gpsLocation!.lng.toDouble()),
-      // ));
-      // await _perDayMarkers.addLabelMarker(LabelMarker(
-      //   flat: true,
-      //   label: rental.details.cost[TimeUnit.PerDay] != null
-      //       ? rental.details.cost[TimeUnit.PerDay]?.toPriceString()
-      //       : null,
-      //   altIconPath: iconPath,
-      //   markerId: MarkerId(rental.id.toString()),
-      //   backgroundColor: Colors.white,
-      //   onTap: () => _onSelectRentalTag(rental),
-      //   position: LatLng(rental.gpsLocation!.lat.toDouble(),
-      //       rental.gpsLocation!.lng.toDouble()),
-      // ));
-
-      // await _perWeekMarkers.addLabelMarker(LabelMarker(
-      //   flat: true,
-      //   label: rental.details.cost[TimeUnit.PerWeek] != null
-      //       ? rental.details.cost[TimeUnit.PerWeek]?.toPriceString()
-      //       : null,
-      //   altIconPath: iconPath,
-      //   markerId: MarkerId(rental.id.toString()),
-      //   backgroundColor: Colors.white,
-      //   onTap: () => _onSelectRentalTag(rental),
-      //   position: LatLng(rental.gpsLocation!.lat.toDouble(),
-      //       rental.gpsLocation!.lng.toDouble()),
-      // ));
-
-      // await _perMonthMarkers.addLabelMarker(LabelMarker(
-      //   flat: true,
-      //   label: rental.details.cost[TimeUnit.PerMonth] != null
-      //       ? rental.details.cost[TimeUnit.PerMonth]?.toPriceString()
-      //       : null,
-      //   altIconPath: iconPath,
-      //   markerId: MarkerId(rental.id.toString()),
-      //   backgroundColor: Colors.white,
-      //   onTap: () => _onSelectRentalTag(rental),
-      //   position: LatLng(rental.gpsLocation!.lat.toDouble(),
-      //       rental.gpsLocation!.lng.toDouble()),
-      // ));
     }
+    print(_buisinessesMarkers.length);
   }
-
-  // onMapCreated(GoogleMapController? controller) {
-  //   _googleMapController = controller;
-  // }
 
   void fetchMapViewRentals() {
     _fetchMapViewRentals(currentPostitionBased: false);
@@ -417,8 +334,6 @@ class CustRentalsListViewController {
   void recenterMap() {
     _googleMapController?.moveCamera(CameraUpdate.newLatLng(_currentLocation));
   }
-
-  void setFilter(TimeUnit tag) => _filterTag.value = tag;
 
   Future<void> onMapCreated(GoogleMapController? gMapController) async {
     _googleMapController = gMapController;

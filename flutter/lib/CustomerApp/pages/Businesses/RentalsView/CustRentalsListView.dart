@@ -124,122 +124,63 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
   }
 
   Widget _mapView() {
-    final List<TimeUnit> timeUnits = <TimeUnit>[
-      TimeUnit.PerDay,
-      TimeUnit.PerWeek,
-      TimeUnit.PerMonth
-    ];
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-        padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Text(
-              '${_i18n()['showCost']}',
-              style: context.textTheme.bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            Row(
-                children: List.generate(
-                    timeUnits.length,
-                    (int index) => Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  shape: StadiumBorder(
-                                      side: BorderSide(
-                                          color: viewController.filterTag ==
-                                                  timeUnits[index]
-                                              ? Colors.transparent
-                                              : Colors.black54)),
-                                  backgroundColor: viewController.filterTag ==
-                                          timeUnits[index]
-                                      ? primaryBlueColor
-                                      : Colors.white,
-                                  shadowColor: Colors.transparent,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 4.25),
-                                  tapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                  minimumSize: Size.zero),
-                              onPressed: () {
-                                viewController.setFilter(timeUnits[index]);
-                                setState(() {});
-                              },
-                              child: Text(
-                                '${_i18n()[timeUnits[index].toFirebaseFormatString()]}',
-                                style: TextStyle(
-                                  color: viewController.filterTag ==
-                                          timeUnits[index]
-                                      ? Colors.white
-                                      : Colors.black54,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 11.mezSp,
-                                ),
-                              )),
-                        )))
-          ]),
-        ),
-      ),
-      Expanded(
-          child: Stack(
-        children: [
-          Obx(() {
-            viewController.allMarkers.isNotEmpty;
-            return GoogleMap(
-                compassEnabled: false,
-                mapToolbarEnabled: false,
-                zoomControlsEnabled: false,
-                markers: viewController.getMarkersList,
-                onMapCreated: viewController.onMapCreated,
-                onCameraMove: viewController.onCameraMove,
-                initialCameraPosition: CameraPosition(
-                  target: viewController.currentLocation,
-                  zoom: 14,
-                ));
-          }),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Obx(
-                () => viewController.showFetchButton.value
-                    ? InkWell(
-                        onTap: () => viewController.fetchMapViewRentals(),
-                        child: Material(
-                            color: Colors.white,
-                            elevation: 1,
-                            borderRadius: BorderRadius.circular(25),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 20),
-                              child: Text(
-                                '${_i18n()['fetchHomesInThisArea']}',
-                                style: context.textTheme.bodyLarge
-                                    ?.copyWith(color: primaryBlueColor),
-                              ),
-                            )),
-                      )
-                    : SizedBox.shrink(),
-              ),
+    return Stack(
+      children: [
+        Obx(() {
+          return viewController.buisinessesMarkers.isEmpty
+              ? GoogleMap(
+                  compassEnabled: false,
+                  mapToolbarEnabled: false,
+                  zoomControlsEnabled: false,
+                  markers: viewController.buisinessesMarkers,
+                  onMapCreated: viewController.onMapCreated,
+                  onCameraMove: viewController.onCameraMove,
+                  initialCameraPosition: CameraPosition(
+                    target: viewController.currentLocation,
+                    zoom: 14,
+                  ))
+              : Text('dsqdqsdqsdqsd');
+        }),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Obx(
+              () => viewController.showFetchButton.value
+                  ? InkWell(
+                      onTap: () => viewController.fetchMapViewRentals(),
+                      child: Material(
+                          color: Colors.white,
+                          elevation: 1,
+                          borderRadius: BorderRadius.circular(25),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 20),
+                            child: Text(
+                              '${_i18n()['fetchHomesInThisArea']}',
+                              style: context.textTheme.bodyLarge
+                                  ?.copyWith(color: primaryBlueColor),
+                            ),
+                          )),
+                    )
+                  : SizedBox.shrink(),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20, bottom: 20),
-              child: MezIconButton(
-                icon: Icons.my_location,
-                iconColor: Colors.black,
-                backgroundColor: Colors.white,
-                onTap: () => viewController.recenterMap(),
-              ),
+        ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20, bottom: 20),
+            child: MezIconButton(
+              icon: Icons.my_location,
+              iconColor: Colors.black,
+              backgroundColor: Colors.white,
+              onTap: () => viewController.recenterMap(),
             ),
-          )
-        ],
-      ))
-    ]);
+          ),
+        )
+      ],
+    );
   }
 
   Widget _viewBusinessesSwitcher() {
