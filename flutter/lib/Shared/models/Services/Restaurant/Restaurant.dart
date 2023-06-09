@@ -50,6 +50,7 @@ class Restaurant extends Service {
     required ServiceState restaurantState,
     required cModels.ServiceProviderLanguage languages,
     required super.serviceDetailsId,
+    required super.isOpen,
     super.deliveryCost,
     super.reviews,
     super.rate,
@@ -331,6 +332,7 @@ class Restaurant extends Service {
   }) {
     return Restaurant(
       serviceDetailsId: 1,
+      isOpen: isOpen,
       userInfo: userInfo ?? info,
       languages: languages ?? this.languages,
       deliveryDetailsId: deliveryDetailsId ?? this.deliveryDetailsId,

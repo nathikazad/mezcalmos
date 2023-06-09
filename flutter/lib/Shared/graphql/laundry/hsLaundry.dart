@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -34,14 +33,14 @@ Future<Laundry?> get_laundry_store_by_id(
   } else if (response.parsedData != null) {
     mezDbgPrint(
         "✅✅✅✅ Hasura querry success, data : ${response.parsedData?.laundry_store_by_pk?.toJson()} ");
-    Query$getLaundryStoreById$laundry_store_by_pk data =
+    final Query$getLaundryStoreById$laundry_store_by_pk data =
         response.parsedData!.laundry_store_by_pk!;
     final PaymentInfo paymentInfo = PaymentInfo();
     if (data.details?.accepted_payments != null) {
       paymentInfo.acceptedPayments =
           paymentInfo.parseAcceptedPayments(data.details!.accepted_payments);
     }
-    LaundryCosts laundryCosts = LaundryCosts();
+    final LaundryCosts laundryCosts = LaundryCosts();
     laundryCosts.lineItems = data.categories.map(
         (Query$getLaundryStoreById$laundry_store_by_pk$categories element) {
       return LaundryCostLineItem(
@@ -59,6 +58,7 @@ Future<Laundry?> get_laundry_store_by_id(
     mezDbgPrint(
         "response data ====> ${response.data} 🧺🧺🧺 laundry data ${data.details?.schedule}");
     return Laundry(
+        isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
         deliveryDetailsId: data.delivery_details_id,
@@ -183,7 +183,7 @@ Future<int> update_laundry_delivery_days(
         "🚨🚨🚨 Hasura days mutation exception =>${response.exception}");
   } else {
     mezDbgPrint("✅✅✅ Hasura mutation success => ${response.data}");
-    Mutation$updateLaundryInfo$update_laundry_store_by_pk data =
+    final Mutation$updateLaundryInfo$update_laundry_store_by_pk data =
         response.parsedData!.update_laundry_store_by_pk!;
     return data.normal_delivery_time;
   }
@@ -206,7 +206,7 @@ Future<double> update_laundry_min_cost(
         "🚨🚨🚨 Hasura days mutation exception =>${response.exception}");
   } else {
     mezDbgPrint("✅✅✅ Hasura mutation success => ${response.data}");
-    Mutation$updateLaundryInfo$update_laundry_store_by_pk data =
+    final Mutation$updateLaundryInfo$update_laundry_store_by_pk data =
         response.parsedData!.update_laundry_store_by_pk!;
     return data.minimum_cost;
   }
@@ -246,7 +246,7 @@ Future<LaundryCostLineItem> get_laundry_category_by_id(
   if (res.parsedData?.laundry_category_by_pk == null) {
     throwError(res.exception);
   }
-  Query$getLaundryCategoryById$laundry_category_by_pk data =
+  final Query$getLaundryCategoryById$laundry_category_by_pk data =
       res.parsedData!.laundry_category_by_pk!;
 
   return LaundryCostLineItem(
@@ -309,7 +309,7 @@ Future<LaundryCostLineItem?> update_laundry_category(
     mezDbgPrint("🛑Error =======>${res.data}");
     throwError(res.exception);
   }
-  Mutation$updateLaundryCategory$update_laundry_category_by_pk data =
+  final Mutation$updateLaundryCategory$update_laundry_category_by_pk data =
       res.parsedData!.update_laundry_category_by_pk!;
   return LaundryCostLineItem(
       name: toLanguageMap(translations: data.name.translations),
@@ -334,7 +334,7 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
       paymentInfo.acceptedPayments =
           paymentInfo.parseAcceptedPayments(data.details!.accepted_payments);
     }
-    LaundryCosts laundryCosts = LaundryCosts();
+    final LaundryCosts laundryCosts = LaundryCosts();
     laundryCosts.lineItems = data.categories
         .map((Query$getLaundries$laundry_store$categories element) {
       return LaundryCostLineItem(
@@ -351,6 +351,7 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
     // }
 
     return Laundry(
+        isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         rate: data.reviews_aggregate.aggregate?.avg?.rating,
         serviceDetailsId: data.details!.id,

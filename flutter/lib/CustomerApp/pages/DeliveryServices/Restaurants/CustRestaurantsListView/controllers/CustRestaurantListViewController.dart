@@ -55,7 +55,7 @@ class CustRestaurantListViewController {
 
   void _assignServiceIds() {
     servicesIds = _restaurants
-        .where((Restaurant element) => element.isOpen())
+        .where((Restaurant element) => element.isOpen)
         .map((Restaurant e) => e.info.hasuraId)
         .toList();
   }

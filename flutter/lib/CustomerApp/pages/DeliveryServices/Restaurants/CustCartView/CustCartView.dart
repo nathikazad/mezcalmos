@@ -7,7 +7,6 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCar
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/CartIsEmptyScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/OrderSummaryCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/PaymentMethodPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -80,7 +79,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       DeliveryTimePicker(
                         deliveryTime: viewController.cart.deliveryTime,
                         fixed7days: !viewController.cart.isSpecial,
-                        isServiceOpen: viewController.cart.restaurant!.isOpen(),
+                        isServiceOpen: viewController.cart.restaurant!.isOpen,
                         numberOfDays: viewController.cart.isSpecial ? 1 : 7,
                         onValue: (DateTime? value) {
                           viewController.setDeliveryTime(value);
@@ -200,7 +199,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         mezDbgPrint("Can order from view =========>${viewController.canOrder}");
         if (viewController.cart.cartItems.length > 0) {
           return MezButton(
-            label: (viewController.cart.restaurant?.isOpen() == false)
+            label: (viewController.cart.restaurant?.isOpen == false)
                 ? '${_i18n()["scheduleOrder"]}'
                 : '${_i18n()["orderNow"]}',
             //  enabled: viewController.canOrder,

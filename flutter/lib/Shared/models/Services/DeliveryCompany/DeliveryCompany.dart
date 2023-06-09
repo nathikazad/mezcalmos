@@ -1,7 +1,6 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class DeliveryCompany extends Service {
   int? deliveryDetailsId;
@@ -14,6 +13,7 @@ class DeliveryCompany extends Service {
       super.numberOfReviews,
       required super.info,
       required super.state,
+      required super.isOpen,
       required super.serviceDetailsId,
       required super.languages,
       required super.schedule,
@@ -31,6 +31,7 @@ class DeliveryCompany extends Service {
   }) {
     return DeliveryCompany(
       info: userInfo ?? info,
+      isOpen: isOpen,
       schedule: schedule,
       deliveryCost: deliveryCost,
       state: state ?? this.state,

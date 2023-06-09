@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 import 'package:sizer/sizer.dart';
 
@@ -60,7 +57,6 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
     super.dispose();
   }
 
-  bool get scheduleRequired => widget.schedule?.isOpen() == false;
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -116,7 +112,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           FormField<DateTime?>(
               autovalidateMode: AutovalidateMode.always,
               validator: (DateTime? value) {
-                if (scheduleRequired && value == null) {
+                if (widget.shoudSchedule && value == null) {
                   return "${_i18n()['required']}";
                 } else if (value != null &&
                     value.toLocal().isBefore(DateTime.now().toLocal())) {
@@ -227,7 +223,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           // if (widget.deliveryTime != null &&
           //     widget.deliveryTime!.toLocal().isBefore(DateTime.now().toLocal()))
           //   _timeError(),
-          // if (widget.deliveryTime == null && widget.schedule?.isOpen() == false)
+          // if (widget.deliveryTime == null && widget.schedule?.isOpen == false)
           //   _timeError(title: "Please select a delivery time")
         ],
       ),

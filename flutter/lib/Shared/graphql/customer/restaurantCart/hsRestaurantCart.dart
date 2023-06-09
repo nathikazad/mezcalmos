@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
-import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/__generated/cart.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/__generated/restaurant_cart.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
@@ -53,6 +53,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
     final Cart cart = Cart(
         restaurant: cartData.restaurant != null
             ? Restaurant(
+                isOpen: cartData.restaurant!.details!.is_open ?? false,
                 serviceDetailsId: cartData.restaurant!.details_id,
                 languages:
                     convertToLanguages(cartData.restaurant?.details?.language),
@@ -276,7 +277,8 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
       }
       if (cart.parsedData?.restaurant_cart.first.restaurant != null) {
         _cartEvent.restaurant = Restaurant(
-          languages: convertToLanguages(_res!.details!.language),
+          isOpen: _res!.details!.is_open ?? false,
+          languages: convertToLanguages(_res.details!.language),
           serviceDetailsId: _res.details_id,
           deliveryCost: (_res.delivery_details_of_deliverer == null)
               ? null

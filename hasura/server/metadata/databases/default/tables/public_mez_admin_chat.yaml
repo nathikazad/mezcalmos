@@ -70,7 +70,7 @@ select_permissions:
       filter:
         business:
           operators:
-            id:
+            user_id:
               _eq: X-Hasura-User-Id
   - role: customer
     permission:

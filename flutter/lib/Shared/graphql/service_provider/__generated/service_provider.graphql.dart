@@ -1019,6 +1019,13 @@ const documentNodeQuerygetServiceDetails = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'is_open'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'creation_time'),
             alias: null,
             arguments: [],
@@ -1393,6 +1400,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
   Query$getServiceDetails$service_provider_details_by_pk({
     required this.accepted_payments,
     required this.approved,
+    this.is_open,
     required this.creation_time,
     this.description_id,
     this.firebase_id,
@@ -1415,6 +1423,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
       Map<String, dynamic> json) {
     final l$accepted_payments = json['accepted_payments'];
     final l$approved = json['approved'];
+    final l$is_open = json['is_open'];
     final l$creation_time = json['creation_time'];
     final l$description_id = json['description_id'];
     final l$firebase_id = json['firebase_id'];
@@ -1434,6 +1443,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     return Query$getServiceDetails$service_provider_details_by_pk(
       accepted_payments: mapFromJson(l$accepted_payments),
       approved: (l$approved as bool),
+      is_open: (l$is_open as bool?),
       creation_time: (l$creation_time as String),
       description_id: (l$description_id as int?),
       firebase_id: (l$firebase_id as String?),
@@ -1463,6 +1473,8 @@ class Query$getServiceDetails$service_provider_details_by_pk {
   final dynamic accepted_payments;
 
   final bool approved;
+
+  final bool? is_open;
 
   final String creation_time;
 
@@ -1505,6 +1517,8 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$approved = approved;
     _resultData['approved'] = l$approved;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$creation_time = creation_time;
     _resultData['creation_time'] = l$creation_time;
     final l$description_id = description_id;
@@ -1544,6 +1558,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
   int get hashCode {
     final l$accepted_payments = accepted_payments;
     final l$approved = approved;
+    final l$is_open = is_open;
     final l$creation_time = creation_time;
     final l$description_id = description_id;
     final l$firebase_id = firebase_id;
@@ -1563,6 +1578,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     return Object.hashAll([
       l$accepted_payments,
       l$approved,
+      l$is_open,
       l$creation_time,
       l$description_id,
       l$firebase_id,
@@ -1599,6 +1615,11 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     final l$approved = approved;
     final lOther$approved = other.approved;
     if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$creation_time = creation_time;
@@ -1710,6 +1731,7 @@ abstract class CopyWith$Query$getServiceDetails$service_provider_details_by_pk<
   TRes call({
     dynamic? accepted_payments,
     bool? approved,
+    bool? is_open,
     String? creation_time,
     int? description_id,
     String? firebase_id,
@@ -1755,6 +1777,7 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk<TRes>
   TRes call({
     Object? accepted_payments = _undefined,
     Object? approved = _undefined,
+    Object? is_open = _undefined,
     Object? creation_time = _undefined,
     Object? description_id = _undefined,
     Object? firebase_id = _undefined,
@@ -1780,6 +1803,7 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk<TRes>
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         creation_time: creation_time == _undefined || creation_time == null
             ? _instance.creation_time
             : (creation_time as String),
@@ -1871,6 +1895,7 @@ class _CopyWithStubImpl$Query$getServiceDetails$service_provider_details_by_pk<
   call({
     dynamic? accepted_payments,
     bool? approved,
+    bool? is_open,
     String? creation_time,
     int? description_id,
     String? firebase_id,
@@ -3145,6 +3170,13 @@ const documentNodeMutationupdateServiceDetails = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'is_open'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'language'),
             alias: null,
             arguments: [],
@@ -3487,6 +3519,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     this.firebase_id,
     required this.id,
     required this.image,
+    this.is_open,
     required this.language,
     required this.name,
     required this.open_status,
@@ -3510,6 +3543,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     final l$firebase_id = json['firebase_id'];
     final l$id = json['id'];
     final l$image = json['image'];
+    final l$is_open = json['is_open'];
     final l$language = json['language'];
     final l$name = json['name'];
     final l$open_status = json['open_status'];
@@ -3530,6 +3564,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
       firebase_id: (l$firebase_id as String?),
       id: (l$id as int),
       image: (l$image as String),
+      is_open: (l$is_open as bool?),
       language: mapFromJson(l$language),
       name: (l$name as String),
       open_status: (l$open_status as String),
@@ -3566,6 +3601,8 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
   final int id;
 
   final String image;
+
+  final bool? is_open;
 
   final dynamic language;
 
@@ -3610,6 +3647,8 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     _resultData['id'] = l$id;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
     final l$name = name;
@@ -3646,6 +3685,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     final l$firebase_id = firebase_id;
     final l$id = id;
     final l$image = image;
+    final l$is_open = is_open;
     final l$language = language;
     final l$name = name;
     final l$open_status = open_status;
@@ -3666,6 +3706,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
       l$firebase_id,
       l$id,
       l$image,
+      l$is_open,
       l$language,
       l$name,
       l$open_status,
@@ -3724,6 +3765,11 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$language = language;
@@ -3823,6 +3869,7 @@ abstract class CopyWith$Mutation$updateServiceDetails$update_service_provider_de
     String? firebase_id,
     int? id,
     String? image,
+    bool? is_open,
     dynamic? language,
     String? name,
     String? open_status,
@@ -3874,6 +3921,7 @@ class _CopyWithImpl$Mutation$updateServiceDetails$update_service_provider_detail
     Object? firebase_id = _undefined,
     Object? id = _undefined,
     Object? image = _undefined,
+    Object? is_open = _undefined,
     Object? language = _undefined,
     Object? name = _undefined,
     Object? open_status = _undefined,
@@ -3908,6 +3956,7 @@ class _CopyWithImpl$Mutation$updateServiceDetails$update_service_provider_detail
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
@@ -3995,6 +4044,7 @@ class _CopyWithStubImpl$Mutation$updateServiceDetails$update_service_provider_de
     String? firebase_id,
     int? id,
     String? image,
+    bool? is_open,
     dynamic? language,
     String? name,
     String? open_status,
@@ -5186,6 +5236,13 @@ const documentNodeQuerygetServiceInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'is_open'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -5419,6 +5476,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     this.firebase_id,
     required this.id,
     required this.image,
+    this.is_open,
     required this.name,
     this.phone_number,
     required this.language,
@@ -5434,6 +5492,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$firebase_id = json['firebase_id'];
     final l$id = json['id'];
     final l$image = json['image'];
+    final l$is_open = json['is_open'];
     final l$name = json['name'];
     final l$phone_number = json['phone_number'];
     final l$language = json['language'];
@@ -5446,6 +5505,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
       firebase_id: (l$firebase_id as String?),
       id: (l$id as int),
       image: (l$image as String),
+      is_open: (l$is_open as bool?),
       name: (l$name as String),
       phone_number: (l$phone_number as String?),
       language: mapFromJson(l$language),
@@ -5468,6 +5528,8 @@ class Query$getServiceInfo$service_provider_details_by_pk {
   final int id;
 
   final String image;
+
+  final bool? is_open;
 
   final String name;
 
@@ -5494,6 +5556,8 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     _resultData['id'] = l$id;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$phone_number = phone_number;
@@ -5517,6 +5581,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$firebase_id = firebase_id;
     final l$id = id;
     final l$image = image;
+    final l$is_open = is_open;
     final l$name = name;
     final l$phone_number = phone_number;
     final l$language = language;
@@ -5529,6 +5594,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
       l$firebase_id,
       l$id,
       l$image,
+      l$is_open,
       l$name,
       l$phone_number,
       l$language,
@@ -5566,6 +5632,11 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$name = name;
@@ -5634,6 +5705,7 @@ abstract class CopyWith$Query$getServiceInfo$service_provider_details_by_pk<
     String? firebase_id,
     int? id,
     String? image,
+    bool? is_open,
     String? name,
     String? phone_number,
     dynamic? language,
@@ -5669,6 +5741,7 @@ class _CopyWithImpl$Query$getServiceInfo$service_provider_details_by_pk<TRes>
     Object? firebase_id = _undefined,
     Object? id = _undefined,
     Object? image = _undefined,
+    Object? is_open = _undefined,
     Object? name = _undefined,
     Object? phone_number = _undefined,
     Object? language = _undefined,
@@ -5688,6 +5761,7 @@ class _CopyWithImpl$Query$getServiceInfo$service_provider_details_by_pk<TRes>
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -5745,6 +5819,7 @@ class _CopyWithStubImpl$Query$getServiceInfo$service_provider_details_by_pk<
     String? firebase_id,
     int? id,
     String? image,
+    bool? is_open,
     String? name,
     String? phone_number,
     dynamic? language,
@@ -10756,6 +10831,544 @@ class _CopyWithStubImpl$Query$getServiceLanguage$service_provider_details_by_pk<
 
   call({
     dynamic? language,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getServiceIsOpen {
+  factory Variables$Query$getServiceIsOpen({required int serviceDetailsId}) =>
+      Variables$Query$getServiceIsOpen._({
+        r'serviceDetailsId': serviceDetailsId,
+      });
+
+  Variables$Query$getServiceIsOpen._(this._$data);
+
+  factory Variables$Query$getServiceIsOpen.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$serviceDetailsId = data['serviceDetailsId'];
+    result$data['serviceDetailsId'] = (l$serviceDetailsId as int);
+    return Variables$Query$getServiceIsOpen._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get serviceDetailsId => (_$data['serviceDetailsId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$serviceDetailsId = serviceDetailsId;
+    result$data['serviceDetailsId'] = l$serviceDetailsId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getServiceIsOpen<Variables$Query$getServiceIsOpen>
+      get copyWith => CopyWith$Variables$Query$getServiceIsOpen(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getServiceIsOpen) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$serviceDetailsId = serviceDetailsId;
+    final lOther$serviceDetailsId = other.serviceDetailsId;
+    if (l$serviceDetailsId != lOther$serviceDetailsId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$serviceDetailsId = serviceDetailsId;
+    return Object.hashAll([l$serviceDetailsId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getServiceIsOpen<TRes> {
+  factory CopyWith$Variables$Query$getServiceIsOpen(
+    Variables$Query$getServiceIsOpen instance,
+    TRes Function(Variables$Query$getServiceIsOpen) then,
+  ) = _CopyWithImpl$Variables$Query$getServiceIsOpen;
+
+  factory CopyWith$Variables$Query$getServiceIsOpen.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getServiceIsOpen;
+
+  TRes call({int? serviceDetailsId});
+}
+
+class _CopyWithImpl$Variables$Query$getServiceIsOpen<TRes>
+    implements CopyWith$Variables$Query$getServiceIsOpen<TRes> {
+  _CopyWithImpl$Variables$Query$getServiceIsOpen(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getServiceIsOpen _instance;
+
+  final TRes Function(Variables$Query$getServiceIsOpen) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? serviceDetailsId = _undefined}) =>
+      _then(Variables$Query$getServiceIsOpen._({
+        ..._instance._$data,
+        if (serviceDetailsId != _undefined && serviceDetailsId != null)
+          'serviceDetailsId': (serviceDetailsId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getServiceIsOpen<TRes>
+    implements CopyWith$Variables$Query$getServiceIsOpen<TRes> {
+  _CopyWithStubImpl$Variables$Query$getServiceIsOpen(this._res);
+
+  TRes _res;
+
+  call({int? serviceDetailsId}) => _res;
+}
+
+class Query$getServiceIsOpen {
+  Query$getServiceIsOpen({
+    this.service_provider_details_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceIsOpen.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_details_by_pk =
+        json['service_provider_details_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceIsOpen(
+      service_provider_details_by_pk: l$service_provider_details_by_pk == null
+          ? null
+          : Query$getServiceIsOpen$service_provider_details_by_pk.fromJson(
+              (l$service_provider_details_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getServiceIsOpen$service_provider_details_by_pk?
+      service_provider_details_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    _resultData['service_provider_details_by_pk'] =
+        l$service_provider_details_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_provider_details_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getServiceIsOpen) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    final lOther$service_provider_details_by_pk =
+        other.service_provider_details_by_pk;
+    if (l$service_provider_details_by_pk !=
+        lOther$service_provider_details_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceIsOpen on Query$getServiceIsOpen {
+  CopyWith$Query$getServiceIsOpen<Query$getServiceIsOpen> get copyWith =>
+      CopyWith$Query$getServiceIsOpen(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getServiceIsOpen<TRes> {
+  factory CopyWith$Query$getServiceIsOpen(
+    Query$getServiceIsOpen instance,
+    TRes Function(Query$getServiceIsOpen) then,
+  ) = _CopyWithImpl$Query$getServiceIsOpen;
+
+  factory CopyWith$Query$getServiceIsOpen.stub(TRes res) =
+      _CopyWithStubImpl$Query$getServiceIsOpen;
+
+  TRes call({
+    Query$getServiceIsOpen$service_provider_details_by_pk?
+        service_provider_details_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk<TRes>
+      get service_provider_details_by_pk;
+}
+
+class _CopyWithImpl$Query$getServiceIsOpen<TRes>
+    implements CopyWith$Query$getServiceIsOpen<TRes> {
+  _CopyWithImpl$Query$getServiceIsOpen(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceIsOpen _instance;
+
+  final TRes Function(Query$getServiceIsOpen) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_details_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getServiceIsOpen(
+        service_provider_details_by_pk:
+            service_provider_details_by_pk == _undefined
+                ? _instance.service_provider_details_by_pk
+                : (service_provider_details_by_pk
+                    as Query$getServiceIsOpen$service_provider_details_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk<TRes>
+      get service_provider_details_by_pk {
+    final local$service_provider_details_by_pk =
+        _instance.service_provider_details_by_pk;
+    return local$service_provider_details_by_pk == null
+        ? CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk(
+            local$service_provider_details_by_pk,
+            (e) => call(service_provider_details_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getServiceIsOpen<TRes>
+    implements CopyWith$Query$getServiceIsOpen<TRes> {
+  _CopyWithStubImpl$Query$getServiceIsOpen(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getServiceIsOpen$service_provider_details_by_pk?
+        service_provider_details_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk<TRes>
+      get service_provider_details_by_pk =>
+          CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk.stub(
+              _res);
+}
+
+const documentNodeQuerygetServiceIsOpen = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getServiceIsOpen'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'serviceDetailsId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_details_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'serviceDetailsId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'is_open'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getServiceIsOpen _parserFn$Query$getServiceIsOpen(
+        Map<String, dynamic> data) =>
+    Query$getServiceIsOpen.fromJson(data);
+
+class Options$Query$getServiceIsOpen
+    extends graphql.QueryOptions<Query$getServiceIsOpen> {
+  Options$Query$getServiceIsOpen({
+    String? operationName,
+    required Variables$Query$getServiceIsOpen variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetServiceIsOpen,
+          parserFn: _parserFn$Query$getServiceIsOpen,
+        );
+}
+
+class WatchOptions$Query$getServiceIsOpen
+    extends graphql.WatchQueryOptions<Query$getServiceIsOpen> {
+  WatchOptions$Query$getServiceIsOpen({
+    String? operationName,
+    required Variables$Query$getServiceIsOpen variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetServiceIsOpen,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getServiceIsOpen,
+        );
+}
+
+class FetchMoreOptions$Query$getServiceIsOpen extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getServiceIsOpen({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getServiceIsOpen variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetServiceIsOpen,
+        );
+}
+
+extension ClientExtension$Query$getServiceIsOpen on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getServiceIsOpen>> query$getServiceIsOpen(
+          Options$Query$getServiceIsOpen options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$getServiceIsOpen> watchQuery$getServiceIsOpen(
+          WatchOptions$Query$getServiceIsOpen options) =>
+      this.watchQuery(options);
+  void writeQuery$getServiceIsOpen({
+    required Query$getServiceIsOpen data,
+    required Variables$Query$getServiceIsOpen variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetServiceIsOpen),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getServiceIsOpen? readQuery$getServiceIsOpen({
+    required Variables$Query$getServiceIsOpen variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetServiceIsOpen),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getServiceIsOpen.fromJson(result);
+  }
+}
+
+class Query$getServiceIsOpen$service_provider_details_by_pk {
+  Query$getServiceIsOpen$service_provider_details_by_pk({
+    this.is_open,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceIsOpen$service_provider_details_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$is_open = json['is_open'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceIsOpen$service_provider_details_by_pk(
+      is_open: (l$is_open as bool?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool? is_open;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$is_open = is_open;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$is_open,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getServiceIsOpen$service_provider_details_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceIsOpen$service_provider_details_by_pk
+    on Query$getServiceIsOpen$service_provider_details_by_pk {
+  CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk<
+          Query$getServiceIsOpen$service_provider_details_by_pk>
+      get copyWith =>
+          CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk<
+    TRes> {
+  factory CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk(
+    Query$getServiceIsOpen$service_provider_details_by_pk instance,
+    TRes Function(Query$getServiceIsOpen$service_provider_details_by_pk) then,
+  ) = _CopyWithImpl$Query$getServiceIsOpen$service_provider_details_by_pk;
+
+  factory CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getServiceIsOpen$service_provider_details_by_pk;
+
+  TRes call({
+    bool? is_open,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getServiceIsOpen$service_provider_details_by_pk<TRes>
+    implements
+        CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk<TRes> {
+  _CopyWithImpl$Query$getServiceIsOpen$service_provider_details_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceIsOpen$service_provider_details_by_pk _instance;
+
+  final TRes Function(Query$getServiceIsOpen$service_provider_details_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? is_open = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getServiceIsOpen$service_provider_details_by_pk(
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getServiceIsOpen$service_provider_details_by_pk<
+        TRes>
+    implements
+        CopyWith$Query$getServiceIsOpen$service_provider_details_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getServiceIsOpen$service_provider_details_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? is_open,
     String? $__typename,
   }) =>
       _res;
