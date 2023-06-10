@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Geography {
   final double latitude;
@@ -46,7 +45,7 @@ Map<Language, String> toLanguageMap({required List translations}) {
   return map;
 }
 
-ServiceProviderLanguage convertToLanguages(dynamic languages) {
+ServiceProviderLanguage convertToLanguages(languages) {
   if (languages["primary"] == null)
     return ServiceProviderLanguage(
         primary: Language.EN, secondary: Language.ES);
@@ -68,8 +67,8 @@ T mapFromJson<T>(jsonString) {
   }
 }
 
-/// Stringify a Map object
-String mapToJson(map) {
-  // mezDbgPrint("map =======>$map");
-  return jsonEncode(map);
+//// Stringify a Map object
+dynamic mapToJson(map) {
+  mezDbgPrint("map =======>$map");
+  return map;
 }
