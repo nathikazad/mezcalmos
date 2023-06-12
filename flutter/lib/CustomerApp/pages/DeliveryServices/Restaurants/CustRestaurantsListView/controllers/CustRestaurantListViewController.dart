@@ -78,7 +78,14 @@ class CustRestaurantListViewController {
 
     isLoading.value = true;
 
-    fetch_restaurants(withCache: false).then((List<Restaurant> list) {
+    await fetch_restaurants(
+            fromLocation: cModels.Location(
+                lat: _currentLocation.latitude,
+                lng: _currentLocation.longitude,
+                address: ''),
+            withCache: false,
+            distance: 25000)
+        .then((List<Restaurant> list) {
       _restaurants = list;
 
       _assignServiceIds();
@@ -153,9 +160,22 @@ class CustRestaurantListViewController {
   Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
     try {
       if (currentPostitionBased) {
-        _mapViewRestaurants.value = await fetch_restaurants(withCache: false);
+        _mapViewRestaurants.value = await fetch_restaurants(
+            fromLocation: cModels.Location(
+                lat: _currentLocation.latitude,
+                lng: _currentLocation.longitude,
+                address: ''),
+            withCache: false,
+            distance: 25000);
       } else {
-        _mapViewRestaurants.value = await fetch_restaurants(withCache: false);
+        _mapViewRestaurants.value = await fetch_restaurants(
+            distance: _calculateDistance(
+                await _googleMapController!.getVisibleRegion()),
+            fromLocation: cModels.Location(
+                lat: _screenToWorldPosition!.latitude,
+                lng: _screenToWorldPosition!.longitude,
+                address: ''),
+            withCache: false);
       }
     } catch (e) {
       mezDbgPrint(e);
