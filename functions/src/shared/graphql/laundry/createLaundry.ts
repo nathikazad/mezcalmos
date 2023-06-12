@@ -1,3 +1,4 @@
+import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { LaundryDetails, LaundryError } from "../../../laundry/createNewLaundry";
 import { getHasura } from "../../../utilities/hasura";
 import { DeepLinkType, IDeepLink, generateDeepLinks } from "../../../utilities/links/deeplink";
@@ -38,22 +39,15 @@ export async function createLaundryStore(
                     data: {
                         name: laundryDetails.name,
                         image: laundryDetails.image,
-                        schedule: JSON.stringify(laundryDetails.schedule),
+                        schedule: $`schedule`,
                         firebase_id: laundryDetails.firebaseId ?? undefined,
-                        language: JSON.stringify(laundryDetails.language),
+                        language: $`language`,
                         service_provider_type: ServiceProviderType.Laundry,
                         unique_id: uniqueId,
-                        accepted_payments: JSON.stringify(<Record<PaymentType, boolean>>{
-                            [PaymentType.Cash]: true,
-                            [PaymentType.Card]: false,
-                            [PaymentType.BankTransfer]: false,
-                        }),
+                        accepted_payments: $`accepted_payments`,
                         location: {
                             data: {
-                                gps: JSON.stringify({
-                                    "type": "point",
-                                    "coordinates": [laundryDetails.location.lng, laundryDetails.location.lat]
-                                }),
+                                gps: $`gps`,
                                 address: laundryDetails.location.address
                             }
                         },
@@ -97,6 +91,18 @@ export async function createLaundryStore(
             id: true,
             details_id: true
         }],
+    }, {
+        "schedule": laundryDetails.schedule,
+        "language": laundryDetails.language,
+        "accepted_payments": <Record<PaymentType, boolean>>{
+            [PaymentType.Cash]: true,
+            [PaymentType.Card]: false,
+            [PaymentType.BankTransfer]: false,
+        },
+        "gps": {
+            "type": "point",
+            "coordinates": [laundryDetails.location.lng, laundryDetails.location.lat]
+        }
     });
     
     console.log("response: ", response);
