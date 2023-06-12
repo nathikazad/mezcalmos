@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:badges/badges.dart' as badge;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,10 +20,12 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
-import 'package:badges/badges.dart' as badge;
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -55,10 +58,26 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     if (authController.fireAuthUser != null) {
       customerAuthController = Get.find<CustomerAuthController>();
       _startListeningForNotifications();
+      MezRouter.registerReturnToViewCallback(SharedRoutes.kHomeRoute, () {
+        _checkOrders();
+      });
+
+      _checkOrders();
     }
     startAuthListener();
     DeepLinkHandler.startDynamicLinkCheckRoutine(
         CustomerDeepLinkHandler.handleDeepLink);
+  }
+
+  void _checkOrders() {
+    if (_index.value == 0) {
+      mezDbgPrint(
+          "✅ ===========>CustomerWrapper Check ORders  ======>${MezRouter.bodyArguments}");
+      final bool showOrders = MezRouter.backResult == true;
+      if (showOrders) {
+        _index.value = 1;
+      }
+    }
   }
 
   @override
@@ -127,7 +146,16 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                       icon: Icon(Icons.home_outlined),
                       label: "${_i18n()['home']}"),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.history), label: "${_i18n()['orders']}"),
+                      icon: badge.Badge(
+                          badgeColor: Colors.red,
+                          badgeContent: Text(
+                            numberOfCurrentOrders.value.toString(),
+                            style: context.textTheme.bodyLarge
+                                ?.copyWith(color: Colors.white),
+                          ),
+                          showBadge: numberOfCurrentOrders > 0,
+                          child: Icon(Icons.history)),
+                      label: "${_i18n()['orders']}"),
                   BottomNavigationBarItem(
                     icon: badge.Badge(
                       badgeColor: Colors.red,

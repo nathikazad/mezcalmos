@@ -361,8 +361,21 @@ enum MezService {
 
 extension ParseMezServiceToString on MezService {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  OrderType toOrderType() {
+    switch (this) {
+      case MezService.Restaurants:
+        return OrderType.Restaurant;
+      case MezService.Laundry:
+        return OrderType.Laundry;
+      case MezService.Courier:
+        return OrderType.Courier;
+      default:
+        throw Exception("Invalid service");
+    }
   }
 }
 

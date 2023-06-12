@@ -13,6 +13,7 @@ query admin_get_dv_companies($limit: Int!, $offset: Int!) {
     }
     details {
       id
+      is_open
       approved
       image
       name
@@ -34,6 +35,7 @@ query admin_get_laundries($limit: Int!, $offset: Int!) {
   laundry_store(limit: $limit, offset: $offset) {
     details {
       id
+      is_open
       approved
       image
       name
@@ -55,6 +57,7 @@ query admin_get_laundries($limit: Int!, $offset: Int!) {
       id
       approved
       image
+      is_open
       name
       language
       open_status
@@ -75,6 +78,7 @@ query admin_get_restaurants($limit: Int!, $offset: Int!) {
     delivery_details_id
     details {
       id
+      is_open
       approved
       firebase_id
 

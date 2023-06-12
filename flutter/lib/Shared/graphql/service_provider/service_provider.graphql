@@ -15,6 +15,7 @@ query getServiceDetails($id: Int!) {
   service_provider_details_by_pk(id: $id) {
     accepted_payments
     approved
+    is_open
     creation_time
     description_id
     firebase_id
@@ -62,6 +63,7 @@ mutation updateServiceDetails($detailsId: Int!, $data: service_provider_details_
     firebase_id
     id
     image
+    is_open
     language
     name
     open_status
@@ -102,7 +104,7 @@ query getServiceInfo($serviceDetailsId: Int!) {
     firebase_id
     id
     image
-
+is_open
     name
 
     phone_number
@@ -182,3 +184,14 @@ query getServiceLanguage($serviceDetailsId: Int!) {
     language
   }
 }
+query getServiceIsOpen($serviceDetailsId: Int!) {
+  service_provider_details_by_pk(id: $serviceDetailsId) {
+    is_open
+  }
+}
+
+# mutation setLastActiveTime($id: Int!) {
+#   update_service_provider_details_by_pk(pk_columns: {id: $id}, _set: {last_active_time: "now()"}) {
+#     last_active_time
+#   }
+# }

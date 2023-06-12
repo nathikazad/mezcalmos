@@ -1,10 +1,10 @@
+import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:collection/collection.dart';
 
 extension AddDayOfWeekToDateTime on DateTime {
   Weekday getDayOfWeek() {
@@ -64,47 +64,47 @@ extension ScheduleFunctions on Schedule {
         null;
   }
 
-  bool isOpen() {
-    bool isOpen = false;
-    final String dayName = DateFormat('EEEE').format(DateTime.now());
-    final DateTime now = DateTime.now();
-    final Weekday? currentWeekday = Weekday.values.firstWhereOrNull(
-      (Weekday weekday) =>
-          weekday.toFirebaseFormatString() == dayName.toLowerCase(),
-    );
+  // bool isOpen {
+  //   bool isOpen = false;
+  //   final String dayName = DateFormat('EEEE').format(DateTime.now());
+  //   final DateTime now = DateTime.now();
+  //   final Weekday? currentWeekday = Weekday.values.firstWhereOrNull(
+  //     (Weekday weekday) =>
+  //         weekday.toFirebaseFormatString() == dayName.toLowerCase(),
+  //   );
 
-    if (currentWeekday != null) {
-      final List<OpenHours>? hours = openHours[currentWeekday]?.openHours;
-      if (hours != null) {
-        for (final OpenHours openHour in hours) {
-          if (openHours[currentWeekday]?.isOpen == true) {
-            final num openingHour = openHour.from[0];
-            final num openingMinute = openHour.from[1];
-            final num closingHour = openHour.to[0];
-            final num closingMinute = openHour.to[1];
+  //   if (currentWeekday != null) {
+  //     final List<OpenHours>? hours = openHours[currentWeekday]?.openHours;
+  //     if (hours != null) {
+  //       for (final OpenHours openHour in hours) {
+  //         if (openHours[currentWeekday]?.isOpen == true) {
+  //           final num openingHour = openHour.from[0];
+  //           final num openingMinute = openHour.from[1];
+  //           final num closingHour = openHour.to[0];
+  //           final num closingMinute = openHour.to[1];
 
-            final num currentHour = now.hour;
-            final num currentMinute = now.minute;
+  //           final num currentHour = now.hour;
+  //           final num currentMinute = now.minute;
 
-            if (currentHour > openingHour && currentHour < closingHour) {
-              isOpen = true;
-              break;
-            } else if (currentHour == openingHour &&
-                currentMinute >= openingMinute) {
-              isOpen = true;
-              break;
-            } else if (currentHour == closingHour &&
-                currentMinute < closingMinute) {
-              isOpen = true;
-              break;
-            }
-          }
-        }
-      }
-    }
+  //           if (currentHour > openingHour && currentHour < closingHour) {
+  //             isOpen = true;
+  //             break;
+  //           } else if (currentHour == openingHour &&
+  //               currentMinute >= openingMinute) {
+  //             isOpen = true;
+  //             break;
+  //           } else if (currentHour == closingHour &&
+  //               currentMinute < closingMinute) {
+  //             isOpen = true;
+  //             break;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
 
-    return isOpen;
-  }
+  //   return isOpen;
+  // }
 
   // Map<String, dynamic> toFirebaseFormattedJson() {
   //   Map<String, dynamic> json = {};

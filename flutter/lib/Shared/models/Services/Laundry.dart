@@ -25,6 +25,7 @@ class Laundry extends Service {
     required this.deliveryDetailsId,
     this.averageNumberOfDays = 2,
     required super.serviceDetailsId,
+    required super.isOpen,
     required this.selfDelivery,
     required this.laundryCosts,
     required cModels.ServiceProviderLanguage languages,
