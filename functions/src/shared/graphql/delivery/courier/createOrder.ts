@@ -11,7 +11,7 @@ import { CourierOrder } from "../../../models/Services/Courier/Courier";
 export async function createNewCourierOrder(
     customerId: number,
     // restaurant: ServiceProvider, 
-    courierRequest: CourierRequest, 
+    courierRequest: CourierRequest,
     // customerCart: Cart, 
     mezAdmins: MezAdmin[]
 ): Promise<CourierOrder> {
@@ -25,14 +25,25 @@ export async function createNewCourierOrder(
         };
     });
     let packageCost = 0;
-    courierRequest.items.forEach((i:any) => {
+    courierRequest.items.forEach((i: any) => {
         packageCost += i.estimatedCost ?? 0;
     })
-
+    let params: any = {
+        "to_location_gps": {
+            "type": "Point",
+            "coordinates": [courierRequest.toLocation.lng, courierRequest.toLocation.lat],
+        },
+        "from_location_gps": undefined
+    }
+    if (courierRequest.fromLocationGps != null)
+        params.from_location_gps = {
+            "type": "Point",
+            "coordinates": (courierRequest.fromLocationGps) ? [courierRequest.fromLocationGps.lng, courierRequest.fromLocationGps.lat] : undefined,
+        }
     let response = await chain.mutation({
         insert_delivery_courier_order_one: [{
             object: {
-                from_location_gps: $`from_location_gps`,
+                from_location_gps:  $`from_location_gps`,
                 from_location_text: courierRequest.fromLocationText,
                 to_location_address: courierRequest.toLocation.address,
                 to_location_gps: $`to_location_gps`,
@@ -43,7 +54,7 @@ export async function createNewCourierOrder(
                 refund_amount: courierRequest.refundAmount ?? undefined,
                 discount_value: courierRequest.discountValue ?? undefined,
                 items: {
-                    data: courierRequest.items.map((i:any) => {
+                    data: courierRequest.items.map((i: any) => {
                         return {
                             name: i.name,
                             image: i.image,
@@ -67,13 +78,13 @@ export async function createNewCourierOrder(
                                     data: [{
                                         participant_id: customerId,
                                         app_type_id: AppType.Customer
-                                    }, 
+                                    },
                                     ...mezAdminDetails]
                                 }
                             }
                         },
                         delivery_cost: courierRequest.deliveryCost ?? 0,
-                        
+
                         status: DeliveryOrderStatus.OrderReceived,
                         service_provider_id: courierRequest.deliveryCompanyId,
                         service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
@@ -96,18 +107,8 @@ export async function createNewCourierOrder(
             //     id: true,
             // }]
         }]
-    }, {
-        "from_location_gps": {
-            "type": "Point",
-            "coordinates": (courierRequest.fromLocationGps) ? [courierRequest.fromLocationGps.lng, courierRequest.fromLocationGps.lat]: undefined,
-        },
-        "to_location_gps": {
-            "type": "Point",
-            "coordinates": [courierRequest.toLocation.lng, courierRequest.toLocation.lat ],
-        },
-
-    });
-    if(response.insert_delivery_courier_order_one == null) {
+    }, params);
+    if (response.insert_delivery_courier_order_one == null) {
         throw new MezError(CreateCourierError.OrderCreationError);
     }
 
@@ -136,9 +137,9 @@ export async function createNewCourierOrder(
             deliveryCost: courierRequest.deliveryCost ?? 0,
             packageCost,
             orderTime: response.insert_delivery_courier_order_one.order_time,
-            tripDistance : courierRequest.tripDistance,
-            tripDuration : courierRequest.tripDuration,
-            tripPolyline : courierRequest.tripPolyline,
+            tripDistance: courierRequest.tripDistance,
+            tripDuration: courierRequest.tripDuration,
+            tripPolyline: courierRequest.tripPolyline,
             serviceProviderId: courierRequest.deliveryCompanyId,
             serviceProviderType: DeliveryServiceProviderType.DeliveryCompany,
             direction: DeliveryDirection.ToCustomer,

@@ -96,7 +96,7 @@ export async function createRestaurant(
       [PaymentType.BankTransfer]: false,
     },
     "gps": {
-      "type": "point",
+      "type": "Point",
       "coordinates": [restaurantDetails.location.lng, restaurantDetails.location.lat]
     }
   })

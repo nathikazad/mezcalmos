@@ -29,5 +29,6 @@ export interface Keys {
   stripe: Stripe,
   serviceAccount?: string | undefined;
   databaseURL?: string | undefined;
+  storageBucket?: string | undefined;
   agora?: Agora
 }

@@ -100,7 +100,7 @@ export async function createLaundryStore(
             [PaymentType.BankTransfer]: false,
         },
         "gps": {
-            "type": "point",
+            "type": "Point",
             "coordinates": [laundryDetails.location.lng, laundryDetails.location.lat]
         }
     });

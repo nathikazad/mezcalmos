@@ -177,7 +177,7 @@
 //             //             pickup_address: restaurantFbIdToObject[o.restaurantFirebaseId].address,
 //             //             dropoff_address: o.toLocationAddress ?? "",
 //             //             dropoff_gps: o.toLocationGps ?? JSON.stringify({
-//             //                 "type": "point",
+//             //                 "type": "Point",
 //             //                 "coordinates": [0, 0]
 //             //             }),
 //             //             chat_with_customer_id: 1,
@@ -226,7 +226,7 @@
 //                         pickup_address: restaurantFbIdToObject[o.restaurantFirebaseId].address,
 //                         dropoff_address: o.toLocationAddress ?? "",
 //                         dropoff_gps: o.toLocationGps ?? JSON.stringify({
-//                             "type": "point",
+//                             "type": "Point",
 //                             "coordinates": [0, 0]
 //                         }),
 //                         chat_with_customer_id: 1,

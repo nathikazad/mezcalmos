@@ -230,7 +230,7 @@
 //             //         location: {
 //             //             data: {
 //             //                 gps: JSON.stringify({
-//             //                     "type": "point",
+//             //                     "type": "Point",
 //             //                     "coordinates": [r.location.lng, r.location.lat]
 //             //                 }),
 //             //                 address: r.location.address,
@@ -534,7 +534,7 @@
 //         name: r.name,
 //         image: r.image,
 //         location_gps: JSON.stringify({
-//             "type": "point",
+//             "type": "Point",
 //             "coordinates": [r.location.lng, r.location.lat]
 //         }),
 //         location_text: r.location.address,
@@ -632,7 +632,7 @@
 //         //     name: data.name,
 //         //     image: data.image,
 //         //     location_gps: JSON.stringify({
-//         //         "type": "point",
+//         //         "type": "Point",
 //         //         "coordinates": [data.location.lng, data.location.lat]
 //         //     }),
 //         //     location_text: data.location.address,

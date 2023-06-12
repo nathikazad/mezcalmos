@@ -68,7 +68,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
         "language": businessDetails.language,
         "schedule": businessDetails.schedule,
         "gps": {
-            "type": "point",
+            "type": "Point",
             "coordinates": [businessDetails.location.lng, businessDetails.location.lat]
         }
     });
