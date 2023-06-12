@@ -1,7 +1,5 @@
-query getRestaurants {
-  restaurant_restaurant(
-    where: { details: { open_status: { _neq: "closed_indefinitely" } } }
-  ) {
+query getRestaurants($is_open: Boolean, $limit: Int, $offset: Int, $distance: Float, $from: geography) {
+  restaurant_restaurant(where: {details: {is_open: {_eq: $is_open}, location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, limit: $limit, offset: $offset, order_by: {details: {referral_points: desc}}) {
     id
     reviews_aggregate {
       aggregate {
