@@ -76,14 +76,11 @@ class ProductCartItemCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              "${item.product!.details.name.getTranslation(userLanguage)!.inCaps}",
-                              style: context.textTheme.bodyLarge,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
+                          Text(
+                            "${item.product!.details.name.getTranslation(userLanguage)!.inCaps}",
+                            style: context.textTheme.bodyLarge,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
                           if (isEditable)
                             Row(
