@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 extension BusinessOrderHelper on BusinessOrder {
@@ -86,5 +87,20 @@ extension BsOrderItemHelper on BusinessOrderItem {
       item: item,
       orderRequestId: orderRequestId,
     );
+  }
+}
+
+extension CustBusinessCartBusinessName on CustBusinessCart {
+  String getBusinessName() {
+    switch (items.first.offeringType) {
+      case OfferingType.Event:
+        return items.first.event!.business.name;
+      case OfferingType.Product:
+        return items.first.product!.business.name;
+      case OfferingType.Rental:
+        return items.first.rental!.business.name;
+      case OfferingType.Service:
+        return items.first.service!.business.name;
+    }
   }
 }

@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
 
 class CustOrderView extends StatefulWidget {
   const CustOrderView({super.key});
@@ -47,7 +48,9 @@ class _CustOrderViewState extends State<CustOrderView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Order",
+        title: (custBusinessCartController.currentOrderInView.value == null)
+            ? "Order"
+            : "${custBusinessCartController.currentOrderInView.value!.getBusinessName()}",
       ),
       bottomNavigationBar: Obx(() {
         if (custBusinessCartController.currentOrderInView.value!.status ==
@@ -309,56 +312,20 @@ class _CustOrderViewState extends State<CustOrderView> {
   }
 
   Widget orderStatusCard() {
-    Icon getIcon() {
-      switch (custBusinessCartController.currentOrderInView.value!.status) {
-        case BusinessOrderRequestStatus.RequestReceived:
-          return Icon(
-            Icons.pending,
-            color: primaryBlueColor,
-          );
-        case BusinessOrderRequestStatus.ModificationRequestByBusiness:
-          return Icon(
-            Icons.hourglass_top,
-            color: primaryBlueColor,
-          );
-        case BusinessOrderRequestStatus.CancelledByBusiness:
-          return Icon(
-            Icons.cancel,
-            color: Colors.red,
-          );
-        case BusinessOrderRequestStatus.Confirmed:
-          return Icon(
-            Icons.check,
-            color: primaryBlueColor,
-          );
-        case BusinessOrderRequestStatus.CancelledByCustomer:
-          return Icon(
-            Icons.cancel,
-            color: Colors.red,
-          );
-        case BusinessOrderRequestStatus.Completed:
-          return Icon(
-            Icons.check,
-            color: primaryBlueColor,
-          );
-        case null:
-          return Icon(
-            Icons.pending,
-            color: primaryBlueColor,
-          );
-      }
-    }
-
     return MezCard(
       content: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Row(
           children: [
-            getIcon(),
+            Icon(
+              custBusinessCartController.currentOrderInView.value!.status!
+                  .getIcon(),
+              color: primaryBlueColor,
+            ),
             Expanded(
               child: Text(
-                custBusinessCartController
-                    .currentOrderInView.value!.status!.name,
+                custBusinessCartController.currentOrderInView.value!.status!
+                    .toReadableString(),
                 style: context.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),

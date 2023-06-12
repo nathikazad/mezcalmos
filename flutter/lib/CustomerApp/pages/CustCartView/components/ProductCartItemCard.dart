@@ -4,13 +4,10 @@ import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dar
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustIconButton.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/CartItemImage.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 
 class ProductCartItemCard extends StatelessWidget {
   const ProductCartItemCard({
@@ -67,105 +64,103 @@ class ProductCartItemCard extends StatelessWidget {
           children: [
             MezCard(
               contentPadding: const EdgeInsets.only(top: 6, bottom: 6),
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+              content: Row(
                 children: [
-                  Row(
-                    children: [
-                      CartItemImage(image: item.product!.details.image?.first),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
+                  CartItemImage(
+                    image: item.product!.details.image?.first,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: Text(
                               "${item.product!.details.name.getTranslation(userLanguage)!.inCaps}",
                               style: context.textTheme.bodyLarge,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
-                            if (isEditable)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  SizedBox(
-                                    child: Builder(builder: (context) {
-                                      int durationCount = item
-                                          .parameters.numberOfUnits!
-                                          .toInt();
-                                      return StatefulBuilder(
-                                          builder: (context, setState) {
-                                        return Row(children: [
-                                          CustIconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                durationCount--;
-                                              });
-                                              controller.updateProductItemCount(
-                                                item: item,
-                                                count: durationCount,
-                                              );
-                                            },
-                                            isEnabled: durationCount > 1,
-                                            icon: Icons.remove,
+                          ),
+                          if (isEditable)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                SizedBox(
+                                  child: Builder(builder: (context) {
+                                    int durationCount =
+                                        item.parameters.numberOfUnits!.toInt();
+                                    return StatefulBuilder(
+                                        builder: (context, setState) {
+                                      return Row(children: [
+                                        CustIconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              durationCount--;
+                                            });
+                                            controller.updateProductItemCount(
+                                              item: item,
+                                              count: durationCount,
+                                            );
+                                          },
+                                          isEnabled: durationCount > 1,
+                                          icon: Icons.remove,
+                                        ),
+                                        Text(
+                                          "$durationCount",
+                                          style: context.textTheme.bodyMedium!
+                                              .copyWith(
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          Text(
-                                            "$durationCount",
-                                            style: context.textTheme.bodyMedium!
-                                                .copyWith(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          CustIconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                durationCount++;
-                                              });
-                                              controller.updateProductItemCount(
-                                                item: item,
-                                                count: durationCount,
-                                              );
-                                            },
-                                            isEnabled: true,
-                                            icon: Icons.add,
-                                          ),
-                                        ]);
-                                      });
-                                    }),
+                                        ),
+                                        CustIconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              durationCount++;
+                                            });
+                                            controller.updateProductItemCount(
+                                              item: item,
+                                              count: durationCount,
+                                            );
+                                          },
+                                          isEnabled: true,
+                                          icon: Icons.add,
+                                        ),
+                                      ]);
+                                    });
+                                  }),
+                                ),
+                              ],
+                            ),
+                          if (!isEditable)
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 4.0),
+                                  child: Icon(
+                                    Icons.local_offer,
                                   ),
-                                ],
-                              ),
-                            if (!isEditable)
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 4.0),
-                                    child: Icon(
-                                      Icons.local_offer,
-                                    ),
+                                ),
+                                Text(
+                                  "${item.parameters.numberOfUnits} item",
+                                  style: context.textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    "${item.parameters.numberOfUnits} item",
-                                    style:
-                                        context.textTheme.bodyMedium!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  costBuilder(context),
-                                ],
-                              ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                costBuilder(context),
+                              ],
+                            ),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
