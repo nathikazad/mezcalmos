@@ -201,6 +201,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           event: scheduledClass[index],
                           onClick: () {
                             viewController.navigateToEvent(
+                                eventCategory: scheduledClass[index].category1,
                                 isClass: scheduledClass[index].isClass,
                                 id: scheduledClass[index].id!.toInt());
                           })),
@@ -227,6 +228,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           event: oneTimeClass[index],
                           onClick: () {
                             viewController.navigateToEvent(
+                                eventCategory: oneTimeClass[index].category1,
                                 isClass: oneTimeClass[index].isClass,
                                 id: oneTimeClass[index].id!.toInt());
                           })),
@@ -253,6 +255,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                           event: onDemandClass[index],
                           onClick: () {
                             viewController.navigateToEvent(
+                                eventCategory: onDemandClass[index].category1,
                                 isClass: onDemandClass[index].isClass,
                                 id: onDemandClass[index].id!.toInt());
                           })),
@@ -527,6 +530,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToEvent(
+                                  eventCategory:
+                                      scheduledEvents[index].category1,
                                   isClass: scheduledEvents[index].isClass,
                                   id: scheduledEvents[index].id!.toInt());
                             },
@@ -554,6 +559,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToEvent(
+                                  eventCategory: oneTimeEvents[index].category1,
                                   isClass: oneTimeEvents[index].isClass,
                                   id: oneTimeEvents[index].id!.toInt());
                             },
@@ -581,6 +587,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToEvent(
+                                  eventCategory:
+                                      onDemandEvents[index].category1,
                                   isClass: onDemandEvents[index].isClass,
                                   id: onDemandEvents[index].id!.toInt());
                             },
@@ -608,6 +616,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToEvent(
+                                  eventCategory: tourEvents[index].category1,
                                   isClass: tourEvents[index].isClass,
                                   id: tourEvents[index].id!.toInt());
                             },
@@ -635,6 +644,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToEvent(
+                                  eventCategory: therapyEvents[index].category1,
                                   isClass: therapyEvents[index].isClass,
                                   id: therapyEvents[index].id!.toInt());
                             },

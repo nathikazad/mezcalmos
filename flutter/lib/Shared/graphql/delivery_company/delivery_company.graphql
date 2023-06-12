@@ -15,6 +15,7 @@ query getDeliveryCompanyById($id: Int!) {
     details {
       id
       schedule
+      is_open
       approved
       description_id
       image
@@ -64,6 +65,7 @@ query getDeliveryCompanies {
     details {
       id
       schedule
+      is_open
       approved
       description_id
       image
@@ -109,6 +111,7 @@ query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
       id
       approved
       description_id
+      is_open
       image
       location_id
       name
@@ -130,4 +133,7 @@ query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
       }
     }
   }
+}
+subscription listen_on_details_open_status($id: Int!) {
+  service_provider_details_by_pk(id:$id){is_open}
 }

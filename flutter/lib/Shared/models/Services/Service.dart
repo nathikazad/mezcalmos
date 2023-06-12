@@ -4,8 +4,6 @@ import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 abstract class Service {
   ServiceInfo info;
@@ -21,6 +19,7 @@ abstract class Service {
   num? rate;
   num? numberOfReviews;
   DeliveryCost? deliveryCost;
+  bool isOpen;
 
   PaymentInfo? paymentInfo;
 
@@ -36,6 +35,7 @@ abstract class Service {
       required this.languages,
       this.reviews = const [],
       this.rate,
+      required this.isOpen,
       required this.deliveryCost,
       this.paymentInfo,
       this.currency});
@@ -47,9 +47,9 @@ abstract class Service {
     return rate != null && reviews.isNotEmpty;
   }
 
-  bool isOpen() {
-    return state.isOpen && (schedule?.isOpen() ?? true);
-  }
+  // bool isOpen {
+  //   return state.isOpen && (schedule?.isOpen ?? true);
+  // }
 }
 
 class ServiceState {
@@ -97,6 +97,7 @@ class MainService extends Service {
     required super.state,
     required super.languages,
     required super.paymentInfo,
+    required super.isOpen,
     required super.schedule,
     required super.phoneNumber,
     required super.serviceLinkId,

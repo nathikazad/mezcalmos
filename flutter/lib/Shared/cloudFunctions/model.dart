@@ -2307,6 +2307,7 @@ enum EventCategory1 {
   Fitness,
   Adventure,
   Volunteer,
+  LanguageSchool,
   Uncategorized
 }
 

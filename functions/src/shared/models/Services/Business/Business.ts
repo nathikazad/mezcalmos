@@ -94,6 +94,7 @@ export enum EventCategory1 {
   Fitness = "fitness",
   Adventure = "adventure",
   Volunteer = "volunteer",
+  LanguageSchool = "languageSchool",
   Uncategorized = "uncategorized",
 }
 export enum EventCategory2 {

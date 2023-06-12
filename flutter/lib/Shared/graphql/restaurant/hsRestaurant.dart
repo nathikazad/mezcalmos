@@ -33,6 +33,7 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
       mezDbgPrint(
           " desc=============>>>🥹=======>${data.details?.description?.toJson()}");
       _restaurants.add(Restaurant(
+         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
         userInfo: ServiceInfo(
@@ -141,6 +142,7 @@ Future<Restaurant?> get_restaurant_by_id(
 
     if (data != null) {
       return Restaurant(
+         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
         deliveryDetailsId: data.delivery_details_id,

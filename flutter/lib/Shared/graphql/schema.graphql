@@ -17751,12 +17751,24 @@ columns and relationships of "mez_admin_chat"
 """
 type mez_admin_chat {
   """An object relationship"""
+  business: business_business
+
+  """An object relationship"""
   chat: chat
   chat_id: Int!
+
+  """An object relationship"""
+  delivery_company: delivery_company
+
+  """An object relationship"""
+  laundry: laundry_store
   recipient_id: Int!
 
   """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
   recipient_type: String!
+
+  """An object relationship"""
+  restaurant: restaurant_restaurant
 
   """An object relationship"""
   user: user
@@ -17800,10 +17812,14 @@ input mez_admin_chat_bool_exp {
   _and: [mez_admin_chat_bool_exp!]
   _not: mez_admin_chat_bool_exp
   _or: [mez_admin_chat_bool_exp!]
+  business: business_business_bool_exp
   chat: chat_bool_exp
   chat_id: Int_comparison_exp
+  delivery_company: delivery_company_bool_exp
+  laundry: laundry_store_bool_exp
   recipient_id: Int_comparison_exp
   recipient_type: String_comparison_exp
+  restaurant: restaurant_restaurant_bool_exp
   user: user_bool_exp
 }
 
@@ -17834,12 +17850,16 @@ input mez_admin_chat_inc_input {
 input type for inserting data into table "mez_admin_chat"
 """
 input mez_admin_chat_insert_input {
+  business: business_business_obj_rel_insert_input
   chat: chat_obj_rel_insert_input
   chat_id: Int
+  delivery_company: delivery_company_obj_rel_insert_input
+  laundry: laundry_store_obj_rel_insert_input
   recipient_id: Int
 
   """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
   recipient_type: String
+  restaurant: restaurant_restaurant_obj_rel_insert_input
   user: user_obj_rel_insert_input
 }
 
@@ -17883,10 +17903,14 @@ input mez_admin_chat_on_conflict {
 
 """Ordering options when selecting data from "mez_admin_chat"."""
 input mez_admin_chat_order_by {
+  business: business_business_order_by
   chat: chat_order_by
   chat_id: order_by
+  delivery_company: delivery_company_order_by
+  laundry: laundry_store_order_by
   recipient_id: order_by
   recipient_type: order_by
+  restaurant: restaurant_restaurant_order_by
   user: user_order_by
 }
 
