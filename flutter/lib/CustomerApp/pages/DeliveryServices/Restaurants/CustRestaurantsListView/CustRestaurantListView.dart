@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -64,14 +65,16 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
 
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
             onClick: MezRouter.back, title: "${_i18n()['restaurants']}"),
-        floatingActionButton: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
-                child: Obx(
-                  () => MezButton(
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(0),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: MezButton(
+                    width: 52.5.mezW,
                     height: 42.5,
                     onClick: () async {
                       viewController.switchView();
@@ -80,14 +83,20 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                     label: viewController.isMapView
                         ? '${_i18n()['viewAsList']}'
                         : '${_i18n()['viewOnMap']}',
-                    borderRadius: 25,
+                    borderRadius: 50,
                   ),
                 ),
               ),
-            ),
-            FloatingCartComponent(),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: FloatingCartComponent()),
+              ),
+            ],
+          ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: Obx(() {
           if (viewController.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
