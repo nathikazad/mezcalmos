@@ -70,7 +70,14 @@ class CustLaundriesListViewController {
 
     isLoading.value = true;
 
-    await get_laundries(withCache: false).then((List<Laundry>? list) {
+    await get_laundries(
+            fromLocation: cModels.Location(
+                lat: _currentLocation.latitude,
+                lng: _currentLocation.longitude,
+                address: ''),
+            withCache: false,
+            distance: 25000)
+        .then((List<Laundry> list) {
       if (list != null) {
         _services = list;
 
@@ -109,9 +116,22 @@ class CustLaundriesListViewController {
       {bool currentPostitionBased = true}) async {
     try {
       if (currentPostitionBased) {
-        _mapViewLaundries.value = await get_laundries(withCache: false);
+        _mapViewLaundries.value = await get_laundries(
+            fromLocation: cModels.Location(
+                lat: _currentLocation.latitude,
+                lng: _currentLocation.longitude,
+                address: ''),
+            withCache: false,
+            distance: 25000);
       } else {
-        _mapViewLaundries.value = await get_laundries(withCache: false);
+        _mapViewLaundries.value = await get_laundries(
+            distance: _calculateDistance(
+                await _googleMapController!.getVisibleRegion()),
+            fromLocation: cModels.Location(
+                lat: _screenToWorldPosition!.latitude,
+                lng: _screenToWorldPosition!.longitude,
+                address: ''),
+            withCache: false);
       }
     } catch (e) {
       mezDbgPrint(e);
