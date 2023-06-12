@@ -3,6 +3,7 @@ import { getHasura } from "../../../../utilities/hasura";
 import { OrderStripeInfo } from "../../../models/stripe";
 import { MezError } from "../../../models/Generic/Generic";
 import { RestaurantOrder } from "../../../models/Services/Restaurant/RestaurantOrder";
+import { $ } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 
 export async function updateRestaurantOrderStatus(order: RestaurantOrder) {
   let chain = getHasura();
@@ -33,12 +34,14 @@ export async function updateRestaurantOrderStripe(orderId: number, orderStripePa
         id: orderId
       }, 
       _set: {
-        stripe_info: JSON.stringify(orderStripePaymentInfo),
+        stripe_info: $`stripeInfo`,
         stripe_fees: orderStripePaymentInfo.stripeFees
       }
     }, { 
       stripe_info: [{}, true]
     }]
+  }, {
+    "stripeInfo": orderStripePaymentInfo
   });
   if(!(response.update_restaurant_order_by_pk)) {
     throw new MezError("updateOrderStripeError");

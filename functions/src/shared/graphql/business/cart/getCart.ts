@@ -33,7 +33,7 @@
 //             customerId,
 //             serviceId: i.service_id,
 //             serviceType: i.service_type as ServiceType,
-//             cost: JSON.parse(i.cost) as BusinessItemCost,
+//             cost: (i.cost) as BusinessItemCost,
 //         }
 //     })
 //     let cost = 0;

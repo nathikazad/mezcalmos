@@ -1835,7 +1835,7 @@
         "privacyPolicies": "Privacy Policies",
         "logout": "Logout",
         "openService": "Open service",
-        "closeService": "Close service",
+        "closeService": "Close forever",
         "serviceClosed": "Service is closed indefinitely",
         "serviceUnderReview": "Your service is under review, you’ll be notified, once it’s approved."
       },

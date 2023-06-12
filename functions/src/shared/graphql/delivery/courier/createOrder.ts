@@ -1,3 +1,4 @@
+import { $ } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { CourierRequest, CreateCourierError } from "../../../../delivery/createCourierOrder";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
@@ -31,16 +32,10 @@ export async function createNewCourierOrder(
     let response = await chain.mutation({
         insert_delivery_courier_order_one: [{
             object: {
-                from_location_gps: (courierRequest.fromLocationGps) ? JSON.stringify({
-                    "type": "Point",
-                    "coordinates": [courierRequest.fromLocationGps.lng, courierRequest.fromLocationGps.lat ],
-                }): undefined,
+                from_location_gps: $`from_location_gps`,
                 from_location_text: courierRequest.fromLocationText,
                 to_location_address: courierRequest.toLocation.address,
-                to_location_gps: JSON.stringify({
-                    "type": "Point",
-                    "coordinates": [courierRequest.toLocation.lng, courierRequest.toLocation.lat ],
-                }),
+                to_location_gps: $`to_location_gps`,
                 customer_id: customerId,
                 stripe_fees: courierRequest.stripeFees ?? undefined,
                 tax: courierRequest.tax ?? undefined,
@@ -61,15 +56,9 @@ export async function createNewCourierOrder(
                     data: {
                         customer_id: customerId,
                         order_type: OrderType.Courier,
-                        dropoff_gps: JSON.stringify({
-                            "type": "Point",
-                            "coordinates": [courierRequest.toLocation.lng, courierRequest.toLocation.lat ],
-                        }),
+                        dropoff_gps: $`to_location_gps`,
                         dropoff_address: courierRequest.toLocation.address,
-                        pickup_gps: (courierRequest.fromLocationGps) ? JSON.stringify({
-                            "type": "Point",
-                            "coordinates": [courierRequest.fromLocationGps.lng, courierRequest.fromLocationGps.lat ],
-                        }): undefined,
+                        pickup_gps: $`from_location_gps`,
                         pickup_address: courierRequest.fromLocationText,
                         schedule_time: courierRequest.scheduledTime,
                         chat_with_customer: {
@@ -107,6 +96,16 @@ export async function createNewCourierOrder(
             //     id: true,
             // }]
         }]
+    }, {
+        "from_location_gps": {
+            "type": "Point",
+            "coordinates": (courierRequest.fromLocationGps) ? [courierRequest.fromLocationGps.lng, courierRequest.fromLocationGps.lat]: undefined,
+        },
+        "to_location_gps": {
+            "type": "Point",
+            "coordinates": [courierRequest.toLocation.lng, courierRequest.toLocation.lat ],
+        },
+
     });
     if(response.insert_delivery_courier_order_one == null) {
         throw new MezError(CreateCourierError.OrderCreationError);
