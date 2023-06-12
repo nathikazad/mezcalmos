@@ -4,6 +4,220 @@ import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
+class Variables$Query$getLaundries {
+  factory Variables$Query$getLaundries({
+    bool? is_open,
+    Geography? from,
+    double? distance,
+    int? limit,
+    int? offset,
+  }) =>
+      Variables$Query$getLaundries._({
+        if (is_open != null) r'is_open': is_open,
+        if (from != null) r'from': from,
+        if (distance != null) r'distance': distance,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
+      });
+
+  Variables$Query$getLaundries._(this._$data);
+
+  factory Variables$Query$getLaundries.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('is_open')) {
+      final l$is_open = data['is_open'];
+      result$data['is_open'] = (l$is_open as bool?);
+    }
+    if (data.containsKey('from')) {
+      final l$from = data['from'];
+      result$data['from'] = l$from == null ? null : geographyFromJson(l$from);
+    }
+    if (data.containsKey('distance')) {
+      final l$distance = data['distance'];
+      result$data['distance'] = (l$distance as num?)?.toDouble();
+    }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    return Variables$Query$getLaundries._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  bool? get is_open => (_$data['is_open'] as bool?);
+  Geography? get from => (_$data['from'] as Geography?);
+  double? get distance => (_$data['distance'] as double?);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('is_open')) {
+      final l$is_open = is_open;
+      result$data['is_open'] = l$is_open;
+    }
+    if (_$data.containsKey('from')) {
+      final l$from = from;
+      result$data['from'] = l$from == null ? null : geographyToJson(l$from);
+    }
+    if (_$data.containsKey('distance')) {
+      final l$distance = distance;
+      result$data['distance'] = l$distance;
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getLaundries<Variables$Query$getLaundries>
+      get copyWith => CopyWith$Variables$Query$getLaundries(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getLaundries) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
+      return false;
+    }
+    if (l$is_open != lOther$is_open) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (_$data.containsKey('from') != other._$data.containsKey('from')) {
+      return false;
+    }
+    if (l$from != lOther$from) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (_$data.containsKey('distance') !=
+        other._$data.containsKey('distance')) {
+      return false;
+    }
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$is_open = is_open;
+    final l$from = from;
+    final l$distance = distance;
+    final l$limit = limit;
+    final l$offset = offset;
+    return Object.hashAll([
+      _$data.containsKey('is_open') ? l$is_open : const {},
+      _$data.containsKey('from') ? l$from : const {},
+      _$data.containsKey('distance') ? l$distance : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getLaundries<TRes> {
+  factory CopyWith$Variables$Query$getLaundries(
+    Variables$Query$getLaundries instance,
+    TRes Function(Variables$Query$getLaundries) then,
+  ) = _CopyWithImpl$Variables$Query$getLaundries;
+
+  factory CopyWith$Variables$Query$getLaundries.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getLaundries;
+
+  TRes call({
+    bool? is_open,
+    Geography? from,
+    double? distance,
+    int? limit,
+    int? offset,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$getLaundries<TRes>
+    implements CopyWith$Variables$Query$getLaundries<TRes> {
+  _CopyWithImpl$Variables$Query$getLaundries(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getLaundries _instance;
+
+  final TRes Function(Variables$Query$getLaundries) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? is_open = _undefined,
+    Object? from = _undefined,
+    Object? distance = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
+      _then(Variables$Query$getLaundries._({
+        ..._instance._$data,
+        if (is_open != _undefined) 'is_open': (is_open as bool?),
+        if (from != _undefined) 'from': (from as Geography?),
+        if (distance != _undefined) 'distance': (distance as double?),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getLaundries<TRes>
+    implements CopyWith$Variables$Query$getLaundries<TRes> {
+  _CopyWithStubImpl$Variables$Query$getLaundries(this._res);
+
+  TRes _res;
+
+  call({
+    bool? is_open,
+    Geography? from,
+    double? distance,
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
+}
+
 class Query$getLaundries {
   Query$getLaundries({
     required this.laundry_store,
@@ -161,7 +375,53 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
     name: NameNode(value: 'getLaundries'),
-    variableDefinitions: [],
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'is_open')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: IntValueNode(value: '10')),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: IntValueNode(value: '10')),
+        directives: [],
+      ),
+    ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
@@ -175,21 +435,65 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
                 name: NameNode(value: 'details'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: 'open_status'),
+                    name: NameNode(value: 'is_open'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: '_neq'),
-                        value: StringValueNode(
-                          value: 'closed_indefinitely',
-                          isBlock: false,
-                        ),
+                        name: NameNode(value: '_eq'),
+                        value: VariableNode(name: NameNode(value: 'is_open')),
                       )
                     ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'location'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'gps'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_st_d_within'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'distance'),
+                                value: VariableNode(
+                                    name: NameNode(value: 'distance')),
+                              ),
+                              ObjectFieldNode(
+                                name: NameNode(value: 'from'),
+                                value:
+                                    VariableNode(name: NameNode(value: 'from')),
+                              ),
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  ),
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
                   )
                 ]),
               )
             ]),
-          )
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -694,6 +998,7 @@ class Options$Query$getLaundries
     extends graphql.QueryOptions<Query$getLaundries> {
   Options$Query$getLaundries({
     String? operationName,
+    Variables$Query$getLaundries? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -701,6 +1006,7 @@ class Options$Query$getLaundries
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -717,6 +1023,7 @@ class WatchOptions$Query$getLaundries
     extends graphql.WatchQueryOptions<Query$getLaundries> {
   WatchOptions$Query$getLaundries({
     String? operationName,
+    Variables$Query$getLaundries? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -727,6 +1034,7 @@ class WatchOptions$Query$getLaundries
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -743,10 +1051,12 @@ class WatchOptions$Query$getLaundries
 }
 
 class FetchMoreOptions$Query$getLaundries extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$getLaundries(
-      {required graphql.UpdateQuery updateQuery})
-      : super(
+  FetchMoreOptions$Query$getLaundries({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$getLaundries? variables,
+  }) : super(
           updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
           document: documentNodeQuerygetLaundries,
         );
 }
@@ -760,20 +1070,26 @@ extension ClientExtension$Query$getLaundries on graphql.GraphQLClient {
       this.watchQuery(options ?? WatchOptions$Query$getLaundries());
   void writeQuery$getLaundries({
     required Query$getLaundries data,
+    Variables$Query$getLaundries? variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-            operation:
-                graphql.Operation(document: documentNodeQuerygetLaundries)),
+          operation: graphql.Operation(document: documentNodeQuerygetLaundries),
+          variables: variables?.toJson() ?? const {},
+        ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$getLaundries? readQuery$getLaundries({bool optimistic = true}) {
+  Query$getLaundries? readQuery$getLaundries({
+    Variables$Query$getLaundries? variables,
+    bool optimistic = true,
+  }) {
     final result = this.readQuery(
       graphql.Request(
-          operation:
-              graphql.Operation(document: documentNodeQuerygetLaundries)),
+        operation: graphql.Operation(document: documentNodeQuerygetLaundries),
+        variables: variables?.toJson() ?? const {},
+      ),
       optimistic: optimistic,
     );
     return result == null ? null : Query$getLaundries.fromJson(result);

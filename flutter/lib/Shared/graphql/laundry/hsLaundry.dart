@@ -319,9 +319,23 @@ Future<LaundryCostLineItem?> update_laundry_category(
       storeId: data.store_id);
 }
 
-Future<List<Laundry>> get_laundries({bool withCache = true}) async {
+Future<List<Laundry>> get_laundries(
+    {required Location fromLocation,
+    required double distance,
+    bool? is_open,
+    int? limit,
+    int? offset,
+    bool withCache = true}) async {
   QueryResult<Query$getLaundries> res = await _db.graphQLClient
       .query$getLaundries(Options$Query$getLaundries(
+          variables: Variables$Query$getLaundries(
+            distance: distance,
+            from: Geography(
+                fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+            is_open: is_open,
+            limit: limit,
+            offset: offset,
+          ),
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
   if (res.parsedData?.laundry_store == null) {
