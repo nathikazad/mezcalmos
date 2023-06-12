@@ -7365,6 +7365,28 @@ const documentNodeQuerygetCustomerOrdersByType = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'nodes'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -7494,18 +7516,25 @@ extension ClientExtension$Query$getCustomerOrdersByType
 class Query$getCustomerOrdersByType$customer_minimal_orders_aggregate {
   Query$getCustomerOrdersByType$customer_minimal_orders_aggregate({
     this.aggregate,
+    required this.nodes,
     required this.$__typename,
   });
 
   factory Query$getCustomerOrdersByType$customer_minimal_orders_aggregate.fromJson(
       Map<String, dynamic> json) {
     final l$aggregate = json['aggregate'];
+    final l$nodes = json['nodes'];
     final l$$__typename = json['__typename'];
     return Query$getCustomerOrdersByType$customer_minimal_orders_aggregate(
       aggregate: l$aggregate == null
           ? null
           : Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate
               .fromJson((l$aggregate as Map<String, dynamic>)),
+      nodes: (l$nodes as List<dynamic>)
+          .map((e) =>
+              Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -7513,12 +7542,18 @@ class Query$getCustomerOrdersByType$customer_minimal_orders_aggregate {
   final Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate?
       aggregate;
 
+  final List<
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>
+      nodes;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$aggregate = aggregate;
     _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$nodes = nodes;
+    _resultData['nodes'] = l$nodes.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -7527,9 +7562,11 @@ class Query$getCustomerOrdersByType$customer_minimal_orders_aggregate {
   @override
   int get hashCode {
     final l$aggregate = aggregate;
+    final l$nodes = nodes;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$aggregate,
+      Object.hashAll(l$nodes.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -7548,6 +7585,18 @@ class Query$getCustomerOrdersByType$customer_minimal_orders_aggregate {
     final lOther$aggregate = other.aggregate;
     if (l$aggregate != lOther$aggregate) {
       return false;
+    }
+    final l$nodes = nodes;
+    final lOther$nodes = other.nodes;
+    if (l$nodes.length != lOther$nodes.length) {
+      return false;
+    }
+    for (int i = 0; i < l$nodes.length; i++) {
+      final l$nodes$entry = l$nodes[i];
+      final lOther$nodes$entry = lOther$nodes[i];
+      if (l$nodes$entry != lOther$nodes$entry) {
+        return false;
+      }
     }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
@@ -7585,10 +7634,18 @@ abstract class CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_ag
   TRes call({
     Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate?
         aggregate,
+    List<Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>?
+        nodes,
     String? $__typename,
   });
   CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate<
       TRes> get aggregate;
+  TRes nodes(
+      Iterable<Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes> Function(
+              Iterable<
+                  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+                      Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>>)
+          _fn);
 }
 
 class _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<
@@ -7611,6 +7668,7 @@ class _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggreg
 
   TRes call({
     Object? aggregate = _undefined,
+    Object? nodes = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getCustomerOrdersByType$customer_minimal_orders_aggregate(
@@ -7618,6 +7676,10 @@ class _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggreg
             ? _instance.aggregate
             : (aggregate
                 as Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate?),
+        nodes: nodes == _undefined || nodes == null
+            ? _instance.nodes
+            : (nodes as List<
+                Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -7631,6 +7693,19 @@ class _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggreg
         : CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate(
             local$aggregate, (e) => call(aggregate: e));
   }
+
+  TRes nodes(
+          Iterable<Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes> Function(
+                  Iterable<
+                      CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+                          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>>)
+              _fn) =>
+      call(
+          nodes: _fn(_instance.nodes.map((e) =>
+              CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+                e,
+                (i) => i,
+              ))).toList());
 }
 
 class _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<
@@ -7646,6 +7721,8 @@ class _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_ag
   call({
     Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate?
         aggregate,
+    List<Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>?
+        nodes,
     String? $__typename,
   }) =>
       _res;
@@ -7654,6 +7731,7 @@ class _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_ag
       get aggregate =>
           CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate
               .stub(_res);
+  nodes(_fn) => _res;
 }
 
 class Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate {
@@ -7796,6 +7874,149 @@ class _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_ag
 
   call({
     int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes {
+  Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes
+    on Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes {
+  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>
+      get copyWith =>
+          CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+    TRes> {
+  factory CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+    Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes
+        instance,
+    TRes Function(
+            Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes;
+
+  factory CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
     String? $__typename,
   }) =>
       _res;

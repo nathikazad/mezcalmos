@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/CustLaundriesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -122,13 +125,25 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
   Widget mezListOfServices() {
     Future<void> navigateToListView(MezService mezService) async {
       if (Get.find<AuthController>().hasuraUserId != null) {
-        int? orders = await get_customer_orders_by_type(
+        int? orderId = await get_customer_orders_by_type(
             customerId: Get.find<AuthController>().hasuraUserId!,
             orderType: mezService.toOrderType());
-        if (orders != null && orders > 0) {
-           await MezRouter.back(backResult: true);
+        if (orderId != null && orderId > 0) {
+          switch (mezService) {
+            case MezService.Courier:
+              await CustCourierOrderView.navigate(orderId: orderId);
+              break;
+            case MezService.Restaurants:
+              await ViewRestaurantOrderScreen.navigate(orderId: orderId);
+              break;
+            case MezService.Laundry:
+              await CustLaundryOrderView.navigate(orderId: orderId);
+              break;
+            default:
+              await MezRouter.back(backResult: true);
+          }
           return;
-        } 
+        }
       }
       switch (mezService) {
         case MezService.Food:

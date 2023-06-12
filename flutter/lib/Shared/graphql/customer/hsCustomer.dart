@@ -301,12 +301,18 @@ Future<int?> get_customer_orders_by_type(
     {required int customerId, required OrderType orderType}) async {
   QueryResult<Query$getCustomerOrdersByType> res = await _graphClient
       .query$getCustomerOrdersByType(Options$Query$getCustomerOrdersByType(
+          fetchPolicy: FetchPolicy.networkOnly,
           variables: Variables$Query$getCustomerOrdersByType(
               custId: customerId,
-              
               orderType: orderType.toFirebaseFormatString())));
   if (res.hasException) {
     throwError(res.exception);
   }
-  return res.parsedData?.customer_minimal_orders_aggregate.aggregate?.count;
+  if (res.parsedData == null) {
+    return null;
+  }
+  if (res.parsedData!.customer_minimal_orders_aggregate.nodes.isEmpty) {
+    return null;
+  }
+  return res.parsedData?.customer_minimal_orders_aggregate.nodes.first.id;
 }

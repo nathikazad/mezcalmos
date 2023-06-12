@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -44,12 +45,13 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
   }
 
   Future<void> navigateToListView(MezService mezService) async {
-    if (Get.find<AuthController>().hasuraUserId != null) {
-      int? orders = await get_customer_orders_by_type(
+    if (Get.find<AuthController>().hasuraUserId != null &&
+        mezService == MezService.Restaurants) {
+      final int? orderId = await get_customer_orders_by_type(
           customerId: Get.find<AuthController>().hasuraUserId!,
           orderType: mezService.toOrderType());
-      if (orders != null && orders > 0) {
-        await MezRouter.back(backResult: true);
+      if (orderId != null && orderId > 0) {
+        await ViewRestaurantOrderScreen.navigate(orderId: orderId);
         return;
       }
     }
