@@ -130,6 +130,27 @@ Future<HasuraChat?> get_service_provider_customer_chat(
   return null;
 }
 
+Future<int?> get_admin_chat_id(
+    {required int recepientId, required RecipientType type}) async {
+  final QueryResult<Query$getMezAdminChat> _chat =
+      await _hasuraDb.graphQLClient.query$getMezAdminChat(
+    Options$Query$getMezAdminChat(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Query$getMezAdminChat(
+        recipient_id: recepientId,
+        recipient_type: type.toFirebaseFormatString(),
+      ),
+    ),
+  );
+  if (_chat.hasException) {
+    mezDbgPrint("get_admin_chat_id :: Exception :: ${_chat.exception}");
+    return null;
+  }
+  return _chat.parsedData?.mez_admin_chat.isNotEmpty == true
+      ? _chat.parsedData?.mez_admin_chat.first.chat_id
+      : null;
+}
+
 Future<List<HasuraChat>> get_customer_chats({required int customerId}) async {
   final List<HasuraChat> _chats = <HasuraChat>[];
 
@@ -142,7 +163,7 @@ Future<List<HasuraChat>> get_customer_chats({required int customerId}) async {
   );
 
   mezDbgPrint(
-      "chat response ${response} ${response.parsedData?.service_provider_customer_chat}");
+      "chat response $response ${response.parsedData?.service_provider_customer_chat}");
 
   if (response.parsedData?.service_provider_customer_chat != null) {
     response.parsedData?.service_provider_customer_chat.forEach(
@@ -196,7 +217,7 @@ Future<List<HasuraChat>> get_business_provider_chats({
     ),
   );
   mezDbgPrint(
-      "chat response ${response} $serviceId ${response.parsedData?.service_provider_customer_chat}");
+      "chat response $response $serviceId ${response.parsedData?.service_provider_customer_chat}");
   if (response.parsedData?.service_provider_customer_chat != null) {
     response.parsedData?.service_provider_customer_chat.forEach(
         (Query$get_service_provider_chats$service_provider_customer_chat

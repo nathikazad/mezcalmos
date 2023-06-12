@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -48,8 +49,25 @@ class MezSideMenu extends GetWidget<AuthController> {
                       color: Color.fromRGBO(196, 196, 196, 0.29),
                     ),
 
-                    // _buildSideMenuItem(),
                     _basicSideMenuItems(context),
+                    _buildSideMenuItem(),
+                    Obx(
+                      () => SideMenuItem(
+                        icon: controller.isUserSignedIn
+                            ? Icons.logout
+                            : Icons.person,
+                        title: (controller.isUserSignedIn)
+                            ? "${_i18n()["logout"]}"
+                            : "${_i18n()["login"]}",
+                        onClick: () {
+                          _drawerController.closeMenu();
+                          if (controller.isUserSignedIn) {
+                            logOut();
+                          } else
+                            SignInView.navigateAtOrderTime();
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -102,47 +120,49 @@ class MezSideMenu extends GetWidget<AuthController> {
           icon: Icons.alternate_email,
           title: '${_i18n()["contact"]}',
         ),
-        SideMenuItem(
-          titleWidget: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${_i18n()["language"]}",
-                style: context.txt.bodyLarge,
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Obx(
-                () => Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage(languageController.oppositFlag),
+        if (MezEnv.appType != AppType.MezAdmin &&
+            Get.find<AuthController>().hasuraUserId != null)
+          SideMenuItem(
+            titleWidget: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${_i18n()["language"]}",
+                  style: context.txt.bodyLarge,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        height: 15,
+                        width: 15,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage(languageController.oppositFlag),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      languageController.oppositToLang,
-                    ),
-                  ],
+                      const SizedBox(width: 10),
+                      Text(
+                        languageController.oppositToLang,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            icon: Icons.g_translate_outlined,
+            onClick: () {
+              languageController.changeUserLanguage().then(
+                    (_) => _drawerController.closeMenu(),
+                  );
+            },
           ),
-          icon: Icons.g_translate_outlined,
-          onClick: () {
-            languageController.changeUserLanguage().then(
-                  (_) => _drawerController.closeMenu(),
-                );
-          },
-        ),
         // Obx(
         //   () => SideMenuItem(
         //     icon: Icons.privacy_tip,
@@ -151,22 +171,6 @@ class MezSideMenu extends GetWidget<AuthController> {
         //     onClick: () => launchUrlString(MezEnv.appType.getPrivacyLink()),
         //   ),
         // ),
-
-        Obx(
-          () => SideMenuItem(
-            icon: controller.isUserSignedIn ? Icons.logout : Icons.person,
-            title: (controller.isUserSignedIn)
-                ? "${_i18n()["logout"]}"
-                : "${_i18n()["login"]}",
-            onClick: () {
-              _drawerController.closeMenu();
-              if (controller.isUserSignedIn) {
-                logOut();
-              } else
-                SignInView.navigateAtOrderTime();
-            },
-          ),
-        ),
       ],
     );
   }
@@ -305,5 +309,34 @@ class SideMenuItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is SideMenuItem && other.title == title;
+  }
+
+  @override
+  int get hashCode => hashValues(icon, title, isI18nPath, shouldBeAuthorized);
+}
+
+RecipientType convertAppTypeToRecipientType(AppType appType) {
+  switch (appType) {
+    case AppType.Customer:
+      return RecipientType.Customer;
+    case AppType.Restaurant:
+      return RecipientType.Restaurant;
+    case AppType.Delivery:
+      return RecipientType.DeliveryDriver;
+    case AppType.Laundry:
+      return RecipientType.Laundry;
+    case AppType.Business:
+      return RecipientType.Business;
+    case AppType.DeliveryAdmin:
+      return RecipientType.DeliveryCompany;
+    default:
+      throw Exception("AppType $appType not supported $appType");
   }
 }

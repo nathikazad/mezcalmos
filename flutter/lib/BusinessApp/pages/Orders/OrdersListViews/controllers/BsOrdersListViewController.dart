@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/buisness_order/hsBusinessOrder.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 
 class BsOrdersListViewController {
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
+  final int businessId = Get.find<BusinessOpAuthController>().companyId!;
   late TabController tabController;
   RxList<MinimumBusinessItem> upcomingItems = RxList.empty();
   RxList<MinimumBusinessItem> _pastItems = RxList.empty();
@@ -35,8 +37,9 @@ class BsOrdersListViewController {
     tabController = TabController(length: 3, vsync: vsync);
     _upcomingScrollController.onBottomReach(fetchUpcoming, sensitivity: 200);
     _pastScrollController.onBottomReach(fetchPast, sensitivity: 200);
+    mezDbgPrint("businessId =================>$businessId");
     _pendingOrders.value = await get_bs_orders(
-            businessId: 1,
+            businessId: businessId,
             withCache: false,
             status: BusinessOrderRequestStatus.RequestReceived) ??
         [];
@@ -51,7 +54,8 @@ class BsOrdersListViewController {
   void _listenToPendingOrders() {
     subscriptionId = _hasuraDb.createSubscription(start: () {
       pendingOrderStream = listen_on_bs_orders(
-              businessId: 1, status: BusinessOrderRequestStatus.RequestReceived)
+              businessId: businessId,
+              status: BusinessOrderRequestStatus.RequestReceived)
           .listen((List<MinimalBsOrder>? event) {
         if (event != null) {
           _pendingOrders.clear();
@@ -76,7 +80,7 @@ class BsOrdersListViewController {
       mezDbgPrint("Fetching upcoming ✅✅✅✅✅");
       List<MinimumBusinessItem> newData =
           await get_upcoming_rental_orders_items(
-              businessId: 1,
+              businessId: businessId,
               offset: _upcomingCurrentOffset,
               limit: fetchSize,
               withCache: false);
@@ -98,7 +102,7 @@ class BsOrdersListViewController {
     try {
       _pastFetchingData = true;
       List<MinimumBusinessItem> newData = await get_past_rental_orders_items(
-          businessId: 1,
+          businessId: businessId,
           offset: _pastCurrentOffset,
           limit: fetchSize,
           withCache: false);

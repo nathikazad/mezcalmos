@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_operator/hsDeliveryOperator.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
@@ -40,6 +42,8 @@ class DeliveryOpAuthController extends GetxController {
       mezDbgPrint("Operator value  ====>${operator.value}");
       if (operator.value != null) {
         _companyId.value = operator.value!.state.serviceProviderId;
+        Get.find<SideMenuDrawerController>().addContactAdminItem(
+            id: _companyId.value!, type: cm.RecipientType.DeliveryCompany);
       }
     } catch (e, stk) {
       mezDbgPrint(e);

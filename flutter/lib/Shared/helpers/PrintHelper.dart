@@ -12,6 +12,41 @@ import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/env.dart';
 
+void mezlog(log, {bool showMilliseconds = false}) {
+  final String timeStamp = DateFormat('HH:mm:ss').format(DateTime.now());
+  String caller = StackTrace.current
+      .toString()
+      .split('\n')
+      .lastWhere(
+        (String element) => element.contains('mezcalmos/'),
+        orElse: () => '',
+      )
+      .split("                           ")[0];
+
+  if (caller.isNotEmpty) {
+    caller = caller.split('/').last.replaceAll(')', '');
+  }
+
+  final List<String> logLines = log.toString().split('\n');
+
+  mezDbgPrint('===================================');
+  mezDbgPrint('🌟 MezLog 🌟');
+  mezDbgPrint('👉 Caller: $caller');
+  mezDbgPrint('⏰ Timestamp: $timeStamp');
+
+  for (final String line in logLines) {
+    final String formattedLine = '[MZL][$caller][$timeStamp] $line';
+    print(formattedLine);
+  }
+
+  if (showMilliseconds) {
+    final int milliseconds = DateTime.now().millisecondsSinceEpoch;
+    mezDbgPrint('Milliseconds: $milliseconds');
+  }
+
+  mezDbgPrint('===================================');
+}
+
 void mezDbgPrint(log, {bool showMilliSeconds = false}) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
   String caller = StackTrace.current

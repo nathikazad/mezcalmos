@@ -4,6 +4,220 @@ import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
+class Variables$Query$getRestaurants {
+  factory Variables$Query$getRestaurants({
+    bool? is_open,
+    int? limit,
+    int? offset,
+    double? distance,
+    Geography? from,
+  }) =>
+      Variables$Query$getRestaurants._({
+        if (is_open != null) r'is_open': is_open,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
+        if (distance != null) r'distance': distance,
+        if (from != null) r'from': from,
+      });
+
+  Variables$Query$getRestaurants._(this._$data);
+
+  factory Variables$Query$getRestaurants.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('is_open')) {
+      final l$is_open = data['is_open'];
+      result$data['is_open'] = (l$is_open as bool?);
+    }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    if (data.containsKey('distance')) {
+      final l$distance = data['distance'];
+      result$data['distance'] = (l$distance as num?)?.toDouble();
+    }
+    if (data.containsKey('from')) {
+      final l$from = data['from'];
+      result$data['from'] = l$from == null ? null : geographyFromJson(l$from);
+    }
+    return Variables$Query$getRestaurants._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  bool? get is_open => (_$data['is_open'] as bool?);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
+  double? get distance => (_$data['distance'] as double?);
+  Geography? get from => (_$data['from'] as Geography?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('is_open')) {
+      final l$is_open = is_open;
+      result$data['is_open'] = l$is_open;
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('distance')) {
+      final l$distance = distance;
+      result$data['distance'] = l$distance;
+    }
+    if (_$data.containsKey('from')) {
+      final l$from = from;
+      result$data['from'] = l$from == null ? null : geographyToJson(l$from);
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getRestaurants<Variables$Query$getRestaurants>
+      get copyWith => CopyWith$Variables$Query$getRestaurants(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getRestaurants) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
+      return false;
+    }
+    if (l$is_open != lOther$is_open) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (_$data.containsKey('distance') !=
+        other._$data.containsKey('distance')) {
+      return false;
+    }
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (_$data.containsKey('from') != other._$data.containsKey('from')) {
+      return false;
+    }
+    if (l$from != lOther$from) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$is_open = is_open;
+    final l$limit = limit;
+    final l$offset = offset;
+    final l$distance = distance;
+    final l$from = from;
+    return Object.hashAll([
+      _$data.containsKey('is_open') ? l$is_open : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('distance') ? l$distance : const {},
+      _$data.containsKey('from') ? l$from : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getRestaurants<TRes> {
+  factory CopyWith$Variables$Query$getRestaurants(
+    Variables$Query$getRestaurants instance,
+    TRes Function(Variables$Query$getRestaurants) then,
+  ) = _CopyWithImpl$Variables$Query$getRestaurants;
+
+  factory CopyWith$Variables$Query$getRestaurants.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getRestaurants;
+
+  TRes call({
+    bool? is_open,
+    int? limit,
+    int? offset,
+    double? distance,
+    Geography? from,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$getRestaurants<TRes>
+    implements CopyWith$Variables$Query$getRestaurants<TRes> {
+  _CopyWithImpl$Variables$Query$getRestaurants(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getRestaurants _instance;
+
+  final TRes Function(Variables$Query$getRestaurants) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? is_open = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+    Object? distance = _undefined,
+    Object? from = _undefined,
+  }) =>
+      _then(Variables$Query$getRestaurants._({
+        ..._instance._$data,
+        if (is_open != _undefined) 'is_open': (is_open as bool?),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
+        if (distance != _undefined) 'distance': (distance as double?),
+        if (from != _undefined) 'from': (from as Geography?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getRestaurants<TRes>
+    implements CopyWith$Variables$Query$getRestaurants<TRes> {
+  _CopyWithStubImpl$Variables$Query$getRestaurants(this._res);
+
+  TRes _res;
+
+  call({
+    bool? is_open,
+    int? limit,
+    int? offset,
+    double? distance,
+    Geography? from,
+  }) =>
+      _res;
+}
+
 class Query$getRestaurants {
   Query$getRestaurants({
     required this.restaurant_restaurant,
@@ -164,7 +378,53 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
     name: NameNode(value: 'getRestaurants'),
-    variableDefinitions: [],
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'is_open')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
@@ -178,21 +438,65 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
                 name: NameNode(value: 'details'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: 'open_status'),
+                    name: NameNode(value: 'is_open'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: '_neq'),
-                        value: StringValueNode(
-                          value: 'closed_indefinitely',
-                          isBlock: false,
-                        ),
+                        name: NameNode(value: '_eq'),
+                        value: VariableNode(name: NameNode(value: 'is_open')),
                       )
                     ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'location'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'gps'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_st_d_within'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'distance'),
+                                value: VariableNode(
+                                    name: NameNode(value: 'distance')),
+                              ),
+                              ObjectFieldNode(
+                                name: NameNode(value: 'from'),
+                                value:
+                                    VariableNode(name: NameNode(value: 'from')),
+                              ),
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  ),
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
                   )
                 ]),
               )
             ]),
-          )
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -341,6 +645,13 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'language'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'is_open'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -498,6 +809,7 @@ class Options$Query$getRestaurants
     extends graphql.QueryOptions<Query$getRestaurants> {
   Options$Query$getRestaurants({
     String? operationName,
+    Variables$Query$getRestaurants? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -505,6 +817,7 @@ class Options$Query$getRestaurants
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -521,6 +834,7 @@ class WatchOptions$Query$getRestaurants
     extends graphql.WatchQueryOptions<Query$getRestaurants> {
   WatchOptions$Query$getRestaurants({
     String? operationName,
+    Variables$Query$getRestaurants? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -531,6 +845,7 @@ class WatchOptions$Query$getRestaurants
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -547,10 +862,12 @@ class WatchOptions$Query$getRestaurants
 }
 
 class FetchMoreOptions$Query$getRestaurants extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$getRestaurants(
-      {required graphql.UpdateQuery updateQuery})
-      : super(
+  FetchMoreOptions$Query$getRestaurants({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$getRestaurants? variables,
+  }) : super(
           updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
           document: documentNodeQuerygetRestaurants,
         );
 }
@@ -564,20 +881,27 @@ extension ClientExtension$Query$getRestaurants on graphql.GraphQLClient {
       this.watchQuery(options ?? WatchOptions$Query$getRestaurants());
   void writeQuery$getRestaurants({
     required Query$getRestaurants data,
+    Variables$Query$getRestaurants? variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-            operation:
-                graphql.Operation(document: documentNodeQuerygetRestaurants)),
+          operation:
+              graphql.Operation(document: documentNodeQuerygetRestaurants),
+          variables: variables?.toJson() ?? const {},
+        ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$getRestaurants? readQuery$getRestaurants({bool optimistic = true}) {
+  Query$getRestaurants? readQuery$getRestaurants({
+    Variables$Query$getRestaurants? variables,
+    bool optimistic = true,
+  }) {
     final result = this.readQuery(
       graphql.Request(
-          operation:
-              graphql.Operation(document: documentNodeQuerygetRestaurants)),
+        operation: graphql.Operation(document: documentNodeQuerygetRestaurants),
+        variables: variables?.toJson() ?? const {},
+      ),
       optimistic: optimistic,
     );
     return result == null ? null : Query$getRestaurants.fromJson(result);
@@ -1606,6 +1930,7 @@ class Query$getRestaurants$restaurant_restaurant$details {
     required this.id,
     required this.image,
     required this.language,
+    this.is_open,
     required this.name,
     required this.location,
     this.firebase_id,
@@ -1622,6 +1947,7 @@ class Query$getRestaurants$restaurant_restaurant$details {
     final l$id = json['id'];
     final l$image = json['image'];
     final l$language = json['language'];
+    final l$is_open = json['is_open'];
     final l$name = json['name'];
     final l$location = json['location'];
     final l$firebase_id = json['firebase_id'];
@@ -1635,6 +1961,7 @@ class Query$getRestaurants$restaurant_restaurant$details {
       id: (l$id as int),
       image: (l$image as String),
       language: mapFromJson(l$language),
+      is_open: (l$is_open as bool?),
       name: (l$name as String),
       location:
           Query$getRestaurants$restaurant_restaurant$details$location.fromJson(
@@ -1657,6 +1984,8 @@ class Query$getRestaurants$restaurant_restaurant$details {
   final String image;
 
   final dynamic language;
+
+  final bool? is_open;
 
   final String name;
 
@@ -1685,6 +2014,8 @@ class Query$getRestaurants$restaurant_restaurant$details {
     _resultData['image'] = l$image;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
@@ -1711,6 +2042,7 @@ class Query$getRestaurants$restaurant_restaurant$details {
     final l$id = id;
     final l$image = image;
     final l$language = language;
+    final l$is_open = is_open;
     final l$name = name;
     final l$location = location;
     final l$firebase_id = firebase_id;
@@ -1724,6 +2056,7 @@ class Query$getRestaurants$restaurant_restaurant$details {
       l$id,
       l$image,
       l$language,
+      l$is_open,
       l$name,
       l$location,
       l$firebase_id,
@@ -1758,6 +2091,11 @@ class Query$getRestaurants$restaurant_restaurant$details {
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$name = name;
@@ -1835,6 +2173,7 @@ abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$details<
     int? id,
     String? image,
     dynamic? language,
+    bool? is_open,
     String? name,
     Query$getRestaurants$restaurant_restaurant$details$location? location,
     String? firebase_id,
@@ -1869,6 +2208,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
     Object? id = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
+    Object? is_open = _undefined,
     Object? name = _undefined,
     Object? location = _undefined,
     Object? firebase_id = _undefined,
@@ -1887,6 +2227,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -1947,6 +2288,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
     int? id,
     String? image,
     dynamic? language,
+    bool? is_open,
     String? name,
     Query$getRestaurants$restaurant_restaurant$details$location? location,
     String? firebase_id,
@@ -3609,6 +3951,13 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'is_open'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'id'),
                 alias: null,
                 arguments: [],
@@ -4507,6 +4856,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$deliv
 
 class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
   Query$getOneRestaurant$restaurant_restaurant_by_pk$details({
+    this.is_open,
     required this.id,
     this.firebase_id,
     required this.currency,
@@ -4527,6 +4877,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
 
   factory Query$getOneRestaurant$restaurant_restaurant_by_pk$details.fromJson(
       Map<String, dynamic> json) {
+    final l$is_open = json['is_open'];
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$currency = json['currency'];
@@ -4544,6 +4895,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Query$getOneRestaurant$restaurant_restaurant_by_pk$details(
+      is_open: (l$is_open as bool?),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       currency: (l$currency as String),
@@ -4570,6 +4922,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final bool? is_open;
 
   final int id;
 
@@ -4608,6 +4962,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
@@ -4645,6 +5001,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
 
   @override
   int get hashCode {
+    final l$is_open = is_open;
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$currency = currency;
@@ -4662,6 +5019,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$is_open,
       l$id,
       l$firebase_id,
       l$currency,
@@ -4689,6 +5047,11 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
     if (!(other
             is Query$getOneRestaurant$restaurant_restaurant_by_pk$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$id = id;
@@ -4799,6 +5162,7 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$detai
       _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$details;
 
   TRes call({
+    bool? is_open,
     int? id,
     String? firebase_id,
     String? currency,
@@ -4845,6 +5209,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$details<
   static const _undefined = {};
 
   TRes call({
+    Object? is_open = _undefined,
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? currency = _undefined,
@@ -4863,6 +5228,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$details<
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getOneRestaurant$restaurant_restaurant_by_pk$details(
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
@@ -4953,6 +5319,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$detai
   TRes _res;
 
   call({
+    bool? is_open,
     int? id,
     String? firebase_id,
     String? currency,
@@ -10265,6 +10632,13 @@ const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'is_open'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'id'),
                 alias: null,
                 arguments: [],
@@ -11120,6 +11494,7 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
 
 class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
   Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details({
+    this.is_open,
     required this.id,
     this.firebase_id,
     required this.location_id,
@@ -11138,6 +11513,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
 
   factory Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details.fromJson(
       Map<String, dynamic> json) {
+    final l$is_open = json['is_open'];
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$location_id = json['location_id'];
@@ -11153,6 +11529,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details(
+      is_open: (l$is_open as bool?),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       location_id: (l$location_id as int),
@@ -11177,6 +11554,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final bool? is_open;
 
   final int id;
 
@@ -11211,6 +11590,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
@@ -11244,6 +11625,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
 
   @override
   int get hashCode {
+    final l$is_open = is_open;
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$location_id = location_id;
@@ -11259,6 +11641,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$is_open,
       l$id,
       l$firebase_id,
       l$location_id,
@@ -11284,6 +11667,11 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
     if (!(other
             is Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$id = id;
@@ -11386,6 +11774,7 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaura
       _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details;
 
   TRes call({
+    bool? is_open,
     int? id,
     String? firebase_id,
     int? location_id,
@@ -11432,6 +11821,7 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
   static const _undefined = {};
 
   TRes call({
+    Object? is_open = _undefined,
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? location_id = _undefined,
@@ -11449,6 +11839,7 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
   }) =>
       _then(
           Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details(
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
@@ -11533,6 +11924,7 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
   TRes _res;
 
   call({
+    bool? is_open,
     int? id,
     String? firebase_id,
     int? location_id,

@@ -1118,7 +1118,7 @@ class _CopyWithStubImpl$Query$get_product_by_id$business_product_by_pk$business<
 
 class Query$get_product_by_id$business_product_by_pk$business$details {
   Query$get_product_by_id$business_product_by_pk$business$details({
-    this.last_active_time,
+    required this.last_active_time,
     required this.id,
     required this.accepted_payments,
     required this.image,
@@ -1137,7 +1137,7 @@ class Query$get_product_by_id$business_product_by_pk$business$details {
     final l$currency = json['currency'];
     final l$$__typename = json['__typename'];
     return Query$get_product_by_id$business_product_by_pk$business$details(
-      last_active_time: (l$last_active_time as String?),
+      last_active_time: (l$last_active_time as String),
       id: (l$id as int),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
@@ -1147,7 +1147,7 @@ class Query$get_product_by_id$business_product_by_pk$business$details {
     );
   }
 
-  final String? last_active_time;
+  final String last_active_time;
 
   final int id;
 
@@ -1312,9 +1312,10 @@ class _CopyWithImpl$Query$get_product_by_id$business_product_by_pk$business$deta
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_product_by_id$business_product_by_pk$business$details(
-        last_active_time: last_active_time == _undefined
-            ? _instance.last_active_time
-            : (last_active_time as String?),
+        last_active_time:
+            last_active_time == _undefined || last_active_time == null
+                ? _instance.last_active_time
+                : (last_active_time as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null

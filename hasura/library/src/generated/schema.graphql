@@ -17751,12 +17751,24 @@ columns and relationships of "mez_admin_chat"
 """
 type mez_admin_chat {
   """An object relationship"""
+  business: business_business
+
+  """An object relationship"""
   chat: chat
   chat_id: Int!
+
+  """An object relationship"""
+  delivery_company: delivery_company
+
+  """An object relationship"""
+  laundry: laundry_store
   recipient_id: Int!
 
   """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
   recipient_type: String!
+
+  """An object relationship"""
+  restaurant: restaurant_restaurant
 
   """An object relationship"""
   user: user
@@ -17800,10 +17812,14 @@ input mez_admin_chat_bool_exp {
   _and: [mez_admin_chat_bool_exp!]
   _not: mez_admin_chat_bool_exp
   _or: [mez_admin_chat_bool_exp!]
+  business: business_business_bool_exp
   chat: chat_bool_exp
   chat_id: Int_comparison_exp
+  delivery_company: delivery_company_bool_exp
+  laundry: laundry_store_bool_exp
   recipient_id: Int_comparison_exp
   recipient_type: String_comparison_exp
+  restaurant: restaurant_restaurant_bool_exp
   user: user_bool_exp
 }
 
@@ -17834,12 +17850,16 @@ input mez_admin_chat_inc_input {
 input type for inserting data into table "mez_admin_chat"
 """
 input mez_admin_chat_insert_input {
+  business: business_business_obj_rel_insert_input
   chat: chat_obj_rel_insert_input
   chat_id: Int
+  delivery_company: delivery_company_obj_rel_insert_input
+  laundry: laundry_store_obj_rel_insert_input
   recipient_id: Int
 
   """customer/business/restaurant/laundry/deliveryCompany/deliveryDriver"""
   recipient_type: String
+  restaurant: restaurant_restaurant_obj_rel_insert_input
   user: user_obj_rel_insert_input
 }
 
@@ -17883,10 +17903,14 @@ input mez_admin_chat_on_conflict {
 
 """Ordering options when selecting data from "mez_admin_chat"."""
 input mez_admin_chat_order_by {
+  business: business_business_order_by
   chat: chat_order_by
   chat_id: order_by
+  delivery_company: delivery_company_order_by
+  laundry: laundry_store_order_by
   recipient_id: order_by
   recipient_type: order_by
+  restaurant: restaurant_restaurant_order_by
   user: user_order_by
 }
 
@@ -35697,12 +35721,17 @@ type service_provider_details {
   id: Int!
   image: String!
 
+  """
+  A computed field, executes function "service_provider.is_open"
+  """
+  is_open: Boolean
+
   """Record <language_id, bool>"""
   language(
     """JSON select path"""
     path: String
   ): jsonb!
-  last_active_time: timestamp
+  last_active_time: timestamp!
 
   """An object relationship"""
   laundry_store: laundry_store
@@ -35730,6 +35759,7 @@ type service_provider_details {
 
   """An object relationship"""
   stripe_info: service_provider_stripe_info
+  time_zone: String
   unique_id: String
 }
 
@@ -35795,6 +35825,7 @@ input service_provider_details_bool_exp {
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
+  is_open: Boolean_comparison_exp
   language: jsonb_comparison_exp
   last_active_time: timestamp_comparison_exp
   laundry_store: laundry_store_bool_exp
@@ -35811,6 +35842,7 @@ input service_provider_details_bool_exp {
   service_provider_type: String_comparison_exp
   stripe_id: Int_comparison_exp
   stripe_info: service_provider_stripe_info_bool_exp
+  time_zone: String_comparison_exp
   unique_id: String_comparison_exp
 }
 
@@ -35923,6 +35955,7 @@ input service_provider_details_insert_input {
   service_provider_type: String
   stripe_id: Int
   stripe_info: service_provider_stripe_info_obj_rel_insert_input
+  time_zone: String
   unique_id: String
 }
 
@@ -35943,6 +35976,7 @@ type service_provider_details_max_fields {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -35963,6 +35997,7 @@ type service_provider_details_min_fields {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -36009,6 +36044,7 @@ input service_provider_details_order_by {
   firebase_id: order_by
   id: order_by
   image: order_by
+  is_open: order_by
   language: order_by
   last_active_time: order_by
   laundry_store: laundry_store_order_by
@@ -36025,6 +36061,7 @@ input service_provider_details_order_by {
   service_provider_type: order_by
   stripe_id: order_by
   stripe_info: service_provider_stripe_info_order_by
+  time_zone: order_by
   unique_id: order_by
 }
 
@@ -36104,6 +36141,9 @@ enum service_provider_details_select_column {
   stripe_id
 
   """column name"""
+  time_zone
+
+  """column name"""
   unique_id
 }
 
@@ -36132,6 +36172,7 @@ input service_provider_details_set_input {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -36199,6 +36240,7 @@ input service_provider_details_stream_cursor_value_input {
   service_link_id: Int
   service_provider_type: String
   stripe_id: Int
+  time_zone: String
   unique_id: String
 }
 
@@ -36272,6 +36314,9 @@ enum service_provider_details_update_column {
 
   """column name"""
   stripe_id
+
+  """column name"""
+  time_zone
 
   """column name"""
   unique_id

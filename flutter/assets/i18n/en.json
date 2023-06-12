@@ -111,6 +111,42 @@
           "endTimeErrorText": "Please select end time",
           "endTimeBeforeErrorText": "End time must be after start time"
         },
+        "otherService": {
+          "title": "Other Services",
+          "whatService": "Which service you'd like to add?",
+          "whatCategory": "Under which category you'd like to add?",
+          "selectService": "Select your service type",
+          "selectCategory": "Select your category type",
+          "next": "Next",
+          "therapy": "Therapy",
+          "yoga": "Yoga",
+          "surf": "Surf",
+          "volunteer": "Volunteer",
+          "adventure": "Adventure",
+          "social": "Social",
+          "dance": "Dance",
+          "language": "Language Learning",
+          "uncategorized": "Uncategorized",
+          "vehicle": "Vehicle",
+          "cleaning": "Cleaning",
+          "petSitting": "Pet Sitting",
+          "mealPlanning": "Meal Planning",
+          "consumable": "Consumable",
+          "art": "Art",
+          "personalCare": "Personal Care",
+          "class": "Class",
+          "classSub": "A class service is when you instruct a class for a student.",
+          "event": "Event",
+          "eventSub": "Event service is used to plan events for your business.",
+          "rental": "Rental",
+          "rentalSub": "Using a rental service, you can advertise an item for rent.",
+          "home": "Home Rental",
+          "homeSub": "Using a rental service, you can advertise a home for rent.",
+          "service": "Service",
+          "serviceSub": "Advertise your service.",
+          "item": "Item",
+          "itemSub": "Advertise an item that can be bought."
+        },
         "cleaning": "Cleaning Service",
         "meal": "Meal Planning Service",
         "petSittingService": "Pet Sitting Service",
@@ -176,6 +212,8 @@
           "cancel": "Cancel"
         },
         "surfShop": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "rentalTitle": "Surfboard rental",
           "rentalSubtitle": "Using a surfboard rental service, you can advertise a surfboard for rent.",
           "classTitle": "Surf class",
@@ -194,6 +232,8 @@
           "oneTimeClassLabel": "A one time class that happens on a particular day."
         },
         "vehicleRental": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "rentalTitle": "Rental",
           "surfRentalTitle": "Surf rental",
           "rentalSubtitle": "Using a rental service, you can advertise a vehicle for rent.",
@@ -216,6 +256,8 @@
           "feet": "Feet"
         },
         "yogaStudio": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "eventTitle": "Event",
           "eventSubtitle": "Event service is used to plan events for your business.",
           "classTitle": "Class",
@@ -234,6 +276,8 @@
           "retreatLabel": "An educational retreat that happens on a set of particular days"
         },
         "danceStudio": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "eventTitle": "Event",
           "eventSubtitle": "Event service is used to plan events for your business.",
           "classTitle": "Class",
@@ -252,6 +296,8 @@
           "retreatLabel": "An educational retreat that happens on a set of particular days"
         },
         "homeRental": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "rentalTitle": "Home rental",
           "rentalSubtitle": "Using a home rental service, you can advertise a home for rent.",
           "rentalDetails": "Rental details",
@@ -274,6 +320,8 @@
           "hotel": "Hotel"
         },
         "languageSchool": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "eventTitle": "Event",
           "eventSubtitle": "Event service is used to plan events for your business.",
           "classTitle": "Class",
@@ -292,6 +340,8 @@
           "retreatLabel": "An educational retreat that happens on a set of particular days"
         },
         "tourAgency": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "eventTitle": "Event",
           "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event.",
           "weeklyEvent": "Weekly trips",
@@ -302,6 +352,8 @@
           "onDemandLabel": "Events that can be booked on demand. For example dolphin tour."
         },
         "artisanalProduct": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "productTitle": "Item",
           "product": "Product",
           "productSubtitle": "Advertise an item that can be bought.",
@@ -311,14 +363,20 @@
           "uncategorized": "Uncategorized"
         },
         "cleaningService": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "serviceTitle": "Service",
           "serviceSubtitle": "Advertise a service that clients can book."
         },
         "mealPlanning": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "serviceTitle": "Service",
           "serviceSubtitle": "Advertise a meal planning service."
         },
         "petSitting": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "serviceTitle": "Pet sitting service",
           "serviceSubtitle": "Advertise your pet sitting service.",
           "weeklyEvent": "Weekly event",
@@ -327,6 +385,8 @@
           "oneTimeEventLabel": "Scheduled event that happens on a certain date and time where multiple people can enter. For example, New Year Bash with DJ Rocco."
         },
         "wellnessPractitioner": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "eventTitle": "Event",
           "eventSubtitle": "Advertise an event, either a private session, weekly repeating event or one time event.",
           "weeklyEvent": "Weekly event",
@@ -337,6 +397,8 @@
           "onDemandLabel": "A one on one event that clients can book with you."
         },
         "volunteer": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "eventTitle": "Event",
           "eventSubtitle": "Advertise weekly or one time event.",
           "weeklyEvent": "Weekly event",
@@ -345,6 +407,8 @@
           "oneTimeEventLabel": "An event that is scheduled for a certain date and time. For example, Pet shelter camp."
         },
         "entertainment": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
           "eventTitle": "Event",
           "eventSubtitle": "Advertise one time or repeat events.",
           "weeklyEvent": "Weekly event",
@@ -1772,6 +1836,9 @@
       "authController": {
         "failedOTPConfirmRequest": "OTP Code confirmation failed :(",
         "setNameAndImage": "Please set your name and image before proceeding"
+      },
+      "SideMenuDrawerController" : {
+        "contactAdmin" : "Contact Admin"
       }
     },
     "models": {
@@ -1825,6 +1892,8 @@
         "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
+        "closed" :"Closed",
+        "closedSubtitle" : "Sorry, the service you are looking for is currently closed.",
         "added": "Added",
         "addedTitle": "Your information has been added",
         "saved": "Saved",
@@ -2412,6 +2481,7 @@
         "login": "Login",
         "language": "Language",
         "contact": "Contact us",
+        "contactAdmin" : "Contact Admin",
         "logout": "Logout",
         "legal": "Privacy policy"
       }

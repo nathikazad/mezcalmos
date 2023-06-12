@@ -102,6 +102,7 @@ Future<Service?> get_service_details_by_id(
       acceptedPayments: data.accepted_payments, stripeInfo: data.stripe_info);
 
   return MainService(
+      isOpen: data.is_open ?? false,
       deliveryCost: null,
       info: ServiceInfo(
           descriptionId: data.description_id,
@@ -430,4 +431,16 @@ Future<void> set_last_active_time({required int detailsId}) async {
   }
   // Mutation$setLastActiveTime$update_service_provider_details_by_pk? data =
   //     res.parsedData!.update_service_provider_details_by_pk;
+}
+
+Future<bool?> get_service_is_open({required int detailsId}) async {
+  final QueryResult<Query$getServiceIsOpen> res = await _db.graphQLClient
+      .query$getServiceIsOpen(Options$Query$getServiceIsOpen(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables:
+              Variables$Query$getServiceIsOpen(serviceDetailsId: detailsId)));
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  return res.parsedData?.service_provider_details_by_pk?.is_open;
 }

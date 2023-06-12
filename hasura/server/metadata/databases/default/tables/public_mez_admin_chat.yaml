@@ -2,6 +2,16 @@ table:
   name: mez_admin_chat
   schema: public
 object_relationships:
+  - name: business
+    using:
+      manual_configuration:
+        column_mapping:
+          recipient_id: id
+          recipient_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: business
+          schema: business
   - name: chat
     using:
       manual_configuration:
@@ -11,6 +21,36 @@ object_relationships:
         remote_table:
           name: chat
           schema: public
+  - name: delivery_company
+    using:
+      manual_configuration:
+        column_mapping:
+          recipient_id: id
+          recipient_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: company
+          schema: delivery
+  - name: laundry
+    using:
+      manual_configuration:
+        column_mapping:
+          recipient_id: id
+          recipient_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          recipient_id: id
+          recipient_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: restaurant
   - name: user
     using:
       manual_configuration:
@@ -20,3 +60,78 @@ object_relationships:
         remote_table:
           name: user
           schema: public
+select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - recipient_id
+        - recipient_type
+        - chat_id
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: customer
+    permission:
+      columns:
+        - chat_id
+        - recipient_id
+        - recipient_type
+      filter:
+        user:
+          customer:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - chat_id
+        - recipient_id
+        - recipient_type
+      filter:
+        _and:
+          - recipient_id:
+              _eq: X-Hasura-User-Id
+          - recipient_type:
+              _eq: deliveryDriver
+  - role: delivery_operator
+    permission:
+      columns:
+        - chat_id
+        - recipient_id
+        - recipient_type
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - chat_id
+        - recipient_id
+        - recipient_type
+      filter:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - chat_id
+        - recipient_id
+        - recipient_type
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - chat_id
+        - recipient_id
+        - recipient_type
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id

@@ -1,5 +1,5 @@
-query getRestaurants {
-  restaurant_restaurant(where: {details: {open_status: {_neq: "closed_indefinitely"}}}) {
+query getRestaurants($is_open: Boolean, $limit: Int, $offset: Int, $distance: Float, $from: geography) {
+  restaurant_restaurant(where: {details: {is_open: {_eq: $is_open}, location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, limit: $limit, offset: $offset, order_by: {details: {referral_points: desc}}) {
     id
     reviews_aggregate {
       aggregate {
@@ -13,7 +13,7 @@ query getRestaurants {
       free_delivery_km_range
       free_delivery_minimum_cost
       id
-      
+
       minimum_cost
       radius
       self_delivery
@@ -22,6 +22,7 @@ query getRestaurants {
       id
       image
       language
+      is_open
 
       name
       location {
@@ -73,6 +74,7 @@ query getOneRestaurant($id: Int!) {
     }
     delivery_details_id
     details {
+      is_open
       id
       firebase_id
       currency
@@ -190,6 +192,7 @@ mutation updateRestaurantInfo(
       radius
     }
     details {
+      is_open
       id
       firebase_id
       location_id

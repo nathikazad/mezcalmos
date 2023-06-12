@@ -72,47 +72,49 @@ class ServiceCartItemCard extends StatelessWidget {
                   Row(
                     children: [
                       CartItemImage(image: item.service!.details.image?.first),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${item.service!.details.name.getTranslation(userLanguage)!.inCaps}",
-                              style: context.textTheme.bodyLarge,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                            Row(
-                              children: [
-                                if (item.service!.category1 !=
-                                    ServiceCategory1.MealPlanning)
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 4.0),
-                                        child: Icon(
-                                          Icons.calendar_today,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${item.service!.details.name.getTranslation(userLanguage)!.inCaps}",
+                                style: context.textTheme.bodyLarge,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Row(
+                                children: [
+                                  if (item.service!.category1 !=
+                                      ServiceCategory1.MealPlanning)
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 4.0),
+                                          child: Icon(
+                                            Icons.calendar_today,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toFirebaseFormatString()}",
-                                        style: context.textTheme.bodyMedium!
-                                            .copyWith(
-                                          fontWeight: FontWeight.bold,
+                                        Text(
+                                          "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toFirebaseFormatString()}",
+                                          style: context.textTheme.bodyMedium!
+                                              .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                    ],
-                                  ),
-                                costBuilder(context),
-                              ],
-                            ),
-                          ],
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                      ],
+                                    ),
+                                  costBuilder(context),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     ],

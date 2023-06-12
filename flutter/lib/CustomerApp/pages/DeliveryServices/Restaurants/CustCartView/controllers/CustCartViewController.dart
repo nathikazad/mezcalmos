@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
@@ -153,7 +153,7 @@ class CustCartViewController {
   // }
 
   bool get shoudSchedule {
-    return (cart.restaurant?.isOpen() == false || cart.isSpecial);
+    return (cart.restaurant?.isOpen == false || cart.isSpecial);
   }
 
   void switchPaymentMedthod(
@@ -311,7 +311,7 @@ class CustCartViewController {
   }
 
   bool get canSchedule {
-    return cart.restaurant?.isOpen() == false && validTime;
+    return cart.restaurant?.isOpen == false && validTime;
   }
 
   bool get canOrder {
@@ -406,7 +406,7 @@ class CustCartViewController {
     if (cart.deliveryTime != null) {
       return cart.deliveryTime!.toLocal().isAfter(DateTime.now().toLocal());
     } else {
-      return cart.restaurant?.isOpen() == true;
+      return cart.restaurant?.isOpen == true;
     }
   }
 
