@@ -11,7 +11,9 @@ class CustBusinessDurationPicker extends StatelessWidget {
     required this.onNewCostUnitSelected,
     required this.onNewDurationSelected,
     this.validator,
-    required this.label, required this.value,
+    required this.label,
+    required this.value,
+    this.unitValue,
   });
 
   final Map<TimeUnit, num> costUnits;
@@ -20,6 +22,7 @@ class CustBusinessDurationPicker extends StatelessWidget {
   final void Function(Map<TimeUnit, num>) onNewCostUnitSelected;
   final void Function(int) onNewDurationSelected;
   final int value;
+  final TimeUnit? unitValue;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +96,7 @@ class CustBusinessDurationPicker extends StatelessWidget {
                               return ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: DropdownButtonFormField<TimeUnit>(
-                                  value: costUnits.keys.first,
+                                  value: unitValue,
                                   decoration: InputDecoration(
                                     fillColor: Colors.white,
                                   ),
