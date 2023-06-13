@@ -75,6 +75,8 @@ Future<void> incrementReferralIfItExists() async {
   // Check the response status code to determine if the increment was successful
   if (response.statusCode == 200) {
     print('Referral count incremented successfully for IP: $ipAddress');
+    // Remove the IP address from local storage
+    await prefs.remove('ip_address');
   } else {
     print('Error incrementing referral count for IP: $ipAddress');
   }
