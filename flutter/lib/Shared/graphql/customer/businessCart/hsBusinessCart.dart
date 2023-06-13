@@ -74,6 +74,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       image: data.rental!.business.details.image,
                     ),
                     rental: Rental(
+                      id: data.rental!.id,
                       category1:
                           data.rental!.details.category1.toRentalCategory1(),
                       details: BusinessItemDetails(
@@ -125,6 +126,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       image: data.event!.business.details.image,
                     ),
                     event: Event(
+                      id: data.event!.id,
                       scheduleType: data.event!.schedule_type.toScheduleType(),
                       startsAt: data.event!.starts_at,
                       endsAt: data.event!.ends_at,
@@ -171,6 +173,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       image: data.service!.business.details.image,
                     ),
                     service: Service(
+                      id: data.service!.id,
                       category1:
                           data.service!.details.category1.toServiceCategory1(),
                       details: BusinessItemDetails(
@@ -210,6 +213,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       image: data.product!.business.details.image,
                     ),
                     product: Product(
+                      id: data.product!.id,
                       category1:
                           data.product!.details.category1.toProductCategory1(),
                       details: BusinessItemDetails(
@@ -298,6 +302,31 @@ Future<int> add_item_to_business_cart(
     mezDbgPrint(
         "🚨 graphql::add_item_to_cart::success :: ${addItemResult.parsedData!.insert_business_cart_item_one!.id}");
     return addItemResult.parsedData!.insert_business_cart_item_one!.id;
+  }
+}
+
+Future<bool> update_item_to_business_cart(
+    {required BusinessCartItem cartItem}) async {
+  final QueryResult<Mutation$update_business_cart_item> addItemResult =
+      await _hasuraDb.graphQLClient.mutate$update_business_cart_item(
+    Options$Mutation$update_business_cart_item(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Mutation$update_business_cart_item(
+        id: cartItem.id!.toInt(),
+        cost: cartItem.cost.toDouble(),
+        parameters: cartItem.parameters.toFirebaseFormattedJson(),
+        time: cartItem.time.toString(),
+      ),
+    ),
+  );
+
+  if (addItemResult.parsedData?.update_business_cart_item_by_pk == null) {
+    throw Exception(
+        "🚨 graphql::update_item_to_business_cart::exception :: ${addItemResult.exception}");
+  } else {
+    mezDbgPrint(
+        "🚨 graphql::update_item_to_business_cart::success :: ${addItemResult.parsedData!.update_business_cart_item_by_pk}");
+    return true;
   }
 }
 

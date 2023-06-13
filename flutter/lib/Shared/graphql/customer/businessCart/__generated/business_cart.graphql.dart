@@ -346,6 +346,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'details'),
                     alias: null,
                     arguments: [],
@@ -612,6 +619,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'business'),
                     alias: null,
                     arguments: [],
@@ -865,6 +879,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'business'),
                     alias: null,
                     arguments: [],
@@ -1117,6 +1138,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
                   FieldNode(
                     name: NameNode(value: 'business'),
                     alias: null,
@@ -2120,6 +2148,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items<TRes>
 
 class Query$getBusinessCart$business_cart$items$rental {
   Query$getBusinessCart$business_cart$items$rental({
+    required this.id,
     required this.details,
     this.home_rental,
     required this.business,
@@ -2128,11 +2157,13 @@ class Query$getBusinessCart$business_cart$items$rental {
 
   factory Query$getBusinessCart$business_cart$items$rental.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details = json['details'];
     final l$home_rental = json['home_rental'];
     final l$business = json['business'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$rental(
+      id: (l$id as int),
       details:
           Query$getBusinessCart$business_cart$items$rental$details.fromJson(
               (l$details as Map<String, dynamic>)),
@@ -2147,6 +2178,8 @@ class Query$getBusinessCart$business_cart$items$rental {
     );
   }
 
+  final int id;
+
   final Query$getBusinessCart$business_cart$items$rental$details details;
 
   final Query$getBusinessCart$business_cart$items$rental$home_rental?
@@ -2158,6 +2191,8 @@ class Query$getBusinessCart$business_cart$items$rental {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$home_rental = home_rental;
@@ -2171,11 +2206,13 @@ class Query$getBusinessCart$business_cart$items$rental {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details = details;
     final l$home_rental = home_rental;
     final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details,
       l$home_rental,
       l$business,
@@ -2190,6 +2227,11 @@ class Query$getBusinessCart$business_cart$items$rental {
     }
     if (!(other is Query$getBusinessCart$business_cart$items$rental) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details = details;
@@ -2237,6 +2279,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$rental<TRes> {
       _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$rental;
 
   TRes call({
+    int? id,
     Query$getBusinessCart$business_cart$items$rental$details? details,
     Query$getBusinessCart$business_cart$items$rental$home_rental? home_rental,
     Query$getBusinessCart$business_cart$items$rental$business? business,
@@ -2264,12 +2307,14 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$rental<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details = _undefined,
     Object? home_rental = _undefined,
     Object? business = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$rental(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -2318,6 +2363,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$rental<TRes>
   TRes _res;
 
   call({
+    int? id,
     Query$getBusinessCart$business_cart$items$rental$details? details,
     Query$getBusinessCart$business_cart$items$rental$home_rental? home_rental,
     Query$getBusinessCart$business_cart$items$rental$business? business,
@@ -3650,6 +3696,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$rental$busines
 
 class Query$getBusinessCart$business_cart$items$product {
   Query$getBusinessCart$business_cart$items$product({
+    required this.id,
     required this.business,
     required this.details,
     required this.$__typename,
@@ -3657,10 +3704,12 @@ class Query$getBusinessCart$business_cart$items$product {
 
   factory Query$getBusinessCart$business_cart$items$product.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$business = json['business'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$product(
+      id: (l$id as int),
       business:
           Query$getBusinessCart$business_cart$items$product$business.fromJson(
               (l$business as Map<String, dynamic>)),
@@ -3671,6 +3720,8 @@ class Query$getBusinessCart$business_cart$items$product {
     );
   }
 
+  final int id;
+
   final Query$getBusinessCart$business_cart$items$product$business business;
 
   final Query$getBusinessCart$business_cart$items$product$details details;
@@ -3679,6 +3730,8 @@ class Query$getBusinessCart$business_cart$items$product {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$details = details;
@@ -3690,10 +3743,12 @@ class Query$getBusinessCart$business_cart$items$product {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$business = business;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$business,
       l$details,
       l$$__typename,
@@ -3707,6 +3762,11 @@ class Query$getBusinessCart$business_cart$items$product {
     }
     if (!(other is Query$getBusinessCart$business_cart$items$product) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$business = business;
@@ -3751,6 +3811,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$product<
       _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$product;
 
   TRes call({
+    int? id,
     Query$getBusinessCart$business_cart$items$product$business? business,
     Query$getBusinessCart$business_cart$items$product$details? details,
     String? $__typename,
@@ -3776,11 +3837,13 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$product<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? business = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$product(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         business: business == _undefined || business == null
             ? _instance.business
             : (business
@@ -3817,6 +3880,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$product<TRes>
   TRes _res;
 
   call({
+    int? id,
     Query$getBusinessCart$business_cart$items$product$business? business,
     Query$getBusinessCart$business_cart$items$product$details? details,
     String? $__typename,
@@ -5298,6 +5362,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$product$detail
 
 class Query$getBusinessCart$business_cart$items$service {
   Query$getBusinessCart$business_cart$items$service({
+    required this.id,
     required this.business,
     required this.details,
     required this.$__typename,
@@ -5305,10 +5370,12 @@ class Query$getBusinessCart$business_cart$items$service {
 
   factory Query$getBusinessCart$business_cart$items$service.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$business = json['business'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$service(
+      id: (l$id as int),
       business:
           Query$getBusinessCart$business_cart$items$service$business.fromJson(
               (l$business as Map<String, dynamic>)),
@@ -5319,6 +5386,8 @@ class Query$getBusinessCart$business_cart$items$service {
     );
   }
 
+  final int id;
+
   final Query$getBusinessCart$business_cart$items$service$business business;
 
   final Query$getBusinessCart$business_cart$items$service$details details;
@@ -5327,6 +5396,8 @@ class Query$getBusinessCart$business_cart$items$service {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$details = details;
@@ -5338,10 +5409,12 @@ class Query$getBusinessCart$business_cart$items$service {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$business = business;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$business,
       l$details,
       l$$__typename,
@@ -5355,6 +5428,11 @@ class Query$getBusinessCart$business_cart$items$service {
     }
     if (!(other is Query$getBusinessCart$business_cart$items$service) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$business = business;
@@ -5399,6 +5477,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$service<
       _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$service;
 
   TRes call({
+    int? id,
     Query$getBusinessCart$business_cart$items$service$business? business,
     Query$getBusinessCart$business_cart$items$service$details? details,
     String? $__typename,
@@ -5424,11 +5503,13 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$service<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? business = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$service(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         business: business == _undefined || business == null
             ? _instance.business
             : (business
@@ -5465,6 +5546,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$service<TRes>
   TRes _res;
 
   call({
+    int? id,
     Query$getBusinessCart$business_cart$items$service$business? business,
     Query$getBusinessCart$business_cart$items$service$details? details,
     String? $__typename,
@@ -6946,9 +7028,9 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$service$detail
 
 class Query$getBusinessCart$business_cart$items$event {
   Query$getBusinessCart$business_cart$items$event({
+    required this.id,
     required this.business,
     required this.details,
-    required this.id,
     required this.schedule_type,
     this.schedule,
     this.starts_at,
@@ -6958,21 +7040,21 @@ class Query$getBusinessCart$business_cart$items$event {
 
   factory Query$getBusinessCart$business_cart$items$event.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$business = json['business'];
     final l$details = json['details'];
-    final l$id = json['id'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
     final l$starts_at = json['starts_at'];
     final l$ends_at = json['ends_at'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$event(
+      id: (l$id as int),
       business:
           Query$getBusinessCart$business_cart$items$event$business.fromJson(
               (l$business as Map<String, dynamic>)),
       details: Query$getBusinessCart$business_cart$items$event$details.fromJson(
           (l$details as Map<String, dynamic>)),
-      id: (l$id as int),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       starts_at: (l$starts_at as String?),
@@ -6981,11 +7063,11 @@ class Query$getBusinessCart$business_cart$items$event {
     );
   }
 
+  final int id;
+
   final Query$getBusinessCart$business_cart$items$event$business business;
 
   final Query$getBusinessCart$business_cart$items$event$details details;
-
-  final int id;
 
   final String schedule_type;
 
@@ -6999,12 +7081,12 @@ class Query$getBusinessCart$business_cart$items$event {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$details = details;
     _resultData['details'] = l$details.toJson();
-    final l$id = id;
-    _resultData['id'] = l$id;
     final l$schedule_type = schedule_type;
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
@@ -7020,18 +7102,18 @@ class Query$getBusinessCart$business_cart$items$event {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$business = business;
     final l$details = details;
-    final l$id = id;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
     final l$starts_at = starts_at;
     final l$ends_at = ends_at;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$business,
       l$details,
-      l$id,
       l$schedule_type,
       l$schedule,
       l$starts_at,
@@ -7049,6 +7131,11 @@ class Query$getBusinessCart$business_cart$items$event {
         runtimeType != other.runtimeType) {
       return false;
     }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
     final l$business = business;
     final lOther$business = other.business;
     if (l$business != lOther$business) {
@@ -7057,11 +7144,6 @@ class Query$getBusinessCart$business_cart$items$event {
     final l$details = details;
     final lOther$details = other.details;
     if (l$details != lOther$details) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
       return false;
     }
     final l$schedule_type = schedule_type;
@@ -7114,9 +7196,9 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$event<TRes> {
       _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$event;
 
   TRes call({
+    int? id,
     Query$getBusinessCart$business_cart$items$event$business? business,
     Query$getBusinessCart$business_cart$items$event$details? details,
-    int? id,
     String? schedule_type,
     dynamic? schedule,
     String? starts_at,
@@ -7143,9 +7225,9 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$event<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? business = _undefined,
     Object? details = _undefined,
-    Object? id = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
     Object? starts_at = _undefined,
@@ -7153,6 +7235,7 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$event<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$event(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         business: business == _undefined || business == null
             ? _instance.business
             : (business
@@ -7161,7 +7244,6 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$event<TRes>
             ? _instance.details
             : (details
                 as Query$getBusinessCart$business_cart$items$event$details),
-        id: id == _undefined || id == null ? _instance.id : (id as int),
         schedule_type: schedule_type == _undefined || schedule_type == null
             ? _instance.schedule_type
             : (schedule_type as String),
@@ -7199,9 +7281,9 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$event<TRes>
   TRes _res;
 
   call({
+    int? id,
     Query$getBusinessCart$business_cart$items$event$business? business,
     Query$getBusinessCart$business_cart$items$event$details? details,
-    int? id,
     String? schedule_type,
     dynamic? schedule,
     String? starts_at,
@@ -9577,6 +9659,665 @@ class _CopyWithStubImpl$Mutation$addItemToBusinessCart$insert_business_cart_item
     String? offering_type,
     int? item_id,
     double? cost,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_business_cart_item {
+  factory Variables$Mutation$update_business_cart_item({
+    required int id,
+    required double cost,
+    required dynamic parameters,
+    required String time,
+  }) =>
+      Variables$Mutation$update_business_cart_item._({
+        r'id': id,
+        r'cost': cost,
+        r'parameters': parameters,
+        r'time': time,
+      });
+
+  Variables$Mutation$update_business_cart_item._(this._$data);
+
+  factory Variables$Mutation$update_business_cart_item.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$cost = data['cost'];
+    result$data['cost'] = moneyFromJson(l$cost);
+    final l$parameters = data['parameters'];
+    result$data['parameters'] = mapFromJson(l$parameters);
+    final l$time = data['time'];
+    result$data['time'] = (l$time as String);
+    return Variables$Mutation$update_business_cart_item._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  double get cost => (_$data['cost'] as double);
+  dynamic get parameters => (_$data['parameters'] as dynamic);
+  String get time => (_$data['time'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$cost = cost;
+    result$data['cost'] = moneyToJson(l$cost);
+    final l$parameters = parameters;
+    result$data['parameters'] = mapToJson(l$parameters);
+    final l$time = time;
+    result$data['time'] = l$time;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_business_cart_item<
+          Variables$Mutation$update_business_cart_item>
+      get copyWith => CopyWith$Variables$Mutation$update_business_cart_item(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_business_cart_item) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$parameters = parameters;
+    final lOther$parameters = other.parameters;
+    if (l$parameters != lOther$parameters) {
+      return false;
+    }
+    final l$time = time;
+    final lOther$time = other.time;
+    if (l$time != lOther$time) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$cost = cost;
+    final l$parameters = parameters;
+    final l$time = time;
+    return Object.hashAll([
+      l$id,
+      l$cost,
+      l$parameters,
+      l$time,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_business_cart_item<TRes> {
+  factory CopyWith$Variables$Mutation$update_business_cart_item(
+    Variables$Mutation$update_business_cart_item instance,
+    TRes Function(Variables$Mutation$update_business_cart_item) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_business_cart_item;
+
+  factory CopyWith$Variables$Mutation$update_business_cart_item.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_business_cart_item;
+
+  TRes call({
+    int? id,
+    double? cost,
+    dynamic? parameters,
+    String? time,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_business_cart_item<TRes>
+    implements CopyWith$Variables$Mutation$update_business_cart_item<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_business_cart_item(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_business_cart_item _instance;
+
+  final TRes Function(Variables$Mutation$update_business_cart_item) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? cost = _undefined,
+    Object? parameters = _undefined,
+    Object? time = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_business_cart_item._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (cost != _undefined && cost != null) 'cost': (cost as double),
+        if (parameters != _undefined && parameters != null)
+          'parameters': (parameters as dynamic),
+        if (time != _undefined && time != null) 'time': (time as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_business_cart_item<TRes>
+    implements CopyWith$Variables$Mutation$update_business_cart_item<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_business_cart_item(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    double? cost,
+    dynamic? parameters,
+    String? time,
+  }) =>
+      _res;
+}
+
+class Mutation$update_business_cart_item {
+  Mutation$update_business_cart_item({
+    this.update_business_cart_item_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_business_cart_item.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_business_cart_item_by_pk =
+        json['update_business_cart_item_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_business_cart_item(
+      update_business_cart_item_by_pk: l$update_business_cart_item_by_pk == null
+          ? null
+          : Mutation$update_business_cart_item$update_business_cart_item_by_pk
+              .fromJson(
+                  (l$update_business_cart_item_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_business_cart_item$update_business_cart_item_by_pk?
+      update_business_cart_item_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_cart_item_by_pk = update_business_cart_item_by_pk;
+    _resultData['update_business_cart_item_by_pk'] =
+        l$update_business_cart_item_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_cart_item_by_pk = update_business_cart_item_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_cart_item_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_business_cart_item) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_cart_item_by_pk = update_business_cart_item_by_pk;
+    final lOther$update_business_cart_item_by_pk =
+        other.update_business_cart_item_by_pk;
+    if (l$update_business_cart_item_by_pk !=
+        lOther$update_business_cart_item_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_business_cart_item
+    on Mutation$update_business_cart_item {
+  CopyWith$Mutation$update_business_cart_item<
+          Mutation$update_business_cart_item>
+      get copyWith => CopyWith$Mutation$update_business_cart_item(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_business_cart_item<TRes> {
+  factory CopyWith$Mutation$update_business_cart_item(
+    Mutation$update_business_cart_item instance,
+    TRes Function(Mutation$update_business_cart_item) then,
+  ) = _CopyWithImpl$Mutation$update_business_cart_item;
+
+  factory CopyWith$Mutation$update_business_cart_item.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_business_cart_item;
+
+  TRes call({
+    Mutation$update_business_cart_item$update_business_cart_item_by_pk?
+        update_business_cart_item_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk<
+      TRes> get update_business_cart_item_by_pk;
+}
+
+class _CopyWithImpl$Mutation$update_business_cart_item<TRes>
+    implements CopyWith$Mutation$update_business_cart_item<TRes> {
+  _CopyWithImpl$Mutation$update_business_cart_item(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_business_cart_item _instance;
+
+  final TRes Function(Mutation$update_business_cart_item) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_cart_item_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_business_cart_item(
+        update_business_cart_item_by_pk: update_business_cart_item_by_pk ==
+                _undefined
+            ? _instance.update_business_cart_item_by_pk
+            : (update_business_cart_item_by_pk
+                as Mutation$update_business_cart_item$update_business_cart_item_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk<
+      TRes> get update_business_cart_item_by_pk {
+    final local$update_business_cart_item_by_pk =
+        _instance.update_business_cart_item_by_pk;
+    return local$update_business_cart_item_by_pk == null
+        ? CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk(
+            local$update_business_cart_item_by_pk,
+            (e) => call(update_business_cart_item_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_business_cart_item<TRes>
+    implements CopyWith$Mutation$update_business_cart_item<TRes> {
+  _CopyWithStubImpl$Mutation$update_business_cart_item(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_business_cart_item$update_business_cart_item_by_pk?
+        update_business_cart_item_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk<
+          TRes>
+      get update_business_cart_item_by_pk =>
+          CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_business_cart_item =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_business_cart_item'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'cost')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'money'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'parameters')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'jsonb'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'time')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'timestamp'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_cart_item_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'cost'),
+                value: VariableNode(name: NameNode(value: 'cost')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'parameters'),
+                value: VariableNode(name: NameNode(value: 'parameters')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'time'),
+                value: VariableNode(name: NameNode(value: 'time')),
+              ),
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_business_cart_item _parserFn$Mutation$update_business_cart_item(
+        Map<String, dynamic> data) =>
+    Mutation$update_business_cart_item.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_business_cart_item = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_business_cart_item?,
+);
+
+class Options$Mutation$update_business_cart_item
+    extends graphql.MutationOptions<Mutation$update_business_cart_item> {
+  Options$Mutation$update_business_cart_item({
+    String? operationName,
+    required Variables$Mutation$update_business_cart_item variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_business_cart_item? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_business_cart_item>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_business_cart_item(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_business_cart_item,
+          parserFn: _parserFn$Mutation$update_business_cart_item,
+        );
+
+  final OnMutationCompleted$Mutation$update_business_cart_item?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_business_cart_item
+    extends graphql.WatchQueryOptions<Mutation$update_business_cart_item> {
+  WatchOptions$Mutation$update_business_cart_item({
+    String? operationName,
+    required Variables$Mutation$update_business_cart_item variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_business_cart_item,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_business_cart_item,
+        );
+}
+
+extension ClientExtension$Mutation$update_business_cart_item
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_business_cart_item>>
+      mutate$update_business_cart_item(
+              Options$Mutation$update_business_cart_item options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_business_cart_item>
+      watchMutation$update_business_cart_item(
+              WatchOptions$Mutation$update_business_cart_item options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_business_cart_item$update_business_cart_item_by_pk {
+  Mutation$update_business_cart_item$update_business_cart_item_by_pk({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_business_cart_item$update_business_cart_item_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_business_cart_item$update_business_cart_item_by_pk(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_business_cart_item$update_business_cart_item_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_business_cart_item$update_business_cart_item_by_pk
+    on Mutation$update_business_cart_item$update_business_cart_item_by_pk {
+  CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk<
+          Mutation$update_business_cart_item$update_business_cart_item_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk(
+    Mutation$update_business_cart_item$update_business_cart_item_by_pk instance,
+    TRes Function(
+            Mutation$update_business_cart_item$update_business_cart_item_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$update_business_cart_item$update_business_cart_item_by_pk;
+
+  factory CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_business_cart_item$update_business_cart_item_by_pk;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_business_cart_item$update_business_cart_item_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$update_business_cart_item$update_business_cart_item_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_business_cart_item$update_business_cart_item_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$update_business_cart_item$update_business_cart_item_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_business_cart_item$update_business_cart_item_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_business_cart_item$update_business_cart_item_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_business_cart_item$update_business_cart_item_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_business_cart_item$update_business_cart_item_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
     String? $__typename,
   }) =>
       _res;

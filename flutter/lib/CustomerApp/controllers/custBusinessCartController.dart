@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -142,7 +143,21 @@ class CustBusinessCartController extends GetxController {
       final int res = await add_item_to_business_cart(
         cartItem: cartItem,
       );
+      await fetchCart();
       return res;
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+    return null;
+  }
+
+  Future<void> updateCartItem(BusinessCartItem cartItem) async {
+    try {
+      await update_item_to_business_cart(
+        cartItem: cartItem,
+      );
+      await fetchCart();
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -215,5 +230,35 @@ class CustBusinessCartController extends GetxController {
       cost: item.product!.details.cost.entries.first.value.toDouble() * count,
     );
     await fetchCart();
+  }
+
+  Future<void> editCartItem(BusinessCartItem item) async {
+    switch (item.offeringType) {
+      case OfferingType.Rental:
+        if (item.rental!.category1 == RentalCategory1.Home) {
+          await CustHomeRentalView.navigate(
+            rentalId: item.rental!.id!.toInt(),
+            cartId: item.id!.toInt(),
+            timeCost: {
+              item.parameters.timeUnit!:
+                  item.rental!.details.cost[item.parameters.timeUnit!]!,
+            },
+            duration: item.parameters.numberOfUnits!.toInt(),
+            guestCount: item.parameters.guests!.toInt(),
+            startDate: DateTime.parse(item.time!),
+          );
+          return;
+        }
+        return;
+      case OfferingType.Event:
+        // TODO: Handle this case.
+        break;
+      case OfferingType.Service:
+        // TODO: Handle this case.
+        break;
+      case OfferingType.Product:
+        // TODO: Handle this case.
+        break;
+    }
   }
 }

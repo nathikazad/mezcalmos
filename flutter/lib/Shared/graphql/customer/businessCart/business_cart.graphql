@@ -8,6 +8,7 @@ query getBusinessCart($customer_id: Int!) {
       offering_type
       time
       rental {
+        id
         details {
           name_id
           description_id
@@ -45,6 +46,7 @@ query getBusinessCart($customer_id: Int!) {
         }
       }
       product {
+        id
         business {
           details {
             name
@@ -80,6 +82,7 @@ query getBusinessCart($customer_id: Int!) {
         }
       }
       service {
+        id
         business {
           details {
             name
@@ -115,6 +118,7 @@ query getBusinessCart($customer_id: Int!) {
         }
       }
       event {
+        id
         business {
           details {
             name
@@ -176,6 +180,20 @@ mutation addItemToBusinessCart($item: business_cart_item_insert_input!) {
     offering_type
     item_id
     cost
+  }
+}
+
+mutation update_business_cart_item(
+  $id: Int!
+  $cost: money!
+  $parameters: jsonb!
+  $time: timestamp!
+) {
+  update_business_cart_item_by_pk(
+    pk_columns: { id: $id }
+    _set: { cost: $cost, parameters: $parameters, time: $time }
+  ) {
+    id
   }
 }
 
@@ -356,7 +374,11 @@ subscription listen_on_business_order_request($_id: Int!) {
   }
 }
 
-mutation update_product_item_count($id: Int!, $parameters: jsonb!, $cost: money!) {
+mutation update_product_item_count(
+  $id: Int!
+  $parameters: jsonb!
+  $cost: money!
+) {
   update_business_cart_item(
     where: { id: { _eq: $id }, offering_type: { _eq: "product" } }
     _set: { parameters: $parameters, cost: $cost }
