@@ -1547,6 +1547,9 @@
             "petSitting": "Cuidado de mascotas",
             "uncategorized": "Sin categoría",
             "cleaning": "Servicio",
+            "beauty": "Belleza",
+            "photography": "Fotografía",
+            "tattoo": "Tatuaje",
             "hour": "hora",
             "day": "día",
             "week": "semana",
@@ -1957,8 +1960,8 @@
         "failedOTPConfirmRequest": "La confirmación del código OTP falló :(",
         "setNameAndImage": "Establezca su nombre e imagen antes de continuar "
       },
-      "SideMenuDrawerController" : {
-        "contactAdmin" :"Contactar a administrador"
+      "SideMenuDrawerController": {
+        "contactAdmin": "Contactar a administrador"
       }
     },
     "models": {
@@ -2012,8 +2015,8 @@
         "photoAccessOffBody": "Apparently you denied the app from photo library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
-        "closed" :"Cerrada",
-        "closedSubtitle" : "Lo siento, el servicio que está buscando está actualmente cerrado.",
+        "closed": "Cerrada",
+        "closedSubtitle": "Lo siento, el servicio que está buscando está actualmente cerrado.",
         "added": "Agregada",
         "addedTitle": "Su información ha sido agregada",
         "saved": "Guardado",
@@ -2608,7 +2611,7 @@
         "login": "Acceso",
         "contact": "Contáctenos",
         "language": "Idioma",
-        "contactAdmin" : "Contactar a administrador",
+        "contactAdmin": "Contactar a administrador",
         "logout": "Cerrar sesión",
         "legal": "Política de privacidad"
       }

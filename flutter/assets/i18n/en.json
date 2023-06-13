@@ -1518,6 +1518,9 @@
             "petSitting": "Pet sitting",
             "uncategorized": "Uncategorized",
             "cleaning": "Service",
+            "beauty": "Beauty",
+            "photography": "Photography",
+            "tattoo": "Tattoo",
             "hour": "hour",
             "day": "day",
             "week": "week",
@@ -1892,8 +1895,8 @@
         "failedOTPConfirmRequest": "OTP Code confirmation failed :(",
         "setNameAndImage": "Please set your name and image before proceeding"
       },
-      "SideMenuDrawerController" : {
-        "contactAdmin" : "Contact Admin"
+      "SideMenuDrawerController": {
+        "contactAdmin": "Contact Admin"
       }
     },
     "models": {
@@ -1947,8 +1950,8 @@
         "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
-        "closed" :"Closed",
-        "closedSubtitle" : "Sorry, the service you are looking for is currently closed.",
+        "closed": "Closed",
+        "closedSubtitle": "Sorry, the service you are looking for is currently closed.",
         "added": "Added",
         "addedTitle": "Your information has been added",
         "saved": "Saved",
@@ -2540,7 +2543,7 @@
         "login": "Login",
         "language": "Language",
         "contact": "Contact us",
-        "contactAdmin" : "Contact Admin",
+        "contactAdmin": "Contact Admin",
         "logout": "Logout",
         "legal": "Privacy policy"
       }

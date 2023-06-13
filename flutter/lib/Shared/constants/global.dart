@@ -209,6 +209,11 @@ const String aParties = "assets/images/customer/parties.png";
 const String aDance = "assets/images/customer/dance.png";
 const String aGetTogether = "assets/images/customer/getTogether.png";
 
+// Services Images
+const String aPhotography = "assets/images/customer/photography.png";
+const String aTattoo = "assets/images/customer/tattoo.png";
+const String aBeauty = "assets/images/customer/beauty.png";
+
 const String _imgs_path = "assets/images/customer/taxi/";
 const String header_asset = "${_imgs_path}header.png";
 
