@@ -1758,6 +1758,8 @@
         "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
+        "closed" :"Closed",
+        "closedSubtitle" : "Sorry, the service you are looking for is currently closed.",
         "added": "Added",
         "addedTitle": "Your information has been added",
         "saved": "Saved",

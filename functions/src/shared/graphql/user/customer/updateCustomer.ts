@@ -1,4 +1,4 @@
-import { customer_stripe_cards_constraint, customer_stripe_sp_id_constraint } from "../../../../../../hasura/library/src/generated/graphql-zeus";
+import { $, customer_stripe_cards_constraint, customer_stripe_sp_id_constraint } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../../utilities/hasura";
 import { MezError } from "../../../models/Generic/Generic";
 import { CustomerInfo } from "../../../models/Generic/User";
@@ -18,7 +18,7 @@ export async function updateCustomerStripe(customer: CustomerInfo) {
             exp_month: card.expMonth,
             exp_year: card.expYear,
             last_4: card.last4,
-            sp_card_ids: JSON.stringify(card.idsWithServiceProvider)
+            sp_card_ids: card.idsWithServiceProvider
         })
     }
     let stripeSPIdsArray = []
@@ -44,7 +44,7 @@ export async function updateCustomerStripe(customer: CustomerInfo) {
             // stripe_info:[{}, true]
         }],
         insert_customer_stripe_cards: [{
-            objects: stripeCardsArray,
+            objects: $`objects`,
             on_conflict: {
                 constraint: customer_stripe_cards_constraint.stripe_cards_card_id_key,
                 update_columns: []
@@ -61,6 +61,8 @@ export async function updateCustomerStripe(customer: CustomerInfo) {
         }, {
             affected_rows: true
         }],
+    }, {
+        "objects": stripeCardsArray
     });
     if(!(response.update_customer_customer_by_pk)) {
         throw new MezError("customerUpdateError");

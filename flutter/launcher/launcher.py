@@ -300,6 +300,22 @@ class Launcher:
             os.system(f'{"mv" if not self.isWin else "move"} ..|android|app|src|main|AndroidManifest.xml ..|android|app|src|main|AndroidManifest.xml.backup'.replace('|' , self.pathname_separator))
 
         _cloned = open('patches/android/main/AndroidManifest.xml').read().replace('<mez-package-name>', _appPackageName).replace('<mez-permissions>' , self.conf['gen::permissions'])
+        
+        if self.user_args['app'] == 'CustomerApp':
+            index = _cloned.rfind("</activity>")
+            if index != -1:
+                # Insert the new format after </activity>
+                _cloned = _cloned[:index] + """
+                <intent-filter android:autoVerify="true">
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+                    <data
+                        android:scheme="https"
+                        android:host="mezkala.app" />
+                </intent-filter>
+                """ + _cloned[index:]
+        
         open(_project_main_manifest , 'w+').write(_cloned)
 
         # profile :

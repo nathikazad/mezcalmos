@@ -6,11 +6,11 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustIte
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -62,13 +62,14 @@ class _CustItemViewState extends State<CustItemView> {
 
   @override
   void initState() {
+    mezDbgPrint("Arguments ====> ${MezRouter.bodyArguments}");
     final int? restaurantId =
         int.tryParse(MezRouter.urlArguments['restaurantId'].toString());
     final int? itemId =
         int.tryParse(MezRouter.urlArguments['itemId'].toString());
     final int? cartItemId =
         int.tryParse(MezRouter.urlArguments["cartItemId"].toString());
-    fromMealPage = MezRouter.bodyArguments!['fromMealPage'] as bool;
+    fromMealPage = MezRouter.bodyArguments?['fromMealPage'] ?? false;
     viewController.init(
         itemId: itemId,
         restaurantId: restaurantId,

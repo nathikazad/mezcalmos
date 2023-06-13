@@ -14,6 +14,8 @@ targets:
               type: String
             timestamp:
               type: String
+            date:
+              type: String  
             json:
               type: dynamic
               fromJsonFunctionName: mapFromJson

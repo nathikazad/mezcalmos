@@ -110,7 +110,7 @@ class CustomerPastOrdersList extends StatelessWidget {
 }
 
 String currentDate(DateTime dateTime) {
-  return '${DateFormat('dd').format(dateTime)} ${_i18n()[DateFormat('MMM').format(dateTime)]} ${DateFormat('yyyy').format(dateTime)}';
+  return '${DateFormat('dd').format(dateTime)} ${_i18n()["shared"]["notification"][DateFormat('MMM').format(dateTime).toLowerCase()]} ${DateFormat('yyyy').format(dateTime)}';
 }
 
 int calculateDifference(DateTime date) {

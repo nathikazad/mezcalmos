@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -17,6 +19,9 @@ class CustRestaurantListViewController {
   RxList<Restaurant> filteredRestaurants = RxList<Restaurant>.empty();
   RxList<Item> filteredItems = RxList<Item>.empty();
   List<int> servicesIds = [];
+  AppLifeCycleController appLifeCycleController =
+      Get.find<AppLifeCycleController>();
+  String? callbackId;
 
   List<Restaurant> _restaurants = List<Restaurant>.empty();
   Rx<SearchType> searchType = SearchType.searchByRestaurantName.obs;
@@ -41,6 +46,8 @@ class CustRestaurantListViewController {
     }).whenComplete(() {
       isLoading.value = false;
     });
+    callbackId = appLifeCycleController.attachCallback(
+        AppLifecycleState.resumed, () => filter());
   }
 
   void _getCustomerCurrentLocation() {
@@ -55,7 +62,7 @@ class CustRestaurantListViewController {
 
   void _assignServiceIds() {
     servicesIds = _restaurants
-        .where((Restaurant element) => element.isOpen())
+        .where((Restaurant element) => element.isOpen)
         .map((Restaurant e) => e.info.hasuraId)
         .toList();
   }
@@ -103,5 +110,7 @@ class CustRestaurantListViewController {
 
   void dispose() {
     isLoading.value = false;
+    appLifeCycleController.removeCallbackIdOfState(
+        AppLifecycleState.resumed, callbackId);
   }
 }

@@ -146,7 +146,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                 prev[current.language_id] = current.value;
                 return prev;
                 }, {}),
-                schedule: JSON.parse(response.service_provider_details_by_pk.schedule),
+                schedule: (response.service_provider_details_by_pk.schedule),
                 creationTime: response.service_provider_details_by_pk.creation_time,
                 openStatus: response.service_provider_details_by_pk.open_status as OpenStatus,
                 approved: response.service_provider_details_by_pk.approved,
@@ -159,14 +159,14 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     detailsSubmitted: response.service_provider_details_by_pk.stripe_info.details_submitted,
                     payoutsEnabled: response.service_provider_details_by_pk.stripe_info.payouts_enabled,
                     email: response.service_provider_details_by_pk.stripe_info.email ?? null,
-                    requirements: JSON.parse(response.service_provider_details_by_pk.stripe_info.requirements)
+                    requirements: (response.service_provider_details_by_pk.stripe_info.requirements)
                 }: undefined,
-                acceptedPayments: JSON.parse(response.service_provider_details_by_pk.accepted_payments),
+                acceptedPayments: (response.service_provider_details_by_pk.accepted_payments),
                 operators,
                 // deliveryPartnerId: response.service_provider_details_by_pk.restaurant.delivery_partners[0] 
                 // ? response.service_provider_details_by_pk.restaurant.delivery_partners[0].delivery_company_id
                 // : undefined,
-                language: /*JSON.parse(*/response.service_provider_details_by_pk.language,
+                language: /*(*/response.service_provider_details_by_pk.language,
                 deliveryDetails: {
                     // costPerKm: response.service_provider_details_by_pk.restaurant.delivery_details.cost_per_km,
                     // freeDeliveryKmRange: response.service_provider_details_by_pk.restaurant.delivery_details.free_delivery_km_range,
@@ -219,13 +219,13 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     detailsSubmitted: response.service_provider_details_by_pk.stripe_info.details_submitted,
                     payoutsEnabled: response.service_provider_details_by_pk.stripe_info.payouts_enabled,
                     email: response.service_provider_details_by_pk.stripe_info.email ?? null,
-                    requirements: JSON.parse(response.service_provider_details_by_pk.stripe_info.requirements)
+                    requirements: (response.service_provider_details_by_pk.stripe_info.requirements)
                 }: undefined,
-                acceptedPayments: JSON.parse(response.service_provider_details_by_pk.accepted_payments),
+                acceptedPayments: (response.service_provider_details_by_pk.accepted_payments),
                 approved: response.service_provider_details_by_pk.approved,
                 creationTime: response.service_provider_details_by_pk.creation_time,
-                language: /*JSON.parse(*/response.service_provider_details_by_pk.language,
-                schedule: JSON.parse(response.service_provider_details_by_pk.schedule),
+                language: /*(*/response.service_provider_details_by_pk.language,
+                schedule: (response.service_provider_details_by_pk.schedule),
                 deliveryDetails: {
                     // costPerKm: response.laundry_store_by_pk.delivery_details.cost_per_km,
                     // freeDeliveryKmRange: response.laundry_store_by_pk.delivery_details.free_delivery_km_range,
@@ -423,7 +423,7 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                 prev[current.language_id] = current.value;
                 return prev;
                 }, {}),
-                schedule: JSON.parse(response.service_provider_details[0].schedule),
+                schedule: (response.service_provider_details[0].schedule),
                 creationTime: response.service_provider_details[0].creation_time,
                 openStatus: response.service_provider_details[0].open_status as OpenStatus,
                 approved: response.service_provider_details[0].approved,
@@ -436,14 +436,14 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                     detailsSubmitted: response.service_provider_details[0].stripe_info.details_submitted,
                     payoutsEnabled: response.service_provider_details[0].stripe_info.payouts_enabled,
                     email: response.service_provider_details[0].stripe_info.email ?? null,
-                    requirements: JSON.parse(response.service_provider_details[0].stripe_info.requirements)
+                    requirements: (response.service_provider_details[0].stripe_info.requirements)
                 }: undefined,
-                acceptedPayments: JSON.parse(response.service_provider_details[0].accepted_payments),
+                acceptedPayments: (response.service_provider_details[0].accepted_payments),
                 operators,
                 // deliveryPartnerId: response.service_provider_details[0].restaurant.delivery_partners[0] 
                 // ? response.service_provider_details[0].restaurant.delivery_partners[0].delivery_company_id
                 // : undefined,
-                language: /*JSON.parse(*/response.service_provider_details[0].language,
+                language: /*(*/response.service_provider_details[0].language,
                 deliveryDetails: {
                     // costPerKm: response.service_provider_details[0].restaurant.delivery_details.cost_per_km,
                     // freeDeliveryKmRange: response.service_provider_details[0].restaurant.delivery_details.free_delivery_km_range,
@@ -497,13 +497,13 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                     detailsSubmitted: response.service_provider_details[0].stripe_info.details_submitted,
                     payoutsEnabled: response.service_provider_details[0].stripe_info.payouts_enabled,
                     email: response.service_provider_details[0].stripe_info.email ?? null,
-                    requirements: JSON.parse(response.service_provider_details[0].stripe_info.requirements)
+                    requirements: (response.service_provider_details[0].stripe_info.requirements)
                 }: undefined,
-                acceptedPayments: JSON.parse(response.service_provider_details[0].accepted_payments),
+                acceptedPayments: (response.service_provider_details[0].accepted_payments),
                 approved: response.service_provider_details[0].approved,
                 creationTime: response.service_provider_details[0].creation_time,
-                language: /*JSON.parse(*/response.service_provider_details[0].language,
-                schedule: JSON.parse(response.service_provider_details[0].schedule),
+                language: /*(*/response.service_provider_details[0].language,
+                schedule: (response.service_provider_details[0].schedule),
                 deliveryDetails: {
                     // costPerKm: response.laundry_store_by_pk.delivery_details.cost_per_km,
                     // freeDeliveryKmRange: response.laundry_store_by_pk.delivery_details.free_delivery_km_range,
@@ -561,13 +561,13 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                     detailsSubmitted: response.service_provider_details[0].stripe_info.details_submitted,
                     payoutsEnabled: response.service_provider_details[0].stripe_info.payouts_enabled,
                     email: response.service_provider_details[0].stripe_info.email ?? null,
-                    requirements: JSON.parse(response.service_provider_details[0].stripe_info.requirements)
+                    requirements: (response.service_provider_details[0].stripe_info.requirements)
                 }: undefined,
-                acceptedPayments: JSON.parse(response.service_provider_details[0].accepted_payments),
+                acceptedPayments: (response.service_provider_details[0].accepted_payments),
                 approved: response.service_provider_details[0].approved,
                 creationTime: response.service_provider_details[0].creation_time,
-                language: /*JSON.parse(*/response.service_provider_details[0].language,
-                schedule: JSON.parse(response.service_provider_details[0].schedule),
+                language: /*(*/response.service_provider_details[0].language,
+                schedule: (response.service_provider_details[0].schedule),
                 deliveryDetails: {
                     // costPerKm: response.laundry_store_by_pk.delivery_details.cost_per_km,
                     // freeDeliveryKmRange: response.laundry_store_by_pk.delivery_details.free_delivery_km_range,

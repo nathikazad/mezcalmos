@@ -2276,6 +2276,13 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'is_open'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'image'),
                     alias: null,
                     arguments: [],
@@ -3753,6 +3760,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     this.stripe_info,
     required this.accepted_payments,
     this.firebase_id,
+    this.is_open,
     required this.image,
     required this.language,
     this.description_id,
@@ -3770,6 +3778,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     final l$stripe_info = json['stripe_info'];
     final l$accepted_payments = json['accepted_payments'];
     final l$firebase_id = json['firebase_id'];
+    final l$is_open = json['is_open'];
     final l$image = json['image'];
     final l$language = json['language'];
     final l$description_id = json['description_id'];
@@ -3787,6 +3796,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
               .fromJson((l$stripe_info as Map<String, dynamic>)),
       accepted_payments: mapFromJson(l$accepted_payments),
       firebase_id: (l$firebase_id as String?),
+      is_open: (l$is_open as bool?),
       image: (l$image as String),
       language: mapFromJson(l$language),
       description_id: (l$description_id as int?),
@@ -3811,6 +3821,8 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
   final dynamic accepted_payments;
 
   final String? firebase_id;
+
+  final bool? is_open;
 
   final String image;
 
@@ -3842,6 +3854,8 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$language = language;
@@ -3870,6 +3884,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     final l$stripe_info = stripe_info;
     final l$accepted_payments = accepted_payments;
     final l$firebase_id = firebase_id;
+    final l$is_open = is_open;
     final l$image = image;
     final l$language = language;
     final l$description_id = description_id;
@@ -3884,6 +3899,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
       l$stripe_info,
       l$accepted_payments,
       l$firebase_id,
+      l$is_open,
       l$image,
       l$language,
       l$description_id,
@@ -3919,6 +3935,11 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     final l$firebase_id = firebase_id;
     final lOther$firebase_id = other.firebase_id;
     if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$image = image;
@@ -4003,6 +4024,7 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details
         stripe_info,
     dynamic? accepted_payments,
     String? firebase_id,
+    bool? is_open,
     String? image,
     dynamic? language,
     int? description_id,
@@ -4044,6 +4066,7 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details<
     Object? stripe_info = _undefined,
     Object? accepted_payments = _undefined,
     Object? firebase_id = _undefined,
+    Object? is_open = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
     Object? description_id = _undefined,
@@ -4067,6 +4090,7 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details<
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -4143,6 +4167,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$details
         stripe_info,
     dynamic? accepted_payments,
     String? firebase_id,
+    bool? is_open,
     String? image,
     dynamic? language,
     int? description_id,
@@ -9049,6 +9074,13 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'is_open'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'firebase_id'),
                     alias: null,
                     arguments: [],
@@ -10633,6 +10665,7 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
 class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
   Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details({
     required this.id,
+    this.is_open,
     this.firebase_id,
     required this.name,
     this.stripe_info,
@@ -10651,6 +10684,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
   factory Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$is_open = json['is_open'];
     final l$firebase_id = json['firebase_id'];
     final l$name = json['name'];
     final l$stripe_info = json['stripe_info'];
@@ -10666,6 +10700,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details(
       id: (l$id as int),
+      is_open: (l$is_open as bool?),
       firebase_id: (l$firebase_id as String?),
       name: (l$name as String),
       stripe_info: l$stripe_info == null
@@ -10691,6 +10726,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
   }
 
   final int id;
+
+  final bool? is_open;
 
   final String? firebase_id;
 
@@ -10725,6 +10762,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
     final l$name = name;
@@ -10757,6 +10796,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
   @override
   int get hashCode {
     final l$id = id;
+    final l$is_open = is_open;
     final l$firebase_id = firebase_id;
     final l$name = name;
     final l$stripe_info = stripe_info;
@@ -10772,6 +10812,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$is_open,
       l$firebase_id,
       l$name,
       l$stripe_info,
@@ -10801,6 +10842,11 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$firebase_id = firebase_id;
@@ -10899,6 +10945,7 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$res
 
   TRes call({
     int? id,
+    bool? is_open,
     String? firebase_id,
     String? name,
     Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info?
@@ -10945,6 +10992,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
 
   TRes call({
     Object? id = _undefined,
+    Object? is_open = _undefined,
     Object? firebase_id = _undefined,
     Object? name = _undefined,
     Object? stripe_info = _undefined,
@@ -10962,6 +11010,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
       _then(
           Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
@@ -11046,6 +11095,7 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
 
   call({
     int? id,
+    bool? is_open,
     String? firebase_id,
     String? name,
     Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info?

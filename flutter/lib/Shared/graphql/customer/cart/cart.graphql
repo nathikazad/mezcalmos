@@ -44,6 +44,7 @@ query getCustomerCart($customer_id: Int!) {
       delivery_details_id
       details_id
       details {
+       
         stripe_info {
           id
           stripe_id
@@ -58,6 +59,7 @@ query getCustomerCart($customer_id: Int!) {
         accepted_payments
 
         firebase_id
+        is_open
         image
         language
         description_id
@@ -177,7 +179,7 @@ subscription listen_on_customer_cart($customer_id: Int!) {
       delivery_details_id
       details {
         id
-
+        is_open
         firebase_id
         name
         stripe_info {

@@ -97,7 +97,7 @@ export async function getChat(chatId: number): Promise<Chat> {
     return {
         chatId,
         participants: participants,
-        chatInfo: JSON.parse(response.chat_by_pk.chat_info),
+        chatInfo: (response.chat_by_pk.chat_info),
         chatType: response.chat_by_pk.chat_type as ChatType,
         isServiceProviderChat: (response.chat_by_pk.service_provider_customer_chat) ? true : false,
     };
@@ -140,10 +140,10 @@ export async function getChat(chatId: number): Promise<Chat> {
 //     }
 //     return {
 //         chatId: response.service_provider_customer_chat[0].chat.id,
-//         chatInfo: JSON.parse(response.service_provider_customer_chat[0].chat.chat_info),
+//         chatInfo: (response.service_provider_customer_chat[0].chat.chat_info),
 //         chatType:  ChatType.Group,
 //         messages: (response.service_provider_customer_chat[0].chat.messages.length) 
-//             ? JSON.parse(response.service_provider_customer_chat[0].chat.messages)
+//             ? (response.service_provider_customer_chat[0].chat.messages)
 //             : undefined
 //     };
 // }

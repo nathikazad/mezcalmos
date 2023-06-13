@@ -2,11 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
-import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/components/CustRequestCourierItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -121,7 +119,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             child: DeliveryTimePicker(
               fixed7days: true,
               deliveryTime: viewController.deliveryTime.value,
-              isServiceOpen: viewController.company.value?.isOpen() ?? true,
+              isServiceOpen: viewController.company.value?.isOpen ?? true,
               numberOfDays: 7,
               onValue: (DateTime? value) {
                 if (value != null &&

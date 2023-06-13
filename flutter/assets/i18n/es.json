@@ -1789,8 +1789,8 @@
           "deliveryCompany": "Compañía de entrega"
         },
         "Generic": {
-          "en": "Inglesa",
-          "es": "Española"
+          "en": "Inglés",
+          "es": "Español"
         }
       }
     },
@@ -1823,6 +1823,8 @@
         "photoAccessOffBody": "Apparently you denied the app from photo library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
+        "closed" :"Cerrada",
+        "closedSubtitle" : "Lo siento, el servicio que está buscando está actualmente cerrado.",
         "added": "Agregada",
         "addedTitle": "Su información ha sido agregada",
         "saved": "Guardado",

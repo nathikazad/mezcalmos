@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -30,9 +29,9 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
   if (response.parsedData?.restaurant_restaurant != null) {
     response.parsedData?.restaurant_restaurant
         .forEach((Query$getRestaurants$restaurant_restaurant data) async {
-      mezDbgPrint(
-          " desc=============>>>🥹=======>${data.details?.description?.toJson()}");
+      mezDbgPrint(" desc=============>>>🥹=======>${data.details?.is_open}");
       _restaurants.add(Restaurant(
+        isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
         userInfo: ServiceInfo(
@@ -141,6 +140,7 @@ Future<Restaurant?> get_restaurant_by_id(
 
     if (data != null) {
       return Restaurant(
+        isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
         deliveryDetailsId: data.delivery_details_id,

@@ -7,9 +7,11 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/env.dart';
@@ -27,6 +29,8 @@ class CustProfileView extends StatefulWidget {
 
 class _CustProfileViewState extends State<CustProfileView> {
   final AuthController _authController = Get.find<AuthController>();
+  UserProfileViewController viewController = UserProfileViewController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -214,6 +218,44 @@ class _CustProfileViewState extends State<CustProfileView> {
                   Text(
                     '${_i18n()['privacyPolicy']}',
                     style: context.textTheme.bodyLarge,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Divider(
+              color: Colors.grey.shade400,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () async {
+                await showConfirmationDialog(context,
+                    title: '${_i18n()["deleteTitle"]}',
+                    primaryButtonText: "${_i18n()["deletePrBtn"]}",
+                    secondaryButtonText: "${_i18n()["deleteScBtn"]}",
+                    helperText: "${_i18n()["deleteHelper"]}",
+                    onYesClick: () async {
+                  await viewController.deleteAccount(context);
+                });
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.delete_outline,
+                    color: redAccentColor,
+                    size: 25,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    '${_i18n()['deleteAccount']}',
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(color: redAccentColor),
                   )
                 ],
               ),
