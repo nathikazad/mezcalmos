@@ -353,6 +353,7 @@ class Launcher:
 
         _project_pbxproj_path = "../ios/Runner.xcodeproj/project.pbxproj"
         _info_plist_path = "../ios/Runner/Info.plist"
+        _entitlements_plist_path = "../ios/Runner/Runner.entitlements"
         
         # <mez-app-type> -> replaces project.pbxproj 's Icon Set
         _cloned = open('patches/ios/project.pbxproj').read()
@@ -387,6 +388,11 @@ class Launcher:
         .replace('<mez-fb-client-token>' , Config.fromEnv('FB_CLIENT_TOKEN'))
 
         open(_info_plist_path , 'w+').write(_cloned)
+        
+        open(_entitlements_plist_path , 'w+').write(\
+        open(f'patches/ios/{_ios_app_folder_name}/Runner.entitlements')\
+        .read())
+
         PRINTLN(f"[+] Patched ios/Runner/Info.plist => {_outputAppName}!")
 	    # Getting rid of 8.0
         if os.path.exists('../ios/Pods/Pods.xcodeproj/project.pbxproj'):
