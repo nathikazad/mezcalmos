@@ -11,18 +11,30 @@ import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
-Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
+Future<List<Restaurant>> fetch_restaurants(
+    {required bool withCache,
+    required cModels.Location fromLocation,
+    required double distance,
+    bool? is_open,
+    int? limit,
+    int? offset}) async {
   final List<Restaurant> _restaurants = <Restaurant>[];
 
   final QueryResult<Query$getRestaurants> response = await _db.graphQLClient
       .query$getRestaurants(Options$Query$getRestaurants(
+          variables: Variables$Query$getRestaurants(
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+              distance: distance,
+              is_open: is_open,
+              limit: limit,
+              offset: offset),
           fetchPolicy: withCache
               ? FetchPolicy.cacheAndNetwork
               : FetchPolicy.networkOnly));
@@ -33,7 +45,7 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
       mezDbgPrint(
           " desc=============>>>🥹=======>${data.details?.description?.toJson()}");
       _restaurants.add(Restaurant(
-         isOpen: data.details!.is_open ?? false,
+        isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
         userInfo: ServiceInfo(
@@ -142,7 +154,7 @@ Future<Restaurant?> get_restaurant_by_id(
 
     if (data != null) {
       return Restaurant(
-         isOpen: data.details!.is_open ?? false,
+        isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
         deliveryDetailsId: data.delivery_details_id,
