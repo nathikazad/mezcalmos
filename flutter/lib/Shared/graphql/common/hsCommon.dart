@@ -222,6 +222,23 @@ Future<ServiceTree> get_service_tree(
     root.children.add(services);
   }
 
+  final QueryResult<Query$number_of_real_estate> realEstateResponse = await _db
+      .graphQLClient
+      .query$number_of_real_estate(Options$Query$number_of_real_estate(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_real_estate(
+              distance: distance, from: Geography(lat, lng))));
+  final ServiceTree realEstate = ServiceTree(
+      MezService.RealEstate,
+      realEstateResponse
+              .parsedData?.business_rental_aggregate.aggregate?.count ??
+          0,
+      root);
+  if (classes.count > 0) {
+    root.children.add(realEstate);
+  }
+
   final ServiceTree products = ServiceTree(MezService.LocallyMade, 0, root);
   List<Future<void>> futuresProducts = [];
   ProductCategory1.values.forEach((ProductCategory1 element) async {
@@ -356,6 +373,10 @@ enum MezService {
   Consumable,
   PersonalCare,
   Art,
+  Beauty,
+  Tattoo,
+  Photography,
+  RealEstate,
   Uncategorized
 }
 

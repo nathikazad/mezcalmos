@@ -14,11 +14,13 @@ import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRealEstateView/BsRealEstateView.dart';
 
 class BusinessOpRoutes {
   static const String kBusniessOpTabsView = '/tabsView';
   static const String kBusniessOpServiceList = '/services/:id';
   static const String kBsOpHomeRental = '/homeRental/:id';
+  static const String kBsOpRealEstate = '/realEstate/:id';
   static const String kBsOpHomeRentalOrder = '/homeRentalOrder/:id';
   static const String kBsOpRental = '/rental/:id';
   static const String kBsOpEvent = '/event/:id';
@@ -81,6 +83,11 @@ class BusinessOpRoutes {
       path: kBsOpHomeRental,
       name: kBsOpHomeRental,
       builder: () => BsOpHomeRentalView(),
+    ),
+    QRoute(
+      path: kBsOpRealEstate,
+      name: kBsOpRealEstate,
+      builder: () => BsRealEstateView(),
     ),
     QRoute(
       path: kBsOpRental,

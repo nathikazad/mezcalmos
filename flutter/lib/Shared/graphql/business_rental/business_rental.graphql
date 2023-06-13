@@ -184,9 +184,133 @@ query get_home_rentals($location: geography!, $limit: Int, $offset: Int, $distan
   }
 }
 
+query get_real_estates(
+  $location: geography!
+  $limit: Int
+  $offset: Int
+  $distance: Float!
+) {
+  business_get_home_rentals(
+    args: { location: $location }
+    limit: $limit
+    offset: $offset
+    where: {
+      rental: {
+        business: {
+          details: {
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
+          }
+        }
+        details: { category1: { _eq: "realEstate" } }
+      }
+      gps_location: { _st_d_within: { distance: $distance, from: $location } }
+    }
+  ) {
+    bathrooms
+    bedrooms
+    gps_location
+    home_type
+    address
+    rental {
+      id
+      category3
+      details {
+        name_id
+        description_id
+        id
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        tags
+        additional_parameters
+        available
+        category1
+        category2
+        cost
+        image
+        position
+      }
+      business {
+        id
+        details {
+          id
+          name
+          currency
+        }
+      }
+    }
+  }
+}
+
 query get_business_home_rentals($businessId: Int!, $limit: Int, $offset: Int) {
   business_home_rental(
     where: { rental: { business_id: { _eq: $businessId } } }
+    limit: $limit
+    offset: $offset
+  ) {
+    bathrooms
+    bedrooms
+    gps_location
+    home_type
+    address
+    rental {
+      id
+      category3
+      details {
+        name_id
+        description_id
+        id
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        tags
+        additional_parameters
+        available
+        category1
+        category2
+        cost
+        image
+        position
+      }
+      business {
+        id
+        details {
+          id
+          name
+          currency
+        }
+      }
+    }
+  }
+}
+
+query get_business_real_estate($businessId: Int!, $limit: Int, $offset: Int) {
+  business_home_rental(
+    where: {
+      rental: {
+        business_id: { _eq: $businessId }
+        details: { category1: { _eq: "realEstate" } }
+      }
+    }
     limit: $limit
     offset: $offset
   ) {

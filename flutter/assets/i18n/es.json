@@ -375,6 +375,48 @@
           "serviceTitle": "Servicio de mascotas",
           "serviceSubtitle": "Anuncie su servicio de sentado para mascotas."
         },
+        "photography": {
+          "otherServicesTitle": "Otros servicios",
+          "otherServicesSubtitle": "El uso de otros servicios le permite agregar un servicio como un evento, una clase, un alquiler (automóvil, surf o hogar), un producto o un servicio.",
+          "serviceTitle": "Servicio",
+          "serviceSubtitle": "Anuncie un servicio que los clientes puedan reservar."
+        },
+        "beautySalon": {
+          "otherServicesTitle": "Otros servicios",
+          "otherServicesSubtitle": "El uso de otros servicios le permite agregar un servicio como un evento, una clase, un alquiler (automóvil, surf o hogar), un producto o un servicio.",
+          "serviceTitle": "Servicio",
+          "serviceSubtitle": "Anuncie un servicio que los clientes puedan reservar."
+        },
+        "tattooArtist": {
+          "otherServicesTitle": "Otros servicios",
+          "otherServicesSubtitle": "El uso de otros servicios le permite agregar un servicio como un evento, una clase, un alquiler (automóvil, surf o hogar), un producto o un servicio.",
+          "serviceTitle": "Servicio",
+          "serviceSubtitle": "Anuncie un servicio que los clientes puedan reservar."
+        },
+        "realEstate": {
+          "otherServicesTitle": "Otros servicios",
+          "otherServicesSubtitle": "El uso de otros servicios le permite agregar un servicio como un evento, una clase, un alquiler (automóvil, surf o hogar), un producto o un servicio.cto o un servicio.",
+          "rentalTitle": "Alquiler de bienes raíces",
+          "rentalSubtitle": "Utilizando un servicio de alquiler de bienes raíces, puede anunciar un bienes raíces en alquiler.",
+          "rentalDetails": "Detalles de alquiler",
+          "homeType": "Tipo de vivienda",
+          "homeTypeError": "Seleccione el tipo de vivienda",
+          "homeLocation": "Elegir ubicación de la casa",
+          "bedrooms": "Dormitorios",
+          "bedroomsHint": "¿Cuántas habitaciones tiene su casa?",
+          "bedroomsError": "Por favor, introduzca los dormitorios",
+          "bathrooms": "Baños",
+          "bathroomsHint": "¿Cuántos cuartos de baño tiene su casa?",
+          "bathroomsError": "Por favor, introduzca los baños",
+          "areaHint": "¿Cuántas área tiene su hogar?",
+          "area": "Área",
+          "areaError": "Ingrese el área",
+          "apartment": "Apartamento",
+          "villa": "Villa",
+          "condo": "Condominio",
+          "bungalow": "Bungalow",
+          "hotel": "Hotel"
+        },
         "mealPlanning": {
           "otherServicesTitle": "Otros servicios",
           "otherServicesSubtitle": "El uso de otros servicios le permite agregar un servicio como un evento, una clase, un alquiler (automóvil, surf o hogar), un producto o un servicio.cto o un servicio.",
@@ -1192,7 +1234,8 @@
             "locallyMade": "Hecho localmente",
             "therapy": "Terapias",
             "volunteer": "Voluntaria",
-            "adventures": "Aventuras"
+            "adventures": "Aventuras",
+            "realEstate": "Bienes raíces"
           }
         },
         "AllServiceView": {
@@ -1515,7 +1558,6 @@
           },
           "CustServicesWrapper": {
             "services": "Servicios",
-
             "cleaning": {
               "title": "Limpieza",
               "description": "Mantenga su espacio impecable con limpiadores profesionales."
@@ -1526,6 +1568,18 @@
             },
             "petSitting": {
               "title": "Cuidado de mascotas",
+              "description": "Asegúrese de que su mascota está bien cuidada mientras usted está fuera."
+            },
+            "photography": {
+              "title": "Photography",
+              "description": "Asegúrese de que su mascota está bien cuidada mientras usted está fuera."
+            },
+            "beauty": {
+              "title": "Beauty",
+              "description": "Asegúrese de que su mascota está bien cuidada mientras usted está fuera."
+            },
+            "tattoo": {
+              "title": "Tattoo",
               "description": "Asegúrese de que su mascota está bien cuidada mientras usted está fuera."
             },
             "uncategorized": {
@@ -2090,7 +2144,11 @@
               "volunteer": "Voluntariado",
               "entertainment": "Planificadores de eventos",
               "danceStudio": "Estudio de baile",
-              "mealPlanning": "Planificación de comidas"
+              "mealPlanning": "Planificación de comidas",
+              "photography": "Fotografía",
+              "beautySalon": "Salón de belleza",
+              "tattooArtist": "Tatuador",
+              "realEstate": "Bienes raíces"
             }
           }
         },

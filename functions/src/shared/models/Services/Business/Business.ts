@@ -74,6 +74,7 @@ export enum RentalCategory1 {
   Surf = "surf",
   Vehicle = "vehicle",
   Home = "home",
+  RealEstate = "realEstate",
   Uncategorized = "uncategorized",
 }
 export enum HomeType {
@@ -133,6 +134,10 @@ export enum BusinessProfile {
   Entertainment = "entertainment",
   DanceStudio = "danceStudio",
   MealPlanning = "mealPlanning",
+  Photography = "photography",
+  BeautySalon = "beautySalon",
+  TattooArtist = "tattooArtist",
+  RealEstate = "realEstate",
 }
 export enum RentalCategory2 {
   Motorcycle = "motorcycle",
@@ -152,6 +157,9 @@ export enum ServiceCategory1 {
   MealPlanning = "mealPlanning",
   Cleaning = "cleaning",
   PetSitting = "petSitting",
+  Photography = 'photography',
+  Tattoo = 'tattoo',
+  Beauty = 'beauty',
   Uncategorized = "uncategorized",
 }
 export enum ProductCategory1 {

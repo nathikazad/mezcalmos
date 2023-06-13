@@ -814,7 +814,11 @@ enum BusinessProfile {
   Volunteer,
   Entertainment,
   DanceStudio,
-  MealPlanning
+  MealPlanning,
+  Photography,
+  BeautySalon,
+  TattooArtist,
+  RealEstate,
 }
 
 extension ParseBusinessProfileToString on BusinessProfile {
@@ -2262,7 +2266,7 @@ class Product {
   }
 }
 
-enum RentalCategory1 { Surf, Vehicle, Home, Uncategorized }
+enum RentalCategory1 { Surf, Vehicle, Home, RealEstate, Uncategorized }
 
 extension ParseRentalCategory1ToString on RentalCategory1 {
   String toFirebaseFormatString() {
@@ -2418,7 +2422,7 @@ extension ParseStringToRentalCategory3 on String {
   }
 }
 
-enum ServiceCategory1 { MealPlanning, Cleaning, PetSitting, Uncategorized }
+enum ServiceCategory1 { MealPlanning, Cleaning, PetSitting, Photography, Tattoo, Beauty, Uncategorized }
 
 extension ParseServiceCategory1ToString on ServiceCategory1 {
   String toFirebaseFormatString() {
