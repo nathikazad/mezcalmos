@@ -82,16 +82,23 @@ Future<int?> add_option(
               service_provider_type:
                   cModels.OrderType.Restaurant.toFirebaseFormatString(),
               translations: Input$translation_value_arr_rel_insert_input(
-                  data: <Input$translation_value_insert_input>[
-                    Input$translation_value_insert_input(
-                        language_id:
-                            cModels.Language.EN.toFirebaseFormatString(),
-                        value: option.name[cModels.Language.EN]),
-                    Input$translation_value_insert_input(
-                        language_id:
-                            cModels.Language.ES.toFirebaseFormatString(),
-                        value: option.name[cModels.Language.ES]),
-                  ]),
+                  data: option.name.entries
+                      .map((MapEntry<cModels.Language, String> e) =>
+                          Input$translation_value_insert_input(
+                              language_id: e.key.toFirebaseFormatString(),
+                              value: e.value))
+                      .toList()),
+
+              // <Input$translation_value_insert_input>[
+              //   Input$translation_value_insert_input(
+              //       language_id:
+              //           cModels.Language.EN.toFirebaseFormatString(),
+              //       value: option.name[cModels.Language.EN]),
+              //   Input$translation_value_insert_input(
+              //       language_id:
+              //           cModels.Language.ES.toFirebaseFormatString(),
+              //       value: option.name[cModels.Language.ES]),
+              // ]),
             ),
           ),
         ),
@@ -167,16 +174,23 @@ Input$restaurant_item_option_map_insert_input convert_option_to_hasura(
           name: Input$translation_obj_rel_insert_input(
             data: Input$translation_insert_input(
               translations: Input$translation_value_arr_rel_insert_input(
-                  data: <Input$translation_value_insert_input>[
-                    Input$translation_value_insert_input(
-                        language_id:
-                            cModels.Language.EN.toFirebaseFormatString(),
-                        value: option.name[cModels.Language.EN]),
-                    Input$translation_value_insert_input(
-                        language_id:
-                            cModels.Language.ES.toFirebaseFormatString(),
-                        value: option.name[cModels.Language.ES]),
-                  ]),
+                  data: option.name.entries
+                      .map((MapEntry<cModels.Language, String> e) =>
+                          Input$translation_value_insert_input(
+                              language_id: e.key.toFirebaseFormatString(),
+                              value: e.value))
+                      .toList()),
+
+              // <Input$translation_value_insert_input>[
+              //   Input$translation_value_insert_input(
+              //       language_id:
+              //           cModels.Language.EN.toFirebaseFormatString(),
+              //       value: option.name[cModels.Language.EN]),
+              //   Input$translation_value_insert_input(
+              //       language_id:
+              //           cModels.Language.ES.toFirebaseFormatString(),
+              //       value: option.name[cModels.Language.ES]),
+              // ]),
             ),
           ),
         ),
