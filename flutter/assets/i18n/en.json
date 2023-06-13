@@ -368,6 +368,48 @@
           "serviceTitle": "Service",
           "serviceSubtitle": "Advertise a service that clients can book."
         },
+        "photography": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
+          "serviceTitle": "Service",
+          "serviceSubtitle": "Advertise a service that clients can book."
+        },
+        "beautySalon": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
+          "serviceTitle": "Service",
+          "serviceSubtitle": "Advertise a service that clients can book."
+        },
+        "tattooArtist": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
+          "serviceTitle": "Service",
+          "serviceSubtitle": "Advertise a service that clients can book."
+        },
+        "realEstate": {
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
+          "rentalTitle": "Real Estate Rental",
+          "rentalSubtitle": "Using a real estate rental service, you can advertise a real estate for rent.",
+          "rentalDetails": "Rental details",
+          "homeType": "Home type",
+          "homeTypeError": "Please select home type",
+          "homeLocation": "Pick house location",
+          "bedrooms": "Bedrooms",
+          "bedroomsHint": "How many bedrooms does your home have?",
+          "bedroomsError": "Please enter bedrooms",
+          "bathrooms": "Bathrooms",
+          "bathroomsHint": "How many bathrooms does your home have?",
+          "bathroomsError": "Please enter bathrooms",
+          "area": "Area",
+          "areaHint": "How many area does your home have?",
+          "areaError": "Please enter area",
+          "apartment": "Apartment",
+          "villa": "Villa",
+          "condo": "Condo",
+          "bungalow": "Bungalow",
+          "hotel": "Hotel"
+        },
         "mealPlanning": {
           "otherServicesTitle": "Other services",
           "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
@@ -1115,7 +1157,8 @@
             "locallyMade": "Locally made",
             "therapy": "Therapies",
             "volunteer": "Volunteer",
-            "adventures": "Adventures"
+            "adventures": "Adventures",
+            "realEstate": "Real Estate"
           }
         },
         "AllServiceView": {
@@ -1463,6 +1506,18 @@
             "petSitting": {
               "title": "Pet sitting",
               "description": "Ensuring your pet is well cared for while you’re away."
+            },
+            "photography": {
+              "title": "Photography",
+              "description": "Keep your space spotless with professional cleaners."
+            },
+            "beauty": {
+              "title": "Beauty",
+              "description": "Keep your space spotless with professional cleaners."
+            },
+            "tattoo": {
+              "title": "Tattoo",
+              "description": "Keep your space spotless with professional cleaners."
             },
             "uncategorized": {
               "title": "Uncategorized",
@@ -1986,7 +2041,11 @@
               "volunteer": "Volunteer",
               "entertainment": "Event Planners",
               "danceStudio": "Dance Studio",
-              "mealPlanning": "Meal Planning"
+              "mealPlanning": "Meal Planning",
+              "photography": "Photography",
+              "beautySalon": "Beauty Salon",
+              "tattooArtist": "Tattoo Artist",
+              "realEstate": "Real Estate"
             }
           }
         },

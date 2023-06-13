@@ -67,6 +67,10 @@ class AllServiceListViewController {
         "icon": aFood,
         "title": "food",
       },
+      MezService.RealEstate: {
+        "icon": aFood,
+        "title": "realEstate",
+      },
     });
   }
 

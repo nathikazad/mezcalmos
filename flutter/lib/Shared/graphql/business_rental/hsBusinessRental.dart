@@ -296,6 +296,121 @@ Future<List<RentalCard>> get_business_home_rentals(
   }
 }
 
+Future<List<RentalCard>> get_real_estate(
+    {required double distance,
+    required Location fromLocation,
+    int? offset,
+    int? limit,
+    required bool withCache}) async {
+  final List<RentalCard> _homes = <RentalCard>[];
+
+  final QueryResult<Query$get_real_estates> response = await _db.graphQLClient
+      .query$get_real_estates(Options$Query$get_real_estates(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$get_real_estates(
+              distance: distance,
+              location: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+              offset: offset,
+              limit: limit)));
+
+  mezDbgPrint("get_real_estates $response");
+
+  if (response.parsedData?.business_get_home_rentals != null) {
+    response.parsedData?.business_get_home_rentals
+        .forEach((Query$get_real_estates$business_get_home_rentals data) async {
+      _homes.add(RentalCard(
+          businessName: data.rental.business.details.name,
+          currency: data.rental.business.details.currency.toCurrency(),
+          rental: Rental(
+            category1: data.rental.details.category1.toRentalCategory1(),
+            details: BusinessItemDetails(
+              id: data.rental.id,
+              nameId: data.rental.details.name_id,
+              descriptionId: data.rental.details.description_id,
+              name: toLanguageMap(
+                  translations: data.rental.details.name.translations),
+              position: data.rental.details.position,
+              businessId: data.rental.business.id,
+              available: data.rental.details.available,
+              image: data.rental.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+              cost: constructBusinessServiceCost(data.rental.details.cost),
+              additionalParameters: data.rental.details.additional_parameters,
+            ),
+            bathrooms: data.bathrooms,
+            bedrooms: data.bedrooms,
+            gpsLocation: Location(
+                lat: data.gps_location.latitude,
+                lng: data.gps_location.longitude,
+                address: data.address),
+            homeType: data.home_type.toHomeType(),
+          )));
+    });
+    return _homes;
+  } else {
+    return [];
+  }
+}
+
+Future<List<RentalCard>> get_business_real_estate(
+    {required int busniessId,
+    int? offset,
+    int? limit,
+    required bool withCache}) async {
+  final List<RentalCard> _homes = <RentalCard>[];
+
+  final QueryResult<Query$get_business_real_estate> response = await _db
+      .graphQLClient
+      .query$get_business_real_estate(Options$Query$get_business_real_estate(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$get_business_real_estate(
+              businessId: busniessId, offset: offset, limit: limit)));
+
+  mezDbgPrint("get_business_real_estate $response");
+
+  if (response.parsedData?.business_home_rental != null) {
+    response.parsedData?.business_home_rental.forEach(
+        (Query$get_business_real_estate$business_home_rental data) async {
+      _homes.add(RentalCard(
+          businessName: data.rental.business.details.name,
+          currency: data.rental.business.details.currency.toCurrency(),
+          rental: Rental(
+            id: data.rental.id,
+            category1: data.rental.details.category1.toRentalCategory1(),
+            details: BusinessItemDetails(
+              id: data.rental.details.id,
+              name: toLanguageMap(
+                  translations: data.rental.details.name.translations),
+              position: data.rental.details.position,
+              businessId: data.rental.business.id,
+              available: data.rental.details.available,
+              image: data.rental.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+              cost: constructBusinessServiceCost(data.rental.details.cost),
+              additionalParameters: data.rental.details.additional_parameters,
+            ),
+            bathrooms: data.bathrooms,
+            bedrooms: data.bedrooms,
+            gpsLocation: Location(
+                lat: data.gps_location.latitude,
+                lng: data.gps_location.longitude,
+                address: data.address),
+            homeType: data.home_type.toHomeType(),
+          )));
+    });
+    return _homes;
+  } else {
+    return [];
+  }
+}
+
 Future<List<RentalCard>> get_business_rentals(
     {required int busniessId,
     int? offset,

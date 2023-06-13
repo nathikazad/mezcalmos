@@ -55,6 +55,21 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
           serviceCategory: ServiceCategory1.PetSitting,
         );
         break;
+      case MezService.Photography:
+        CustServicesListView.navigate(
+          serviceCategory: ServiceCategory1.Photography,
+        );
+        break;
+      case MezService.Beauty:
+        CustServicesListView.navigate(
+          serviceCategory: ServiceCategory1.Beauty,
+        );
+        break;
+      case MezService.Tattoo:
+        CustServicesListView.navigate(
+          serviceCategory: ServiceCategory1.Tattoo,
+        );
+        break;
     }
   }
 

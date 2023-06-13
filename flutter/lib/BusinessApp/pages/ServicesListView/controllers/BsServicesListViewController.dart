@@ -5,6 +5,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsOtherServiceView/controller/BsOtherServiceViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRealEstateView/BsRealEstateView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -122,6 +123,7 @@ class BsServicesListViewController {
   BusinessProfileItem otherServices() {
     OtherServiceType getSimilarType() {
       switch (businessProfile) {
+        case BusinessProfile.RealEstate:
         case BusinessProfile.SurfShop:
         case BusinessProfile.VehicleRental:
         case BusinessProfile.HomeRental:
@@ -142,6 +144,9 @@ class BsServicesListViewController {
         case BusinessProfile.CleaningService:
         case BusinessProfile.PetSitting:
         case BusinessProfile.MealPlanning:
+        case BusinessProfile.Photography:
+        case BusinessProfile.BeautySalon:
+        case BusinessProfile.TattooArtist:
           return OtherServiceType.Service;
       }
     }
@@ -401,6 +406,53 @@ class BsServicesListViewController {
           ),
           otherServices(),
         ];
+      case BusinessProfile.Photography:
+        return [
+          BusinessProfileItem(
+            title: serviceTitleLangKey,
+            subtitle: serviceSubtitleLangKey,
+            route: () async {
+              await navigateToService(
+                  serviceCategory: ServiceCategory1.Photography);
+            },
+          ),
+          otherServices(),
+        ];
+      case BusinessProfile.BeautySalon:
+        return [
+          BusinessProfileItem(
+            title: serviceTitleLangKey,
+            subtitle: serviceSubtitleLangKey,
+            route: () async {
+              await navigateToService(serviceCategory: ServiceCategory1.Beauty);
+            },
+          ),
+          otherServices(),
+        ];
+      case BusinessProfile.TattooArtist:
+        return [
+          BusinessProfileItem(
+            title: serviceTitleLangKey,
+            subtitle: serviceSubtitleLangKey,
+            route: () async {
+              await navigateToService(serviceCategory: ServiceCategory1.Tattoo);
+            },
+
+          ),
+          otherServices(),
+        ];
+      case BusinessProfile.RealEstate:
+        return [
+          BusinessProfileItem(
+            title: rentalTitleLangKey,
+            subtitle: rentalSubtitleLangKey,
+            route: () async {
+              mezDbgPrint("Details id here ========$businessDetailsId");
+              await navigateToRealEstate();
+            },
+          ),
+          otherServices(),
+        ];
     }
   }
 
@@ -436,6 +488,14 @@ class BsServicesListViewController {
     bool? refetch = await BsOpHomeRentalView.navigate(
         businessDetailsId: businessDetailsId, businessId: businessId, id: id);
     if (refetch == true) unawaited(_fetchHomeRentals());
+  }
+
+  Future<void> navigateToRealEstate({
+    int? id,
+  }) async {
+    bool? refetch = await BsRealEstateView.navigate(
+        businessDetailsId: businessDetailsId, businessId: businessId, id: id);
+    if (refetch == true) unawaited(_fetchRealEstate());
   }
 
   Future<void> navigateToService({
@@ -520,6 +580,15 @@ class BsServicesListViewController {
       withCache: false,
     );
     _isFetchingSingle.value = false;
+  }
+
+  Future<void> _fetchRealEstate() async {
+    // _isFetchingSingle.value = true;
+    // homeRentals.value = await get_business_home_rentals(
+    //   busniessId: businessId,
+    //   withCache: false,
+    // );
+    // _isFetchingSingle.value = false;
   }
 
   Future<int?> changeItemAvailability(
