@@ -1,5 +1,5 @@
 
-alter table "service_provider"."details" add column "timezone" text
+alter table "service_provider"."details" add column "time_zone" text
  null default 'America/Mexico_City';
 
 CREATE OR REPLACE FUNCTION service_provider.is_open(details service_provider.details)
