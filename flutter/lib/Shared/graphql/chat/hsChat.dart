@@ -88,6 +88,7 @@ Future<HasuraChat?> get_service_provider_customer_chat(
   final QueryResult<Query$get_service_provider_customer_chat> _chat =
       await _hasuraDb.graphQLClient.query$get_service_provider_customer_chat(
     Options$Query$get_service_provider_customer_chat(
+      fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Query$get_service_provider_customer_chat(
         customer_id: customerId,
         service_provider_id: serviceProviderId,
