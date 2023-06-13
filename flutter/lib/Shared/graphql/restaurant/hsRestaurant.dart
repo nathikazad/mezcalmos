@@ -29,7 +29,6 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
   if (response.parsedData?.restaurant_restaurant != null) {
     response.parsedData?.restaurant_restaurant
         .forEach((Query$getRestaurants$restaurant_restaurant data) async {
-      mezDbgPrint(" desc=============>>>🥹=======>${data.details?.is_open}");
       _restaurants.add(Restaurant(
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),

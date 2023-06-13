@@ -133,11 +133,16 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         in_json: {
           name: i.name,
           image : i.image,
-          selected_options: i.selectedOptions
+          selected_options: parseSelectedOptions(i.selectedOptions)
         },
       };
     })
   });
+
+
+  
+
+  
 
   if(response.insert_restaurant_order_one == null) {
     throw new MezError("orderCreationError");
@@ -231,5 +236,17 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
     }
   }
   return {restaurantOrder, deliveryOrder}
+
+  function parseSelectedOptions(selectedOptions: object | string) {
+    if (typeof selectedOptions === 'string') {
+      try {
+        return JSON.parse(selectedOptions);
+      } catch (e) {
+        // Handle JSON parsing error if needed
+        return null; // or any other default value
+      }
+    }
+    return selectedOptions;
+  }
 }
 
