@@ -66,12 +66,6 @@ query get_business_by_id($id: Int!) {
         }
         position
       }
-      home_rental {
-        bathrooms
-        bedrooms
-        gps_location
-        home_type
-      }
     }
     products {
       id

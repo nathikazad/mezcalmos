@@ -8,6 +8,7 @@ query getBusinessCart($customer_id: Int!) {
       offering_type
       time
       home {
+        available_for
         details {
           name_id
           description_id
@@ -34,6 +35,8 @@ query getBusinessCart($customer_id: Int!) {
             id
             name
             currency
+            accepted_payments
+            image
             location {
               gps
               address
@@ -187,7 +190,6 @@ query getBusinessCart($customer_id: Int!) {
       }
     }
     business_id
-    discount_value
     customer_id
     cost
   }
@@ -240,6 +242,7 @@ subscription listen_on_business_order_request($_id: Int!) {
       offering_type
       time
       home {
+        available_for
         details {
           name_id
           description_id
@@ -266,6 +269,8 @@ subscription listen_on_business_order_request($_id: Int!) {
             id
             name
             currency
+            accepted_payments
+            image
             location {
               gps
               address
@@ -419,7 +424,6 @@ subscription listen_on_business_order_request($_id: Int!) {
       }
     }
     business_id
-    discount_value
     status
     customer_id
     cost
