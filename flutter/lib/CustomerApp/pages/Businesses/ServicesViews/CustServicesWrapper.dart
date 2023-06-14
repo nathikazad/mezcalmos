@@ -85,8 +85,15 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
         return aMealPrep;
       case MezService.PetSitting:
         return aPetSitting;
+      case MezService.Beauty:
+        return aBeauty;
+      case MezService.Photography:
+        return aPhotography;
+      case MezService.Tattoo:
+        return aTattoo;
+      default:
+        return aUncategorized;
     }
-    return aUncategorized;
   }
 
   @override
