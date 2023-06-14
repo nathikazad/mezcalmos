@@ -37,8 +37,8 @@ Future<ServiceLink?> get_service_link_by_id(
     mezDbgPrint(
         "🚨🚨🚨 hasura query service links faild \n  Data from response \n ${response.data} \n Exceptions from hasura \n ${response.exception}");
   } else if (response.parsedData!.service_provider_service_link_by_pk != null) {
-    Query$getServiceProviderLinks$service_provider_service_link_by_pk data =
-        response.parsedData!.service_provider_service_link_by_pk!;
+    final Query$getServiceProviderLinks$service_provider_service_link_by_pk
+        data = response.parsedData!.service_provider_service_link_by_pk!;
     mezDbgPrint("✅ Getting service links done ✅ \n ${data.toJson()}");
     return ServiceLink(
         id: data.id,
@@ -96,12 +96,13 @@ Future<Service?> get_service_details_by_id(
     throwError(res.exception);
   }
 
-  Query$getServiceDetails$service_provider_details_by_pk data =
+  final Query$getServiceDetails$service_provider_details_by_pk data =
       res.parsedData!.service_provider_details_by_pk!;
   final PaymentInfo paymentInfo = PaymentInfo.fromData(
       acceptedPayments: data.accepted_payments, stripeInfo: data.stripe_info);
 
   return MainService(
+      isOpen: data.is_open ?? false,
       deliveryCost: null,
       info: ServiceInfo(
           descriptionId: data.description_id,
@@ -139,7 +140,7 @@ Future<ServiceInfo?> get_service_info(
   if (res.parsedData?.service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
-  Query$getServiceInfo$service_provider_details_by_pk data =
+  final Query$getServiceInfo$service_provider_details_by_pk data =
       res.parsedData!.service_provider_details_by_pk!;
 
   return ServiceInfo(
@@ -170,7 +171,7 @@ Future<PaymentInfo?> get_service_payment_info(
   if (res.parsedData?.service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
-  Query$getServicePaymentInfo$service_provider_details_by_pk data =
+  final Query$getServicePaymentInfo$service_provider_details_by_pk data =
       res.parsedData!.service_provider_details_by_pk!;
 
   final PaymentInfo paymentInfo = PaymentInfo.fromData(
@@ -194,10 +195,10 @@ Future<MezLocation?> get_service_location(
     throwError(res.exception);
   }
   mezDbgPrint("👋 called get location ===========>${res.data}");
-  Query$getServiceInfo$service_provider_details_by_pk data =
+  final Query$getServiceInfo$service_provider_details_by_pk data =
       res.parsedData!.service_provider_details_by_pk!;
 
-  MezLocation mezLocation =
+  final MezLocation mezLocation =
       MezLocation.fromHasura(data.location.gps, data.location.address);
 
   return mezLocation;
@@ -214,11 +215,12 @@ Future<cModels.Schedule?> get_service_schedule(
           serviceDetailsId: serviceDetailsId),
     ),
   );
-  mezDbgPrint("👋 called get schedule ===========>${res.data}");
+  mezDbgPrint(
+      "👋 called get schedule of $serviceDetailsId ===========>${res.data}");
   if (res.parsedData?.service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
-  Query$getServiceSchedule$service_provider_details_by_pk data =
+  final Query$getServiceSchedule$service_provider_details_by_pk data =
       res.parsedData!.service_provider_details_by_pk!;
 
   if (data.schedule != null) {
@@ -300,8 +302,8 @@ Future<ServiceInfo> update_service_info(
   if (res.parsedData?.update_service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
-  Mutation$updateServiceDetails$update_service_provider_details_by_pk data =
-      res.parsedData!.update_service_provider_details_by_pk!;
+  final Mutation$updateServiceDetails$update_service_provider_details_by_pk
+      data = res.parsedData!.update_service_provider_details_by_pk!;
   return ServiceInfo(
       descriptionId: data.description_id,
       description: (data.description?.translations != null)
@@ -403,7 +405,7 @@ Future<cModels.ServiceProviderLanguage?> get_service_lang(
     {required int detailsId}) async {
   final QueryResult<Query$getServiceLanguage> response = await _db.graphQLClient
       .query$getServiceLanguage(Options$Query$getServiceLanguage(
-          fetchPolicy: FetchPolicy.cacheFirst,
+          fetchPolicy: FetchPolicy.networkOnly,
           variables:
               Variables$Query$getServiceLanguage(serviceDetailsId: detailsId)));
   if (response.hasException) {
@@ -415,4 +417,16 @@ Future<cModels.ServiceProviderLanguage?> get_service_lang(
         response.parsedData?.service_provider_details_by_pk!.language);
   }
   return null;
+}
+
+Future<bool?> get_service_is_open({required int detailsId}) async {
+  final QueryResult<Query$getServiceIsOpen> res = await _db.graphQLClient
+      .query$getServiceIsOpen(Options$Query$getServiceIsOpen(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables:
+              Variables$Query$getServiceIsOpen(serviceDetailsId: detailsId)));
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  return res.parsedData?.service_provider_details_by_pk?.is_open;
 }

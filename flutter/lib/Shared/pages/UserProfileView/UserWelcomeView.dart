@@ -1,13 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TextInputHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/components/UserProfileImage.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserWelcomeView"];
@@ -40,6 +44,8 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
         return false;
       },
       child: Scaffold(
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
+        drawer: MezSideMenu(),
         resizeToAvoidBottomInset: false,
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Lang),
         floatingActionButton: Obx(
@@ -88,6 +94,9 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     child: TextFormField(
+                      initialValue: AppleSignInCreds.appleName ??
+                          FirebaseAuth.instance.currentUser?.displayName ??
+                          '',
                       onChanged: (String v) {
                         viewController.name.value = v;
                       },
@@ -103,10 +112,10 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
                       ),
                     ),
                   ),
-                  Padding(
-                      padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                  ))
+                  // Padding(
+                  //     padding: EdgeInsets.only(
+                  //   bottom: MediaQuery.of(context).viewInsets.bottom,
+                  // ))
                 ],
               ),
             ),

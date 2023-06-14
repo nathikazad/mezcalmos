@@ -3077,8 +3077,8 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$details$name$
 class Variables$Query$get_event_by_category {
   factory Variables$Query$get_event_by_category({
     List<String>? categories1,
-    required double distance,
-    required Geography from,
+    double? distance,
+    Geography? from,
     int? limit,
     int? offset,
     List<String>? categories2,
@@ -3087,8 +3087,8 @@ class Variables$Query$get_event_by_category {
   }) =>
       Variables$Query$get_event_by_category._({
         if (categories1 != null) r'categories1': categories1,
-        r'distance': distance,
-        r'from': from,
+        if (distance != null) r'distance': distance,
+        if (from != null) r'from': from,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
         if (categories2 != null) r'categories2': categories2,
@@ -3106,10 +3106,14 @@ class Variables$Query$get_event_by_category {
       result$data['categories1'] =
           (l$categories1 as List<dynamic>?)?.map((e) => (e as String)).toList();
     }
-    final l$distance = data['distance'];
-    result$data['distance'] = (l$distance as num).toDouble();
-    final l$from = data['from'];
-    result$data['from'] = geographyFromJson(l$from);
+    if (data.containsKey('distance')) {
+      final l$distance = data['distance'];
+      result$data['distance'] = (l$distance as num?)?.toDouble();
+    }
+    if (data.containsKey('from')) {
+      final l$from = data['from'];
+      result$data['from'] = l$from == null ? null : geographyFromJson(l$from);
+    }
     if (data.containsKey('limit')) {
       final l$limit = data['limit'];
       result$data['limit'] = (l$limit as int?);
@@ -3140,8 +3144,8 @@ class Variables$Query$get_event_by_category {
   Map<String, dynamic> _$data;
 
   List<String>? get categories1 => (_$data['categories1'] as List<String>?);
-  double get distance => (_$data['distance'] as double);
-  Geography get from => (_$data['from'] as Geography);
+  double? get distance => (_$data['distance'] as double?);
+  Geography? get from => (_$data['from'] as Geography?);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
   List<String>? get categories2 => (_$data['categories2'] as List<String>?);
@@ -3153,10 +3157,14 @@ class Variables$Query$get_event_by_category {
       final l$categories1 = categories1;
       result$data['categories1'] = l$categories1?.map((e) => e).toList();
     }
-    final l$distance = distance;
-    result$data['distance'] = l$distance;
-    final l$from = from;
-    result$data['from'] = geographyToJson(l$from);
+    if (_$data.containsKey('distance')) {
+      final l$distance = distance;
+      result$data['distance'] = l$distance;
+    }
+    if (_$data.containsKey('from')) {
+      final l$from = from;
+      result$data['from'] = l$from == null ? null : geographyToJson(l$from);
+    }
     if (_$data.containsKey('limit')) {
       final l$limit = limit;
       result$data['limit'] = l$limit;
@@ -3217,11 +3225,18 @@ class Variables$Query$get_event_by_category {
     }
     final l$distance = distance;
     final lOther$distance = other.distance;
+    if (_$data.containsKey('distance') !=
+        other._$data.containsKey('distance')) {
+      return false;
+    }
     if (l$distance != lOther$distance) {
       return false;
     }
     final l$from = from;
     final lOther$from = other.from;
+    if (_$data.containsKey('from') != other._$data.containsKey('from')) {
+      return false;
+    }
     if (l$from != lOther$from) {
       return false;
     }
@@ -3319,8 +3334,8 @@ class Variables$Query$get_event_by_category {
               ? null
               : Object.hashAll(l$categories1.map((v) => v))
           : const {},
-      l$distance,
-      l$from,
+      _$data.containsKey('distance') ? l$distance : const {},
+      _$data.containsKey('from') ? l$from : const {},
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
       _$data.containsKey('categories2')
@@ -3390,9 +3405,8 @@ class _CopyWithImpl$Variables$Query$get_event_by_category<TRes>
         ..._instance._$data,
         if (categories1 != _undefined)
           'categories1': (categories1 as List<String>?),
-        if (distance != _undefined && distance != null)
-          'distance': (distance as double),
-        if (from != _undefined && from != null) 'from': (from as Geography),
+        if (distance != _undefined) 'distance': (distance as double?),
+        if (from != _undefined) 'from': (from as Geography?),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
         if (categories2 != _undefined)
@@ -3599,7 +3613,7 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'distance')),
         type: NamedTypeNode(
           name: NameNode(value: 'Float'),
-          isNonNull: true,
+          isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -3608,7 +3622,7 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'from')),
         type: NamedTypeNode(
           name: NameNode(value: 'geography'),
-          isNonNull: true,
+          isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -3754,30 +3768,26 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
                         name: NameNode(value: 'details'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: 'location'),
+                            name: NameNode(value: 'approved'),
                             value: ObjectValueNode(fields: [
                               ObjectFieldNode(
-                                name: NameNode(value: 'gps'),
-                                value: ObjectValueNode(fields: [
-                                  ObjectFieldNode(
-                                    name: NameNode(value: '_st_d_within'),
-                                    value: ObjectValueNode(fields: [
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'distance'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'distance')),
-                                      ),
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'from'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'from')),
-                                      ),
-                                    ]),
-                                  )
-                                ]),
+                                name: NameNode(value: '_eq'),
+                                value: BooleanValueNode(value: true),
                               )
                             ]),
-                          )
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'open_status'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_neq'),
+                                value: StringValueNode(
+                                  value: 'closedIndefinitely',
+                                  isBlock: false,
+                                ),
+                              )
+                            ]),
+                          ),
                         ]),
                       )
                     ]),
@@ -3793,6 +3803,26 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'offset'),
             value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'referral_points'),
+                        value: EnumValueNode(
+                            name: NameNode(value: 'desc_nulls_last')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -4069,7 +4099,7 @@ class Options$Query$get_event_by_category
     extends graphql.QueryOptions<Query$get_event_by_category> {
   Options$Query$get_event_by_category({
     String? operationName,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -4077,7 +4107,7 @@ class Options$Query$get_event_by_category
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -4094,7 +4124,7 @@ class WatchOptions$Query$get_event_by_category
     extends graphql.WatchQueryOptions<Query$get_event_by_category> {
   WatchOptions$Query$get_event_by_category({
     String? operationName,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -4105,7 +4135,7 @@ class WatchOptions$Query$get_event_by_category
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -4125,10 +4155,10 @@ class FetchMoreOptions$Query$get_event_by_category
     extends graphql.FetchMoreOptions {
   FetchMoreOptions$Query$get_event_by_category({
     required graphql.UpdateQuery updateQuery,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
   }) : super(
           updateQuery: updateQuery,
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           document: documentNodeQueryget_event_by_category,
         );
 }
@@ -4136,35 +4166,35 @@ class FetchMoreOptions$Query$get_event_by_category
 extension ClientExtension$Query$get_event_by_category on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$get_event_by_category>>
       query$get_event_by_category(
-              Options$Query$get_event_by_category options) async =>
-          await this.query(options);
-  graphql.ObservableQuery<Query$get_event_by_category>
-      watchQuery$get_event_by_category(
-              WatchOptions$Query$get_event_by_category options) =>
-          this.watchQuery(options);
+              [Options$Query$get_event_by_category? options]) async =>
+          await this.query(options ?? Options$Query$get_event_by_category());
+  graphql.ObservableQuery<
+      Query$get_event_by_category> watchQuery$get_event_by_category(
+          [WatchOptions$Query$get_event_by_category? options]) =>
+      this.watchQuery(options ?? WatchOptions$Query$get_event_by_category());
   void writeQuery$get_event_by_category({
     required Query$get_event_by_category data,
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
           operation: graphql.Operation(
               document: documentNodeQueryget_event_by_category),
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? const {},
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
   Query$get_event_by_category? readQuery$get_event_by_category({
-    required Variables$Query$get_event_by_category variables,
+    Variables$Query$get_event_by_category? variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
         operation:
             graphql.Operation(document: documentNodeQueryget_event_by_category),
-        variables: variables.toJson(),
+        variables: variables?.toJson() ?? const {},
       ),
       optimistic: optimistic,
     );
@@ -6374,7 +6404,28 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
                                 ]),
                               )
                             ]),
-                          )
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'approved'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_eq'),
+                                value: BooleanValueNode(value: true),
+                              )
+                            ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'open_status'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_neq'),
+                                value: StringValueNode(
+                                  value: 'closedIndefinitely',
+                                  isBlock: false,
+                                ),
+                              )
+                            ]),
+                          ),
                         ]),
                       )
                     ]),
@@ -6390,6 +6441,26 @@ const documentNodeQueryget_class_by_category = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'offset'),
             value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'referral_points'),
+                        value: EnumValueNode(
+                            name: NameNode(value: 'desc_nulls_last')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -8604,7 +8675,28 @@ const documentNodeQuerynumber_of_classes = DocumentNode(definitions: [
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   )
                 ]),
@@ -9393,7 +9485,28 @@ const documentNodeQuerynumber_of_therapy = DocumentNode(definitions: [
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   )
                 ]),
@@ -10181,7 +10294,28 @@ const documentNodeQuerynumber_of_events = DocumentNode(definitions: [
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   )
                 ]),
@@ -10983,7 +11117,28 @@ const documentNodeQuerynumber_of_volunteer = DocumentNode(definitions: [
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   )
                 ]),
@@ -11784,7 +11939,28 @@ const documentNodeQuerynumber_of_adventure = DocumentNode(definitions: [
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   )
                 ]),
@@ -19692,6 +19868,540 @@ class _CopyWithStubImpl$Mutation$add_class$insert_business_event_one<TRes>
 
   call({
     int? details_id,
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$delete_business_event {
+  factory Variables$Mutation$delete_business_event({required int id}) =>
+      Variables$Mutation$delete_business_event._({
+        r'id': id,
+      });
+
+  Variables$Mutation$delete_business_event._(this._$data);
+
+  factory Variables$Mutation$delete_business_event.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Mutation$delete_business_event._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$delete_business_event<
+          Variables$Mutation$delete_business_event>
+      get copyWith => CopyWith$Variables$Mutation$delete_business_event(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$delete_business_event) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$delete_business_event<TRes> {
+  factory CopyWith$Variables$Mutation$delete_business_event(
+    Variables$Mutation$delete_business_event instance,
+    TRes Function(Variables$Mutation$delete_business_event) then,
+  ) = _CopyWithImpl$Variables$Mutation$delete_business_event;
+
+  factory CopyWith$Variables$Mutation$delete_business_event.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$delete_business_event;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Mutation$delete_business_event<TRes>
+    implements CopyWith$Variables$Mutation$delete_business_event<TRes> {
+  _CopyWithImpl$Variables$Mutation$delete_business_event(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$delete_business_event _instance;
+
+  final TRes Function(Variables$Mutation$delete_business_event) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Mutation$delete_business_event._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$delete_business_event<TRes>
+    implements CopyWith$Variables$Mutation$delete_business_event<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$delete_business_event(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Mutation$delete_business_event {
+  Mutation$delete_business_event({
+    this.delete_business_event_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_business_event.fromJson(Map<String, dynamic> json) {
+    final l$delete_business_event_by_pk = json['delete_business_event_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_business_event(
+      delete_business_event_by_pk: l$delete_business_event_by_pk == null
+          ? null
+          : Mutation$delete_business_event$delete_business_event_by_pk.fromJson(
+              (l$delete_business_event_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$delete_business_event$delete_business_event_by_pk?
+      delete_business_event_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delete_business_event_by_pk = delete_business_event_by_pk;
+    _resultData['delete_business_event_by_pk'] =
+        l$delete_business_event_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delete_business_event_by_pk = delete_business_event_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delete_business_event_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$delete_business_event) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delete_business_event_by_pk = delete_business_event_by_pk;
+    final lOther$delete_business_event_by_pk =
+        other.delete_business_event_by_pk;
+    if (l$delete_business_event_by_pk != lOther$delete_business_event_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_business_event
+    on Mutation$delete_business_event {
+  CopyWith$Mutation$delete_business_event<Mutation$delete_business_event>
+      get copyWith => CopyWith$Mutation$delete_business_event(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$delete_business_event<TRes> {
+  factory CopyWith$Mutation$delete_business_event(
+    Mutation$delete_business_event instance,
+    TRes Function(Mutation$delete_business_event) then,
+  ) = _CopyWithImpl$Mutation$delete_business_event;
+
+  factory CopyWith$Mutation$delete_business_event.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$delete_business_event;
+
+  TRes call({
+    Mutation$delete_business_event$delete_business_event_by_pk?
+        delete_business_event_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$delete_business_event$delete_business_event_by_pk<TRes>
+      get delete_business_event_by_pk;
+}
+
+class _CopyWithImpl$Mutation$delete_business_event<TRes>
+    implements CopyWith$Mutation$delete_business_event<TRes> {
+  _CopyWithImpl$Mutation$delete_business_event(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_business_event _instance;
+
+  final TRes Function(Mutation$delete_business_event) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delete_business_event_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_business_event(
+        delete_business_event_by_pk: delete_business_event_by_pk == _undefined
+            ? _instance.delete_business_event_by_pk
+            : (delete_business_event_by_pk
+                as Mutation$delete_business_event$delete_business_event_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$delete_business_event$delete_business_event_by_pk<TRes>
+      get delete_business_event_by_pk {
+    final local$delete_business_event_by_pk =
+        _instance.delete_business_event_by_pk;
+    return local$delete_business_event_by_pk == null
+        ? CopyWith$Mutation$delete_business_event$delete_business_event_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$delete_business_event$delete_business_event_by_pk(
+            local$delete_business_event_by_pk,
+            (e) => call(delete_business_event_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$delete_business_event<TRes>
+    implements CopyWith$Mutation$delete_business_event<TRes> {
+  _CopyWithStubImpl$Mutation$delete_business_event(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$delete_business_event$delete_business_event_by_pk?
+        delete_business_event_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$delete_business_event$delete_business_event_by_pk<TRes>
+      get delete_business_event_by_pk =>
+          CopyWith$Mutation$delete_business_event$delete_business_event_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationdelete_business_event = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'delete_business_event'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delete_business_event_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$delete_business_event _parserFn$Mutation$delete_business_event(
+        Map<String, dynamic> data) =>
+    Mutation$delete_business_event.fromJson(data);
+typedef OnMutationCompleted$Mutation$delete_business_event = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$delete_business_event?,
+);
+
+class Options$Mutation$delete_business_event
+    extends graphql.MutationOptions<Mutation$delete_business_event> {
+  Options$Mutation$delete_business_event({
+    String? operationName,
+    required Variables$Mutation$delete_business_event variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$delete_business_event? onCompleted,
+    graphql.OnMutationUpdate<Mutation$delete_business_event>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$delete_business_event(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationdelete_business_event,
+          parserFn: _parserFn$Mutation$delete_business_event,
+        );
+
+  final OnMutationCompleted$Mutation$delete_business_event?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$delete_business_event
+    extends graphql.WatchQueryOptions<Mutation$delete_business_event> {
+  WatchOptions$Mutation$delete_business_event({
+    String? operationName,
+    required Variables$Mutation$delete_business_event variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationdelete_business_event,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$delete_business_event,
+        );
+}
+
+extension ClientExtension$Mutation$delete_business_event
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$delete_business_event>>
+      mutate$delete_business_event(
+              Options$Mutation$delete_business_event options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$delete_business_event>
+      watchMutation$delete_business_event(
+              WatchOptions$Mutation$delete_business_event options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$delete_business_event$delete_business_event_by_pk {
+  Mutation$delete_business_event$delete_business_event_by_pk({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_business_event$delete_business_event_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_business_event$delete_business_event_by_pk(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$delete_business_event$delete_business_event_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_business_event$delete_business_event_by_pk
+    on Mutation$delete_business_event$delete_business_event_by_pk {
+  CopyWith$Mutation$delete_business_event$delete_business_event_by_pk<
+          Mutation$delete_business_event$delete_business_event_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$delete_business_event$delete_business_event_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$delete_business_event$delete_business_event_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$delete_business_event$delete_business_event_by_pk(
+    Mutation$delete_business_event$delete_business_event_by_pk instance,
+    TRes Function(Mutation$delete_business_event$delete_business_event_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$delete_business_event$delete_business_event_by_pk;
+
+  factory CopyWith$Mutation$delete_business_event$delete_business_event_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$delete_business_event$delete_business_event_by_pk;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$delete_business_event$delete_business_event_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_business_event$delete_business_event_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$delete_business_event$delete_business_event_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_business_event$delete_business_event_by_pk _instance;
+
+  final TRes Function(
+      Mutation$delete_business_event$delete_business_event_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_business_event$delete_business_event_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$delete_business_event$delete_business_event_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_business_event$delete_business_event_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$delete_business_event$delete_business_event_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
     int? id,
     String? $__typename,
   }) =>

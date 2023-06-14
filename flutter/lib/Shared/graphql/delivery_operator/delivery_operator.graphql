@@ -4,6 +4,8 @@ query getOperatorByUserId($userId: Int!) {
     operator_details {
       owner
       status
+      online
+      id
     }
     user_id
     user {

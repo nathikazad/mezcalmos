@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper']['rental'];
+    ['pages']['Businesses']['RentalsView']['CustRentalWrapper'];
 
 //TO DO
 class CustRentalWrapper extends StatefulWidget {
@@ -34,7 +34,7 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
   @override
   void initState() {
     super.initState();
-    serviceTree = MezRouter.bodyArguments!["serviceTree"] as List<ServiceTree>;
+    serviceTree = MezRouter.bodyArguments?["serviceTree"] as List<ServiceTree>;
   }
 
   void navigateToListView(MezService mezService) {
@@ -69,7 +69,7 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: '${_i18n()['title']}',
+        title: '${_i18n()['rentals']}',
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -83,10 +83,10 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
                   navigateToListView(serviceTree[index].name);
                 },
                 url: getCardImage(serviceTree[index].name),
-                title: _i18n()[serviceTree[index].name.name.toLowerCase()]
-                    ['title'],
-                subtitle: _i18n()[serviceTree[index].name.name.toLowerCase()]
-                    ['description'],
+                title:
+                    '${_i18n()[serviceTree[index].name.toFirebaseFormatString()]['title']}',
+                subtitle:
+                    '${_i18n()[serviceTree[index].name.toFirebaseFormatString()]['description']}',
               );
             },
           ),

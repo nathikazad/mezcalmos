@@ -46,6 +46,7 @@ class RentalCard extends Rental {
           bedrooms: rental.bedrooms,
           homeType: rental.homeType,
           gpsLocation: rental.gpsLocation,
+          id: rental.id,
         );
 }
 
@@ -58,8 +59,15 @@ class EventCard extends Event {
     required this.currency,
   }) : super(
           scheduleType: event.scheduleType,
+          schedule: event.schedule,
           category1: event.category1,
           details: event.details,
+          startsAt: event.startsAt,
+          endsAt: event.endsAt,
+          tags: event.tags,
+          category2: event.category2,
+          gpsLocation: event.gpsLocation,
+          id: event.id,
         );
 
   bool get isClass {
@@ -80,6 +88,7 @@ class ProductCard extends Product {
   }) : super(
           category1: product.category1,
           details: product.details,
+          id: product.id,
         );
 }
 
@@ -93,6 +102,8 @@ class ServiceCard extends Service {
   }) : super(
           category1: service.category1,
           details: service.details,
+          id: service.id,
+          schedule: service.schedule,
         );
 }
 
@@ -126,6 +137,8 @@ class EventWithBusinessCard extends Event {
           tags: event.tags,
           gpsLocation: event.gpsLocation,
           category2: event.category2,
+          startsAt: event.startsAt,
+          endsAt: event.endsAt,
         );
 }
 

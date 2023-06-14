@@ -1,18 +1,114 @@
 {
   "BusinessApp": {
     "pages": {
+      "Components": {
+        "BsRentalCard": {
+          "hour": "hora",
+          "day": "día",
+          "week": "semana",
+          "month": "mes",
+          "person": "persona",
+          "total": "total",
+          "unit": "unidad",
+          "none": "ninguna"
+        },
+        "BsHomeRentalCard": {
+          "hour": "hora",
+          "day": "día",
+          "week": "semana",
+          "month": "mes",
+          "person": "persona",
+          "total": "total",
+          "unit": "unidad",
+          "none": "ningunauna"
+        },
+        "BsDeleteOfferButton": {
+          "title": "Eliminar la oferta",
+          "helperText": "¿Estás seguro de que quieres eliminar esta ofrenda?",
+          "buttonText": "Si, eliminar la oferta"
+        },
+        "BsServiceCard": {
+          "hour": "hora",
+          "day": "día",
+          "week": "semana",
+          "month": "mes",
+          "person": "persona",
+          "total": "total",
+          "unit": "unidad",
+          "none": "ninguna"
+        },
+        "BsProductCard": {
+          "hour": "hora",
+          "day": "día",
+          "week": "semana",
+          "month": "mes",
+          "person": "persona",
+          "total": "total",
+          "unit": "unidad",
+          "none": "ninguna"
+        },
+        "BsEventCard": {
+          "hour": "hora",
+          "day": "día",
+          "week": "semana",
+          "month": "mes",
+          "person": "persona",
+          "total": "total",
+          "unit": "unidad",
+          "none": "ninguna",
+          "free": "Gratis"
+        }
+      },
       "services": {
+        "weekdays": {
+          "monday": "Lunes",
+          "tuesday": "Martes",
+          "wednesday": "Miércoles",
+          "thursday": "Jueves",
+          "friday": "Viernes",
+          "saturday": "Sábado",
+          "sunday": "Domingo"
+        },
         "services": "Servicios",
         "service": "Servicio",
         "serviceType": "¿Qué tipo de servicio agregarás?",
         "addService": "Agregar servicio",
         "reorder": "Reordenar",
         "events": "Eventos",
+        "noServicesFound": "Todavía no se ha agregado ningún servicio",
+        "bodyMessage": "Al seleccionar \"Agregar servicio\", puede agregar su primer servicio y comenzar a construir su negocio en línea.",
         "event": {
           "event": "Evento",
-          "eventType": "Seleccione un tipo de evento",
-          "scheduleTypeError": "Seleccione un tipo de horario"
+          "class": "Clase",
+          "eventType": "Tipo de evento",
+          "classType": "Tipo de clase",
+          "scheduleTypeError": "Seleccione un tipo de horario",
+          "scheduled": "Programada",
+          "oneTime": "Una vez",
+          "onDemand": "Bajo demanda",
+          "startDate": "Fecha de inicio",
+          "endDate": "Fecha de fin",
+          "startTimeErrorText": "Por favor, selecciona la hora de inicio",
+          "endTimeErrorText": "Por favor, selecciona la hora de fin",
+          "endTimeBeforeErrorText": "La hora de fin debe ser posterior a la hora de inicio"
         },
+        "cleaning": "Servicio de limpieza",
+        "meal": "Servicio de planificación de comidas",
+        "petSittingService": "Servicio de mascotas",
+        "weeklySchedule": "Programación semanal",
+        "artProduct": "Productos de arte",
+        "careProduct": "Productos de cuidado personal",
+        "consumableProduct": "Productos consumibles",
+        "weeklyClass": "Clases semanales",
+        "oneTimeClass": "Talleres/retirarse",
+        "onDemandClass": "Lecciones privadas",
+        "weeklyEvent": "Eventos semanales",
+        "oneTimeEvent": "Próximos Eventos",
+        "onDemandEvent": "Eventos a pedido",
+        "experiences": "Experiencias",
+        "therapyEvent": "Terapia privada",
+        "vehicleRentals": "Alquiler de vehículos",
+        "surfRentals": "Alquiler de surf",
         "profile": "Perfil",
         "feed": "Alimentar",
         "messages": "Mensajes",
@@ -24,11 +120,11 @@
         "english": "Inglés",
         "spanish": "Español",
         "name": "Nombre",
-        "nameHint": "Añadir nombre de artículo",
-        "nameError": "Por favor, añada el nombre del artículo",
+        "nameHint": "Añadir nombre",
+        "nameError": "Por favor, añada el nombre",
         "description": "Descripción",
-        "descriptionHint": "Introduzca una descripción para su artículo",
-        "descriptionError": "Por favor, introduzca una descripción para su artículo",
+        "descriptionHint": "Introduzca una descripción",
+        "descriptionError": "Por favor, introduzca una descripción",
         "image": "Imagen",
         "imageInfo": "Sólo puedes subir hasta cinco imágenes.",
         "imageError": "Añada al menos una imagen",
@@ -36,8 +132,8 @@
         "category": "Categoría",
         "categoryHint": "Seleccione una categoría",
         "schedule": "Disponibilidad",
-        "scheduleHint": "Se deben seleccionar al menos dos días.",
-        "scheduleError": "Se deben seleccionar al menos dos días",
+        "scheduleHint": "Se deben seleccionar al menos un día.",
+        "scheduleError": "Se deben seleccionar al menos un día",
         "categoryError": "Por favor, seleccione una categoría",
         "locationLabel": "Seleccione una ubicación",
         "locationError": "Por favor, seleccione una ubicación",
@@ -79,10 +175,11 @@
         },
         "vehicleRental": {
           "rentalTitle": "Alquiler",
+          "surfRentalTitle": "Alquiler de surf",
           "rentalSubtitle": "A través de un servicio de alquiler, puede anunciar un vehículo en alquiler.",
           "motorcycle": "Motocicleta",
           "car": "Coche",
-          "aTB": "ATB",
+          "aTB": "ATV",
           "bicycle": "Bicicleta",
           "retro": "Retro",
           "scooter": "Scooter",
@@ -95,7 +192,8 @@
           "motorcycleTypeHint": "Seleccione su tipo de motocicleta",
           "length": "Longitud",
           "surfLength": "Longitud de la tabla de surf",
-          "surfLengthError": "Introduzca la longitud de la tabla de surf"
+          "surfLengthError": "Introduzca la longitud de la tabla de surf",
+          "feet": "Pies"
         },
         "yogaStudio": {
           "eventTitle": "Evento",
@@ -109,9 +207,29 @@
           "onDemandClass": "Lección privada",
           "onDemandClassLabel": "Clase no programada que un estudiante puede reservar con usted en función de su disponibilidad",
           "weeklyClass": "Clase semanal programada",
-          "weeklyClassLabel": "Clase programada que ocurre cada semana que ocurre en el grupo.",
+          "weeklyClassLabel": "Clase semanal programada que ocurre en el grupo.",
           "oneTimeClass": "Taller",
-          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular."
+          "oneTimeClassLabel": "Un taller educativo que ocurre en un día en particular.",
+          "retreat": "Retiro",
+          "retreatLabel": "Un retiro educativo que ocurre en un conjunto de días particulares."
+        },
+        "danceStudio": {
+          "eventTitle": "Evento",
+          "eventSubtitle": "El servicio de eventos se utiliza para planificar eventos para su negocio.",
+          "classTitle": "Clase",
+          "classSubtitle": "Un servicio de clase es cuando instruye a una clase para un estudiante.",
+          "weeklyEvent": "Evento semanal",
+          "weeklyEventLabel": "Evento programado que ocurre en una base de repetición semanal. Por ejemplo, los martes latinos por la noche.",
+          "oneTimeEvent": "Evento de una vez",
+          "oneTimeEventLabel": "Evento programado que ocurre en una cierta fecha y hora en la que varias personas pueden ingresar. Por ejemplo, el Año Nuevo Bash con DJ Rocco.",
+          "onDemandClass": "Lección privada",
+          "onDemandClassLabel": "Clase no programada que un estudiante puede reservar con usted en función de su disponibilidad",
+          "weeklyClass": "Clase semanal programada",
+          "weeklyClassLabel": "Clase semanal programada que ocurre en el grupo.",
+          "oneTimeClass": "Taller",
+          "oneTimeClassLabel": "Un taller educativo que ocurre en un día en particular.",
+          "retreat": "Retiro",
+          "retreatLabel": "Un retiro educativo que ocurre en un conjunto de días particulares."
         },
         "homeRental": {
           "rentalTitle": "Alquiler de viviendas",
@@ -126,6 +244,9 @@
           "bathrooms": "Baños",
           "bathroomsHint": "¿Cuántos cuartos de baño tiene su casa?",
           "bathroomsError": "Por favor, introduzca los baños",
+          "areaHint": "¿Cuántas área tiene su hogar?",
+          "area": "Área",
+          "areaError": "Ingrese el área",
           "apartment": "Apartamento",
           "villa": "Villa",
           "condo": "Condominio",
@@ -146,7 +267,9 @@
           "weeklyClass": "Clase semanal programada",
           "weeklyClassLabel": "Clase programada que ocurre cada semana que ocurre en el grupo.",
           "oneTimeClass": "Taller",
-          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular."
+          "oneTimeClassLabel": "Una clase única que ocurre en un día en particular.",
+          "retreat": "Retiro",
+          "retreatLabel": "Un retiro educativo que ocurre en un conjunto de días particulares."
         },
         "tourAgency": {
           "eventTitle": "Evento",
@@ -175,6 +298,10 @@
           "serviceTitle": "Servicio de mascotas",
           "serviceSubtitle": "Anuncie su servicio de sentado para mascotas."
         },
+        "mealPlanning": {
+          "serviceTitle": "Servicio",
+          "serviceSubtitle": "Anuncie un servicio de planificación de comidas.ón de comidas."
+        },
         "wellnessPractitioner": {
           "eventTitle": "Evento",
           "eventSubtitle": "Anuncie un evento, ya sea una sesión privada, un evento de repetición semanal o un evento único.",
@@ -200,6 +327,13 @@
           "weeklyEventLabel": "Evento programado que ocurre en una base de repetición semanal. Por ejemplo, los martes latinos por la noche",
           "oneTimeEvent": "Evento de una vez",
           "oneTimeEventLabel": "Evento programado que ocurre en una cierta fecha y hora en la que varias personas pueden ingresar. Por ejemplo, el Año Nuevo Bash con DJ Rocco."
+        }
+      },
+      "BsOpSchedulePickerView": {
+        "BsOpSchedulePickerView": {
+          "schedule": "Disponibilidad",
+          "weeklySchedule": "Programación semanal",
+          "save": "Guardar"
         }
       }
     }
@@ -251,17 +385,50 @@
     },
     "pages": {
       "Offerings": {
+        "hour": "hora",
+        "day": "día",
+        "week": "semana",
+        "month": "mes",
+        "person": "persona",
+        "total": "total",
+        "unit": "unidad",
+        "none": "ninguna",
+        "free": "GRATIS",
+        "bedrooms": "Dormitorios",
+        "bathrooms": "Baños",
+        "apartment": "Departamento",
+        "villa": "Villa",
+        "condo": "Condominio",
+        "bungalow": "Bungalow",
+        "hotel": "Hotel",
         "components": {
           "loading": "Cargando",
           "schedule": "Horario",
           "availability": "Disponibilidad",
           "time": "Tiempo",
-          "noBooking": "No se pueden hacer reservas en línea, pero puede enviar un mensaje a la empresa para cualquier consulta."
+          "noBooking": "No se pueden hacer reservas en línea, pero puede enviar un mensaje a la empresa para cualquier consulta.",
+          "weekDays": {
+            "monday": "Lunes",
+            "tuesday": "Martes",
+            "wednesday": "Miércoles",
+            "thursday": "Jueves",
+            "friday": "Viernes",
+            "saturday": "Sábado",
+            "sunday": "Domingo"
+          }
         },
         "description": "Descripción",
         "price": "Precio",
         "noDescription": "Sin descripción",
-        "noTitle": "Sin Título"
+        "noTitle": "Sin Título",
+        "store": "Tienda",
+        "CustBusinessMessageCard": {
+          "store": "Almacenar",
+          "organizer": "Organizadora",
+          "studio": "Estudio",
+          "view": "Ver",
+          "agency": "Agencia"
+        }
       },
       "cards": {
         "SavedCardsListView": {
@@ -278,11 +445,12 @@
           "title": "Empresas de entrega a su alrededor",
           "courier": "Mensajera",
           "min": "Min",
-          "showOnlyOpenCompanies": "Mostrar solo compañías abiertas"
+          "showOnlyOpenCompanies": "Mostrar solo compañías abiertas",
+          "search": "Buscar"
         },
         "CustCourierServiceView": {
           "orderNow": "Ordenar ahora",
-          "chatWithUs": "Habla con nosotros",
+          "chatWithUs": "Mensaje",
           "contactUs": "Contáctenos",
           "minimumCost": "Costo mínimo",
           "description": "Descripción",
@@ -380,7 +548,19 @@
           "shared": {
             "notification": {
               "today": "Hoy",
-              "yesterday": "Ayer"
+              "yesterday": "Ayer",
+              "jan": "Jan",
+              "feb": "Feb",
+              "mar": "Mar",
+              "apr": "Abr",
+              "may": "May",
+              "jun": "Jun",
+              "jul": "Jul",
+              "aug": "Ago",
+              "sep": "Sep",
+              "oct": "Oct",
+              "nov": "Nov",
+              "dec": "Dic"
             }
           },
           "orders": {
@@ -741,14 +921,55 @@
         }
       },
       "CustHomeWrapper": {
-        "services": "Servicios",
-        "deliveries": "Entregas",
-        "rentals": "Alquileres",
-        "rental": {
-          "title": "Alquileres",
+        "shared": {
+          "filter": "Filtrar",
+          "cancel": "Cancelar",
+          "confirm": "Confirmar",
+          "categories": "Categorías",
+          "schedule": "Horario",
+          "dance": "Bailar",
+          "party": "Fiesta",
+          "social": "social",
+          "therapy": "Terapia",
+          "scheduled": "Programada",
+          "oneTime": "Una vez",
+          "onDemand": "Bajo demanda",
+          "motorcycle": "Motocicleta",
+          "car": "Auto",
+          "bicycle": "Bicicleta"
+        },
+        "service": "Servicios",
+        "deliveries": { "title": "Entregas", "shared": {} },
+        "food": {
+          "title": "Alimento",
+          "shared": {},
+          "restaurants": {
+            "title": "Restaurantes",
+            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
+          },
+          "locallyMade": {
+            "title": "Hecho localmente",
+            "description": "Saborea el sabor de las golosinas locales.",
+            "CustFoodListView": {
+              "store": "Almacenar",
+              "uncategorized": "Sin categoría",
+              "cleaning": "Limpieza",
+              "mealPlanning": "Planificación de comidas",
+              "petsitting": "Cuidado de mascotas",
+              "noUncategorizedFound": "No se encontró sin categoría",
+              "noCleaningFound": "No se encontró limpieza",
+              "noMealPlanningFound": "No se encontró la planificación de comidas",
+              "noPetSittingFound": "No se encontró una mascota sentada",
+              "noBusinessesFound": "No se encontraron negocios"
+            }
+          }
+        },
+        "classes": {
+          "title": "Clases",
           "shared": {
-            "store": "Almacenar",
             "filter": "Filtrar",
+            "class": "Clase",
+            "studio": "Estudio",
             "cancel": "Cancelar",
             "confirm": "Confirmar",
             "hour": "Hora",
@@ -757,82 +978,536 @@
             "month": "Mes",
             "person": "Persona",
             "total": "Total",
+            "unit": "Unidad",
             "none": "Ninguna"
           },
-          "surf": {
-            "title": "Navegar",
-            "description": "Coge la ola perfecta con nuestro alquiler de tablas de surf.",
-            "board": "Junta",
-            "store": "Almacenar"
-          },
-          "vehicle": {
-            "title": "Vehículo",
-            "description": "Explore la ciudad sobre ruedas con nuestros asequibles vehículos de alquiler.",
-            "vehicle": "Vehículo",
-            "store": "Almacenar"
-          },
-          "car": {
-            "title": "Auto",
-            "description": "Reserve y alquile su automóvil de proveedores locales con precios asequibles.",
-            "car": "Auto",
-            "store": "Almacenar"
-          },
-          "home": {
-            "title": "Casas",
-            "description": "Encuentre el alquiler vacacional perfecto para su próxima escapada.",
-            "home": "Hogar",
-            "agency": "Agencia"
-          }
-        },
-        "classes": "Clases",
-        "class": {
-          "title": "Classes",
           "classes": {
             "title": "Clase",
             "class": "Clase",
             "studio": "Estudio"
           }
         },
-        "therapy": "Terapia",
-        "events": "Eventos",
-        "event": {
+        "therapy": {
+          "title": "Terapias",
+          "shared": {
+            "filter": "Filtrar",
+            "therapy": "Terapia",
+            "therapist": "Terapeuta",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "Hora",
+            "day": "Día",
+            "week": "Semana",
+            "month": "Mes",
+            "person": "Persona",
+            "total": "total",
+            "unit": "Unidad",
+            "none": "Ninguna",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noTherapyFound": "No se encontró terapia"
+          }
+        },
+        "events": {
           "title": "Eventos",
+          "shared": {
+            "filter": "Filtrar",
+            "events": "Eventos",
+            "organizers": "Organizadora",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "Hora",
+            "day": "Día",
+            "week": "Semana",
+            "month": "Mes",
+            "person": "Persona",
+            "total": "total",
+            "unit": "Unidad",
+            "none": "Ninguna",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noEventsFound": "No se encuentra ningún evento"
+          },
           "parties": {
             "title": "Fiestas",
-            "description": "Discover most delicious dishes from the nearest restaurants."
+            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
           },
           "dance": {
-            "title": "Danza",
-            "description": "Get your clothes cleaned by your nearest laundry service."
+            "title": "Bailar",
+            "description": "Haga que su ropa limpie su servicio de lavandería más cercano."
           },
           "getTogether": {
             "title": "Reunirse",
-            "description": "Obtain delivery of anything you desire to your location."
+            "description": "Obtenga la entrega de todo lo que desee a su ubicación."
           }
         },
-        "volunteer": "Voluntario",
-        "adventures": "Aventura",
-        "adventure": {
+        "locallyMade": {
+          "title": "Hecho localmente",
+          "shared": {
+            "store": "Almacenar",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noServiceFound": "No se encuentra el servicio"
+          },
+          "consumable": {
+            "title": "Consumible",
+            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
+          },
+          "personalcare": {
+            "title": "Cuidado personal",
+            "description": "Haga que su ropa limpie su servicio de lavandería más cercano."
+          }
+        },
+        "services": {
+          "title": "Servicios",
+          "cleaning": {
+            "title": "Limpieza",
+            "description": "Haga que su ropa limpie su servicio de lavandería más cercano."
+          },
+          "shared": {
+            "store": "Almacenar",
+            "uncategorized": "Sin categoría",
+            "cleaning": "Limpieza",
+            "mealPlanning": "Planificación de comidas",
+            "petsitting": "Cuidado de mascotas",
+            "noUncategorizedFound": "No se encontró sin categoría",
+            "noCleaningFound": "No se encontró limpieza",
+            "noMealPlanningFound": "No se encontró la planificación de comidas",
+            "noPetSittingFound": "No se encontró una mascota sentada",
+            "noBusinessesFound": "No se encontraron negocios"
+          }
+        },
+        "volunteer": "Voluntaria",
+        "adventures": {
           "title": "Aventura",
           "tour": {
-            "title": "Visita",
-            "description": "Discover most delicious dishes from the nearest restaurants."
+            "title": "Recorrido",
+            "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
           },
           "activities": {
             "title": "Actividades",
-            "description": "Get your clothes cleaned by your nearest laundry service."
+            "description": "Haga que su ropa limpie su servicio de lavandería más cercano."
           }
         },
-        "locallyMade": "Fabricación Local",
-        "food": "Alimentos",
-        "search": "Buscar",
         "welcomeText": "Bienvenido a MEZKALA 👋",
-        "appDescription": "Un lugar único para encontrar todos los servicios locales que necesitas de manera rápida y de alta calidad."
+        "search": "Buscar",
+        "appDescription": "Su único lugar de parada para encontrar todos sus servicios locales necesarios y dónde puede disfrutar de servicios rápidos y de alta calidad."
       },
+      "AllServices": {
+        "AllServiceListView": {
+          "AllServiceListView": {
+            "deliveries": "Entregas",
+            "food": "Alimento",
+            "rentals": "Alquileres",
+            "events": "Eventos",
+            "classes": "Clases",
+            "services": "Servicios",
+            "locallyMade": "Hecho localmente",
+            "therapy": "Terapias",
+            "volunteer": "Voluntaria",
+            "adventures": "Aventuras"
+          }
+        },
+        "AllServiceView": {
+          "AllServiceView": {
+            "welcomeText": "Bienvenido a MEZKALA 👋",
+            "appDescription": "Su único lugar de parada para encontrar todos sus servicios locales necesarios y dónde puede disfrutar de servicios rápidos y de alta calidad.",
+            "services": "Servicios"
+          }
+        }
+      },
+      "Businesses": {
+        "components": {
+          "CustBusinessRentalCard": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad"
+          },
+          "CustBusinessEventCard": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "free": "GRATIS"
+          },
+          "CustBusinessRentalCost": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad"
+          },
+          "CustBusinessServiceCard": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad"
+          },
+          "CustBusinessProductCard": {
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad"
+          },
+          "cusShowBusinessFilerSheet": {
+            "confirm": "Confirmar",
+            "cancel": "Cancelar",
+            "filter": "Filtrar",
+            "categories": "Categories",
+            "schedule": "Tipo",
+            "dance": "Bailar",
+            "party": "Fiesta",
+            "social": "Social",
+            "therapy": "Terapia",
+            "scheduled": "Programada",
+            "oneTime": "Una vez",
+            "onDemand": "On demand",
+            "class": {
+              "scheduled": "Semanalmente",
+              "oneTime": "Taller",
+              "onDemand": "Privada"
+            },
+            "therapies": {
+              "scheduled": "Semanalmente",
+              "oneTime": "Retiro",
+              "onDemand": "Privada"
+            },
+            "all": "Alle",
+            "surf": "Navegar",
+            "fitness": "Aptitud física",
+            "yoga": "Yoga",
+            "martialArt": "Arte marcial",
+            "adventure": "Aventura",
+            "volunteer": "Voluntaria",
+            "motorcycle": "Motocicleta",
+            "car": "Auto",
+            "bicycle": "Bicicleta",
+            "aTB": "ATV"
+          },
+          "NoServicesFound": {
+            "noServicesFound": "No se encontraron servicios",
+            "bodyMessage": "Lo siento, el servicio que está buscando no se ofrece actualmente."
+          }
+        },
+        "RentalsView": {
+          "CustHomeRentalListView": {
+            "homes": "Casas",
+            "home": "Hogar",
+            "agency": "Agencia",
+            "noBusinessesFound": "No businesses found",
+            "noRentalsFound": "No Rentals Found",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "Total",
+            "bedrooms": "Dormitorios",
+            "bathrooms": "Baños"
+          },
+          "CustRentalWrapper": {
+            "rentals": "Alquileres",
+            "surf": {
+              "title": "Surf",
+              "description": "Encuentra las mejores tablas de surf a tu alrededor."
+            },
+            "vehicle": {
+              "title": "Vehículo",
+              "description": "Reserve y alquile su automóvil de proveedores locales con precios asequibles."
+            },
+            "home": {
+              "title": "Casas",
+              "description": "Descubre las mejores casas de su ciudad."
+            }
+          },
+          "CustRentalsListView": {
+            "uncategorized": "Sin categoría",
+            "surf": "Surf",
+            "homes": "Casas",
+            "vehicle": "Vehículos",
+            "noRentalsFound": "No se encontraron alquileres",
+            "none": "Ninguna",
+            "noBusinessFound": "No se encontraron Buisinesses",
+            "confirm": "Confirmar",
+            "cancel": "Cancelar",
+            "filter": "Filtrar",
+            "store": "Tienda",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "motorcycle": "Motocicleta",
+            "car": "Auto",
+            "bicycle": "Bicicleta"
+          }
+        },
+        "EventsViews": {
+          "CustEventsListView": {
+            "events": "Eventos",
+            "organizers": "Organizadora",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noEventsFound": "No se encuentran eventos",
+            "free": "GRATIS",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "unit": "unidad",
+            "total": "total",
+            "filter": "Filtrar",
+            "scheduled": "Semanalmente",
+            "oneTime": "Una vez",
+            "onDemand": "Bajo demanda"
+          }
+        },
+        "ClassView": {
+          "CustEventsListView": {
+            "classes": "Clases",
+            "events": "Eventos",
+            "studio": "Estudio",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noClassesFound": "No se encontraron clases",
+            "noEventsFound": "No se encuentran eventos",
+            "free": "GRATIS",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "unit": "unidadad",
+            "total": "total",
+            "filter": "Filtrar"
+          }
+        },
+        "TherapyView": {
+          "CustTherapyListView": {
+            "filter": "Filtrar",
+            "therapy": "Terapia",
+            "therapies": "Terapias",
+            "therapist": "Terapeuta",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "none": "Ninguna",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noTherapyFound": "No se encontró terapia",
+            "parties": {
+              "title": "Fiestas",
+              "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
+            },
+            "dance": {
+              "title": "Bailar",
+              "description": "Haga que su ropa limpie su servicio de lavandería más cercano."
+            },
+            "getTogether": {
+              "title": "Reunirse",
+              "description": "Obtenga la entrega de todo lo que desee a su ubicación."
+            }
+          }
+        },
+        "VolunteerView": {
+          "CustVolunteerListView": {
+            "filter": "Filtrar",
+            "therapy": "Terapia",
+            "therapies": "Terapias",
+            "therapist": "Terapeuta",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "hora",
+            "day": "día",
+            "week": "week",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "none": "Ninguna",
+            "noBusinessesFound": "No se encontraron negocios",
+            "noVolunteerFound": "No se encontró ningún voluntario",
+            "volunteer": "Voluntaria",
+            "organizers": "Organizadora"
+          }
+        },
+        "AdventureView": {
+          "CustAdventureListView": {
+            "filter": "Filtrar",
+            "therapy": "Terapia",
+            "therapies": "Terapias",
+            "therapist": "Terapeuta",
+            "cancel": "Cancelar",
+            "confirm": "Confirmar",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "none": "Ninguna",
+            "noBusinessesFound": "No se encontraron negocios",
+            "adventure": "Aventura",
+            "organizers": "Organizadora"
+          }
+        },
+        "ServicesViews": {
+          "CustServicesListView": {
+            "noUncategorizedFound": "No se encontró sin categoría",
+            "noCleaningFound": "No se encontró limpieza",
+            "noMealPlanningFound": "No se encontró la planificación de comidas",
+            "noPetSittingFound": "No se encontró una mascota sentada",
+            "noBusinessesFound": "No businesses found",
+            "store": "Tienda",
+            "services": "Servicios",
+            "mealPlanning": "Planificación de comidas",
+            "service": "Servicio",
+            "meal": "Comida",
+            "petSitting": "Cuidado de mascotas",
+            "uncategorized": "Sin categoría",
+            "cleaning": "Servicio",
+            "hour": "hora",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "personaa",
+            "total": "total",
+            "unit": "unidad",
+            "none": "Ninguna"
+          },
+          "CustServicesWrapper": {
+            "services": "Servicios",
+
+            "cleaning": {
+              "title": "Limpieza",
+              "description": "Mantenga su espacio impecable con limpiadores profesionales."
+            },
+            "mealPlanning": {
+              "title": "Planificación de comidas",
+              "description": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
+            },
+            "petSitting": {
+              "title": "Cuidado de mascotas",
+              "description": "Asegúrese de que su mascota está bien cuidada mientras usted está fuera."
+            },
+            "uncategorized": {
+              "title": "Sin categoría",
+              "description": "Obtener todos los demás servicios."
+            }
+          }
+        },
+        "LocallyMadeView": {
+          "CustLocallyMadeListView": {
+            "localMade": "Hecho localmente",
+            "consumable": "Consumible",
+            "personalCare": "Cuidado personal",
+            "product": "Productos",
+            "noPetServiceFound": "No se encontraron servicios",
+            "art": "Arte",
+            "noBusinessesFound": "No se encontraron negocios",
+            "store": "Almacenar",
+            "services": "Servicios",
+            "free": "GRATIS",
+            "hour": "Hora",
+            "day": "Día",
+            "week": "Semana",
+            "month": "Mes",
+            "person": "Person",
+            "total": "total",
+            "unit": "unidad",
+            "none": "ninguna"
+          },
+          "CustLocallyMadeWrapper": {
+            "locallyMade": "Hecho localmente",
+            "consumable": {
+              "title": "Consumible",
+              "description": "Saborea el sabor de las golosinas locales."
+            },
+            "personalCare": {
+              "title": "Cuidado personal",
+              "description": "Cuídate con productos de cuidado personal de alta calidad."
+            },
+            "art": {
+              "title": "Arte",
+              "description": "Agregue un toque de belleza e inspiración a su hogar con nuestra colección de bellas artes."
+            }
+          }
+        },
+        "FoodView": {
+          "CustFoodWrapper": {
+            "food": "Alimento",
+            "restaurants": {
+              "title": "Restaurantes",
+              "description": "Descubre los platos más deliciosos de los restaurantes más cercanos."
+            },
+            "locallyMade": {
+              "title": "Consumible",
+              "description": "Saborea el sabor de las golosinas locales."
+            },
+            "mealPlanning": {
+              "title": "Planificación de comidas",
+              "description": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
+            }
+          },
+          "CustFoodListView": {
+            "store": "Tienda",
+            "noUncategorizedFound": "No se encontró sin categoría",
+            "noCleaningFound": "No cleaning found",
+            "noMealPlanningFound": "No se encontró la planificación de comidas",
+            "noPetSittingFound": "No pet sitting found",
+            "noBusinessesFound": "No se encontraron negocios",
+            "uncategorized": "Sin categoría"
+          }
+        }
+      },
+      "CustBusinessView": {
+        "rentals": "Alquileres",
+        "vehicleRentals": "Alquiler de vehículos",
+        "surfRentals": "Alquiler de surf",
+        "events": "Eventos",
+        "products": "Productos",
+        "services": "Servicios",
+        "chatWithUs": "Mensaje",
+        "contactUs": "Contáctenos",
+        "reviews": "Reseñas",
+        "viewAll": "Ver todo",
+        "loading": "Cargando",
+        "weekly": "Semanalmente",
+        "oneTime": "Una vez",
+        "onDemand": "Bajo demanda",
+        "weeklyClasses": "Clases semanales",
+        "oneTimeClasses": "Talleres/retirarsee",
+        "onDemandClasses": "Lecciones privadas",
+        "weeklyEvents": "Eventos semanales",
+        "oneTimeEvents": "Próximos Eventos",
+        "onDemandEvents": "Experiencias"
+      },
+
       "CustomerWrapper": {
         "orders": "Pedidos",
         "profile": "Perfil",
         "messages": "Mensajes",
+        "noMessage": "No se han encontrado mensajes",
+        "noMessageLabel": "Una vez que reciba un nuevo mensaje, se mostrará aquí.",
         "home": "Hogar",
         "savedLocations": "Ubicaciones guardadas",
         "welcomeText": "Bienvenido a MEZCALMOS 👋",
@@ -858,7 +1533,7 @@
           "title": "Fabricación local",
           "subtitle": "Saboree las delicias locales."
         },
-        "mealplanning": {
+        "mealPlanning": {
           "title": "Planificación de comidas",
           "subtitle": "Planifique sus comidas sin esfuerzo con nuestro servicio de planificación de comidas."
         },
@@ -999,6 +1674,7 @@
         },
         "LaundriesListView": {
           "laundries": "Lavanderías",
+          "search": "Buscar",
           "title": "Lavanderías a tu alrededor",
           "noLaundaryFound": "No se encontró lavandería",
           "showOnlyOpenLaundries": "Mostrar solo lavas abiertas",
@@ -1104,14 +1780,18 @@
         "setNameAndImage": "Establezca su nombre e imagen antes de continuar "
       }
     },
-    "models" : {
-      "Utilities" : {
-"ServiceProviderType" : {
-  "restaurant" : "Restaurante",
-  "business" : "Negocio",
-  "laundry" : "Lavadero",
-  "deliveryCompany" :"Compañía de entrega"
-}
+    "models": {
+      "Utilities": {
+        "ServiceProviderType": {
+          "restaurant": "Restaurante",
+          "business": "Negocio",
+          "laundry": "Lavadero",
+          "deliveryCompany": "Compañía de entrega"
+        },
+        "Generic": {
+          "en": "Inglés",
+          "es": "Español"
+        }
       }
     },
     "helpers": {
@@ -1143,8 +1823,10 @@
         "photoAccessOffBody": "Apparently you denied the app from photo library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
-        "added" : "Agregada",
-        "addedTitle" : "Su información ha sido agregada",
+        "closed" :"Cerrada",
+        "closedSubtitle" : "Lo siento, el servicio que está buscando está actualmente cerrado.",
+        "added": "Agregada",
+        "addedTitle": "Su información ha sido agregada",
         "saved": "Guardado",
         "routeError": "Error a obtener su información de ubicación e ruta",
         "writeReview": "Escribir un comentario",
@@ -1189,6 +1871,21 @@
       }
     },
     "pages": {
+      "ServiceProviderPages": {
+        "ServiceScheduleViews": {
+          "SingleDayScheduleView": {
+            "open": "Abierto",
+            "closed": "Cerrado",
+            "save": "Guardar",
+            "delete": "Eliminar",
+            "time": "Hora",
+            "startsAt": "Comienza a las",
+            "endsAt": "Termina a las",
+            "add": "Agregar hora adicional",
+            "overlapError": "La hora de inicio y finalización no pueden superponerse"
+          }
+        }
+      },
       "ServiceProfileView": {
         "profile": "Perfil",
         "info": "Información",
@@ -1201,22 +1898,22 @@
         "share": "Compartir",
         "privacyPolicies": "Políticas de privacidad",
         "logout": "Cerrar sesión",
-        "openService": "Servicio abierto",
-        "closeService": "Servicio cerrado",
+        "openService": "Abrir servicio",
+        "closeService": "Cerrar para siempre",
         "serviceClosed": "El servicio está cerrado indefinidamente",
         "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación."
       },
       "CreateServiceView": {
-
         "pages": {
           "createServiceStartPage": {
-            "create" : "Crear",
-            "subtitle" : {
-              "restaurant" : "Cree un nuevo restaurante y reciba pedidos de sus clientes locales..",
-              "business" : "Cree su perfil comercial y comience a recibir pedidos de sus clientes locales.",
-              "laundry" : "Cree una nueva ropa y reciba pedidos de sus clientes locales.",
-              "deliveryCompany" : "Cree el perfil de su empresa de entrega y comience a recibir pedidos de sus clientes locales"
-             }   },
+            "create": "Crear",
+            "subtitle": {
+              "restaurant": "Cree un nuevo restaurante y reciba pedidos de sus clientes locales..",
+              "business": "Cree su perfil comercial y comience a recibir pedidos de sus clientes locales.",
+              "laundry": "Cree una nueva ropa y reciba pedidos de sus clientes locales.",
+              "deliveryCompany": "Cree el perfil de su empresa de entrega y comience a recibir pedidos de sus clientes locales"
+            }
+          },
           "CreateServiceInfoPage": {
             "name": "Nombre ",
             "hintNameText": "Introduzca su nombre",
@@ -1239,7 +1936,27 @@
             "sameLangErrorText": "Se utiliza este idioma, ingrese un idioma diferente.",
             "none": "Ninguna",
             "en": "Inglesa",
-            "es": "Español"
+            "es": "Español",
+            "businessType": "Tipo de negocio",
+            "businessTypeErrorText": "Por favor, seleccione un tipo de negocio",
+            "save": "Guardar",
+            "cancel": "Cancelar",
+            "businessProfile": {
+              "surfShop": "Tienda de Surf",
+              "vehicleRental": "Alquiler de Vehículos",
+              "yogaStudio": "Estudio de Yoga",
+              "homeRental": "Alquiler de Viviendas",
+              "languageSchool": "Escuela de Idiomas",
+              "tourAgency": "Agencia de Turismo",
+              "artisanalProduct": "Producto Artesanal",
+              "cleaningService": "Servicio de Limpieza",
+              "petSitting": "Cuidado de Mascotas",
+              "wellnessPractitioner": "Profesional de Bienestar",
+              "volunteer": "Voluntariado",
+              "entertainment": "Planificadores de eventos",
+              "danceStudio": "Estudio de baile",
+              "mealPlanning": "Planificación de comidas"
+            }
           }
         },
         "createText": "Crear",
@@ -1251,21 +1968,19 @@
         "ok": "OK",
         "selectCompany": "Seleccione una empresa",
         "selectCompanyText": "Necesita seleccionar una empresa de entrega",
-        "createdTitle" : {
-          "restaurant" : "Tu restaurante está en revisión",
-          "business" : "Su negocio está en revisión",
-          "laundry" : "Tu lavandería está en revisión",
-          "deliveryCompany" : "Su empresa de entrega está bajo revisión"
-
+        "createdTitle": {
+          "restaurant": "Tu restaurante está en revisión",
+          "business": "Su negocio está en revisión",
+          "laundry": "Tu lavandería está en revisión",
+          "deliveryCompany": "Su empresa de entrega está bajo revisión"
         },
-        "createdSubtitle" : {
-          "restaurant" : "Puede comenzar a agregar elementos a su menú y se le notificará una vez que su restaurante esté aprobado.",
-          "business" : "Puede comenzar a agregar ofertas y se le notificará una vez que su negocio esté aprobado.",
-          "laundry" : "Puede comenzar a agregar precios y se le notificará una vez que se apruebe su lavandería.",
-          "deliveryCompany" : "Puede comenzar las ofertas de conducir y se le notificará una vez que se apruebe su empresa de entrega."
-
+        "createdSubtitle": {
+          "restaurant": "Puede comenzar a agregar elementos a su menú y se le notificará una vez que su restaurante esté aprobado.",
+          "business": "Puede comenzar a agregar ofertas y se le notificará una vez que su negocio esté aprobado.",
+          "laundry": "Puede comenzar a agregar precios y se le notificará una vez que se apruebe su lavandería.",
+          "deliveryCompany": "Puede comenzar las ofertas de conducir y se le notificará una vez que se apruebe su empresa de entrega."
         }
-        },
+      },
       "DeliveryCostSettingView": {
         "dvCost": "Coste de envío",
         "km": "km",
@@ -1452,7 +2167,16 @@
         "deleteTitle": "¡Confirme la eliminación de la cuenta!",
         "deletePrBtn": "¡Sí, eliminar!",
         "deleteScBtn": "Cancelar",
-        "deleteHelper": "Haga clic en SÍ Eliminará permanentemente su cuenta, ¿está seguro?"
+        "deleteHelper": "Haga clic en SÍ Eliminará permanentemente su cuenta, ¿está seguro?",
+        "memberSince": "Miembro desde",
+        "settings": "Ajustes",
+        "userInfo": "Informacion del usuario",
+        "savedCards": "Tarjetas guardadas",
+        "savedLocations": "Ubicaciones guardadas",
+        "shortcuts": "Atajos",
+        "privacyPolicy": "Política de privacidad",
+        "accountWillBeDeleted": "Su cuenta se eliminará definitivamente.",
+        "logOut": "Cerrar sesión"
       },
       "UserProfileScreen": {
         "UserProfileScreen": {
@@ -1570,7 +2294,7 @@
       "MezDateTimePicker": {
         "cancel": "Cancelar",
         "confirm": "Confirmar",
-        "endsAt": "Termina en",
+        "endsAt": "Termina",
         "sDate": "Seleccione fecha",
         "startsAt": "Empieza a",
         "sTime": "Tiempo de selección",
@@ -2401,7 +3125,7 @@
         "components": {
           "AddCategorySlide": {
             "categoryName": "Nombre de la categoría",
-            "categoryNameIn": "Nombre de categoría en",
+            "categoryNameIn": "Nombre de categoría",
             "categoryNameHint": "Ingrese un nombre de categoría",
             "categoryPrice": "Categoría Precios por kilogramo",
             "categoryPriceHint": "Entrar en la categoría Precios por kilogramo ..."
@@ -2410,10 +3134,10 @@
         "addCategory": "Añadir categoría",
         "editCategory": "Editar categoria",
         "catDesc": "Descripción de categoría",
-        "catDescIn": "Descripción de la categoría en",
+        "catDescIn": "Descripción de la categoría",
         "saveCategory": "Guardar categoría",
         "categoryName": "Nombre de la categoría",
-        "categoryNameIn": "Nombre de categoría en",
+        "categoryNameIn": "Nombre de categoría",
         "categoryDescHint": "Ingrese una descripción de categoría",
         "categoryNameHint": "Ingrese un nombre de categoría",
         "categoryPrice": "Categoría Precios por kilogramo",
@@ -2608,7 +3332,7 @@
         "added": "Agregada",
         "addedText": "La elección se ha agregado con éxito",
         "choiceName": "Nombre de elección",
-        "choiceNameIn": "Nombre de elección en",
+        "choiceNameIn": "Nombre de elección",
         "choicePrice": "Precio de elección",
         "deleteChoice": "Eliminar la elección",
         "yDeleteChoice": "SÍ ELECHE ELECCIÓN",
@@ -2617,7 +3341,7 @@
       "ROpReviewsView": {
         "reviews": "Reseñas",
         "review": "Revisar",
-        "base": "Basada en",
+        "base": "Basada",
         "perfomTitle": "Su rendimiento de revisión es",
         "excellent": "Excelente",
         "poor": "Pobre",
@@ -2732,8 +3456,8 @@
         }
       },
       "ROpOptionView": {
-        "addOption": "Opción Guardar",
-        "editOption": "Opción Guardar",
+        "addOption": "Añadir opción",
+        "editOption": "Opción de edición",
         "optionName": "Nombre de opción",
         "required": "Requeridaa",
         "optionChoices": "Opciones de opcionesciones",
@@ -2744,7 +3468,7 @@
         "components": {
           "ROpOptionChoice": {
             "chName": "Nombre de elección",
-            "chNameIn": "Nombre de elección en",
+            "chNameIn": "Nombre de elección",
             "required": "Requerida"
           },
           "ROpOptionSelector": {
@@ -2831,8 +3555,11 @@
         "components": {
           "ROpListDriverCard": {
             "available": "Disponible",
+            "approve": "Aprobar",
+            "reject": "Rechazar",
+            "owner": "Propietario",
             "unavailable": "Indisponible",
-            "rmBtn": "Sí, retire el conductor",
+            "rmBtn": "Sí, Eliminar usuario",
             "rmTitle": "Eliminar este usuario",
             "rmText": "¿Estás seguro de que quieres eliminar este usuario?"
           }
@@ -2919,7 +3646,7 @@
           "nameErrorText": "Proporcione un nombre",
           "defaultLanguage": "Idioma predeterminado",
           "secondaryLanguage": "Lenguaje secundario",
-          "description": "Descripción en",
+          "description": "Descripción",
           "location": "Ubicación",
           "saveInfo": "Guardar información",
           "components": {
@@ -2977,8 +3704,8 @@
             "profile": "Perfil",
             "costs": "Costo",
             "accept": "Aceptar",
-            "reject": "Rechazar"
-            ,"offerings" : "Ofertas"
+            "reject": "Rechazar",
+            "offerings": "Ofertas"
           }
         }
       },

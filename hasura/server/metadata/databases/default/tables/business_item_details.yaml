@@ -12,6 +12,26 @@ object_relationships:
     using:
       foreign_key_constraint_on: name_id
 insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - additional_parameters
+        - available
+        - business_id
+        - category1
+        - category2
+        - cost
+        - description_id
+        - id
+        - image
+        - name_id
+        - position
+        - tags
   - role: mez_admin
     permission:
       check:
@@ -35,13 +55,9 @@ insert_permissions:
         - name_id
         - position
         - tags
-  - role: business_operator
+select_permissions:
+  - role: anonymous
     permission:
-      check:
-        business:
-          operators:
-            user_id:
-              _eq: X-Hasura-User-Id
       columns:
         - additional_parameters
         - available
@@ -55,7 +71,8 @@ insert_permissions:
         - name_id
         - position
         - tags
-select_permissions:
+      filter: {}
+      allow_aggregations: true
   - role: business_operator
     permission:
       columns:
@@ -80,6 +97,7 @@ select_permissions:
       columns:
         - additional_parameters
         - available
+        - business_id
         - category1
         - category2
         - cost
@@ -132,3 +150,32 @@ update_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - additional_parameters
+        - available
+        - category1
+        - category2
+        - cost
+        - description_id
+        - image
+        - name_id
+        - position
+        - tags
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

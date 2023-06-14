@@ -3,9 +3,13 @@ import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class Variables$Query$admin_get_dv_companies {
-  factory Variables$Query$admin_get_dv_companies({required int limit}) =>
+  factory Variables$Query$admin_get_dv_companies({
+    required int limit,
+    required int offset,
+  }) =>
       Variables$Query$admin_get_dv_companies._({
         r'limit': limit,
+        r'offset': offset,
       });
 
   Variables$Query$admin_get_dv_companies._(this._$data);
@@ -15,16 +19,21 @@ class Variables$Query$admin_get_dv_companies {
     final result$data = <String, dynamic>{};
     final l$limit = data['limit'];
     result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
     return Variables$Query$admin_get_dv_companies._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
     return result$data;
   }
 
@@ -48,13 +57,22 @@ class Variables$Query$admin_get_dv_companies {
     if (l$limit != lOther$limit) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$limit = limit;
-    return Object.hashAll([l$limit]);
+    final l$offset = offset;
+    return Object.hashAll([
+      l$limit,
+      l$offset,
+    ]);
   }
 }
 
@@ -67,7 +85,10 @@ abstract class CopyWith$Variables$Query$admin_get_dv_companies<TRes> {
   factory CopyWith$Variables$Query$admin_get_dv_companies.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_dv_companies;
 
-  TRes call({int? limit});
+  TRes call({
+    int? limit,
+    int? offset,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_dv_companies<TRes>
@@ -83,10 +104,14 @@ class _CopyWithImpl$Variables$Query$admin_get_dv_companies<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? limit = _undefined}) =>
+  TRes call({
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_dv_companies._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
       }));
 }
 
@@ -96,7 +121,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_dv_companies<TRes>
 
   TRes _res;
 
-  call({int? limit}) => _res;
+  call({
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_dv_companies {
@@ -269,7 +298,16 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -280,7 +318,11 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -370,6 +412,13 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
                 name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'is_open'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -1146,6 +1195,7 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$delivery_d
 class Query$admin_get_dv_companies$delivery_company$details {
   Query$admin_get_dv_companies$delivery_company$details({
     required this.id,
+    this.is_open,
     required this.approved,
     required this.image,
     required this.name,
@@ -1161,6 +1211,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
   factory Query$admin_get_dv_companies$delivery_company$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$is_open = json['is_open'];
     final l$approved = json['approved'];
     final l$image = json['image'];
     final l$name = json['name'];
@@ -1173,6 +1224,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$$__typename = json['__typename'];
     return Query$admin_get_dv_companies$delivery_company$details(
       id: (l$id as int),
+      is_open: (l$is_open as bool?),
       approved: (l$approved as bool),
       image: (l$image as String),
       name: (l$name as String),
@@ -1188,6 +1240,8 @@ class Query$admin_get_dv_companies$delivery_company$details {
   }
 
   final int id;
+
+  final bool? is_open;
 
   final bool approved;
 
@@ -1213,6 +1267,8 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$image = image;
@@ -1239,6 +1295,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
   @override
   int get hashCode {
     final l$id = id;
+    final l$is_open = is_open;
     final l$approved = approved;
     final l$image = image;
     final l$name = name;
@@ -1251,6 +1308,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$is_open,
       l$approved,
       l$image,
       l$name,
@@ -1276,6 +1334,11 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$approved = approved;
@@ -1356,6 +1419,7 @@ abstract class CopyWith$Query$admin_get_dv_companies$delivery_company$details<
 
   TRes call({
     int? id,
+    bool? is_open,
     bool? approved,
     String? image,
     String? name,
@@ -1388,6 +1452,7 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? is_open = _undefined,
     Object? approved = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
@@ -1401,6 +1466,7 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details<TRes>
   }) =>
       _then(Query$admin_get_dv_companies$delivery_company$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -1453,6 +1519,7 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details<
 
   call({
     int? id,
+    bool? is_open,
     bool? approved,
     String? image,
     String? name,
@@ -1634,9 +1701,13 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details$lo
 }
 
 class Variables$Query$admin_get_laundries {
-  factory Variables$Query$admin_get_laundries({required int limit}) =>
+  factory Variables$Query$admin_get_laundries({
+    required int limit,
+    required int offset,
+  }) =>
       Variables$Query$admin_get_laundries._({
         r'limit': limit,
+        r'offset': offset,
       });
 
   Variables$Query$admin_get_laundries._(this._$data);
@@ -1646,16 +1717,21 @@ class Variables$Query$admin_get_laundries {
     final result$data = <String, dynamic>{};
     final l$limit = data['limit'];
     result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
     return Variables$Query$admin_get_laundries._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
     return result$data;
   }
 
@@ -1679,13 +1755,22 @@ class Variables$Query$admin_get_laundries {
     if (l$limit != lOther$limit) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$limit = limit;
-    return Object.hashAll([l$limit]);
+    final l$offset = offset;
+    return Object.hashAll([
+      l$limit,
+      l$offset,
+    ]);
   }
 }
 
@@ -1698,7 +1783,10 @@ abstract class CopyWith$Variables$Query$admin_get_laundries<TRes> {
   factory CopyWith$Variables$Query$admin_get_laundries.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_laundries;
 
-  TRes call({int? limit});
+  TRes call({
+    int? limit,
+    int? offset,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_laundries<TRes>
@@ -1714,10 +1802,14 @@ class _CopyWithImpl$Variables$Query$admin_get_laundries<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? limit = _undefined}) =>
+  TRes call({
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_laundries._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
       }));
 }
 
@@ -1727,7 +1819,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_laundries<TRes>
 
   TRes _res;
 
-  call({int? limit}) => _res;
+  call({
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_laundries {
@@ -1898,7 +1994,16 @@ const documentNodeQueryadmin_get_laundries = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -1909,7 +2014,11 @@ const documentNodeQueryadmin_get_laundries = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -1921,6 +2030,13 @@ const documentNodeQueryadmin_get_laundries = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
                 name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'is_open'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -2334,6 +2450,7 @@ class _CopyWithStubImpl$Query$admin_get_laundries$laundry_store<TRes>
 class Query$admin_get_laundries$laundry_store$details {
   Query$admin_get_laundries$laundry_store$details({
     required this.id,
+    this.is_open,
     required this.approved,
     required this.image,
     required this.name,
@@ -2348,6 +2465,7 @@ class Query$admin_get_laundries$laundry_store$details {
   factory Query$admin_get_laundries$laundry_store$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$is_open = json['is_open'];
     final l$approved = json['approved'];
     final l$image = json['image'];
     final l$name = json['name'];
@@ -2359,6 +2477,7 @@ class Query$admin_get_laundries$laundry_store$details {
     final l$$__typename = json['__typename'];
     return Query$admin_get_laundries$laundry_store$details(
       id: (l$id as int),
+      is_open: (l$is_open as bool?),
       approved: (l$approved as bool),
       image: (l$image as String),
       name: (l$name as String),
@@ -2374,6 +2493,8 @@ class Query$admin_get_laundries$laundry_store$details {
   }
 
   final int id;
+
+  final bool? is_open;
 
   final bool approved;
 
@@ -2397,6 +2518,8 @@ class Query$admin_get_laundries$laundry_store$details {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$image = image;
@@ -2421,6 +2544,7 @@ class Query$admin_get_laundries$laundry_store$details {
   @override
   int get hashCode {
     final l$id = id;
+    final l$is_open = is_open;
     final l$approved = approved;
     final l$image = image;
     final l$name = name;
@@ -2432,6 +2556,7 @@ class Query$admin_get_laundries$laundry_store$details {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$is_open,
       l$approved,
       l$image,
       l$name,
@@ -2456,6 +2581,11 @@ class Query$admin_get_laundries$laundry_store$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$approved = approved;
@@ -2529,6 +2659,7 @@ abstract class CopyWith$Query$admin_get_laundries$laundry_store$details<TRes> {
 
   TRes call({
     int? id,
+    bool? is_open,
     bool? approved,
     String? image,
     String? name,
@@ -2558,6 +2689,7 @@ class _CopyWithImpl$Query$admin_get_laundries$laundry_store$details<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? is_open = _undefined,
     Object? approved = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
@@ -2570,6 +2702,7 @@ class _CopyWithImpl$Query$admin_get_laundries$laundry_store$details<TRes>
   }) =>
       _then(Query$admin_get_laundries$laundry_store$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -2616,6 +2749,7 @@ class _CopyWithStubImpl$Query$admin_get_laundries$laundry_store$details<TRes>
 
   call({
     int? id,
+    bool? is_open,
     bool? approved,
     String? image,
     String? name,
@@ -2793,9 +2927,13 @@ class _CopyWithStubImpl$Query$admin_get_laundries$laundry_store$details$location
 }
 
 class Variables$Query$admin_get_businesses {
-  factory Variables$Query$admin_get_businesses({required int limit}) =>
+  factory Variables$Query$admin_get_businesses({
+    required int limit,
+    required int offset,
+  }) =>
       Variables$Query$admin_get_businesses._({
         r'limit': limit,
+        r'offset': offset,
       });
 
   Variables$Query$admin_get_businesses._(this._$data);
@@ -2805,16 +2943,21 @@ class Variables$Query$admin_get_businesses {
     final result$data = <String, dynamic>{};
     final l$limit = data['limit'];
     result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
     return Variables$Query$admin_get_businesses._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
     return result$data;
   }
 
@@ -2838,13 +2981,22 @@ class Variables$Query$admin_get_businesses {
     if (l$limit != lOther$limit) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$limit = limit;
-    return Object.hashAll([l$limit]);
+    final l$offset = offset;
+    return Object.hashAll([
+      l$limit,
+      l$offset,
+    ]);
   }
 }
 
@@ -2857,7 +3009,10 @@ abstract class CopyWith$Variables$Query$admin_get_businesses<TRes> {
   factory CopyWith$Variables$Query$admin_get_businesses.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_businesses;
 
-  TRes call({int? limit});
+  TRes call({
+    int? limit,
+    int? offset,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_businesses<TRes>
@@ -2873,10 +3028,14 @@ class _CopyWithImpl$Variables$Query$admin_get_businesses<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? limit = _undefined}) =>
+  TRes call({
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_businesses._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
       }));
 }
 
@@ -2886,7 +3045,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_businesses<TRes>
 
   TRes _res;
 
-  call({int? limit}) => _res;
+  call({
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_businesses {
@@ -3059,7 +3222,16 @@ const documentNodeQueryadmin_get_businesses = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -3070,7 +3242,11 @@ const documentNodeQueryadmin_get_businesses = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -3096,6 +3272,13 @@ const documentNodeQueryadmin_get_businesses = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'is_open'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -3495,6 +3678,7 @@ class Query$admin_get_businesses$business_business$details {
     required this.id,
     required this.approved,
     required this.image,
+    this.is_open,
     required this.name,
     required this.language,
     required this.open_status,
@@ -3509,6 +3693,7 @@ class Query$admin_get_businesses$business_business$details {
     final l$id = json['id'];
     final l$approved = json['approved'];
     final l$image = json['image'];
+    final l$is_open = json['is_open'];
     final l$name = json['name'];
     final l$language = json['language'];
     final l$open_status = json['open_status'];
@@ -3520,6 +3705,7 @@ class Query$admin_get_businesses$business_business$details {
       id: (l$id as int),
       approved: (l$approved as bool),
       image: (l$image as String),
+      is_open: (l$is_open as bool?),
       name: (l$name as String),
       language: mapFromJson(l$language),
       open_status: (l$open_status as String),
@@ -3536,6 +3722,8 @@ class Query$admin_get_businesses$business_business$details {
   final bool approved;
 
   final String image;
+
+  final bool? is_open;
 
   final String name;
 
@@ -3559,6 +3747,8 @@ class Query$admin_get_businesses$business_business$details {
     _resultData['approved'] = l$approved;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$language = language;
@@ -3581,6 +3771,7 @@ class Query$admin_get_businesses$business_business$details {
     final l$id = id;
     final l$approved = approved;
     final l$image = image;
+    final l$is_open = is_open;
     final l$name = name;
     final l$language = language;
     final l$open_status = open_status;
@@ -3592,6 +3783,7 @@ class Query$admin_get_businesses$business_business$details {
       l$id,
       l$approved,
       l$image,
+      l$is_open,
       l$name,
       l$language,
       l$open_status,
@@ -3624,6 +3816,11 @@ class Query$admin_get_businesses$business_business$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$name = name;
@@ -3691,6 +3888,7 @@ abstract class CopyWith$Query$admin_get_businesses$business_business$details<
     int? id,
     bool? approved,
     String? image,
+    bool? is_open,
     String? name,
     dynamic? language,
     String? open_status,
@@ -3722,6 +3920,7 @@ class _CopyWithImpl$Query$admin_get_businesses$business_business$details<TRes>
     Object? id = _undefined,
     Object? approved = _undefined,
     Object? image = _undefined,
+    Object? is_open = _undefined,
     Object? name = _undefined,
     Object? language = _undefined,
     Object? open_status = _undefined,
@@ -3738,6 +3937,7 @@ class _CopyWithImpl$Query$admin_get_businesses$business_business$details<TRes>
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -3783,6 +3983,7 @@ class _CopyWithStubImpl$Query$admin_get_businesses$business_business$details<
     int? id,
     bool? approved,
     String? image,
+    bool? is_open,
     String? name,
     dynamic? language,
     String? open_status,
@@ -3959,9 +4160,13 @@ class _CopyWithStubImpl$Query$admin_get_businesses$business_business$details$loc
 }
 
 class Variables$Query$admin_get_restaurants {
-  factory Variables$Query$admin_get_restaurants({required int limit}) =>
+  factory Variables$Query$admin_get_restaurants({
+    required int limit,
+    required int offset,
+  }) =>
       Variables$Query$admin_get_restaurants._({
         r'limit': limit,
+        r'offset': offset,
       });
 
   Variables$Query$admin_get_restaurants._(this._$data);
@@ -3971,16 +4176,21 @@ class Variables$Query$admin_get_restaurants {
     final result$data = <String, dynamic>{};
     final l$limit = data['limit'];
     result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
     return Variables$Query$admin_get_restaurants._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
     return result$data;
   }
 
@@ -4004,13 +4214,22 @@ class Variables$Query$admin_get_restaurants {
     if (l$limit != lOther$limit) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$limit = limit;
-    return Object.hashAll([l$limit]);
+    final l$offset = offset;
+    return Object.hashAll([
+      l$limit,
+      l$offset,
+    ]);
   }
 }
 
@@ -4023,7 +4242,10 @@ abstract class CopyWith$Variables$Query$admin_get_restaurants<TRes> {
   factory CopyWith$Variables$Query$admin_get_restaurants.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$admin_get_restaurants;
 
-  TRes call({int? limit});
+  TRes call({
+    int? limit,
+    int? offset,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$admin_get_restaurants<TRes>
@@ -4039,10 +4261,14 @@ class _CopyWithImpl$Variables$Query$admin_get_restaurants<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? limit = _undefined}) =>
+  TRes call({
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
       _then(Variables$Query$admin_get_restaurants._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
       }));
 }
 
@@ -4052,7 +4278,11 @@ class _CopyWithStubImpl$Variables$Query$admin_get_restaurants<TRes>
 
   TRes _res;
 
-  call({int? limit}) => _res;
+  call({
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
 }
 
 class Query$admin_get_restaurants {
@@ -4230,7 +4460,16 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -4241,7 +4480,11 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -4267,6 +4510,13 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
                 name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'is_open'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -4677,6 +4927,7 @@ class _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant<TRes>
 class Query$admin_get_restaurants$restaurant_restaurant$details {
   Query$admin_get_restaurants$restaurant_restaurant$details({
     required this.id,
+    this.is_open,
     required this.approved,
     this.firebase_id,
     required this.image,
@@ -4691,6 +4942,7 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
   factory Query$admin_get_restaurants$restaurant_restaurant$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$is_open = json['is_open'];
     final l$approved = json['approved'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
@@ -4702,6 +4954,7 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
     final l$$__typename = json['__typename'];
     return Query$admin_get_restaurants$restaurant_restaurant$details(
       id: (l$id as int),
+      is_open: (l$is_open as bool?),
       approved: (l$approved as bool),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
@@ -4717,6 +4970,8 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
   }
 
   final int id;
+
+  final bool? is_open;
 
   final bool approved;
 
@@ -4741,6 +4996,8 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$is_open = is_open;
+    _resultData['is_open'] = l$is_open;
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$firebase_id = firebase_id;
@@ -4765,6 +5022,7 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
   @override
   int get hashCode {
     final l$id = id;
+    final l$is_open = is_open;
     final l$approved = approved;
     final l$firebase_id = firebase_id;
     final l$image = image;
@@ -4776,6 +5034,7 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$is_open,
       l$approved,
       l$firebase_id,
       l$image,
@@ -4800,6 +5059,11 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     final l$approved = approved;
@@ -4876,6 +5140,7 @@ abstract class CopyWith$Query$admin_get_restaurants$restaurant_restaurant$detail
 
   TRes call({
     int? id,
+    bool? is_open,
     bool? approved,
     String? firebase_id,
     String? image,
@@ -4910,6 +5175,7 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$details<
 
   TRes call({
     Object? id = _undefined,
+    Object? is_open = _undefined,
     Object? approved = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
@@ -4922,6 +5188,7 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$details<
   }) =>
       _then(Query$admin_get_restaurants$restaurant_restaurant$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -4972,6 +5239,7 @@ class _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$detail
 
   call({
     int? id,
+    bool? is_open,
     bool? approved,
     String? firebase_id,
     String? image,

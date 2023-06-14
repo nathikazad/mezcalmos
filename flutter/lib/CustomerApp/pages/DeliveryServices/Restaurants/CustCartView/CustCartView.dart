@@ -47,6 +47,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint(
+        "🇲🇽 View cart screen is building=======>${viewController.cart.restaurant?.isOpen}");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: MezcalmosAppBar(
@@ -62,7 +64,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           );
         } else if (viewController.cart.cartItems.length > 0) {
           return SingleChildScrollView(
-            reverse: true,
+            reverse: false,
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +81,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       DeliveryTimePicker(
                         deliveryTime: viewController.cart.deliveryTime,
                         fixed7days: !viewController.cart.isSpecial,
-                        isServiceOpen: viewController.cart.restaurant!.isOpen(),
+                        isServiceOpen: viewController.cart.restaurant!.isOpen,
                         numberOfDays: viewController.cart.isSpecial ? 1 : 7,
                         onValue: (DateTime? value) {
                           viewController.setDeliveryTime(value);
@@ -101,9 +103,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 //   child: PaymentMethodPicker(
                 //     viewCartController: viewController,
                 //   ),
-                // ),
-                // SizedBox(
-                //   height: 9,
                 // ),
                 Container(
                   //alignment: Alignment.centerLeft,
@@ -148,16 +147,27 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           ),
         ),
         const SizedBox(height: 9),
-        DropDownLocationList(
-          elevation: 1,
-          onValueChangeCallback: (MezLocation location) {
-            viewController.switchLocation(location);
-          },
-          bgColor: Colors.white,
-          checkDistance: true,
-          ensureVisible: false,
-          serviceProviderLocation:
-              viewController.cart.restaurant?.info.location,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.shade300,
+                  blurRadius: 1,
+                  offset: Offset(0, .5))
+            ]),
+            child: DropDownLocationList(
+              elevation: 1,
+              onValueChangeCallback: (MezLocation location) {
+                viewController.switchLocation(location);
+              },
+              bgColor: Colors.white,
+              checkDistance: true,
+              ensureVisible: false,
+              serviceProviderLocation:
+                  viewController.cart.restaurant?.info.location,
+            ),
+          ),
         ),
       ],
     );
@@ -191,7 +201,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         mezDbgPrint("Can order from view =========>${viewController.canOrder}");
         if (viewController.cart.cartItems.length > 0) {
           return MezButton(
-            label: (viewController.cart.restaurant?.isOpen() == false)
+            label: (viewController.cart.restaurant?.isOpen == false)
                 ? '${_i18n()["scheduleOrder"]}'
                 : '${_i18n()["orderNow"]}',
             //  enabled: viewController.canOrder,

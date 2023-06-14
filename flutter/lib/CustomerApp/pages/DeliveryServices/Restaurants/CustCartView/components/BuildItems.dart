@@ -50,10 +50,11 @@ class CartItemsBuilder extends StatelessWidget {
                     showImage: viewController.showItemsImages,
                     imageUrl: cartItem.item.image,
                     itemName:
-                        cartItem.item.name.getTranslation(userLanguage).inCaps,
+                        cartItem.item.name.getTranslation(userLanguage)!.inCaps,
                     itemsPrice: cartItem.totalCost().toStringAsFixed(0),
                     viewController: viewController,
                   )),
+                  itemPrice: cartItem.totalCost().toStringAsFixed(0),
                   children: [
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 9),

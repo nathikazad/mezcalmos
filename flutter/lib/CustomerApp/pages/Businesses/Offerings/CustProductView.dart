@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -61,29 +62,26 @@ class _CustProductViewState extends State<CustProductView> {
                     children: [
                       Text(
                         viewController.product!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!
+                            .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
-                        "\$${viewController.product!.details.cost.entries.first.value}",
+                        "${viewController.product!.details.cost.entries.first.value.toPriceString()}",
                         style: context.textTheme.bodyLarge!.copyWith(
                           color: primaryBlueColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(
-                        _i18n()['description'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        viewController.product!.details.description
-                                ?.getTranslation(userLanguage) ??
-                            _i18n()['noDescription'],
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                      _description(context),
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.only(top: 15),
+                        contentPadding: EdgeInsets.symmetric(vertical: 15),
                         business: viewController.product!.business,
-                        offeringName: viewController.product!.details.name,
+                        offering: viewController.product!.details,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],
@@ -96,6 +94,28 @@ class _CustProductViewState extends State<CustProductView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          _i18n()['description'],
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          viewController.product!.details.description
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
+              _i18n()['noDescription'],
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }

@@ -58,7 +58,7 @@ class CustomerPastOrdersList extends StatelessWidget {
                     ? _i18n()["shared"]["notification"]["today"]
                     : (calculateDifference(element.orderTime) == -1)
                         ? _i18n()["shared"]["notification"]["yesterday"]
-                        : DateFormat('dd MMM yyyy').format(element.orderTime),
+                        : currentDate(element.orderTime),
                 style: txt.bodyLarge,
               ),
             );
@@ -107,6 +107,10 @@ class CustomerPastOrdersList extends StatelessWidget {
       ),
     );
   }
+}
+
+String currentDate(DateTime dateTime) {
+  return '${DateFormat('dd').format(dateTime)} ${_i18n()["shared"]["notification"][DateFormat('MMM').format(dateTime).toLowerCase()]} ${DateFormat('yyyy').format(dateTime)}';
 }
 
 int calculateDifference(DateTime date) {

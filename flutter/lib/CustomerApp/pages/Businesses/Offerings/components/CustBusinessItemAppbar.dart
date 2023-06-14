@@ -6,12 +6,15 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezImageslider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessImageScreen.dart';
 
 class CustBusinessItemAppbar extends StatelessWidget {
@@ -40,40 +43,80 @@ class CustBusinessItemAppbar extends StatelessWidget {
 
         return FlexibleSpaceBar(
           centerTitle: true,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              AnimatedOpacity(
-                  duration: Duration(milliseconds: 300),
-                  opacity: isCollapsed ? 1.0 : 0.0,
-                  // opacity: 1.0,
-                  child: MezIconButton(
-                    icon: Icons.favorite_border,
-                    iconSize: 15.sp,
-                    iconColor: Colors.white,
-                    backgroundColor: Colors.transparent,
-                    materialColor: Colors.transparent,
-                    onTap: () {},
-                  )),
-              AnimatedOpacity(
-                  duration: Duration(milliseconds: 300),
-                  opacity: isCollapsed ? 1.0 : 0.0,
-                  // opacity: 1.0,
-                  child: MezIconButton(
-                    icon: Icons.zoom_in,
-                    iconSize: 15.sp,
-                    iconColor: Colors.white,
-                    backgroundColor: Colors.transparent,
-                    materialColor: Colors.transparent,
-                    onTap: () async {
-                      await CustBusinessImageScreen.navigate(
-                        images: itemDetails.image ?? [],
-                      );
-                    },
-                  )),
-            ],
+          title: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 1),
+            child: !isCollapsed
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                      left: 50,
+                    ),
+                    child: Text(
+                      itemDetails.name.getTranslation(userLanguage)!,
+                      style: context.textTheme.displayMedium!
+                          .copyWith(color: Colors.white),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      AnimatedOpacity(
+                          duration: Duration(milliseconds: 300),
+                          opacity: isCollapsed ? 1.0 : 0.0,
+                          // opacity: 1.0,
+                          child: MezIconButton(
+                            shadowColor: Colors.transparent,
+                            icon: null,
+                            iconColor: Colors.white,
+                            backgroundColor: Colors.transparent,
+                            materialColor: Colors.transparent,
+                            child: Container(
+                                padding: EdgeInsets.all(5.5),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                    )),
+                                child: Icon(
+                                  Icons.favorite,
+                                  size: 7.mezSp,
+                                  color: Colors.white,
+                                )),
+                            onTap: () {},
+                          )),
+                      AnimatedOpacity(
+                          duration: Duration(milliseconds: 300),
+                          opacity: isCollapsed ? 1.0 : 0.0,
+                          // opacity: 1.0,
+                          child: MezIconButton(
+                            shadowColor: Colors.transparent,
+                            icon: null,
+                            iconColor: Colors.white,
+                            backgroundColor: Colors.transparent,
+                            materialColor: Colors.transparent,
+                            child: Container(
+                                padding: EdgeInsets.all(3.75),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                    )),
+                                child: Icon(
+                                  Icons.zoom_in,
+                                  size: 9.mezSp,
+                                  color: Colors.white,
+                                )),
+                            onTap: () {
+                              CustBusinessImageScreen.navigate(
+                                images: itemDetails.image ?? [],
+                              );
+                            },
+                          )),
+                    ],
+                  ),
           ),
           background: MezImageSlider(
             images: itemDetails.image ?? [],
@@ -201,7 +244,7 @@ class CustBusinessItemAppbar extends StatelessWidget {
         if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
         if (Get.find<AuthController>().isUserSignedIn)
           _notificationAppBarIcon(),
-        if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+        // if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
       ],
     );
   }

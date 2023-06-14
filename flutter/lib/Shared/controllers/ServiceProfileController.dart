@@ -120,13 +120,11 @@ class ServiceProfileController extends GetxController {
   }
 
   Future<void> navigateToOperators() async {
-    if (service.serviceLinkId != null) {
-      // ignore: unawaited_futures
-      OperatorsListView.navigate(
-          serviceProviderId: serviceId,
-          serviceLinkId: service.serviceLinkId!,
-          serviceProviderType: service.serviceProviderType!);
-    }
+    // ignore: unawaited_futures
+    OperatorsListView.navigate(
+        serviceProviderId: serviceId,
+        serviceLinkId: service.serviceLinkId,
+        serviceProviderType: service.serviceProviderType!);
   }
 
   Future<void> navigateToDeliverySettings() async {

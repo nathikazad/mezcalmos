@@ -1,22 +1,31 @@
 import 'dart:async';
 
+import 'package:badges/badges.dart' as badge;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
+import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/deepLinkHandler.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
+import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -48,16 +57,35 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
     if (authController.fireAuthUser != null) {
       customerAuthController = Get.find<CustomerAuthController>();
+      _startListeningForNotifications();
+      MezRouter.registerReturnToViewCallback(SharedRoutes.kHomeRoute, () {
+        _checkOrders();
+      });
+
+      _checkOrders();
     }
     startAuthListener();
     DeepLinkHandler.startDynamicLinkCheckRoutine(
         CustomerDeepLinkHandler.handleDeepLink);
   }
 
+  void _checkOrders() {
+    if (_index.value == 0) {
+      mezDbgPrint(
+          "✅ ===========>CustomerWrapper Check ORders  ======>${MezRouter.bodyArguments}");
+      final bool showOrders = MezRouter.backResult == true;
+      if (showOrders) {
+        _index.value = 1;
+      }
+    }
+  }
+
   @override
   void dispose() {
     _authStateChnagesListener?.cancel();
     _authStateChnagesListener = null;
+    _notificationsStreamListener?.cancel();
+    _notificationsStreamListener = null;
     super.dispose();
   }
 
@@ -89,9 +117,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
           serviceProviderType: ServiceProviderType.Customer,
         );
       case 3:
-        return UserProfileView(
-          asTab: true,
-        );
+        return CustProfileView();
 
       default:
         return Scaffold(
@@ -110,6 +136,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
               selectedLabelStyle: context.textTheme.bodyLarge,
               unselectedLabelStyle: context.textTheme.bodyMedium,
               currentIndex: _index.value,
+              unselectedItemColor: pickLocationHintTextFieldColor,
               onTap: (int v) {
                 _index.value = v;
               },
@@ -119,10 +146,28 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                       icon: Icon(Icons.home_outlined),
                       label: "${_i18n()['home']}"),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.history), label: "${_i18n()['orders']}"),
+                      icon: badge.Badge(
+                          badgeColor: Colors.red,
+                          badgeContent: Text(
+                            numberOfCurrentOrders.value.toString(),
+                            style: context.textTheme.bodyLarge
+                                ?.copyWith(color: Colors.white),
+                          ),
+                          showBadge: numberOfCurrentOrders > 0,
+                          child: Icon(Icons.history)),
+                      label: "${_i18n()['orders']}"),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.feed_outlined),
-                      label: "${_i18n()['messages']}"),
+                    icon: badge.Badge(
+                      badgeColor: Colors.red,
+                      showBadge: Get.find<ForegroundNotificationsController>()
+                          .hasNewSPMessageNotification(),
+                      position: badge.BadgePosition(top: 0, end: 0),
+                      child: Icon(
+                        Icons.sms_outlined,
+                      ),
+                    ),
+                    label: "${_i18n()['messages']}",
+                  ),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.person_outline),
                       label: "${_i18n()['profile']}"),
@@ -137,12 +182,21 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     _authStateChnagesListener =
         authController.authStateStream.listen((User? fireUser) {
       if (fireUser != null) {
+        _startListeningForNotifications();
       } else {
         _notificationsStreamListener?.cancel();
         _notificationsStreamListener = null;
         appLifeCycleController.cleanAllCallbacks();
       }
     });
+  }
+
+  Future<void> _startListeningForNotifications() async {
+    _notificationsStreamListener = initializeShowNotificationsListener();
+    final String? userId = Get.find<AuthController>().fireAuthUser!.uid;
+    Get.find<ForegroundNotificationsController>()
+        .startListeningForNotificationsFromFirebase(
+            customerNotificationsNode(userId!), customerNotificationHandler);
   }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {

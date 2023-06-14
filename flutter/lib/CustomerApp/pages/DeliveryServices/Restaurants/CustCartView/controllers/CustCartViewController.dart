@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
 // import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 // controller class //
@@ -151,7 +150,7 @@ class CustCartViewController {
   // }
 
   bool get shoudSchedule {
-    return (cart.restaurant?.isOpen() == false || cart.isSpecial);
+    return (cart.restaurant?.isOpen == false || cart.isSpecial);
   }
 
   void switchPaymentMedthod(
@@ -309,7 +308,7 @@ class CustCartViewController {
   }
 
   bool get canSchedule {
-    return cart.restaurant?.isOpen() == false && validTime;
+    return cart.restaurant?.isOpen == false && validTime;
   }
 
   bool get canOrder {
@@ -336,7 +335,6 @@ class CustCartViewController {
 
   Future<bool> updateShippingPrice() async {
     isShippingSet.value = false;
-    
 
     if (cart.toLocation != null && cart.restaurant != null) {
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
@@ -405,7 +403,7 @@ class CustCartViewController {
     if (cart.deliveryTime != null) {
       return cart.deliveryTime!.toLocal().isAfter(DateTime.now().toLocal());
     } else {
-      return cart.restaurant?.isOpen() == true;
+      return cart.restaurant?.isOpen == true;
     }
   }
 

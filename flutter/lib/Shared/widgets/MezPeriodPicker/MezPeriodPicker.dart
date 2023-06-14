@@ -21,6 +21,7 @@ class MezPeriodPicker extends StatefulWidget {
       required this.startDate,
       required this.numberOfDaysInterval,
       required this.serviceSchedule,
+      this.basedOnSchedule = true,
       this.title,
       this.periodOfTime,
       this.confirmBtnText})
@@ -32,6 +33,7 @@ class MezPeriodPicker extends StatefulWidget {
   final Schedule serviceSchedule;
   final String? title;
   final String? confirmBtnText;
+  final bool basedOnSchedule;
 
   @override
   State<MezPeriodPicker> createState() => _MezPeriodPickerState();
@@ -42,7 +44,9 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
   @override
   void initState() {
     _controller.init(
-        period: widget.periodOfTime, schedule: widget.serviceSchedule);
+        period: widget.periodOfTime,
+        schedule: widget.serviceSchedule,
+        basedOnSchedule: widget.basedOnSchedule);
     super.initState();
   }
 

@@ -4,12 +4,11 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/contro
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingLocationCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsDeleteOfferButton.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -42,30 +41,47 @@ class BsOpHomeRentalView extends StatefulWidget {
 class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
     with TickerProviderStateMixin {
   BsHomeRentalViewController viewController = BsHomeRentalViewController();
+  int? businessId;
+  int? businessDetailsId;
+  int? homeRentalId;
+
+  final FocusNode nameNode = FocusNode();
+  final FocusNode descriptionNode = FocusNode();
+  final FocusNode bedroomNode = FocusNode();
+  final FocusNode bathroomNode = FocusNode();
+
   @override
   void initState() {
-    final int? detailsId = int.tryParse(
-        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
-    final int? businessId =
-        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    _assignValues();
 
-    if (detailsId == null || businessId == null) {
+    if (businessDetailsId == null || businessId == null) {
       throw Exception("detailsId is null");
     }
-    mezDbgPrint("detailsId: $detailsId");
+
     viewController.init(
-        thickerProvider: this, detailsId: detailsId, businessId: businessId);
-    int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
-    if (id != null) {
-      viewController.initEditMode(id: id);
-    }
+        thickerProvider: this,
+        homeRentalId: homeRentalId,
+        detailsId: businessDetailsId!,
+        businessId: businessId!);
 
     super.initState();
+  }
+
+  void _assignValues() {
+    businessDetailsId = int.tryParse(
+        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
+    businessId =
+        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    homeRentalId = int.tryParse(MezRouter.urlArguments["id"].toString());
   }
 
   @override
   void dispose() {
     viewController.dispose();
+    nameNode.dispose();
+    descriptionNode.dispose();
+    bedroomNode.dispose();
+    bathroomNode.dispose();
     super.dispose();
   }
 
@@ -73,13 +89,15 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbar(),
-      bottomNavigationBar: MezButton(
-        label: _i18n()["save"],
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.save();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: _i18n()["save"],
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.save();
+          },
+        ),
       ),
       body: Obx(
         () {
@@ -114,10 +132,11 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
                           key: viewController
                               .languageTabsController.primaryLangFormKey,
                           child: _primaryTab(context)),
-                      Form(
-                          key: viewController
-                              .languageTabsController.secondaryLangFormKey,
-                          child: _secondaryTab(context)),
+                      if (viewController.hasSecondaryLang)
+                        Form(
+                            key: viewController
+                                .languageTabsController.secondaryLangFormKey,
+                            child: _secondaryTab(context)),
                     ],
                   ),
                 ),
@@ -138,7 +157,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
       MezRouter.back(backResult: viewController.shouldRefetch);
     },
         titleWidget: Obx(() => Text(viewController.rental != null
-            ? "${viewController.rental!.details.name.getTranslation(userLanguage)}"
+            ? "${viewController.rental!.details.name.getTranslation(viewController.languages!.primary)}"
             : _i18n()["homeRental"]["rentalTitle"])));
   }
 
@@ -191,6 +210,11 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
     );
   }
 
+  void _focus(FocusNode node) {
+    FocusScope.of(context).unfocus();
+    node.requestFocus();
+  }
+
   Widget _primaryTab(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -201,10 +225,10 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             () => MezItemAvSwitcher(
               value: viewController.detailsController.isAvailable.value,
               onAvalableTap: () {
-                viewController.detailsController.isAvailable.value = true;
+                viewController.detailsController.switchAvailable(true);
               },
               onUnavalableTap: () {
-                viewController.detailsController.isAvailable.value = false;
+                viewController.detailsController.switchAvailable(false);
               },
             ),
           ),
@@ -227,12 +251,14 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           smallSepartor,
           TextFormField(
+            focusNode: nameNode,
             controller: viewController.detailsController.nameController,
             decoration: InputDecoration(
               hintText: _i18n()["nameHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
+                _focus(nameNode);
                 return _i18n()["nameError"];
               }
               return null;
@@ -245,6 +271,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           smallSepartor,
           TextFormField(
+            focusNode: descriptionNode,
             maxLines: 7,
             minLines: 5,
             controller: viewController.detailsController.descriptionController,
@@ -253,6 +280,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
+                _focus(descriptionNode);
                 return _i18n()["descriptionError"];
               }
               return null;
@@ -277,10 +305,13 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             _i18n()["homeRental"]["rentalDetails"],
             style: context.textTheme.bodyLarge,
           ),
-          meduimSeperator,
+          smallSepartor,
           Text(
-            "Home type",
-            style: context.textTheme.bodyLarge,
+            '${_i18n()["homeRental"]["homeType"]}',
+            style: context.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
           ),
           smallSepartor,
           Obx(
@@ -304,11 +335,15 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               labelText: _i18n()["homeRental"]["homeType"],
             ),
           ),
-          bigSeperator,
+          smallSepartor,
           Obx(
             () => BsOpOfferingLocationCard(
               location: viewController.homeLocation.value,
               label: _i18n()["homeRental"]["homeLocation"],
+              locationLabelStyle: context.textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
               onLocationSelected: (Location loc) {
                 viewController.homeLocation.value = loc;
               },
@@ -320,42 +355,82 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               },
             ),
           ),
-          // bigSeperator,
+          smallSepartor,
           Text(
             _i18n()["homeRental"]["bedrooms"],
-            style: context.textTheme.bodyLarge,
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
           ),
           smallSepartor,
           TextFormField(
+            focusNode: bedroomNode,
             controller: viewController.bedroomsController,
             decoration: InputDecoration(
               hintText: _i18n()["homeRental"]["bedroomsHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
+                _focus(bedroomNode);
                 return _i18n()["homeRental"]["bedroomsError"];
               }
               return null;
             },
           ),
-          bigSeperator,
+          smallSepartor,
           Text(
             _i18n()["homeRental"]["bathrooms"],
-            style: context.textTheme.bodyLarge,
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
           ),
           smallSepartor,
           TextFormField(
+            focusNode: bathroomNode,
             controller: viewController.bathroomsController,
             decoration: InputDecoration(
               hintText: _i18n()["homeRental"]["bathroomsHint"],
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
+                _focus(bathroomNode);
                 return _i18n()["homeRental"]["bathroomsError"];
               }
               return null;
             },
           ),
+          smallSepartor,
+          Text(
+            _i18n()["homeRental"]["area"],
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+          smallSepartor,
+          TextFormField(
+            controller: viewController.areaController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                hintText: _i18n()["homeRental"]["areaHint"],
+                suffixText: "sq ft m²"),
+            // validator: (String? value) {
+            //   if (value == null || value.isEmpty) {
+            //     return _i18n()["homeRental"]["areaError"];
+            //   }
+            //   return null;
+            // },
+          ),
+
+          if (viewController.isEditing)
+            BsDeleteOfferButton(
+              onDelete: () async {
+                await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
+              },
+            )
         ],
       ),
     );

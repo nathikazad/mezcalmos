@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -25,28 +26,46 @@ class CustEventsListViewController {
       showBusiness.isTrue ? _businessScrollController : _eventScrollController;
   ScrollController _eventScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  final int eventFetchSize = 10;
+  final int eventFetchSize = 20;
   int _eventCurrentOffset = 0;
   bool _eventFetchingData = false;
   bool _eventReachedEndOfData = false;
-  final int businessFetchSize = 10;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;
   /* SCROLL CONTROLLER */
 
-  final List<EventCategory1> _filterCategories = <EventCategory1>[
-    EventCategory1.Dance,
-    EventCategory1.Party,
-    EventCategory1.Social,
-    EventCategory1.Therapy,
-  ];
-
+  final List<EventCategory1> _filterCategories = [];
   final List<EventCategory2> _categories2 = <EventCategory2>[
     EventCategory2.Uncategorized,
   ];
 
   RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
+  RxString selectedCategoriesText =
+      LanguageController().userLanguageKey == Language.EN
+          ? "All".obs
+          : "Alle".obs;
+
+  void _categoryStringGen() {
+    selectedCategoriesText.value = "";
+    List<EventCategory1> data = filterInput["categories"]!
+        .map((String e) => e.toEventCategory1())
+        .toList();
+    if (data.length == _filterCategories.length) {
+      selectedCategoriesText.value =
+          LanguageController().userLanguageKey == Language.EN ? 'All' : 'Alle';
+      return;
+    }
+
+    for (int idx = 0; idx < data.length; idx++) {
+      if (idx == data.length - 1) {
+        selectedCategoriesText.value += data[idx].name;
+      } else {
+        selectedCategoriesText.value += "${data[idx].name}, ";
+      }
+    }
+  }
 
   late FilterInput _filterInput;
 
@@ -58,7 +77,30 @@ class CustEventsListViewController {
   List<EventCard> get events => _events.value;
   List<BusinessCard> get businesses => _businesses.value;
 
+  int get weeklyEventsNumbe {
+    int number = 0;
+    for (EventCard event in _events) {
+      if (event.scheduleType == ScheduleType.Scheduled) number++;
+    }
+    return number;
+  }
+
+  bool get isWeeklyEventsEmpty =>
+      _events
+          .where((EventCard e) => e.scheduleType == ScheduleType.Scheduled)
+          .length ==
+      0;
+  bool get isOneTimeEventsEmpty =>
+      _events
+          .where((EventCard e) => e.scheduleType == ScheduleType.OneTime)
+          .length ==
+      0;
+
   Future<void> init() async {
+    _filterCategories.addAll([
+      EventCategory1.Dance,
+      EventCategory1.Social,
+    ]);
     _filterInput = defaultFilters();
     try {
       _isLoading.value = true;
@@ -94,7 +136,6 @@ class CustEventsListViewController {
       "schedule": [
         ScheduleType.Scheduled,
         ScheduleType.OneTime,
-        ScheduleType.OnDemand
       ].map((ScheduleType e) => e.toFirebaseFormatString()).toList(),
     };
   }
@@ -143,7 +184,7 @@ class CustEventsListViewController {
           "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_event_category1(
-          categories1: filterInput["categpries"]
+          categories1: filterInput["categories"]
                   ?.map((String e) => e.toEventCategory1())
                   .toList() ??
               _filterCategories,
@@ -177,6 +218,7 @@ class CustEventsListViewController {
     mezDbgPrint("new data :::::::::=====>_filterInput $_filterInput");
     _resetEvents();
     _fetchEvents();
+    _categoryStringGen();
   }
 
   void _resetEvents() {

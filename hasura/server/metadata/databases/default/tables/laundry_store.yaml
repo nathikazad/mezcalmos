@@ -66,6 +66,7 @@ select_permissions:
         - delivery_details_id
         - minimum_cost
       filter: {}
+      allow_aggregations: true
   - role: customer
     permission:
       columns:

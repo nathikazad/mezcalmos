@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/controllers/BsRentalViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsDeleteOfferButton.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -47,22 +48,21 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
     with TickerProviderStateMixin {
   BsRentalViewController viewController = BsRentalViewController();
   late RentalCategory1 rentalCategory;
+  int? businessId;
+  int? businessDetailsId;
+  int? rentalId;
   @override
   void initState() {
-    rentalCategory =
-        MezRouter.bodyArguments?["rentalCategory"] as RentalCategory1;
-    final int? detailsId = int.tryParse(
-        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
-    final int? businessId =
-        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
-    if (detailsId == null || businessId == null) {
+    _assignValues();
+    if (businessDetailsId == null || businessId == null) {
       throw Exception("detailsId is null");
     }
     viewController.init(
-        businessId: businessId,
+        businessId: businessId!,
         category1: rentalCategory,
+        rentalId: rentalId,
         thickerProvider: this,
-        detailsId: detailsId);
+        detailsId: businessDetailsId!);
 
     int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (id != null) {
@@ -70,6 +70,16 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
     }
 
     super.initState();
+  }
+
+  void _assignValues() {
+    rentalCategory =
+        MezRouter.bodyArguments?["rentalCategory"] as RentalCategory1;
+    businessDetailsId = int.tryParse(
+        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
+    businessId =
+        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    rentalId = int.tryParse(MezRouter.urlArguments["id"].toString());
   }
 
   @override
@@ -82,13 +92,15 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbar(),
-      bottomNavigationBar: MezButton(
-        label: _i18n()["save"],
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.save();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: _i18n()["save"],
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.save();
+          },
+        ),
       ),
       body: Obx(
         () => viewController.hasData
@@ -146,7 +158,9 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
     },
         titleWidget: Obx(() => Text(viewController.rental != null
             ? "${viewController.rental!.details.name.getTranslation(userLanguage)}"
-            : _i18n()["vehicleRental"]["rentalTitle"])));
+            : rentalCategory == RentalCategory1.Surf
+                ? _i18n()["vehicleRental"]["surfRentalTitle"]
+                : _i18n()["vehicleRental"]["rentalTitle"])));
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -208,10 +222,10 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
             () => MezItemAvSwitcher(
               value: viewController.detailsController.isAvailable.value,
               onAvalableTap: () {
-                viewController.detailsController.isAvailable.value = true;
+                viewController.detailsController.switchAvailable(true);
               },
               onUnavalableTap: () {
-                viewController.detailsController.isAvailable.value = false;
+                viewController.detailsController.switchAvailable(false);
               },
             ),
           ),
@@ -329,7 +343,10 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                       smallSepartor,
                       Text(
                         _i18n()["vehicleRental"]["motorcycleType"],
-                        style: context.textTheme.bodySmall,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
                       smallSepartor,
                       MezStringDropDown(
@@ -372,7 +389,8 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                     smallSepartor,
                     Text(
                       _i18n()["vehicleRental"]["length"],
-                      style: context.textTheme.bodySmall,
+                      style: context.textTheme.bodySmall
+                          ?.copyWith(fontWeight: FontWeight.w700),
                     ),
                     smallSepartor,
                     TextFormField(
@@ -383,15 +401,15 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                         suffixIconConstraints: BoxConstraints(
                           minWidth: 0,
                           minHeight: 0,
-                        ).tighten(width: 80),
+                        ).tighten(width: 50),
                         suffixIcon: Text(
-                          "feet",
+                          "${_i18n()["vehicleRental"]["feet"]}",
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return _i18n()["vehicleRental"]["surfLengthError"];
+                          return "${_i18n()["vehicleRental"]["surfLengthError"]}";
                         }
                         return null;
                       },
@@ -400,6 +418,13 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                   ],
                 )
               : SizedBox.shrink(),
+          if (viewController.isEditing)
+            BsDeleteOfferButton(
+              onDelete: () async {
+                await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
+              },
+            )
         ],
       ),
     );

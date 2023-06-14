@@ -23,6 +23,8 @@ class MezButton extends StatefulWidget {
     this.icon,
     required this.label,
     this.onClick,
+    this.borderColor,
+    this.fontSize,
   }) : super(key: key);
 
   final bool enabled;
@@ -30,12 +32,14 @@ class MezButton extends StatefulWidget {
   final String label;
   final double height;
   final Color? backgroundColor;
+  final Color? borderColor;
   final Color? textColor;
   final Future<void> Function()? onClick;
   final double? borderRadius;
   final TextStyle? textStyle;
   final IconData? icon;
   final BoxBorder? border;
+  final double? fontSize;
 
   @override
   State<MezButton> createState() => _MezButtonState();
@@ -50,8 +54,11 @@ class _MezButtonState extends State<MezButton> {
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
-            side: BorderSide.none),
+          borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
+          side: BorderSide(
+            color: widget.borderColor ?? Colors.transparent,
+          ),
+        ),
         child: InkWell(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
             onTap:
@@ -112,6 +119,7 @@ class _MezButtonState extends State<MezButton> {
                               widget.label,
                               style: widget.textStyle ??
                                   context.txt.bodyLarge?.copyWith(
+                                      fontSize: widget.fontSize,
                                       color: widget.textColor ?? Colors.white),
                             ),
                           ),

@@ -468,6 +468,20 @@ const documentNodeQueryget_business_by_id = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'starts_at'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'ends_at'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'details'),
                 alias: null,
                 arguments: [],
@@ -719,49 +733,6 @@ const documentNodeQueryget_business_by_id = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'position'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: 'home_rental'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'bathrooms'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'bedrooms'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'gps_location'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'home_type'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -2617,6 +2588,8 @@ class Query$get_business_by_id$business_business_by_pk$events {
     required this.id,
     required this.schedule_type,
     this.schedule,
+    this.starts_at,
+    this.ends_at,
     required this.details,
     required this.$__typename,
   });
@@ -2626,12 +2599,16 @@ class Query$get_business_by_id$business_business_by_pk$events {
     final l$id = json['id'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$get_business_by_id$business_business_by_pk$events(
       id: (l$id as int),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
       details: Query$get_business_by_id$business_business_by_pk$events$details
           .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -2643,6 +2620,10 @@ class Query$get_business_by_id$business_business_by_pk$events {
   final String schedule_type;
 
   final dynamic? schedule;
+
+  final String? starts_at;
+
+  final String? ends_at;
 
   final Query$get_business_by_id$business_business_by_pk$events$details details;
 
@@ -2656,6 +2637,10 @@ class Query$get_business_by_id$business_business_by_pk$events {
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -2668,12 +2653,16 @@ class Query$get_business_by_id$business_business_by_pk$events {
     final l$id = id;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$schedule_type,
       l$schedule,
+      l$starts_at,
+      l$ends_at,
       l$details,
       l$$__typename,
     ]);
@@ -2701,6 +2690,16 @@ class Query$get_business_by_id$business_business_by_pk$events {
     final l$schedule = schedule;
     final lOther$schedule = other.schedule;
     if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
       return false;
     }
     final l$details = details;
@@ -2743,6 +2742,8 @@ abstract class CopyWith$Query$get_business_by_id$business_business_by_pk$events<
     int? id,
     String? schedule_type,
     dynamic? schedule,
+    String? starts_at,
+    String? ends_at,
     Query$get_business_by_id$business_business_by_pk$events$details? details,
     String? $__typename,
   });
@@ -2770,6 +2771,8 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$events<
     Object? id = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -2781,6 +2784,11 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$events<
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -2810,6 +2818,8 @@ class _CopyWithStubImpl$Query$get_business_by_id$business_business_by_pk$events<
     int? id,
     String? schedule_type,
     dynamic? schedule,
+    String? starts_at,
+    String? ends_at,
     Query$get_business_by_id$business_business_by_pk$events$details? details,
     String? $__typename,
   }) =>
@@ -3488,7 +3498,6 @@ class Query$get_business_by_id$business_business_by_pk$rentals {
   Query$get_business_by_id$business_business_by_pk$rentals({
     required this.id,
     required this.details,
-    this.home_rental,
     required this.$__typename,
   });
 
@@ -3496,16 +3505,11 @@ class Query$get_business_by_id$business_business_by_pk$rentals {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$details = json['details'];
-    final l$home_rental = json['home_rental'];
     final l$$__typename = json['__typename'];
     return Query$get_business_by_id$business_business_by_pk$rentals(
       id: (l$id as int),
       details: Query$get_business_by_id$business_business_by_pk$rentals$details
           .fromJson((l$details as Map<String, dynamic>)),
-      home_rental: l$home_rental == null
-          ? null
-          : Query$get_business_by_id$business_business_by_pk$rentals$home_rental
-              .fromJson((l$home_rental as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -3515,9 +3519,6 @@ class Query$get_business_by_id$business_business_by_pk$rentals {
   final Query$get_business_by_id$business_business_by_pk$rentals$details
       details;
 
-  final Query$get_business_by_id$business_business_by_pk$rentals$home_rental?
-      home_rental;
-
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -3526,8 +3527,6 @@ class Query$get_business_by_id$business_business_by_pk$rentals {
     _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
-    final l$home_rental = home_rental;
-    _resultData['home_rental'] = l$home_rental?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3537,12 +3536,10 @@ class Query$get_business_by_id$business_business_by_pk$rentals {
   int get hashCode {
     final l$id = id;
     final l$details = details;
-    final l$home_rental = home_rental;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$details,
-      l$home_rental,
       l$$__typename,
     ]);
   }
@@ -3564,11 +3561,6 @@ class Query$get_business_by_id$business_business_by_pk$rentals {
     final l$details = details;
     final lOther$details = other.details;
     if (l$details != lOther$details) {
-      return false;
-    }
-    final l$home_rental = home_rental;
-    final lOther$home_rental = other.home_rental;
-    if (l$home_rental != lOther$home_rental) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3606,14 +3598,10 @@ abstract class CopyWith$Query$get_business_by_id$business_business_by_pk$rentals
   TRes call({
     int? id,
     Query$get_business_by_id$business_business_by_pk$rentals$details? details,
-    Query$get_business_by_id$business_business_by_pk$rentals$home_rental?
-        home_rental,
     String? $__typename,
   });
   CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$details<
       TRes> get details;
-  CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental<
-      TRes> get home_rental;
 }
 
 class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$rentals<
@@ -3636,7 +3624,6 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$rentals<
   TRes call({
     Object? id = _undefined,
     Object? details = _undefined,
-    Object? home_rental = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_business_by_id$business_business_by_pk$rentals(
@@ -3645,10 +3632,6 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$rentals<
             ? _instance.details
             : (details
                 as Query$get_business_by_id$business_business_by_pk$rentals$details),
-        home_rental: home_rental == _undefined
-            ? _instance.home_rental
-            : (home_rental
-                as Query$get_business_by_id$business_business_by_pk$rentals$home_rental?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3658,16 +3641,6 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$rentals<
     final local$details = _instance.details;
     return CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$details(
         local$details, (e) => call(details: e));
-  }
-
-  CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental<
-      TRes> get home_rental {
-    final local$home_rental = _instance.home_rental;
-    return local$home_rental == null
-        ? CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental
-            .stub(_then(_instance))
-        : CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental(
-            local$home_rental, (e) => call(home_rental: e));
   }
 }
 
@@ -3684,8 +3657,6 @@ class _CopyWithStubImpl$Query$get_business_by_id$business_business_by_pk$rentals
   call({
     int? id,
     Query$get_business_by_id$business_business_by_pk$rentals$details? details,
-    Query$get_business_by_id$business_business_by_pk$rentals$home_rental?
-        home_rental,
     String? $__typename,
   }) =>
       _res;
@@ -3693,11 +3664,6 @@ class _CopyWithStubImpl$Query$get_business_by_id$business_business_by_pk$rentals
           TRes>
       get details =>
           CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$details
-              .stub(_res);
-  CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental<
-          TRes>
-      get home_rental =>
-          CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental
               .stub(_res);
 }
 
@@ -4361,211 +4327,6 @@ class _CopyWithStubImpl$Query$get_business_by_id$business_business_by_pk$rentals
   call({
     String? language_id,
     String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$get_business_by_id$business_business_by_pk$rentals$home_rental {
-  Query$get_business_by_id$business_business_by_pk$rentals$home_rental({
-    required this.bathrooms,
-    required this.bedrooms,
-    required this.gps_location,
-    required this.home_type,
-    required this.$__typename,
-  });
-
-  factory Query$get_business_by_id$business_business_by_pk$rentals$home_rental.fromJson(
-      Map<String, dynamic> json) {
-    final l$bathrooms = json['bathrooms'];
-    final l$bedrooms = json['bedrooms'];
-    final l$gps_location = json['gps_location'];
-    final l$home_type = json['home_type'];
-    final l$$__typename = json['__typename'];
-    return Query$get_business_by_id$business_business_by_pk$rentals$home_rental(
-      bathrooms: (l$bathrooms as int),
-      bedrooms: (l$bedrooms as int),
-      gps_location: geographyFromJson(l$gps_location),
-      home_type: (l$home_type as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int bathrooms;
-
-  final int bedrooms;
-
-  final Geography gps_location;
-
-  final String home_type;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$bathrooms = bathrooms;
-    _resultData['bathrooms'] = l$bathrooms;
-    final l$bedrooms = bedrooms;
-    _resultData['bedrooms'] = l$bedrooms;
-    final l$gps_location = gps_location;
-    _resultData['gps_location'] = geographyToJson(l$gps_location);
-    final l$home_type = home_type;
-    _resultData['home_type'] = l$home_type;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$bathrooms = bathrooms;
-    final l$bedrooms = bedrooms;
-    final l$gps_location = gps_location;
-    final l$home_type = home_type;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$bathrooms,
-      l$bedrooms,
-      l$gps_location,
-      l$home_type,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_business_by_id$business_business_by_pk$rentals$home_rental) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$bathrooms = bathrooms;
-    final lOther$bathrooms = other.bathrooms;
-    if (l$bathrooms != lOther$bathrooms) {
-      return false;
-    }
-    final l$bedrooms = bedrooms;
-    final lOther$bedrooms = other.bedrooms;
-    if (l$bedrooms != lOther$bedrooms) {
-      return false;
-    }
-    final l$gps_location = gps_location;
-    final lOther$gps_location = other.gps_location;
-    if (l$gps_location != lOther$gps_location) {
-      return false;
-    }
-    final l$home_type = home_type;
-    final lOther$home_type = other.home_type;
-    if (l$home_type != lOther$home_type) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_business_by_id$business_business_by_pk$rentals$home_rental
-    on Query$get_business_by_id$business_business_by_pk$rentals$home_rental {
-  CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental<
-          Query$get_business_by_id$business_business_by_pk$rentals$home_rental>
-      get copyWith =>
-          CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental<
-    TRes> {
-  factory CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental(
-    Query$get_business_by_id$business_business_by_pk$rentals$home_rental
-        instance,
-    TRes Function(
-            Query$get_business_by_id$business_business_by_pk$rentals$home_rental)
-        then,
-  ) = _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$rentals$home_rental;
-
-  factory CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_business_by_id$business_business_by_pk$rentals$home_rental;
-
-  TRes call({
-    int? bathrooms,
-    int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$rentals$home_rental<
-        TRes>
-    implements
-        CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental<
-            TRes> {
-  _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$rentals$home_rental(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_business_by_id$business_business_by_pk$rentals$home_rental
-      _instance;
-
-  final TRes Function(
-          Query$get_business_by_id$business_business_by_pk$rentals$home_rental)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? bathrooms = _undefined,
-    Object? bedrooms = _undefined,
-    Object? gps_location = _undefined,
-    Object? home_type = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_business_by_id$business_business_by_pk$rentals$home_rental(
-        bathrooms: bathrooms == _undefined || bathrooms == null
-            ? _instance.bathrooms
-            : (bathrooms as int),
-        bedrooms: bedrooms == _undefined || bedrooms == null
-            ? _instance.bedrooms
-            : (bedrooms as int),
-        gps_location: gps_location == _undefined || gps_location == null
-            ? _instance.gps_location
-            : (gps_location as Geography),
-        home_type: home_type == _undefined || home_type == null
-            ? _instance.home_type
-            : (home_type as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_business_by_id$business_business_by_pk$rentals$home_rental<
-        TRes>
-    implements
-        CopyWith$Query$get_business_by_id$business_business_by_pk$rentals$home_rental<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_by_id$business_business_by_pk$rentals$home_rental(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? bathrooms,
-    int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
     String? $__typename,
   }) =>
       _res;
@@ -7589,7 +7350,28 @@ const documentNodeQueryget_business_by_rental_category1 =
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   ),
                   ObjectFieldNode(
@@ -7623,6 +7405,21 @@ const documentNodeQueryget_business_by_rental_category1 =
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value:
+                        EnumValueNode(name: NameNode(value: 'desc_nulls_last')),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -9340,7 +9137,28 @@ const documentNodeQueryget_business_by_event_category1 =
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   ),
                   ObjectFieldNode(
@@ -9384,6 +9202,21 @@ const documentNodeQueryget_business_by_event_category1 =
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value:
+                        EnumValueNode(name: NameNode(value: 'desc_nulls_last')),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -11044,7 +10877,28 @@ const documentNodeQueryget_business_by_service_category1 =
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   ),
                   ObjectFieldNode(
@@ -11078,6 +10932,21 @@ const documentNodeQueryget_business_by_service_category1 =
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value:
+                        EnumValueNode(name: NameNode(value: 'desc_nulls_last')),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -12743,7 +12612,28 @@ const documentNodeQueryget_business_by_product_category1 =
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   ),
                   ObjectFieldNode(
@@ -12777,6 +12667,21 @@ const documentNodeQueryget_business_by_product_category1 =
           ArgumentNode(
             name: NameNode(value: 'limit'),
             value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value:
+                        EnumValueNode(name: NameNode(value: 'desc_nulls_last')),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],

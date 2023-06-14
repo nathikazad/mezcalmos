@@ -24,25 +24,29 @@ class ServiceReviewsFilters extends StatelessWidget {
       () => SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
                 viewController.filters.length,
-                (int index) => FilterChip(
-                    selectedColor: softPurple,
-                    selected: viewController.filterBy.value ==
-                        viewController.filters[index],
-                    label: Text(
-                        '${_i18n()[viewController.filters[index].toNormalString().toLowerCase()]}'
-                            .inCaps),
-                    labelStyle: TextStyle(
-                        fontWeight: (viewController.filterBy.value ==
-                                viewController.filters[index])
-                            ? FontWeight.w600
-                            : null),
-                    onSelected: (bool v) {
-                      viewController
-                          .switchFiletrBy(viewController.filters[index]);
-                    }))),
+                (int index) => Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: FilterChip(
+                          selectedColor: softPurple,
+                          disabledColor: Colors.grey.shade200,
+                          selected: viewController.filterBy.value ==
+                              viewController.filters[index],
+                          label: Text(
+                              '${_i18n()[viewController.filters[index].toNormalString().toLowerCase()]}'
+                                  .inCaps),
+                          labelStyle: TextStyle(
+                              fontWeight: (viewController.filterBy.value ==
+                                      viewController.filters[index])
+                                  ? FontWeight.w600
+                                  : null),
+                          onSelected: (bool v) {
+                            viewController
+                                .switchFiletrBy(viewController.filters[index]);
+                          }),
+                    ))),
       ),
     );
   }

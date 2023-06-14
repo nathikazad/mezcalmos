@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -107,6 +108,15 @@ Future<Business?> get_business_by_id(
         _events.add(Event(
             category1: event.details.category1.toEventCategory1(),
             scheduleType: event.schedule_type.toScheduleType(),
+            schedule: event.schedule != null
+                ? scheduleFromData(event.schedule)
+                : null,
+            startsAt: event.starts_at,
+            endsAt: event.ends_at,
+            tags: event.details.tags
+                    ?.map<EventTag>((e) => e.toString().toEventTag())
+                    .toList() ??
+                [],
             details: BusinessItemDetails(
               id: event.id,
               name:
@@ -183,8 +193,9 @@ Future<Business?> get_business_by_id(
             language: ServiceProviderLanguage(
                 primary:
                     data.details.language["primary"].toString().toLanguage(),
-                secondary:
-                    data.details.language["secondary"].toString().toLanguage()),
+                secondary: (data.details.language?["secondary"] != null)
+                    ? data.details.language["secondary"].toString().toLanguage()
+                    : null),
             currency: data.details.currency.toCurrency(),
             deliveryDetails: DeliveryDetails(
                 deliveryAvailable: false,
@@ -353,6 +364,7 @@ Future<int?> update_business_item_details(
   QueryResult<Mutation$update_business_item_details_by_id> res =
       await _db.graphQLClient.mutate$update_business_item_details_by_id(
           Options$Mutation$update_business_item_details_by_id(
+              fetchPolicy: FetchPolicy.networkOnly,
               variables: Variables$Mutation$update_business_item_details_by_id(
                   id: id,
                   object: Input$business_item_details_set_input(

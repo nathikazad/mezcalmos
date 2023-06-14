@@ -64,7 +64,8 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                 Container(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                    widget.category.dialog!.getTranslation(userLanguage),
+                    widget.category.dialog!.getTranslation(userLanguage) ??
+                        "No description",
                     style: context.txt.bodyMedium,
                   ),
                 ),

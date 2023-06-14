@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -29,11 +31,11 @@ class CustRentalsListViewController {
       showBusiness.isTrue ? _businessScrollController : _rentalScrollController;
   ScrollController _rentalScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  int rentalFetchSize = 3;
+  int rentalFetchSize = 20;
   int _rentalCurrentOffset = 0;
   bool _rentalFetchingData = false;
   bool _rentalReachedEndOfData = false;
-  final int businessFetchSize = 3;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;
@@ -56,6 +58,44 @@ class CustRentalsListViewController {
 
   late RentalCategory1 _currentRentalCategory;
 
+  late FilterInput _filterInput;
+
+  // getters //
+  FilterInput get filterInput => _filterInput;
+  RxString selectedCategoriesText =
+      LanguageController().userLanguageKey == Language.EN
+          ? "All".obs
+          : "Alle".obs;
+
+  void _categoryStringGen() {
+    selectedCategoriesText.value = "";
+    List<RentalCategory2> data = filterInput["categories"]!
+        .map((String e) => e.toRentalCategory2())
+        .toList();
+    if (data.length == _filterCategories.length) {
+      selectedCategoriesText.value =
+          LanguageController().userLanguageKey == Language.EN ? 'All' : 'Alle';
+      return;
+    }
+
+    for (int idx = 0; idx < data.length; idx++) {
+      if (idx == data.length - 1) {
+        selectedCategoriesText.value += data[idx].name;
+      } else {
+        selectedCategoriesText.value += "${data[idx].name}, ";
+      }
+    }
+  }
+
+  FilterInput defaultFilters() {
+    return {
+      "categories": _filterCategories
+          .map((RentalCategory2 e) => e.toFirebaseFormatString())
+          .toList(),
+      "schedule": [],
+    };
+  }
+
 // methods //
   Future<void> init({required RentalCategory1 rentalCategory}) async {
     _currentRentalCategory = rentalCategory;
@@ -65,6 +105,7 @@ class CustRentalsListViewController {
         RentalCategory2.Car,
         RentalCategory2.Bicycle,
       ]);
+      _filterInput = defaultFilters();
       selectedCategories.value = List.from(filterCategories);
       previewCategories.value = List.from(filterCategories);
     }
@@ -99,10 +140,14 @@ class CustRentalsListViewController {
     try {
       _rentalFetchingData = true;
       mezDbgPrint(
-          "👋 _fetchRentals called selected categories : $selectedCategories \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
+          "👋 _fetchRentals called selected categories : ${isVehicle ? filterInput["categories"]!.map((String e) => e.toRentalCategory2()).toList() : ""} \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
       List<RentalCard> newList = await get_rental_by_category(
         category1: rentalCategory,
-        categories2: (isVehicle) ? selectedCategories : null,
+        categories2: (isVehicle)
+            ? filterInput["categories"]
+                ?.map((String e) => e.toRentalCategory2())
+                .toList()
+            : null,
         distance: 1000000000000,
         fromLocation: _fromLocation!,
         tags: [],
@@ -153,16 +198,21 @@ class CustRentalsListViewController {
     }
   }
 
-  void filter() {
-    selectedCategories.value = List.from(previewCategories);
-
+  void filter(FilterInput newData) {
+    _filterInput.clear();
+    newData.forEach((String key, List<String> value) {
+      _filterInput[key] = List.from(value);
+    });
+    mezDbgPrint("new data :::::::::=====>_filterInput $_filterInput");
     _resetRentals();
     _fetchRentals();
+    _categoryStringGen();
   }
 
   void resetFilter() {
     previewCategories.value = List.from(filterCategories);
     selectedCategories.value = List.from(filterCategories);
+    _filterInput = defaultFilters();
     _fetchRentals();
   }
 

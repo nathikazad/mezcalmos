@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["MezServiceOpenHours"];
@@ -29,39 +27,95 @@ class MezServiceOpenHours extends StatelessWidget {
         SizedBox(
           height: 2,
         ),
-        Container(
-            child: Column(
-                children: schedule
-                    .concatenatedVersion()
-                    .entries
-                    .map((MapEntry<String, OpenHours> v) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 3),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+        Column(
+          children:
+              List.generate(schedule.openHours.entries.length, (int index) {
+            final MapEntry<Weekday, WorkingDay> entry =
+                schedule.openHours.entries.elementAt(index);
+            final bool isLastElement =
+                index == schedule.openHours.entries.length - 1;
+
+            return Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 2),
-                  child: Icon(
-                    Icons.schedule,
-                    size: 18,
+                  margin: const EdgeInsets.only(bottom: 5),
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    border: isLastElement
+                        ? null
+                        : Border(
+                            bottom: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 0.5,
+                            ),
+                          ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 2),
+                        child: Icon(
+                          Icons.calendar_today,
+                          size: 18,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Text(
+                          "${_i18n()["weekDays"][entry.key.toFirebaseFormatString()]}",
+                          style: textStyle?.copyWith(
+                                  fontWeight: FontWeight.w600) ??
+                              context.txt.titleLarge,
+                        ),
+                      ),
+                      Flexible(
+                          fit: FlexFit.tight,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: List.generate(entry.value.openHours.length,
+                                  (int hourIndex) {
+                                return Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.watch_later_outlined,
+                                          size: 18),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        convertToAmPm(
+                                           entry.value.openHours[hourIndex].from[0]
+                                                .toInt(),
+                                          entry.value.openHours[hourIndex].from[1]
+                                                .toInt()),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        convertToAmPm(
+                                           entry.value.openHours[hourIndex].to[0]
+                                                .toInt(),
+                                            entry.value.openHours[hourIndex].to[1]
+                                                .toInt()),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ]);
+                              }))),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  getDayName(v.key).capitalizeDays,
-                  style: textStyle?.copyWith(fontWeight: FontWeight.w600) ??
-                      context.txt.titleLarge,
-                ),
-                Spacer(),
-                Text(
-                    "${convertToAmPm(v.value.from[0].toInt(), v.value.from[1].toInt())} - ${convertToAmPm(v.value.to[0].toInt(), v.value.to[1].toInt())}"),
               ],
-            ),
-          );
-        }).toList())),
+            );
+          }),
+        )
       ],
     );
   }

@@ -68,6 +68,7 @@ export async function getBusiness(businessId: number): Promise<Business> {
     })
 
     return {
+        id: businessId,
         profile: response.business_business_by_pk.profile as BusinessProfile,
         details: {
             id: businessId,
@@ -87,7 +88,7 @@ export async function getBusiness(businessId: number): Promise<Business> {
             openStatus: response.business_business_by_pk.details.open_status as OpenStatus,
             approved: response.business_business_by_pk.details.approved,
             creationTime: response.business_business_by_pk.details.creation_time,
-            language: /*JSON.parse(*/response.business_business_by_pk.details.language,
+            language: /*(*/response.business_business_by_pk.details.language,
             deliveryDetails: {
                 customerPickup: false,
                 deliveryAvailable: false,

@@ -33,9 +33,9 @@ Future<List<EventCard>> get_event_by_category(
               categories1: categories1
                   .map((EventCategory1 e) => e.toFirebaseFormatString())
                   .toList(),
-              distance: distance,
-              from: Geography(
-                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+              // distance: distance,
+              // from: Geography(
+              //     fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               categories2: categories2
                       ?.map((EventCategory2 e) => e.toFirebaseFormatString())
                       .toList() ??
@@ -46,7 +46,7 @@ Future<List<EventCard>> get_event_by_category(
               tags: tags ?? [],
               offset: offset,
               limit: limit)));
-  mezDbgPrint("Event response ======>${response.data}");
+  mezDbgPrint("Event response ======>${response.parsedData?.toJson()}");
   if (response.parsedData?.business_event != null) {
     response.parsedData?.business_event
         .forEach((Query$get_event_by_category$business_event data) async {
@@ -54,6 +54,8 @@ Future<List<EventCard>> get_event_by_category(
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           event: Event(
+            startsAt: data.starts_at,
+            endsAt: data.ends_at,
             category1: data.details.category1.toEventCategory1(),
             gpsLocation: data.gps_location != null && data.address != null
                 ? Location(
@@ -543,6 +545,10 @@ Future<List<EventCard>> get_business_events(
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           event: Event(
+            startsAt: data.starts_at,
+            endsAt: data.ends_at,
+            category2: data.details.category2.toEventCategory2(),
+            id: data.id,
             category1: data.details.category1.toEventCategory1(),
             gpsLocation: data.gps_location != null && data.address != null
                 ? Location(
@@ -556,7 +562,7 @@ Future<List<EventCard>> get_business_events(
                     .toList() ??
                 [],
             details: BusinessItemDetails(
-              id: data.id,
+              id: data.details.id,
               name: toLanguageMap(translations: data.details.name.translations),
               position: data.details.position,
               businessId: data.business.id,
@@ -676,4 +682,19 @@ Future<EventWithBusinessCard?> update_event_by_id(
     }
   }
   return null;
+}
+
+Future<int?> delete_business_event({required int eventId}) async {
+  final QueryResult<Mutation$delete_business_event> res = await _db
+      .graphQLClient
+      .mutate$delete_business_event(Options$Mutation$delete_business_event(
+          variables: Variables$Mutation$delete_business_event(id: eventId)));
+  if (res.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨🚨 Hasura delete event by id exception : ${res.exception}");
+    throw Exception(
+        "🚨🚨🚨🚨 Hasura delete event by id exception : ${res.exception}");
+  } else {
+    return res.parsedData?.delete_business_event_by_pk?.id;
+  }
 }

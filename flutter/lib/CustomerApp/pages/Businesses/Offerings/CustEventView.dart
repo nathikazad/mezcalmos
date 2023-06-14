@@ -7,7 +7,9 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/Off
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -52,22 +54,29 @@ class _CustEventViewState extends State<CustEventView> {
 
   String generateCost() {
     String removePerFromTime(TimeUnit timeUnit) {
+      if (timeUnit == TimeUnit.PerPerson) {
+        return '/${_i18n()['person']}';
+      }
       if (timeUnit == TimeUnit.Unit) {
         return "";
       }
-      return "/${timeUnit.name.toString().toLowerCase().replaceFirst("per", "")}";
+      return '/${_i18n()[timeUnit.name.toString().toLowerCase().replaceFirst('per', '')]}';
+    }
+
+    if (viewController.event!.details.cost.entries.first.value == 0) {
+      return '${_i18n()['free']}';
     }
 
     final Map<TimeUnit, num> singleCost = viewController.event!.details.cost;
     switch (viewController.event!.scheduleType) {
       case ScheduleType.Scheduled:
-        return "\$${singleCost.entries.first.value}";
+        return "${singleCost.entries.first.value.toPriceString()}${removePerFromTime(singleCost.entries.first.key)}";
 
       case ScheduleType.OnDemand:
-        return "\$${singleCost.entries.first.value}${removePerFromTime(singleCost.entries.first.key)}";
+        return "${singleCost.entries.first.value.toPriceString()}${removePerFromTime(singleCost.entries.first.key)}";
 
       case ScheduleType.OneTime:
-        return "\$${singleCost.entries.first.value}${removePerFromTime(singleCost.entries.first.key)}";
+        return "${singleCost.entries.first.value.toPriceString()}${removePerFromTime(singleCost.entries.first.key)}";
     }
   }
 
@@ -90,7 +99,8 @@ class _CustEventViewState extends State<CustEventView> {
                     children: [
                       Text(
                         viewController.event!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!
+                            .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
                       CustBusinessAdditionalData(
@@ -99,56 +109,37 @@ class _CustEventViewState extends State<CustEventView> {
                             {},
                       ),
                       // Price
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          generateCost(),
-                          style: context.textTheme.bodyLarge!.copyWith(
-                            color: primaryBlueColor,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        generateCost(),
+                        style: context.textTheme.bodyLarge?.copyWith(
+                          color: primaryBlueColor,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
 
-                      Text(
-                        _i18n()['description'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        viewController.event!.details.description
-                                ?.getTranslation(userLanguage) ??
-                            _i18n()['noDescription'],
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                      _description(context),
+                      _schedule(),
 
-                      // todo @ChiragKr04 complete the view with the needed data
-
-                      CustBusinessScheduleBuilder(
-                        schedule: viewController.event!.schedule,
-                        scheduleType: viewController.event!.scheduleType,
-                      ),
-
-                      viewController.event!.gpsLocation == null
-                          ? const SizedBox.shrink()
-                          : ServiceLocationCard(
-                              height: 20.h,
-                              location: MezLocation(
-                                viewController.event!.gpsLocation?.address ??
-                                    "",
-                                MezLocation.buildLocationData(
-                                  viewController.event!.gpsLocation!.lat
-                                      .toDouble(),
-                                  viewController.event!.gpsLocation!.lng
-                                      .toDouble(),
-                                ),
-                              ),
+                      if (viewController.event?.gpsLocation != null)
+                        ServiceLocationCard(
+                          height: 20.h,
+                          location: MezLocation(
+                            viewController.event!.gpsLocation?.address ?? "",
+                            MezLocation.buildLocationData(
+                              viewController.event!.gpsLocation!.lat.toDouble(),
+                              viewController.event!.gpsLocation!.lng.toDouble(),
                             ),
-
+                          ),
+                        ),
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.only(top: 15),
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.event!.business,
-                        offeringName: viewController.event!.details.name,
+                        offering: viewController.event!.details,
                       ),
-
                       CustBusinessNoOrderBanner(),
                     ],
                   ),
@@ -160,6 +151,44 @@ class _CustEventViewState extends State<CustEventView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Column _schedule() {
+    return Column(
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        CustBusinessScheduleBuilder(
+          period: viewController.event!.period,
+          icon: Icons.calendar_today,
+          schedule: viewController.event!.schedule,
+          scheduleType: viewController.event!.scheduleType,
+        )
+      ],
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          _i18n()['description'],
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          viewController.event!.details.description
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
+              _i18n()['noDescription'],
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }

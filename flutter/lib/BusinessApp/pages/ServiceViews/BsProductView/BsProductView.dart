@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/controllers/BsProductViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsDeleteOfferButton.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -40,21 +41,24 @@ class BsOpProductView extends StatefulWidget {
 class _BsOpProductViewState extends State<BsOpProductView>
     with TickerProviderStateMixin {
   BsProductViewController viewController = BsProductViewController();
+  int? businessId;
+  int? businessDetailsId;
+  int? productId;
   @override
   void initState() {
-    final int? detailsId = int.tryParse(
+    businessDetailsId = int.tryParse(
         MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
-    final int? businessId =
+    businessId =
         int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
-    if (detailsId == null || businessId == null) {
+    productId = int.tryParse(MezRouter.urlArguments["id"].toString());
+    if (businessDetailsId == null || businessId == null) {
       throw Exception("detailsId is null");
     }
     viewController.init(
-        thickerProvider: this, detailsId: detailsId, businessId: businessId);
-    int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
-    if (id != null) {
-      viewController.initEditMode(id: id);
-    }
+        thickerProvider: this,
+        productId: productId,
+        detailsId: businessDetailsId!,
+        businessId: businessId!);
 
     super.initState();
   }
@@ -69,13 +73,15 @@ class _BsOpProductViewState extends State<BsOpProductView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbar(),
-      bottomNavigationBar: MezButton(
-        label: _i18n()["save"],
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.save();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: _i18n()["save"],
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.save();
+          },
+        ),
       ),
       body: Obx(
         () => viewController.hasData
@@ -109,10 +115,11 @@ class _BsOpProductViewState extends State<BsOpProductView>
                             key: viewController
                                 .languageTabsController.primaryLangFormKey,
                             child: _primaryTab(context)),
-                        Form(
-                            key: viewController
-                                .languageTabsController.secondaryLangFormKey,
-                            child: _secondaryTab(context)),
+                        if (viewController.hasSecondaryLang)
+                          Form(
+                              key: viewController
+                                  .languageTabsController.secondaryLangFormKey,
+                              child: _secondaryTab(context)),
                       ],
                     ),
                   ),
@@ -194,10 +201,10 @@ class _BsOpProductViewState extends State<BsOpProductView>
             () => MezItemAvSwitcher(
               value: viewController.detailsController.isAvailable.value,
               onAvalableTap: () {
-                viewController.detailsController.isAvailable.value = true;
+                viewController.detailsController.switchAvailable(true);
               },
               onUnavalableTap: () {
-                viewController.detailsController.isAvailable.value = false;
+                viewController.detailsController.switchAvailable(false);
               },
             ),
           ),
@@ -260,6 +267,10 @@ class _BsOpProductViewState extends State<BsOpProductView>
           Obx(() {
             print(
                 "productCategory ${viewController.productCategory.value?.toFirebaseFormatString()}");
+            final List<ProductCategory1> validCategories = [
+              ...ProductCategory1.values
+            ];
+            validCategories.remove(ProductCategory1.Uncategorized);
             return MezStringDropDown(
               validator: (String? p0) {
                 if (viewController.productCategory.value == null) {
@@ -269,7 +280,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
               },
               labelText: _i18n()["categoryHint"],
               langPath: _i18n()["artisanalProduct"],
-              items: ProductCategory1.values
+              items: validCategories
                   .map((ProductCategory1 e) => e.toFirebaseFormatString())
                   .toList(),
               value: viewController.productCategory.value
@@ -280,7 +291,7 @@ class _BsOpProductViewState extends State<BsOpProductView>
               },
             );
           }),
-          smallSepartor,
+          bigSeperator,
           BsOpOfferingPricesList(
             availbleUnits: viewController.avalbleUnits,
             onAddPrice: (TimeUnit unit) {
@@ -291,6 +302,13 @@ class _BsOpProductViewState extends State<BsOpProductView>
             },
             seletedPrices: viewController.detailsController.priceTimeUnitMap,
           ),
+          if (viewController.isEditing)
+            BsDeleteOfferButton(
+              onDelete: () async {
+                await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
+              },
+            )
         ],
       ),
     );

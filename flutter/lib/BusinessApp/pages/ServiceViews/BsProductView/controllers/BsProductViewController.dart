@@ -19,6 +19,7 @@ class BsProductViewController {
   // streams //
 
   // variables //
+  int? productId;
 
   // states variables //
 
@@ -43,7 +44,7 @@ class BsProductViewController {
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
   bool get hasData {
-    if (isEditing) {
+    if (productId != null) {
       return _product.value != null &&
           languageTabsController.tabController != null;
     } else
@@ -53,7 +54,9 @@ class BsProductViewController {
   Future<void> init(
       {required TickerProvider thickerProvider,
       required int detailsId,
-      required int businessId}) async {
+      required int businessId,
+      int? productId}) async {
+    this.productId = productId;
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
@@ -61,6 +64,10 @@ class BsProductViewController {
         language: languages!,
         businessDetailsId: detailsId);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
+    if (productId != null) {
+      this.productId = productId;
+      await initEditMode(id: productId);
+    }
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -99,6 +106,7 @@ class BsProductViewController {
               productCategory: productCategory.value!,
             );
             showSavedSnackBar();
+            shouldRefetch = true;
           }
         } catch (e, stk) {
           mezDbgPrint(
@@ -116,7 +124,7 @@ class BsProductViewController {
   }
 
   void dispose() {
-    // TODO: implement dispose
+   languageTabsController.dispose();
   }
 
   Future<void> createItem(Product product) async {
@@ -128,10 +136,23 @@ class BsProductViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
+        detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
+    }
+  }
+
+  Future<void> deleteOffer() async {
+    mezDbgPrint("prdouct id ============>$productId");
+    try {
+      await delete_business_product(productId: productId!);
+      shouldRefetch = true;
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
   }
 }

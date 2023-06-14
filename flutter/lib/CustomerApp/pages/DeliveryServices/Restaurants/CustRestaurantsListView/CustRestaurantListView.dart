@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 import 'components/SearchItemCard.dart';
@@ -128,97 +129,90 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
   }
 
   Widget _searchFilter() {
+    // Padding(
+    //   padding: const EdgeInsets.only(bottom: 5),
+    //   child: Row(
+    //     children: [
+    //       Flexible(
+    //         child: MezButton(
+    //           label:
+    //               '${_i18n()[viewController.rentalCategory.toFirebaseFormatString()]}',
+    //           height: 35,
+    //           onClick: () async {
+    //             viewController.showBusiness.value = false;
+    //           },
+    //           icon: firstButtonIcon,
+    //           borderRadius: 35,
+    //           backgroundColor:
+    //               viewController.showBusiness.isTrue ? Color(0xFFF0F0F0) : null,
+    //           textColor: viewController.showBusiness.isTrue
+    //               ? Colors.grey.shade800
+    //               : null,
+    //         ),
+    //       ),
+    //       SizedBox(
+    //         width: 10,
+    //       ),
+    //       Flexible(
+    //         child: MezButton(
+    //           label: '${_i18n()['store']}',
+    //           height: 35,
+    //           onClick: () async {
+    //             viewController.showBusiness.value = true;
+    //           },
+    //           icon: secondButtonIcon,
+    //           borderRadius: 35,
+    //           backgroundColor: viewController.showBusiness.isFalse
+    //               ? Color(0xFFF0F0F0)
+    //               : null,
+    //           textColor: viewController.showBusiness.isFalse
+    //               ? Colors.grey.shade800
+    //               : null,
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
+
     return Obx(() => Container(
           margin: const EdgeInsets.only(top: 15),
           child: Row(
             children: [
               Flexible(
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(18),
-                  onTap: () {
+                child: MezButton(
+                  label: '${_i18n()["restaurants"]}',
+                  height: 35,
+                  onClick: () async {
                     viewController
                         .switchSearchType(SearchType.searchByRestaurantName);
                   },
-                  child: Ink(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    decoration: BoxDecoration(
-                        color: (viewController.byRestaurants)
-                            ? primaryBlueColor
-                            : Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(18)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.flatware,
-                          color: !viewController.byRestaurants
-                              ? Colors.grey.shade700
-                              : Colors.white,
-                          size: 20,
-                        ),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Flexible(
-                          child: Text(
-                            "${_i18n()["restaurants"]}",
-                            style: context.txt.bodyLarge?.copyWith(
-                              color: !viewController.byRestaurants
-                                  ? Colors.grey.shade700
-                                  : Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  icon: Icons.flatware,
+                  borderRadius: 35,
+                  backgroundColor:
+                      !viewController.byRestaurants ? Color(0xFFF0F0F0) : null,
+                  textColor: !viewController.byRestaurants
+                      ? Colors.grey.shade800
+                      : null,
                 ),
               ),
               SizedBox(
                 width: 8,
               ),
               Flexible(
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(18),
-                  onTap: () {
+                child: MezButton(
+                  label: '${_i18n()["meals"]}',
+                  height: 35,
+                  onClick: () async {
                     viewController
                         .switchSearchType(SearchType.searchByItemName);
                   },
-                  child: Ink(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    decoration: BoxDecoration(
-                        color: (!viewController.byRestaurants)
-                            ? primaryBlueColor
-                            : Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(18)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.fastfood,
-                          color: viewController.byRestaurants
-                              ? Colors.grey.shade700
-                              : Colors.white,
-                          size: 20,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Flexible(
-                          child: Text(
-                            '${_i18n()["meals"]}',
-                            style: context.txt.bodyLarge?.copyWith(
-                              color: viewController.byRestaurants
-                                  ? Colors.grey.shade700
-                                  : Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  icon: Icons.fastfood,
+                  borderRadius: 35,
+                  backgroundColor:
+                      viewController.byRestaurants ? Color(0xFFF0F0F0) : null,
+                  textColor: viewController.byRestaurants
+                      ? Colors.grey.shade800
+                      : null,
                 ),
               ),
             ],

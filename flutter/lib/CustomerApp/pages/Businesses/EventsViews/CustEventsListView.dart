@@ -1,17 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/controllers/CustEventsListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Businesses']['EventsViews']['CustEventsListView'];
 
 class CustEventsListView extends StatefulWidget {
   const CustEventsListView({super.key});
@@ -39,12 +46,18 @@ class _CustEventsListViewState extends State<CustEventsListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "Events",
+        title: '${_i18n()['events']}',
       ),
       body: Obx(() {
         if (viewController.isLoading) {
           return const Center(child: CircularProgressIndicator());
         } else {
+          final bool onlyScheduleOneTimeIsEmpty = viewController.events
+              .where((EventCard element) =>
+                  element.scheduleType == ScheduleType.Scheduled ||
+                  element.scheduleType == ScheduleType.OneTime)
+              .toList()
+              .isEmpty;
           return CustomScrollView(
             controller: viewController.scrollController,
             physics: AlwaysScrollableScrollPhysics(),
@@ -63,7 +76,44 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
                             ? _buildBusinesses()
-                            : _buildEvents(),
+                            : onlyScheduleOneTimeIsEmpty
+                                ? NoServicesFound()
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      if (!viewController.isWeeklyEventsEmpty)
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${_i18n()["scheduled"]} ${_i18n()['events'].toString().toLowerCase()}",
+                                              style:
+                                                  context.textTheme.bodyLarge,
+                                            ),
+                                            smallSepartor,
+                                            _buildEvents(
+                                                ScheduleType.Scheduled),
+                                          ],
+                                        ),
+                                      meduimSeperator,
+                                      if (!viewController.isOneTimeEventsEmpty)
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${_i18n()["oneTime"]} ${_i18n()['events'].toString().toLowerCase()}",
+                                              style:
+                                                  context.textTheme.bodyLarge,
+                                            ),
+                                            smallSepartor,
+                                            _buildEvents(ScheduleType.OneTime),
+                                          ],
+                                        ),
+                                    ],
+                                  ),
                       ),
                     ],
                   ),
@@ -81,16 +131,16 @@ class _CustEventsListViewState extends State<CustEventsListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: "Events",
+            label: '${_i18n()['events']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
             },
+            fontSize: 12.mezSp,
             icon: Icons.celebration,
             borderRadius: 35,
-            backgroundColor: viewController.showBusiness.isTrue
-                ? Colors.grey.shade300
-                : null,
+            backgroundColor:
+                viewController.showBusiness.isTrue ? Color(0xFFF0F0F0) : null,
             textColor: viewController.showBusiness.isTrue
                 ? Colors.grey.shade800
                 : null,
@@ -101,16 +151,16 @@ class _CustEventsListViewState extends State<CustEventsListView> {
         ),
         Flexible(
           child: MezButton(
-            label: "Organizers",
+            label: '${_i18n()['organizers']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
             },
+            fontSize: 12.mezSp,
             icon: Icons.local_activity,
             borderRadius: 35,
-            backgroundColor: viewController.showBusiness.isFalse
-                ? Colors.grey.shade300
-                : null,
+            backgroundColor:
+                viewController.showBusiness.isFalse ? Color(0xFFF0F0F0) : null,
             textColor: viewController.showBusiness.isFalse
                 ? Colors.grey.shade800
                 : null,
@@ -122,8 +172,9 @@ class _CustEventsListViewState extends State<CustEventsListView> {
 
   Widget _filterButton(BuildContext context) {
     return Card(
+      elevation: 0,
       margin: EdgeInsets.only(top: 15),
-      color: Colors.grey.shade300,
+      color: Color(0xFFF0F0F0),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
@@ -139,6 +190,7 @@ class _CustEventsListViewState extends State<CustEventsListView> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -149,16 +201,16 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                 width: 5,
               ),
               Text(
-                "Filter:",
+                '${_i18n()['filter']}:',
               ),
               SizedBox(
                 width: 3,
               ),
-              Container(
+              Flexible(
                 child: Text(
                   (viewController.selectedCategories.length == 1)
                       ? "${viewController.selectedCategories.first.name}"
-                      : "${viewController.selectedCategories.length}",
+                      : "${viewController.selectedCategoriesText}",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
@@ -181,37 +233,104 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                 businessId: viewController.businesses[index].id,
               );
             },
+            elevation: 0,
+            contentPadding: EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
+            margin: EdgeInsets.only(bottom: 15),
             firstAvatarBgImage: CachedNetworkImageProvider(
                 viewController.businesses[index].image),
-            content: Text(viewController.businesses[index].name)),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  viewController.businesses[index].name,
+                  style: context.textTheme.displaySmall?.copyWith(
+                      fontSize: 12.5.mezSp, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _getAcceptedPaymentIcons(
+                        viewController.businesses[index].acceptedPayments),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Flexible(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 17.5.mezSp,
+                            color: Color(0xFF6779FE),
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                              '${viewController.businesses[index].avgRating ?? '0'}',
+                              style: context.textTheme.bodySmall),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 2),
+                            child: Text(
+                              '(${viewController.businesses[index].reviewCount})',
+                              style: context.textTheme.bodyMedium,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            )),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text("No businesses found"));
+      return NoServicesFound();
   }
 
-  Widget _buildEvents() {
-    if (viewController.events.isNotEmpty) {
-      return Column(
-          children: List.generate(
-        viewController.events.length,
-        (int index) => MezCard(
-            onClick: () {
-              CustEventView.navigate(
-                eventId: viewController.events[index].details.id.toInt(),
-              );
-            },
-            firstAvatarBgImage: CachedNetworkImageProvider(
-                viewController.events[index].details.image?.first ?? ""),
-            content: Text(viewController.events[index].details.name
-                .getTranslation(userLanguage))),
-      ));
-    } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text("No events found"));
+  Widget _buildEvents(ScheduleType scheduleType) {
+    return viewController.events.isNotEmpty
+        ? Column(
+            children: List.generate(
+            viewController.events.length,
+            (int index) =>
+                scheduleType != viewController.events[index].scheduleType
+                    ? const SizedBox.shrink()
+                    : CustBusinessEventCard(
+                        event: viewController.events[index],
+                        needBussinessName: true,
+                      ),
+          ))
+        : NoServicesFound();
+  }
+
+  Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
+    final List<IconData> iconList = [];
+    acceptedPayments.forEach((PaymentType key, bool value) {
+      if (value) {
+        switch (key) {
+          case PaymentType.Cash:
+            iconList.add(Icons.payments_outlined);
+            break;
+          case PaymentType.Card:
+            iconList.add(Icons.credit_card_outlined);
+            break;
+          case PaymentType.BankTransfer:
+            iconList.add(Icons.account_balance_outlined);
+            break;
+        }
+      }
+    });
+
+    return Row(
+      children: <Icon>[
+        for (IconData icon in iconList)
+          Icon(
+            icon,
+            size: 15.mezSp,
+          )
+      ],
+    );
   }
 }

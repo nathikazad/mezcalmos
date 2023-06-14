@@ -59,6 +59,12 @@ class _ROpCategoryViewState extends State<ROpCategoryView>
   void initState() {
     _categoryId = MezRouter.urlArguments["categoryId"].toString();
     restaurantId = MezRouter.urlArguments["restaurantId"].toString();
+    mezDbgPrint("Restif =======>${MezRouter.bodyArguments}");
+    // if (MezRouter.bodyArguments != null) {
+    //   shouldSave = MezRouter.bodyArguments?["shouldSave"].toString() == 'true'
+    //       ? true
+    //       : false;
+    // }
 
     shouldSave = MezRouter.bodyArguments!["shouldSave"] as bool;
     detailsId = int.tryParse(MezRouter.bodyArguments!["detailsId"].toString());
@@ -125,7 +131,9 @@ class _ROpCategoryViewState extends State<ROpCategoryView>
   PreferredSizeWidget _addCategoryAppBar() {
     return MezcalmosAppBar(
       AppBarLeftButtonType.Back,
-      onClick: MezRouter.back,
+      onClick: () {
+        MezRouter.back(backResult: _viewController.refetch);
+      },
       title: (_viewController.editMode.value)
           ? _viewController.category.value?.name!.getTranslation(userLanguage)
           : "${_i18n()["addCategory"]}",

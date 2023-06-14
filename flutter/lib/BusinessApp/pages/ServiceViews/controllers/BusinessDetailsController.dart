@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class BusinessItemDetailsController {
@@ -26,10 +27,12 @@ class BusinessItemDetailsController {
   RxList<String?> imagesUrls = RxList.filled(5, null);
   late int businessId;
   late int businessDetailsId;
+  int? itemDetailsId;
+
   RxMap<TimeUnit, TextEditingController> priceTimeUnitMap =
       RxMap<TimeUnit, TextEditingController>();
   RxList<File?> images = RxList.filled(5, null);
-  RxBool isAvailable = false.obs;
+  RxBool isAvailable = true.obs;
   RxBool isEditing = false.obs;
   Rxn<BusinessItemDetails> _details = Rxn<BusinessItemDetails>();
   Rxn<ServiceProviderLanguage> languages = Rxn();
@@ -51,6 +54,7 @@ class BusinessItemDetailsController {
 
   Future<void> initEditMode({required int itemDetailsId}) async {
     mezDbgPrint(" 🟢  initEditMode : $itemDetailsId");
+    this.itemDetailsId = itemDetailsId;
 
     _details.value = await get_business_item_details_by_id(
         detailsId: itemDetailsId, businessId: businessId, withCache: false);
@@ -73,7 +77,7 @@ class BusinessItemDetailsController {
 
       details!.cost.forEach((TimeUnit key, num value) {
         TextEditingController _controller = TextEditingController();
-        _controller.text = value.toString();
+        _controller.text = value.toDouble().toStringAsFixed(0);
         priceTimeUnitMap[key] = _controller;
       });
     }
@@ -95,8 +99,13 @@ class BusinessItemDetailsController {
   }
 
   Future<void> updateItemDetails() async {
-    await Future.wait(
-        [_updateName(), _updateDescription(), _pushDetailsToDb()]);
+    await Future.wait([
+      _updateName(),
+      _updateDescription(),
+      _pushDetailsToDb(),
+    ]).then(
+      (List<void> value) => initEditMode(itemDetailsId: itemDetailsId!),
+    );
   }
 
   Future<void> _pushDetailsToDb() async {
@@ -196,7 +205,7 @@ class BusinessItemDetailsController {
   }
 
   ImageProvider? getImage(int index) {
-    if (images[index] != null) {
+    if (images.length > index && images[index] != null) {
       return FileImage(images[index]!);
     } else if (imagesUrls[index] != null) {
       return CachedNetworkImageProvider(imagesUrls[index]!);
@@ -204,12 +213,17 @@ class BusinessItemDetailsController {
     return null;
   }
 
+  void removeImage(int index) {
+    images[index] = null;
+    imagesUrls[index] = null;
+  }
+
   LanguageMap constructDesc() {
     final LanguageMap _desc = {
       languages.value!.primary: descriptionController.text
     };
     if (languages.value!.secondary != null) {
-      _desc[languages.value!.secondary!] = scDescriptionController.text;
+      _desc[languages.value!.secondary!] = scDescriptionController.text.inCaps;
     }
     return _desc;
   }
@@ -217,7 +231,7 @@ class BusinessItemDetailsController {
   LanguageMap constructName() {
     final LanguageMap _name = {languages.value!.primary: nameController.text};
     if (languages.value!.secondary != null) {
-      _name[languages.value!.secondary!] = scNameController.text;
+      _name[languages.value!.secondary!] = scNameController.text.inCaps;
     }
     return _name;
   }
@@ -225,5 +239,14 @@ class BusinessItemDetailsController {
   bool get hasOneImage {
     return imagesUrls.any((String? element) => element != null) ||
         images.any((File? element) => element != null);
+  }
+
+  void clearImages() {
+    images.clear();
+  }
+
+  void switchAvailable(bool value) {
+    isAvailable.value = value;
+    isAvailable.refresh();
   }
 }

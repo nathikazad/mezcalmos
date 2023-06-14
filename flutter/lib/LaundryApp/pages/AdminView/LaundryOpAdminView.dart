@@ -194,7 +194,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              item.name.getTranslation(userLanguage),
+              item.name.getTranslation(userLanguage)!,
               style: context.txt.displaySmall?.copyWith(fontSize: 12.sp),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,

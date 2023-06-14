@@ -1,4 +1,4 @@
-import { notification_info_constraint, notification_info_update_column } from "../../../../../hasura/library/src/generated/graphql-zeus";
+import { $, notification_info_constraint, notification_info_update_column } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { RestaurantDetails } from "../../../restaurant/createNewRestaurant";
 import { getHasura } from "../../../utilities/hasura";
 import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../../utilities/links/deeplink";
@@ -36,22 +36,16 @@ export async function createRestaurant(
           data: {
             name: restaurantDetails.name,
             image: restaurantDetails.image,
-            schedule: JSON.stringify(restaurantDetails.schedule),
+            phone_number: restaurantDetails.phoneNumber,
+            schedule: $`schedule`,
             firebase_id: restaurantDetails.firebaseId ?? undefined,
-            language: JSON.stringify(restaurantDetails.language),
+            language: $`language`,
             service_provider_type: ServiceProviderType.Restaurant,
             unique_id: uniqueId,
-            accepted_payments: JSON.stringify(<Record<PaymentType, boolean>>{
-              [PaymentType.Cash]: true,
-              [PaymentType.Card]: false,
-              [PaymentType.BankTransfer]: false,
-            }),
+            accepted_payments: $`accepted_payments`,
             location: {
               data: {
-                gps: JSON.stringify({
-                  "type": "point",
-                  "coordinates": [restaurantDetails.location.lng, restaurantDetails.location.lat]
-                }),
+                gps: $`gps`,
                 address: restaurantDetails.location.address
               }
             },
@@ -93,6 +87,18 @@ export async function createRestaurant(
         id: true
       }]
     }]
+  }, {
+    "schedule": restaurantDetails.schedule,
+    "language": restaurantDetails.language,
+    "accepted_payments":<Record<PaymentType, boolean>>{
+      [PaymentType.Cash]: true,
+      [PaymentType.Card]: false,
+      [PaymentType.BankTransfer]: false,
+    },
+    "gps": {
+      "type": "Point",
+      "coordinates": [restaurantDetails.location.lng, restaurantDetails.location.lat]
+    }
   })
   console.log("response: ", response);
 

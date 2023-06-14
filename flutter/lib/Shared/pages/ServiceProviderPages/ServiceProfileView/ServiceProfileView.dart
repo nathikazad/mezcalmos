@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -110,14 +109,13 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   },
                                   icon: Icons.person,
                                   label: "${_i18n()['info']}"),
-                              if (_viewController.serviceLink != null)
-                                _navigationLink(
-                                    onClick: () async {
-                                      await _viewController
-                                          .navigateToOperators();
-                                    },
-                                    icon: Icons.support_agent,
-                                    label: "${_i18n()['operators']}"),
+                              // if (_viewController.serviceLink != null)
+                              _navigationLink(
+                                  onClick: () async {
+                                    await _viewController.navigateToOperators();
+                                  },
+                                  icon: Icons.support_agent,
+                                  label: "${_i18n()['operators']}"),
                               if (_viewController.deliveryDetailsId != null &&
                                   !_viewController.isBusiness)
                                 _navigationLink(
@@ -166,9 +164,11 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                     icon: Icons.share,
                                     label: "${_i18n()['share']}",
                                     trailingWidget: MezIconButton(
+                                      elevation: 0,
                                       icon: Icons.copy,
+                                      iconSize: 20,
                                       onTap: () {
-                                        String text = _viewController
+                                        final String text = _viewController
                                             .serviceLink!.customerDeepLink
                                             .toString();
                                         Clipboard.setData(
@@ -179,25 +179,13 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                       },
                                     )),
                               _navigationLink(
+                                  showDivider: false,
                                   onClick: () async {
                                     await launchUrlString(
                                         MezEnv.appType.getPrivacyLink());
                                   },
                                   icon: Icons.privacy_tip,
                                   label: "${_i18n()['privacyPolicies']}"),
-                              _navigationLink(
-                                  showDivider: false,
-                                  onClick: () async {
-                                    await Get.find<AuthController>().signOut();
-                                  },
-                                  label: "",
-                                  icon: Icons.logout,
-                                  iconColor: Colors.red,
-                                  labelWidget: Text(
-                                    "${_i18n()['logout']}",
-                                    style: context.txt.bodyLarge
-                                        ?.copyWith(color: Colors.red),
-                                  )),
                             ],
                           ),
                         ),
@@ -349,7 +337,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                   ),
                 ),
                 SizedBox(
-                  width: 12,
+                  width: 15,
                 ),
                 Flexible(
                     fit: FlexFit.tight,

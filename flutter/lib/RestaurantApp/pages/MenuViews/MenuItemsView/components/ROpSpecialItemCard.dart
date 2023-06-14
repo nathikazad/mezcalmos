@@ -68,7 +68,7 @@ class ROpSpecialItemCard extends StatelessWidget {
                             Flexible(
                               fit: FlexFit.tight,
                               child: Text(
-                                item.name.getTranslation(userLanguage),
+                                item.name.getTranslation(userLanguage)!,
                                 style: context.txt.bodyLarge,
                               ),
                             ),

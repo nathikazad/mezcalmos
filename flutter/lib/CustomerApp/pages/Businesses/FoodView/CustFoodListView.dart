@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/controllers/CustFoodListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Common/MezSearch.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -17,6 +17,9 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Businesses']['FoodView']['CustFoodListView'];
 
 class CustFoodListView extends StatefulWidget {
   const CustFoodListView({super.key});
@@ -53,7 +56,8 @@ class _CustFoodListViewState extends State<CustFoodListView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        titleWidget: Text(viewController.serviceCategory.first.name),
+        titleWidget: Text(
+            '${_i18n()[viewController.serviceCategory.first.toFirebaseFormatString()]}'),
       ),
       body: Obx(() {
         if (viewController.isLoading) {
@@ -98,16 +102,16 @@ class _CustFoodListViewState extends State<CustFoodListView> {
       children: [
         Flexible(
           child: MezButton(
-            label: viewController.serviceCategory.first.name,
+            label:
+                '${_i18n()[viewController.serviceCategory.first.toFirebaseFormatString()]}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = false;
             },
             icon: Icons.local_offer,
             borderRadius: 35,
-            backgroundColor: viewController.showBusiness.isTrue
-                ? Colors.grey.shade300
-                : null,
+            backgroundColor:
+                viewController.showBusiness.isTrue ? Color(0xFFF0F0F0) : null,
             textColor: viewController.showBusiness.isTrue
                 ? Colors.grey.shade800
                 : null,
@@ -118,16 +122,15 @@ class _CustFoodListViewState extends State<CustFoodListView> {
         ),
         Flexible(
           child: MezButton(
-            label: "Store",
+            label: '${_i18n()['store']}',
             height: 35,
             onClick: () async {
               viewController.showBusiness.value = true;
             },
             icon: Icons.local_activity,
             borderRadius: 35,
-            backgroundColor: viewController.showBusiness.isFalse
-                ? Colors.grey.shade300
-                : null,
+            backgroundColor:
+                viewController.showBusiness.isFalse ? Color(0xFFF0F0F0) : null,
             textColor: viewController.showBusiness.isFalse
                 ? Colors.grey.shade800
                 : null,
@@ -153,10 +156,7 @@ class _CustFoodListViewState extends State<CustFoodListView> {
             content: Text(viewController.businesses[index].name)),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text("No businesses found"));
+      return NoServicesFound();
   }
 
   Widget _buildService() {
@@ -174,14 +174,12 @@ class _CustFoodListViewState extends State<CustFoodListView> {
                 (viewController.services[index].details.firstImage != null)
                     ? CachedNetworkImageProvider(
                         viewController.services[index].details.firstImage!)
-                    : CachedNetworkImageProvider(customImageUrl),
+                    : CachedNetworkImageProvider(defaultUserImgUrl),
             content: Text(viewController.services[index].details.name
-                .getTranslation(userLanguage))),
+                .getTranslation(userLanguage)!
+                .inCaps)),
       ));
     } else
-      return Container(
-          margin: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-          child: Text("No ${viewController.serviceCategory.first.name} found"));
+      return NoServicesFound();
   }
 }

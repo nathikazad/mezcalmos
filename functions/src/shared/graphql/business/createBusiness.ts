@@ -1,3 +1,4 @@
+import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { BusinessDetails, BusinessError } from "../../../business/createNewBusiness";
 import { getHasura } from "../../../utilities/hasura";
 import { DeepLinkType, IDeepLink, generateDeepLinks } from "../../../utilities/links/deeplink";
@@ -21,16 +22,14 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                     data: {
                         name: businessDetails.name,
                         image: businessDetails.image,
-                        language: JSON.stringify(businessDetails.language),
+                        phone_number: businessDetails.phoneNumber,
+                        language: $`language` ,
                         service_provider_type: ServiceProviderType.Business,
                         firebase_id: businessDetails.firebaseId ?? undefined,
-                        schedule: JSON.stringify(businessDetails.schedule),
+                        schedule: $`schedule`,
                         location: {
                             data: {
-                                gps: JSON.stringify({
-                                    "type": "point",
-                                    "coordinates": [businessDetails.location.lng, businessDetails.location.lat]
-                                }),
+                                gps: $`gps`,
                                 address: businessDetails.location.address
                             }
                         },
@@ -65,6 +64,13 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
             id: true,
             details_id: true
         }],
+    }, {
+        "language": businessDetails.language,
+        "schedule": businessDetails.schedule,
+        "gps": {
+            "type": "Point",
+            "coordinates": [businessDetails.location.lng, businessDetails.location.lat]
+        }
     });
     
     console.log("response: ", response);
@@ -73,6 +79,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
         throw new MezError(BusinessError.BusinessCreationError);
     }
     let business: Business = {
+        id: response.insert_business_business_one.id,
         profile: businessDetails.profile,
         details: {
             id: response.insert_business_business_one.id,

@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 
 abstract class MessagesListViewController {
   AuthController _authController = Get.find<AuthController>();
@@ -17,6 +18,12 @@ abstract class MessagesListViewController {
   RxBool isLoading = false.obs;
 
   void init() {
+    MezRouter.registerReturnToViewCallback(
+      MessagesListView.constructPath(),
+      () {
+        getMessages();
+      },
+    );
     getMessages();
   }
 
@@ -45,12 +52,12 @@ class CustMessagesListViewController extends MessagesListViewController {
 
   Future<void> initiateChat(
       {required int businessId,
-      required String businessImage,
+      required String offeringImage,
       required Map<Language, String>? offeringName}) async {
     final IncomingViewLink? viewLink = offeringName == null
         ? null
         : IncomingViewLink(
-            image: businessImage,
+            image: offeringImage,
             name: offeringName,
             url: MezRouter.currentRoute().name,
           );

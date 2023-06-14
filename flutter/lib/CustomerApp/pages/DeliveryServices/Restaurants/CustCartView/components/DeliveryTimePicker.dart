@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/MezDateTimePicker.dart';
 import 'package:sizer/sizer.dart';
 
@@ -60,7 +57,6 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
     super.dispose();
   }
 
-  bool get scheduleRequired => widget.schedule?.isOpen() == false;
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -90,10 +86,13 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.info_outline,
-                    size: 14.sp,
-                    color: Color(0xFF494949),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: Icon(
+                      Icons.info_outline,
+                      size: 14.sp,
+                      color: Color(0xFF494949),
+                    ),
                   ),
                   SizedBox(
                     width: 3,
@@ -113,7 +112,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           FormField<DateTime?>(
               autovalidateMode: AutovalidateMode.always,
               validator: (DateTime? value) {
-                if (scheduleRequired && value == null) {
+                if (widget.shoudSchedule && value == null) {
                   return "${_i18n()['required']}";
                 } else if (value != null &&
                     value.toLocal().isBefore(DateTime.now().toLocal())) {
@@ -176,42 +175,36 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                     onTap: () {
                                       _pickDeliveryTime(context, field);
                                     },
-                                    customBorder: CircleBorder(),
-                                    child: Ink(
-                                      padding: const EdgeInsets.all(3),
-                                      decoration: BoxDecoration(
-                                          color: secondaryLightBlueColor,
-                                          shape: BoxShape.circle),
-                                      child: Icon(
-                                        Icons.edit,
-                                        size: 20,
-                                        color: primaryBlueColor,
-                                      ),
+                                    child: Icon(
+                                      Icons.chevron_right,
+                                      size: 20,
+                                      color: Colors.black,
+                                      // color: primaryBlueColor,
                                     ),
                                   ),
-                                if (widget.deliveryTime != null &&
-                                    widget.shoudSchedule == false)
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8),
-                                    child: InkWell(
-                                      customBorder: CircleBorder(),
-                                      onTap: () {
-                                        widget.onClear.call();
-                                        field.setValue(null);
-                                      },
-                                      child: Ink(
-                                        padding: const EdgeInsets.all(3),
-                                        decoration: BoxDecoration(
-                                            color: offRedColor,
-                                            shape: BoxShape.circle),
-                                        child: Icon(
-                                          Icons.close,
-                                          size: 20,
-                                          color: redAccentColor,
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                // if (widget.deliveryTime != null &&
+                                //     widget.shoudSchedule == false)
+                                //   Padding(
+                                //     padding: const EdgeInsets.only(left: 8),
+                                //     child: InkWell(
+                                //       customBorder: CircleBorder(),
+                                //       onTap: () {
+                                //         widget.onClear.call();
+                                //         field.setValue(null);
+                                //       },
+                                //       child: Ink(
+                                //         padding: const EdgeInsets.all(3),
+                                //         decoration: BoxDecoration(
+                                //             color: offRedColor,
+                                //             shape: BoxShape.circle),
+                                //         child: Icon(
+                                //           Icons.close,
+                                //           size: 20,
+                                //           color: redAccentColor,
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   )
                               ],
                             ),
                           ),
@@ -230,7 +223,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           // if (widget.deliveryTime != null &&
           //     widget.deliveryTime!.toLocal().isBefore(DateTime.now().toLocal()))
           //   _timeError(),
-          // if (widget.deliveryTime == null && widget.schedule?.isOpen() == false)
+          // if (widget.deliveryTime == null && widget.schedule?.isOpen == false)
           //   _timeError(title: "Please select a delivery time")
         ],
       ),

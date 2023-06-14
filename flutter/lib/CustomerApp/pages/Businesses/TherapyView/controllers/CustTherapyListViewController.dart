@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
-import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Businesses']['components']['cusShowBusinessFilerSheet'];
 
 class CustTherapyListViewController {
   // variables //
@@ -27,11 +30,11 @@ class CustTherapyListViewController {
       : _therapyScrollController;
   ScrollController _therapyScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  final int therapyFetchSize = 10;
+  final int therapyFetchSize = 20;
   int _therapyCurrentOffset = 0;
   bool _therapyFetchingData = false;
   bool _therapyReachedEndOfData = false;
-  final int businessFetchSize = 10;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;
@@ -46,6 +49,27 @@ class CustTherapyListViewController {
   ];
 
   RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
+  RxString selectedCategoriesText = _i18n()["all"].toString().obs;
+
+  void _categoryStringGen() {
+    selectedCategoriesText.value = "";
+    List<ScheduleType> data =
+        filterInput["schedule"]!.map((String e) => e.toScheduleType()).toList();
+    if (data.length == 3) {
+      selectedCategoriesText.value = _i18n()["all"];
+      return;
+    }
+
+    for (int idx = 0; idx < data.length; idx++) {
+      if (idx == data.length - 1) {
+        selectedCategoriesText.value +=
+            _i18n()["therapies"][data[idx].toFirebaseFormatString()];
+      } else {
+        selectedCategoriesText.value +=
+            "${_i18n()["therapies"][data[idx].toFirebaseFormatString()]}, ";
+      }
+    }
+  }
 
   late FilterInput _filterInput;
 
@@ -176,6 +200,7 @@ class CustTherapyListViewController {
     mezDbgPrint("new data :::::::::=====>_filterInput $_filterInput");
     _resetEvents();
     _fetchTherapy();
+    _categoryStringGen();
   }
 
   void _resetEvents() {

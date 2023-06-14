@@ -1,5 +1,6 @@
 query get_event_by_id($id: Int!) {
   business_event_by_pk(id: $id) {
+    
     business {
       id
       details {
@@ -53,46 +54,40 @@ query get_event_by_id($id: Int!) {
   }
 }
 
-query get_event_by_category($categories1: [String!],
-  $distance: Float!, $from: geography!,
-  $limit: Int, $offset: Int, 
-   $categories2: [String!],
-   $schedule_type: [String!],
-	$tags: [String!]) {
+query get_event_by_category(
+  $categories1: [String!]
+  $distance: Float
+  $from: geography
+  $limit: Int
+  $offset: Int
+  $categories2: [String!]
+  $schedule_type: [String!]
+  $tags: [String!]
+) {
   business_event(
     where: {
       _and: {
         details: {
           _and: {
-            category1: {
-              _in: $categories1
-            }, 
-             category2: {
-               _in: $categories2
-             },
-            _not: {
-              tags: {_has_key: "class"}
-            },
-            tags: {_has_keys_all: $tags}
+            category1: { _in: $categories1 }
+            category2: { _in: $categories2 }
+            _not: { tags: { _has_key: "class" } }
+            tags: { _has_keys_all: $tags }
           }
-        }, 
-        schedule_type: {
-          _in: $schedule_type
-        },
-         business: {
-           details: {
-             location: {
-               gps: {
-                 _st_d_within: {
-                   distance: $distance, 
-                   from: $from
-                 }
-               }
-             }
-           }
-         }
+        }
+        schedule_type: { _in: $schedule_type }
+        business: {
+          details: {
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
+          }
+        }
       }
-    }, limit: $limit, offset: $offset) {
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
+  ) {
     details {
       id
       name {
@@ -131,44 +126,43 @@ query get_event_by_category($categories1: [String!],
   }
 }
 
-query get_class_by_category($categories1: [String!],
-  $distance: Float!, $from: geography!,
-  $limit: Int, $offset: Int, 
-   $categories2: [String!],
-   $schedule_type: [String!],
-	$tags: [String!]) {
+query get_class_by_category(
+  $categories1: [String!]
+  $distance: Float!
+  $from: geography!
+  $limit: Int
+  $offset: Int
+  $categories2: [String!]
+  $schedule_type: [String!]
+  $tags: [String!]
+) {
   business_event(
     where: {
       _and: {
         details: {
           _and: {
-            category1: {
-              _in: $categories1
-            }, 
-             category2: {
-               _in: $categories2
-             },
-            tags: {_has_keys_all: $tags}
-          },
-          tags: {_has_key: "class"}
-        }, 
-        schedule_type: {
-          _in: $schedule_type
-        },
-         business: {
-           details: {
-             location: {
-               gps: {
-                 _st_d_within: {
-                   distance: $distance, 
-                   from: $from
-                 }
-               }
-             }
-           }
-         }
+            category1: { _in: $categories1 }
+            category2: { _in: $categories2 }
+            tags: { _has_keys_all: $tags }
+          }
+          tags: { _has_key: "class" }
+        }
+        schedule_type: { _in: $schedule_type }
+        business: {
+          details: {
+            location: {
+              gps: { _st_d_within: { distance: $distance, from: $from } }
+            }
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
+          }
+        }
       }
-    }, limit: $limit, offset: $offset) {
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
+  ) {
     details {
       id
       name {
@@ -208,7 +202,7 @@ query get_class_by_category($categories1: [String!],
 }
 
 query number_of_classes($distance: Float!, $from: geography!) {
-  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {tags: {_has_key: "class"}}}) {
+  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}, details: {tags: {_has_key: "class"}}}) {
     aggregate {
       count
     }
@@ -216,7 +210,7 @@ query number_of_classes($distance: Float!, $from: geography!) {
 }
 
 query number_of_therapy($distance: Float!, $from: geography!) {
-  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: "therapy"}}}) {
+  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}, details: {category1: {_eq: "therapy"}}}) {
     aggregate {
       count
     }
@@ -224,7 +218,7 @@ query number_of_therapy($distance: Float!, $from: geography!) {
 }
 
 query number_of_events($distance: Float!, $from: geography!) {
-  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_in: ["party", "dance", "social"]}}}) {
+  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}, details: {category1: {_in: ["party", "dance", "social"]}}}) {
     aggregate {
       count
     }
@@ -232,14 +226,14 @@ query number_of_events($distance: Float!, $from: geography!) {
 }
 
 query number_of_volunteer($distance: Float!, $from: geography!) {
-  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: "volunteer"}}}) {
+  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}, details: {category1: {_eq: "volunteer"}}}) {
     aggregate {
       count
     }
   }
 }
 query number_of_adventure($distance: Float!, $from: geography!) {
-  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: "adventure"}}}) {
+  business_event_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}, details: {category1: {_eq: "adventure"}}}) {
     aggregate {
       count
     }
@@ -361,6 +355,11 @@ mutation update_event_by_id($id: Int!,$object: business_event_set_input) {
 mutation add_class($business_id: Int!, $gps_location: geography, $address: String, $schedule_type: String, $schedule: jsonb, $starts_at: timestamptz, $ends_at: timestamptz, $available: Boolean, $tags: jsonb = ["class"], $category1: String, $category2: String, $cost: jsonb, $image: jsonb, $name: translation_obj_rel_insert_input, $position: Int = 1, $additional_parameters: jsonb, $description: translation_obj_rel_insert_input) {
   insert_business_event_one(object: {business_id: $business_id, details: {data: {business_id: $business_id, available: $available, tags: $tags, category1: $category1, category2: $category2, cost: $cost, image: $image, name: $name, position: $position, additional_parameters: $additional_parameters, description: $description}}, gps_location: $gps_location, address: $address, schedule_type: $schedule_type, schedule: $schedule, starts_at: $starts_at, ends_at: $ends_at}) {
     details_id
+    id
+  }
+}
+mutation delete_business_event($id: Int!) {
+  delete_business_event_by_pk(id: $id) {
     id
   }
 }

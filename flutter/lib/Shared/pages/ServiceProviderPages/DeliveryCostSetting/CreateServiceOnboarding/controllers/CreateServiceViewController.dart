@@ -315,6 +315,7 @@ class CreateServiceViewController {
       final RestaurantResponse res =
           await CloudFunctions.restaurant3_createRestaurant(
         name: serviceInput.value.serviceInfo!.name,
+        phoneNumber: phone.text,
         image: serviceInput.value.serviceInfo!.image,
         location: cModels.Location(
             lat: serviceInput.value.serviceInfo!.location.latitude,
@@ -354,17 +355,18 @@ class CreateServiceViewController {
         "Creating business ${languages.value.toFirebaseFormattedJson()} with this paylod ====>>>\n ${_constructServiceDetails()}");
     try {
       await _setImage();
-      cModels.BusinessResponse res =
+      final cModels.BusinessResponse res =
           await CloudFunctions.business_createBusiness(
         name: serviceInput.value.serviceInfo!.name,
-        image: serviceInput.value.serviceInfo!.image,
+        image: newImageUrl.value ?? defaultUserImgUrl,
+        phoneNumber: phone.text,
         location: cModels.Location(
             lat: serviceInput.value.serviceInfo!.location.latitude,
             lng: serviceInput.value.serviceInfo!.location.longitude,
             address: serviceInput.value.serviceInfo!.location.address),
         language: languages.value,
         profile: businessProfile!,
-        schedule: serviceInput.value.schedule!,
+        schedule: oldSchedule.value,
       );
       if (res.success == false) {
         mezDbgPrint(res.error);

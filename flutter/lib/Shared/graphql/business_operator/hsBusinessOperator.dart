@@ -3,6 +3,10 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/business_operator/__generated/business_operator.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart' as dartModel;
+import 'package:mezcalmos/Shared/models/User.dart' as userModel;
+import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 
 final HasuraDb _db = Get.find<HasuraDb>();
 
@@ -24,7 +28,6 @@ Future<Operator?> get_business_operator({required int userId}) async {
         detailsId: data.details_id,
         id: data.id,
         serviceProviderDetailsId: data.business.details_id,
-        
         online: data.operator_details.online,
         serviceProviderId: data.business_id,
         status: data.operator_details.status.toAuthorizationStatus(),
@@ -52,4 +55,40 @@ Future<BusinessProfile?> get_operator_business_profile(
     return data.business.profile.toBusinessProfile();
   }
   return null;
+}
+
+Future<List<dartModel.Operator>> get_business_ops(
+    {required int businessId}) async {
+  QueryResult<Query$getBusinessOperators> res = await _db.graphQLClient
+      .query$getBusinessOperators(Options$Query$getBusinessOperators(
+          fetchPolicy: FetchPolicy.noCache,
+          variables:
+              Variables$Query$getBusinessOperators(businessId: businessId)));
+  mezDbgPrint("🟩 Get business operator response =>${res.data}");
+  if (res.parsedData?.business_business_by_pk == null) {
+    throw Exception("🟥 Get business operator exceptions =>${res.exception}");
+  }
+  if (res.parsedData!.business_business_by_pk!.operators.isNotEmpty) {
+    List<Query$getBusinessOperators$business_business_by_pk$operators> data =
+        res.parsedData!.business_business_by_pk!.operators;
+    return data
+        .map((Query$getBusinessOperators$business_business_by_pk$operators e) =>
+            dartModel.Operator(
+                state: dartModel.OperatorState(
+                    deliveryDetailsId: null,
+                    serviceProviderDetailsId: e.business.details_id,
+                    serviceLinkId: e.business.details.service_link_id,
+                    operatorState: e.operator_details.status.toAgentStatus(),
+                    owner: e.operator_details.owner,
+                    serviceProviderId: e.business_id),
+                info: userModel.UserInfo(
+                    name: e.user.name,
+                    image: e.user.image,
+                    hasuraId: e.user_id,
+                    firebaseId: null,
+                    language: null),
+                operatorId: e.id))
+        .toList();
+  }
+  return [];
 }

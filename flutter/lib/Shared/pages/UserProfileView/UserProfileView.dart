@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/components/UserProfileImage.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -14,7 +13,6 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileView"];
@@ -36,7 +34,7 @@ class _UserProfileViewState extends State<UserProfileView> {
 
   @override
   void initState() {
-    UserProfileViewMode initMode =
+    final UserProfileViewMode initMode =
         MezRouter.bodyArguments?["mode"] as UserProfileViewMode? ??
             UserProfileViewMode.None;
     viewController.initProfileView(initMode);
@@ -53,57 +51,76 @@ class _UserProfileViewState extends State<UserProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      key: Get.find<SideMenuDrawerController>().getNewKey(),
-      drawer: MezSideMenu(),
-      appBar: MezcalmosAppBar(
-          widget.asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
-          onClick: widget.asTab
-              ? null
-              : () {
-                  _handleBackClick();
-                },
-          title: "${_i18n()["profile"]}"),
-      bottomSheet: Obx(
-        () => (viewController.isEditingInfo)
-            ? MezButton(
-                enabled: viewController.isInfoSet,
-                borderRadius: 0,
-                height: 80,
-                label: "${_i18n()["save"]}",
-                onClick: () async {
-                  await viewController.setInfo();
-                },
-              )
-            : SizedBox(),
-      ),
-      body: Obx(
-        () => Container(
-          padding: const EdgeInsets.all(22),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              UserProfileImage(
-                viewController: viewController,
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              if (!viewController.isEditingInfo)
-                Text(
-                  viewController.user?.name ?? "",
-                  style: context.txt.displaySmall,
-                ),
-              SizedBox(
-                height: 25,
-              ),
-              if (!viewController.isEditingInfo) _editAndDeleteBtns(context),
-              if (viewController.isEditingInfo) _userNameInput()
-            ],
-          ),
+        resizeToAvoidBottomInset: false,
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
+        drawer: MezSideMenu(),
+        appBar: MezcalmosAppBar(
+            widget.asTab
+                ? AppBarLeftButtonType.Menu
+                : AppBarLeftButtonType.Back,
+            onClick: widget.asTab
+                ? null
+                : () {
+                    _handleBackClick();
+                  },
+            title: "${_i18n()["profile"]}"),
+        bottomSheet: Obx(
+          () => (viewController.isEditingInfo)
+              ? MezButton(
+                  enabled: viewController.isInfoSet,
+                  borderRadius: 0,
+                  height: 80,
+                  label: "${_i18n()["save"]}",
+                  onClick: () async {
+                    await viewController.setInfo();
+                  },
+                )
+              : SizedBox(),
         ),
-      ),
-    );
+        body: Obx(() => Container(
+              padding: const EdgeInsets.all(22),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  UserProfileImage(
+                    viewController: viewController,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  if (!viewController.isEditingInfo)
+                    Text(
+                      viewController.user?.name ?? "",
+                      style: context.txt.displaySmall,
+                    ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  if (!viewController.isEditingInfo)
+                    _editAndDeleteBtns(context),
+                  if (viewController.isEditingInfo) _userNameInput(),
+                  // if (!viewController.isEditingInfo)
+                  //   MezButton(
+                  //     label: "Delete account",
+                  //     backgroundColor: offRedColor,
+                  //     textColor: redAccentColor,
+                  //     onClick: () async {
+                  //       await showConfirmationDialog(
+                  //         context,
+                  //         title: '${_i18n()["deleteTitle"]}',
+                  //         primaryButtonText: "${_i18n()["deletePrBtn"]}",
+                  //         secondaryButtonText: "${_i18n()["deleteScBtn"]}",
+                  //         helperText: "${_i18n()["deleteHelper"]}",
+                  //         onYesClick: () async {
+                  //           await viewController.deleteAccount(context);
+                  //         },
+                  //       );
+                  //     },
+                  //   ),
+                ],
+              ),
+            )));
   }
 
   void _handleBackClick() {
@@ -128,32 +145,32 @@ class _UserProfileViewState extends State<UserProfileView> {
         SizedBox(
           height: 25,
         ),
-        MezButton(
-          label: "${_i18n()["deleteAccount"]}",
-          onClick: () async {
-            await showConfirmationDialog(
-              context,
-              title: '${_i18n()["deleteTitle"]}',
-              primaryButtonText: "${_i18n()["deletePrBtn"]}",
-              secondaryButtonText: "${_i18n()["deleteScBtn"]}",
-              helperText: "${_i18n()["deleteHelper"]}",
-              onYesClick: () async {
-                final ServerResponse res = await viewController.deleteAccount();
-                if (!res.success) {
-                  MezSnackbar(
-                    "Oops",
-                    res.errorMessage ?? "Server problem!",
-                  );
-                }
-              },
-            );
-          },
-          backgroundColor: offRedColor,
-          textColor: Colors.red,
-        ),
-        SizedBox(
-          height: 35,
-        ),
+        // MezButton(
+        //   label: "${_i18n()["deleteAccount"]}",
+        //   onClick: () async {
+        //     await showConfirmationDialog(
+        //       context,
+        //       title: '${_i18n()["deleteTitle"]}',
+        //       primaryButtonText: "${_i18n()["deletePrBtn"]}",
+        //       secondaryButtonText: "${_i18n()["deleteScBtn"]}",
+        //       helperText: "${_i18n()["deleteHelper"]}",
+        //       onYesClick: () async {
+        //         final ServerResponse res = await viewController.deleteAccount();
+        //         if (!res.success) {
+        //           MezSnackbar(
+        //             "Oops",
+        //             res.errorMessage ?? "Server problem!",
+        //           );
+        //         }
+        //       },
+        //     );
+        //   },
+        //   backgroundColor: offRedColor,
+        //   textColor: Colors.red,
+        // ),
+        // SizedBox(
+        //   height: 35,
+        // ),
       ],
     );
   }

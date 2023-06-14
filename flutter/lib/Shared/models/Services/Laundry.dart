@@ -25,6 +25,7 @@ class Laundry extends Service {
     required this.deliveryDetailsId,
     this.averageNumberOfDays = 2,
     required super.serviceDetailsId,
+    required super.isOpen,
     required this.selfDelivery,
     required this.laundryCosts,
     required cModels.ServiceProviderLanguage languages,
@@ -172,7 +173,7 @@ class LaundryCostLineItem {
         Get.find<LanguageController>().userLanguageKey;
     final String availableName = name[name.keys.first]!;
     if (name.getTranslation(userLanguage) != null) {
-      return name.getTranslation(userLanguage);
+      return name.getTranslation(userLanguage)!;
     } else {
       return availableName;
     }

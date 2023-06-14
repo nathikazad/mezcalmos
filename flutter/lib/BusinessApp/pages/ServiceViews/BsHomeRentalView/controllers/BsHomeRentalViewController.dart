@@ -6,6 +6,7 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
+import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -23,8 +24,10 @@ class BsHomeRentalViewController {
       BusinessItemDetailsController();
   TextEditingController bedroomsController = TextEditingController();
   TextEditingController bathroomsController = TextEditingController();
+  TextEditingController areaController = TextEditingController();
 
   // vars //
+  int? _homeRentalId;
   bool shouldRefetch = false;
   // state variables //
   Rxn<Rental> _rental = Rxn<Rental>();
@@ -35,7 +38,7 @@ class BsHomeRentalViewController {
   bool get isEditing => _rental.value != null;
 
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
-        TimeUnit.PerHour,
+        // TimeUnit.PerHour,
         TimeUnit.PerDay,
         TimeUnit.PerWeek,
         TimeUnit.PerMonth,
@@ -47,7 +50,7 @@ class BsHomeRentalViewController {
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
   bool get hasData {
-    if (isEditing) {
+    if (_homeRentalId != null) {
       return _rental.value != null &&
           languageTabsController.tabController != null;
     } else
@@ -57,7 +60,9 @@ class BsHomeRentalViewController {
   Future<void> init(
       {required TickerProvider thickerProvider,
       required int detailsId,
+      int? homeRentalId,
       required int businessId}) async {
+    _homeRentalId = homeRentalId;
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
@@ -65,6 +70,9 @@ class BsHomeRentalViewController {
         language: languages!,
         businessDetailsId: detailsId);
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
+    if (homeRentalId != null) {
+      await initEditMode(id: homeRentalId);
+    }
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -77,6 +85,11 @@ class BsHomeRentalViewController {
           itemDetailsId: rental!.details.id.toInt());
       bedroomsController.text = rental!.bedrooms.toString();
       bathroomsController.text = rental!.bathrooms.toString();
+      areaController.text = rental!.details.additionalParameters?["area"]
+              .toString()
+              .replaceAll("sq ft", "")
+              .trim() ??
+          "";
       homeLocation.value = rental!.gpsLocation;
       homeType.value = rental!.homeType;
     }
@@ -87,8 +100,12 @@ class BsHomeRentalViewController {
   }
 
   Future<Rental> _constructRentalWithDetails() async {
-    BusinessItemDetails details = await detailsController.contructDetails();
-    Rental rental = Rental(
+    final BusinessItemDetails details =
+        await detailsController.contructDetails();
+    details.additionalParameters = {
+      "area": areaController.text.trim() + " sq ft",
+    };
+    final Rental rental = Rental(
       homeType: homeType.value,
       category1: RentalCategory1.Home,
       gpsLocation: homeLocation.value,
@@ -100,7 +117,7 @@ class BsHomeRentalViewController {
   }
 
   Rental _constructRental() {
-    Rental rental = Rental(
+    final Rental rental = Rental(
       homeType: homeType.value,
       category1: RentalCategory1.Home,
       gpsLocation: homeLocation.value,
@@ -116,9 +133,16 @@ class BsHomeRentalViewController {
       if (isEditing) {
         try {
           await saveItemDetails();
-          await update_business_home_rental(
+          _rental.value = await update_business_home_rental(
               id: rental!.id!.toInt(), rental: _constructRental());
+          await update_item_additional_params(
+            id: rental!.details.id.toInt(),
+            additionalParams: {
+              "area": areaController.text.trim() + " sq ft",
+            },
+          );
           showSavedSnackBar();
+          shouldRefetch = true;
         } catch (e, stk) {
           mezDbgPrint(
               " 🛑 ${rental?.id?.toInt()}  OperationException : ${e.toString()}");
@@ -134,7 +158,7 @@ class BsHomeRentalViewController {
   }
 
   void dispose() {
-    // TODO: implement dispose
+    languageTabsController.dispose();
   }
 
   Future<void> createItem(Rental rental) async {
@@ -146,10 +170,22 @@ class BsHomeRentalViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
+        detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
+    }
+  }
+
+  Future<void> deleteOffer() async {
+    try {
+      await delete_busines_rental(rentalId: rental!.id!.toInt());
+      shouldRefetch = true;
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
   }
 }

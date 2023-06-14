@@ -59,10 +59,10 @@ export interface Event {
   tags?: Array<EventTag>;
 }
 export interface Service {
-    id?: number;
-    category1: ServiceCategory1;
-    schedule?: Schedule;
-    details: BusinessItemDetails;
+  id?: number;
+  category1: ServiceCategory1;
+  schedule?: Schedule;
+  details: BusinessItemDetails;
 }
 export interface Product {
   id?: number;
@@ -129,6 +129,8 @@ export enum BusinessProfile {
   WellnessPractitioner = "wellnessPractitioner",
   Volunteer = "volunteer",
   Entertainment = "entertainment",
+  DanceStudio = "danceStudio",
+  MealPlanning = "mealPlanning",
 }
 export enum RentalCategory2 {
   Motorcycle = "motorcycle",
@@ -158,6 +160,8 @@ export enum ProductCategory1 {
 }
 export enum EventTag {
   Class = "class",
+  Workshop = "workshop",
+  Retreat = "retreat",
 }
 export interface NewBusinessNotification extends ForegroundNotification {
   name: string;

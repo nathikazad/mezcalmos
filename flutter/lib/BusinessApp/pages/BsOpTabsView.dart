@@ -1,9 +1,11 @@
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
@@ -89,14 +91,14 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
                 case 0:
                   currentView.value = BusinessOpTabView.Services;
                   break;
+                // case 1:
+                //   currentView.value = BusinessOpTabView.Feed;
+                //   break;
                 case 1:
-                  currentView.value = BusinessOpTabView.Feed;
-                  break;
-                case 2:
                   currentView.value = BusinessOpTabView.Messages;
 
                   break;
-                case 3:
+                case 2:
                   currentView.value = BusinessOpTabView.Profile;
 
                   break;
@@ -109,12 +111,20 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
                 icon: Icon(Icons.business_center),
                 label: '${_i18n()["services"]}',
               ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.feed),
+              //   label: '${_i18n()["feed"]}',
+              // ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.feed),
-                label: '${_i18n()["feed"]}',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.textsms),
+                icon: badge.Badge(
+                  badgeColor: Colors.red,
+                  showBadge: Get.find<ForegroundNotificationsController>()
+                      .hasNewSPMessageNotification(),
+                  position: badge.BadgePosition(top: 0, end: 0),
+                  child: Icon(
+                    Icons.textsms,
+                  ),
+                ),
                 label: '${_i18n()["messages"]}',
               ),
               BottomNavigationBarItem(

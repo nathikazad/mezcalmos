@@ -1,3 +1,4 @@
+import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { AssignDriverError } from "../../../delivery/assignDriver";
 import { getHasura } from "../../../utilities/hasura";
 import { ChangePriceStatus, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
@@ -53,11 +54,13 @@ export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOr
           },
           _set: {
             
-           change_price_request: JSON.stringify(deliveryOrder.changePriceRequest)
+           change_price_request: $`change_price_request`
           }
         }, {
           delivery_cost: true
         }]
+      }, {
+        "change_price_request": deliveryOrder.changePriceRequest
       })
       break;
     case ChangePriceStatus.Accepted:
@@ -67,12 +70,14 @@ export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOr
             id: deliveryOrder.deliveryId
           },
           _set: {
-            change_price_request: JSON.stringify(deliveryOrder.changePriceRequest),
+            change_price_request: $`change_price_request`,
             delivery_cost: deliveryOrder.deliveryCost
           }
         }, {
           delivery_cost: true
         }]
+      }, {
+        "change_price_request": deliveryOrder.changePriceRequest
       })
       break;
     default:
@@ -82,12 +87,14 @@ export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOr
             id: deliveryOrder.deliveryId
           },
           _set: {
-            change_price_request: JSON.stringify(deliveryOrder.changePriceRequest),
+            change_price_request: $`change_price_request`,
             delivery_driver_id: null!,
           }
         }, {
           delivery_cost: true
         }]
+      }, {
+        "change_price_request": deliveryOrder.changePriceRequest
       })
       break;
   }

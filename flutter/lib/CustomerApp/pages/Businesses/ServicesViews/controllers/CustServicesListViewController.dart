@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 class CustServiceListViewController {
   // variables //
-  RxList<Service> _services = <Service>[].obs;
+  RxList<ServiceCard> _services = <ServiceCard>[].obs;
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
   // RxList<BusinessCard> _filtredBusiness = <BusinessCard>[].obs;
 
@@ -32,11 +32,11 @@ class CustServiceListViewController {
       : _servicesScrollController;
   ScrollController _servicesScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  int servicesFetchSize = 15;
+  int servicesFetchSize = 20;
   int _servicesCurrentOffset = 0;
   bool _servicesFetchingData = false;
   bool _servicesReachedEndOfData = false;
-  final int businessFetchSize = 3;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;
@@ -48,7 +48,7 @@ class CustServiceListViewController {
   bool get isFiltering => selectedCategories.length != _filterCategories.length;
   List<ServiceCategory1> get filterCategories => _filterCategories;
 
-  List<Service> get services => _services.value;
+  List<ServiceCard> get services => _services.value;
   List<BusinessCard> get businesses => _businesses.value;
 
   /// return current view rental category (Home, Surf, etc)

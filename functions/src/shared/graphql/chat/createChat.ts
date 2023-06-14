@@ -1,7 +1,7 @@
-import { service_provider_customer_chat_constraint } from "../../../../../hasura/library/src/generated/graphql-zeus";
+import { $, service_provider_customer_chat_constraint } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../utilities/hasura";
-import { DirectChatDetails } from "../../chat/createChat";
-import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName, ChatInfo } from "../../models/Generic/Chat";
+import { DirectChatDetails, MezAdminChatDetails } from "../../chat/createChat";
+import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName, ChatInfo, RecipientTypeToChatInfoAppName, RecipientType, RecipientAppType, ParticipantType } from "../../models/Generic/Chat";
 import { AppType, MezError } from "../../models/Generic/Generic";
 import { CustomerInfo, MezAdmin, UserInfo } from "../../models/Generic/User";
 import { ServiceProvider, ServiceProviderToAppType } from "../../models/Services/Service";
@@ -18,10 +18,14 @@ export async function createServiceProviderCustomerChat(serviceProvider: Service
         [ChatInfoAppName.CustomerApp]: {
             chatTitle: serviceProvider.name,
             chatImage: serviceProvider.image,
+            phoneNumber: serviceProvider.phoneNumber,
+            participantType: AppParticipant[ServiceProviderToAppType[serviceProvider.serviceProviderType]],
         },
         [AppTypeToChatInfoAppName[ServiceProviderToAppType[serviceProvider.serviceProviderType]]]: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
+            phoneNumber: customer.phoneNumber,
+            participantType: ParticipantType.Customer,
         },
     }
 
@@ -33,7 +37,7 @@ export async function createServiceProviderCustomerChat(serviceProvider: Service
                 service_provider_type: serviceProvider.serviceProviderType,
                 chat: {
                     data: {
-                        chat_info: JSON.stringify(chatInfo),
+                        chat_info: $`chatInfo`,
                         chat_participants: {
                             data: [{
                                     participant_id: customer.id,
@@ -51,6 +55,8 @@ export async function createServiceProviderCustomerChat(serviceProvider: Service
         },{
             chat_id: true,
         }]
+    }, {
+        "chatInfo": chatInfo,
     })
     if(response.insert_service_provider_customer_chat_one == null) {
         throw new MezError("chatCreationError");
@@ -78,7 +84,7 @@ export async function createDirectChat(user1: UserInfo, user2: UserInfo, directC
                 user_id2: user2.id,
                 chat: {
                     data: {
-                        chat_info: JSON.stringify(chatInfo),
+                        chat_info: $`chatInfo`,
                         chat_participants: {
                             data: [{
                                 app_type_id: directChatDetails.user1AppType,
@@ -95,9 +101,11 @@ export async function createDirectChat(user1: UserInfo, user2: UserInfo, directC
         }, {
             chat_id: true
         }]
+    }, {
+        "chatInfo": chatInfo
     });
 }
-export async function createMezAdminChat(user: UserInfo, userAppType: AppType, mezAdmins: MezAdmin[]) {
+export async function createMezAdminChat(recipients: number[], mezAdminChatDetails: MezAdminChatDetails, mezAdmins: MezAdmin[], name?: string, image?: string) {
     let chain = getHasura();
 
     let mezAdminsDetails = mezAdmins.map((m:any) => {
@@ -106,29 +114,34 @@ export async function createMezAdminChat(user: UserInfo, userAppType: AppType, m
             app_type_id: AppType.MezAdmin
         };
     });
+    let recipientsDetails = recipients.map((r:number) => {
+        return {
+            participant_id: r,
+            app_type_id: RecipientAppType[mezAdminChatDetails.recipientType]
+        };
+    });
+    let nameSub: string;
+    switch (mezAdminChatDetails.recipientType) {
+        case RecipientType.Customer:
+        case RecipientType.DeliveryDriver:
+            nameSub = "User";
+            break;
+        default:
+            nameSub = "Service Provider";
+            break;
+    }
 
     await chain.mutation({
         insert_mez_admin_chat_one: [{
             object: {
-                user_id: user.id,
-                app_type: userAppType,
+                recipient_id: mezAdminChatDetails.recipientId,
+                recipient_type: mezAdminChatDetails.recipientType,
                 chat: {
                     data: {
-                        chat_info: JSON.stringify({
-                            [AppTypeToChatInfoAppName[userAppType]]: {
-                                chatTitle: "Mez Admin",
-                                chatImage: "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d",
-                            },
-                            [ChatInfoAppName.MezAdminApp]: {
-                                chatTitle: user.name ?? AppParticipant[userAppType],
-                                chatImage: user.image,
-                            },
-                        }),
+                        chat_info: $`chatInfo`,
                         chat_participants: {
-                            data: [{
-                                    participant_id: user.id,
-                                    app_type_id: userAppType
-                                },
+                            data: [
+                                ...recipientsDetails,
                                 ...mezAdminsDetails
                             ]
                         },
@@ -138,5 +151,16 @@ export async function createMezAdminChat(user: UserInfo, userAppType: AppType, m
         },{
             chat_id: true,
         }]
+    }, {
+        "chatInfo": {
+            [RecipientTypeToChatInfoAppName[mezAdminChatDetails.recipientType]]: {
+                chatTitle: "Mez Admin",
+                chatImage: "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d",
+            },
+            [ChatInfoAppName.MezAdminApp]: {
+                chatTitle: name ?? nameSub,
+                chatImage: image,
+            },
+        }
     })
 }

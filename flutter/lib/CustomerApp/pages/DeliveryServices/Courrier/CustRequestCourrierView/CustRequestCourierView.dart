@@ -2,11 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
-import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/components/CustRequestCourierItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -115,15 +113,13 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                   viewController.company.value!.info.name,
                   style: context.txt.bodyLarge,
                 )),
-          SizedBox(
-            height: 5,
-          ),
+
           Form(
             key: viewController.secondFormKey,
             child: DeliveryTimePicker(
               fixed7days: true,
               deliveryTime: viewController.deliveryTime.value,
-              isServiceOpen: viewController.company.value?.isOpen() ?? true,
+              isServiceOpen: viewController.company.value?.isOpen ?? true,
               numberOfDays: 7,
               onValue: (DateTime? value) {
                 if (value != null &&
@@ -139,14 +135,13 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
               schedule: viewController.company.value!.schedule,
             ),
           ),
-          SizedBox(
-            height: 5,
-          ),
+
           // Text(
           //   'Payment method',
           //   style: context.txt.bodyLarge,
           // ),
           OrderSummaryCard(
+              margin: EdgeInsets.only(top: 20),
               costs: OrderCosts(
                   deliveryCost: viewController.shippingCost.value,
                   refundAmmount: null,
@@ -186,22 +181,27 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
           ),
           Form(
             key: viewController.fromKey,
-            child: DropDownLocationList(
-              elevation: 0,
-              onValueChangeCallback: (MezLocation location) {
-                viewController.setToLocation(location);
-              },
-              bgColor: Colors.white,
-              checkDistance: false,
-              passedInLocation: viewController.toLoc.value,
-              serviceProviderLocation: null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DropDownLocationList(
+                  elevation: 0,
+                  onValueChangeCallback: (MezLocation location) {
+                    viewController.setToLocation(location);
+                  },
+                  bgColor: Colors.white,
+                  checkDistance: false,
+                  passedInLocation: viewController.toLoc.value,
+                  serviceProviderLocation: null,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                CustRequestCourierItems(
+                  viewController: viewController,
+                ),
+              ],
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          CustRequestCourierItems(
-            viewController: viewController,
           ),
           SizedBox(
             height: 75,

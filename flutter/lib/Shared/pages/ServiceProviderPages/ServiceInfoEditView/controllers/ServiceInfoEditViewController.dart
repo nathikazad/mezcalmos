@@ -43,6 +43,8 @@ class ServiceInfoEditViewController {
   late ServiceProviderType serviceType;
 
   int? newDescId;
+
+  Language? get secLang => languages.value?.secondary;
 // INIT //
 
   Future<void> init({
@@ -66,8 +68,7 @@ class ServiceInfoEditViewController {
 
   void _setServiceInfo() {
     if (service.value != null) {
-      mezDbgPrint(
-          "Description id ========>>>${service.value?.languages?.toFirebaseFormattedJson()}");
+      mezDbgPrint("Description id ========>>>${service.value?.descriptionId}");
       mezDbgPrint("Description id ========>>>${service.value?.description}");
       serviceNameTxt.text = service.value?.name ?? '';
       phoneNumber.text = service.value?.phoneNumber ?? '';
@@ -85,6 +86,8 @@ class ServiceInfoEditViewController {
 
   Future<void> updateServiceDescription() async {
     if (!fd.mapEquals(service.value!.description, _contructDesc())) {
+      mezDbgPrint(
+          "Descriptions are not equal ! ${service.value!.descriptionId}");
       if (service.value!.descriptionId != null) {
         _contructDesc().forEach((Language key, String value) {
           update_translation(
@@ -224,5 +227,12 @@ class ServiceInfoEditViewController {
     primaryServiceDesc.dispose();
     phoneNumber.dispose();
     serviceNameTxt.dispose();
+  }
+
+  List<String> getSecLangsOptions() {
+    List<Language> data = [];
+    data.addAll(Language.values);
+    data.remove(languages.value!.primary);
+    return data.map((Language e) => e.toFirebaseFormatString()).toList();
   }
 }

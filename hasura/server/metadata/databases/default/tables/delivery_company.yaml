@@ -51,6 +51,7 @@ select_permissions:
         - id
         - service_provider_type
       filter: {}
+      allow_aggregations: true
   - role: customer
     permission:
       columns:

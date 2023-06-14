@@ -1,7 +1,7 @@
 // ignore_for_file: always_specify_types
 
 import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
@@ -33,6 +33,17 @@ class LocationController extends GetxController {
       case PermissionStatus.denied:
         statusSnapshot.value = LocationPermissionsStatus.Denied;
         mezDbgPrint(statusSnapshot.value);
+        if (kIsWeb) {
+          mezDbgPrint("entering is web");
+          try {
+            LocationData _locationData = await Location().getLocation();
+            mezDbgPrint(_locationData.latitude);
+            return Future.value(LocationPermissionsStatus.Ok);
+          } catch (e) {
+            mezDbgPrint("failed web location get");
+            return Future.value(statusSnapshot.value);
+          }
+        }
         return Future.value(statusSnapshot.value);
       case PermissionStatus.deniedForever:
         statusSnapshot.value = LocationPermissionsStatus.ForeverDenied;

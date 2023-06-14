@@ -48,13 +48,48 @@ const int nSplashScreenTimer = 1;
 const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
 const int nScheduledCounterOfferValidExpireTimeInSeconds = 900; // 15mins
 const Map<String, dynamic> defaultSchedule = {
-  "friday": {"from": "8:00", "isOpen": false, "to": "20:00"},
-  "monday": {"from": "8:00", "isOpen": false, "to": "20:00"},
-  "saturday": {"from": "8:00", "isOpen": false, "to": "20:00"},
-  "sunday": {"from": "8:00", "isOpen": false, "to": "20:00"},
-  "thursday": {"from": "8:00", "isOpen": false, "to": "20:00"},
-  "tuesday": {"from": "8:00", "isOpen": false, "to": "20:00"},
-  "wednesday": {"from": "8:00", "isOpen": false, "to": "20:00"},
+  "monday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "tuesday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "wednesday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "thursday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "friday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "saturday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "sunday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
 };
 // ----------------- Costants Strings ----------------- //
 const String sPrivacyPolicyCustomerApp =
@@ -63,6 +98,7 @@ const String sPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
 
 const String sNetworkCheckUrl1 = 'https://www.google.com';
 const String firebaseDbUrl = 'https://www.firebaseio.com';
+const String firebaseAuthUrl = 'https://identitytoolkit.googleapis.com';
 const String firebaseFunctionsProdUrl =
     'https://us-central1-mezcalmos-31f1c.cloudfunctions.net';
 const String firebaseFunctionsStageUrl =
@@ -123,6 +159,9 @@ const String aDeliveredIcon =
     "assets/images/shared/notifications/delivered.png";
 const String aCancelledIcon = "assets/images/shared/notifications/cancel.png";
 const String aAtLaundry = "assets/images/shared/notifications/atLaundry.png";
+const String aNoMessages = "assets/images/shared/noMessages.png";
+const String aNoResults = "assets/images/shared/noresults.png";
+const String aNoServices = "assets/images/shared/noServicesAdded.png";
 const String aReadyDeliveryLaundry =
     "assets/images/shared/notifications/readyForDelivery.png";
 const rive.RiveAnimation aDriverAnimation = rive.RiveAnimation.asset(

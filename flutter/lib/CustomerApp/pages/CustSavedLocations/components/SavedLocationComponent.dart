@@ -33,9 +33,10 @@ class SavedLocationComponent extends StatelessWidget {
       elevation: 1.0,
       margin: const EdgeInsets.all(8),
       child: Container(
-        padding: const EdgeInsets.only(top: 12, bottom: 5, left: 12, right: 12),
+        padding: const EdgeInsets.only(bottom: 10, left: 12, right: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,32 +54,38 @@ class SavedLocationComponent extends StatelessWidget {
                   child: Text(savelocation.name.capitalizeFirst.toString(),
                       style: context.txt.headlineMedium),
                 ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: StadiumBorder(),
-                        backgroundColor: (savelocation.defaultLocation)
-                            ? primaryBlueColor
-                            : backgroundShadeColor,
-                        shadowColor: Colors.transparent,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 4.25),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        minimumSize: Size.zero),
-                    onPressed: () {
-                      Get.find<CustomerAuthController>()
-                          .setAsDefaultLocation(savelocation);
-                    },
-                    child: Text(
-                      '${_i18n()["defaultAddressText"]}',
-                      style: TextStyle(
-                        fontFamily: "Montserrat",
-                        color: (savelocation.defaultLocation)
-                            ? Colors.white
-                            : Color(0xFF787878),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 11.mezSp,
-                      ),
-                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: StadiumBorder(),
+                          backgroundColor: (savelocation.defaultLocation)
+                              ? primaryBlueColor
+                              : backgroundShadeColor,
+                          shadowColor: Colors.transparent,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 4.25),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minimumSize: Size.zero),
+                      onPressed: () {
+                        Get.find<CustomerAuthController>()
+                            .setAsDefaultLocation(savelocation);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Text(
+                          '${_i18n()["defaultAddressText"]}',
+                          style: TextStyle(
+                            fontFamily: "Montserrat",
+                            color: (savelocation.defaultLocation)
+                                ? Colors.white
+                                : Color(0xFF787878),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 11.mezSp,
+                          ),
+                        ),
+                      )),
+                ),
                 // InkWell(
                 //   onTap: () {
                 //     Get.find<CustomerAuthController>()
@@ -116,66 +123,68 @@ class SavedLocationComponent extends StatelessWidget {
                 SizedBox(
                   width: 11,
                 ),
-                InkWell(
-                  onTap: () async {
-                    MezLocation? newLoc = await PickLocationView.navigate(
-                      initialLocation: savelocation.location.toLatLng(),
-                      onSaveLocation: ({MezLocation? location}) async {
-                        if (location != null) {
-                          await savedLocationDailog(
-                              context: context,
-                              loc: location,
-                              savedLoc: savelocation,
-                              skippable: false);
-                        }
-                      },
-                    );
-                  },
-                  customBorder: CircleBorder(),
-                  child: Ink(
-                      height: 3.h,
-                      width: 3.h,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: backgroundShadeColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.edit_outlined,
-                          color: Color(0xFF787878),
-                          size: 2.h,
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: InkWell(
+                    onTap: () async {
+                      MezLocation? newLoc = await PickLocationView.navigate(
+                        initialLocation: savelocation.location.toLatLng(),
+                        onSaveLocation: ({MezLocation? location}) async {
+                          if (location != null) {
+                            await savedLocationDailog(
+                                context: context,
+                                loc: location,
+                                savedLoc: savelocation,
+                                skippable: false);
+                          }
+                        },
+                      );
+                    },
+                    customBorder: CircleBorder(),
+                    child: Ink(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: backgroundShadeColor,
+                          shape: BoxShape.circle,
                         ),
-                      )),
+                        child: Center(
+                          child: Icon(
+                            Icons.edit_outlined,
+                            color: Color(0xFF787878),
+                            size: 25,
+                          ),
+                        )),
+                  ),
                 ),
                 SizedBox(
                   width: 11,
                 ),
-                InkWell(
-                  onTap: () {
-                    _customerAuthController.deleteLocation(savelocation);
-                  },
-                  customBorder: CircleBorder(),
-                  child: Ink(
-                      height: 3.h,
-                      width: 3.h,
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: offRedColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.delete_outline,
-                          color: Color(0xFFE21132),
-                          size: 2.h,
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: InkWell(
+                    onTap: () {
+                      _customerAuthController.deleteLocation(savelocation);
+                    },
+                    customBorder: CircleBorder(),
+                    child: Ink(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: offRedColor,
+                          shape: BoxShape.circle,
                         ),
-                      )),
+                        child: Center(
+                          child: Icon(
+                            Icons.delete_outline,
+                            color: Color(0xFFE21132),
+                            size: 25,
+                          ),
+                        )),
+                  ),
                 ),
               ],
             ),
             SizedBox(
-              height: 9,
+              height: 12,
             ),
             Container(
               child: Text(

@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
@@ -124,7 +125,7 @@ class CustLaundryOrderRequestViewController {
   }
 
   LaundryRequest _constructLaundryRequest(MapHelper.Route route) {
-    LaundryRequest _laundryRequest = LaundryRequest(
+    final LaundryRequest _laundryRequest = LaundryRequest(
         laundryId: laundry.value!.info.hasuraId,
         deliveryCost: shippingCost.value!);
     _laundryRequest.routeInformation = MapHelper.RouteInformation(
@@ -142,14 +143,20 @@ class CustLaundryOrderRequestViewController {
   }
 
   Future<void> createLaundryOrder() async {
-    bool nameAndImageChecker =
+    final bool nameAndImageChecker =
         await Get.find<AuthController>().nameAndImageChecker();
+    bool? isOpen =
+        await get_service_is_open(detailsId: laundry.value!.serviceDetailsId);
+    if (isOpen != true) {
+      showServiceClosedSnackBar();
+      return;
+    }
     if (nameAndImageChecker) {
       MapHelper.Route? route = await MapHelper.getDurationAndDistance(
           laundry.value!.info.location, customerLoc.value!);
 
       if (route != null) {
-        LaundryRequest _laundryRequest = _constructLaundryRequest(route);
+        final LaundryRequest _laundryRequest = _constructLaundryRequest(route);
 
         await _checkoutOrder(_laundryRequest);
       } else {
@@ -160,7 +167,7 @@ class CustLaundryOrderRequestViewController {
 
   Future<void> _checkoutOrder(LaundryRequest laundryRequest) async {
     try {
-      cloudFunctionModels.ReqLaundryResponse response =
+      final cloudFunctionModels.ReqLaundryResponse response =
           await CloudFunctions.laundry3_requestLaundry(
         storeId: laundryRequest.laundryId,
         customerAppType: cloudFunctionModels.CustomerAppType.Native,

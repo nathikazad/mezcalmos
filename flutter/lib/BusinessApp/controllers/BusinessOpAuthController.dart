@@ -19,7 +19,7 @@ class BusinessOpAuthController extends GetxController {
       Get.find<AppLifeCycleController>();
 
   /// TODO: Just for testing
-  BusinessProfile? _businessProfile = BusinessProfile.SurfShop;
+  late BusinessProfile? _businessProfile;
   String? _appLifeCyclePauseCallbackId;
   String? _appLifeCycleResumeCallbackId;
 
@@ -53,13 +53,17 @@ class BusinessOpAuthController extends GetxController {
       operator.value = await get_business_operator(userId: operatorUserId);
 
       mezDbgPrint("Operator value  ====>${operator.value}");
+      _businessProfile =
+          await get_operator_business_profile(userId: operatorUserId);
+      mezDbgPrint("_businessProfile $_businessProfile");
       if (operator.value != null) {
         _companyId.value = operator.value!.serviceProviderId.toInt();
         _businessProfile =
             await get_operator_business_profile(userId: operatorUserId);
+        mezDbgPrint("_businessProfile $_businessProfile");
 
         /// TODO: Just for testing
-        _businessProfile = BusinessProfile.SurfShop;
+        // _businessProfile = BusinessProfile.SurfShop;
       }
     } catch (e, stk) {
       mezDbgPrint(e);

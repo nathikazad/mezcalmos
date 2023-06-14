@@ -89,7 +89,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                           onTap: controller.onInfoTap,
                           child: Icon(
                             Icons.info_outline_rounded,
-                            size: 15.sp,
+                            size: 15.mezSp,
                             color: Colors.white,
                           )),
                     )
@@ -240,7 +240,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                             text: controller.restaurant.value!
                                     .getAvailableCategories[index].name
                                     ?.getTranslation(userLanguage)
-                                    .inCaps ??
+                                    ?.inCaps ??
                                 "",
                           );
                         })

@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -114,7 +115,7 @@ class CustRequestCourierViewController {
   Future<num?> handleNext() async {
     if (currentPage == 0) {
       if (fromKey.currentState?.validate() == true) {
-        FocusManager.instance.primaryFocus?.unfocus();
+        //FocusManager.instance.primaryFocus?.unfocus();
         unawaited(pageController
             .animateToPage(currentPage.value + 1,
                 duration: Duration(milliseconds: 500), curve: Curves.easeInOut)
@@ -130,17 +131,24 @@ class CustRequestCourierViewController {
   }
 
   Future<void> _makeOrder() async {
-    bool nameAndImageChecker =
+    final bool nameAndImageChecker =
         await Get.find<AuthController>().nameAndImageChecker();
+    bool? isOpen =
+        await get_service_is_open(detailsId: company.value!.serviceDetailsId);
+    if (isOpen != true) {
+      showServiceClosedSnackBar();
+      return;
+    }
     if (nameAndImageChecker) {
       await _callCloudFunc();
     }
   }
 
   Future<void> _callCloudFunc() async {
+    mezDbgPrint("Calling cloud func with from text : ${fromLocText.text}");
     try {
       await _uploadItemsImages();
-      cModels.CreateCourierResponse res =
+      final cModels.CreateCourierResponse res =
           await CloudFunctions.delivery3_createCourierOrder(
         toLocation: cModels.Location(
             lat: toLoc.value!.position.latitude!,
@@ -159,7 +167,7 @@ class CustRequestCourierViewController {
             )
             .toList(),
         fromLocationText:
-            (fromLocText.text.length > 4) ? fromLocText.text : null,
+            (fromLocText.text.length > 1) ? fromLocText.text : null,
         fromLocationGps: (fromLoc.value != null)
             ? cModels.Location(
                 lat: fromLoc.value!.position.latitude!,

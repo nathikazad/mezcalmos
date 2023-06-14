@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -13,11 +12,9 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
@@ -45,13 +42,13 @@ class MezSideMenu extends GetWidget<AuthController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Flexible(flex: 1, child: _drawerHeader()),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 1.5.h),
-                      child: Divider(
-                        color: Color.fromRGBO(196, 196, 196, 0.29),
-                      ),
+
+                    // padding: EdgeInsets.symmetric(vertical: 1.5.h),
+                    Divider(
+                      color: Color.fromRGBO(196, 196, 196, 0.29),
                     ),
-                    _buildSideMenuItem(),
+
+                    // _buildSideMenuItem(),
                     _basicSideMenuItems(context),
                   ],
                 ),
@@ -73,30 +70,26 @@ class MezSideMenu extends GetWidget<AuthController> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SideMenuItem(
-          icon: Icons.person,
-
-          title: (controller.isUserSignedIn)
-              ? "${_i18n()["profile"]}"
-              : "${_i18n()["login"]}", // _i18n()["userInfo"],
-          onClick: () {
-            _drawerController.closeMenu();
-            if (controller.isUserSignedIn) {
-              UserProfileView.navigate();
-            } else
-              SignInView.navigateAtOrderTime();
-          },
-        ),
-        if (_drawerController.pastOrdersRoute != null)
+        if (controller.isUserSignedIn)
           SideMenuItem(
-            icon: Icons.restore,
-
-            title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
+            icon: Icons.person,
+            title: "${_i18n()["profile"]}",
             onClick: () {
               _drawerController.closeMenu();
-              MezRouter.toPath(_drawerController.pastOrdersRoute!);
+
+              UserProfileView.navigate();
             },
           ),
+        // if (_drawerController.pastOrdersRoute != null)
+        //   SideMenuItem(
+        //     icon: Icons.restore,
+
+        //     title: "${_i18n()["pastOrders"]}", // _i18n()["userInfo"],
+        //     onClick: () {
+        //       _drawerController.closeMenu();
+        //       MezRouter.toPath(_drawerController.pastOrdersRoute!);
+        //     },
+        //   ),
         SideMenuItem(
           onClick: () {
             _drawerController.closeMenu();
@@ -150,25 +143,30 @@ class MezSideMenu extends GetWidget<AuthController> {
                 );
           },
         ),
+        // Obx(
+        //   () => SideMenuItem(
+        //     icon: Icons.privacy_tip,
+
+        //     title: _i18n()["legal"], // _i18n()["userInfo"],
+        //     onClick: () => launchUrlString(MezEnv.appType.getPrivacyLink()),
+        //   ),
+        // ),
+
         Obx(
           () => SideMenuItem(
-            icon: Icons.privacy_tip,
-
-            title: _i18n()["legal"], // _i18n()["userInfo"],
-            onClick: () => launchUrlString(MezEnv.appType.getPrivacyLink()),
+            icon: controller.isUserSignedIn ? Icons.logout : Icons.person,
+            title: (controller.isUserSignedIn)
+                ? "${_i18n()["logout"]}"
+                : "${_i18n()["login"]}",
+            onClick: () {
+              _drawerController.closeMenu();
+              if (controller.isUserSignedIn) {
+                logOut();
+              } else
+                SignInView.navigateAtOrderTime();
+            },
           ),
         ),
-        if (controller.isUserSignedIn)
-          Obx(
-            () => SideMenuItem(
-              icon: Icons.logout,
-              title: _i18n()["logout"],
-              onClick: () async {
-                _drawerController.closeMenu();
-                await signOut();
-              },
-            ),
-          ),
       ],
     );
   }
@@ -262,13 +260,17 @@ class SideMenuItem extends StatelessWidget {
       this.shouldBeAuthorized = false,
       this.isI18nPath = false,
       this.title,
+      this.backgroundColor,
+      this.contentPadding,
       this.titleWidget})
       : super(key: key);
   final IconData icon;
+  final Color? backgroundColor;
   final Widget? titleWidget;
   final String? title;
   final bool isI18nPath;
   final bool shouldBeAuthorized;
+  final EdgeInsetsGeometry? contentPadding;
   final Function()? onClick;
 
   @override
@@ -276,6 +278,8 @@ class SideMenuItem extends StatelessWidget {
     return InkWell(
       onTap: onClick,
       child: Container(
+        padding: contentPadding,
+        color: backgroundColor,
         margin: EdgeInsets.symmetric(vertical: 1.h),
         child: Row(
           children: [

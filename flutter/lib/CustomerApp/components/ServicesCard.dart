@@ -11,13 +11,13 @@ class ServicesCard extends StatelessWidget {
   const ServicesCard({
     Key? key,
     required this.title,
-    this.subtitle,
+    required this.subtitle,
     required this.url,
     this.onTap,
   }) : super(key: key);
 
   final String title;
-  final String? subtitle;
+  final String subtitle;
   final String url;
 
   final GestureTapCallback? onTap;
@@ -47,12 +47,7 @@ class ServicesCard extends StatelessWidget {
                     //================= title=============
                     Text("$title", style: textTheme.displaySmall),
                     //================ subtitle============
-                    subtitle != null
-                        ? Text("$subtitle", style: textTheme.titleMedium)
-                        : Text(
-                            "${i18n["comingSoon"]}",
-                            style: textTheme.titleMedium,
-                          )
+                    Text("$subtitle", style: textTheme.titleMedium)
                   ],
                 ),
               ),

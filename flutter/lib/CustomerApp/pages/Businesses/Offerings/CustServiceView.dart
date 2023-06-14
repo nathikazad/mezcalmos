@@ -8,13 +8,16 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
@@ -66,12 +69,15 @@ class _CustServiceViewState extends State<CustServiceView> {
                     children: [
                       Text(
                         viewController.service!.details.name
-                            .getTranslation(userLanguage),
-                        style: context.textTheme.displayMedium,
+                            .getTranslation(userLanguage)!
+                            .inCaps,
+                        style: context.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w700, fontSize: 18.mezSp),
                       ),
+                      SizedBox(height: 10),
                       viewController.service!.details.cost.length == 1
                           ? Text(
-                              "\$${costData.entries.first.value}/${costData.entries.first.key.name.toString().toLowerCase().replaceAll("per", "")}",
+                              "${costData.entries.first.value.toPriceString()}/${costData.entries.first.key.name.toString().toLowerCase().replaceAll("per", "")}",
                               style: context.textTheme.bodyLarge!.copyWith(
                                 color: primaryBlueColor,
                                 fontWeight: FontWeight.w600,
@@ -80,19 +86,18 @@ class _CustServiceViewState extends State<CustServiceView> {
                           : CustBusinessRentalCost(
                               cost: viewController.service!.details.cost,
                             ),
-                      Text(
-                        _i18n()['description'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        viewController.service!.details.description
-                                ?.getTranslation(userLanguage) ??
-                            _i18n()['noDescription'],
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      _description(context),
+                      CustBusinessScheduleBuilder(
+                        period: null,
+                        isService: true,
+                        schedule: viewController.service!.schedule,
+                        scheduleType: ScheduleType.Scheduled,
                       ),
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.only(top: 15),
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.service!.business,
-                        offeringName: viewController.service!.details.name,
+                        offering: viewController.service!.details,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],
@@ -105,6 +110,31 @@ class _CustServiceViewState extends State<CustServiceView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          _i18n()['description'],
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          viewController.service!.details.description
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
+              _i18n()['noDescription'],
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        SizedBox(
+          height: 15,
+        ),
+      ],
     );
   }
 }

@@ -59,7 +59,7 @@ class CustBusinessPaymentMethods extends StatelessWidget {
         label = '${_i18n()["creditCard"]}';
         break;
       default:
-        icon = Icons.payments;
+        icon = Icons.payments_outlined;
         label = '${_i18n()["cashOnDelivery"]}';
     }
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: [

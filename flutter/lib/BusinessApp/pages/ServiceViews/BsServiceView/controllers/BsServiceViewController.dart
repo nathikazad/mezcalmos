@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 class BsServiceViewController {
   // instances //
@@ -19,6 +20,7 @@ class BsServiceViewController {
   // streams //
 
   // variables //
+  int? serviceId;
 
   // states variables //
 
@@ -34,9 +36,12 @@ class BsServiceViewController {
   ServiceWithBusinessCard? get service => _service.value;
   bool get isEditing => _service.value != null;
   Rxn<Schedule?> serviceSchedule = Rxn();
+  late ServiceCategory1 serviceCategory;
 
-  List<TimeUnit> get _possibleTimeUnits =>
-      List.unmodifiable([TimeUnit.PerHour]);
+  List<TimeUnit> _possibleTimeUnits = [
+    TimeUnit.PerHour,
+    TimeUnit.PerDay,
+  ];
   List<TimeUnit> get avalbleUnits => _possibleTimeUnits
       .where((TimeUnit element) =>
           detailsController.priceTimeUnitMap.keys.contains(element) == false)
@@ -44,7 +49,7 @@ class BsServiceViewController {
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
   bool get hasData {
-    if (isEditing) {
+    if (serviceId != null) {
       return _service.value != null &&
           languageTabsController.tabController != null;
     } else
@@ -54,15 +59,25 @@ class BsServiceViewController {
   Future<void> init(
       {required TickerProvider thickerProvider,
       required int detailsId,
-      required int businessId}) async {
+      required int businessId,
+      required ServiceCategory1 serviceCategory,
+      int? serviceId}) async {
+    this.serviceId = serviceId;
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
         businessId: businessId,
         language: languages!,
         businessDetailsId: detailsId);
-
+    this.serviceCategory = serviceCategory;
+    if (serviceCategory == ServiceCategory1.MealPlanning) {
+      _possibleTimeUnits = [TimeUnit.Unit];
+    }
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
+    if (serviceId != null) {
+      this.serviceId = serviceId;
+      await initEditMode(id: serviceId);
+    }
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -78,10 +93,9 @@ class BsServiceViewController {
   Future<void> changeSchedule(Schedule? schedule) async {
     if (schedule != null &&
         // This condition checks if the schedule has any [isOpen=true] timing
-        (schedule.openHours.values
-            .toList()
-            .any((OpenHours element) => element.isOpen))) {
+        schedule.atLeastOneDayIsOpen) {
       serviceSchedule.value = schedule;
+      serviceSchedule.refresh();
     }
   }
 
@@ -93,7 +107,7 @@ class BsServiceViewController {
     final BusinessItemDetails details =
         await detailsController.contructDetails();
     final Service service = Service(
-      category1: ServiceCategory1.Cleaning,
+      category1: serviceCategory,
       details: details,
       schedule: serviceSchedule.value,
     );
@@ -126,7 +140,7 @@ class BsServiceViewController {
   }
 
   void dispose() {
-    // TODO: implement dispose
+    languageTabsController.dispose();
   }
 
   Future<void> createItem(Service service) async {
@@ -138,10 +152,22 @@ class BsServiceViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
+        detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
+    }
+  }
+
+  Future<void> deleteOffer() async {
+    try {
+      await delete_business_service(serviceId: serviceId!);
+      shouldRefetch = true;
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
   }
 }

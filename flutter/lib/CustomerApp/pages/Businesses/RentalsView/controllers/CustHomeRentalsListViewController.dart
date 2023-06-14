@@ -24,11 +24,11 @@ class CustHomeRentalsListViewController {
       showBusiness.isTrue ? _businessScrollController : _rentalScrollController;
   ScrollController _rentalScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  int rentalFetchSize = 10;
+  int rentalFetchSize = 20;
   int _rentalCurrentOffset = 0;
   bool _rentalFetchingData = false;
   bool _rentalReachedEndOfData = false;
-  final int businessFetchSize = 3;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;

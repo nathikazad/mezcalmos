@@ -71,7 +71,7 @@ class _LaundryOrderWeightSelectorState
                             Flexible(
                               flex: 3,
                               child: Text(
-                                value.name.getTranslation(userLanguage),
+                                value.name.getTranslation(userLanguage)!,
                                 style: context.txt.bodyLarge
                                     ?.copyWith(fontSize: 11.sp),
                               ),

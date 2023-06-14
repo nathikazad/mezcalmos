@@ -134,24 +134,24 @@ def getReturnType(corresponding):
   searchFor = corresponding.split("(")[0]+"("
   if "." in corresponding.split("(")[0]:
     searchFor = corresponding.split("(")[0].split(".")[1]+"("
-  if "data" in corresponding:
-    with open(fileName+".ts", 'r') as f:
-      for line in f:
-        if searchFor in line:
-          returnType = line.split(")")[1].split("{")[0].strip()
-          # @sanchit find return type checkoutResponse
-          if returnType:
-            returnType = returnType.split(":")[1].strip()
-            if "Promise" in returnType:
-              returnType = returnType.split("<")[1].split(">")[0]
-            # print(returnType)
-            if "void" in returnType:
-              returnType = ""
-            # returnType = "CheckoutResponse"
-          if returnType:
-            uniqueTypes[returnType] = True
-            return returnType
-          return None
+  # if "data" in corresponding:
+  with open(fileName+".ts", 'r') as f:
+    for line in f:
+      if searchFor in line and "await" not in line:
+        returnType = line.split(")")[1].split("{")[0].strip()
+        # @sanchit find return type checkoutResponse
+        if returnType:
+          returnType = returnType.split(":")[1].strip()
+          if "Promise" in returnType:
+            returnType = returnType.split("<")[1].split(">")[0]
+          # print(returnType)
+          if "void" in returnType:
+            returnType = ""
+          # returnType = "CheckoutResponse"
+        if returnType:
+          uniqueTypes[returnType] = True
+          return returnType
+        return None
 
 
 def getCorrespondingFnName(functionGroupName, line, authenticated):
@@ -420,7 +420,11 @@ def getModels():
     return <String, dynamic>{
       '''
       for v in models[key]["values"]:
-        toWriteModel +=  "\""+v.replace("?","")+"\": "+v.replace("?","")+",\n      "
+        toWriteModel +=  "\""+v.replace("?","")+"\": "
+        if models[key]["values"][v] == "Language" :
+          toWriteModel += v+".toFirebaseFormatString(),\n      "
+        else:
+          toWriteModel += v.replace("?","")+",\n      "
       toWriteModel = toWriteModel[:-2]
       toWriteModel +=  "};\n  }\n"
       if "Response" in key:

@@ -272,6 +272,13 @@ const documentNodeQueryget_service_by_id = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'schedule'),
             alias: null,
             arguments: [],
@@ -706,6 +713,7 @@ extension ClientExtension$Query$get_service_by_id on graphql.GraphQLClient {
 
 class Query$get_service_by_id$business_service_by_pk {
   Query$get_service_by_id$business_service_by_pk({
+    required this.id,
     this.schedule,
     required this.business,
     required this.details,
@@ -714,11 +722,13 @@ class Query$get_service_by_id$business_service_by_pk {
 
   factory Query$get_service_by_id$business_service_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$schedule = json['schedule'];
     final l$business = json['business'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$get_service_by_id$business_service_by_pk(
+      id: (l$id as int),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       business:
           Query$get_service_by_id$business_service_by_pk$business.fromJson(
@@ -728,6 +738,8 @@ class Query$get_service_by_id$business_service_by_pk {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final dynamic? schedule;
 
@@ -739,6 +751,8 @@ class Query$get_service_by_id$business_service_by_pk {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$business = business;
@@ -752,11 +766,13 @@ class Query$get_service_by_id$business_service_by_pk {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$schedule = schedule;
     final l$business = business;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$schedule,
       l$business,
       l$details,
@@ -771,6 +787,11 @@ class Query$get_service_by_id$business_service_by_pk {
     }
     if (!(other is Query$get_service_by_id$business_service_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$schedule = schedule;
@@ -818,6 +839,7 @@ abstract class CopyWith$Query$get_service_by_id$business_service_by_pk<TRes> {
       _CopyWithStubImpl$Query$get_service_by_id$business_service_by_pk;
 
   TRes call({
+    int? id,
     dynamic? schedule,
     Query$get_service_by_id$business_service_by_pk$business? business,
     Query$get_service_by_id$business_service_by_pk$details? details,
@@ -843,12 +865,14 @@ class _CopyWithImpl$Query$get_service_by_id$business_service_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? schedule = _undefined,
     Object? business = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_service_by_id$business_service_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
@@ -886,6 +910,7 @@ class _CopyWithStubImpl$Query$get_service_by_id$business_service_by_pk<TRes>
   TRes _res;
 
   call({
+    int? id,
     dynamic? schedule,
     Query$get_service_by_id$business_service_by_pk$business? business,
     Query$get_service_by_id$business_service_by_pk$details? details,
@@ -3530,7 +3555,28 @@ const documentNodeQueryget_service_by_category = DocumentNode(definitions: [
                                 ]),
                               )
                             ]),
-                          )
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'approved'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_eq'),
+                                value: BooleanValueNode(value: true),
+                              )
+                            ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'open_status'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_neq'),
+                                value: StringValueNode(
+                                  value: 'closedIndefinitely',
+                                  isBlock: false,
+                                ),
+                              )
+                            ]),
+                          ),
                         ]),
                       )
                     ]),
@@ -3546,6 +3592,26 @@ const documentNodeQueryget_service_by_category = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'offset'),
             value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'referral_points'),
+                        value: EnumValueNode(
+                            name: NameNode(value: 'desc_nulls_last')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -6449,7 +6515,28 @@ const documentNodeQuerynumber_of_services_by_category =
                             ]),
                           )
                         ]),
-                      )
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
                     ]),
                   )
                 ]),
@@ -10461,6 +10548,546 @@ class _CopyWithStubImpl$Query$get_business_services$business_service$business$de
     int? id,
     String? name,
     String? currency,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$delete_business_service {
+  factory Variables$Mutation$delete_business_service({required int id}) =>
+      Variables$Mutation$delete_business_service._({
+        r'id': id,
+      });
+
+  Variables$Mutation$delete_business_service._(this._$data);
+
+  factory Variables$Mutation$delete_business_service.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Mutation$delete_business_service._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$delete_business_service<
+          Variables$Mutation$delete_business_service>
+      get copyWith => CopyWith$Variables$Mutation$delete_business_service(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$delete_business_service) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$delete_business_service<TRes> {
+  factory CopyWith$Variables$Mutation$delete_business_service(
+    Variables$Mutation$delete_business_service instance,
+    TRes Function(Variables$Mutation$delete_business_service) then,
+  ) = _CopyWithImpl$Variables$Mutation$delete_business_service;
+
+  factory CopyWith$Variables$Mutation$delete_business_service.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$delete_business_service;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Mutation$delete_business_service<TRes>
+    implements CopyWith$Variables$Mutation$delete_business_service<TRes> {
+  _CopyWithImpl$Variables$Mutation$delete_business_service(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$delete_business_service _instance;
+
+  final TRes Function(Variables$Mutation$delete_business_service) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Mutation$delete_business_service._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$delete_business_service<TRes>
+    implements CopyWith$Variables$Mutation$delete_business_service<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$delete_business_service(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Mutation$delete_business_service {
+  Mutation$delete_business_service({
+    this.delete_business_service_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_business_service.fromJson(Map<String, dynamic> json) {
+    final l$delete_business_service_by_pk =
+        json['delete_business_service_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_business_service(
+      delete_business_service_by_pk: l$delete_business_service_by_pk == null
+          ? null
+          : Mutation$delete_business_service$delete_business_service_by_pk
+              .fromJson(
+                  (l$delete_business_service_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$delete_business_service$delete_business_service_by_pk?
+      delete_business_service_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delete_business_service_by_pk = delete_business_service_by_pk;
+    _resultData['delete_business_service_by_pk'] =
+        l$delete_business_service_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delete_business_service_by_pk = delete_business_service_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delete_business_service_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$delete_business_service) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delete_business_service_by_pk = delete_business_service_by_pk;
+    final lOther$delete_business_service_by_pk =
+        other.delete_business_service_by_pk;
+    if (l$delete_business_service_by_pk !=
+        lOther$delete_business_service_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_business_service
+    on Mutation$delete_business_service {
+  CopyWith$Mutation$delete_business_service<Mutation$delete_business_service>
+      get copyWith => CopyWith$Mutation$delete_business_service(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$delete_business_service<TRes> {
+  factory CopyWith$Mutation$delete_business_service(
+    Mutation$delete_business_service instance,
+    TRes Function(Mutation$delete_business_service) then,
+  ) = _CopyWithImpl$Mutation$delete_business_service;
+
+  factory CopyWith$Mutation$delete_business_service.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$delete_business_service;
+
+  TRes call({
+    Mutation$delete_business_service$delete_business_service_by_pk?
+        delete_business_service_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$delete_business_service$delete_business_service_by_pk<TRes>
+      get delete_business_service_by_pk;
+}
+
+class _CopyWithImpl$Mutation$delete_business_service<TRes>
+    implements CopyWith$Mutation$delete_business_service<TRes> {
+  _CopyWithImpl$Mutation$delete_business_service(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_business_service _instance;
+
+  final TRes Function(Mutation$delete_business_service) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delete_business_service_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_business_service(
+        delete_business_service_by_pk: delete_business_service_by_pk ==
+                _undefined
+            ? _instance.delete_business_service_by_pk
+            : (delete_business_service_by_pk
+                as Mutation$delete_business_service$delete_business_service_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$delete_business_service$delete_business_service_by_pk<TRes>
+      get delete_business_service_by_pk {
+    final local$delete_business_service_by_pk =
+        _instance.delete_business_service_by_pk;
+    return local$delete_business_service_by_pk == null
+        ? CopyWith$Mutation$delete_business_service$delete_business_service_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$delete_business_service$delete_business_service_by_pk(
+            local$delete_business_service_by_pk,
+            (e) => call(delete_business_service_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$delete_business_service<TRes>
+    implements CopyWith$Mutation$delete_business_service<TRes> {
+  _CopyWithStubImpl$Mutation$delete_business_service(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$delete_business_service$delete_business_service_by_pk?
+        delete_business_service_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$delete_business_service$delete_business_service_by_pk<TRes>
+      get delete_business_service_by_pk =>
+          CopyWith$Mutation$delete_business_service$delete_business_service_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationdelete_business_service = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'delete_business_service'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delete_business_service_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$delete_business_service _parserFn$Mutation$delete_business_service(
+        Map<String, dynamic> data) =>
+    Mutation$delete_business_service.fromJson(data);
+typedef OnMutationCompleted$Mutation$delete_business_service = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$delete_business_service?,
+);
+
+class Options$Mutation$delete_business_service
+    extends graphql.MutationOptions<Mutation$delete_business_service> {
+  Options$Mutation$delete_business_service({
+    String? operationName,
+    required Variables$Mutation$delete_business_service variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$delete_business_service? onCompleted,
+    graphql.OnMutationUpdate<Mutation$delete_business_service>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$delete_business_service(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationdelete_business_service,
+          parserFn: _parserFn$Mutation$delete_business_service,
+        );
+
+  final OnMutationCompleted$Mutation$delete_business_service?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$delete_business_service
+    extends graphql.WatchQueryOptions<Mutation$delete_business_service> {
+  WatchOptions$Mutation$delete_business_service({
+    String? operationName,
+    required Variables$Mutation$delete_business_service variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationdelete_business_service,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$delete_business_service,
+        );
+}
+
+extension ClientExtension$Mutation$delete_business_service
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$delete_business_service>>
+      mutate$delete_business_service(
+              Options$Mutation$delete_business_service options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$delete_business_service>
+      watchMutation$delete_business_service(
+              WatchOptions$Mutation$delete_business_service options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$delete_business_service$delete_business_service_by_pk {
+  Mutation$delete_business_service$delete_business_service_by_pk({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_business_service$delete_business_service_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_business_service$delete_business_service_by_pk(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$delete_business_service$delete_business_service_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_business_service$delete_business_service_by_pk
+    on Mutation$delete_business_service$delete_business_service_by_pk {
+  CopyWith$Mutation$delete_business_service$delete_business_service_by_pk<
+          Mutation$delete_business_service$delete_business_service_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$delete_business_service$delete_business_service_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$delete_business_service$delete_business_service_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$delete_business_service$delete_business_service_by_pk(
+    Mutation$delete_business_service$delete_business_service_by_pk instance,
+    TRes Function(
+            Mutation$delete_business_service$delete_business_service_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$delete_business_service$delete_business_service_by_pk;
+
+  factory CopyWith$Mutation$delete_business_service$delete_business_service_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$delete_business_service$delete_business_service_by_pk;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$delete_business_service$delete_business_service_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_business_service$delete_business_service_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$delete_business_service$delete_business_service_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_business_service$delete_business_service_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$delete_business_service$delete_business_service_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_business_service$delete_business_service_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$delete_business_service$delete_business_service_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_business_service$delete_business_service_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$delete_business_service$delete_business_service_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
     String? $__typename,
   }) =>
       _res;

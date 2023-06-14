@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:sizer/sizer.dart';
 
@@ -20,13 +19,13 @@ class CreateServiceImageComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField(
-      // validator: (Object? value) {
-      //   if (viewController.newImageFile.value == null &&
-      //       viewController.newImageUrl.value == null) {
-      //     return "${_i18n()['imageError']}";
-      //   }
-      //   return null;
-      // },
+      validator: (Object? value) {
+        if (viewController.newImageFile.value == null &&
+            viewController.newImageUrl.value == null) {
+          return "${_i18n()['imageError']}";
+        }
+        return null;
+      },
       builder: (FormFieldState state) {
         return Obx(
           () => Column(
@@ -38,7 +37,7 @@ class CreateServiceImageComponent extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      backgroundColor: Color(0xFFF5F5F5),
+                      backgroundColor: Colors.grey.shade200,
                       backgroundImage: viewController.getRightImage,
                       radius: 9.5.h,
                       child: (viewController.imageLoading.isTrue)
@@ -85,11 +84,10 @@ class CreateServiceImageComponent extends StatelessWidget {
               ),
               if (!state.isValid)
                 Container(
-                    margin: const EdgeInsets.only(top: 5),
+                    margin: const EdgeInsets.only(top: 5, left: 8),
                     child: Text(
                       state.errorText ?? "",
-                      style:
-                          context.txt.titleMedium?.copyWith(color: Colors.red),
+                      style: context.theme.inputDecorationTheme.errorStyle,
                     ))
             ],
           ),

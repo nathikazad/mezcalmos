@@ -7,10 +7,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -114,43 +112,50 @@ Future<LocModel.MezLocation> getCurrentLocation() async {
   return LocModel.MezLocation("", res);
 }
 
-/// This is for AutoComplete location Search !
 Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
-  mezDbgPrint("Getting locations with querry =======>$search");
+  mezDbgPrint("Getting locations with query =======>$search");
   final List<AutoCompleteResult> _returnedPredictions = [];
 
   final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
-  // ignore: unawaited_futures
   final LocationData loc = await Location().getLocation().timeout(
-      Duration(seconds: 2),
-      onTimeout: () => LocationData.fromMap(
-          <String, dynamic>{"latitude": 15.872141, "longitude": -97.076737}));
-  //     .then((LocationData locData) {
-  //   loc = locData;
-  // }).catchError((Object error) {
-  //   loc = LocationData.fromMap(
-  //       <String, dynamic>{"latitude": 15.872141, "longitude": -97.076737});
-  // });
+        Duration(seconds: 2),
+        onTimeout: () => LocationData.fromMap(
+          <String, dynamic>{"latitude": 15.872141, "longitude": -97.076737},
+        ),
+      );
 
   final String url =
-      "https://cors-mezc.herokuapp.com/api/place/autocomplete/json?input=$search&language=$userLanguage&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000&strictbounds=true";
+      "https://cors-mezc.herokuapp.com/api/place/autocomplete/json?input=$search&language=en&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000";
 
   mezDbgPrint(" $url \n ===>TWRK :  ${loc.latitude}  | ${loc.longitude}<===");
+
   if (loc == null) return _returnedPredictions;
 
   final http.Response resp = await http.get(Uri.parse(url));
-  final Map<String, dynamic> respJson = json.decode(resp.body);
 
-  if (respJson["status"] == "OK") {
-    respJson["predictions"].forEach((pred) {
-      if (pred["description"].toLowerCase().contains(search.toLowerCase())) {
-        _returnedPredictions.add(AutoCompleteResult(
-            placeId: pred["place_id"], description: pred["description"]));
+  if (resp.statusCode == 200) {
+    final Map<String, dynamic> respJson = json.decode(resp.body);
+
+    if (respJson["status"] == "OK") {
+      final List<dynamic> predictions = respJson["predictions"];
+      for (final pred in predictions) {
+        final String description = pred["description"];
+        if (description.toLowerCase().startsWith(search.toLowerCase())) {
+          _returnedPredictions.add(AutoCompleteResult(
+            placeId: pred["place_id"],
+            description: description,
+          ));
+        }
       }
-    });
+    } else {
+      mezDbgPrint("API Error: $respJson");
+    }
+  } else {
+    mezDbgPrint("HTTP Error: ${resp.statusCode}");
   }
+
   mezDbgPrint("Returned Auto Complete ====> $_returnedPredictions");
 
   return _returnedPredictions;

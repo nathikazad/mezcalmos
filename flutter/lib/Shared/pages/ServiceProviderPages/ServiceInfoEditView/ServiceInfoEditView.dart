@@ -7,6 +7,8 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceEditLocationCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceImageEditComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/controllers/ServiceInfoEditViewController.dart';
@@ -82,169 +84,192 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back, title: "${_i18n()['info']}"),
-      bottomSheet: MezButton(
-        label: "${_i18n()['save']}",
-        borderRadius: 0,
-        onClick: () async {
-          if (viewController.formKey.currentState?.validate() == true) {
-            await viewController.saveInfo();
-            await MezRouter.back(backResult: true);
-          }
-        },
-      ),
       body: Obx(
         () {
           if (viewController.service.value != null) {
-            return SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Form(
-                  key: viewController.formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ServiceImageEditComponent(
-                          editInfoController: viewController),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          viewController.service.value?.name ?? "",
-                          style: context.txt.displaySmall,
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(16),
+                      child: Form(
+                        key: viewController.formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ServiceImageEditComponent(
+                                editInfoController: viewController),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                viewController.service.value?.name ?? "",
+                                style: context.txt.displaySmall,
+                              ),
+                            )
+                            // Laundry name fiels
+                            ,
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Text(
+                              "${_i18n()['name']}",
+                              style: context.txt.bodyLarge,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            _restNameTextField(),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              '${_i18n()['description']}',
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            _prdescTextField(),
+                            Obx(() {
+                              if (viewController.languages.value?.secondary !=
+                                  null) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Text(
+                                      '${_i18n()['description']} ${viewController.languages.value!.secondary?.toLanguageName() ?? ''}',
+                                      style: context.textTheme.bodyLarge,
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    _scdescTextField(),
+                                  ],
+                                );
+                              } else
+                                return SizedBox();
+                            }),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              "${_i18n()['phoneNumber']}",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            TextFormField(
+                              controller: viewController.phoneNumber,
+                              style: context.txt.bodyLarge,
+                              keyboardType: TextInputType.phone,
+                              validator: (String? v) {
+                                if (v == null || v.isEmpty) {
+                                  return null;
+                                } else if (v.toString().validatePhoneNumber() ==
+                                    false) {
+                                  return "${_i18n()['phoneErrorText']}";
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              "${_i18n()['location']}",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            ServiceEditLocationCard(
+                              editInfoController: viewController,
+                            ),
+                            meduimSeperator,
+                            Text(
+                              "${_i18n()['prLang']}",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            smallSepartor,
+                            MezStringDropDown(
+                              labelText: "${_i18n()['none']}",
+                              value: viewController.languages.value!.primary
+                                  .toFirebaseFormatString(),
+                              langPath: _i18n(),
+                              items: Language.values
+                                  .map((Language e) =>
+                                      e.toFirebaseFormatString())
+                                  .toList(),
+                              onChanged: (String? v) {
+                                if (v != null) {
+                                  viewController.languages.value!.primary =
+                                      v.toLanguage();
+                                }
+                              },
+                              validator: (String? p0) {
+                                if (p0 == null || p0.isEmpty) {
+                                  return "${_i18n()['prLangErrorText']}";
+                                }
+                                return null;
+                              },
+                            ),
+                            meduimSeperator,
+                            Text(
+                              "${_i18n()['scLang']}",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            smallSepartor,
+                            MezStringDropDown(
+                                labelText: "${_i18n()['none']}",
+                                withNoneItem: true,
+                                value: viewController.languages.value?.secondary
+                                    ?.toFirebaseFormatString(),
+                                langPath: _i18n(),
+                                validator: (String? v) {
+                                  if (v != null &&
+                                      v != "none" &&
+                                      v.toLanguage() ==
+                                          viewController
+                                              .languages.value?.primary) {
+                                    return "${_i18n()['sameLangErrorText']}";
+                                  }
+                                  return null;
+                                },
+                                items: viewController.getSecLangsOptions(),
+                                onChanged: (String? v) {
+                                  viewController.languages.value?.secondary =
+                                      v?.toLanguage() ?? null;
+                                  viewController.secondayServiceDesc.text =
+                                      viewController
+                                                  .service.value?.description?[
+                                              viewController.secLang] ??
+                                          "";
+                                  viewController.languages.refresh();
+                                }),
+                          ],
                         ),
-                      )
-                      // Laundry name fiels
-                      ,
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Text(
-                        "${_i18n()['name']}",
-                        style: context.txt.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      _restNameTextField(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        '${_i18n()['description']} ${viewController.languages.value!.primary.toFirebaseFormatString()}',
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      _prdescTextField(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        '${_i18n()['description']} ${viewController.languages.value!.secondary?.toFirebaseFormatString() ?? ''}',
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      _scdescTextField(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "${_i18n()['phoneNumber']}",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      TextFormField(
-                        controller: viewController.phoneNumber,
-                        style: context.txt.bodyLarge,
-                        keyboardType: TextInputType.phone,
-                        validator: (String? v) {
-                          if (v == null || v.isEmpty) {
-                            return null;
-                          } else if (v.toString().isPhoneNumber == false) {
-                            return "${_i18n()['phoneErrorText']}";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "${_i18n()['location']}",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      ServiceEditLocationCard(
-                        editInfoController: viewController,
-                      ),
-                      meduimSeperator,
-                      Text(
-                        "${_i18n()['prLang']}",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      MezStringDropDown(
-                        labelText: "${_i18n()['none']}",
-                        value: viewController.languages.value!.primary
-                            .toFirebaseFormatString(),
-                        langPath: _i18n(),
-                        items: Language.values
-                            .map((Language e) => e.toFirebaseFormatString())
-                            .toList(),
-                        onChanged: (String? v) {
-                          if (v != null) {
-                            viewController.languages.value!.primary =
-                                v.toLanguage();
-                          }
-                        },
-                        validator: (String? p0) {
-                          if (p0 == null || p0.isEmpty) {
-                            return "${_i18n()['prLangErrorText']}";
-                          }
-                          return null;
-                        },
-                      ),
-                      meduimSeperator,
-                      Text(
-                        "${_i18n()['scLang']}",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      MezStringDropDown(
-                          labelText: "${_i18n()['none']}",
-                          withNoneItem: true,
-                          value: viewController.languages.value?.secondary
-                              ?.toFirebaseFormatString(),
-                          langPath: _i18n(),
-                          validator: (String? v) {
-                            if (v != null &&
-                                v != "none" &&
-                                v.toLanguage() ==
-                                    viewController.languages.value?.primary) {
-                              return "${_i18n()['sameLangErrorText']}";
-                            }
-                            return null;
-                          },
-                          items: Language.values
-                              .map((Language e) => e.toFirebaseFormatString())
-                              .toList(),
-                          onChanged: (String? v) {
-                            viewController.languages.value?.secondary =
-                                v?.toLanguage() ?? null;
-                          }),
-                      bigSeperator,
-                      bigSeperator,
-                    ],
-                  ),
-                ));
+                      )),
+                ),
+                MezButton(
+                  label: "${_i18n()['save']}",
+                  borderRadius: 0,
+                  onClick: () async {
+                    if (viewController.formKey.currentState?.validate() ==
+                        true) {
+                      await viewController.saveInfo();
+                      await MezRouter.back(backResult: true);
+                    }
+                  },
+                )
+              ],
+            );
           } else {
             return Container(
               alignment: Alignment.center,

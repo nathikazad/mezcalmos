@@ -86,7 +86,9 @@ Future<ProductWithBusinessCard?> get_product_by_id(
 
     if (data != null) {
       return ProductWithBusinessCard(
+        
           product: Product(
+            id: data.id,
               category1: data.details.category1.toProductCategory1(),
               details: BusinessItemDetails(
                 id: data.details.id,
@@ -262,9 +264,10 @@ Future<List<ProductCard>> get_business_products(
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           product: Product(
+            id: data.id,
             category1: data.details.category1.toProductCategory1(),
             details: BusinessItemDetails(
-              id: data.id,
+              id: data.details.id,
               name: toLanguageMap(translations: data.details.name.translations),
               position: data.details.position,
               businessId: data.business.id,
@@ -282,4 +285,24 @@ Future<List<ProductCard>> get_business_products(
   } else {
     return [];
   }
+}
+
+Future<int?> delete_business_product({required int productId}) async {
+  final QueryResult<Mutation$delete_business_product> response =
+      await _db.graphQLClient.mutate$delete_business_product(
+    Options$Mutation$delete_business_product(
+      variables: Variables$Mutation$delete_business_product(
+        id: productId,
+      ),
+    ),
+  );
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura delete product mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura delete product mutation success => ${response.data}");
+    return response.parsedData?.delete_business_product_by_pk?.id;
+  }
+  return null;
 }

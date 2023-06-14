@@ -1,20 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodListView.dart';
+import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
+import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
-import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustomerWrapper'];
+    ['pages']['Businesses']['FoodView']['CustFoodWrapper'];
 
 class CustFoodWrapper extends StatefulWidget {
   const CustFoodWrapper({super.key});
@@ -39,25 +44,31 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
     mezDbgPrint("food serviceTree $serviceTree");
   }
 
-  void navigateToListView(MezService mezService) {
+  Future<void> navigateToListView(MezService mezService) async {
+    if (Get.find<AuthController>().hasuraUserId != null &&
+        mezService == MezService.Restaurants) {
+      final int? orderId = await get_customer_orders_by_type(
+          customerId: Get.find<AuthController>().hasuraUserId!,
+          orderType: mezService.toOrderType());
+      if (orderId != null && orderId > 0) {
+        await ViewRestaurantOrderScreen.navigate(orderId: orderId);
+        return;
+      }
+    }
     switch (mezService) {
       case MezService.Restaurants:
-        CustRestaurantListView.navigate();
-        break;
-      case MezService.Farmers:
-        CustFoodListView.navigate(
-          serviceCategory: ServiceCategory1.Uncategorized,
-        );
+        unawaited(CustRestaurantListView.navigate());
         break;
       case MezService.LocallyMade:
-        CustFoodListView.navigate(
-          serviceCategory: ServiceCategory1.Uncategorized,
-        );
+        mezDbgPrint("going to locally made =======");
+        unawaited(CustLocallyMadeListView.navigate(
+          productCategories: [ProductCategory1.Consumable],
+        ));
         break;
       case MezService.MealPlanning:
-        CustFoodListView.navigate(
+        unawaited(CustServicesListView.navigate(
           serviceCategory: ServiceCategory1.MealPlanning,
-        );
+        ));
         break;
     }
   }
@@ -82,7 +93,7 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: _i18n()['food']['title'],
+        title: _i18n()['food'],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -94,10 +105,11 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
                 navigateToListView(serviceTree[index].name);
               },
               url: getCardImage(serviceTree[index].name),
-              title: _i18n()[serviceTree[index].name.name.toLowerCase()]
+              title: _i18n()[serviceTree[index].name.toFirebaseFormatString()]
                   ['title'],
-              subtitle: _i18n()[serviceTree[index].name.name.toLowerCase()]
-                  ['subtitle'],
+              subtitle:
+                  _i18n()[serviceTree[index].name.toFirebaseFormatString()]
+                      ['description'],
             ),
           ),
         ),

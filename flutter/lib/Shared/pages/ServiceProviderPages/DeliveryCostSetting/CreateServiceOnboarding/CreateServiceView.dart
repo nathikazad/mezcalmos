@@ -67,7 +67,8 @@ class _CreateServiceViewState extends State<CreateServiceView> {
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
       bottomSheet: Obx(
-        () => (viewController.currentPage.value != 0)
+        () => (viewController.currentPage.value != 0 &&
+                viewController.currentPage.value != 1)
             ? MezButton(
                 height: 75,
                 label: viewController.getSaveButtonTitle(),
@@ -85,7 +86,14 @@ class _CreateServiceViewState extends State<CreateServiceView> {
         controller: viewController.pageController,
         children: [
           CreateServiceStartPage(viewController: viewController),
-          CreateServiceInfoPage(viewController: viewController),
+          CreateServiceInfoPage(
+            viewController: viewController,
+            onSaveButton: () async {
+              if (viewController.isFormValid()) {
+                await _handleButton(context);
+              }
+            },
+          ),
           CreateServiceSchedulePage(
             viewController: viewController,
           ),

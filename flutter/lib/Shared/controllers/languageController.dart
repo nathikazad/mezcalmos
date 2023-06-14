@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as dartIO;
+
 //import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
-
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -48,6 +48,8 @@ class LanguageController extends GetxController {
   String get langImage => languageDetails[_userLanguageKey.value]['langImage'];
   dynamic get strings =>
       _jsonStrings[_userLanguageKey.value.toFirebaseFormatString()];
+  dynamic stringsByLanguage(Language lang) =>
+      _jsonStrings[lang.toFirebaseFormatString()];
 
   /// fileLocation: customerApp/notificationHandler
   dynamic getLMap(String fileLocation) {

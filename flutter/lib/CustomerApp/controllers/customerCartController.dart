@@ -41,14 +41,18 @@ class CustomerCartController extends GetxController {
           .listen((Cart? event) {
         if (event != null) {
           mezDbgPrint(
-              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length}");
+              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length} \n restaurant isOpen =====> ${event.restaurant?.isOpen}");
           if (cart.value != null) {
             cart.value?.cartItems.clear();
             cart.value?.cartItems.addAll(event.cartItems);
-
+            cart.value?.restaurant = null;
             cart.value?.restaurant = event.restaurant;
+            mezDbgPrint(
+                " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
           } else {
             cart.value = event;
+            mezDbgPrint(
+                " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
           }
 
           _handlerRestaurantId();
@@ -157,7 +161,7 @@ class CustomerCartController extends GetxController {
   }
 
   Future<num?> checkout({String? stripePaymentId}) async {
-    bool nameAndImageChecker =
+    final bool nameAndImageChecker =
         await Get.find<AuthController>().nameAndImageChecker();
     if (nameAndImageChecker == true) {
       try {

@@ -1,5 +1,6 @@
 query get_service_by_id($id: Int!) {
   business_service_by_pk(id: $id) {
+    id
     schedule
     business {
       id
@@ -46,35 +47,40 @@ query get_service_by_id($id: Int!) {
   }
 }
 
-query get_service_by_category($categories1: [String!], $distance: Float!, $from: geography!, $limit: Int, $offset: Int, $categories2: [String!], $tags: [String!]) {
+query get_service_by_category(
+  $categories1: [String!]
+  $distance: Float!
+  $from: geography!
+  $limit: Int
+  $offset: Int
+  $categories2: [String!]
+  $tags: [String!]
+) {
   business_service(
     where: {
       _and: {
         details: {
           _and: {
-            category1: {
-              _in: $categories1
-            }, 
-            category2: {
-              _in: $categories2
-            },
-            tags: {_has_keys_all: $tags}
+            category1: { _in: $categories1 }
+            category2: { _in: $categories2 }
+            tags: { _has_keys_all: $tags }
           }
-        },
+        }
         business: {
           details: {
             location: {
-              gps: {
-                _st_d_within: {
-                  distance: $distance, 
-                  from: $from
-                }
-              }
+              gps: { _st_d_within: { distance: $distance, from: $from } }
             }
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
           }
         }
       }
-    }, limit: $limit, offset: $offset) {
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
+  ) {
     details {
       id
       name {
@@ -116,7 +122,7 @@ query number_of_services($distance: Float!, $from: geography!) {
 }
 
 query number_of_services_by_category($distance: Float!, $from: geography!, $category1: String) {
-  business_service_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, details: {category1: {_eq: $category1}}}) {
+  business_service_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}, details: {category1: {_eq: $category1}}}) {
     aggregate {
       count
     }
@@ -182,4 +188,9 @@ query get_business_services($businessId: Int!, $limit: Int, $offset: Int) {
       }
     }
   
+}
+mutation delete_business_service($id: Int!){
+  delete_business_service_by_pk(id: $id){
+    id
+  }
 }

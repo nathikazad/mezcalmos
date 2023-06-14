@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -22,15 +23,16 @@ class CustClassesListViewController {
   String searchQuery = "";
 
   /* SCROLL CONTROLLER */
-  ScrollController get scrollController =>
-      showBusiness.isTrue ? _businessScrollController : _classesScrollController;
+  ScrollController get scrollController => showBusiness.isTrue
+      ? _businessScrollController
+      : _classesScrollController;
   ScrollController _classesScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  final int eventFetchSize = 10;
+  final int eventFetchSize = 20;
   int _classesCurrentOffset = 0;
   bool _classesFetchingData = false;
   bool _classesReachedEndOfData = false;
-  final int businessFetchSize = 10;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;
@@ -48,6 +50,30 @@ class CustClassesListViewController {
   ];
 
   RxList<EventCategory1> selectedCategories = <EventCategory1>[].obs;
+  RxString selectedCategoriesText =
+      LanguageController().userLanguageKey == Language.EN
+          ? "All".obs
+          : "Alle".obs;
+
+  void _categoryStringGen() {
+    selectedCategoriesText.value = "";
+    var data = filterInput["categories"]!
+        .map((String e) => e.toEventCategory1())
+        .toList();
+    if (data.length == _filterCategories.length) {
+      selectedCategoriesText.value =
+          LanguageController().userLanguageKey == Language.EN ? 'All' : 'Alle';
+      return;
+    }
+
+    for (int idx = 0; idx < data.length; idx++) {
+      if (idx == data.length - 1) {
+        selectedCategoriesText.value += data[idx].name;
+      } else {
+        selectedCategoriesText.value += "${data[idx].name}, ";
+      }
+    }
+  }
 
   late FilterInput _filterInput;
 
@@ -178,6 +204,7 @@ class CustClassesListViewController {
     mezDbgPrint("new data :::::::::=====>_filterInput $_filterInput");
     _resetEvents();
     _fetchClasses();
+    _categoryStringGen();
   }
 
   void _resetEvents() {

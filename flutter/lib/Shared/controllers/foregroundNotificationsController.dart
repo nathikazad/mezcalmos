@@ -162,4 +162,13 @@ class ForegroundNotificationsController extends GetxController {
         .toList()
         .isNotEmpty;
   }
+
+  bool hasNewSPMessageNotification() {
+    return notifications()
+        .where((Notification notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            (notification.isServiceProvderChat ?? false))
+        .toList()
+        .isNotEmpty;
+  }
 }

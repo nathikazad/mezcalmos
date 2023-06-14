@@ -101,7 +101,7 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
     if (data != null) {
       RentalWithBusinessCard returnedRental = RentalWithBusinessCard(
           rental: Rental(
-              id: id,
+              id: data.id,
               category1: data.details.category1.toRentalCategory1(),
               category2: data.details.category2.toRentalCategory2(),
               category3: data.category3.toRentalCategory3(),
@@ -261,9 +261,10 @@ Future<List<RentalCard>> get_business_home_rentals(
           businessName: data.rental.business.details.name,
           currency: data.rental.business.details.currency.toCurrency(),
           rental: Rental(
+            id: data.rental.id,
             category1: data.rental.details.category1.toRentalCategory1(),
             details: BusinessItemDetails(
-              id: data.rental.id,
+              id: data.rental.details.id,
               name: toLanguageMap(
                   translations: data.rental.details.name.translations),
               position: data.rental.details.position,
@@ -315,9 +316,10 @@ Future<List<RentalCard>> get_business_rentals(
           businessName: data.business.details.name,
           currency: data.business.details.currency.toCurrency(),
           rental: Rental(
+            id: data.id,
             category1: data.details.category1.toRentalCategory1(),
             details: BusinessItemDetails(
-              id: data.id,
+              id: data.details.id,
               name: toLanguageMap(translations: data.details.name.translations),
               position: data.details.position,
               businessId: data.business.id,
@@ -596,6 +598,26 @@ Future<int?> update_rental_category3({
     mezDbgPrint(
         "✅✅✅ Hasura update rental category3 mutation success => ${response.data}");
     return response.parsedData?.update_business_rental!.affected_rows;
+  }
+  return null;
+}
+
+Future<int?> delete_busines_rental({required int rentalId}) async {
+  final QueryResult<Mutation$delete_business_rental> response =
+      await _db.graphQLClient.mutate$delete_business_rental(
+    Options$Mutation$delete_business_rental(
+      variables: Variables$Mutation$delete_business_rental(
+        id: rentalId,
+      ),
+    ),
+  );
+  if (response.hasException) {
+    mezDbgPrint(
+        "🚨🚨🚨 Hasura delete rental mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura delete rental mutation success => ${response.data}");
+    return response.parsedData?.delete_business_rental_by_pk?.id;
   }
   return null;
 }

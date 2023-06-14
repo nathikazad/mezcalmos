@@ -23,6 +23,7 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 DateTime now = DateTime.now().toLocal();
@@ -98,53 +99,68 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
     Timer(mezChatScrollDuration ?? Duration(milliseconds: 200), () {
       if (_listViewScrollController.hasClients)
         _listViewScrollController.jumpTo(
-          _listViewScrollController.position.maxScrollExtent,
+          _listViewScrollController.position.minScrollExtent,
           // duration: Duration(seconds: 1),
           // curve: Curves.fastOutSlowIn
         );
     });
   }
 
+  /// UI for the offering view card to show in chat
+  Widget offeringViewCard(ChatLink link) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12.0,
+        vertical: 4.0,
+      ),
+      child: MezCard(
+        firstAvatarBgImage: NetworkImage(link.image),
+        action: InkWell(
+          onTap: () {
+            if (MezEnv.appType == AppType.Customer) {
+              MezRouter.toPath(link.url);
+            }
+          },
+          child: MezEnv.appType == AppType.Customer
+              ? Obx(
+                  () => Text(
+                    _i18n()["view"],
+                    style: context.textTheme.titleLarge!.copyWith(
+                      color: primaryBlueColor,
+                    ),
+                  ),
+                )
+              : SizedBox.shrink(),
+        ),
+        content: Text(
+          link.name.getTranslation(userLanguage)!,
+        ),
+      ),
+    );
+  }
+
   void _fillCallBack() {
     mezDbgPrint("Fill Calback has been called ...... 👋");
+    DateTime? currentDate;
     chatLines.assignAll(controller.chat.value!.messages.map(
       (Message message) {
+        final bool isFirstMessage = currentDate == null;
+        final bool isDifferentDate = currentDate?.day != message.timestamp.day;
+        if (isFirstMessage || isDifferentDate) {
+          currentDate = message.timestamp.copyWith();
+        }
+
+        /// This condition display offering card on top of chat
+        /// if message has link only then it shows
         if (message.link != null) {
           return Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12.0,
-                  vertical: 4.0,
+              if (isDifferentDate)
+                SizedBox(
+                  child: Text(
+                      "${intl.DateFormat('dd-MM-yyyy').format(message.timestamp)}"),
                 ),
-                child: MezCard(
-                  firstAvatarBgImage: NetworkImage(message.link!.image),
-                  action: InkWell(
-                    onTap: () {
-                      if (MezRouter.isRouteInStack(
-                        message.link!.url,
-                      )) {
-                        MezRouter.toPath(message.link!.url);
-                      }
-                    },
-                    child: MezRouter.isRouteInStack(
-                      message.link!.url,
-                    )
-                        ? Obx(
-                            () => Text(
-                              _i18n()["view"],
-                              style: context.textTheme.titleLarge!.copyWith(
-                                color: primaryBlueColor,
-                              ),
-                            ),
-                          )
-                        : SizedBox.shrink(),
-                  ),
-                  content: Text(
-                    message.link!.name.getTranslation(userLanguage),
-                  ),
-                ),
-              ),
+              offeringViewCard(message.link!),
               singleChatComponent(
                 message: message.message,
                 time: intl.DateFormat('hh:mm a')
@@ -155,14 +171,59 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
             ],
           );
         }
-        return singleChatComponent(
-          message: message.message,
-          time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
-          isMe: message.userId == _authController.user!.hasuraId,
-          userImage: getchatImg(message),
+
+        /// else we just show chat component
+        return Column(
+          children: [
+            if (isFirstMessage || isDifferentDate)
+              SizedBox(
+                child: Text(
+                    "${intl.DateFormat('dd-MM-yyyy').format(message.timestamp)}"),
+              ),
+            singleChatComponent(
+              message: message.message,
+              time: intl.DateFormat('hh:mm a')
+                  .format(message.timestamp.toLocal()),
+              isMe: message.userId == _authController.user!.hasuraId,
+              userImage: getchatImg(message),
+            ),
+          ],
         );
       },
     ));
+
+    /// This function gets the last offering link and checks
+    /// the url with the incomingViewLink and last link in chat
+    /// returns true if both are same else false
+    bool checkLastLink() {
+      for (int idx = controller.chat.value!.messages.length - 1;
+          idx >= 0;
+          idx--) {
+        if (controller.chat.value!.messages[idx].link != null) {
+          if (controller.incomingViewLink!.url ==
+              controller.chat.value!.messages[idx].link!.url) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+      return false;
+    }
+
+    /// This condition display offering card at the end of chat
+    /// If incomingViewLink != null and incomingViewLink != last link in chat
+    if (controller.incomingViewLink != null && !checkLastLink()) {
+      chatLines.add(
+        offeringViewCard(
+          ChatLink(
+            url: controller.incomingViewLink!.url,
+            name: controller.incomingViewLink!.name,
+            image: controller.incomingViewLink!.image,
+          ),
+        ),
+      );
+    }
     scrollDown();
   }
 
@@ -243,17 +304,13 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.1),
-                        child: Center(
-                          child: Text(formattedDate),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(top: 10.1),
+                      //   child: Center(
+                      //     child: Text(formattedDate),
+                      //   ),
+                      // ),
                       Obx(() {
-                        mezDbgPrint("Linkkkkkkkk ⏰");
-                        mezDbgPrint(
-                            "${controller.chat.value?.messages.last.message}");
-
                         if (controller.chat.value?.chatInfo.parentlink ==
                                 null ||
                             (MezRouter.isRouteInStack(
@@ -286,9 +343,11 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                       Expanded(
                         child: Obx(
                           () => ListView(
+                            addAutomaticKeepAlives: true,
+                            reverse: true,
                             shrinkWrap: true,
                             controller: _listViewScrollController,
-                            children: List.from(chatLines),
+                            children: List.from(chatLines.reversed),
                           ),
                         ),
                       ),

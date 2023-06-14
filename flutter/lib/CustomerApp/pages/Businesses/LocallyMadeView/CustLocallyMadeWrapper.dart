@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart';
+import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -11,11 +9,9 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustomerWrapper'];
+    ['pages']['Businesses']['LocallyMadeView']['CustLocallyMadeWrapper'];
 
 class CustLocallyMadeWrapper extends StatefulWidget {
   const CustLocallyMadeWrapper({super.key});
@@ -43,19 +39,21 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
     switch (mezService) {
       case MezService.Consumable:
         CustLocallyMadeListView.navigate(
-          productCategory: ProductCategory1.Consumable,
+          productCategories: [ProductCategory1.Consumable],
         );
         break;
       case MezService.PersonalCare:
         CustLocallyMadeListView.navigate(
-          productCategory: ProductCategory1.PersonalCare,
+          productCategories: [ProductCategory1.PersonalCare],
         );
         break;
       case MezService.Art:
         CustLocallyMadeListView.navigate(
-          productCategory: ProductCategory1.Art,
+          productCategories: [ProductCategory1.Art],
         );
         break;
+      default:
+        throw Exception("Invalid MezService $mezService");
     }
   }
 
@@ -67,8 +65,9 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
         return aPersonalCare;
       case MezService.Art:
         return aArt;
+      default:
+        return aUncategorized;
     }
-    return aUncategorized;
   }
 
   @override
@@ -77,7 +76,7 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: _i18n()['locallymade']['title'],
+        title: _i18n()['locallyMade'],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -89,10 +88,11 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
                 navigateToListView(serviceTree[index].name);
               },
               url: getCardImage(serviceTree[index].name),
-              title: _i18n()[serviceTree[index].name.name.toLowerCase()]
+              title: _i18n()[serviceTree[index].name.toFirebaseFormatString()]
                   ['title'],
-              subtitle: _i18n()[serviceTree[index].name.name.toLowerCase()]
-                  ['subtitle'],
+              subtitle:
+                  _i18n()[serviceTree[index].name.toFirebaseFormatString()]
+                      ['description'],
             ),
           ),
         ),

@@ -66,11 +66,15 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     children: [
                       Text(
                         viewController.homeRental!.details.name
-                            .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!
+                            .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
                         homeRental: viewController.homeRental!,
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
                       Text(
                         _i18n()['price'],
@@ -79,35 +83,26 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       CustBusinessRentalCost(
                         cost: viewController.homeRental!.details.cost,
                       ),
-                      Text(
-                        _i18n()['description'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        viewController.homeRental!.details.description
-                                ?.getTranslation(userLanguage) ??
-                            _i18n()['noDescription'],
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      viewController.homeRental!.gpsLocation == null
-                          ? const SizedBox.shrink()
-                          : ServiceLocationCard(
-                              height: 20.h,
-                              location: MezLocation(
-                                viewController
-                                        .homeRental!.gpsLocation?.address ??
-                                    "",
-                                MezLocation.buildLocationData(
-                                  viewController.homeRental!.gpsLocation!.lat
-                                      .toDouble(),
-                                  viewController.homeRental!.gpsLocation!.lng
-                                      .toDouble(),
-                                ),
-                              ),
+                      _description(context),
+                      if (viewController.homeRental?.gpsLocation != null)
+                        ServiceLocationCard(
+                          height: 20.h,
+                          location: MezLocation(
+                            viewController.homeRental!.gpsLocation?.address ??
+                                "",
+                            MezLocation.buildLocationData(
+                              viewController.homeRental!.gpsLocation!.lat
+                                  .toDouble(),
+                              viewController.homeRental!.gpsLocation!.lng
+                                  .toDouble(),
                             ),
+                          ),
+                        ),
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.only(top: 15),
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.homeRental!.business,
-                        offeringName: viewController.homeRental!.details.name,
+                        offering: viewController.homeRental!.details,
                       ),
                       CustBusinessNoOrderBanner(),
                     ],
@@ -120,6 +115,28 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          _i18n()['description'],
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          viewController.homeRental!.details.description
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
+              _i18n()['noDescription'],
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }
@@ -136,9 +153,10 @@ class _CustBusinessAdditionalData extends StatelessWidget {
     String wholeAdditionalParamString() {
       final String circle = "•";
       final Map<String, String> additionalValues = {
-        "bedRooms": "Bedrooms ${homeRental?.bedrooms ?? 0}",
-        "bathRooms": "Bathrooms ${homeRental?.bathrooms ?? 0}",
-        "houseType": "${homeRental?.homeType ?? ""}",
+        'bedRooms': '${homeRental?.bedrooms ?? 0} ${_i18n()['bedrooms']}',
+        'bathRooms': '${homeRental?.bathrooms ?? 0} ${_i18n()['bathrooms']}',
+        'houseType':
+            '${_i18n()[homeRental?.homeType?.name.toLowerCase()] ?? ''}',
       };
       final Map<String, String> moreAdditionalValues = homeRental
               ?.details.additionalParameters
@@ -151,7 +169,11 @@ class _CustBusinessAdditionalData extends StatelessWidget {
       final StringBuffer wholeString = StringBuffer();
       additionalValues.map(
         (key, value) {
-          wholeString.write("$circle $value ");
+          if (additionalValues.keys.toList().indexOf(key) == 0) {
+            wholeString.write("$value ");
+          } else {
+            wholeString.write("$circle $value ");
+          }
           return MapEntry(key, value);
         },
       );

@@ -66,11 +66,15 @@ class _CustRentalViewState extends State<CustRentalView> {
                     children: [
                       Text(
                         viewController.rental!.details.name
-                                .getTranslation(userLanguage),
+                            .getTranslation(userLanguage)!
+                            .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
                       _CustBusinessAdditionalData(
                         rental: viewController.rental!,
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       Text(
                         _i18n()['price'],
@@ -79,16 +83,7 @@ class _CustRentalViewState extends State<CustRentalView> {
                       CustBusinessRentalCost(
                         cost: viewController.rental!.details.cost,
                       ),
-                      Text(
-                        _i18n()['description'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      Text(
-                        viewController.rental!.details.description
-                                ?.getTranslation(userLanguage) ??
-                            _i18n()['noDescription'],
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
+                      _description(context),
                       viewController.rental!.gpsLocation == null
                           ? const SizedBox.shrink()
                           : ServiceLocationCard(
@@ -105,10 +100,15 @@ class _CustRentalViewState extends State<CustRentalView> {
                               ),
                             ),
                       CustBusinessMessageCard(
+                        margin: EdgeInsets.only(top: 15),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
                         business: viewController.rental!.business,
-                        offeringName: viewController.rental!.details.name,
+                        offering: viewController.rental!.details,
                       ),
-                      CustBusinessNoOrderBanner(),
+                      CustBusinessNoOrderBanner(
+                        margin: EdgeInsets.only(top: 15),
+                      ),
                     ],
                   ),
                 ),
@@ -119,6 +119,28 @@ class _CustRentalViewState extends State<CustRentalView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          _i18n()['description'],
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          viewController.rental!.details.description
+                  ?.getTranslation(userLanguage)
+                  ?.trim() ??
+              _i18n()['noDescription'],
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ],
     );
   }
 }
@@ -143,7 +165,14 @@ class _CustBusinessAdditionalData extends StatelessWidget {
       final StringBuffer wholeString = StringBuffer();
       additionalValues.map(
         (key, value) {
-          wholeString.write("$circle $value ");
+          if (additionalValues.keys.toList().indexOf(key) == 0) {
+            wholeString.write("$value ");
+          } else {
+            wholeString.write("$circle $value ");
+          }
+          if (key == "length") {
+            wholeString.write("inch ");
+          }
           return MapEntry(key, value);
         },
       );

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Businesses']['components']['CustBusinessRentalCost'];
 
 class CustBusinessRentalCost extends StatelessWidget {
   const CustBusinessRentalCost({super.key, required this.cost});
@@ -68,37 +73,38 @@ class CustBusinessRentalCost extends StatelessWidget {
 
     return Padding(
         padding: const EdgeInsets.only(top: 8.0),
-        child: Wrap(
-          spacing: 20,
-          runSpacing: 20,
-          direction: costData.length > 2 ? Axis.horizontal : Axis.vertical,
-          children: [
-            for (int index = 0; index < costData.length; index++)
-              // costData.length <= 2
-              //     ? Row(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: <Widget>[
-              //           Icon(
-              //             costData[index]["icon"],
-              //           ),
-              //           Text(
-              //             "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
-              //           )
-              //         ],
-              //       )
-              //     :
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    costData[index]["icon"],
-                  ),
-                  Text(
-                    "\$${(costData[index]["cost"] as double).toStringAsFixed(0)}/${costData[index]["unit"]}",
-                  )
-                ],
-              ),
-          ],
+        child: Align(
+          alignment:
+              costData.length > 2 ? Alignment.center : Alignment.centerLeft,
+          child: Wrap(
+            spacing: 10,
+            runSpacing: 20,
+            direction: costData.length > 2 ? Axis.horizontal : Axis.vertical,
+            children: [
+              for (int index = 0; index < costData.length; index++)
+                costData.length <= 2
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            costData[index]["icon"],
+                          ),
+                          Text(
+                              '\$${(costData[index]['cost'] as double).toStringAsFixed(0)}/${_i18n()[costData[index]['unit']]}')
+                        ],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            costData[index]["icon"],
+                          ),
+                          Text(
+                              '\$${(costData[index]['cost'] as double).toStringAsFixed(0)}/${_i18n()[costData[index]['unit']]}')
+                        ],
+                      ),
+            ],
+          ),
         ));
   }
 }

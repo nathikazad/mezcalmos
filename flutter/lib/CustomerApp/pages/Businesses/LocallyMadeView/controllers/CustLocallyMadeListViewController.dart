@@ -3,12 +3,10 @@ import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
-import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 class CustLocallyMadeListViewController {
   // variables //
@@ -32,11 +30,11 @@ class CustLocallyMadeListViewController {
       : _productsScrollController;
   ScrollController _productsScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
-  int productsFetchSize = 15;
+  int productsFetchSize = 20;
   int _productsCurrentOffset = 0;
   bool _productsFetchingData = false;
   bool _productsReachedEndOfData = false;
-  final int businessFetchSize = 3;
+  final int businessFetchSize = 20;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
   bool _businessReachedEndOfData = false;
@@ -54,13 +52,19 @@ class CustLocallyMadeListViewController {
   /// return current view rental category (Home, Surf, etc)
   List<ProductCategory1> get productsCategory => _currentProductCategory;
 
-  late List<ProductCategory1> _currentProductCategory;
+  List<ProductCategory1> _currentProductCategory = [];
+
+  String get getTitleKey {
+    return _currentProductCategory.length > 1
+        ? "localMade"
+        : productsCategory.first.toFirebaseFormatString();
+  }
 
 // methods //
-  Future<void> init({required ProductCategory1 serviceCategory}) async {
-    _currentProductCategory = [serviceCategory];
+  Future<void> init({required List<ProductCategory1> serviceCategory}) async {
+    _currentProductCategory.addAll(serviceCategory);
 
-    filterCategories.add(
+    filterCategories.addAll(
       serviceCategory,
     );
     selectedCategories.value = List.from(filterCategories);

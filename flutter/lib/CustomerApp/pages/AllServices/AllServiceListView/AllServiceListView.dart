@@ -1,23 +1,24 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/CustAdventureListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesWrapper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/CustVolunteerListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/CustVolunteerListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/CustAdventureListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesWrapper.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeWrapper.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodWrapper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustHomeWrapper'];
+    ['pages']['AllServices']['AllServiceListView']['AllServiceListView'];
 
 class AllServiceListView extends StatefulWidget {
   const AllServiceListView({super.key});
@@ -55,11 +56,9 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         );
         return;
       case MezService.Rentals:
-        // CustRentalsListView.navigate(category: RentalCategory1.Vehicle);
         CustRentalWrapper.navigate(
           serviceTree: childServiceTree,
         );
-        //  RentalView.navigate();
         return;
       case MezService.Classes:
         CustClassesListView.navigate();
@@ -124,7 +123,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                 itemCount:
                     cServiceController.serviceTreeData.value!.children.length,
                 itemBuilder: (BuildContext context, int index) {
-                  var currentMezService = cServiceController
+                  final MezService currentMezService = cServiceController
                       .serviceTreeData.value!.children[index].name;
                   return MezCard(
                     radius: 10,
@@ -140,23 +139,30 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                     content: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Image.asset(
-                          cServiceController.deliveryServiceListData[
-                                  currentMezService]!["icon"]
-                              .toString(),
-                          height: 85.mezSp,
-                          width: 85.mezSp,
+                        Container(
+                          height: kIsWeb ? 115.mezSp : 85.mezSp,
+                          width: kIsWeb ? 115.mezSp : 85.mezSp,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.contain,
+                                  image: AssetImage(cServiceController
+                                      .deliveryServiceListData[
+                                          currentMezService]!["icon"]
+                                      .toString()))),
                         ),
+                        // Image.asset(
+                        //  cServiceController.deliveryServiceListData[
+                        //           currentMezService]!["icon"]
+                        //       .toString() ,
+                        //   height: kIsWeb ? 150.mezSp : 85.mezSp,
+                        //   width: kIsWeb ? 150.mezSp : 85.mezSp,
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Obx(
                             () => FittedBox(
                               child: Text(
-                                _i18n()[cServiceController
-                                        .deliveryServiceListData[
-                                            currentMezService]!["title"]
-                                        .toString()]
-                                    .toString(),
+                                '${_i18n()[cServiceController.deliveryServiceListData[currentMezService]!['title']]}',
                                 style: txt.headlineSmall,
                               ),
                             ),

@@ -124,7 +124,7 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
       prev[current.language_id] = current.value;
       return prev;
     }, {}),
-    schedule: JSON.parse(response.restaurant_restaurant_by_pk.details.schedule),
+    schedule: (response.restaurant_restaurant_by_pk.details.schedule),
     creationTime: response.restaurant_restaurant_by_pk.details.creation_time,
     openStatus: response.restaurant_restaurant_by_pk.details.open_status as OpenStatus,
     approved: response.restaurant_restaurant_by_pk.details.approved,
@@ -139,12 +139,12 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
         email: response.restaurant_restaurant_by_pk.details.stripe_info.email ?? null,
         //requirements
       }: undefined,
-    acceptedPayments: JSON.parse(response.restaurant_restaurant_by_pk.details.accepted_payments),
+    acceptedPayments: (response.restaurant_restaurant_by_pk.details.accepted_payments),
     operators,
     deliveryPartnerId: response.restaurant_restaurant_by_pk.delivery_partners[0] 
       ? response.restaurant_restaurant_by_pk.delivery_partners[0].delivery_company_id
       : undefined,
-    language: /*JSON.parse(*/response.restaurant_restaurant_by_pk.details.language,
+    language: /*(*/response.restaurant_restaurant_by_pk.details.language,
     deliveryDetails: {
       costPerKm: response.restaurant_restaurant_by_pk.delivery_details.cost_per_km,
       freeDeliveryKmRange: response.restaurant_restaurant_by_pk.delivery_details.free_delivery_km_range,

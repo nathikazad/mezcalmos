@@ -8,11 +8,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 
 enum RestaurantsView { Rows, Grid }
@@ -54,6 +50,7 @@ class Restaurant extends Service {
     required ServiceState restaurantState,
     required cModels.ServiceProviderLanguage languages,
     required super.serviceDetailsId,
+    required super.isOpen,
     super.deliveryCost,
     super.reviews,
     super.rate,
@@ -68,93 +65,93 @@ class Restaurant extends Service {
             state: restaurantState,
             paymentInfo: paymentInfo);
 
-  factory Restaurant.fromRestaurantData(
-      {required String restaurantId, required restaurantData}) {
-    mezDbgPrint("Restaurant id $restaurantId \n Data : $restaurantData");
-    // List<Object?> availableLanguages =
-    //     restaurantData["details"]["languages"] as List<Object?>;
-    final ServiceState restaurantState =
-        ServiceState.fromServiceStateData(restaurantData["state"]);
-    LanguageMap? description;
-    if (restaurantData["details"]["description"] != null) {
-      description =
-          convertToLanguageMap(restaurantData["details"]["description"]);
-    }
+  // factory Restaurant.fromRestaurantData(
+  //     {required String restaurantId, required restaurantData}) {
+  //   mezDbgPrint("Restaurant id $restaurantId \n Data : $restaurantData");
+  //   // List<Object?> availableLanguages =
+  //   //     restaurantData["details"]["languages"] as List<Object?>;
+  //   final ServiceState restaurantState =
+  //       ServiceState.fromServiceStateData(restaurantData["state"]);
+  //   LanguageMap? description;
+  //   if (restaurantData["details"]["description"] != null) {
+  //     description =
+  //         convertToLanguageMap(restaurantData["details"]["description"]);
+  //   }
 
-    RestaurantsView restaurantsView = RestaurantsView.Rows;
-    if (restaurantData["details"]["restaurantsView"] != null) {
-      restaurantsView = restaurantData["details"]["restaurantsView"]
-          .toString()
-          .toRestaurantsView();
-    }
+  //   RestaurantsView restaurantsView = RestaurantsView.Rows;
+  //   if (restaurantData["details"]["restaurantsView"] != null) {
+  //     restaurantsView = restaurantData["details"]["restaurantsView"]
+  //         .toString()
+  //         .toRestaurantsView();
+  //   }
 
-    final cModels.Schedule schedule =
-        scheduleFromData(restaurantData["details"]["schedule"]);
+  //   // final cModels.Schedule schedule =
+  //   //     scheduleFromData(restaurantData["details"]["schedule"]);
 
-    final PaymentInfo paymentInfo =
-        // restaurantData["details"]["paymentInfo"] != servinull
-        //     ? PaymentInfo.fromData(restaurantData["details"]["paymentInfo"])
-        //     :
-        PaymentInfo();
+  //   final PaymentInfo paymentInfo =
+  //       // restaurantData["details"]["paymentInfo"] != servinull
+  //       //     ? PaymentInfo.fromData(restaurantData["details"]["paymentInfo"])
+  //       //     :
+  //       PaymentInfo();
 
-    final cModels.Language primaryLanguage = restaurantData["details"]
-                ?["language"]?["primary"]
-            .toString()
-            .toLanguage() ??
-        cModels.Language.EN;
+  //   final cModels.Language primaryLanguage = restaurantData["details"]
+  //               ?["language"]?["primary"]
+  //           .toString()
+  //           .toLanguage() ??
+  //       cModels.Language.EN;
 
-    final cModels.Language? secondaryLanguage = restaurantData["details"]
-            ?["language"]?["secondary"]
-        .toString()
-        .toLanguage();
+  //   final cModels.Language? secondaryLanguage = restaurantData["details"]
+  //           ?["language"]?["secondary"]
+  //       .toString()
+  //       .toLanguage();
 
-    final num? rate = (restaurantData?["details"]?["rating"].toString() != null)
-        ? num.tryParse(restaurantData["details"]?["rating"]?.toString() ?? "")
-        : null;
-    // primaryLanguage.toOpLang();
-    final Restaurant restaurant = Restaurant(
-        serviceDetailsId: 1,
-        userInfo: ServiceInfo.fromData(restaurantData["info"]),
-        schedule: schedule,
-        restaurantState: restaurantState,
-        restaurantsView: restaurantsView,
-        languages: cModels.ServiceProviderLanguage(
-            primary: primaryLanguage, secondary: secondaryLanguage),
-        rate: rate,
-        paymentInfo: paymentInfo);
-    // if (restaurantData["details"]["reviews"] != null) {
-    //   restaurantData["details"]["reviews"]?.forEach((key, review) {
-    //     restaurant.reviews.add(Review.fromMap(key, review));
-    //   });
-    // }
-    if (restaurantData['menu'] != null) {
-      if (restaurantData["menu"]?["specials"] != null ||
-          restaurantData["menu"]?["daily"] != null) {
-        restaurantData["menu"]?["specials"]?["current"]
-            ?.forEach((key, element) {
-          restaurant.currentSpecials.add(Item.itemFromData(key, element));
-        });
-        restaurantData["menu"]?["specials"]?["past"]?.forEach((key, element) {
-          restaurant.pastSpecials.add(Item.itemFromData(key, element));
-        });
-        restaurantData["menu"]?["daily"]?.forEach((categoryId, categoryData) {
-          restaurant._categories
-              .add(Category.fromData(categoryId, categoryData));
-        });
-      } else {
-        restaurantData["menu"].forEach((itemId, itemdata) {
-          restaurant.itemsWithoutCategory
-              .add(Item.itemFromData(itemId, itemdata));
-        });
-      }
-    }
+  //   final num? rate = (restaurantData?["details"]?["rating"].toString() != null)
+  //       ? num.tryParse(restaurantData["details"]?["rating"]?.toString() ?? "")
+  //       : null;
+  //   // primaryLanguage.toOpLang();
+  //   final Restaurant restaurant = Restaurant(
+  //       serviceDetailsId: 1,
+  //       userInfo: ServiceInfo.fromData(restaurantData["info"]),
+  //       schedule: schedule,
+  //       restaurantState: restaurantState,
+  //       restaurantsView: restaurantsView,
+  //       languages: cModels.ServiceProviderLanguage(
+  //           primary: primaryLanguage, secondary: secondaryLanguage),
+  //       rate: rate,
+  //       paymentInfo: paymentInfo);
+  //   // if (restaurantData["details"]["reviews"] != null) {
+  //   //   restaurantData["details"]["reviews"]?.forEach((key, review) {
+  //   //     restaurant.reviews.add(Review.fromMap(key, review));
+  //   //   });
+  //   // }
+  //   if (restaurantData['menu'] != null) {
+  //     if (restaurantData["menu"]?["specials"] != null ||
+  //         restaurantData["menu"]?["daily"] != null) {
+  //       restaurantData["menu"]?["specials"]?["current"]
+  //           ?.forEach((key, element) {
+  //         restaurant.currentSpecials.add(Item.itemFromData(key, element));
+  //       });
+  //       restaurantData["menu"]?["specials"]?["past"]?.forEach((key, element) {
+  //         restaurant.pastSpecials.add(Item.itemFromData(key, element));
+  //       });
+  //       restaurantData["menu"]?["daily"]?.forEach((categoryId, categoryData) {
+  //         restaurant._categories
+  //             .add(Category.fromData(categoryId, categoryData));
+  //       });
+  //     } else {
+  //       restaurantData["menu"].forEach((itemId, itemdata) {
+  //         restaurant.itemsWithoutCategory
+  //             .add(Item.itemFromData(itemId, itemdata));
+  //       });
+  //     }
+  //   }
 
-    restaurant._categories
-        .sort((Category a, Category b) => a.position.compareTo(b.position));
-    restaurant.reviews
-        .sort((Review a, Review b) => b.reviewTime.compareTo(a.reviewTime));
-    return restaurant;
-  }
+  //   restaurant._categories
+  //       .sort((Category a, Category b) => a.position.compareTo(b.position));
+  //   restaurant.reviews
+  //       .sort((Review a, Review b) => b.reviewTime.compareTo(a.reviewTime));
+  //   return restaurant;
+  // }
 
   void setCategories(List<Category> cats) {
     _categories = cats;
@@ -335,6 +332,7 @@ class Restaurant extends Service {
   }) {
     return Restaurant(
       serviceDetailsId: 1,
+      isOpen: isOpen,
       userInfo: userInfo ?? info,
       languages: languages ?? this.languages,
       deliveryDetailsId: deliveryDetailsId ?? this.deliveryDetailsId,

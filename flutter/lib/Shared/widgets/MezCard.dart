@@ -18,7 +18,8 @@ class MezCard extends StatelessWidget {
       this.borderRadius = 10,
       this.secondAvatarIcon,
       this.secondAvatarIconColor,
-      this.leading});
+      this.leading,
+      this.elevation});
   final EdgeInsets? margin;
   final EdgeInsets? contentPadding;
   final Function()? onClick;
@@ -35,6 +36,7 @@ class MezCard extends StatelessWidget {
   final Widget? action;
   final Widget? leading;
   final double borderRadius;
+  final double? elevation;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class MezCard extends StatelessWidget {
       // shape: RoundedRectangleBorder(
       //   borderRadius: BorderRadius.circular(radius),
       // ),
+      elevation: elevation,
       margin: margin,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius)),

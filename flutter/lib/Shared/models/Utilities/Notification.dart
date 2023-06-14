@@ -74,6 +74,13 @@ class Notification {
     return null;
   }
 
+  bool? get isServiceProvderChat {
+    if (variableParams['isServiceProvderChat'] != null) {
+      return variableParams['isServiceProvderChat'];
+    }
+    return null;
+  }
+
   int? get orderId => variableParams['orderId'];
   String? get orderType => variableParams['orderType'];
   Notification(

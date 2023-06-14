@@ -24,6 +24,7 @@ class BsRentalViewController {
   // streams //
 
   // variables //
+  int? _rentalId;
 
   // states variables //
 
@@ -56,7 +57,7 @@ class BsRentalViewController {
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
   bool get hasData {
-    if (isEditing) {
+    if (_rentalId != null) {
       return _rental.value != null &&
           languageTabsController.tabController != null;
     } else
@@ -68,7 +69,9 @@ class BsRentalViewController {
     required RentalCategory1 category1,
     required int detailsId,
     required int businessId,
+    int? rentalId,
   }) async {
+    _rentalId = rentalId;
     await languageTabsController.init(
         vsync: thickerProvider, detailsId: detailsId);
     detailsController.initDetails(
@@ -78,6 +81,9 @@ class BsRentalViewController {
 
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
     rentalCategory1 = category1;
+    if (rentalId != null) {
+      await initEditMode(id: rentalId);
+    }
   }
 
   Future<void> initEditMode({required int id}) async {
@@ -85,7 +91,7 @@ class BsRentalViewController {
     mezDbgPrint("service id : $id");
     if (rental != null) {
       detailsController.clearPrices();
-     await detailsController.initEditMode(
+      await detailsController.initEditMode(
           itemDetailsId: rental!.details.id.toInt());
       rentalCategory2.value = rental!.category2;
       rentalCategory3.value = rental!.category3;
@@ -151,6 +157,7 @@ class BsRentalViewController {
             );
           }
           showSavedSnackBar();
+          shouldRefetch = true;
         } catch (e, stk) {
           mezDbgPrint(
               " 🛑 ${rental?.id?.toInt()}  OperationException : ${e.toString()}");
@@ -167,7 +174,7 @@ class BsRentalViewController {
   }
 
   void dispose() {
-    // TODO: implement dispose
+    languageTabsController.dispose();
   }
 
   Future<void> createItem(Rental rental) async {
@@ -179,10 +186,23 @@ class BsRentalViewController {
       if (res != null) {
         showAddedSnackBar();
         shouldRefetch = true;
+        detailsController.clearImages();
         await initEditMode(id: res);
       }
     } on OperationException catch (e) {
       mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
+    }
+  }
+
+  Future<void> deleteOffer() async {
+    try {
+      await delete_busines_rental(rentalId: rental!.id!.toInt());
+
+      shouldRefetch = true;
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
   }
 }

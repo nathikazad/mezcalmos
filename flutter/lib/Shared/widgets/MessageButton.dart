@@ -2,7 +2,9 @@ import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:sizer/sizer.dart';
 
 class MessageButton extends StatelessWidget {
@@ -28,12 +30,14 @@ class MessageButton extends StatelessWidget {
             padding: withPadding ? const EdgeInsets.all(8) : null,
             child: badge.Badge(
               badgeColor: Colors.red,
-              showBadge: Get.find<ForegroundNotificationsController>()
-                  .hasNewMessageNotification(chatId),
+              showBadge: Get.find<AuthController>().user == null
+                  ? false
+                  : Get.find<ForegroundNotificationsController>()
+                      .hasNewMessageNotification(chatId),
               position: badge.BadgePosition(top: 0, end: 0),
               child: Icon(
                 icon,
-                size: 24.sp,
+                size: 24.mezSp,
                 color: primaryBlueColor,
               ),
             )),

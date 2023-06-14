@@ -4,6 +4,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/controlle
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpScheduleSelector.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsDeleteOfferButton.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -23,12 +24,14 @@ class BsOpServiceView extends StatefulWidget {
   static Future<bool?> navigate(
       {required int? serviceId,
       required int businessDetailsId,
+      required ServiceCategory1 serviceCategory,
       required int businessId}) async {
     String route = BusinessOpRoutes.kBsOpService;
     route = route.replaceFirst(":id", serviceId?.toString() ?? "add");
     await MezRouter.toPath(route, arguments: {
       "businessDetailsId": businessDetailsId,
       "businessId": businessId,
+      "serviceCategory": serviceCategory,
     });
     return MezRouter.backResult;
   }
@@ -40,21 +43,28 @@ class BsOpServiceView extends StatefulWidget {
 class _BsOpServiceViewState extends State<BsOpServiceView>
     with TickerProviderStateMixin {
   BsServiceViewController viewController = BsServiceViewController();
+  int? businessId;
+  int? businessDetailsId;
+  int? serviceId;
+  ServiceCategory1? serviceCategory;
   @override
   void initState() {
-    final int? detailsId = int.tryParse(
+    businessDetailsId = int.tryParse(
         MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
-    final int? businessId =
+    businessId =
         int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
-    if (detailsId == null || businessId == null) {
+    serviceId = int.tryParse(MezRouter.urlArguments["id"].toString());
+    serviceCategory =
+        MezRouter.bodyArguments!["serviceCategory"] as ServiceCategory1;
+    if (businessDetailsId == null || businessId == null) {
       throw Exception("detailsId is null");
     }
     viewController.init(
-        thickerProvider: this, detailsId: detailsId, businessId: businessId);
-    int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
-    if (id != null) {
-      viewController.initEditMode(id: id);
-    }
+        thickerProvider: this,
+        serviceId: serviceId,
+        detailsId: businessDetailsId!,
+        serviceCategory: serviceCategory!,
+        businessId: businessId!);
 
     super.initState();
   }
@@ -69,13 +79,15 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbar(),
-      bottomNavigationBar: MezButton(
-        label: _i18n()["save"],
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.save();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: '${_i18n()["save"]}',
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.save();
+          },
+        ),
       ),
       body: Obx(
         () => viewController.hasData
@@ -109,10 +121,11 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
                             key: viewController
                                 .languageTabsController.primaryLangFormKey,
                             child: _primaryTab(context)),
-                        Form(
-                            key: viewController
-                                .languageTabsController.secondaryLangFormKey,
-                            child: _secondaryTab(context)),
+                        if (viewController.hasSecondaryLang)
+                          Form(
+                              key: viewController
+                                  .languageTabsController.secondaryLangFormKey,
+                              child: _secondaryTab(context)),
                       ],
                     ),
                   ),
@@ -194,10 +207,10 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             () => MezItemAvSwitcher(
               value: viewController.detailsController.isAvailable.value,
               onAvalableTap: () {
-                viewController.detailsController.isAvailable.value = true;
+                viewController.detailsController.switchAvailable(true);
               },
               onUnavalableTap: () {
-                viewController.detailsController.isAvailable.value = false;
+                viewController.detailsController.switchAvailable(false);
               },
             ),
           ),
@@ -271,12 +284,20 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
                 }
                 return null;
               },
+              scheduleType: ScheduleType.OnDemand,
               onScheduleSelected: (Schedule? schedule) {
                 viewController.changeSchedule(schedule);
               },
               schedule: viewController.serviceSchedule.value,
             ),
           ),
+          if (viewController.isEditing)
+            BsDeleteOfferButton(
+              onDelete: () async {
+                await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
+              },
+            )
         ],
       ),
     );

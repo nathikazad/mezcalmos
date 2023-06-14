@@ -69,7 +69,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           padding: const EdgeInsets.only(top: 2.0),
                           child: Text(
                             widget.restaurant.info.description!
-                                .getTranslation(userLanguage),
+                                .getTranslation(userLanguage)!,
                             style: txt.bodyMedium,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -225,10 +225,10 @@ class _RestaurantCardState extends State<RestaurantCard> {
               ),
             ),
             Container(
-              color: widget.restaurant.isOpen()
+              color: widget.restaurant.isOpen
                   ? null
                   : Colors.black.withOpacity(0.5),
-              child: widget.restaurant.isOpen()
+              child: widget.restaurant.isOpen
                   ? null
                   : Center(
                       child: Text(

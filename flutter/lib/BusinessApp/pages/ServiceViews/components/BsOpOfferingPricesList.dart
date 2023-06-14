@@ -97,7 +97,10 @@ class BsOpOfferingPricesList extends StatelessWidget {
       required bool canRemove,
       required void Function() onRemoveTimeUnit}) {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(
+        top: 0,
+        bottom: 12,
+      ),
       child: Row(
         children: [
           Flexible(
@@ -113,16 +116,32 @@ class BsOpOfferingPricesList extends StatelessWidget {
                 }
                 return null;
               },
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 hintText: _i18n()["price"],
+                hintStyle: context.textTheme.bodyLarge!.copyWith(
+                  color: Theme.of(context).disabledColor,
+                ),
                 suffixIconConstraints: BoxConstraints(
                   minWidth: 0,
                   minHeight: 0,
-                ).tighten(width: 80),
-                prefixIcon: const Icon(Icons.attach_money),
-                suffixIcon: Text(
-                  _i18n()[timeUnit.toFirebaseFormatString()],
-                  style: Theme.of(context).textTheme.bodyLarge,
+                ).tighten(width: 100),
+                prefixIconConstraints: BoxConstraints.tight(Size(24, 24)),
+                prefixIcon: Padding(
+                    padding: EdgeInsets.only(left: 8),
+                    child: const Icon(
+                      Icons.attach_money,
+                      color: Colors.black,
+                    )),
+                suffixIcon: Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(
+                      _i18n()[timeUnit.toFirebaseFormatString()],
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
                 ),
               ),
               controller: textEditingController,
@@ -132,6 +151,7 @@ class BsOpOfferingPricesList extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 6),
               child: MezIconButton(
+                elevation: 0,
                 onTap: onRemoveTimeUnit,
                 iconSize: 20,
                 backgroundColor: Colors.transparent,

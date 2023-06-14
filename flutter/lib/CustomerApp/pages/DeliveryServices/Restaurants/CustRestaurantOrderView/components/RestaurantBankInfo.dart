@@ -83,9 +83,8 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                           MezIconButton(
                               onTap: () {
                                 Clipboard.setData(ClipboardData(
-                                        text: restaurant.value!.paymentInfo
-                                            ?.bankInfo?.bankName
-                                            .toString()))
+                                        text:
+                                            '${restaurant.value!.paymentInfo?.bankInfo?.bankName.toString()}'))
                                     .then((_) => _copiedSnackBar());
                               },
                               iconSize: 20,
@@ -117,9 +116,8 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                           MezIconButton(
                               onTap: () {
                                 Clipboard.setData(ClipboardData(
-                                        text: restaurant.value!.paymentInfo
-                                            ?.bankInfo?.accountNumber
-                                            .toString()))
+                                        text:
+                                            '${restaurant.value!.paymentInfo?.bankInfo?.accountNumber.toString()}'))
                                     .then((_) => _copiedSnackBar());
                               },
                               iconSize: 20,

@@ -25,11 +25,11 @@ import { createCourierOrder } from "./delivery/createCourierOrder";
 import { changeDeliveryPrice, changeDeliveryPriceResponse } from "./delivery/changeDeliveryPrice";
 import { cancelCourierFromCustomer } from "./delivery/cancelCourierFromCustomer";
 import { createNewBusiness } from "./business/createNewBusiness";
-import { requestOrder } from "./business/orderRequest";
-import { handleOrderRequestByAdmin } from "./business/adminHandleRequest";
-import { handleOrderRequestFromCustomer } from "./business/customerHandleRequest";
+// import { requestOrder } from "./business/orderRequest";
+// import { handleOrderRequestByAdmin } from "./business/adminHandleRequest";
+// import { handleOrderRequestFromCustomer } from "./business/customerHandleRequest";
 import { createServiceProviderChat } from "./shared/chat/createChat";
-import { addNewReferral } from "./serviceProvider/addReferral";
+// import { addNewReferral } from "./serviceProvider/addReferral";
 import { authorizeDriver } from "./serviceProvider/authorizeDriver";
 import { removeDriver } from "./delivery/removeDriver";
 
@@ -44,8 +44,8 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
 
 export const user2 = {
   processSignUp: userChanges.processSignUp,
-  // deleteUserAccount: authenticatedCall((userId, data) => userChanges.deleteAccount(userId, data))
-  addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth?.uid, null))
+  deleteUserAccount: authenticatedCall((userId, data) => userChanges.deleteAccount(userId, data)),
+  addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth!.uid, null))
 }
 
 export const otp3 = {
@@ -71,7 +71,7 @@ export const serviceProvider = {
   addDriver: authenticatedCall((userId, data) => addDriver(userId, data)),
   authorizeDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data)),
   createServiceProviderChat: authenticatedCall((userId, data) => createServiceProviderChat(userId, data)),
-  addReferral: authenticatedCall((userId, data) => addNewReferral(userId, data)),
+// addReferral: authenticatedCall((userId, data) => addNewReferral(userId, data)),
   removeDriver: authenticatedCall((userId, data) => removeDriver(userId, data)),
 }
 
@@ -87,9 +87,9 @@ export const restaurant3 = {
 }
 export const business = {
   createBusiness: authenticatedCall((userId, data) => createNewBusiness(userId, data)),
-  requestOrder: authenticatedCall((userId, data) => requestOrder(userId, data)),
-  handleOrderRequestByAdmin: authenticatedCall((userId, data) => handleOrderRequestByAdmin(userId, data)),
-  handleOrderRequestFromCustomer: authenticatedCall((userId, data) => handleOrderRequestFromCustomer(userId, data)),
+  // requestOrder: authenticatedCall((userId, data) => requestOrder(userId, data)),
+  // handleOrderRequestByAdmin: authenticatedCall((userId, data) => handleOrderRequestByAdmin(userId, data)),
+  // handleOrderRequestFromCustomer: authenticatedCall((userId, data) => handleOrderRequestFromCustomer(userId, data)),
 }
 
 
@@ -132,12 +132,12 @@ function authenticatedCall(func:AuthenticatedFunction) {
       );
     }
     let firebaseUser = await firebase.auth().getUser(context.auth!.uid)
-    console.log("Custom claims",firebaseUser.customClaims)
     if(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"] == null) {
       await userChanges.addHasuraClaim(context.auth?.uid, null);
       firebaseUser = await firebase.auth().getUser(context.auth!.uid)
     }
-   
+    data = data || {};
+    data.firebaseId = context.auth!.uid;
     return await func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
   });
 }

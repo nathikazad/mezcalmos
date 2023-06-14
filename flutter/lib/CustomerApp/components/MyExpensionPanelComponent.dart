@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
@@ -125,50 +126,66 @@ class _MyExpansionPanelComponentState extends State<MyExpansionPanelComponent>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     widget.child,
-                    Container(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          InkWell(
-                            child: Container(
-                              width: 25,
-                              height: 25,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: secondaryLightBlueColor,
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              InkWell(
+                                child: Container(
+                                  width: 25,
+                                  height: 25,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: secondaryLightBlueColor,
+                                  ),
+                                  child: const Icon(
+                                    Icons.edit_outlined,
+                                    size: 14,
+                                    color: primaryBlueColor,
+                                  ),
+                                ),
+                                onTap: widget.onEdit,
                               ),
-                              child: const Icon(
-                                Icons.edit_outlined,
-                                size: 14,
-                                color: primaryBlueColor,
-                              ),
-                            ),
-                            onTap: widget.onEdit,
+                              if (widget.showExpandButton)
+                                const SizedBox(width: 10),
+                              if (widget.showExpandButton)
+                                InkWell(
+                                  child: Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(64)),
+                                      color: secondaryLightBlueColor,
+                                    ),
+                                    child: RotationTransition(
+                                      turns: _iconTurns,
+                                      child: const Icon(Icons.expand_more,
+                                          color: primaryBlueColor),
+                                    ),
+                                  ),
+                                  onTap: _handleTap,
+                                ),
+                              const SizedBox(width: 10),
+                            ],
                           ),
-                          if (widget.showExpandButton)
-                            const SizedBox(width: 10),
-                          if (widget.showExpandButton)
-                            InkWell(
-                              child: Container(
-                                width: 25,
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(64)),
-                                  color: secondaryLightBlueColor,
-                                ),
-                                child: RotationTransition(
-                                  turns: _iconTurns,
-                                  child: const Icon(Icons.expand_more,
-                                      color: primaryBlueColor),
-                                ),
-                              ),
-                              onTap: _handleTap,
-                            ),
-                          const SizedBox(width: 10),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            "\$${widget.itemPrice}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.txt.bodyLarge,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

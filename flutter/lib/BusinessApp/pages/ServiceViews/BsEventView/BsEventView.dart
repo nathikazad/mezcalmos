@@ -5,11 +5,11 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/controllers
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingLocationCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsDeleteOfferButton.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -48,32 +48,37 @@ class BsOpEventView extends StatefulWidget {
 class _BsOpEventViewState extends State<BsOpEventView>
     with TickerProviderStateMixin {
   BsEventViewController viewController = BsEventViewController();
+  int? detailsId;
+  int? businessId;
+  BusinessProfile? profile;
+  bool isClass = false;
+  int? eventId;
   @override
   void initState() {
-    final int? detailsId = int.tryParse(
-        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
-    final int? businessId =
-        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
-    final BusinessProfile? profile =
-        MezRouter.bodyArguments?["profile"] as BusinessProfile?;
-    final bool isClass = MezRouter.bodyArguments?["class"] ?? false;
+    _assignValues();
     if (detailsId == null || profile == null || businessId == null) {
       throw Exception("detailsId or businessId or profile is null");
     }
     viewController.init(
       thickerProvider: this,
-      businessId: businessId,
-      profile: profile,
-      detailsId: detailsId,
+      businessId: businessId!,
+      profile: profile!,
+      eventId: eventId,
+      detailsId: detailsId!,
       isClass: isClass,
     );
 
-    int? id = int.tryParse(MezRouter.urlArguments["id"].toString());
-    if (id != null) {
-      viewController.initEditMode(id: id);
-    }
-
     super.initState();
+  }
+
+  void _assignValues() {
+    detailsId = int.tryParse(
+        MezRouter.bodyArguments?["businessDetailsId"].toString() ?? "");
+    businessId =
+        int.tryParse(MezRouter.bodyArguments?["businessId"].toString() ?? "");
+    profile = MezRouter.bodyArguments?["profile"] as BusinessProfile?;
+    isClass = MezRouter.bodyArguments?["class"] ?? false;
+    eventId = int.tryParse(MezRouter.urlArguments["id"].toString());
   }
 
   @override
@@ -86,13 +91,15 @@ class _BsOpEventViewState extends State<BsOpEventView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbar(),
-      bottomNavigationBar: MezButton(
-        label: _i18n()["save"],
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.save();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: _i18n()["save"],
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.save();
+          },
+        ),
       ),
       body: Obx(() {
         if (viewController.hasData) {
@@ -153,7 +160,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
 
   String getAppbartitle() {
     return viewController.event != null
-        ? "${viewController.event!.details.name.getTranslation(userLanguage)}"
+        ? "${viewController.event!.details.name.getTranslation(viewController.languages!.primary)}"
         : (viewController.isClass == false)
             ? "${_i18n()["event"]["event"]}"
             : "${_i18n()['class']}";
@@ -218,21 +225,33 @@ class _BsOpEventViewState extends State<BsOpEventView>
             () => MezItemAvSwitcher(
               value: viewController.detailsController.isAvailable.value,
               onAvalableTap: () {
-                viewController.detailsController.isAvailable.value = true;
+                viewController.detailsController.switchAvailable(true);
               },
               onUnavalableTap: () {
-                viewController.detailsController.isAvailable.value = false;
+                viewController.detailsController.switchAvailable(false);
               },
             ),
           ),
           bigSeperator,
+          Text(
+            isClass
+                ? _i18n()["event"]["classType"]
+                : _i18n()["event"]["eventType"],
+            style: context.textTheme.bodyLarge,
+          ),
+          SizedBox(
+            height: 5,
+          ),
           Obx(
             () => BsOpScheduleTypeSelector(
               items: viewController.getScheduleType(),
-              label: _i18n()["event"]["eventType"],
+              label: isClass
+                  ? _i18n()["event"]["classType"]
+                  : _i18n()["event"]["eventType"],
               value: viewController.getScheduleType().firstWhereOrNull(
                   (ScheduleTypeInput element) =>
-                      element.type == viewController.scheduleType.value),
+                      element.type ==
+                      viewController.scheduleTypeInput.value.type),
               validator: (ScheduleTypeInput? v) {
                 if (v == null) {
                   return _i18n()["event"]["scheduleTypeError"];
@@ -241,7 +260,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
               },
               onChanged: (ScheduleTypeInput? v) {
                 if (v != null) {
-                  viewController.switchScheduleType(v.type);
+                  viewController.switchScheduleType(v);
                 }
               },
             ),
@@ -307,7 +326,7 @@ class _BsOpEventViewState extends State<BsOpEventView>
             },
             seletedPrices: viewController.detailsController.priceTimeUnitMap,
           ),
-          bigSeperator,
+          smallSepartor,
           if (viewController.showLocation)
             Obx(
               () => BsOpOfferingLocationCard(
@@ -316,16 +335,24 @@ class _BsOpEventViewState extends State<BsOpEventView>
                   viewController.setLocation(v);
                 },
                 location: viewController.location.value,
-                validator: (Location? loc) {
-                  if (loc == null) {
-                    return _i18n()["locationError"];
-                  }
-                  return null;
-                },
+                // validator: (Location? loc) {
+                //   if (loc == null) {
+                //     return _i18n()["locationError"];
+                //   }
+                //   return null;
+                // },
               ),
             ),
-          // bigSeperator,
+          if (viewController.showLocation) bigSeperator,
           Obx(() => viewController.getScheduleWidget()),
+
+          if (viewController.isEditing)
+            BsDeleteOfferButton(
+              onDelete: () async {
+                await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
+              },
+            )
         ],
       ),
     );
