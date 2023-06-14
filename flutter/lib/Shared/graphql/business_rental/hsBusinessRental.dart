@@ -231,13 +231,13 @@ Future<List<RentalCard>> get_home_rentals(
               cost: constructBusinessServiceCost(data.rental.details.cost),
               additionalParameters: data.rental.details.additional_parameters,
             ),
-            bathrooms: data.bathrooms,
-            bedrooms: data.bedrooms,
-            gpsLocation: Location(
-                lat: data.gps_location.latitude,
-                lng: data.gps_location.longitude,
-                address: data.address),
-            homeType: data.home_type.toHomeType(),
+            // bathrooms: data.bathrooms,
+            // bedrooms: data.bedrooms,
+            // gpsLocation: Location(
+            //     lat: data.gps_location.latitude,
+            //     lng: data.gps_location.longitude,
+            //     address: data.address),
+            // homeType: data.home_type.toHomeType(),
           )));
     });
     return _homes;
@@ -286,13 +286,13 @@ Future<List<RentalCard>> get_business_home_rentals(
               cost: constructBusinessServiceCost(data.rental.details.cost),
               additionalParameters: data.rental.details.additional_parameters,
             ),
-            bathrooms: data.bathrooms,
-            bedrooms: data.bedrooms,
-            gpsLocation: Location(
-                lat: data.gps_location.latitude,
-                lng: data.gps_location.longitude,
-                address: data.address),
-            homeType: data.home_type.toHomeType(),
+            // bathrooms: data.bathrooms,
+            // bedrooms: data.bedrooms,
+            // gpsLocation: Location(
+            //     lat: data.gps_location.latitude,
+            //     lng: data.gps_location.longitude,
+            //     address: data.address),
+            // homeType: data.home_type.toHomeType(),
           )));
     });
     return _homes;
@@ -346,13 +346,13 @@ Future<List<RentalCard>> get_real_estate(
               cost: constructBusinessServiceCost(data.rental.details.cost),
               additionalParameters: data.rental.details.additional_parameters,
             ),
-            bathrooms: data.bathrooms,
-            bedrooms: data.bedrooms,
-            gpsLocation: Location(
-                lat: data.gps_location.latitude,
-                lng: data.gps_location.longitude,
-                address: data.address),
-            homeType: data.home_type.toHomeType(),
+            // bathrooms: data.bathrooms,
+            // bedrooms: data.bedrooms,
+            // gpsLocation: Location(
+            //     lat: data.gps_location.latitude,
+            //     lng: data.gps_location.longitude,
+            //     address: data.address),
+            // homeType: data.home_type.toHomeType(),
           )));
     });
     return _homes;
@@ -401,13 +401,13 @@ Future<List<RentalCard>> get_business_real_estate(
               cost: constructBusinessServiceCost(data.rental.details.cost),
               additionalParameters: data.rental.details.additional_parameters,
             ),
-            bathrooms: data.bathrooms,
-            bedrooms: data.bedrooms,
-            gpsLocation: Location(
-                lat: data.gps_location.latitude,
-                lng: data.gps_location.longitude,
-                address: data.address),
-            homeType: data.home_type.toHomeType(),
+            // bathrooms: data.bathrooms,
+            // bedrooms: data.bedrooms,
+            // gpsLocation: Location(
+            //     lat: data.gps_location.latitude,
+            //     lng: data.gps_location.longitude,
+            //     address: data.address),
+            // homeType: data.home_type.toHomeType(),
           )));
     });
     return _homes;
