@@ -176,7 +176,7 @@ Future<HomeWithBusinessCard?> get_home_by_id(
             id: data.id,
             category1: data.details!.category1.toHomeCategory1(),
             details: BusinessItemDetails(
-              id: data.id,
+              id: data.details!.id.toInt(),
               nameId: data.details!.name_id,
               descriptionId: data.details!.description_id,
               name:
@@ -212,15 +212,16 @@ Future<HomeWithBusinessCard?> get_home_by_id(
                     stripeInfo: {},
                     acceptedPayments: data.business!.details.accepted_payments)
                 .acceptedPayments,
-            avgRating: double.tryParse(
-                data.business!.details.business!
-                    .reviews_aggregate.aggregate?.avg.toString() ??
-                    '0.0'),
+            avgRating: double.tryParse(data.business!.details.business!
+                    .reviews_aggregate.aggregate?.avg
+                    .toString() ??
+                '0.0'),
             location: Location(
                 lat: data.business!.details.location.gps.latitude,
                 lng: data.business!.details.location.gps.longitude,
                 address: data.business!.details.location.address),
-            reviewCount: data.business!.details.business!.reviews_aggregate.aggregate?.count,
+            reviewCount: data
+                .business!.details.business!.reviews_aggregate.aggregate?.count,
           ));
       returnedRental.id = id;
       return returnedRental;
@@ -357,7 +358,7 @@ Future<List<HomeCard>> get_business_home_rentals(
             id: data.id,
             category1: data.details!.category1.toHomeCategory1(),
             details: BusinessItemDetails(
-              id: data.id,
+              id: data.details!.id.toInt(),
               nameId: data.details!.name_id,
               descriptionId: data.details!.description_id,
               name:
@@ -650,19 +651,21 @@ Future<int?> add_one_home_rental({required Home rental}) async {
       await _db.graphQLClient.mutate$add_home(Options$Mutation$add_home(
     variables: Variables$Mutation$add_home(
         object: Input$business_home_insert_input(
+            business_id: rental.details.businessId.toInt(),
+            available_for: rental.availableFor.toFirebaseFormatString(),
+            offering_type: "home",
             bathrooms: rental.bathrooms?.toInt(),
             bedrooms: rental.bedrooms?.toInt(),
-            location: (rental.gpsLocation != null)
-                ? Input$business_home_location_obj_rel_insert_input(
-                    data: Input$business_home_location_insert_input(
-                      address: rental.gpsLocation!.address,
-                      gps: Geography(
-                        rental.gpsLocation!.lat.toDouble(),
-                        rental.gpsLocation!.lng.toDouble(),
-                      ),
-                    ),
-                  )
-                : null,
+            location: Input$business_home_location_obj_rel_insert_input(
+              data: Input$business_home_location_insert_input(
+                address: rental.location.name,
+                name: rental.location.name,
+                gps: Geography(
+                  rental.location.location.lat.toDouble(),
+                  rental.location.location.lat.toDouble(),
+                ),
+              ),
+            ),
             details: Input$business_item_details_obj_rel_insert_input(
                 data: Input$business_item_details_insert_input(
                     business_id: rental.details.businessId.toInt(),
