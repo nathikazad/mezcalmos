@@ -31,6 +31,10 @@ class AllServiceListViewController {
         "icon": aDelivery,
         "title": "deliveries",
       },
+      MezService.Courier: {
+        "icon": aDelivery,
+        "title": "deliveries",
+      },
       MezService.Rentals: {
         "icon": aRentals,
         "title": "rentals",

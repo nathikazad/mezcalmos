@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/CustLaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -69,6 +70,9 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
         CustServicesListView.navigate(
           serviceCategory: ServiceCategory1.Tattoo,
         );
+        break;
+      case MezService.Laundry:
+        CustLaundriesListView.navigate();
         break;
     }
   }

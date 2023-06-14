@@ -45,22 +45,24 @@ Future<ServiceTree> get_service_tree(
                 .parsedData?.delivery_company_aggregate.aggregate?.count ??
             0),
         deliveries);
-    deliveries.children.add(courier);
+    // deliveries.children.add(courier);
+    root.children.add(courier);
   }
+  ServiceTree? laundry = null;
   if ((deliveryResponse.parsedData?.laundry_store_aggregate.aggregate?.count ??
           0) >
       0) {
-    final ServiceTree laundry = ServiceTree(
+    laundry = ServiceTree(
         MezService.Laundry,
         (deliveryResponse
                 .parsedData?.laundry_store_aggregate.aggregate?.count ??
             0),
         deliveries);
-    deliveries.children.add(laundry);
+    // deliveries.children.add(laundry);
   }
-  if (deliveries.count > 0) {
-    root.children.add(deliveries);
-  }
+  // if (deliveries.count > 0) {
+  //   root.children.add(deliveries);
+  // }
 
   final QueryResult<Query$number_of_food_by_category> foodResponse =
       await _db.graphQLClient.query$number_of_food_by_category(
@@ -219,6 +221,9 @@ Future<ServiceTree> get_service_tree(
   });
   await Future.wait(futuresServices);
   if (services.count > 0) {
+    if (laundry != null) {
+      services.children.add(laundry);
+    }
     root.children.add(services);
   }
 
