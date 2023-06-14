@@ -24,6 +24,7 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/env.dart';
+import 'package:mezcalmos/BusinessApp/pages/Components/BsHomeRentalCard.dart'as homeCard;
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -742,8 +743,8 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 () => Column(
                   children: List.generate(
                       viewController.homeRentals.length,
-                      (int index) => BsHomeRentalCard(
-                            rental: viewController.homeRentals[index],
+                      (int index) => homeCard.BsHomeRentalCard(
+                            home: viewController.homeRentals[index],
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToHomeRental(

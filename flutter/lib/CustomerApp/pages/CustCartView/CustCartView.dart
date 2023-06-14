@@ -75,6 +75,12 @@ class _CustCartViewState extends State<CustCartView> {
                             final int index = data.key;
                             final BusinessCartItem item = data.value;
                             switch (item.offeringType) {
+                              case OfferingType.Home:
+                                return RentalCartItemCard(
+                                  index: index,
+                                  item: item,
+                                  controller: custBusinessCartController,
+                                );
                               case OfferingType.Rental:
                                 return RentalCartItemCard(
                                   index: index,

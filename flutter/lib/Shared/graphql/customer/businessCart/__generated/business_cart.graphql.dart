@@ -346,6 +346,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'available_for'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'details'),
                     alias: null,
                     arguments: [],
@@ -530,6 +537,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                           ),
                           FieldNode(
                             name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -2394,29 +2408,30 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items<TRes>
 
 class Query$getBusinessCart$business_cart$items$home {
   Query$getBusinessCart$business_cart$items$home({
+    required this.available_for,
     this.details,
     required this.id,
     this.business,
     required this.bathrooms,
     required this.bedrooms,
     this.location,
-    required this.available_for,
     required this.offering_type,
     required this.$__typename,
   });
 
   factory Query$getBusinessCart$business_cart$items$home.fromJson(
       Map<String, dynamic> json) {
+    final l$available_for = json['available_for'];
     final l$details = json['details'];
     final l$id = json['id'];
     final l$business = json['business'];
     final l$bathrooms = json['bathrooms'];
     final l$bedrooms = json['bedrooms'];
     final l$location = json['location'];
-    final l$available_for = json['available_for'];
     final l$offering_type = json['offering_type'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$home(
+      available_for: (l$available_for as String),
       details: l$details == null
           ? null
           : Query$getBusinessCart$business_cart$items$home$details.fromJson(
@@ -2432,11 +2447,12 @@ class Query$getBusinessCart$business_cart$items$home {
           ? null
           : Query$getBusinessCart$business_cart$items$home$location.fromJson(
               (l$location as Map<String, dynamic>)),
-      available_for: (l$available_for as String),
       offering_type: (l$offering_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String available_for;
 
   final Query$getBusinessCart$business_cart$items$home$details? details;
 
@@ -2450,14 +2466,14 @@ class Query$getBusinessCart$business_cart$items$home {
 
   final Query$getBusinessCart$business_cart$items$home$location? location;
 
-  final String available_for;
-
   final String offering_type;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$available_for = available_for;
+    _resultData['available_for'] = l$available_for;
     final l$details = details;
     _resultData['details'] = l$details?.toJson();
     final l$id = id;
@@ -2470,8 +2486,6 @@ class Query$getBusinessCart$business_cart$items$home {
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
     _resultData['location'] = l$location?.toJson();
-    final l$available_for = available_for;
-    _resultData['available_for'] = l$available_for;
     final l$offering_type = offering_type;
     _resultData['offering_type'] = l$offering_type;
     final l$$__typename = $__typename;
@@ -2481,23 +2495,23 @@ class Query$getBusinessCart$business_cart$items$home {
 
   @override
   int get hashCode {
+    final l$available_for = available_for;
     final l$details = details;
     final l$id = id;
     final l$business = business;
     final l$bathrooms = bathrooms;
     final l$bedrooms = bedrooms;
     final l$location = location;
-    final l$available_for = available_for;
     final l$offering_type = offering_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$available_for,
       l$details,
       l$id,
       l$business,
       l$bathrooms,
       l$bedrooms,
       l$location,
-      l$available_for,
       l$offering_type,
       l$$__typename,
     ]);
@@ -2510,6 +2524,11 @@ class Query$getBusinessCart$business_cart$items$home {
     }
     if (!(other is Query$getBusinessCart$business_cart$items$home) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$available_for = available_for;
+    final lOther$available_for = other.available_for;
+    if (l$available_for != lOther$available_for) {
       return false;
     }
     final l$details = details;
@@ -2540,11 +2559,6 @@ class Query$getBusinessCart$business_cart$items$home {
     final l$location = location;
     final lOther$location = other.location;
     if (l$location != lOther$location) {
-      return false;
-    }
-    final l$available_for = available_for;
-    final lOther$available_for = other.available_for;
-    if (l$available_for != lOther$available_for) {
       return false;
     }
     final l$offering_type = offering_type;
@@ -2582,13 +2596,13 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$home<TRes> {
       _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$home;
 
   TRes call({
+    String? available_for,
     Query$getBusinessCart$business_cart$items$home$details? details,
     int? id,
     Query$getBusinessCart$business_cart$items$home$business? business,
     int? bathrooms,
     int? bedrooms,
     Query$getBusinessCart$business_cart$items$home$location? location,
-    String? available_for,
     String? offering_type,
     String? $__typename,
   });
@@ -2614,17 +2628,20 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$home<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? available_for = _undefined,
     Object? details = _undefined,
     Object? id = _undefined,
     Object? business = _undefined,
     Object? bathrooms = _undefined,
     Object? bedrooms = _undefined,
     Object? location = _undefined,
-    Object? available_for = _undefined,
     Object? offering_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$home(
+        available_for: available_for == _undefined || available_for == null
+            ? _instance.available_for
+            : (available_for as String),
         details: details == _undefined
             ? _instance.details
             : (details
@@ -2644,9 +2661,6 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$home<TRes>
             ? _instance.location
             : (location
                 as Query$getBusinessCart$business_cart$items$home$location?),
-        available_for: available_for == _undefined || available_for == null
-            ? _instance.available_for
-            : (available_for as String),
         offering_type: offering_type == _undefined || offering_type == null
             ? _instance.offering_type
             : (offering_type as String),
@@ -2692,13 +2706,13 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$home<TRes>
   TRes _res;
 
   call({
+    String? available_for,
     Query$getBusinessCart$business_cart$items$home$details? details,
     int? id,
     Query$getBusinessCart$business_cart$items$home$business? business,
     int? bathrooms,
     int? bedrooms,
     Query$getBusinessCart$business_cart$items$home$location? location,
-    String? available_for,
     String? offering_type,
     String? $__typename,
   }) =>
@@ -3602,6 +3616,7 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
     required this.name,
     required this.currency,
     required this.accepted_payments,
+    required this.image,
     required this.location,
     required this.$__typename,
   });
@@ -3612,6 +3627,7 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$home$business$details(
@@ -3619,6 +3635,7 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
       name: (l$name as String),
       currency: (l$currency as String),
       accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
       location:
           Query$getBusinessCart$business_cart$items$home$business$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -3633,6 +3650,8 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
   final String currency;
 
   final dynamic accepted_payments;
+
+  final String image;
 
   final Query$getBusinessCart$business_cart$items$home$business$details$location
       location;
@@ -3649,6 +3668,8 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
     _resultData['currency'] = l$currency;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
@@ -3662,6 +3683,7 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
     final l$name = name;
     final l$currency = currency;
     final l$accepted_payments = accepted_payments;
+    final l$image = image;
     final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -3669,6 +3691,7 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
       l$name,
       l$currency,
       l$accepted_payments,
+      l$image,
       l$location,
       l$$__typename,
     ]);
@@ -3702,6 +3725,11 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
     final l$accepted_payments = accepted_payments;
     final lOther$accepted_payments = other.accepted_payments;
     if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$location = location;
@@ -3747,6 +3775,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$home$business$
     String? name,
     String? currency,
     dynamic? accepted_payments,
+    String? image,
     Query$getBusinessCart$business_cart$items$home$business$details$location?
         location,
     String? $__typename,
@@ -3778,6 +3807,7 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$home$business$deta
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? accepted_payments = _undefined,
+    Object? image = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -3793,6 +3823,9 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$home$business$deta
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
                 : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -3824,6 +3857,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$home$business$
     String? name,
     String? currency,
     dynamic? accepted_payments,
+    String? image,
     Query$getBusinessCart$business_cart$items$home$business$details$location?
         location,
     String? $__typename,
@@ -12892,6 +12926,13 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'available_for'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'details'),
                     alias: null,
                     arguments: [],
@@ -13076,6 +13117,13 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                           ),
                           FieldNode(
                             name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -15105,29 +15153,30 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
 
 class Subscription$listen_on_business_order_request$business_order_request$items$home {
   Subscription$listen_on_business_order_request$business_order_request$items$home({
+    required this.available_for,
     this.details,
     required this.id,
     this.business,
     required this.bathrooms,
     required this.bedrooms,
     this.location,
-    required this.available_for,
     required this.offering_type,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_business_order_request$business_order_request$items$home.fromJson(
       Map<String, dynamic> json) {
+    final l$available_for = json['available_for'];
     final l$details = json['details'];
     final l$id = json['id'];
     final l$business = json['business'];
     final l$bathrooms = json['bathrooms'];
     final l$bedrooms = json['bedrooms'];
     final l$location = json['location'];
-    final l$available_for = json['available_for'];
     final l$offering_type = json['offering_type'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$home(
+      available_for: (l$available_for as String),
       details: l$details == null
           ? null
           : Subscription$listen_on_business_order_request$business_order_request$items$home$details
@@ -15143,11 +15192,12 @@ class Subscription$listen_on_business_order_request$business_order_request$items
           ? null
           : Subscription$listen_on_business_order_request$business_order_request$items$home$location
               .fromJson((l$location as Map<String, dynamic>)),
-      available_for: (l$available_for as String),
       offering_type: (l$offering_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String available_for;
 
   final Subscription$listen_on_business_order_request$business_order_request$items$home$details?
       details;
@@ -15164,14 +15214,14 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final Subscription$listen_on_business_order_request$business_order_request$items$home$location?
       location;
 
-  final String available_for;
-
   final String offering_type;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$available_for = available_for;
+    _resultData['available_for'] = l$available_for;
     final l$details = details;
     _resultData['details'] = l$details?.toJson();
     final l$id = id;
@@ -15184,8 +15234,6 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
     _resultData['location'] = l$location?.toJson();
-    final l$available_for = available_for;
-    _resultData['available_for'] = l$available_for;
     final l$offering_type = offering_type;
     _resultData['offering_type'] = l$offering_type;
     final l$$__typename = $__typename;
@@ -15195,23 +15243,23 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   @override
   int get hashCode {
+    final l$available_for = available_for;
     final l$details = details;
     final l$id = id;
     final l$business = business;
     final l$bathrooms = bathrooms;
     final l$bedrooms = bedrooms;
     final l$location = location;
-    final l$available_for = available_for;
     final l$offering_type = offering_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$available_for,
       l$details,
       l$id,
       l$business,
       l$bathrooms,
       l$bedrooms,
       l$location,
-      l$available_for,
       l$offering_type,
       l$$__typename,
     ]);
@@ -15225,6 +15273,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     if (!(other
             is Subscription$listen_on_business_order_request$business_order_request$items$home) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$available_for = available_for;
+    final lOther$available_for = other.available_for;
+    if (l$available_for != lOther$available_for) {
       return false;
     }
     final l$details = details;
@@ -15255,11 +15308,6 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$location = location;
     final lOther$location = other.location;
     if (l$location != lOther$location) {
-      return false;
-    }
-    final l$available_for = available_for;
-    final lOther$available_for = other.available_for;
-    if (l$available_for != lOther$available_for) {
       return false;
     }
     final l$offering_type = offering_type;
@@ -15302,6 +15350,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
       _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_order_request$items$home;
 
   TRes call({
+    String? available_for,
     Subscription$listen_on_business_order_request$business_order_request$items$home$details?
         details,
     int? id,
@@ -15311,7 +15360,6 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     int? bedrooms,
     Subscription$listen_on_business_order_request$business_order_request$items$home$location?
         location,
-    String? available_for,
     String? offering_type,
     String? $__typename,
   });
@@ -15343,18 +15391,21 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
   static const _undefined = {};
 
   TRes call({
+    Object? available_for = _undefined,
     Object? details = _undefined,
     Object? id = _undefined,
     Object? business = _undefined,
     Object? bathrooms = _undefined,
     Object? bedrooms = _undefined,
     Object? location = _undefined,
-    Object? available_for = _undefined,
     Object? offering_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_business_order_request$business_order_request$items$home(
+        available_for: available_for == _undefined || available_for == null
+            ? _instance.available_for
+            : (available_for as String),
         details: details == _undefined
             ? _instance.details
             : (details
@@ -15374,9 +15425,6 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             ? _instance.location
             : (location
                 as Subscription$listen_on_business_order_request$business_order_request$items$home$location?),
-        available_for: available_for == _undefined || available_for == null
-            ? _instance.available_for
-            : (available_for as String),
         offering_type: offering_type == _undefined || offering_type == null
             ? _instance.offering_type
             : (offering_type as String),
@@ -15426,6 +15474,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
   TRes _res;
 
   call({
+    String? available_for,
     Subscription$listen_on_business_order_request$business_order_request$items$home$details?
         details,
     int? id,
@@ -15435,7 +15484,6 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     int? bedrooms,
     Subscription$listen_on_business_order_request$business_order_request$items$home$location?
         location,
-    String? available_for,
     String? offering_type,
     String? $__typename,
   }) =>
@@ -16375,6 +16423,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     required this.name,
     required this.currency,
     required this.accepted_payments,
+    required this.image,
     required this.location,
     required this.$__typename,
   });
@@ -16385,6 +16434,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$home$business$details(
@@ -16392,6 +16442,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       name: (l$name as String),
       currency: (l$currency as String),
       accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
       location:
           Subscription$listen_on_business_order_request$business_order_request$items$home$business$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -16406,6 +16457,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final String currency;
 
   final dynamic accepted_payments;
+
+  final String image;
 
   final Subscription$listen_on_business_order_request$business_order_request$items$home$business$details$location
       location;
@@ -16422,6 +16475,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['currency'] = l$currency;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
@@ -16435,6 +16490,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = name;
     final l$currency = currency;
     final l$accepted_payments = accepted_payments;
+    final l$image = image;
     final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -16442,6 +16498,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       l$name,
       l$currency,
       l$accepted_payments,
+      l$image,
       l$location,
       l$$__typename,
     ]);
@@ -16475,6 +16532,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$accepted_payments = accepted_payments;
     final lOther$accepted_payments = other.accepted_payments;
     if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$location = location;
@@ -16521,6 +16583,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     dynamic? accepted_payments,
+    String? image,
     Subscription$listen_on_business_order_request$business_order_request$items$home$business$details$location?
         location,
     String? $__typename,
@@ -16553,6 +16616,7 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? accepted_payments = _undefined,
+    Object? image = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -16569,6 +16633,9 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
                 : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -16600,6 +16667,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     dynamic? accepted_payments,
+    String? image,
     Subscription$listen_on_business_order_request$business_order_request$items$home$business$details$location?
         location,
     String? $__typename,

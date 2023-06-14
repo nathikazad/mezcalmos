@@ -50,6 +50,24 @@ class RentalCard extends Rental {
         );
 }
 
+class HomeCard extends Home {
+  final String businessName;
+  final Currency currency;
+  HomeCard({
+    required Home home,
+    required this.businessName,
+    required this.currency,
+  }) : super(
+          category1: home.category1,
+          details: home.details,
+          id: home.id,
+          availableFor: home.availableFor,
+          location: home.location,
+          bathrooms: home.bathrooms,
+          bedrooms: home.bedrooms,
+        );
+}
+
 class EventCard extends Event {
   final String businessName;
   final Currency currency;

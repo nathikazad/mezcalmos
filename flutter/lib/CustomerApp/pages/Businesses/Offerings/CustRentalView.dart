@@ -99,17 +99,17 @@ class _CustRentalViewState extends State<CustRentalView> {
                         cost: viewController.rental!.details.cost,
                       ),
                       _description(context),
-                      viewController.rental!.gpsLocation == null
+                      viewController.rental!.business.location == null
                           ? const SizedBox.shrink()
                           : ServiceLocationCard(
                               height: 20.h,
                               location: MezLocation(
-                                viewController.rental!.gpsLocation?.address ??
+                                viewController.rental!.business.location?.address ??
                                     "",
                                 MezLocation.buildLocationData(
-                                  viewController.rental!.gpsLocation!.lat
+                                  viewController.rental!.business.location!.lat
                                       .toDouble(),
-                                  viewController.rental!.gpsLocation!.lng
+                                  viewController.rental!.business.location!.lng
                                       .toDouble(),
                                 ),
                               ),

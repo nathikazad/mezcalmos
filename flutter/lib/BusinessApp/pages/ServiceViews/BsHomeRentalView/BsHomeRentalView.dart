@@ -323,13 +323,13 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
                 return null;
               },
               langPath: _i18n()["homeRental"],
-              items: HomeType.values
-                  .map((HomeType e) => e.toFirebaseFormatString())
+              items: HomeCategory1.values
+                  .map((HomeCategory1 e) => e.toFirebaseFormatString())
                   .toList(),
               value: viewController.homeType.value?.toFirebaseFormatString(),
               onChanged: (String? newHomeType) {
                 if (newHomeType != null) {
-                  viewController.homeType.value = newHomeType.toHomeType();
+                  viewController.homeType.value = newHomeType.toHomeCategory1();
                 }
               },
               labelText: _i18n()["homeRental"]["homeType"],

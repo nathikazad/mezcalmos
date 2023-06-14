@@ -119,6 +119,12 @@ class _CustOrderViewState extends State<CustOrderView> {
                             final int index = data.key;
                             final BusinessCartItem item = data.value;
                             switch (item.offeringType) {
+                              case OfferingType.Home:
+                                return RentalCartItemCard(
+                                  index: index,
+                                  item: item,
+                                  controller: custBusinessCartController,
+                                );
                               case OfferingType.Rental:
                                 return RentalCartItemCard(
                                   index: index,
@@ -215,6 +221,9 @@ class _CustOrderViewState extends State<CustOrderView> {
       case OfferingType.Product:
         return custBusinessCartController
             .currentOrderInView.value!.items.first.product!.business.image;
+      case OfferingType.Home:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.home!.business.image;
     }
   }
 
@@ -233,6 +242,9 @@ class _CustOrderViewState extends State<CustOrderView> {
       case OfferingType.Product:
         return custBusinessCartController
             .currentOrderInView.value!.items.first.product!.business.name;
+      case OfferingType.Home:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.home!.business.name;
     }
   }
 

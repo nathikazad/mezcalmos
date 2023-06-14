@@ -32,7 +32,7 @@ class BsRealEstateViewController {
   // state variables //
   Rxn<Rental> _rental = Rxn<Rental>();
   Rxn<Location> homeLocation = Rxn<Location>();
-  Rxn<HomeType> homeType = Rxn<HomeType>();
+  Rxn<HomeCategory1> homeType = Rxn<HomeCategory1>();
   // getters //
   Rental? get rental => _rental.value;
   bool get isEditing => _rental.value != null;
@@ -99,15 +99,17 @@ class BsRealEstateViewController {
     // await detailsController.updateItemDetails();
   }
 
-  Future<Rental> _constructRentalWithDetails() async {
+  Future<Home> _constructRentalWithDetails() async {
     final BusinessItemDetails details =
         await detailsController.contructDetails();
     details.additionalParameters = {
       "area": areaController.text.trim() + " sq ft",
     };
-    final Rental rental = Rental(
-      homeType: homeType.value,
-      category1: RentalCategory1.Home,
+    final Home rental = Home(
+      location: HomeLocation(
+          name: homeLocation.value!.address, location: homeLocation.value!),
+      category1: homeType.value!,
+      availableFor: HomeAvailabilityOption.Sale,
       gpsLocation: homeLocation.value,
       details: details,
       bathrooms: int.tryParse(bathroomsController.text),
@@ -116,10 +118,12 @@ class BsRealEstateViewController {
     return rental;
   }
 
-  Rental _constructRental() {
-    final Rental rental = Rental(
-      homeType: homeType.value,
-      category1: RentalCategory1.Home,
+  Home _constructRental() {
+    final Home rental = Home(
+      location: HomeLocation(
+          name: homeLocation.value!.address, location: homeLocation.value!),
+      category1: homeType.value!,
+      availableFor: HomeAvailabilityOption.Sale,
       gpsLocation: homeLocation.value,
       bathrooms: int.tryParse(bathroomsController.text),
       bedrooms: int.tryParse(bedroomsController.text),

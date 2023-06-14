@@ -62,6 +62,54 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
   }
 }
 
+Future<List<BusinessCard>> get_business_by_home(
+    {
+    required double distance,
+    required Location fromLocation,
+    int? offset,
+    int? limit,
+    required HomeAvailabilityOption? homeType,
+    required bool withCache}) async {
+  final List<BusinessCard> _businesses = <BusinessCard>[];
+
+  final QueryResult<Query$get_business_by_home> response =
+      await _db.graphQLClient.query$get_business_by_home(
+          Options$Query$get_business_by_home(
+              fetchPolicy: withCache
+                  ? FetchPolicy.cacheAndNetwork
+                  : FetchPolicy.networkOnly,
+              variables: Variables$Query$get_business_by_home(
+                  distance: distance,
+                  homeType: homeType!.toFirebaseFormatString(),
+                  from: Geography(
+                      fromLocation.lat as double, fromLocation.lng as double),
+                  offset: offset,
+                  limit: limit)));
+
+  if (response.parsedData?.business_business != null) {
+    response.parsedData?.business_business.forEach(
+        (Query$get_business_by_home$business_business data) async {
+      final PaymentInfo _paymentInfo = PaymentInfo.fromData(
+          stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
+      _businesses.add(BusinessCard(
+        id: data.id,
+        detailsId: data.details.id,
+        name: data.details.name,
+        image: data.details.image,
+        currency: data.details.currency.toCurrency(),
+        acceptedPayments: _paymentInfo.acceptedPayments,
+        avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
+        reviewCount: data.reviews_aggregate.aggregate?.count,
+        location: constructLocation(
+                data.details.location.gps, data.details.location.address),
+      ));
+    });
+    return _businesses;
+  } else {
+    return [];
+  }
+}
+
 Future<Business?> get_business_by_id(
     {required int id, required bool withCache}) async {
   final QueryResult<Query$get_business_by_id> response =
