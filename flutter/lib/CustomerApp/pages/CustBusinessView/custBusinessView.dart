@@ -312,7 +312,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${_i18n()['weeklyClasses']}}',
+                '${_i18n()['weeklyClasses']}',
                 style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
               ),
               SizedBox(height: 5),

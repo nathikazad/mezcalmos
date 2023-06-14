@@ -113,6 +113,10 @@ Future<Business?> get_business_by_id(
                 : null,
             startsAt: event.starts_at,
             endsAt: event.ends_at,
+            tags: event.details.tags
+                    ?.map<EventTag>((e) => e.toString().toEventTag())
+                    .toList() ??
+                [],
             details: BusinessItemDetails(
               id: event.id,
               name:
