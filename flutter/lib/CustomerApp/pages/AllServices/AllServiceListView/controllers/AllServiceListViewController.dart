@@ -33,7 +33,7 @@ class AllServiceListViewController {
       },
       MezService.Courier: {
         "icon": aDelivery,
-        "title": "deliveries",
+        "title": "courier",
       },
       MezService.Rentals: {
         "icon": aRentals,
@@ -72,7 +72,7 @@ class AllServiceListViewController {
         "title": "food",
       },
       MezService.RealEstate: {
-        "icon": aFood,
+        "icon": aProperty,
         "title": "realEstate",
       },
     });

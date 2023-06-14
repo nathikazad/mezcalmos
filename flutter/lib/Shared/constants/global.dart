@@ -191,6 +191,7 @@ const String aArt = "assets/images/customer/art.png";
 const String aConsumable = "assets/images/customer/consumable.png";
 const String aPersonalCare = "assets/images/customer/personalCare.png";
 const String aVehicle = "assets/images/customer/vehicle.png";
+const String aProperty = "assets/images/customer/property.png";
 
 // Rental Images, Icons
 const String aRentals = "assets/images/customer/rentals.png";

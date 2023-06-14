@@ -1,9 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
@@ -20,8 +27,9 @@ class CustRealEstateViewController {
 
   // scroll logic //
   /* SCROLL CONTROLLER */
-  ScrollController get scrollController =>
-      showBusiness.isTrue ? _businessScrollController : _realEstateScrollController;
+  ScrollController get scrollController => showBusiness.isTrue
+      ? _businessScrollController
+      : _realEstateScrollController;
   ScrollController _realEstateScrollController = ScrollController();
   ScrollController _businessScrollController = ScrollController();
   int realEstateFetchSize = 20;
@@ -41,6 +49,32 @@ class CustRealEstateViewController {
   List<RentalCard> get realEstate => _realEstates.value;
   List<BusinessCard> get businesses => _businesses.value;
 
+  // Map view //
+  RxBool _isMapView = false.obs;
+  bool get isMapView => _isMapView.value;
+
+  GoogleMapController? _googleMapController;
+
+  RxBool _showFetchButton = false.obs;
+  RxBool get showFetchButton => _showFetchButton;
+
+  LatLng _currentLocation = LatLng(19.4326, -99.1332);
+  LatLng get currentLocation => _currentLocation;
+
+  LatLng? _screenToWorldPosition;
+
+  RxList<BusinessCard> _mapViewBusinesses = <BusinessCard>[].obs;
+  List<BusinessCard> get mapViewBusinesses => _mapViewBusinesses;
+
+  RxSet<Marker> _buisinessesMarkers = <Marker>{}.obs;
+  RxSet<Marker> get buisinessesMarkers => _buisinessesMarkers;
+
+  RxSet<Marker> _allMarkers = <Marker>{}.obs;
+  RxSet<Marker> get allMarkers => _allMarkers;
+
+  BuildContext? ctx;
+  // Map view //
+
 // methods //
   Future<void> init() async {
     try {
@@ -54,7 +88,8 @@ class CustRealEstateViewController {
             lat: location.latitude!, lng: location.longitude!, address: "");
         await _fetchRealEstate();
         await _fetchBusinesses();
-        _realEstateScrollController.onBottomReach(_fetchRealEstate, sensitivity: 500);
+        _realEstateScrollController.onBottomReach(_fetchRealEstate,
+            sensitivity: 500);
         _businessScrollController.onBottomReach(_fetchBusinesses,
             sensitivity: 500);
       }
@@ -150,4 +185,117 @@ class CustRealEstateViewController {
     _realEstateCurrentOffset = 0;
     _realEstateReachedEndOfData = false;
   }
+
+  // Map view //
+  void switchView() => _isMapView.value = !_isMapView.value;
+
+  Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
+    try {
+      if (currentPostitionBased) {
+        _mapViewBusinesses.value = await get_business_by_rental_category1(
+            categories1: [],
+            distance: 25000,
+            fromLocation: _fromLocation!,
+            offset: 0,
+            limit: 25,
+            withCache: false);
+      } else {
+        _mapViewBusinesses.value = await get_business_by_rental_category1(
+            categories1: [],
+            distance: _calculateDistance(
+                await _googleMapController!.getVisibleRegion()),
+            fromLocation: Location(
+                lat: _screenToWorldPosition!.latitude,
+                lng: _screenToWorldPosition!.longitude,
+                address: ''),
+            offset: 0,
+            limit: 25,
+            withCache: false);
+      }
+    } catch (e) {
+      mezDbgPrint(e);
+    } finally {
+      await _fillMapsMarkers();
+    }
+  }
+
+  Future<void> _fillMapsMarkers() async {
+    _buisinessesMarkers = <Marker>{}.obs;
+
+    final String iconPath = mezVehicleRentalIconMarker;
+    for (BusinessCard business in _mapViewBusinesses) {
+      await _allMarkers.addLabelMarker(LabelMarker(
+        flat: true,
+        label: null,
+        altIconPath: iconPath,
+        markerId: MarkerId(business.id.toString()),
+        backgroundColor: Colors.white,
+        onTap: () => _onSelectRentalTag(business),
+        position: LatLng(business.location!.lat.toDouble(),
+            business.location!.lng.toDouble()),
+      ));
+      await _buisinessesMarkers.addLabelMarker(LabelMarker(
+        flat: true,
+        label: null,
+        altIconPath: iconPath,
+        markerId: MarkerId(business.id.toString()),
+        backgroundColor: Colors.white,
+        onTap: () => _onSelectRentalTag(business),
+        position: LatLng(business.location!.lat.toDouble(),
+            business.location!.lng.toDouble()),
+      ));
+    }
+    _buisinessesMarkers.update((value) {});
+    _buisinessesMarkers.refresh();
+  }
+
+  void fetchMapViewRentals() {
+    _fetchMapViewRentals(currentPostitionBased: false);
+    _showFetchButton.value = false;
+  }
+
+  void recenterMap() {
+    _googleMapController?.moveCamera(CameraUpdate.newLatLng(_currentLocation));
+  }
+
+  Future<void> onMapCreated(GoogleMapController? gMapController) async {
+    _googleMapController = gMapController;
+    await _googleMapController?.setMapStyle(mezMapStyle);
+    await _fetchMapViewRentals();
+  }
+
+  void onCameraMove(CameraPosition cameraPosition) {
+    _screenToWorldPosition = cameraPosition.target;
+    _showFetchButton.value = true;
+  }
+
+  void _onSelectRentalTag(BusinessCard business) {
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.transparent,
+        context: ctx!,
+        builder: (BuildContext context) {
+          return Text('Test');
+        });
+  }
+
+  double _calculateDistance(LatLngBounds bounds) {
+    final double centerLat =
+        (bounds.northeast.latitude + bounds.southwest.latitude) / 2;
+    final double centerLng =
+        (bounds.northeast.longitude + bounds.southwest.longitude) / 2;
+    final LatLng center = LatLng(centerLat, centerLng);
+
+    final double p = 0.017453292519943295;
+    final double a = 0.5 -
+        cos((bounds.northeast.latitude - center.latitude) * p) / 2 +
+        cos(center.latitude * p) *
+            cos(bounds.northeast.latitude * p) *
+            (1 - cos((bounds.northeast.longitude - center.longitude) * p)) /
+            2;
+
+    return (12742 * asin(sqrt(a))) * 1000;
+  }
+
+  // Map view //
 }

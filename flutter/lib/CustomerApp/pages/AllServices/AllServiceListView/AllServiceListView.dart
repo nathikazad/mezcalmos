@@ -145,40 +145,35 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                               cServiceController.serviceTreeData.value!
                                   .children[index].children,
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 10.mezW, right: 10.mezW),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              fit: BoxFit.contain,
-                                              image: AssetImage(
-                                                  cServiceController
-                                                      .deliveryServiceListData[
-                                                          currentMezService]![
-                                                          "icon"]
-                                                      .toString()))),
-                                    ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 10.mezW),
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.contain,
+                                            image: AssetImage(cServiceController
+                                                .deliveryServiceListData[
+                                                    currentMezService]!["icon"]
+                                                .toString()))),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 15),
-                                    child: Obx(
-                                      () => FittedBox(
-                                        child: Text(
-                                          '${_i18n()[cServiceController.deliveryServiceListData[currentMezService]!['title']]}',
-                                          style:
-                                              context.textTheme.headlineSmall,
-                                        ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 15),
+                                  child: Obx(
+                                    () => FittedBox(
+                                      child: Text(
+                                        '${_i18n()[cServiceController.deliveryServiceListData[currentMezService]!['title']]}',
+                                        style: context.textTheme.headlineSmall,
+                                        textAlign: TextAlign.center,
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         );

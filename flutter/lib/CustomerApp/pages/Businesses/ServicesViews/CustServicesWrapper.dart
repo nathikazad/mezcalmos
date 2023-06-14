@@ -91,6 +91,8 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
         return aPhotography;
       case MezService.Tattoo:
         return aTattoo;
+      case MezService.Laundry:
+        return aCleaning;
       default:
         return aUncategorized;
     }
@@ -114,11 +116,10 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
                 navigateToListView(serviceTree[index].name);
               },
               url: getCardImage(serviceTree[index].name),
-              title: _i18n()[serviceTree[index].name.toFirebaseFormatString()]
-                  ['title'],
+              title:
+                  '${_i18n()[serviceTree[index].name.toFirebaseFormatString()]['title']}',
               subtitle:
-                  _i18n()[serviceTree[index].name.toFirebaseFormatString()]
-                      ['description'],
+                  '${_i18n()[serviceTree[index].name.toFirebaseFormatString()]['description']}',
             ),
           ),
         ),

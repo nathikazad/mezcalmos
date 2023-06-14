@@ -1163,7 +1163,8 @@
             "therapy": "Therapies",
             "volunteer": "Volunteer",
             "adventures": "Adventures",
-            "realEstate": "Real Estate"
+            "realEstate": "Properties",
+            "courier": "Courier"
           }
         },
         "AllServiceView": {
@@ -1383,6 +1384,25 @@
             "bicycle": "Bicycle"
           }
         },
+        "CustRealEstateView": {
+          "home": "Home",
+          "map": "Map",
+          "realEstate": "Realestate",
+          "properties": "Properties",
+          "store": "Agency",
+          "viewOnMap": "View on map",
+          "viewAsList": "View as list",
+          "showCost": "Show cost",
+          "fetchHomesInThisArea": "Fetch properties in this area",
+          "uncategorized": "Uncategorized",
+          "homes": "Homes",
+          "noRentalsFound": "No realestate found",
+          "none": "None",
+          "noBusinessFound": "No buisinesses found",
+          "confirm": "Confirm",
+          "cancel": "Cancel",
+          "filter": "Filter"
+        },
         "EventsViews": {
           "CustEventsListView": {
             "homes": "Homes",
@@ -1425,7 +1445,14 @@
             "person": "person",
             "unit": "unit",
             "total": "Total",
-            "filter": "Filter"
+            "filter": "Filter",
+            "weekly": "Weekly",
+            "workshop": "Workshop",
+            "private": "Private",
+            "surf": "Surf",
+            "yoga": "Yoga",
+            "fitness": "Fitness",
+            "dance": "Dance"
           }
         },
         "TherapyView": {
@@ -1555,6 +1582,10 @@
             "tattoo": {
               "title": "Tattoo",
               "description": "Keep your space spotless with professional cleaners."
+            },
+            "laundry": {
+              "title": "Laundry",
+              "description": "Get your clothes cleaned by your nearest laundry service"
             },
             "uncategorized": {
               "title": "Uncategorized",
