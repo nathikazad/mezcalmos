@@ -281,7 +281,7 @@ class CustHomeRentalViewController {
       BusinessCartItem(
         businessId: _homeRental.value!.business.id,
         itemId: _homeRental.value!.id!,
-        offeringType: OfferingType.Rental,
+        offeringType: OfferingType.Home,
         time: startDate.value!.toString(),
         parameters: BusinessItemParameters(
           guests: _totalGuests.value,

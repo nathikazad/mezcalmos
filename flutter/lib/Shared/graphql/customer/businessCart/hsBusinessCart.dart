@@ -100,7 +100,10 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                         position: data.home!.details!.position,
                         businessId: data.home!.business!.details.id,
                         available: data.home!.details!.available,
-                        image: data.home!.details!.image,
+                        image: data.home!.details!.image
+                                ?.map<String>((e) => e.toString())
+                                .toList() ??
+                            [],
                       ),
                     ),
                   )

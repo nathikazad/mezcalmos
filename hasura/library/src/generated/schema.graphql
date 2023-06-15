@@ -71,6 +71,42 @@ type business_business {
     """filter the rows returned"""
     where: business_event_bool_exp
   ): business_event_aggregate!
+
+  """An array relationship"""
+  home(
+    """distinct select on columns"""
+    distinct_on: [business_home_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_bool_exp
+  ): [business_home!]!
+
+  """An aggregate relationship"""
+  home_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_home_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_bool_exp
+  ): business_home_aggregate!
   id: Int!
 
   """An array relationship"""
@@ -302,6 +338,8 @@ input business_business_bool_exp {
   details_id: Int_comparison_exp
   events: business_event_bool_exp
   events_aggregate: business_event_aggregate_bool_exp
+  home: business_home_bool_exp
+  home_aggregate: business_home_aggregate_bool_exp
   id: Int_comparison_exp
   operators: business_operator_bool_exp
   operators_aggregate: business_operator_aggregate_bool_exp
@@ -347,6 +385,7 @@ input business_business_insert_input {
   details: service_provider_details_obj_rel_insert_input
   details_id: Int
   events: business_event_arr_rel_insert_input
+  home: business_home_arr_rel_insert_input
   id: Int
   operators: business_operator_arr_rel_insert_input
   products: business_product_arr_rel_insert_input
@@ -420,6 +459,7 @@ input business_business_order_by {
   details: service_provider_details_order_by
   details_id: order_by
   events_aggregate: business_event_aggregate_order_by
+  home_aggregate: business_home_aggregate_order_by
   id: order_by
   operators_aggregate: business_operator_aggregate_order_by
   products_aggregate: business_product_aggregate_order_by
@@ -1987,6 +2027,17 @@ type business_home_aggregate {
   nodes: [business_home!]!
 }
 
+input business_home_aggregate_bool_exp {
+  count: business_home_aggregate_bool_exp_count
+}
+
+input business_home_aggregate_bool_exp_count {
+  arguments: [business_home_select_column!]
+  distinct: Boolean
+  filter: business_home_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "business.home"
 """
@@ -2004,6 +2055,33 @@ type business_home_aggregate_fields {
   variance: business_home_variance_fields
 }
 
+"""
+order by aggregate values of table "business.home"
+"""
+input business_home_aggregate_order_by {
+  avg: business_home_avg_order_by
+  count: order_by
+  max: business_home_max_order_by
+  min: business_home_min_order_by
+  stddev: business_home_stddev_order_by
+  stddev_pop: business_home_stddev_pop_order_by
+  stddev_samp: business_home_stddev_samp_order_by
+  sum: business_home_sum_order_by
+  var_pop: business_home_var_pop_order_by
+  var_samp: business_home_var_samp_order_by
+  variance: business_home_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "business.home"
+"""
+input business_home_arr_rel_insert_input {
+  data: [business_home_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: business_home_on_conflict
+}
+
 """aggregate avg on columns"""
 type business_home_avg_fields {
   bathrooms: Float
@@ -2012,6 +2090,18 @@ type business_home_avg_fields {
   details_id: Float
   id: Float
   location_id: Float
+}
+
+"""
+order by avg() on columns of table "business.home"
+"""
+input business_home_avg_order_by {
+  bathrooms: order_by
+  bedrooms: order_by
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  location_id: order_by
 }
 
 """
@@ -2331,6 +2421,20 @@ type business_home_max_fields {
   offering_type: String
 }
 
+"""
+order by max() on columns of table "business.home"
+"""
+input business_home_max_order_by {
+  available_for: order_by
+  bathrooms: order_by
+  bedrooms: order_by
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  location_id: order_by
+  offering_type: order_by
+}
+
 """aggregate min on columns"""
 type business_home_min_fields {
   available_for: String
@@ -2341,6 +2445,20 @@ type business_home_min_fields {
   id: Int
   location_id: Int
   offering_type: String
+}
+
+"""
+order by min() on columns of table "business.home"
+"""
+input business_home_min_order_by {
+  available_for: order_by
+  bathrooms: order_by
+  bedrooms: order_by
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  location_id: order_by
+  offering_type: order_by
 }
 
 """
@@ -2446,6 +2564,18 @@ type business_home_stddev_fields {
   location_id: Float
 }
 
+"""
+order by stddev() on columns of table "business.home"
+"""
+input business_home_stddev_order_by {
+  bathrooms: order_by
+  bedrooms: order_by
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type business_home_stddev_pop_fields {
   bathrooms: Float
@@ -2456,6 +2586,18 @@ type business_home_stddev_pop_fields {
   location_id: Float
 }
 
+"""
+order by stddev_pop() on columns of table "business.home"
+"""
+input business_home_stddev_pop_order_by {
+  bathrooms: order_by
+  bedrooms: order_by
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type business_home_stddev_samp_fields {
   bathrooms: Float
@@ -2464,6 +2606,18 @@ type business_home_stddev_samp_fields {
   details_id: Float
   id: Float
   location_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "business.home"
+"""
+input business_home_stddev_samp_order_by {
+  bathrooms: order_by
+  bedrooms: order_by
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  location_id: order_by
 }
 
 """
@@ -2497,6 +2651,18 @@ type business_home_sum_fields {
   details_id: Int
   id: Int
   location_id: Int
+}
+
+"""
+order by sum() on columns of table "business.home"
+"""
+input business_home_sum_order_by {
+  bathrooms: order_by
+  bedrooms: order_by
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  location_id: order_by
 }
 
 """
@@ -2549,6 +2715,18 @@ type business_home_var_pop_fields {
   location_id: Float
 }
 
+"""
+order by var_pop() on columns of table "business.home"
+"""
+input business_home_var_pop_order_by {
+  bathrooms: order_by
+  bedrooms: order_by
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
 """aggregate var_samp on columns"""
 type business_home_var_samp_fields {
   bathrooms: Float
@@ -2559,6 +2737,18 @@ type business_home_var_samp_fields {
   location_id: Float
 }
 
+"""
+order by var_samp() on columns of table "business.home"
+"""
+input business_home_var_samp_order_by {
+  bathrooms: order_by
+  bedrooms: order_by
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  location_id: order_by
+}
+
 """aggregate variance on columns"""
 type business_home_variance_fields {
   bathrooms: Float
@@ -2567,6 +2757,18 @@ type business_home_variance_fields {
   details_id: Float
   id: Float
   location_id: Float
+}
+
+"""
+order by variance() on columns of table "business.home"
+"""
+input business_home_variance_order_by {
+  bathrooms: order_by
+  bedrooms: order_by
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  location_id: order_by
 }
 
 """

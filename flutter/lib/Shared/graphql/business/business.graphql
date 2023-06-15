@@ -121,6 +121,37 @@ query get_business_by_id($id: Int!) {
         }
       }
     }
+    home {
+      details {
+        name_id
+        description_id
+        id
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+        additional_parameters
+        available
+        category1
+        category2
+        cost
+        image
+        position
+        tags
+      }
+      id
+      bathrooms
+      bedrooms
+      location {
+        address
+        gps
+        name
+      }
+      available_for
+      offering_type
+    }
   }
 }
 
@@ -182,14 +213,17 @@ query get_business_by_home(
     where: {
       _and: {
         details: {
-          location: {
-            gps: { _st_d_within: { distance: $distance, from: $from } }
-          }
           approved: { _eq: true }
           open_status: { _neq: "closedIndefinitely" }
         }
         home: {
-          _and: { id: { _is_null: false }, available_for: { _eq: $homeType } }
+          _and: {
+            id: { _is_null: false }
+            available_for: { _eq: $homeType }
+            location: {
+              gps: { _st_d_within: { distance: $distance, from: $from } }
+            }
+          }
         }
       }
     }
@@ -406,8 +440,9 @@ query get_business_lang($id: Int!) {
       language
     }
   }
-}query get_business_id_from_details_id( $businessDetailsId: Int!) {
-
-  business_business(where: {details_id: {_eq: $businessDetailsId}})
-{id}
+}
+query get_business_id_from_details_id($businessDetailsId: Int!) {
+  business_business(where: { details_id: { _eq: $businessDetailsId } }) {
+    id
+  }
 }
