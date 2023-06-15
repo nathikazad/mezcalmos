@@ -1,4 +1,5 @@
 import '../../__generated/schema.graphql.dart';
+import '../../buisness_order/__generated/business_order.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -9351,6 +9352,31 @@ const documentNodeQueryget_home = DocumentNode(definitions: [
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
+                name: NameNode(value: 'location'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'gps'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_st_d_within'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'distance'),
+                            value:
+                                VariableNode(name: NameNode(value: 'distance')),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'from'),
+                            value:
+                                VariableNode(name: NameNode(value: 'location')),
+                          ),
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
                 name: NameNode(value: '_and'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
@@ -9359,31 +9385,6 @@ const documentNodeQueryget_home = DocumentNode(definitions: [
                       ObjectFieldNode(
                         name: NameNode(value: 'details'),
                         value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: 'location'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'gps'),
-                                value: ObjectValueNode(fields: [
-                                  ObjectFieldNode(
-                                    name: NameNode(value: '_st_d_within'),
-                                    value: ObjectValueNode(fields: [
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'distance'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'distance')),
-                                      ),
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'from'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'location')),
-                                      ),
-                                    ]),
-                                  )
-                                ]),
-                              )
-                            ]),
-                          ),
                           ObjectFieldNode(
                             name: NameNode(value: 'approved'),
                             value: ObjectValueNode(fields: [
@@ -9408,9 +9409,21 @@ const documentNodeQueryget_home = DocumentNode(definitions: [
                         ]),
                       )
                     ]),
-                  )
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'available_for'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value: StringValueNode(
+                          value: 'rent',
+                          isBlock: false,
+                        ),
+                      )
+                    ]),
+                  ),
                 ]),
-              )
+              ),
             ]),
           ),
           ArgumentNode(
@@ -11888,6 +11901,31 @@ const documentNodeQueryget_real_estates = DocumentNode(definitions: [
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
+                name: NameNode(value: 'location'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'gps'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_st_d_within'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'distance'),
+                            value:
+                                VariableNode(name: NameNode(value: 'distance')),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'from'),
+                            value:
+                                VariableNode(name: NameNode(value: 'location')),
+                          ),
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
                 name: NameNode(value: '_and'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
@@ -11896,31 +11934,6 @@ const documentNodeQueryget_real_estates = DocumentNode(definitions: [
                       ObjectFieldNode(
                         name: NameNode(value: 'details'),
                         value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: 'location'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'gps'),
-                                value: ObjectValueNode(fields: [
-                                  ObjectFieldNode(
-                                    name: NameNode(value: '_st_d_within'),
-                                    value: ObjectValueNode(fields: [
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'distance'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'distance')),
-                                      ),
-                                      ObjectFieldNode(
-                                        name: NameNode(value: 'from'),
-                                        value: VariableNode(
-                                            name: NameNode(value: 'location')),
-                                      ),
-                                    ]),
-                                  )
-                                ]),
-                              )
-                            ]),
-                          ),
                           ObjectFieldNode(
                             name: NameNode(value: 'approved'),
                             value: ObjectValueNode(fields: [
@@ -11945,19 +11958,19 @@ const documentNodeQueryget_real_estates = DocumentNode(definitions: [
                         ]),
                       )
                     ]),
-                  )
-                ]),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'available_for'),
-                value: ObjectValueNode(fields: [
+                  ),
                   ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: StringValueNode(
-                      value: 'forSale',
-                      isBlock: false,
-                    ),
-                  )
+                    name: NameNode(value: 'available_for'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value: StringValueNode(
+                          value: 'sale',
+                          isBlock: false,
+                        ),
+                      )
+                    ]),
+                  ),
                 ]),
               ),
             ]),

@@ -65,6 +65,7 @@ class HomeCard extends Home {
           location: home.location,
           bathrooms: home.bathrooms,
           bedrooms: home.bedrooms,
+          gpsLocation: home.gpsLocation,
         );
 }
 

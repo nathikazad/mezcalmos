@@ -3115,31 +3115,30 @@ class _CopyWithStubImpl$Variables$Query$number_of_real_estate<TRes>
 
 class Query$number_of_real_estate {
   Query$number_of_real_estate({
-    required this.business_rental_aggregate,
+    required this.business_home_aggregate,
     required this.$__typename,
   });
 
   factory Query$number_of_real_estate.fromJson(Map<String, dynamic> json) {
-    final l$business_rental_aggregate = json['business_rental_aggregate'];
+    final l$business_home_aggregate = json['business_home_aggregate'];
     final l$$__typename = json['__typename'];
     return Query$number_of_real_estate(
-      business_rental_aggregate:
-          Query$number_of_real_estate$business_rental_aggregate.fromJson(
-              (l$business_rental_aggregate as Map<String, dynamic>)),
+      business_home_aggregate:
+          Query$number_of_real_estate$business_home_aggregate.fromJson(
+              (l$business_home_aggregate as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$number_of_real_estate$business_rental_aggregate
-      business_rental_aggregate;
+  final Query$number_of_real_estate$business_home_aggregate
+      business_home_aggregate;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$business_rental_aggregate = business_rental_aggregate;
-    _resultData['business_rental_aggregate'] =
-        l$business_rental_aggregate.toJson();
+    final l$business_home_aggregate = business_home_aggregate;
+    _resultData['business_home_aggregate'] = l$business_home_aggregate.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3147,10 +3146,10 @@ class Query$number_of_real_estate {
 
   @override
   int get hashCode {
-    final l$business_rental_aggregate = business_rental_aggregate;
+    final l$business_home_aggregate = business_home_aggregate;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$business_rental_aggregate,
+      l$business_home_aggregate,
       l$$__typename,
     ]);
   }
@@ -3164,9 +3163,9 @@ class Query$number_of_real_estate {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$business_rental_aggregate = business_rental_aggregate;
-    final lOther$business_rental_aggregate = other.business_rental_aggregate;
-    if (l$business_rental_aggregate != lOther$business_rental_aggregate) {
+    final l$business_home_aggregate = business_home_aggregate;
+    final lOther$business_home_aggregate = other.business_home_aggregate;
+    if (l$business_home_aggregate != lOther$business_home_aggregate) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3197,12 +3196,12 @@ abstract class CopyWith$Query$number_of_real_estate<TRes> {
       _CopyWithStubImpl$Query$number_of_real_estate;
 
   TRes call({
-    Query$number_of_real_estate$business_rental_aggregate?
-        business_rental_aggregate,
+    Query$number_of_real_estate$business_home_aggregate?
+        business_home_aggregate,
     String? $__typename,
   });
-  CopyWith$Query$number_of_real_estate$business_rental_aggregate<TRes>
-      get business_rental_aggregate;
+  CopyWith$Query$number_of_real_estate$business_home_aggregate<TRes>
+      get business_home_aggregate;
 }
 
 class _CopyWithImpl$Query$number_of_real_estate<TRes>
@@ -3219,25 +3218,24 @@ class _CopyWithImpl$Query$number_of_real_estate<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? business_rental_aggregate = _undefined,
+    Object? business_home_aggregate = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$number_of_real_estate(
-        business_rental_aggregate: business_rental_aggregate == _undefined ||
-                business_rental_aggregate == null
-            ? _instance.business_rental_aggregate
-            : (business_rental_aggregate
-                as Query$number_of_real_estate$business_rental_aggregate),
+        business_home_aggregate: business_home_aggregate == _undefined ||
+                business_home_aggregate == null
+            ? _instance.business_home_aggregate
+            : (business_home_aggregate
+                as Query$number_of_real_estate$business_home_aggregate),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$number_of_real_estate$business_rental_aggregate<TRes>
-      get business_rental_aggregate {
-    final local$business_rental_aggregate = _instance.business_rental_aggregate;
-    return CopyWith$Query$number_of_real_estate$business_rental_aggregate(
-        local$business_rental_aggregate,
-        (e) => call(business_rental_aggregate: e));
+  CopyWith$Query$number_of_real_estate$business_home_aggregate<TRes>
+      get business_home_aggregate {
+    final local$business_home_aggregate = _instance.business_home_aggregate;
+    return CopyWith$Query$number_of_real_estate$business_home_aggregate(
+        local$business_home_aggregate, (e) => call(business_home_aggregate: e));
   }
 }
 
@@ -3248,14 +3246,14 @@ class _CopyWithStubImpl$Query$number_of_real_estate<TRes>
   TRes _res;
 
   call({
-    Query$number_of_real_estate$business_rental_aggregate?
-        business_rental_aggregate,
+    Query$number_of_real_estate$business_home_aggregate?
+        business_home_aggregate,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$number_of_real_estate$business_rental_aggregate<TRes>
-      get business_rental_aggregate =>
-          CopyWith$Query$number_of_real_estate$business_rental_aggregate.stub(
+  CopyWith$Query$number_of_real_estate$business_home_aggregate<TRes>
+      get business_home_aggregate =>
+          CopyWith$Query$number_of_real_estate$business_home_aggregate.stub(
               _res);
 }
 
@@ -3286,7 +3284,7 @@ const documentNodeQuerynumber_of_real_estate = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'business_rental_aggregate'),
+        name: NameNode(value: 'business_home_aggregate'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -3350,18 +3348,17 @@ const documentNodeQuerynumber_of_real_estate = DocumentNode(definitions: [
               ),
               ObjectFieldNode(
                 name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: []),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'available_for'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: 'category1'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: '_eq'),
-                        value: StringValueNode(
-                          value: 'realEstate',
-                          isBlock: false,
-                        ),
-                      )
-                    ]),
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'sale',
+                      isBlock: false,
+                    ),
                   )
                 ]),
               ),
@@ -3516,26 +3513,26 @@ extension ClientExtension$Query$number_of_real_estate on graphql.GraphQLClient {
   }
 }
 
-class Query$number_of_real_estate$business_rental_aggregate {
-  Query$number_of_real_estate$business_rental_aggregate({
+class Query$number_of_real_estate$business_home_aggregate {
+  Query$number_of_real_estate$business_home_aggregate({
     this.aggregate,
     required this.$__typename,
   });
 
-  factory Query$number_of_real_estate$business_rental_aggregate.fromJson(
+  factory Query$number_of_real_estate$business_home_aggregate.fromJson(
       Map<String, dynamic> json) {
     final l$aggregate = json['aggregate'];
     final l$$__typename = json['__typename'];
-    return Query$number_of_real_estate$business_rental_aggregate(
+    return Query$number_of_real_estate$business_home_aggregate(
       aggregate: l$aggregate == null
           ? null
-          : Query$number_of_real_estate$business_rental_aggregate$aggregate
+          : Query$number_of_real_estate$business_home_aggregate$aggregate
               .fromJson((l$aggregate as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$number_of_real_estate$business_rental_aggregate$aggregate?
+  final Query$number_of_real_estate$business_home_aggregate$aggregate?
       aggregate;
 
   final String $__typename;
@@ -3564,7 +3561,7 @@ class Query$number_of_real_estate$business_rental_aggregate {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$number_of_real_estate$business_rental_aggregate) ||
+    if (!(other is Query$number_of_real_estate$business_home_aggregate) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -3582,47 +3579,47 @@ class Query$number_of_real_estate$business_rental_aggregate {
   }
 }
 
-extension UtilityExtension$Query$number_of_real_estate$business_rental_aggregate
-    on Query$number_of_real_estate$business_rental_aggregate {
-  CopyWith$Query$number_of_real_estate$business_rental_aggregate<
-          Query$number_of_real_estate$business_rental_aggregate>
+extension UtilityExtension$Query$number_of_real_estate$business_home_aggregate
+    on Query$number_of_real_estate$business_home_aggregate {
+  CopyWith$Query$number_of_real_estate$business_home_aggregate<
+          Query$number_of_real_estate$business_home_aggregate>
       get copyWith =>
-          CopyWith$Query$number_of_real_estate$business_rental_aggregate(
+          CopyWith$Query$number_of_real_estate$business_home_aggregate(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$number_of_real_estate$business_rental_aggregate<
+abstract class CopyWith$Query$number_of_real_estate$business_home_aggregate<
     TRes> {
-  factory CopyWith$Query$number_of_real_estate$business_rental_aggregate(
-    Query$number_of_real_estate$business_rental_aggregate instance,
-    TRes Function(Query$number_of_real_estate$business_rental_aggregate) then,
-  ) = _CopyWithImpl$Query$number_of_real_estate$business_rental_aggregate;
+  factory CopyWith$Query$number_of_real_estate$business_home_aggregate(
+    Query$number_of_real_estate$business_home_aggregate instance,
+    TRes Function(Query$number_of_real_estate$business_home_aggregate) then,
+  ) = _CopyWithImpl$Query$number_of_real_estate$business_home_aggregate;
 
-  factory CopyWith$Query$number_of_real_estate$business_rental_aggregate.stub(
+  factory CopyWith$Query$number_of_real_estate$business_home_aggregate.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$number_of_real_estate$business_rental_aggregate;
+      _CopyWithStubImpl$Query$number_of_real_estate$business_home_aggregate;
 
   TRes call({
-    Query$number_of_real_estate$business_rental_aggregate$aggregate? aggregate,
+    Query$number_of_real_estate$business_home_aggregate$aggregate? aggregate,
     String? $__typename,
   });
-  CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate<TRes>
+  CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate<TRes>
       get aggregate;
 }
 
-class _CopyWithImpl$Query$number_of_real_estate$business_rental_aggregate<TRes>
+class _CopyWithImpl$Query$number_of_real_estate$business_home_aggregate<TRes>
     implements
-        CopyWith$Query$number_of_real_estate$business_rental_aggregate<TRes> {
-  _CopyWithImpl$Query$number_of_real_estate$business_rental_aggregate(
+        CopyWith$Query$number_of_real_estate$business_home_aggregate<TRes> {
+  _CopyWithImpl$Query$number_of_real_estate$business_home_aggregate(
     this._instance,
     this._then,
   );
 
-  final Query$number_of_real_estate$business_rental_aggregate _instance;
+  final Query$number_of_real_estate$business_home_aggregate _instance;
 
-  final TRes Function(Query$number_of_real_estate$business_rental_aggregate)
+  final TRes Function(Query$number_of_real_estate$business_home_aggregate)
       _then;
 
   static const _undefined = {};
@@ -3631,57 +3628,57 @@ class _CopyWithImpl$Query$number_of_real_estate$business_rental_aggregate<TRes>
     Object? aggregate = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$number_of_real_estate$business_rental_aggregate(
+      _then(Query$number_of_real_estate$business_home_aggregate(
         aggregate: aggregate == _undefined
             ? _instance.aggregate
             : (aggregate
-                as Query$number_of_real_estate$business_rental_aggregate$aggregate?),
+                as Query$number_of_real_estate$business_home_aggregate$aggregate?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate<TRes>
+  CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate<TRes>
       get aggregate {
     final local$aggregate = _instance.aggregate;
     return local$aggregate == null
-        ? CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate
+        ? CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate
             .stub(_then(_instance))
-        : CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate(
+        : CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate(
             local$aggregate, (e) => call(aggregate: e));
   }
 }
 
-class _CopyWithStubImpl$Query$number_of_real_estate$business_rental_aggregate<
+class _CopyWithStubImpl$Query$number_of_real_estate$business_home_aggregate<
         TRes>
     implements
-        CopyWith$Query$number_of_real_estate$business_rental_aggregate<TRes> {
-  _CopyWithStubImpl$Query$number_of_real_estate$business_rental_aggregate(
+        CopyWith$Query$number_of_real_estate$business_home_aggregate<TRes> {
+  _CopyWithStubImpl$Query$number_of_real_estate$business_home_aggregate(
       this._res);
 
   TRes _res;
 
   call({
-    Query$number_of_real_estate$business_rental_aggregate$aggregate? aggregate,
+    Query$number_of_real_estate$business_home_aggregate$aggregate? aggregate,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate<TRes>
+  CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate<TRes>
       get aggregate =>
-          CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate
+          CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate
               .stub(_res);
 }
 
-class Query$number_of_real_estate$business_rental_aggregate$aggregate {
-  Query$number_of_real_estate$business_rental_aggregate$aggregate({
+class Query$number_of_real_estate$business_home_aggregate$aggregate {
+  Query$number_of_real_estate$business_home_aggregate$aggregate({
     required this.count,
     required this.$__typename,
   });
 
-  factory Query$number_of_real_estate$business_rental_aggregate$aggregate.fromJson(
+  factory Query$number_of_real_estate$business_home_aggregate$aggregate.fromJson(
       Map<String, dynamic> json) {
     final l$count = json['count'];
     final l$$__typename = json['__typename'];
-    return Query$number_of_real_estate$business_rental_aggregate$aggregate(
+    return Query$number_of_real_estate$business_home_aggregate$aggregate(
       count: (l$count as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -3716,7 +3713,7 @@ class Query$number_of_real_estate$business_rental_aggregate$aggregate {
       return true;
     }
     if (!(other
-            is Query$number_of_real_estate$business_rental_aggregate$aggregate) ||
+            is Query$number_of_real_estate$business_home_aggregate$aggregate) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -3734,29 +3731,28 @@ class Query$number_of_real_estate$business_rental_aggregate$aggregate {
   }
 }
 
-extension UtilityExtension$Query$number_of_real_estate$business_rental_aggregate$aggregate
-    on Query$number_of_real_estate$business_rental_aggregate$aggregate {
-  CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate<
-          Query$number_of_real_estate$business_rental_aggregate$aggregate>
+extension UtilityExtension$Query$number_of_real_estate$business_home_aggregate$aggregate
+    on Query$number_of_real_estate$business_home_aggregate$aggregate {
+  CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate<
+          Query$number_of_real_estate$business_home_aggregate$aggregate>
       get copyWith =>
-          CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate(
+          CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate<
+abstract class CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate<
     TRes> {
-  factory CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate(
-    Query$number_of_real_estate$business_rental_aggregate$aggregate instance,
-    TRes Function(
-            Query$number_of_real_estate$business_rental_aggregate$aggregate)
+  factory CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate(
+    Query$number_of_real_estate$business_home_aggregate$aggregate instance,
+    TRes Function(Query$number_of_real_estate$business_home_aggregate$aggregate)
         then,
-  ) = _CopyWithImpl$Query$number_of_real_estate$business_rental_aggregate$aggregate;
+  ) = _CopyWithImpl$Query$number_of_real_estate$business_home_aggregate$aggregate;
 
-  factory CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate.stub(
+  factory CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$number_of_real_estate$business_rental_aggregate$aggregate;
+      _CopyWithStubImpl$Query$number_of_real_estate$business_home_aggregate$aggregate;
 
   TRes call({
     int? count,
@@ -3764,21 +3760,20 @@ abstract class CopyWith$Query$number_of_real_estate$business_rental_aggregate$ag
   });
 }
 
-class _CopyWithImpl$Query$number_of_real_estate$business_rental_aggregate$aggregate<
+class _CopyWithImpl$Query$number_of_real_estate$business_home_aggregate$aggregate<
         TRes>
     implements
-        CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate<
+        CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate<
             TRes> {
-  _CopyWithImpl$Query$number_of_real_estate$business_rental_aggregate$aggregate(
+  _CopyWithImpl$Query$number_of_real_estate$business_home_aggregate$aggregate(
     this._instance,
     this._then,
   );
 
-  final Query$number_of_real_estate$business_rental_aggregate$aggregate
-      _instance;
+  final Query$number_of_real_estate$business_home_aggregate$aggregate _instance;
 
   final TRes Function(
-      Query$number_of_real_estate$business_rental_aggregate$aggregate) _then;
+      Query$number_of_real_estate$business_home_aggregate$aggregate) _then;
 
   static const _undefined = {};
 
@@ -3786,7 +3781,7 @@ class _CopyWithImpl$Query$number_of_real_estate$business_rental_aggregate$aggreg
     Object? count = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$number_of_real_estate$business_rental_aggregate$aggregate(
+      _then(Query$number_of_real_estate$business_home_aggregate$aggregate(
         count: count == _undefined || count == null
             ? _instance.count
             : (count as int),
@@ -3796,12 +3791,808 @@ class _CopyWithImpl$Query$number_of_real_estate$business_rental_aggregate$aggreg
       ));
 }
 
-class _CopyWithStubImpl$Query$number_of_real_estate$business_rental_aggregate$aggregate<
+class _CopyWithStubImpl$Query$number_of_real_estate$business_home_aggregate$aggregate<
         TRes>
     implements
-        CopyWith$Query$number_of_real_estate$business_rental_aggregate$aggregate<
+        CopyWith$Query$number_of_real_estate$business_home_aggregate$aggregate<
             TRes> {
-  _CopyWithStubImpl$Query$number_of_real_estate$business_rental_aggregate$aggregate(
+  _CopyWithStubImpl$Query$number_of_real_estate$business_home_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$number_of_home {
+  factory Variables$Query$number_of_home({
+    required double distance,
+    required Geography from,
+  }) =>
+      Variables$Query$number_of_home._({
+        r'distance': distance,
+        r'from': from,
+      });
+
+  Variables$Query$number_of_home._(this._$data);
+
+  factory Variables$Query$number_of_home.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
+    return Variables$Query$number_of_home._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  double get distance => (_$data['distance'] as double);
+  Geography get from => (_$data['from'] as Geography);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$number_of_home<Variables$Query$number_of_home>
+      get copyWith => CopyWith$Variables$Query$number_of_home(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$number_of_home) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (l$from != lOther$from) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$distance = distance;
+    final l$from = from;
+    return Object.hashAll([
+      l$distance,
+      l$from,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$number_of_home<TRes> {
+  factory CopyWith$Variables$Query$number_of_home(
+    Variables$Query$number_of_home instance,
+    TRes Function(Variables$Query$number_of_home) then,
+  ) = _CopyWithImpl$Variables$Query$number_of_home;
+
+  factory CopyWith$Variables$Query$number_of_home.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$number_of_home;
+
+  TRes call({
+    double? distance,
+    Geography? from,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$number_of_home<TRes>
+    implements CopyWith$Variables$Query$number_of_home<TRes> {
+  _CopyWithImpl$Variables$Query$number_of_home(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$number_of_home _instance;
+
+  final TRes Function(Variables$Query$number_of_home) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? distance = _undefined,
+    Object? from = _undefined,
+  }) =>
+      _then(Variables$Query$number_of_home._({
+        ..._instance._$data,
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
+        if (from != _undefined && from != null) 'from': (from as Geography),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$number_of_home<TRes>
+    implements CopyWith$Variables$Query$number_of_home<TRes> {
+  _CopyWithStubImpl$Variables$Query$number_of_home(this._res);
+
+  TRes _res;
+
+  call({
+    double? distance,
+    Geography? from,
+  }) =>
+      _res;
+}
+
+class Query$number_of_home {
+  Query$number_of_home({
+    required this.business_home_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_home.fromJson(Map<String, dynamic> json) {
+    final l$business_home_aggregate = json['business_home_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_home(
+      business_home_aggregate:
+          Query$number_of_home$business_home_aggregate.fromJson(
+              (l$business_home_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_home$business_home_aggregate business_home_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_home_aggregate = business_home_aggregate;
+    _resultData['business_home_aggregate'] = l$business_home_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_home_aggregate = business_home_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_home_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_home) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_home_aggregate = business_home_aggregate;
+    final lOther$business_home_aggregate = other.business_home_aggregate;
+    if (l$business_home_aggregate != lOther$business_home_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_home on Query$number_of_home {
+  CopyWith$Query$number_of_home<Query$number_of_home> get copyWith =>
+      CopyWith$Query$number_of_home(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$number_of_home<TRes> {
+  factory CopyWith$Query$number_of_home(
+    Query$number_of_home instance,
+    TRes Function(Query$number_of_home) then,
+  ) = _CopyWithImpl$Query$number_of_home;
+
+  factory CopyWith$Query$number_of_home.stub(TRes res) =
+      _CopyWithStubImpl$Query$number_of_home;
+
+  TRes call({
+    Query$number_of_home$business_home_aggregate? business_home_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_home$business_home_aggregate<TRes>
+      get business_home_aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_home<TRes>
+    implements CopyWith$Query$number_of_home<TRes> {
+  _CopyWithImpl$Query$number_of_home(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_home _instance;
+
+  final TRes Function(Query$number_of_home) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_home_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_home(
+        business_home_aggregate: business_home_aggregate == _undefined ||
+                business_home_aggregate == null
+            ? _instance.business_home_aggregate
+            : (business_home_aggregate
+                as Query$number_of_home$business_home_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_home$business_home_aggregate<TRes>
+      get business_home_aggregate {
+    final local$business_home_aggregate = _instance.business_home_aggregate;
+    return CopyWith$Query$number_of_home$business_home_aggregate(
+        local$business_home_aggregate, (e) => call(business_home_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_home<TRes>
+    implements CopyWith$Query$number_of_home<TRes> {
+  _CopyWithStubImpl$Query$number_of_home(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_home$business_home_aggregate? business_home_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_home$business_home_aggregate<TRes>
+      get business_home_aggregate =>
+          CopyWith$Query$number_of_home$business_home_aggregate.stub(_res);
+}
+
+const documentNodeQuerynumber_of_home = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'number_of_home'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_home_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'location'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'gps'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: '_st_d_within'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'distance'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'distance')),
+                                  ),
+                                  ObjectFieldNode(
+                                    name: NameNode(value: 'from'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'from')),
+                                  ),
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'approved'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      ),
+                      ObjectFieldNode(
+                        name: NameNode(value: 'open_status'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_neq'),
+                            value: StringValueNode(
+                              value: 'closedIndefinitely',
+                              isBlock: false,
+                            ),
+                          )
+                        ]),
+                      ),
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: []),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'available_for'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'rent',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$number_of_home _parserFn$Query$number_of_home(
+        Map<String, dynamic> data) =>
+    Query$number_of_home.fromJson(data);
+
+class Options$Query$number_of_home
+    extends graphql.QueryOptions<Query$number_of_home> {
+  Options$Query$number_of_home({
+    String? operationName,
+    required Variables$Query$number_of_home variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerynumber_of_home,
+          parserFn: _parserFn$Query$number_of_home,
+        );
+}
+
+class WatchOptions$Query$number_of_home
+    extends graphql.WatchQueryOptions<Query$number_of_home> {
+  WatchOptions$Query$number_of_home({
+    String? operationName,
+    required Variables$Query$number_of_home variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerynumber_of_home,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$number_of_home,
+        );
+}
+
+class FetchMoreOptions$Query$number_of_home extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$number_of_home({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$number_of_home variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerynumber_of_home,
+        );
+}
+
+extension ClientExtension$Query$number_of_home on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$number_of_home>> query$number_of_home(
+          Options$Query$number_of_home options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$number_of_home> watchQuery$number_of_home(
+          WatchOptions$Query$number_of_home options) =>
+      this.watchQuery(options);
+  void writeQuery$number_of_home({
+    required Query$number_of_home data,
+    required Variables$Query$number_of_home variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerynumber_of_home),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$number_of_home? readQuery$number_of_home({
+    required Variables$Query$number_of_home variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(document: documentNodeQuerynumber_of_home),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$number_of_home.fromJson(result);
+  }
+}
+
+class Query$number_of_home$business_home_aggregate {
+  Query$number_of_home$business_home_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_home$business_home_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_home$business_home_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$number_of_home$business_home_aggregate$aggregate.fromJson(
+              (l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_home$business_home_aggregate$aggregate? aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_home$business_home_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_home$business_home_aggregate
+    on Query$number_of_home$business_home_aggregate {
+  CopyWith$Query$number_of_home$business_home_aggregate<
+          Query$number_of_home$business_home_aggregate>
+      get copyWith => CopyWith$Query$number_of_home$business_home_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_home$business_home_aggregate<TRes> {
+  factory CopyWith$Query$number_of_home$business_home_aggregate(
+    Query$number_of_home$business_home_aggregate instance,
+    TRes Function(Query$number_of_home$business_home_aggregate) then,
+  ) = _CopyWithImpl$Query$number_of_home$business_home_aggregate;
+
+  factory CopyWith$Query$number_of_home$business_home_aggregate.stub(TRes res) =
+      _CopyWithStubImpl$Query$number_of_home$business_home_aggregate;
+
+  TRes call({
+    Query$number_of_home$business_home_aggregate$aggregate? aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_home$business_home_aggregate$aggregate<TRes>
+      get aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_home$business_home_aggregate<TRes>
+    implements CopyWith$Query$number_of_home$business_home_aggregate<TRes> {
+  _CopyWithImpl$Query$number_of_home$business_home_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_home$business_home_aggregate _instance;
+
+  final TRes Function(Query$number_of_home$business_home_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_home$business_home_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$number_of_home$business_home_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_home$business_home_aggregate$aggregate<TRes>
+      get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$number_of_home$business_home_aggregate$aggregate.stub(
+            _then(_instance))
+        : CopyWith$Query$number_of_home$business_home_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_home$business_home_aggregate<TRes>
+    implements CopyWith$Query$number_of_home$business_home_aggregate<TRes> {
+  _CopyWithStubImpl$Query$number_of_home$business_home_aggregate(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_home$business_home_aggregate$aggregate? aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_home$business_home_aggregate$aggregate<TRes>
+      get aggregate =>
+          CopyWith$Query$number_of_home$business_home_aggregate$aggregate.stub(
+              _res);
+}
+
+class Query$number_of_home$business_home_aggregate$aggregate {
+  Query$number_of_home$business_home_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_home$business_home_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_home$business_home_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_home$business_home_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_home$business_home_aggregate$aggregate
+    on Query$number_of_home$business_home_aggregate$aggregate {
+  CopyWith$Query$number_of_home$business_home_aggregate$aggregate<
+          Query$number_of_home$business_home_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_home$business_home_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_home$business_home_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_home$business_home_aggregate$aggregate(
+    Query$number_of_home$business_home_aggregate$aggregate instance,
+    TRes Function(Query$number_of_home$business_home_aggregate$aggregate) then,
+  ) = _CopyWithImpl$Query$number_of_home$business_home_aggregate$aggregate;
+
+  factory CopyWith$Query$number_of_home$business_home_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_home$business_home_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$number_of_home$business_home_aggregate$aggregate<TRes>
+    implements
+        CopyWith$Query$number_of_home$business_home_aggregate$aggregate<TRes> {
+  _CopyWithImpl$Query$number_of_home$business_home_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_home$business_home_aggregate$aggregate _instance;
+
+  final TRes Function(Query$number_of_home$business_home_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_home$business_home_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$number_of_home$business_home_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_home$business_home_aggregate$aggregate<TRes> {
+  _CopyWithStubImpl$Query$number_of_home$business_home_aggregate$aggregate(
       this._res);
 
   TRes _res;

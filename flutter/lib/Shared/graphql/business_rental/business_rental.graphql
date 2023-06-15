@@ -190,16 +190,17 @@ query get_home(
 ) {
   business_home(
     where: {
+      location: {
+        gps: { _st_d_within: { distance: $distance, from: $location } }
+      }
       _and: {
         business: {
           details: {
-            location: {
-              gps: { _st_d_within: { distance: $distance, from: $location } }
-            }
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
           }
         }
+        available_for: { _eq: "rent" }
       }
     }
     limit: $limit
@@ -258,18 +259,18 @@ query get_real_estates(
 ) {
   business_home(
     where: {
+      location: {
+        gps: { _st_d_within: { distance: $distance, from: $location } }
+      }
       _and: {
         business: {
           details: {
-            location: {
-              gps: { _st_d_within: { distance: $distance, from: $location } }
-            }
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
           }
         }
+        available_for: { _eq: "sale" }
       }
-      available_for: { _eq: "forSale" }
     }
     limit: $limit
     offset: $offset
@@ -421,7 +422,6 @@ query get_business_real_estate($businessId: Int!, $limit: Int, $offset: Int) {
     offering_type
   }
 }
-
 
 query number_of_rentals($distance: Float!, $from: geography!) {
   business_rental_aggregate(

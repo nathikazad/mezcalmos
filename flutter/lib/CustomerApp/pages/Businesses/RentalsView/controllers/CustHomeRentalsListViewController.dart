@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRentalCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
@@ -55,8 +53,8 @@ class CustHomeRentalsListViewController {
 
   RxBool _isMapView = false.obs;
 
-  List<HomeCard> get rentals => _rentals.value;
-  List<BusinessCard> get businesses => _businesses.value;
+  List<HomeCard> get rentals => _rentals;
+  List<BusinessCard> get businesses => _businesses;
 
   // Map view //
   GoogleMapController? _googleMapController;
@@ -69,7 +67,7 @@ class CustHomeRentalsListViewController {
 
   LatLng? _screenToWorldPosition;
 
-  List<HomeCard> get mapViewRentals => _rentals.value;
+  List<HomeCard> get mapViewRentals => _rentals;
   RxList<HomeCard> _mapViewRentals = <HomeCard>[].obs;
 
   RxSet<Marker> _allMarkers = <Marker>{}.obs;
@@ -143,8 +141,6 @@ class CustHomeRentalsListViewController {
       List<HomeCard> newList = await get_home_rentals(
         distance: 25000,
         fromLocation: _fromLocation!,
-        // distance: 1000000000000,
-        // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
         withCache: false,
         offset: _rentalCurrentOffset,
         limit: rentalFetchSize,
@@ -222,6 +218,7 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(e);
     } finally {
       await _fillMapsMarkers();
+      _filterTag.refresh();
     }
   }
 
@@ -288,9 +285,10 @@ class CustHomeRentalsListViewController {
   //   _googleMapController = controller;
   // }
 
-  void fetchMapViewRentals() {
-    _fetchMapViewRentals(currentPostitionBased: false);
+  Future<void> fetchMapViewRentals() async {
+    await _fetchMapViewRentals(currentPostitionBased: false);
     _showFetchButton.value = false;
+    _filterTag.refresh();
   }
 
   void recenterMap() {
@@ -311,7 +309,7 @@ class CustHomeRentalsListViewController {
   }
 
   void _onSelectRentalTag(HomeCard rental) {
-    showModalBottomSheet(
+    showModalBottomSheet<OnMapRentalCard>(
         backgroundColor: Colors.transparent,
         barrierColor: Colors.transparent,
         context: ctx!,

@@ -260,11 +260,11 @@ Future<List<HomeCard>> get_home_rentals(
     int? limit,
     required bool withCache}) async {
   final List<HomeCard> _homes = <HomeCard>[];
-
+  mezDbgPrint(
+      "distance $distance location ${fromLocation.lat.toDouble()} ${fromLocation.lng.toDouble()}");
   final QueryResult<Query$get_home> response = await _db.graphQLClient
       .query$get_home(Options$Query$get_home(
-          fetchPolicy:
-              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          fetchPolicy: FetchPolicy.networkOnly,
           variables: Variables$Query$get_home(
               distance: distance,
               location: Geography(
@@ -662,7 +662,7 @@ Future<int?> add_one_home_rental({required Home rental}) async {
                 name: rental.location.name,
                 gps: Geography(
                   rental.location.location.lat.toDouble(),
-                  rental.location.location.lat.toDouble(),
+                  rental.location.location.lng.toDouble(),
                 ),
               ),
             ),
