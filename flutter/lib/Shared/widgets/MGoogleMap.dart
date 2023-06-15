@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart'
@@ -224,8 +225,8 @@ class MGoogleMapState extends State<MGoogleMap> {
           }
         },
         child: Container(
-          height: 10.w,
-          width: 10.w,
+          height: 35.mezSp,
+          width: 35.mezSp,
           decoration: BoxDecoration(
             color: Color(0xffffffff),
             boxShadow: <BoxShadow>[

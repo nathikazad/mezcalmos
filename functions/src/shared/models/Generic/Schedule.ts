@@ -1,18 +1,12 @@
 
-export interface Schedule {
-    openHours: Record<Weekday, WorkingDay>;
-}
+
 export interface WorkingDay{
     isOpen: boolean;
-    openHours: Array<OpenHours>;
+    openHours: {
+        to: string;
+        from: string;
+      }[];
 }
-
-export interface OpenHours {
-   
-    from: Array<number>;
-    to: Array<number>;
-}
-
 export enum Weekday {
     Monday = "monday",
     Tuesday = "tuesday",
@@ -22,3 +16,16 @@ export enum Weekday {
     Saturday = "saturday",
     Sunday = "sunday"
 }
+
+export type Schedule = {
+    [day in Weekday]: {
+      isOpen: boolean;
+      openHours: {
+        to: string;
+        from: string;
+      }[];
+    };
+  };
+  
+  
+

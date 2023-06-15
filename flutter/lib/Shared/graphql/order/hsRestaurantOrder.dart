@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
@@ -59,21 +60,14 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
           (item.in_json['selected_options'] as Map<String, dynamic>)
               .forEach((String key, value) {
             final List<Choice> choices = [];
-            _restauItem.optionNames[key] = {
-              cModels.Language.EN: value['optionName']["en"],
-              cModels.Language.ES: value['optionName']["es"]
-            };
+            _restauItem.optionNames[key] =
+                convertToLanguageMap(value['optionName']);
 
             value['choices'].forEach((key, value) {
               choices.add(
                 Choice(
                   id: value['id'],
-                  name: {
-                    cModels.Language.EN: value['name']
-                        [userLanguage.toFirebaseFormatString()],
-                    cModels.Language.ES: value['name']
-                        [userLanguage.toFirebaseFormatString()]
-                  },
+                  name: convertToLanguageMap(value['name']),
                   cost: value['cost'],
                 ),
               );
@@ -235,21 +229,14 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       (item.in_json['selected_options'] as Map<String, dynamic>)
           .forEach((String key, value) {
         final List<Choice> choices = [];
-        _restauItem.optionNames[key] = {
-          cModels.Language.EN: value['optionName']["en"],
-          cModels.Language.ES: value['optionName']["es"]
-        };
+        _restauItem.optionNames[key] =
+            convertToLanguageMap(value['optionName']);
 
         value['choices'].forEach((key, value) {
           choices.add(
             Choice(
               id: value['id'],
-              name: {
-                cModels.Language.EN: value['name']
-                    [userLanguage.toFirebaseFormatString()],
-                cModels.Language.ES: value['name']
-                    [userLanguage.toFirebaseFormatString()]
-              },
+              name: convertToLanguageMap(value['name']),
               cost: value['cost'],
             ),
           );

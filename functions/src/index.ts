@@ -25,11 +25,7 @@ import { createCourierOrder } from "./delivery/createCourierOrder";
 import { changeDeliveryPrice, changeDeliveryPriceResponse } from "./delivery/changeDeliveryPrice";
 import { cancelCourierFromCustomer } from "./delivery/cancelCourierFromCustomer";
 import { createNewBusiness } from "./business/createNewBusiness";
-import { requestOrder } from "./business/orderRequest";
-import { handleOrderRequestByAdmin } from "./business/adminHandleRequest";
-import { handleOrderRequestFromCustomer } from "./business/customerHandleRequest";
 import { createNewMezAdminChat, createServiceProviderChat } from "./shared/chat/createChat";
-import { addNewReferral } from "./serviceProvider/addReferral";
 import { authorizeDriver } from "./serviceProvider/authorizeDriver";
 import { removeDriver } from "./delivery/removeDriver";
 import { deleteServiceProvider } from "./serviceProvider/deleteServiceProvider";
@@ -72,7 +68,7 @@ export const serviceProvider = {
   addDriver: authenticatedCall((userId, data) => addDriver(userId, data)),
   authorizeDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data)),
   createServiceProviderChat: authenticatedCall((userId, data) => createServiceProviderChat(userId, data)),
-  addReferral: authenticatedCall((userId, data) => addNewReferral(userId, data)),
+// addReferral: authenticatedCall((userId, data) => addNewReferral(userId, data)),
   removeDriver: authenticatedCall((userId, data) => removeDriver(userId, data)),
   deleteServiceProvider: authenticatedCall((userId, data) => deleteServiceProvider(userId, data)),
   createMezAdminChat: authenticatedCall((userId, data) => createNewMezAdminChat(userId, data)),
@@ -90,9 +86,9 @@ export const restaurant3 = {
 }
 export const business = {
   createBusiness: authenticatedCall((userId, data) => createNewBusiness(userId, data)),
-  requestOrder: authenticatedCall((userId, data) => requestOrder(userId, data)),
-  handleOrderRequestByAdmin: authenticatedCall((userId, data) => handleOrderRequestByAdmin(userId, data)),
-  handleOrderRequestFromCustomer: authenticatedCall((userId, data) => handleOrderRequestFromCustomer(userId, data)),
+  // requestOrder: authenticatedCall((userId, data) => requestOrder(userId, data)),
+  // handleOrderRequestByAdmin: authenticatedCall((userId, data) => handleOrderRequestByAdmin(userId, data)),
+  // handleOrderRequestFromCustomer: authenticatedCall((userId, data) => handleOrderRequestFromCustomer(userId, data)),
 }
 
 

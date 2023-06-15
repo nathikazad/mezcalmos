@@ -94,7 +94,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     tripDuration: response.delivery_order_by_pk.trip_duration,
     tripPolyline: response.delivery_order_by_pk.trip_polyline,
     changePriceRequest: (response.delivery_order_by_pk.change_price_request)
-      ? JSON.parse(response.delivery_order_by_pk.change_price_request)
+      ? (response.delivery_order_by_pk.change_price_request)
       : undefined,
     deliveryDriver: (response.delivery_order_by_pk.delivery_driver) ? {
       id: response.delivery_order_by_pk.delivery_driver.id,

@@ -117,11 +117,11 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             email: response.laundry_store_by_pk.details.stripe_info.email ?? null,
             //requirements
         }: undefined,
-        acceptedPayments: JSON.parse(response.laundry_store_by_pk.details.accepted_payments),
+        acceptedPayments: response.laundry_store_by_pk.details.accepted_payments,
         approved: response.laundry_store_by_pk.details.approved,
         creationTime: response.laundry_store_by_pk.details.creation_time,
-        language: /*JSON.parse(*/response.laundry_store_by_pk.details.language,
-        schedule: JSON.parse(response.laundry_store_by_pk.details.schedule),
+        language: /*(*/response.laundry_store_by_pk.details.language,
+        schedule: response.laundry_store_by_pk.details.schedule,
         deliveryDetails: {
             costPerKm: response.laundry_store_by_pk.delivery_details.cost_per_km,
             freeDeliveryKmRange: response.laundry_store_by_pk.delivery_details.free_delivery_km_range,

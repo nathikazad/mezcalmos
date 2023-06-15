@@ -4,6 +4,7 @@ import { OrderStripeInfo } from "../../../models/stripe";
 import { DeliveryDirection, DeliveryOrder } from "../../../models/Generic/Delivery";
 import { MezError } from "../../../models/Generic/Generic";
 import { LaundryOrder } from "../../../models/Services/Laundry/LaundryOrder";
+import { $ } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 
 export async function updateLaundryOrderStatus(order: LaundryOrder) {
 
@@ -33,12 +34,14 @@ export async function updateLaundryOrderStripe(orderId: number, orderStripePayme
                 id: orderId
             }, 
             _set: {
-                stripe_info: JSON.stringify(orderStripePaymentInfo),
+                stripe_info: $`stripe_info` ,
                 stripe_fees: orderStripePaymentInfo.stripeFees
             }
         }, { 
             stripe_info: [{}, true]
         }]
+    }, {
+        "stripe_info": orderStripePaymentInfo
     });
     if(!(response.update_laundry_order_by_pk)) {
         throw new MezError("updateOrderStripeError");

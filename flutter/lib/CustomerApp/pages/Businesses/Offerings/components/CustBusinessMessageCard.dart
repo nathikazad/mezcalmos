@@ -109,7 +109,7 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
                       Text('${widget.business.avgRating ?? '0'}',
                           style: context.textTheme.bodySmall),
                       Padding(
-                        padding: const EdgeInsets.only(left: 2, bottom: 3),
+                        padding: const EdgeInsets.only(left: 2),
                         child: Text(
                           '(${widget.business.reviewCount})',
                           style: context.textTheme.bodyMedium,
