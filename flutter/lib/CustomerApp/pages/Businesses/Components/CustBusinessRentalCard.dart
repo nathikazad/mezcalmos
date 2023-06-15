@@ -38,11 +38,11 @@ class CustBusinessRentalCard extends StatelessWidget {
       margin: margin,
       elevation: elevation,
       onClick: () {
-        if (rental.category1 == RentalCategory1.Home) {
-          CustHomeRentalView.navigate(rentalId: rental.details.id.toInt());
-        } else {
+        // if (rental.category1 == RentalCategory1.Home) {
+        //   CustHomeRentalView.navigate(rentalId: rental.details.id.toInt());
+        // } else {
           CustRentalView.navigate(rentalId: rental.details.id.toInt());
-        }
+        // }
       },
       firstAvatarBgImage:
           (rental.details.image != null && rental.details.image!.isNotEmpty)

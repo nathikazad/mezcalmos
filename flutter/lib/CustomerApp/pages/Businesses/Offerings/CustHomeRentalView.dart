@@ -252,7 +252,7 @@ class _CustBusinessAdditionalData extends StatelessWidget {
     required this.homeRental,
   });
 
-  final RentalWithBusinessCard? homeRental;
+  final HomeWithBusinessCard? homeRental;
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +262,7 @@ class _CustBusinessAdditionalData extends StatelessWidget {
         'bedRooms': '${homeRental?.bedrooms ?? 0} ${_i18n()['bedrooms']}',
         'bathRooms': '${homeRental?.bathrooms ?? 0} ${_i18n()['bathrooms']}',
         'houseType':
-            '${_i18n()[homeRental?.homeType?.name.toLowerCase()] ?? ''}',
+            '${_i18n()[homeRental?.category1.name.toLowerCase()] ?? ''}',
       };
       final Map<String, String> moreAdditionalValues = homeRental
               ?.details.additionalParameters

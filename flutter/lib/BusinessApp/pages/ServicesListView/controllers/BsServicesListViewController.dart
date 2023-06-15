@@ -57,7 +57,7 @@ class BsServicesListViewController {
   late BusinessProfile businessProfile;
   late int businessDetailsId;
   // states variables //
-  RxList<RentalCard> homeRentals = RxList.empty();
+  RxList<HomeCard> homeRentals = RxList.empty();
   RxList<RentalCard> rentals = RxList.empty();
   RxList<EventCard> events = RxList.empty();
   RxList<ServiceCard> services = RxList.empty();

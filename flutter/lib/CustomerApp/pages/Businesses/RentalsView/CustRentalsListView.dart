@@ -196,9 +196,9 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
     }
 
     IconData secondButtonIcon = Icons.store;
-    if (viewController.rentalCategory == RentalCategory1.Home) {
-      secondButtonIcon = Icons.store;
-    }
+    // if (viewController.rentalCategory == RentalCategory1.Home) {
+    //   secondButtonIcon = Icons.store;
+    // }
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: Row(

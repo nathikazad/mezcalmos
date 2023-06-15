@@ -11,6 +11,7 @@ export interface Business {
   events?: Array<Event>;
   services?: Array<Service>;
   products?: Array<Product>;
+  homes?: Array<Home>;
 }
 
 export interface BusinessItemDetails {
@@ -41,11 +42,26 @@ export interface Rental {
   category2?: RentalCategory2;
   category3?: RentalCategory3;
   details: BusinessItemDetails;
+}
+export interface Home {
+  id?: number;
+  category1: HomeCategory1;
+  details: BusinessItemDetails;
   bedrooms?: number;
   bathrooms?: number;
   gpsLocation?: Location;
-  homeType?: HomeType;
+  availableFor: HomeAvailabilityOption;
+  location: HomeLocation;
 }
+export enum HomeAvailabilityOption {
+  Rent = "rent",
+  Sale = "sale",
+}
+export interface HomeLocation {
+  name: string;
+  location: Location;
+}
+
 export interface Event {
   id?: number;
   category1: EventCategory1;
@@ -73,16 +89,15 @@ export interface Product {
 export enum RentalCategory1 {
   Surf = "surf",
   Vehicle = "vehicle",
-  Home = "home",
-  RealEstate = "realEstate",
   Uncategorized = "uncategorized",
 }
-export enum HomeType {
+export enum HomeCategory1 {
   Apartment = "apartment",
   Villa = "villa",
   Condo = "condo",
   Bungalow = "bungalow",
   Hotel = "hotel",
+  Uncategorized = "uncategorized",
 }
 export enum EventCategory1 {
   Yoga = "yoga",
@@ -113,6 +128,7 @@ export enum OfferingType {
   Event = "event",
   Service = "service",
   Product = "product",
+  Home = "home",
 }
 export enum ScheduleType {
   Scheduled = "scheduled",

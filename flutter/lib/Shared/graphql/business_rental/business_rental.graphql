@@ -65,13 +65,6 @@ query get_rental_by_category(
         }
       }
     }
-    home_rental {
-      bathrooms
-      bedrooms
-      gps_location
-      home_type
-      address
-    }
   }
 }
 
@@ -127,60 +120,134 @@ query get_rental_by_id($id: Int!) {
       position
     }
     category3
-    home_rental {
-      bathrooms
-      bedrooms
-      gps_location
-      home_type
-      address
-    }
   }
 }
 
-query get_home_rentals($location: geography!, $limit: Int, $offset: Int, $distance: Float!) {
-  business_get_home_rentals(args: {location: $location}, limit: $limit, offset: $offset, where: {rental: {business: {details: {approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}}, gps_location: {_st_d_within: {distance: $distance, from: $location}}}) {
-    bathrooms
-    bedrooms
-    gps_location
-    home_type
-    address
-    rental {
+query get_home_by_id($id: Int!) {
+  business_home_by_pk(id: $id) {
+    details {
+      name_id
+      description_id
       id
-      category3
-      details {
-        name_id
-        description_id
-        id
-        name {
-          translations {
-            language_id
-            value
-          }
+      name {
+        translations {
+          language_id
+          value
         }
-        description {
-          translations {
-            language_id
-            value
-          }
-        }
-        tags
-        additional_parameters
-        available
-        category1
-        category2
-        cost
-        image
-        position
       }
-      business {
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+      tags
+    }
+    id
+    business {
+      id
+      details {
+        last_active_time
         id
-        details {
-          id
-          name
-          currency
+        name
+        currency
+        location {
+          gps
+          address
+        }
+        image
+        accepted_payments
+        business {
+          reviews_aggregate {
+            aggregate {
+              avg {
+                rating
+              }
+              count
+            }
+          }
         }
       }
     }
+    bathrooms
+    bedrooms
+    location {
+      address
+      gps
+      name
+    }
+    available_for
+    offering_type
+  }
+}
+
+query get_home(
+  $location: geography!
+  $limit: Int
+  $offset: Int
+  $distance: Float!
+) {
+  business_home(
+    where: {
+      location: {
+        gps: { _st_d_within: { distance: $distance, from: $location } }
+      }
+      _and: {
+        business: {
+          details: {
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
+          }
+        }
+        available_for: { _eq: "rent" }
+      }
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
+  ) {
+    details {
+      name_id
+      description_id
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+      tags
+    }
+    id
+    business {
+      id
+      details {
+        id
+        name
+        currency
+        location {
+          gps
+          address
+        }
+      }
+    }
+    bathrooms
+    bedrooms
+    location {
+      address
+      gps
+      name
+    }
+    available_for
+    offering_type
   }
 }
 
@@ -190,172 +257,169 @@ query get_real_estates(
   $offset: Int
   $distance: Float!
 ) {
-  business_get_home_rentals(
-    args: { location: $location }
-    limit: $limit
-    offset: $offset
+  business_home(
     where: {
-      rental: {
+      location: {
+        gps: { _st_d_within: { distance: $distance, from: $location } }
+      }
+      _and: {
         business: {
           details: {
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
           }
         }
-        details: { category1: { _eq: "realEstate" } }
+        available_for: { _eq: "sale" }
       }
-      gps_location: { _st_d_within: { distance: $distance, from: $location } }
     }
+    limit: $limit
+    offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
   ) {
+    details {
+      name_id
+      description_id
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+      tags
+    }
+    id
+    business {
+      id
+      details {
+        id
+        name
+        currency
+        location {
+          gps
+          address
+        }
+      }
+    }
     bathrooms
     bedrooms
-    gps_location
-    home_type
-    address
-    rental {
-      id
-      category3
-      details {
-        name_id
-        description_id
-        id
-        name {
-          translations {
-            language_id
-            value
-          }
-        }
-        description {
-          translations {
-            language_id
-            value
-          }
-        }
-        tags
-        additional_parameters
-        available
-        category1
-        category2
-        cost
-        image
-        position
-      }
-      business {
-        id
-        details {
-          id
-          name
-          currency
-        }
-      }
+    location {
+      address
+      gps
+      name
     }
+    available_for
+    offering_type
   }
 }
 
-query get_business_home_rentals($businessId: Int!, $limit: Int, $offset: Int) {
-  business_home_rental(
-    where: { rental: { business_id: { _eq: $businessId } } }
+query get_business_home($businessId: Int!, $limit: Int, $offset: Int) {
+  business_home(
+    where: { business_id: { _eq: $businessId } }
     limit: $limit
     offset: $offset
   ) {
-    bathrooms
-    bedrooms
-    gps_location
-    home_type
-    address
-    rental {
+    details {
+      name_id
+      description_id
       id
-      category3
-      details {
-        name_id
-        description_id
-        id
-        name {
-          translations {
-            language_id
-            value
-          }
+      name {
+        translations {
+          language_id
+          value
         }
-        description {
-          translations {
-            language_id
-            value
-          }
-        }
-        tags
-        additional_parameters
-        available
-        category1
-        category2
-        cost
-        image
-        position
       }
-      business {
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+      tags
+    }
+    id
+    business {
+      id
+      details {
         id
-        details {
-          id
-          name
-          currency
+        name
+        currency
+        location {
+          gps
+          address
         }
       }
     }
+    bathrooms
+    bedrooms
+    location {
+      address
+      gps
+      name
+    }
+    available_for
+    offering_type
   }
 }
 
 query get_business_real_estate($businessId: Int!, $limit: Int, $offset: Int) {
-  business_home_rental(
+  business_home(
     where: {
-      rental: {
-        business_id: { _eq: $businessId }
-        details: { category1: { _eq: "realEstate" } }
-      }
+      business_id: { _eq: $businessId }
+      available_for: { _eq: "forSale" }
     }
     limit: $limit
     offset: $offset
   ) {
-    bathrooms
-    bedrooms
-    gps_location
-    home_type
-    address
-    rental {
+    details {
+      name_id
+      description_id
       id
-      category3
-      details {
-        name_id
-        description_id
-        id
-        name {
-          translations {
-            language_id
-            value
-          }
+      name {
+        translations {
+          language_id
+          value
         }
-        description {
-          translations {
-            language_id
-            value
-          }
-        }
-        tags
-        additional_parameters
-        available
-        category1
-        category2
-        cost
-        image
-        position
       }
-      business {
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+      tags
+    }
+    id
+    business {
+      id
+      details {
         id
-        details {
-          id
-          name
-          currency
+        name
+        currency
+        location {
+          gps
+          address
         }
       }
     }
+    bathrooms
+    bedrooms
+    location {
+      address
+      gps
+      name
+    }
+    available_for
+    offering_type
   }
 }
 
@@ -410,63 +474,73 @@ mutation create_rental($object: business_rental_insert_input!) {
   }
 }
 
-mutation add_home_rental($object: business_home_rental_insert_input!) {
-  insert_business_home_rental_one(object: $object) {
-    rental_id
-    rental {
-      details_id
-    }
+mutation add_home($object: business_home_insert_input!) {
+  insert_business_home_one(object: $object) {
+    id
+    details_id
   }
 }
-mutation update_home_rental_by_id(
-  $id: Int!
-  $object: business_home_rental_set_input
-) {
-  update_business_home_rental_by_pk(
-    pk_columns: { rental_id: $id }
-    _set: $object
-  ) {
-    bathrooms
-    bedrooms
-    gps_location
-    home_type
-    address
-    rental {
+
+mutation update_home_by_id($id: Int!, $object: business_home_set_input) {
+  update_business_home_by_pk(pk_columns: { id: $id }, _set: $object) {
+    details {
+      name_id
+      description_id
       id
-      category3
-      details {
-        name_id
-        description_id
-        id
-        name {
-          translations {
-            language_id
-            value
-          }
+      name {
+        translations {
+          language_id
+          value
         }
-        description {
-          translations {
-            language_id
-            value
-          }
-        }
-        tags
-        additional_parameters
-        available
-        category1
-        category2
-        cost
-        image
-        position
       }
-      business {
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+      tags
+    }
+    id
+    business {
+      id
+      details {
         id
-        details {
-          id
-          name
+        name
+        currency
+        location {
+          gps
+          address
         }
       }
     }
+    bathrooms
+    bedrooms
+    location {
+      address
+      gps
+      name
+    }
+    available_for
+    offering_type
+  }
+}
+
+mutation update_home_location(
+  $id: Int!
+  $address: String!
+  $gps: geography!
+  $name: String!
+) {
+  update_business_home_location_by_pk(
+    pk_columns: { id: $id }
+    _set: { address: $address, gps: $gps, name: $name }
+  ) {
+    id
+    name
+    gps
+    address
   }
 }
 

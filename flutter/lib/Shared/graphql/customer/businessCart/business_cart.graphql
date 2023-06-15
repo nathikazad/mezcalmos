@@ -7,6 +7,52 @@ query getBusinessCart($customer_id: Int!) {
       item_id
       offering_type
       time
+      home {
+        available_for
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        id
+        business {
+          id
+          details {
+            id
+            name
+            currency
+            accepted_payments
+            image
+            location {
+              gps
+              address
+            }
+          }
+        }
+        bathrooms
+        bedrooms
+        location {
+          address
+          gps
+          name
+        }
+        available_for
+        offering_type
+      }
       rental {
         id
         details {
@@ -27,13 +73,6 @@ query getBusinessCart($customer_id: Int!) {
           image
           position
           tags
-        }
-        home_rental {
-          address
-          bathrooms
-          bedrooms
-          gps_location
-          home_type
         }
         business {
           details {
@@ -155,7 +194,6 @@ query getBusinessCart($customer_id: Int!) {
       }
     }
     business_id
-    discount_value
     customer_id
     cost
   }
@@ -221,7 +259,8 @@ subscription listen_on_business_order_request($_id: Int!) {
       item_id
       offering_type
       time
-      rental {
+      home {
+        available_for
         details {
           name_id
           description_id
@@ -241,12 +280,50 @@ subscription listen_on_business_order_request($_id: Int!) {
           position
           tags
         }
-        home_rental {
+        id
+        business {
+          id
+          details {
+            id
+            name
+            currency
+            accepted_payments
+            image
+            location {
+              gps
+              address
+            }
+          }
+        }
+        bathrooms
+        bedrooms
+        location {
           address
-          bathrooms
-          bedrooms
-          gps_location
-          home_type
+          gps
+          name
+        }
+        available_for
+        offering_type
+      }
+      rental {
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
         }
         business {
           details {

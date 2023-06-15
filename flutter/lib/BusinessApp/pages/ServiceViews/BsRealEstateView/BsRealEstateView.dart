@@ -311,8 +311,10 @@ class _BsRealEstateViewState extends State<BsRealEstateView>
             ),
           ),
           smallSepartor,
-          Obx(
-            () => MezStringDropDown(
+          Obx(() {
+            List<HomeCategory1> possibleItems = [...HomeCategory1.values];
+            possibleItems.remove(HomeCategory1.Uncategorized);
+            return MezStringDropDown(
               validator: (String? value) {
                 if (viewController.homeType.value == null) {
                   return _i18n()["homeRental"]["homeTypeError"];
@@ -320,18 +322,18 @@ class _BsRealEstateViewState extends State<BsRealEstateView>
                 return null;
               },
               langPath: _i18n()["homeRental"],
-              items: HomeType.values
-                  .map((HomeType e) => e.toFirebaseFormatString())
+              items: possibleItems
+                  .map((HomeCategory1 e) => e.toFirebaseFormatString())
                   .toList(),
               value: viewController.homeType.value?.toFirebaseFormatString(),
               onChanged: (String? newHomeType) {
                 if (newHomeType != null) {
-                  viewController.homeType.value = newHomeType.toHomeType();
+                  viewController.homeType.value = newHomeType.toHomeCategory1();
                 }
               },
               labelText: _i18n()["homeRental"]["homeType"],
-            ),
-          ),
+            );
+          }),
           smallSepartor,
           Obx(
             () => BsOpOfferingLocationCard(

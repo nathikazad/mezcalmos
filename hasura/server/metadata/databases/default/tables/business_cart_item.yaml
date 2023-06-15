@@ -12,6 +12,16 @@ object_relationships:
         remote_table:
           name: event
           schema: business
+  - name: home
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: home
+          schema: business
   - name: product
     using:
       manual_configuration:

@@ -18,13 +18,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
     ['pages']['Components']['BsHomeRentalCard'];
 
 class BsHomeRentalCard extends StatelessWidget {
-  final RentalCard rental;
+  final HomeCard home;
   final Function()? onClick;
   final BsServicesListViewController viewController;
 
   const BsHomeRentalCard(
       {super.key,
-      required this.rental,
+      required this.home,
       required this.onClick,
       required this.viewController});
 
@@ -40,7 +40,7 @@ class BsHomeRentalCard extends StatelessWidget {
             CircleAvatar(
               radius: 17.5.mezSp,
               backgroundImage: CachedNetworkImageProvider(
-                rental.details.firstImage ?? customImageUrl,
+                home.details.firstImage ?? customImageUrl,
               ),
             ),
             SizedBox(
@@ -48,7 +48,10 @@ class BsHomeRentalCard extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                rental.details.name.getTranslation(viewController.primaryLang)?.inCaps ?? "",
+                home.details.name
+                        .getTranslation(viewController.primaryLang)
+                        ?.inCaps ??
+                    "",
                 style: context.textTheme.bodyLarge,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
@@ -59,14 +62,14 @@ class BsHomeRentalCard extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                '${rental.details.cost.values.first.toPriceString()}/${_i18n()[rental.details.cost.keys.first.toStringDuration().toLowerCase()]}',
+                '${home.details.cost.values.first.toPriceString()}/${_i18n()[home.details.cost.keys.first.toStringDuration().toLowerCase()]}',
                 style: context.textTheme.bodyLarge
                     ?.copyWith(fontSize: 12.mezSp, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.right,
               ),
             ),
             BsItemToggleButton(
-              details: rental.details,
+              details: home.details,
               viewController: viewController,
             ),
           ],
