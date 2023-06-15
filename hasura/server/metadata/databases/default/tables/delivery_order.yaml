@@ -116,7 +116,7 @@ select_permissions:
         - actual_delivered_time
         - actual_package_ready_time
         - cancellation_time
-        - change_price_request
+        - notified_drivers
         - chat_with_customer_id
         - chat_with_service_provider_id
         - current_gps
@@ -162,7 +162,7 @@ select_permissions:
         - actual_delivered_time
         - actual_package_ready_time
         - cancellation_time
-        - change_price_request
+        - notified_drivers
         - chat_with_customer_id
         - chat_with_service_provider_id
         - current_gps
@@ -255,7 +255,7 @@ select_permissions:
         - status
         - service_provider_type
         - direction
-        - change_price_request
+        - notified_drivers
       computed_fields:
         - in_process
         - notification_token
@@ -360,7 +360,7 @@ select_permissions:
         - status
         - service_provider_type
         - direction
-        - change_price_request
+        - notified_drivers
       computed_fields:
         - in_process
         - notification_token

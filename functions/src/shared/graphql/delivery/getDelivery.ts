@@ -32,7 +32,10 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
       trip_distance: true,
       trip_duration: true,
       trip_polyline: true,
-      change_price_request: [{}, true],
+      counter_offers: [{}, true],
+      customer_offer: true,
+      notified_drivers: [{}, true],
+      chosen_companies: [{}, true],
       delivery_driver: {
         id: true,
         delivery_company_type: true,
@@ -93,9 +96,6 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     tripDistance: response.delivery_order_by_pk.trip_distance,
     tripDuration: response.delivery_order_by_pk.trip_duration,
     tripPolyline: response.delivery_order_by_pk.trip_polyline,
-    changePriceRequest: (response.delivery_order_by_pk.change_price_request)
-      ? JSON.parse(response.delivery_order_by_pk.change_price_request)
-      : undefined,
     deliveryDriver: (response.delivery_order_by_pk.delivery_driver) ? {
       id: response.delivery_order_by_pk.delivery_driver.id,
       deliveryCompanyType: response.delivery_order_by_pk.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
@@ -112,7 +112,11 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         token: response.delivery_order_by_pk.delivery_driver.notification_info.token,
         turnOffNotifications: response.delivery_order_by_pk.delivery_driver.notification_info.turn_off_notifications,
       } : undefined,
-    }: undefined
+    }: undefined,
+    customerOffer: response.delivery_order_by_pk.customer_offer,
+    counterOffers: response.delivery_order_by_pk.counter_offers,
+    chosenCompanies: response.delivery_order_by_pk.chosen_companies,
+    notifiedDrivers: response.delivery_order_by_pk.notified_drivers,
   }
   
   return delivery;
@@ -146,6 +150,8 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       delivery_driver: {
         id: true,
         status: true,
+        delivery_company_id: true,
+        delivery_company_type: true,
         user: {
           firebase_id: true,
           id: true,
@@ -182,10 +188,13 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       serviceProviderId: d.service_provider_id,
       serviceProviderType: DeliveryServiceProviderType.DeliveryCompany,
       direction: d.direction as DeliveryDirection,
+      notifiedDrivers: {},
       deliveryDriver: (d.delivery_driver) ? {
         id: d.delivery_driver.id,
         userId: d.delivery_driver.user.id,
         status: d.delivery_driver.status as AuthorizationStatus,
+        deliveryCompanyType: d.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
+        deliveryCompanyId: d.delivery_driver.delivery_company_id,
         user: {
           id: d.delivery_driver.user.id,
           firebaseId: d.delivery_driver.user.firebase_id,

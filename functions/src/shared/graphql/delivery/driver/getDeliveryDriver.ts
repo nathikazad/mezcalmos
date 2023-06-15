@@ -101,12 +101,16 @@ export async function getDeliveryDriver(deliveryDriverId: number): Promise<Deliv
   // }
 }
 
-export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<DeliveryDriver[]> {
+export async function getDeliveryDrivers(deliveryCompanyIds: number[]): Promise<DeliveryDriver[]> {
 
   let chain = getHasura();
   let response = await chain.query({
-    delivery_company_by_pk: [{
-      id: deliveryCompanyId
+    delivery_company: [{
+      where: {
+        id: {
+          _in: deliveryCompanyIds
+        }
+      }
     }, {
       id: true
     }],
@@ -118,7 +122,7 @@ export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<Del
           },
         }, {
           delivery_company_id: {
-            _eq: deliveryCompanyId
+            _in: deliveryCompanyIds
           }
         }]
       }
@@ -143,11 +147,11 @@ export async function getDeliveryDrivers(deliveryCompanyId: number): Promise<Del
         },
       }]
     });
-    if(response.delivery_company_by_pk == null) {
-      throw new MezError("deliveryCompanyNotFound");
+    if(response.delivery_company.length == 0) {
+      throw new MezError("noDeliveryCompanyFound");
     }
     if (response.delivery_driver.length == 0) {
-      throw new MezError("deliveryCompanyHasNoDrivers");
+      throw new MezError("deliveryCompaniesHaveNoDrivers");
     }
     return response.delivery_driver.map((d: any) => {
       return {

@@ -1,6 +1,7 @@
+import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { AssignDriverError } from "../../../delivery/assignDriver";
 import { getHasura } from "../../../utilities/hasura";
-import { ChangePriceStatus, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 import { MezError } from "../../models/Generic/Generic";
 
 export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
@@ -39,59 +40,6 @@ export async function updateDeliveryOrderCompany(deliveryOrderId: number, delive
       }
     }]
   })
-}
-
-export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOrder) {
-  let chain = getHasura();
-
-  switch (deliveryOrder.changePriceRequest!.status) {
-    case ChangePriceStatus.Requested:
-      await chain.mutation({
-        update_delivery_order_by_pk: [{
-          pk_columns: {
-            id: deliveryOrder.deliveryId
-          },
-          _set: {
-            
-           change_price_request: JSON.stringify(deliveryOrder.changePriceRequest)
-          }
-        }, {
-          delivery_cost: true
-        }]
-      })
-      break;
-    case ChangePriceStatus.Accepted:
-      await chain.mutation({
-        update_delivery_order_by_pk: [{
-          pk_columns: {
-            id: deliveryOrder.deliveryId
-          },
-          _set: {
-            change_price_request: JSON.stringify(deliveryOrder.changePriceRequest),
-            delivery_cost: deliveryOrder.deliveryCost
-          }
-        }, {
-          delivery_cost: true
-        }]
-      })
-      break;
-    default:
-      await chain.mutation({
-        update_delivery_order_by_pk: [{
-          pk_columns: {
-            id: deliveryOrder.deliveryId
-          },
-          _set: {
-            change_price_request: JSON.stringify(deliveryOrder.changePriceRequest),
-            delivery_driver_id: null!,
-          }
-        }, {
-          delivery_cost: true
-        }]
-      })
-      break;
-  }
-  
 }
 
 export async function setLockTime(deliveryOrderId: number) {
@@ -171,4 +119,45 @@ export async function unassignDriver(deliveryOrderId: number) {
     
     }]
   });
+}
+
+
+export async function updateDeliveryCounterOffers(deliveryOrder: DeliveryOrder) {
+  let chain = getHasura();
+
+  await chain.mutation({
+    update_delivery_order_by_pk: [{
+      pk_columns: {
+        id: deliveryOrder.deliveryId
+      },
+      _set: {
+        counter_offers: $`counter_offers`
+      }
+    }, {
+      delivery_cost: true
+    }]
+  }, {
+    "counter_offers": deliveryOrder.counterOffers
+  })
+  
+}
+
+export async function setNotifiedDrivers(deliveryOrder: DeliveryOrder) {
+  let chain = getHasura();
+
+  await chain.mutation({
+    update_delivery_order_by_pk: [{
+      pk_columns: {
+        id: deliveryOrder.deliveryId
+      },
+      _set: {
+        notified_drivers: $`notified_drivers`
+      }
+    }, {
+      delivery_cost: true
+    }]
+  }, {
+    "deliveryOrder": deliveryOrder.notifiedDrivers
+  })
+  
 }
