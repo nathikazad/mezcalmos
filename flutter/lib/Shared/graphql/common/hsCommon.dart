@@ -124,7 +124,7 @@ Future<ServiceTree> get_service_tree(
   final ServiceTree rentals = ServiceTree(MezService.Rentals, 0, root);
   List<Future<void>> futures = [];
   RentalCategory1.values.forEach((RentalCategory1 element) async {
-    if (element == RentalCategory1.Uncategorized || element == RentalCategory1.RealEstate) return;
+    if (element == RentalCategory1.Uncategorized) return;
 
     futures.add(rentalsQuery(withCache, distance, lat, lng, element, rentals));
   });
