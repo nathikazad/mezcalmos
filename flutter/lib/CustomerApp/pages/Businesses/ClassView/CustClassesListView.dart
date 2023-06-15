@@ -333,7 +333,14 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                     ScheduleType.OneTime)
                   oneTimeBuilder(viewController.classes[index]),
                 Divider(),
-                Text(viewController.classes[index].businessName)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(viewController.classes[index].businessName),
+                    Text(classType(viewController.classes[index].scheduleType,
+                        viewController.classes[index].category1)),
+                  ],
+                )
               ],
             )),
       ));
@@ -397,5 +404,16 @@ class _CustClassesListViewState extends State<CustClassesListView> {
           )
       ],
     );
+  }
+
+  String classType(ScheduleType scheduleType, EventCategory1 category) {
+    switch (scheduleType) {
+      case ScheduleType.OnDemand:
+        return '${_i18n()['private']}/${_i18n()[category.toFirebaseFormatString()]}';
+      case ScheduleType.OneTime:
+        return '${_i18n()['workshop']}/${_i18n()[category.toFirebaseFormatString()]}';
+      default:
+        return '${_i18n()['weekly']}/${_i18n()[category.toFirebaseFormatString()]}';
+    }
   }
 }

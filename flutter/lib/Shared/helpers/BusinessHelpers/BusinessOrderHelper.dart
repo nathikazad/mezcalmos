@@ -101,6 +101,8 @@ extension CustBusinessCartBusinessName on CustBusinessCart {
         return items.first.rental!.business.name;
       case OfferingType.Service:
         return items.first.service!.business.name;
+      case OfferingType.Home:
+        return items.first.home!.business.name;
     }
   }
 }

@@ -1,17 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
+import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['FoodView']['CustFoodWrapper'];
@@ -39,21 +44,31 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
     mezDbgPrint("food serviceTree $serviceTree");
   }
 
-  void navigateToListView(MezService mezService) {
+  Future<void> navigateToListView(MezService mezService) async {
+    if (Get.find<AuthController>().hasuraUserId != null &&
+        mezService == MezService.Restaurants) {
+      final int? orderId = await get_customer_orders_by_type(
+          customerId: Get.find<AuthController>().hasuraUserId!,
+          orderType: mezService.toOrderType());
+      if (orderId != null && orderId > 0) {
+        await ViewRestaurantOrderScreen.navigate(orderId: orderId);
+        return;
+      }
+    }
     switch (mezService) {
       case MezService.Restaurants:
-        CustRestaurantListView.navigate();
+        unawaited(CustRestaurantListView.navigate());
         break;
       case MezService.LocallyMade:
         mezDbgPrint("going to locally made =======");
-        CustLocallyMadeListView.navigate(
+        unawaited(CustLocallyMadeListView.navigate(
           productCategories: [ProductCategory1.Consumable],
-        );
+        ));
         break;
       case MezService.MealPlanning:
-        CustServicesListView.navigate(
+        unawaited(CustServicesListView.navigate(
           serviceCategory: ServiceCategory1.MealPlanning,
-        );
+        ));
         break;
     }
   }

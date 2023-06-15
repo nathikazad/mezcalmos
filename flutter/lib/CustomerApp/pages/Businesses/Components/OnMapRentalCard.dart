@@ -15,7 +15,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['components']['OnMapRentalCard'];
 
 class OnMapRentalCard extends StatelessWidget {
-  final RentalCard rental;
+  final HomeCard rental;
   final EdgeInsetsGeometry margin;
   const OnMapRentalCard(
       {super.key,

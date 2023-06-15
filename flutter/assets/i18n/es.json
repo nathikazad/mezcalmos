@@ -1235,7 +1235,8 @@
             "therapy": "Terapias",
             "volunteer": "Voluntaria",
             "adventures": "Aventuras",
-            "realEstate": "Bienes raíces"
+            "realEstate": "Properties",
+            "courier": "Mensajera"
           }
         },
         "AllServiceView": {
@@ -1418,6 +1419,25 @@
             "bicycle": "Bicicleta"
           }
         },
+        "CustRealEstateView": {
+          "home": "Hogar",
+          "map": "Mapa",
+          "realEstate": "Realestate",
+          "properties": "Propiedades",
+          "store": "Agency",
+          "viewOnMap": "Ver en el mapa",
+          "viewAsList": "Ver como lista",
+          "showCost": "Costo de exhibición",
+          "fetchHomesInThisArea": "Obtener propiedades en esta área",
+          "uncategorized": "Sin categoría",
+          "homes": "Casas",
+          "noRentalsFound": "No se encontró en Realestate",
+          "none": "Ninguna",
+          "noBusinessFound": "No se encontraron Buisinesses",
+          "confirm": "Confirmar",
+          "cancel": "Cancelar",
+          "filter": "Filtrar"
+        },
         "EventsViews": {
           "CustEventsListView": {
             "events": "Eventos",
@@ -1454,7 +1474,14 @@
             "person": "persona",
             "unit": "unidadad",
             "total": "total",
-            "filter": "Filtrar"
+            "filter": "Filtrar",
+            "weekly": "Semanalmente",
+            "workshop": "Taller",
+            "private": "Privada",
+            "surf": "Surf",
+            "yoga": "yoga",
+            "fitness": "Aptitud física",
+            "dance": "Bailar"
           }
         },
         "TherapyView": {
@@ -1547,6 +1574,9 @@
             "petSitting": "Cuidado de mascotas",
             "uncategorized": "Sin categoría",
             "cleaning": "Servicio",
+            "beauty": "Belleza",
+            "photography": "Fotografía",
+            "tattoo": "Tatuaje",
             "hour": "hora",
             "day": "día",
             "week": "semana",
@@ -1581,6 +1611,10 @@
             "tattoo": {
               "title": "Tattoo",
               "description": "Asegúrese de que su mascota está bien cuidada mientras usted está fuera."
+            },
+            "laundry": {
+              "title": "Lavadero",
+              "description": "Haga que su ropa limpie su servicio de lavandería más cercano"
             },
             "uncategorized": {
               "title": "Sin categoría",
@@ -1656,6 +1690,7 @@
         "rentals": "Alquileres",
         "vehicleRentals": "Alquiler de vehículos",
         "surfRentals": "Alquiler de surf",
+        "homesRentals": "Alquiler de casas",
         "events": "Eventos",
         "products": "Productos",
         "services": "Servicios",
@@ -1957,8 +1992,8 @@
         "failedOTPConfirmRequest": "La confirmación del código OTP falló :(",
         "setNameAndImage": "Establezca su nombre e imagen antes de continuar "
       },
-      "SideMenuDrawerController" : {
-        "contactAdmin" :"Contactar a administrador"
+      "SideMenuDrawerController": {
+        "contactAdmin": "Contactar a administrador"
       }
     },
     "models": {
@@ -1970,8 +2005,8 @@
           "deliveryCompany": "Compañía de entrega"
         },
         "Generic": {
-          "en": "Inglesa",
-          "es": "Española"
+          "en": "Inglés",
+          "es": "Español"
         }
       }
     },
@@ -2012,8 +2047,8 @@
         "photoAccessOffBody": "Apparently you denied the app from photo library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
-        "closed" :"Cerrada",
-        "closedSubtitle" : "Lo siento, el servicio que está buscando está actualmente cerrado.",
+        "closed": "Cerrada",
+        "closedSubtitle": "Lo siento, el servicio que está buscando está actualmente cerrado.",
         "added": "Agregada",
         "addedTitle": "Su información ha sido agregada",
         "saved": "Guardado",
@@ -2087,8 +2122,8 @@
         "share": "Compartir",
         "privacyPolicies": "Políticas de privacidad",
         "logout": "Cerrar sesión",
-        "openService": "Servicio abierto",
-        "closeService": "Servicio cerrado",
+        "openService": "Abrir servicio",
+        "closeService": "Cerrar para siempre",
         "serviceClosed": "El servicio está cerrado indefinidamente",
         "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación."
       },
@@ -2608,7 +2643,7 @@
         "login": "Acceso",
         "contact": "Contáctenos",
         "language": "Idioma",
-        "contactAdmin" : "Contactar a administrador",
+        "contactAdmin": "Contactar a administrador",
         "logout": "Cerrar sesión",
         "legal": "Política de privacidad"
       }

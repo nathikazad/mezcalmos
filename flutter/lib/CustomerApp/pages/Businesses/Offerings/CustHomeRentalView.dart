@@ -29,10 +29,23 @@ dynamic _i18n() =>
 
 class CustHomeRentalView extends StatefulWidget {
   const CustHomeRentalView({super.key});
-  static Future<void> navigate({required int rentalId}) async {
+  static Future<void> navigate({
+    required int rentalId,
+    int? cartId,
+    DateTime? startDate,
+    Map<TimeUnit, num>? timeCost,
+    int? duration,
+    int? guestCount,
+  }) async {
     final String route =
         CustBusinessRoutes.custHomeRentalRoute.replaceFirst(":id", "$rentalId");
-    return MezRouter.toPath(route);
+    return MezRouter.toPath(route, arguments: {
+      "startDate": startDate,
+      "timeCost": timeCost,
+      "guestCount": guestCount,
+      "duration": duration,
+      "cartId": cartId,
+    });
   }
 
   @override
@@ -46,8 +59,24 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
   void initState() {
     rentalId = int.tryParse(MezRouter.urlArguments["id"].toString());
     mezDbgPrint("✅ init home rental view with id => $rentalId");
+    final DateTime? startDate =
+        MezRouter.bodyArguments!["startDate"] as DateTime?;
+    final Map<TimeUnit, num>? timeCost =
+        MezRouter.bodyArguments!["timeCost"] as Map<TimeUnit, num>?;
+    final int? guestCount = MezRouter.bodyArguments!["guestCount"] as int?;
+    final int? duration = MezRouter.bodyArguments!["duration"] as int?;
+    final int? cartId = MezRouter.bodyArguments!["cartId"] as int?;
+
     if (rentalId != null) {
-      viewController.fetchData(rentalId: rentalId!);
+      viewController.init(
+        rentalId: rentalId!,
+        startDate: startDate,
+        timeCost: timeCost,
+        duration: duration,
+        guestCount: guestCount,
+        cartId: cartId,
+      );
+      // viewController.fetchData(rentalId: rentalId!);
     } else {
       showErrorSnackBar(errorText: "Error: Home Rental ID $rentalId not found");
     }
@@ -57,13 +86,17 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MezButton(
-        label: "Add to cart",
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.bookOffering();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: viewController.isEditingMode.value
+              ? "Update Item"
+              : "Add to cart",
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.bookOffering();
+          },
+        ),
       ),
       body: Obx(() {
         if (viewController.homeRental != null) {
@@ -117,7 +150,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                         business: viewController.homeRental!.business,
                         offering: viewController.homeRental!.details,
                       ),
-                      
+
                       /// Bookings
                       bigSeperator,
                       BsOpDateTimePicker(
@@ -138,6 +171,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                         costUnits: viewController.homeRental!.details.cost,
                         label: "Duration",
                         value: viewController.duration.value,
+                        unitValue: viewController.timeCost.value?.keys.first,
                         validator: (TimeUnit? p0) {
                           if (p0 == null) return "Please select a time";
                           return null;
@@ -218,7 +252,7 @@ class _CustBusinessAdditionalData extends StatelessWidget {
     required this.homeRental,
   });
 
-  final RentalWithBusinessCard? homeRental;
+  final HomeWithBusinessCard? homeRental;
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +262,7 @@ class _CustBusinessAdditionalData extends StatelessWidget {
         'bedRooms': '${homeRental?.bedrooms ?? 0} ${_i18n()['bedrooms']}',
         'bathRooms': '${homeRental?.bathrooms ?? 0} ${_i18n()['bathrooms']}',
         'houseType':
-            '${_i18n()[homeRental?.homeType?.name.toLowerCase()] ?? ''}',
+            '${_i18n()[homeRental?.category1.name.toLowerCase()] ?? ''}',
       };
       final Map<String, String> moreAdditionalValues = homeRental
               ?.details.additionalParameters

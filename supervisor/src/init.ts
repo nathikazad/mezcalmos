@@ -48,7 +48,8 @@ export function initEnv() {
   }
 
   let firebaseParams: any = { databaseURL: keys[env].databaseURL };
-  // console.log(keys, env, keys[env].serviceAccount)
+  if(keys[env].storageBucket)
+    firebaseParams.storageBucket= keys[env].storageBucket
   if (keys[env].serviceAccount)
     firebaseParams.credential = firebase.credential.cert(require(keys[env].serviceAccount!));
   // console.log(firebaseParams)

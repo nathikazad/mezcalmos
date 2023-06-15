@@ -30,11 +30,11 @@ class BsHomeRentalViewController {
   int? _homeRentalId;
   bool shouldRefetch = false;
   // state variables //
-  Rxn<Rental> _rental = Rxn<Rental>();
+  Rxn<Home> _rental = Rxn<Home>();
   Rxn<Location> homeLocation = Rxn<Location>();
-  Rxn<HomeType> homeType = Rxn<HomeType>();
+  Rxn<HomeCategory1> homeType = Rxn<HomeCategory1>();
   // getters //
-  Rental? get rental => _rental.value;
+  Home? get rental => _rental.value;
   bool get isEditing => _rental.value != null;
 
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
@@ -76,9 +76,9 @@ class BsHomeRentalViewController {
   }
 
   Future<void> initEditMode({required int id}) async {
-    _rental.value = await get_rental_by_id(id: id, withCache: false);
+    _rental.value = await get_home_by_id(id: id, withCache: false);
     mezDbgPrint(
-        "rental id : $id home type ============>>> ${rental!.homeType}");
+        "rental id : $id home type ============>>> ${rental!.category1}");
     if (rental != null) {
       detailsController.clearPrices();
       await detailsController.initEditMode(
@@ -91,7 +91,7 @@ class BsHomeRentalViewController {
               .trim() ??
           "";
       homeLocation.value = rental!.gpsLocation;
-      homeType.value = rental!.homeType;
+      homeType.value = rental!.category1;
     }
   }
 
@@ -99,15 +99,17 @@ class BsHomeRentalViewController {
     await detailsController.updateItemDetails();
   }
 
-  Future<Rental> _constructRentalWithDetails() async {
+  Future<Home> _constructRentalWithDetails() async {
     final BusinessItemDetails details =
         await detailsController.contructDetails();
     details.additionalParameters = {
       "area": areaController.text.trim() + " sq ft",
     };
-    final Rental rental = Rental(
-      homeType: homeType.value,
-      category1: RentalCategory1.Home,
+    final Home rental = Home(
+      availableFor: HomeAvailabilityOption.Rent,
+      location: HomeLocation(
+          name: homeLocation.value!.address, location: homeLocation.value!),
+      category1: homeType.value!,
       gpsLocation: homeLocation.value,
       details: details,
       bathrooms: int.tryParse(bathroomsController.text),
@@ -116,10 +118,12 @@ class BsHomeRentalViewController {
     return rental;
   }
 
-  Rental _constructRental() {
-    final Rental rental = Rental(
-      homeType: homeType.value,
-      category1: RentalCategory1.Home,
+  Home _constructRental() {
+    final Home rental = Home(
+      location: HomeLocation(
+          name: homeLocation.value!.address, location: homeLocation.value!),
+      category1: homeType.value!,
+      availableFor: HomeAvailabilityOption.Rent,
       gpsLocation: homeLocation.value,
       bathrooms: int.tryParse(bathroomsController.text),
       bedrooms: int.tryParse(bedroomsController.text),
@@ -151,7 +155,7 @@ class BsHomeRentalViewController {
         }
         shouldRefetch = true;
       } else {
-        Rental _rental = await _constructRentalWithDetails();
+        Home _rental = await _constructRentalWithDetails();
         await createItem(_rental);
       }
     }
@@ -161,7 +165,7 @@ class BsHomeRentalViewController {
     languageTabsController.dispose();
   }
 
-  Future<void> createItem(Rental rental) async {
+  Future<void> createItem(Home rental) async {
     mezDbgPrint(
         "Create rental with this payload : ${rental.toFirebaseFormattedJson()}");
     try {

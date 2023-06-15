@@ -12,6 +12,16 @@ object_relationships:
         remote_table:
           name: event
           schema: business
+  - name: home
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: home
+          schema: business
   - name: order
     using:
       foreign_key_constraint_on: order_request_id
@@ -79,6 +89,11 @@ select_permissions:
                 operators:
                   user_id:
                     _eq: X-Hasura-User-Id
+          - home:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
@@ -121,6 +136,11 @@ update_permissions:
                 operators:
                   user_id:
                     _eq: X-Hasura-User-Id
+          - home:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
       check:
         _or:
           - rental:
@@ -139,6 +159,11 @@ update_permissions:
                   user_id:
                     _eq: X-Hasura-User-Id
           - service:
+              business:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - home:
               business:
                 operators:
                   user_id:

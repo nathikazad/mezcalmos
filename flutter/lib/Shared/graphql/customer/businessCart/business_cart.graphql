@@ -7,7 +7,8 @@ query getBusinessCart($customer_id: Int!) {
       item_id
       offering_type
       time
-      rental {
+      home {
+        available_for
         details {
           name_id
           description_id
@@ -27,12 +28,51 @@ query getBusinessCart($customer_id: Int!) {
           position
           tags
         }
-        home_rental {
+        id
+        business {
+          id
+          details {
+            id
+            name
+            currency
+            accepted_payments
+            image
+            location {
+              gps
+              address
+            }
+          }
+        }
+        bathrooms
+        bedrooms
+        location {
           address
-          bathrooms
-          bedrooms
-          gps_location
-          home_type
+          gps
+          name
+        }
+        available_for
+        offering_type
+      }
+      rental {
+        id
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
         }
         business {
           details {
@@ -45,6 +85,7 @@ query getBusinessCart($customer_id: Int!) {
         }
       }
       product {
+        id
         business {
           details {
             name
@@ -80,6 +121,7 @@ query getBusinessCart($customer_id: Int!) {
         }
       }
       service {
+        id
         business {
           details {
             name
@@ -115,6 +157,7 @@ query getBusinessCart($customer_id: Int!) {
         }
       }
       event {
+        id
         business {
           details {
             name
@@ -151,7 +194,6 @@ query getBusinessCart($customer_id: Int!) {
       }
     }
     business_id
-    discount_value
     customer_id
     cost
   }
@@ -179,6 +221,20 @@ mutation addItemToBusinessCart($item: business_cart_item_insert_input!) {
   }
 }
 
+mutation update_business_cart_item(
+  $id: Int!
+  $cost: money!
+  $parameters: jsonb!
+  $time: timestamp!
+) {
+  update_business_cart_item_by_pk(
+    pk_columns: { id: $id }
+    _set: { cost: $cost, parameters: $parameters, time: $time }
+  ) {
+    id
+  }
+}
+
 mutation set_cart_business_id($business_id: Int, $customer_id: Int!) {
   update_business_cart_by_pk(
     pk_columns: { customer_id: $customer_id }
@@ -203,7 +259,8 @@ subscription listen_on_business_order_request($_id: Int!) {
       item_id
       offering_type
       time
-      rental {
+      home {
+        available_for
         details {
           name_id
           description_id
@@ -223,12 +280,50 @@ subscription listen_on_business_order_request($_id: Int!) {
           position
           tags
         }
-        home_rental {
+        id
+        business {
+          id
+          details {
+            id
+            name
+            currency
+            accepted_payments
+            image
+            location {
+              gps
+              address
+            }
+          }
+        }
+        bathrooms
+        bedrooms
+        location {
           address
-          bathrooms
-          bedrooms
-          gps_location
-          home_type
+          gps
+          name
+        }
+        available_for
+        offering_type
+      }
+      rental {
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
         }
         business {
           details {
@@ -356,7 +451,11 @@ subscription listen_on_business_order_request($_id: Int!) {
   }
 }
 
-mutation update_product_item_count($id: Int!, $parameters: jsonb!, $cost: money!) {
+mutation update_product_item_count(
+  $id: Int!
+  $parameters: jsonb!
+  $cost: money!
+) {
   update_business_cart_item(
     where: { id: { _eq: $id }, offering_type: { _eq: "product" } }
     _set: { parameters: $parameters, cost: $cost }

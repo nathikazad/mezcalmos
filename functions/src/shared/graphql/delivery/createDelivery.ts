@@ -1,3 +1,4 @@
+import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 import { AppType, MezError } from "../../models/Generic/Generic";
@@ -36,15 +37,9 @@ export async function createLaundryToCustomerDeliveryOrder(
             object: {
                 customer_id: laundryOrder.customerId,
                 order_type: OrderType.Laundry,
-                dropoff_gps: JSON.stringify({
-                "type": "Point",
-                "coordinates": [laundryOrder.customerLocation!.lng, laundryOrder.customerLocation!.lat ],
-                }),
+                dropoff_gps: $`dropoff_gps`,
                 dropoff_address: laundryOrder.customerLocation!.address,
-                pickup_gps: JSON.stringify({
-                    "type": "Point",
-                    "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],
-                }),
+                pickup_gps:  $`pickup_gps`,
                 direction : DeliveryDirection.ToCustomer,
                 pickup_address: laundryStore.location.address,
                 schedule_time: laundryOrder.scheduledTime,
@@ -88,6 +83,15 @@ export async function createLaundryToCustomerDeliveryOrder(
             chat_with_service_provider_id: true,
             order_time: true
         }]
+    }, {
+        "dropoff_gps": {
+            "type": "Point",
+            "coordinates": [laundryOrder.customerLocation!.lng, laundryOrder.customerLocation!.lat ],
+            },
+        "pickup_gps": {
+            "type": "Point",
+            "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],
+        },
     });
     if(!(response.insert_delivery_order_one)) {
         throw new MezError("orderCreationError");

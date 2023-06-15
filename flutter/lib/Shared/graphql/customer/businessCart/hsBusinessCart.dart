@@ -58,6 +58,66 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
               timeUnit:
                   data.parameters?["timeUnit"]?.toString().toTimeUnit() ?? null,
             ),
+            home: data.home != null
+                ? HomeWithBusinessCard(
+                    business: BusinessCard(
+                      id: data.home!.business!.details.id,
+                      name: data.home!.business!.details.name,
+                      currency:
+                          data.home!.business!.details.currency.toCurrency(),
+                      acceptedPayments: PaymentInfo.fromData(
+                              stripeInfo: {},
+                              acceptedPayments: data
+                                  .home!.business!.details.accepted_payments)
+                          .acceptedPayments,
+                      detailsId: data.home!.business!.details.id,
+                      image: data.home!.business!.details.image,
+                    ),
+                    home: Home(
+                      id: data.home!.id,
+                      bathrooms: data.home!.bathrooms,
+                      bedrooms: data.home!.bedrooms,
+                      gpsLocation: data.home!.location?.gps != null
+                          ? Location(
+                              lat: data.home!.location!.gps.latitude,
+                              lng: data.home!.location!.gps.longitude,
+                              address: data.home!.location!.address,
+                            )
+                          : null,
+                      location: HomeLocation(
+                        name: data.home!.location!.name,
+                        location: Location(
+                          lat: data.home!.location!.gps.latitude,
+                          lng: data.home!.location!.gps.longitude,
+                          address: data.home!.location!.address,
+                        ),
+                      ),
+                      category1:
+                          data.home!.details!.category1.toHomeCategory1(),
+                      availableFor:
+                          data.home!.available_for.toHomeAvailabilityOption(),
+                      details: BusinessItemDetails(
+                        cost: constructBusinessServiceCost(
+                            data.home!.details!.cost),
+                        additionalParameters:
+                            data.home!.details!.additional_parameters,
+                        id: data.home!.details!.id,
+                        nameId: data.home!.details!.name_id,
+                        descriptionId: data.home!.details!.description_id,
+                        name: toLanguageMap(
+                            translations:
+                                data.home!.details!.name.translations),
+                        position: data.home!.details!.position,
+                        businessId: data.home!.business!.details.id,
+                        available: data.home!.details!.available,
+                        image: data.home!.details!.image
+                                ?.map<String>((e) => e.toString())
+                                .toList() ??
+                            [],
+                      ),
+                    ),
+                  )
+                : null,
             rental: data.rental != null
                 ? RentalWithBusinessCard(
                     business: BusinessCard(
@@ -74,6 +134,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       image: data.rental!.business.details.image,
                     ),
                     rental: Rental(
+                      id: data.rental!.id,
                       category1:
                           data.rental!.details.category1.toRentalCategory1(),
                       details: BusinessItemDetails(
@@ -95,18 +156,6 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                         additionalParameters:
                             data.rental!.details.additional_parameters,
                       ),
-                      bathrooms: data.rental?.home_rental?.bathrooms,
-                      bedrooms: data.rental?.home_rental?.bedrooms,
-                      gpsLocation: Location(
-                          lat:
-                              data.rental?.home_rental?.gps_location.latitude ??
-                                  0,
-                          lng: data.rental?.home_rental?.gps_location
-                                  .longitude ??
-                              0,
-                          address: data.rental?.home_rental?.address ?? ''),
-                      homeType:
-                          data.rental?.home_rental?.home_type.toHomeType(),
                     ))
                 : null,
             event: data.event != null
@@ -125,6 +174,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       image: data.event!.business.details.image,
                     ),
                     event: Event(
+                      id: data.event!.id,
                       scheduleType: data.event!.schedule_type.toScheduleType(),
                       startsAt: data.event!.starts_at,
                       endsAt: data.event!.ends_at,
@@ -171,6 +221,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       image: data.service!.business.details.image,
                     ),
                     service: Service(
+                      id: data.service!.id,
                       category1:
                           data.service!.details.category1.toServiceCategory1(),
                       details: BusinessItemDetails(
@@ -210,6 +261,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       image: data.product!.business.details.image,
                     ),
                     product: Product(
+                      id: data.product!.id,
                       category1:
                           data.product!.details.category1.toProductCategory1(),
                       details: BusinessItemDetails(
@@ -298,6 +350,31 @@ Future<int> add_item_to_business_cart(
     mezDbgPrint(
         "🚨 graphql::add_item_to_cart::success :: ${addItemResult.parsedData!.insert_business_cart_item_one!.id}");
     return addItemResult.parsedData!.insert_business_cart_item_one!.id;
+  }
+}
+
+Future<bool> update_item_to_business_cart(
+    {required BusinessCartItem cartItem}) async {
+  final QueryResult<Mutation$update_business_cart_item> addItemResult =
+      await _hasuraDb.graphQLClient.mutate$update_business_cart_item(
+    Options$Mutation$update_business_cart_item(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Mutation$update_business_cart_item(
+        id: cartItem.id!.toInt(),
+        cost: cartItem.cost.toDouble(),
+        parameters: cartItem.parameters.toFirebaseFormattedJson(),
+        time: cartItem.time.toString(),
+      ),
+    ),
+  );
+
+  if (addItemResult.parsedData?.update_business_cart_item_by_pk == null) {
+    throw Exception(
+        "🚨 graphql::update_item_to_business_cart::exception :: ${addItemResult.exception}");
+  } else {
+    mezDbgPrint(
+        "🚨 graphql::update_item_to_business_cart::success :: ${addItemResult.parsedData!.update_business_cart_item_by_pk}");
+    return true;
   }
 }
 
@@ -438,6 +515,63 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                       .toTimeUnit() ??
                                   null,
                             ),
+                            home: data.home != null
+                                ? HomeWithBusinessCard(
+                                    business: BusinessCard(
+                                      id: data.home!.business!.details.id,
+                                      name: data.home!.business!.details.name,
+                                      currency: data
+                                          .home!.business!.details.currency
+                                          .toCurrency(),
+                                      acceptedPayments: PaymentInfo.fromData(
+                                              stripeInfo: {},
+                                              acceptedPayments: data
+                                                  .home!
+                                                  .business!
+                                                  .details
+                                                  .accepted_payments)
+                                          .acceptedPayments,
+                                      detailsId:
+                                          data.home!.business!.details.id,
+                                      image: data.home!.business!.details.image,
+                                    ),
+                                    home: Home(
+                                      location: HomeLocation(
+                                        name: data.home!.location!.name,
+                                        location: Location(
+                                          lat:
+                                              data.home!.location!.gps.latitude,
+                                          lng: data
+                                              .home!.location!.gps.longitude,
+                                          address: data.home!.location!.address,
+                                        ),
+                                      ),
+                                      category1: data.home!.details!.category1
+                                          .toHomeCategory1(),
+                                      availableFor: data.home!.available_for
+                                          .toHomeAvailabilityOption(),
+                                      details: BusinessItemDetails(
+                                        cost: constructBusinessServiceCost(
+                                            data.home!.details!.cost),
+                                        additionalParameters: data.home!
+                                            .details!.additional_parameters,
+                                        id: data.home!.details!.id,
+                                        nameId: data.home!.details!.name_id,
+                                        descriptionId:
+                                            data.home!.details!.description_id,
+                                        name: toLanguageMap(
+                                            translations: data.home!.details!
+                                                .name.translations),
+                                        position: data.home!.details!.position,
+                                        businessId:
+                                            data.home!.business!.details.id,
+                                        available:
+                                            data.home!.details!.available,
+                                        image: data.home!.details!.image,
+                                      ),
+                                    ),
+                                  )
+                                : null,
                             rental: data.rental != null
                                 ? RentalWithBusinessCard(
                                     business: BusinessCard(
@@ -485,23 +619,6 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                         additionalParameters: data.rental!
                                             .details.additional_parameters,
                                       ),
-                                      bathrooms:
-                                          data.rental?.home_rental?.bathrooms,
-                                      bedrooms:
-                                          data.rental?.home_rental?.bedrooms,
-                                      gpsLocation: Location(
-                                          lat: data.rental?.home_rental
-                                                  ?.gps_location.latitude ??
-                                              0,
-                                          lng: data.rental?.home_rental
-                                                  ?.gps_location.longitude ??
-                                              0,
-                                          address: data.rental?.home_rental
-                                                  ?.address ??
-                                              ''),
-                                      homeType: data
-                                          .rental?.home_rental?.home_type
-                                          .toHomeType(),
                                     ))
                                 : null,
                             event: data.event != null

@@ -46,17 +46,19 @@ export async function generateQr(path:string, shortLink:string): Promise<string>
             },
             {
                 headers: {
-                  'Content-Type': 'application/json',
-                  'X-RapidAPI-Key': '44e3afe025mshd611453cf167049p1dc220jsn387a69f61a51',
-                  'X-RapidAPI-Host': 'qrcode-monkey.p.rapidapi.com'
-                },
+                    'content-type': 'application/json',
+                    'X-RapidAPI-Key': 'f9fed06f46msh431782d8821c831p1169cbjsn711aab3b6dc7',
+                    'X-RapidAPI-Host': 'qrcode-monkey.p.rapidapi.com'
+                  }
             },
         );
         let imgUrl : string | null | undefined = data['imageUrl']
         if (!imgUrl)
             throw Error('Image Generation Error 1');
-        else 
+        else {
+            console.log("uploading");
             return await uploadQrImg(path, (data['imageUrl'] as string).replace('//', 'https://'));
+        }
     } catch (error) {
         console.log(`Error Happend when generating the QR code:\n${error}`);
         throw Error('Image Generation Error 2');

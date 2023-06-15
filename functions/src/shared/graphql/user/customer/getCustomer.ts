@@ -53,7 +53,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             expMonth: c.exp_month,
             expYear: c.exp_year,
             last4: c.last_4,
-            idsWithServiceProvider: JSON.parse(c.sp_card_ids)
+            idsWithServiceProvider: (c.sp_card_ids)
         }
     })
     return {
@@ -73,7 +73,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             idsWithServiceProvider: stripeSPIds,
             cards
         }: undefined,
-        // JSON.parse(response.customer_customer_by_pk.stripe_info),
+        // (response.customer_customer_by_pk.stripe_info),
         phoneNumber: response.customer_customer_by_pk.user.phone
     }
 }

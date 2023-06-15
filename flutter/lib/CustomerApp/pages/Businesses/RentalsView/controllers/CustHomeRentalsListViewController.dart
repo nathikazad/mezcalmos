@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRentalCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
@@ -23,7 +21,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['RentalsView']['CustHomeRentalListView'];
 
 class CustHomeRentalsListViewController {
-  RxList<RentalCard> _rentals = <RentalCard>[].obs;
+  RxList<HomeCard> _rentals = <HomeCard>[].obs;
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
   // RxList<BusinessCard> _filtredBusiness = <BusinessCard>[].obs;
 
@@ -55,8 +53,8 @@ class CustHomeRentalsListViewController {
 
   RxBool _isMapView = false.obs;
 
-  List<RentalCard> get rentals => _rentals.value;
-  List<BusinessCard> get businesses => _businesses.value;
+  List<HomeCard> get rentals => _rentals;
+  List<BusinessCard> get businesses => _businesses;
 
   // Map view //
   GoogleMapController? _googleMapController;
@@ -69,8 +67,8 @@ class CustHomeRentalsListViewController {
 
   LatLng? _screenToWorldPosition;
 
-  List<RentalCard> get mapViewRentals => _rentals.value;
-  RxList<RentalCard> _mapViewRentals = <RentalCard>[].obs;
+  List<HomeCard> get mapViewRentals => _rentals;
+  RxList<HomeCard> _mapViewRentals = <HomeCard>[].obs;
 
   RxSet<Marker> _allMarkers = <Marker>{}.obs;
   RxSet<Marker> get allMarkers => _allMarkers;
@@ -140,11 +138,9 @@ class CustHomeRentalsListViewController {
       _rentalFetchingData = true;
       mezDbgPrint(
           "👋 _fetchRentals called  \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
-      List<RentalCard> newList = await get_home_rentals(
+      List<HomeCard> newList = await get_home_rentals(
         distance: 25000,
         fromLocation: _fromLocation!,
-        // distance: 1000000000000,
-        // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
         withCache: false,
         offset: _rentalCurrentOffset,
         limit: rentalFetchSize,
@@ -169,8 +165,8 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(
           "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
       _businessFetchingData = true;
-      List<BusinessCard> newList = await get_business_by_rental_category1(
-          categories1: [RentalCategory1.Home],
+      List<BusinessCard> newList = await get_business_by_home(
+          homeType: HomeAvailabilityOption.Rent,
           distance: 25000,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
@@ -222,6 +218,7 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(e);
     } finally {
       await _fillMapsMarkers();
+      _filterTag.refresh();
     }
   }
 
@@ -230,7 +227,7 @@ class CustHomeRentalsListViewController {
     _perWeekMarkers = <Marker>{}.obs;
     _perMonthMarkers = <Marker>{}.obs;
 
-    for (RentalCard rental in _mapViewRentals) {
+    for (HomeCard rental in _mapViewRentals) {
       await _allMarkers.addLabelMarker(LabelMarker(
         flat: true,
         label: rental.details.cost[TimeUnit.PerDay] != null
@@ -288,9 +285,10 @@ class CustHomeRentalsListViewController {
   //   _googleMapController = controller;
   // }
 
-  void fetchMapViewRentals() {
-    _fetchMapViewRentals(currentPostitionBased: false);
+  Future<void> fetchMapViewRentals() async {
+    await _fetchMapViewRentals(currentPostitionBased: false);
     _showFetchButton.value = false;
+    _filterTag.refresh();
   }
 
   void recenterMap() {
@@ -310,8 +308,8 @@ class CustHomeRentalsListViewController {
     _showFetchButton.value = true;
   }
 
-  void _onSelectRentalTag(RentalCard rental) {
-    showModalBottomSheet(
+  void _onSelectRentalTag(HomeCard rental) {
+    showModalBottomSheet<OnMapRentalCard>(
         backgroundColor: Colors.transparent,
         barrierColor: Colors.transparent,
         context: ctx!,

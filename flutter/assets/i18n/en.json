@@ -1163,7 +1163,8 @@
             "therapy": "Therapies",
             "volunteer": "Volunteer",
             "adventures": "Adventures",
-            "realEstate": "Real Estate"
+            "realEstate": "Properties",
+            "courier": "Courier"
           }
         },
         "AllServiceView": {
@@ -1383,6 +1384,25 @@
             "bicycle": "Bicycle"
           }
         },
+        "CustRealEstateView": {
+          "home": "Home",
+          "map": "Map",
+          "realEstate": "Realestate",
+          "properties": "Properties",
+          "store": "Agency",
+          "viewOnMap": "View on map",
+          "viewAsList": "View as list",
+          "showCost": "Show cost",
+          "fetchHomesInThisArea": "Fetch properties in this area",
+          "uncategorized": "Uncategorized",
+          "homes": "Homes",
+          "noRentalsFound": "No realestate found",
+          "none": "None",
+          "noBusinessFound": "No buisinesses found",
+          "confirm": "Confirm",
+          "cancel": "Cancel",
+          "filter": "Filter"
+        },
         "EventsViews": {
           "CustEventsListView": {
             "homes": "Homes",
@@ -1425,7 +1445,14 @@
             "person": "person",
             "unit": "unit",
             "total": "Total",
-            "filter": "Filter"
+            "filter": "Filter",
+            "weekly": "Weekly",
+            "workshop": "Workshop",
+            "private": "Private",
+            "surf": "Surf",
+            "yoga": "Yoga",
+            "fitness": "Fitness",
+            "dance": "Dance"
           }
         },
         "TherapyView": {
@@ -1518,6 +1545,9 @@
             "petSitting": "Pet sitting",
             "uncategorized": "Uncategorized",
             "cleaning": "Service",
+            "beauty": "Beauty",
+            "photography": "Photography",
+            "tattoo": "Tattoo",
             "hour": "hour",
             "day": "day",
             "week": "week",
@@ -1552,6 +1582,10 @@
             "tattoo": {
               "title": "Tattoo",
               "description": "Keep your space spotless with professional cleaners."
+            },
+            "laundry": {
+              "title": "Laundry",
+              "description": "Get your clothes cleaned by your nearest laundry service"
             },
             "uncategorized": {
               "title": "Uncategorized",
@@ -1591,6 +1625,7 @@
         "rentals": "Rentals",
         "vehicleRentals": "Vehicle Rentals",
         "surfRentals": "Surf Rentals",
+        "homesRentals": "Home Rentals",
         "events": "Events",
         "products": "Products",
         "services": "Services",
@@ -1892,8 +1927,8 @@
         "failedOTPConfirmRequest": "OTP Code confirmation failed :(",
         "setNameAndImage": "Please set your name and image before proceeding"
       },
-      "SideMenuDrawerController" : {
-        "contactAdmin" : "Contact Admin"
+      "SideMenuDrawerController": {
+        "contactAdmin": "Contact Admin"
       }
     },
     "models": {
@@ -1947,8 +1982,8 @@
         "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
-        "closed" :"Closed",
-        "closedSubtitle" : "Sorry, the service you are looking for is currently closed.",
+        "closed": "Closed",
+        "closedSubtitle": "Sorry, the service you are looking for is currently closed.",
         "added": "Added",
         "addedTitle": "Your information has been added",
         "saved": "Saved",
@@ -2023,7 +2058,7 @@
         "privacyPolicies": "Privacy Policies",
         "logout": "Logout",
         "openService": "Open service",
-        "closeService": "Close service",
+        "closeService": "Close forever",
         "serviceClosed": "Service is closed indefinitely",
         "serviceUnderReview": "Your service is under review, you’ll be notified, once it’s approved."
       },
@@ -2540,7 +2575,7 @@
         "login": "Login",
         "language": "Language",
         "contact": "Contact us",
-        "contactAdmin" : "Contact Admin",
+        "contactAdmin": "Contact Admin",
         "logout": "Logout",
         "legal": "Privacy policy"
       }

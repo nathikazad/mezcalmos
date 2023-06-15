@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           height: Get.height * 0.06,
                         ),
                         Text(
-                          "MEZCALMOS",
+                          "MEZKALA",
                           style: TextStyle(fontSize: 45, color: Colors.white),
                         ),
                       ],

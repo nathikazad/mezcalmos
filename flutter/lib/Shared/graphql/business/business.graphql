@@ -66,12 +66,6 @@ query get_business_by_id($id: Int!) {
         }
         position
       }
-      home_rental {
-        bathrooms
-        bedrooms
-        gps_location
-        home_type
-      }
     }
     products {
       id
@@ -127,6 +121,37 @@ query get_business_by_id($id: Int!) {
         }
       }
     }
+    home {
+      details {
+        name_id
+        description_id
+        id
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+        additional_parameters
+        available
+        category1
+        category2
+        cost
+        image
+        position
+        tags
+      }
+      id
+      bathrooms
+      bedrooms
+      location {
+        address
+        gps
+        name
+      }
+      available_for
+      offering_type
+    }
   }
 }
 
@@ -148,6 +173,58 @@ query get_business_by_rental_category1(
           open_status: { _neq: "closedIndefinitely" }
         }
         rentals: { details: { category1: { _in: $categories1 } } }
+      }
+    }
+    offset: $offset
+    limit: $limit
+    order_by: { details: { referral_points: desc_nulls_last } }
+  ) {
+    id
+    details {
+      id
+      accepted_payments
+      image
+      name
+      currency
+      location {
+        address
+        gps
+      }
+    }
+    reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+        count
+      }
+    }
+  }
+}
+
+query get_business_by_home(
+  $distance: Float!
+  $from: geography!
+  $offset: Int
+  $limit: Int
+  $homeType: String!
+) {
+  business_business(
+    where: {
+      _and: {
+        details: {
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+        }
+        home: {
+          _and: {
+            id: { _is_null: false }
+            available_for: { _eq: $homeType }
+            location: {
+              gps: { _st_d_within: { distance: $distance, from: $from } }
+            }
+          }
+        }
       }
     }
     offset: $offset
@@ -363,8 +440,9 @@ query get_business_lang($id: Int!) {
       language
     }
   }
-}query get_business_id_from_details_id( $businessDetailsId: Int!) {
-
-  business_business(where: {details_id: {_eq: $businessDetailsId}})
-{id}
+}
+query get_business_id_from_details_id($businessDetailsId: Int!) {
+  business_business(where: { details_id: { _eq: $businessDetailsId } }) {
+    id
+  }
 }

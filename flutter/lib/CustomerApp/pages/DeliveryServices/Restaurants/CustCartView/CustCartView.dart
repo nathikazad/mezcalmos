@@ -47,6 +47,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint(
+        "🇲🇽 View cart screen is building=======>${viewController.cart.restaurant?.isOpen}");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: MezcalmosAppBar(

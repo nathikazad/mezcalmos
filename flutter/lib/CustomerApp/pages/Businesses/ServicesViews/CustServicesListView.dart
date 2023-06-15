@@ -113,13 +113,13 @@ class _CustServicesListViewState extends State<CustServicesListView> {
         case ServiceCategory1.Uncategorized:
           return Icons.cleaning_services;
         case ServiceCategory1.Photography:
-          return Icons.cleaning_services;
+          return Icons.photo_camera;
 
         case ServiceCategory1.Tattoo:
-          return Icons.cleaning_services;
+          return Icons.brush;
 
         case ServiceCategory1.Beauty:
-          return Icons.cleaning_services;
+          return Icons.auto_awesome;
       }
     }
 

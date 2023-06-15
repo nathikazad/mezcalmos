@@ -18,6 +18,10 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+class AppleSignInCreds {
+  static String? appleName;
+}
+
 Future<void> signUp(String email, String password) async {
   try {
     await fireAuth.FirebaseAuth.instance
@@ -192,6 +196,14 @@ Future<void> signInWithApple() async {
         );
       }
     }));
+
+    if (appleCredential.givenName != null ||
+        appleCredential.familyName != null) {
+      AppleSignInCreds.appleName =
+          ("${appleCredential.givenName} ${appleCredential.familyName}")
+              .trimRight();
+    }
+    mezDbgPrint("💞💞💞💞💞 ${AppleSignInCreds.appleName}");
   } catch (exception) {
     mezDbgPrint(exception);
     MezSnackbar("Notice ~", "Failed SignIn with Apple !");

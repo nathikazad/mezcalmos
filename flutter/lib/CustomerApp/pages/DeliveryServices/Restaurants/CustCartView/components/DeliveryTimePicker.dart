@@ -78,7 +78,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
               child: Text(
                   "(${widget.periodOfTime!.toNormalString(format: DateFormat.MMMd(userLangCode))})"),
             ),
-          if (widget.isServiceOpen != false)
+          if (widget.isServiceOpen == false)
             Container(
               margin: const EdgeInsets.only(
                 top: 5,

@@ -13,6 +13,13 @@ array_relationships:
         table:
           name: event
           schema: business
+  - name: home
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: home
+          schema: business
   - name: operators
     using:
       foreign_key_constraint_on:
