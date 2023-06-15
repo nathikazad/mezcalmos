@@ -237,11 +237,11 @@ class CustBusinessCartController extends GetxController {
     switch (item.offeringType) {
       case OfferingType.Home:
         await CustHomeRentalView.navigate(
-          rentalId: item.rental!.id!.toInt(),
+          rentalId: item.home!.id!.toInt(),
           cartId: item.id!.toInt(),
           timeCost: {
             item.parameters.timeUnit!:
-                item.rental!.details.cost[item.parameters.timeUnit!]!,
+                item.home!.details.cost[item.parameters.timeUnit!]!,
           },
           duration: item.parameters.numberOfUnits!.toInt(),
           guestCount: item.parameters.guests!.toInt(),

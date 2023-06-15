@@ -74,6 +74,16 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       image: data.home!.business!.details.image,
                     ),
                     home: Home(
+                      id: data.home!.id,
+                      bathrooms: data.home!.bathrooms,
+                      bedrooms: data.home!.bedrooms,
+                      gpsLocation: data.home!.location?.gps != null
+                          ? Location(
+                              lat: data.home!.location!.gps.latitude,
+                              lng: data.home!.location!.gps.longitude,
+                              address: data.home!.location!.address,
+                            )
+                          : null,
                       location: HomeLocation(
                         name: data.home!.location!.name,
                         location: Location(
