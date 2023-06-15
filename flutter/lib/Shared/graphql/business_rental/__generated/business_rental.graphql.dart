@@ -24459,6 +24459,747 @@ class _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$lo
       _res;
 }
 
+class Variables$Mutation$update_home_location {
+  factory Variables$Mutation$update_home_location({
+    required int id,
+    required String address,
+    required Geography gps,
+    required String name,
+  }) =>
+      Variables$Mutation$update_home_location._({
+        r'id': id,
+        r'address': address,
+        r'gps': gps,
+        r'name': name,
+      });
+
+  Variables$Mutation$update_home_location._(this._$data);
+
+  factory Variables$Mutation$update_home_location.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$address = data['address'];
+    result$data['address'] = (l$address as String);
+    final l$gps = data['gps'];
+    result$data['gps'] = geographyFromJson(l$gps);
+    final l$name = data['name'];
+    result$data['name'] = (l$name as String);
+    return Variables$Mutation$update_home_location._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  String get address => (_$data['address'] as String);
+  Geography get gps => (_$data['gps'] as Geography);
+  String get name => (_$data['name'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$address = address;
+    result$data['address'] = l$address;
+    final l$gps = gps;
+    result$data['gps'] = geographyToJson(l$gps);
+    final l$name = name;
+    result$data['name'] = l$name;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_home_location<
+          Variables$Mutation$update_home_location>
+      get copyWith => CopyWith$Variables$Mutation$update_home_location(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_home_location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$address = address;
+    final l$gps = gps;
+    final l$name = name;
+    return Object.hashAll([
+      l$id,
+      l$address,
+      l$gps,
+      l$name,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_home_location<TRes> {
+  factory CopyWith$Variables$Mutation$update_home_location(
+    Variables$Mutation$update_home_location instance,
+    TRes Function(Variables$Mutation$update_home_location) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_home_location;
+
+  factory CopyWith$Variables$Mutation$update_home_location.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_home_location;
+
+  TRes call({
+    int? id,
+    String? address,
+    Geography? gps,
+    String? name,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_home_location<TRes>
+    implements CopyWith$Variables$Mutation$update_home_location<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_home_location(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_home_location _instance;
+
+  final TRes Function(Variables$Mutation$update_home_location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? address = _undefined,
+    Object? gps = _undefined,
+    Object? name = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_home_location._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (address != _undefined && address != null)
+          'address': (address as String),
+        if (gps != _undefined && gps != null) 'gps': (gps as Geography),
+        if (name != _undefined && name != null) 'name': (name as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_home_location<TRes>
+    implements CopyWith$Variables$Mutation$update_home_location<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_home_location(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? address,
+    Geography? gps,
+    String? name,
+  }) =>
+      _res;
+}
+
+class Mutation$update_home_location {
+  Mutation$update_home_location({
+    this.update_business_home_location_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_location.fromJson(Map<String, dynamic> json) {
+    final l$update_business_home_location_by_pk =
+        json['update_business_home_location_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_location(
+      update_business_home_location_by_pk:
+          l$update_business_home_location_by_pk == null
+              ? null
+              : Mutation$update_home_location$update_business_home_location_by_pk
+                  .fromJson((l$update_business_home_location_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_home_location$update_business_home_location_by_pk?
+      update_business_home_location_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_home_location_by_pk =
+        update_business_home_location_by_pk;
+    _resultData['update_business_home_location_by_pk'] =
+        l$update_business_home_location_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_home_location_by_pk =
+        update_business_home_location_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_home_location_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_home_location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_home_location_by_pk =
+        update_business_home_location_by_pk;
+    final lOther$update_business_home_location_by_pk =
+        other.update_business_home_location_by_pk;
+    if (l$update_business_home_location_by_pk !=
+        lOther$update_business_home_location_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_location
+    on Mutation$update_home_location {
+  CopyWith$Mutation$update_home_location<Mutation$update_home_location>
+      get copyWith => CopyWith$Mutation$update_home_location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_location<TRes> {
+  factory CopyWith$Mutation$update_home_location(
+    Mutation$update_home_location instance,
+    TRes Function(Mutation$update_home_location) then,
+  ) = _CopyWithImpl$Mutation$update_home_location;
+
+  factory CopyWith$Mutation$update_home_location.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_location;
+
+  TRes call({
+    Mutation$update_home_location$update_business_home_location_by_pk?
+        update_business_home_location_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+      TRes> get update_business_home_location_by_pk;
+}
+
+class _CopyWithImpl$Mutation$update_home_location<TRes>
+    implements CopyWith$Mutation$update_home_location<TRes> {
+  _CopyWithImpl$Mutation$update_home_location(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_location _instance;
+
+  final TRes Function(Mutation$update_home_location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_home_location_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_home_location(
+        update_business_home_location_by_pk: update_business_home_location_by_pk ==
+                _undefined
+            ? _instance.update_business_home_location_by_pk
+            : (update_business_home_location_by_pk
+                as Mutation$update_home_location$update_business_home_location_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+      TRes> get update_business_home_location_by_pk {
+    final local$update_business_home_location_by_pk =
+        _instance.update_business_home_location_by_pk;
+    return local$update_business_home_location_by_pk == null
+        ? CopyWith$Mutation$update_home_location$update_business_home_location_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_home_location$update_business_home_location_by_pk(
+            local$update_business_home_location_by_pk,
+            (e) => call(update_business_home_location_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_home_location<TRes>
+    implements CopyWith$Mutation$update_home_location<TRes> {
+  _CopyWithStubImpl$Mutation$update_home_location(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_home_location$update_business_home_location_by_pk?
+        update_business_home_location_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+          TRes>
+      get update_business_home_location_by_pk =>
+          CopyWith$Mutation$update_home_location$update_business_home_location_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_home_location = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_home_location'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'address')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'gps')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'name')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_home_location_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'address'),
+                value: VariableNode(name: NameNode(value: 'address')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'gps'),
+                value: VariableNode(name: NameNode(value: 'gps')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'name'),
+                value: VariableNode(name: NameNode(value: 'name')),
+              ),
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'gps'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_home_location _parserFn$Mutation$update_home_location(
+        Map<String, dynamic> data) =>
+    Mutation$update_home_location.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_home_location = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_home_location?,
+);
+
+class Options$Mutation$update_home_location
+    extends graphql.MutationOptions<Mutation$update_home_location> {
+  Options$Mutation$update_home_location({
+    String? operationName,
+    required Variables$Mutation$update_home_location variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_home_location? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_home_location>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_home_location(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_home_location,
+          parserFn: _parserFn$Mutation$update_home_location,
+        );
+
+  final OnMutationCompleted$Mutation$update_home_location?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_home_location
+    extends graphql.WatchQueryOptions<Mutation$update_home_location> {
+  WatchOptions$Mutation$update_home_location({
+    String? operationName,
+    required Variables$Mutation$update_home_location variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_home_location,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_home_location,
+        );
+}
+
+extension ClientExtension$Mutation$update_home_location
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_home_location>>
+      mutate$update_home_location(
+              Options$Mutation$update_home_location options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_home_location>
+      watchMutation$update_home_location(
+              WatchOptions$Mutation$update_home_location options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_home_location$update_business_home_location_by_pk {
+  Mutation$update_home_location$update_business_home_location_by_pk({
+    required this.id,
+    required this.name,
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_location$update_business_home_location_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_location$update_business_home_location_by_pk(
+      id: (l$id as int),
+      name: (l$name as String),
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String name;
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_location$update_business_home_location_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_location$update_business_home_location_by_pk
+    on Mutation$update_home_location$update_business_home_location_by_pk {
+  CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+          Mutation$update_home_location$update_business_home_location_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$update_home_location$update_business_home_location_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$update_home_location$update_business_home_location_by_pk(
+    Mutation$update_home_location$update_business_home_location_by_pk instance,
+    TRes Function(
+            Mutation$update_home_location$update_business_home_location_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_location$update_business_home_location_by_pk;
+
+  factory CopyWith$Mutation$update_home_location$update_business_home_location_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_location$update_business_home_location_by_pk;
+
+  TRes call({
+    int? id,
+    String? name,
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_home_location$update_business_home_location_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_location$update_business_home_location_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_location$update_business_home_location_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$update_home_location$update_business_home_location_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_home_location$update_business_home_location_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_home_location$update_business_home_location_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_location$update_business_home_location_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? name,
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$get_business_rentals {
   factory Variables$Query$get_business_rentals({
     int? limit,

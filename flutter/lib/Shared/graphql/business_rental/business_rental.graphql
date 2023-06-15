@@ -527,6 +527,23 @@ mutation update_home_by_id($id: Int!, $object: business_home_set_input) {
   }
 }
 
+mutation update_home_location(
+  $id: Int!
+  $address: String!
+  $gps: geography!
+  $name: String!
+) {
+  update_business_home_location_by_pk(
+    pk_columns: { id: $id }
+    _set: { address: $address, gps: $gps, name: $name }
+  ) {
+    id
+    name
+    gps
+    address
+  }
+}
+
 query get_business_rentals($limit: Int, $offset: Int, $businessId: Int!) {
   business_rental(
     where: {

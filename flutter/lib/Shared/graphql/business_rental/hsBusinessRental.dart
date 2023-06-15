@@ -736,20 +736,38 @@ Future<Home?> update_business_home_rental(
       ),
     ),
   );
-  if (res.hasException) {
+  final QueryResult<Mutation$update_home_location> res2 =
+      await _db.graphQLClient.mutate$update_home_location(
+    Options$Mutation$update_home_location(
+      variables: Variables$Mutation$update_home_location(
+        id: id,
+        address: rental.location.location.address,
+        name: rental.location.name,
+        gps: Geography(
+          rental.location.location.lat.toDouble(),
+          rental.location.location.lng.toDouble(),
+        ),
+      ),
+    ),
+  );
+  if (res.hasException || res2.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data}");
     throwError(res.exception);
-  } else if (res.parsedData?.update_business_home_by_pk != null) {
+  } else if (res.parsedData?.update_business_home_by_pk != null ||
+      res2.parsedData?.update_business_home_location_by_pk != null) {
     final Mutation$update_home_by_id$update_business_home_by_pk data =
         res.parsedData!.update_business_home_by_pk!;
     return Home(
       location: HomeLocation(
-        name: data.location!.name,
+        name: res2.parsedData!.update_business_home_location_by_pk!.name,
         location: Location(
-          lat: data.location!.gps.latitude,
-          lng: data.location!.gps.longitude,
-          address: data.location!.address,
+          lat: res2
+              .parsedData!.update_business_home_location_by_pk!.gps.latitude,
+          lng: res2
+              .parsedData!.update_business_home_location_by_pk!.gps.longitude,
+          address:
+              res2.parsedData!.update_business_home_location_by_pk!.address,
         ),
       ),
       availableFor: data.available_for.toHomeAvailabilityOption(),
@@ -771,9 +789,10 @@ Future<Home?> update_business_home_rental(
       bathrooms: data.bathrooms,
       bedrooms: data.bedrooms,
       gpsLocation: Location(
-        lat: data.location!.gps.latitude,
-        lng: data.location!.gps.longitude,
-        address: data.location!.address,
+        lat: res2.parsedData!.update_business_home_location_by_pk!.gps.latitude,
+        lng:
+            res2.parsedData!.update_business_home_location_by_pk!.gps.longitude,
+        address: res2.parsedData!.update_business_home_location_by_pk!.address,
       ),
     );
   }
