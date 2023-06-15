@@ -24,6 +24,8 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/env.dart';
+import 'package:mezcalmos/BusinessApp/pages/Components/BsHomeRentalCard.dart'
+    as homeCard;
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -729,8 +731,18 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   }
 
   Widget _homeRentals(BuildContext context) {
-    return viewController.homeRentals.length > 0
-        ? Column(
+    final RxList<HomeCard> homeRentals = viewController.homeRentals
+        .where((e) => e.availableFor == HomeAvailabilityOption.Rent)
+        .toList()
+        .obs;
+    final RxList<HomeCard> realEstate = viewController.homeRentals
+        .where((e) => e.availableFor == HomeAvailabilityOption.Sale)
+        .toList()
+        .obs;
+    return Column(
+      children: [
+        if (homeRentals.isNotEmpty)
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -741,22 +753,47 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
               Obx(
                 () => Column(
                   children: List.generate(
-                      viewController.homeRentals.length,
-                      (int index) => BsHomeRentalCard(
-                            rental: viewController.homeRentals[index],
+                      homeRentals.length,
+                      (int index) => homeCard.BsHomeRentalCard(
+                            home: homeRentals[index],
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToHomeRental(
-                                  id: viewController.homeRentals[index].id!
-                                      .toInt());
+                                  id: homeRentals[index].id!.toInt());
                             },
                           )),
                 ),
               ),
               bigSeperator,
             ],
-          )
-        : SizedBox.shrink();
+          ),
+        if (realEstate.isNotEmpty)
+          Column(
+            children: [
+              Text(
+                "Real Estate",
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      realEstate.length,
+                      (int index) => homeCard.BsHomeRentalCard(
+                            home: realEstate[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToHomeRental(
+                                  id: realEstate[index].id!.toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
+      ],
+    );
   }
 
   MezButton _addServiceButton(BuildContext context) {

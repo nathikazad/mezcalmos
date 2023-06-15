@@ -1,26 +1,7 @@
 table:
   name: home_rental
   schema: business
-object_relationships:
-  - name: rental
-    using:
-      foreign_key_constraint_on: rental_id
 insert_permissions:
-  - role: business_operator
-    permission:
-      check:
-        rental:
-          business:
-            operators:
-              user_id:
-                _eq: X-Hasura-User-Id
-      columns:
-        - gps_location
-        - bathrooms
-        - bedrooms
-        - rental_id
-        - address
-        - home_type
   - role: mez_admin
     permission:
       check:
@@ -35,7 +16,7 @@ insert_permissions:
         - gps_location
         - bathrooms
         - bedrooms
-        - rental_id
+        - id
         - address
         - home_type
 select_permissions:
@@ -45,31 +26,16 @@ select_permissions:
         - gps_location
         - bathrooms
         - bedrooms
-        - rental_id
+        - id
         - address
         - home_type
       filter: {}
       allow_aggregations: true
-  - role: business_operator
-    permission:
-      columns:
-        - gps_location
-        - bathrooms
-        - bedrooms
-        - rental_id
-        - address
-        - home_type
-      filter:
-        rental:
-          business:
-            operators:
-              user_id:
-                _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
         - address
-        - rental_id
+        - id
         - bedrooms
         - bathrooms
         - gps_location
@@ -82,7 +48,7 @@ select_permissions:
         - gps_location
         - bathrooms
         - bedrooms
-        - rental_id
+        - id
         - address
         - home_type
       filter:
@@ -94,21 +60,6 @@ select_permissions:
             user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
-  - role: business_operator
-    permission:
-      columns:
-        - address
-        - bathrooms
-        - bedrooms
-        - gps_location
-        - home_type
-      filter:
-        rental:
-          business:
-            operators:
-              user_id:
-                _eq: X-Hasura-User-Id
-      check: null
   - role: mez_admin
     permission:
       columns:
@@ -134,14 +85,6 @@ update_permissions:
             user_id:
               _eq: X-Hasura-User-Id
 delete_permissions:
-  - role: business_operator
-    permission:
-      filter:
-        rental:
-          business:
-            operators:
-              user_id:
-                _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       filter:

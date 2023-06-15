@@ -42,6 +42,7 @@ class BusinessCartItem {
   bool? available;
   BusinessItemDetails? item;
   num? orderRequestId;
+  HomeWithBusinessCard? home;
   RentalWithBusinessCard? rental;
   EventWithBusinessCard? event;
   ServiceWithBusinessCard? service;
@@ -56,6 +57,7 @@ class BusinessCartItem {
       this.time,
       this.available,
       this.item,
+      this.home,
       this.rental,
       this.event,
       this.service,

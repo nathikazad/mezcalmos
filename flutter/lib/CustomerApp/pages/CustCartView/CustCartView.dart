@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/EventCartItemCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/HomeCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ProductCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/RentalCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ServiceCartItemCard.dart';
@@ -75,6 +76,12 @@ class _CustCartViewState extends State<CustCartView> {
                             final int index = data.key;
                             final BusinessCartItem item = data.value;
                             switch (item.offeringType) {
+                              case OfferingType.Home:
+                                return HomeCartItemCard(
+                                  index: index,
+                                  item: item,
+                                  controller: custBusinessCartController,
+                                );
                               case OfferingType.Rental:
                                 return RentalCartItemCard(
                                   index: index,

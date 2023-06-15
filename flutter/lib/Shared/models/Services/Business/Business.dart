@@ -46,11 +46,26 @@ class RentalCard extends Rental {
   }) : super(
           category1: rental.category1,
           details: rental.details,
-          bathrooms: rental.bathrooms,
-          bedrooms: rental.bedrooms,
-          homeType: rental.homeType,
-          gpsLocation: rental.gpsLocation,
           id: rental.id,
+        );
+}
+
+class HomeCard extends Home {
+  final String businessName;
+  final Currency currency;
+  HomeCard({
+    required Home home,
+    required this.businessName,
+    required this.currency,
+  }) : super(
+          category1: home.category1,
+          details: home.details,
+          id: home.id,
+          availableFor: home.availableFor,
+          location: home.location,
+          bathrooms: home.bathrooms,
+          bedrooms: home.bedrooms,
+          gpsLocation: home.gpsLocation,
         );
 }
 
@@ -121,11 +136,24 @@ class RentalWithBusinessCard extends Rental {
           category2: rental.category2,
           category3: rental.category3,
           details: rental.details,
-          bathrooms: rental.bathrooms,
-          bedrooms: rental.bedrooms,
-          homeType: rental.homeType,
-          gpsLocation: rental.gpsLocation,
           id: rental.id,
+        );
+}
+
+class HomeWithBusinessCard extends Home {
+  final BusinessCard business;
+  HomeWithBusinessCard({
+    required Home home,
+    required this.business,
+  }) : super(
+          id: home.id,
+          availableFor: home.availableFor,
+          category1: home.category1,
+          details: home.details,
+          location: home.location,
+          bathrooms: home.bathrooms,
+          bedrooms: home.bedrooms,
+          gpsLocation: home.gpsLocation,
         );
 }
 

@@ -195,6 +195,7 @@ class CustBusinessCartController extends GetxController {
         return requestData.success;
       }
     } catch (e) {
+      mezDbgPrint("requestOrder ===> $e");
       return null;
     }
     return null;
@@ -234,21 +235,20 @@ class CustBusinessCartController extends GetxController {
 
   Future<void> editCartItem(BusinessCartItem item) async {
     switch (item.offeringType) {
+      case OfferingType.Home:
+        await CustHomeRentalView.navigate(
+          rentalId: item.home!.id!.toInt(),
+          cartId: item.id!.toInt(),
+          timeCost: {
+            item.parameters.timeUnit!:
+                item.home!.details.cost[item.parameters.timeUnit!]!,
+          },
+          duration: item.parameters.numberOfUnits!.toInt(),
+          guestCount: item.parameters.guests!.toInt(),
+          startDate: DateTime.parse(item.time!),
+        );
+        return;
       case OfferingType.Rental:
-        if (item.rental!.category1 == RentalCategory1.Home) {
-          await CustHomeRentalView.navigate(
-            rentalId: item.rental!.id!.toInt(),
-            cartId: item.id!.toInt(),
-            timeCost: {
-              item.parameters.timeUnit!:
-                  item.rental!.details.cost[item.parameters.timeUnit!]!,
-            },
-            duration: item.parameters.numberOfUnits!.toInt(),
-            guestCount: item.parameters.guests!.toInt(),
-            startDate: DateTime.parse(item.time!),
-          );
-          return;
-        }
         return;
       case OfferingType.Event:
         // TODO: Handle this case.
