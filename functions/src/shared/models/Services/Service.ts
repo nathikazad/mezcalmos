@@ -24,7 +24,6 @@ export interface ServiceProvider {
   creationTime?: string;
   language: ServiceProviderLanguage;
   schedule?: Schedule;
-  deliveryPartnerId?: number;
   deliveryDetails: DeliveryDetails;
   operators?: Array<Operator>;
   serviceProviderType: ServiceProviderType;

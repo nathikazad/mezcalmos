@@ -45,7 +45,7 @@ export async function createLaundryOrder(
                 discount_value: laundryRequestDetails.discountValue ?? undefined,
                 customer_location_gps: $`customer_location_gps`,
                 customer_address: laundryRequestDetails.customerLocation.address,
-                delivery_cost: laundryRequestDetails.deliveryCost,
+                // delivery_cost: laundryRequestDetails.deliveryCost,
                 status: LaundryOrderStatus.OrderReceived,
                 chat: {
                     data: {
@@ -86,13 +86,15 @@ export async function createLaundryOrder(
                                 }
                             }
                         },
+                        customer_offer: laundryRequestDetails.fromCustomerDeliveryOffer,
+                        chosen_companies: laundryRequestDetails.chosenCompanies,
                         payment_type: laundryRequestDetails.paymentType,
-                        delivery_cost: laundryRequestDetails.deliveryCost / 2,
+                        // delivery_cost: laundryRequestDetails.deliveryCost / 2,
                         direction : DeliveryDirection.FromCustomer,
                         status: DeliveryOrderStatus.OrderReceived,
                         service_provider_id: (laundryStore.deliveryDetails.selfDelivery) 
                             ? laundryStore.id 
-                            : laundryStore.deliveryPartnerId,
+                            : undefined,
                         service_provider_type: (laundryStore.deliveryDetails.selfDelivery) 
                             ? DeliveryServiceProviderType.Laundry
                             : DeliveryServiceProviderType.DeliveryCompany,
@@ -143,7 +145,7 @@ export async function createLaundryOrder(
         stripeFees: laundryRequestDetails.stripeFees,
         discountValue: laundryRequestDetails.discountValue,
         customerLocation: laundryRequestDetails.customerLocation,
-        deliveryCost: laundryRequestDetails.deliveryCost,
+        deliveryCost: 0,
         status: LaundryOrderStatus.OrderReceived,
         chatId: response.insert_laundry_order_one.chat_id
     }
@@ -165,14 +167,21 @@ export async function createLaundryOrder(
                 paymentType: laundryRequestDetails.paymentType,
                 status: DeliveryOrderStatus.OrderReceived,
                 customerId: customerId,
-                deliveryCost: laundryRequestDetails.deliveryCost / 2,
+                deliveryCost: 0,
                 packageCost: 0,
+                notifiedDrivers: [],
+                customerOffer: laundryRequestDetails.fromCustomerDeliveryOffer,
+                chosenCompanies: laundryRequestDetails.chosenCompanies,
                 orderTime: response.insert_laundry_order_one.order_time,
                 tripDistance : laundryRequestDetails.tripDistance,
                 tripDuration : laundryRequestDetails.tripDuration,
                 tripPolyline : laundryRequestDetails.tripPolyline,
-                serviceProviderType: DeliveryServiceProviderType.Laundry,
-                serviceProviderId: laundryStore.id!,
+                serviceProviderType: (laundryStore.deliveryDetails.selfDelivery == false) 
+                    ? DeliveryServiceProviderType.DeliveryCompany 
+                    : DeliveryServiceProviderType.Laundry,
+                serviceProviderId: (laundryStore.deliveryDetails.selfDelivery == false) 
+                    ? undefined 
+                    : laundryStore.id,
                 direction: DeliveryDirection.FromCustomer,
                 packageReady: true,
                 distanceFromBase: laundryRequestDetails.distanceFromBase
@@ -191,17 +200,20 @@ export async function createLaundryOrder(
             paymentType: laundryRequestDetails.paymentType,
             status: DeliveryOrderStatus.OrderReceived,
             customerId: customerId,
-            deliveryCost: laundryRequestDetails.deliveryCost,
+            notifiedDrivers: [],
+            customerOffer: laundryRequestDetails.fromCustomerDeliveryOffer,
+            chosenCompanies: laundryRequestDetails.chosenCompanies,
+            deliveryCost: 0,
             packageCost: 0,
             orderTime: response.insert_laundry_order_one.order_time,
             tripDistance : laundryRequestDetails.tripDistance,
             tripDuration : laundryRequestDetails.tripDuration,
             tripPolyline : laundryRequestDetails.tripPolyline,
-            serviceProviderType: (laundryStore.deliveryDetails.selfDelivery == false && laundryStore.deliveryPartnerId) 
+            serviceProviderType: (laundryStore.deliveryDetails.selfDelivery == false) 
                 ? DeliveryServiceProviderType.DeliveryCompany 
                 : DeliveryServiceProviderType.Laundry,
-            serviceProviderId: (laundryStore.deliveryDetails.selfDelivery == false && laundryStore.deliveryPartnerId) 
-                ? laundryStore.deliveryPartnerId 
+            serviceProviderId: (laundryStore.deliveryDetails.selfDelivery == false) 
+                ? undefined
                 : laundryStore.id,
             direction: DeliveryDirection.FromCustomer,
             packageReady: false,

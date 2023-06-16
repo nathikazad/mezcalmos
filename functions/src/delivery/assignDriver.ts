@@ -34,6 +34,7 @@ export enum AssignDriverError {
   ServiceProviderDeliveryChatNotFound = "serviceProviderDeliveryChatNotFound",
   DriverAlreadyAssigned = "driverAlreadyAssigned",
   IncorrectOrderId = "incorrectOrderId",
+  NoCustomerOffer = "noCustomerOffer",
 }
 
 export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails): Promise<AssignDriverResponse> {
@@ -65,17 +66,23 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
         throw new MezError(AssignDriverError.DriverAlreadyAssigned);
       }
     }
-
+    if(deliveryOrder.customerOffer == null) {
+      throw new MezError(AssignDriverError.NoCustomerOffer);
+    }
+    deliveryOrder.deliveryCost = deliveryOrder.customerOffer;
     for (let driverId in deliveryOrder.counterOffers) {
       if(parseInt(driverId) != assignDriverDetails.deliveryDriverId) {
         deliveryOrder.counterOffers[parseInt(driverId)].status = CounterOfferStatus.Rejected;
       } else {
         deliveryOrder.counterOffers[parseInt(driverId)].status = CounterOfferStatus.Accepted;
+        deliveryOrder.deliveryCost = deliveryOrder.counterOffers[parseInt(driverId)].price;
       }
     }
     await assignDeliveryDriver(deliveryOrder, deliveryDriver);
 
     setDeliveryChatInfo(deliveryOrder, deliveryDriver, deliveryOrder.orderType);
+
+    
     
     if( deliveryDriver.userId != userId)
       sendNotificationToDriver(deliveryDriver, deliveryOrder);

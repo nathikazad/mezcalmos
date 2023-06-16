@@ -39,16 +39,6 @@ export const deliveryDriverChangeMessage: BackgroundNotification =
 }
 
 export const deliveryOrderStatusChangeMessages: { [id in DeliveryOrderStatus]: BackgroundNotification } = {
-  [DeliveryOrderStatus.LookingForDriver]: {
-    [Language.EN]: {
-      title: "",
-      body: ""
-    },
-    [Language.ES]: {
-      title: "",
-      body: ""
-    }
-  },
   [DeliveryOrderStatus.OnTheWayToPickup]: {
     [Language.EN]: {
       title: "",

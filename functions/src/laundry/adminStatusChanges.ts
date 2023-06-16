@@ -17,9 +17,9 @@ import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDeli
 import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { setLaundryToCustomerDeliveryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { createLaundryToCustomerDeliveryOrder } from "../shared/graphql/delivery/createDelivery";
-import { notifyDeliveryCompany } from "../shared/helper";
 import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
 import { ServiceProvider } from "../shared/models/Services/Service";
+import { notifyDeliveryDrivers } from "../shared/helper";
 
 interface ChangeStatusDetails {
   orderId: number,
@@ -95,7 +95,7 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
         setLaundryToCustomerDeliveryOrderChatInfo(order, laundryStore, toCustomerDeliveryOrder, customer);
 
         if(laundryStore.deliveryDetails.selfDelivery == false)
-          notifyDeliveryCompany(toCustomerDeliveryOrder);
+          notifyDeliveryDrivers(toCustomerDeliveryOrder);
         notify(customer);
       } else {
         fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;

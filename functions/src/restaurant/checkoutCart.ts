@@ -16,14 +16,14 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
-import { updateDeliveryOrderCompany } from '../shared/graphql/delivery/updateDelivery';
 import { ServiceProvider } from '../shared/models/Services/Service';
-import { notifyDeliveryCompany } from '../shared/helper';
+import { notifyDeliveryDrivers } from '../shared/helper';
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
   customerLocation: Location,
-  deliveryCost: number,
+  customerDeliveryOffer?: number,
+  chosenCompanies?: Array<number>,
   paymentType: PaymentType,
   notes?: string,
   restaurantId: number,
@@ -82,8 +82,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
 
-      updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, restaurant.deliveryPartnerId!);
-      notifyDeliveryCompany(orderResponse.deliveryOrder);
+      notifyDeliveryDrivers(orderResponse.deliveryOrder);
     }
     
     if(checkoutRequest.paymentType == PaymentType.Card) {
@@ -136,16 +135,8 @@ function errorChecks(restaurant: ServiceProvider, checkoutRequest: CheckoutReque
     throw new MezError(CheckoutResponseError.CartEmpty);
 
   }
-  if(checkoutRequest.deliveryType == undefined || checkoutRequest.deliveryType == DeliveryType.Delivery) {
-    if(restaurant.deliveryDetails.deliveryAvailable) {
-      if(restaurant.deliveryDetails.selfDelivery == false) {
-        if(restaurant.deliveryPartnerId == null) {
-          throw new MezError(CheckoutResponseError.NoDeliveryPartner);
-        }
-      }
-    } else {
-      throw new MezError(CheckoutResponseError.NotAcceptingDeliveryOrders);
-    }
+  if(checkoutRequest.deliveryType != DeliveryType.Pickup && restaurant.deliveryDetails.deliveryAvailable == false) {
+    throw new MezError(CheckoutResponseError.NotAcceptingDeliveryOrders);
   }
 }
 

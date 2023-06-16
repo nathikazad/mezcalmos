@@ -99,7 +99,6 @@ export enum CounterOfferStatus {
 }
 export enum DeliveryOrderStatus {
   OrderReceived = "orderReceived",
-  LookingForDriver = "lookingForDriver",
   OnTheWayToPickup = "onTheWayToPickup",
 
   AtPickup = "atPickup",

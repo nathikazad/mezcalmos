@@ -1,10 +1,9 @@
 import { setLaundryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
-import { updateDeliveryOrderCompany } from "../shared/graphql/delivery/updateDelivery";
 import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
 import { createLaundryOrder } from "../shared/graphql/laundry/order/createLaundryOrder";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
-import { notifyDeliveryCompany } from "../shared/helper";
+import { notifyDeliveryDrivers } from "../shared/helper";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { CustomerAppType, Language, Location, MezError } from "../shared/models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
@@ -21,7 +20,8 @@ export interface LaundryRequestDetails {
     paymentType: PaymentType,  
     deliveryType: DeliveryType,
     customerLocation: Location,
-    deliveryCost: number,
+    fromCustomerDeliveryOffer?: number;
+    chosenCompanies?: Array<number>,
     customerAppType: CustomerAppType,
     notes?: string,
     tax?: number,
@@ -77,8 +77,7 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
         // assign delivery company 
         if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
 
-            updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
-            notifyDeliveryCompany(orderResponse.fromCustomerDeliveryOrder)
+            notifyDeliveryDrivers(orderResponse.fromCustomerDeliveryOrder);
         }
 
         notify(orderResponse.laundryOrder, laundryStore, mezAdmins);
@@ -124,16 +123,8 @@ function errorChecks(laundryStore: ServiceProvider, laundryRequestDetails: Laund
     if(laundryStore.openStatus != "open") {
         throw new MezError(ReqLaundryError.StoreClosed);
     }
-    if(laundryRequestDetails.deliveryType == DeliveryType.Delivery) {
-        if(laundryStore.deliveryDetails.deliveryAvailable) {
-            if(!(laundryStore.deliveryDetails.selfDelivery)) {
-                if(laundryStore.deliveryPartnerId == null) {
-                    throw new MezError(ReqLaundryError.NoDeliveryPartner);
-                }
-            }
-        } else {
-            throw new MezError(ReqLaundryError.DeliveryNotAvailable);
-        }
+    if(laundryRequestDetails.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.deliveryAvailable == false) {
+        throw new MezError(ReqLaundryError.DeliveryNotAvailable);
     }
 }
 async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {

@@ -33,7 +33,7 @@ export enum CounterOfferError {
     DriverNotFound = "driverNotFound",
     DriverAlreadyAssigned = "driverAlreadyAssigned",
     InvalidDriverId = "invalidDriverId",
-    StatusNotLookingForDriver = "statusNotLookingForDriver",
+    StatusNotOrderReceived = "statusNotOrderReceived",
     DriverUnAuthorized = "driverUnAuthorized",
     DriverCompanyNotChosen = "driverCompanyNotChosen",
     CustomerNotFound = "customerNotFound",
@@ -86,8 +86,8 @@ function counterOfferErrorCheck(deliveryOrder: DeliveryOrder, deliveryDriver: De
     if(deliveryDriver.userId != userId) {
         throw new MezError(CounterOfferError.InvalidDriverId);
     }
-    if (deliveryOrder.status != DeliveryOrderStatus.LookingForDriver) {
-        throw new MezError(CounterOfferError.StatusNotLookingForDriver);
+    if (deliveryOrder.status != DeliveryOrderStatus.OrderReceived) {
+        throw new MezError(CounterOfferError.StatusNotOrderReceived);
     }
     if(deliveryDriver.status != AuthorizationStatus.Authorized) {
         throw new MezError(CounterOfferError.DriverUnAuthorized);

@@ -1,7 +1,7 @@
 import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { AssignDriverError } from "../../../delivery/assignDriver";
 import { getHasura } from "../../../utilities/hasura";
-import { DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { DeliveryOrder, DeliveryOrderStatus } from "../../models/Generic/Delivery";
 import { MezError } from "../../models/Generic/Generic";
 
 export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
@@ -22,25 +22,25 @@ export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
   });
 }
 
-export async function updateDeliveryOrderCompany(deliveryOrderId: number, deliveryCompanyId: number) {
-  let chain = getHasura();
+// export async function updateDeliveryOrderCompany(deliveryOrderId: number, deliveryCompanyId: number) {
+//   let chain = getHasura();
 
-  await chain.mutation({
-    update_delivery_order_by_pk: [{ 
-      pk_columns: {
-        id: deliveryOrderId
-      },
-      _set: {
-        service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
-        service_provider_id: deliveryCompanyId
-      }
-    }, {
-      delivery_company: {
-        id: true
-      }
-    }]
-  })
-}
+//   await chain.mutation({
+//     update_delivery_order_by_pk: [{ 
+//       pk_columns: {
+//         id: deliveryOrderId
+//       },
+//       _set: {
+//         service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
+//         service_provider_id: deliveryCompanyId
+//       }
+//     }, {
+//       delivery_company: {
+//         id: true
+//       }
+//     }]
+//   })
+// }
 
 export async function setLockTime(deliveryOrderId: number) {
   let chain = getHasura();
