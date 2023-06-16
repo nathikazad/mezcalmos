@@ -171,8 +171,6 @@ class CustHomeRentalsListViewController {
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,
-
-          // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
           withCache: false);
       _businesses.value += newList;
       if (newList.length == 0) {
@@ -201,7 +199,6 @@ class CustHomeRentalsListViewController {
           withCache: false,
         );
       } else {
-        print('ddddddddddddddd');
         _mapViewRentals.value = await get_home_rentals(
           distance: _calculateDistance(
               await _googleMapController!.getVisibleRegion()),
@@ -280,10 +277,6 @@ class CustHomeRentalsListViewController {
       ));
     }
   }
-
-  // onMapCreated(GoogleMapController? controller) {
-  //   _googleMapController = controller;
-  // }
 
   Future<void> fetchMapViewRentals() async {
     await _fetchMapViewRentals(currentPostitionBased: false);

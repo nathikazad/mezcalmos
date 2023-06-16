@@ -274,19 +274,24 @@ class _CustBusinessAdditionalData extends StatelessWidget {
           {};
 
       final StringBuffer wholeString = StringBuffer();
+
+      wholeString.write(
+          '${additionalValues['minLength']} ${_i18n()['to']} ${additionalValues['maxLength']} inch');
+      additionalValues.remove('minLength');
+      additionalValues.remove('maxLength');
       additionalValues.map(
         (key, value) {
-          if (additionalValues.keys.toList().indexOf(key) == 0) {
-            wholeString.write("$value ");
-          } else {
-            wholeString.write("$circle $value ");
-          }
+          // if (additionalValues.keys.toList().indexOf(key) == 0) {
+          //   wholeString.write("$value ");
+          // } else {
+          wholeString.write("$circle $value ");
+          // }
 
-          if (key == "minLength") {
-            wholeString.write("inch ");
-          } else if (key == "maxLength") {
-            wholeString.write("inch ");
-          }
+          // if (key == "minLength") {
+          //   wholeString.write("inch ");
+          // } else if (key == "maxLength") {
+          //   wholeString.write("inch ");
+          // }
 
           return MapEntry(key, value);
         },

@@ -616,6 +616,7 @@
         "condo": "Condominio",
         "bungalow": "Bungalow",
         "hotel": "Hotel",
+        "to": "a",
         "components": {
           "loading": "Cargando",
           "schedule": "Horario",

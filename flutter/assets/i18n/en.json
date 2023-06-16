@@ -619,6 +619,7 @@
         "condo": "Condo",
         "bungalow": "Bungalow",
         "hotel": "Hotel",
+        "to": "to",
         "components": {
           "loading": "Loading",
           "schedule": "Schedule",
