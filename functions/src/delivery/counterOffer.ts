@@ -50,7 +50,7 @@ export async function requestCounterOffer(userId: number, counterOfferRequest: C
             price: counterOfferRequest.newPrice,
             status: CounterOfferStatus.Requested,
             time: (new Date()).toISOString(),
-            expiryTime: (new Date(Date.now() + 1000 * 30)).toISOString(),
+            expiryTime: (new Date(Date.now() + 1000 * 60 * 5)).toISOString(),
         }
         
         updateDeliveryCounterOffers(deliveryOrder);

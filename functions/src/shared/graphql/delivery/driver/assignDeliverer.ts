@@ -1,19 +1,20 @@
-import { AssignDriverDetails } from "../../../../delivery/assignDriver";
 import { getHasura } from "../../../../utilities/hasura";
+import { DeliveryDriver, DeliveryOrder } from "../../../models/Generic/Delivery";
 import { AppType, MezError } from "../../../models/Generic/Generic";
 
-export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDetails, driverUserId: number) {
+export async function assignDeliveryDriver(deliveryOrder: DeliveryOrder, driver: DeliveryDriver) {
   let chain = getHasura();
   
   let response = await chain.mutation({
     update_delivery_order_by_pk: [{
       pk_columns: {
-        id: assignDriverDetails.deliveryOrderId
+        id: deliveryOrder.deliveryId
       },
       _set: {
-        // delivery_driver_type: ParticipantType.DeliveryDriver,
-        delivery_driver_id: assignDriverDetails.deliveryDriverId,
-        change_price_request: null
+        delivery_driver_id: driver.id,
+        service_provider_id: driver.deliveryCompanyId,
+        counter_offers: deliveryOrder.counterOffers,
+
       }
     }, {
       id: true,
@@ -22,18 +23,18 @@ export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDeta
     }]
   });
   if(response.update_delivery_order_by_pk == null) {
-    throw new MezError("deliveryOrderNotFound");
+    throw new MezError("orderNotFound");
   }
   let chatParticipants = [{
     chat_id: response.update_delivery_order_by_pk.chat_with_customer_id,
     app_type_id: AppType.Delivery,
-    participant_id: driverUserId
+    participant_id: driver.userId
   }];
   if(response.update_delivery_order_by_pk.chat_with_service_provider_id) {
     chatParticipants.push({
       chat_id: response.update_delivery_order_by_pk.chat_with_service_provider_id,
       app_type_id: AppType.Delivery,
-      participant_id: driverUserId
+      participant_id: driver.userId
     })
   }
   await chain.mutation({
