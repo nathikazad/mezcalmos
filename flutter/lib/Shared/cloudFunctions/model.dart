@@ -1746,13 +1746,14 @@ class Home {
   num? id;
   HomeCategory1 category1;
   BusinessItemDetails details;
+  int? locationId;
   num? bedrooms;
   num? bathrooms;
   Location? gpsLocation;
   HomeAvailabilityOption availableFor;
   HomeLocation location;
   Home({
-    this.id, required this.category1, required this.details, this.bedrooms, this.bathrooms, this.gpsLocation, required this.availableFor, required this.location});
+    this.id, required this.category1, required this.details, this.bedrooms, this.bathrooms, this.gpsLocation, required this.availableFor, required this.location, this.locationId});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -1763,6 +1764,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "gpsLocation": gpsLocation,
       "availableFor": availableFor,
       "location": location,
+      "locationId": locationId,
     };
   }
 

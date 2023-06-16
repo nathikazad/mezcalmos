@@ -66,6 +66,7 @@ class HomeCard extends Home {
           bathrooms: home.bathrooms,
           bedrooms: home.bedrooms,
           gpsLocation: home.gpsLocation,
+          locationId: home.locationId,
         );
 }
 
@@ -154,6 +155,7 @@ class HomeWithBusinessCard extends Home {
           bathrooms: home.bathrooms,
           bedrooms: home.bedrooms,
           gpsLocation: home.gpsLocation,
+          locationId: home.locationId,
         );
 }
 

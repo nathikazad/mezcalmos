@@ -179,6 +179,7 @@ query get_home_by_id($id: Int!) {
     }
     available_for
     offering_type
+    location_id
   }
 }
 
@@ -248,6 +249,7 @@ query get_home(
     }
     available_for
     offering_type
+    location_id
   }
 }
 
@@ -317,6 +319,7 @@ query get_real_estates(
     }
     available_for
     offering_type
+    location_id
   }
 }
 
@@ -367,6 +370,7 @@ query get_business_home($businessId: Int!, $limit: Int, $offset: Int) {
     }
     available_for
     offering_type
+    location_id
   }
 }
 
@@ -420,6 +424,7 @@ query get_business_real_estate($businessId: Int!, $limit: Int, $offset: Int) {
     }
     available_for
     offering_type
+    location_id
   }
 }
 
@@ -524,6 +529,7 @@ mutation update_home_by_id($id: Int!, $object: business_home_set_input) {
     }
     available_for
     offering_type
+    location_id
   }
 }
 
@@ -533,14 +539,16 @@ mutation update_home_location(
   $gps: geography!
   $name: String!
 ) {
-  update_business_home_location_by_pk(
-    pk_columns: { id: $id }
+  update_business_home_location(
+    where: { id: { _eq: $id } }
     _set: { address: $address, gps: $gps, name: $name }
   ) {
-    id
-    name
-    gps
-    address
+    returning {
+      id
+      gps
+      address
+      name
+    }
   }
 }
 

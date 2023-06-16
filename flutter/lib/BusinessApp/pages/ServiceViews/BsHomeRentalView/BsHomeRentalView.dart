@@ -425,6 +425,29 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             //   return null;
             // },
           ),
+          smallSepartor,
+          Text(
+            _i18n()["homeRental"]["petFriendly"],
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+          smallSepartor,
+          Obx(() {
+            final List<String> possibleItems = ["yes", "no"];
+            return MezStringDropDown(
+              langPath: _i18n()["homeRental"],
+              items: possibleItems,
+              value: viewController.petFriendly.value,
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  viewController.petFriendly.value = newValue;
+                }
+              },
+              labelText: _i18n()["homeRental"]["petFriendlyHint"],
+            );
+          }),
 
           if (viewController.isEditing)
             BsDeleteOfferButton(
