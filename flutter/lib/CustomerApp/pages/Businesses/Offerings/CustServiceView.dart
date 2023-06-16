@@ -29,10 +29,21 @@ dynamic _i18n() =>
 
 class CustServiceView extends StatefulWidget {
   const CustServiceView({super.key});
-  static Future<void> navigate({required int serviceId}) async {
+  static Future<void> navigate({
+    required int serviceId,
+    int? cartId,
+    DateTime? startDate,
+    Map<TimeUnit, num>? timeCost,
+    int? duration,
+  }) async {
     final String route =
         CustBusinessRoutes.custServiceRoute.replaceFirst(":id", "$serviceId");
-    return MezRouter.toPath(route);
+    return MezRouter.toPath(route, arguments: {
+      "startDate": startDate,
+      "timeCost": timeCost,
+      "duration": duration,
+      "cartId": cartId,
+    });
   }
 
   @override
@@ -46,7 +57,20 @@ class _CustServiceViewState extends State<CustServiceView> {
   void initState() {
     serviceId = int.tryParse(MezRouter.urlArguments["id"].toString());
     mezDbgPrint("✅ init service view with id => $serviceId");
+    final DateTime? startDate =
+        MezRouter.bodyArguments!["startDate"] as DateTime?;
+    final Map<TimeUnit, num>? timeCost =
+        MezRouter.bodyArguments!["timeCost"] as Map<TimeUnit, num>?;
+    final int? duration = MezRouter.bodyArguments!["duration"] as int?;
+    final int? cartId = MezRouter.bodyArguments!["cartId"] as int?;
     if (serviceId != null) {
+      viewController.init(
+        serviceId: serviceId!,
+        startDate: startDate,
+        timeCost: timeCost,
+        duration: duration,
+        cartId: cartId,
+      );
       viewController.fetchData(serviceId: serviceId!);
     } else {
       showErrorSnackBar(errorText: "Error: Service ID $serviceId not found");
@@ -57,13 +81,17 @@ class _CustServiceViewState extends State<CustServiceView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MezButton(
-        label: "Add to cart",
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.bookOffering();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: viewController.isEditingMode.value
+              ? "Update Item"
+              : "Add to cart",
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.bookOffering();
+          },
+        ),
       ),
       body: Obx(() {
         if (viewController.service != null) {
@@ -153,6 +181,8 @@ class _CustServiceViewState extends State<CustServiceView> {
                             CustBusinessDurationPicker(
                               costUnits: viewController.service!.details.cost,
                               label: "Duration",
+                              unitValue:
+                                  viewController.timeCost.value?.keys.first,
                               value: viewController.totalHours.value,
                               validator: (TimeUnit? p0) {
                                 if (p0 == null) return "Please select a time";

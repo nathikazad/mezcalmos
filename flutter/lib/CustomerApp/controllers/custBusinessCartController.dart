@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -162,7 +165,7 @@ class CustBusinessCartController extends GetxController {
       mezDbgPrint(e);
       mezDbgPrint(stk);
     }
-    return null;
+    return;
   }
 
   Future<bool?> deleteCartItem(int cartItemId) async {
@@ -249,16 +252,43 @@ class CustBusinessCartController extends GetxController {
         );
         return;
       case OfferingType.Rental:
+        await CustRentalView.navigate(
+          rentalId: item.rental!.id!.toInt(),
+          cartId: item.id!.toInt(),
+          timeCost: {
+            item.parameters.timeUnit!:
+                item.rental!.details.cost[item.parameters.timeUnit!]!,
+          },
+          duration: item.parameters.numberOfUnits!.toInt(),
+          startDate: DateTime.parse(item.time!),
+        );
         return;
       case OfferingType.Event:
-        // TODO: Handle this case.
-        break;
+        await CustEventView.navigate(
+          eventId: item.event!.id!.toInt(),
+          cartId: item.id!.toInt(),
+          timeCost: {
+            item.parameters.timeUnit!:
+                item.event!.details.cost[item.parameters.timeUnit!]!,
+          },
+          duration: item.parameters.numberOfUnits!.toInt(),
+          startDate: DateTime.parse(item.time!),
+        );
+        return;
       case OfferingType.Service:
-        // TODO: Handle this case.
-        break;
+        await CustServiceView.navigate(
+          serviceId: item.service!.id!.toInt(),
+          cartId: item.id!.toInt(),
+          timeCost: {
+            item.parameters.timeUnit!:
+                item.service!.details.cost[item.parameters.timeUnit!]!,
+          },
+          duration: item.parameters.numberOfUnits!.toInt(),
+          startDate: DateTime.parse(item.time!),
+        );
+        return;
       case OfferingType.Product:
-        // TODO: Handle this case.
-        break;
+        return;
     }
   }
 }

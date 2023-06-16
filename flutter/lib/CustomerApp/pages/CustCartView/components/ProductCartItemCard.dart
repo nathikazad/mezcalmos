@@ -172,28 +172,28 @@ class ProductCartItemCard extends StatelessWidget {
                     ),
                   )
                 : SizedBox.shrink(),
-            isEditable
-                ? Positioned(
-                    top: 4,
-                    right: 4,
-                    child: InkWell(
-                      child: Container(
-                        width: 25,
-                        height: 25,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: secondaryLightBlueColor,
-                        ),
-                        child: const Icon(
-                          Icons.edit_outlined,
-                          size: 14,
-                          color: primaryBlueColor,
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                  )
-                : SizedBox.shrink(),
+            // isEditable
+            //     ? Positioned(
+            //         top: 4,
+            //         right: 4,
+            //         child: InkWell(
+            //           child: Container(
+            //             width: 25,
+            //             height: 25,
+            //             decoration: BoxDecoration(
+            //               shape: BoxShape.circle,
+            //               color: secondaryLightBlueColor,
+            //             ),
+            //             child: const Icon(
+            //               Icons.edit_outlined,
+            //               size: 14,
+            //               color: primaryBlueColor,
+            //             ),
+            //           ),
+            //           onTap: () {},
+            //         ),
+            //       )
+            //     : SizedBox.shrink(),
           ],
         ),
       ],
