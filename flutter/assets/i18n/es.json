@@ -253,6 +253,8 @@
           "motorcycleTypeHint": "Seleccione su tipo de motocicleta",
           "length": "Longitud",
           "surfLength": "Longitud de la tabla de surf",
+          "surfMinLength": "Longitud mínima",
+          "surfMaxLength": "Longitud máxima",
           "surfLengthError": "Introduzca la longitud de la tabla de surf",
           "feet": "Pies"
         },
@@ -511,6 +513,89 @@
       }
     },
     "pages": {
+      "JoinUsView": {
+        "joinUs": "Únete a nosotros",
+        "restaurantBusiness": {
+          "title": "Negocio de los restaurantes",
+          "subtitle": "Si posee un restaurante y desea expandirlo en línea."
+        },
+        "laundryBusiness": {
+          "title": "Negocio de lavandería",
+          "subtitle": "Si posee una lavandería y desea ganar más en línea."
+        },
+        "houseRentalAgency": {
+          "title": "Agencia de alquiler de casas",
+          "subtitle": "Si es dueño de la agencia de alquiler de casas, desea expandirlo en línea."
+        },
+        "surfShop": {
+          "title": "Tienda de surf",
+          "subtitle": "Si es propietario de Surf Shop, desea expandirlo en línea."
+        },
+        "vehicleRental": {
+          "title": "Alquiler de vehículos",
+          "subtitle": "Si posee una tienda de alquiler de vehículos, desea expandirlo en línea."
+        },
+        "yogaStudio": {
+          "title": "Estudio de yoga",
+          "subtitle": "Si posee Yoga Studio, quiere expandirlo en línea."
+        },
+        "wellnessPractitioner": {
+          "title": "Practicante de bienestar",
+          "subtitle": "Si es profesional de bienestar y desea expandir su negocio en línea."
+        },
+        "entertainmentEvent": {
+          "title": "Evento de entretenimiento",
+          "subtitle": "Si posee un evento de entretenimiento y desea expandirlo en línea."
+        },
+        "volunteerOrganisations": {
+          "title": "Organizaciones voluntarias",
+          "subtitle": "Si posee organizaciones voluntarias, desea expandirlo en línea."
+        },
+        "tourismAgency": {
+          "title": "Agencia de turismo",
+          "subtitle": "Si es propietario de la agencia de turismo, desea expandirlo en línea."
+        },
+        "mealPlanning": {
+          "title": "Planificación de comidas",
+          "subtitle": "Si es un planificador de comidas y desea expandir su negocio en línea."
+        },
+        "tattooArtist": {
+          "title": "Tatuador",
+          "subtitle": "Si es un artista de tatuajes y desea expandir su negocio en línea."
+        },
+        "beautySalon": {
+          "title": "Salón de belleza",
+          "subtitle": "Si es propietario del salón de belleza, quiere expandirlo en línea."
+        },
+        "photographer": {
+          "title": "Fotógrafa",
+          "subtitle": "Si es un fotógrafo, desea expandir su negocio en línea."
+        },
+        "cleaningService": {
+          "title": "Servicio de limpieza",
+          "subtitle": "Si es propietario del servicio de limpieza y desea expandirlo en línea."
+        },
+        "petSitter": {
+          "title": "Cuidador de mascotas",
+          "subtitle": "Si usted es una niñera de mascotas, desea expandir su negocio en línea."
+        },
+        "artisanal Products": {
+          "title": "Productos artesanales",
+          "subtitle": "Si posee productos artesanales y desea venderlo en línea."
+        },
+        "realEstate": {
+          "title": "Bienes raíces",
+          "subtitle": "Si es un agente inmobiliario, desea expandir su negocio en línea."
+        },
+        "languageSchool": {
+          "title": "Escuela de idiomas",
+          "subtitle": "Si posee la escuela de idiomas y desea venderla en línea."
+        },
+        "deliveryDriver": {
+          "title": "Compañía de entrega",
+          "subtitle": "Si posee una empresa de entrega y desea ganar más."
+        }
+      },
       "Offerings": {
         "hour": "hora",
         "day": "día",
@@ -1242,7 +1327,8 @@
         "AllServiceView": {
           "AllServiceView": {
             "welcomeText": "Bienvenido a MEZKALA 👋",
-            "appDescription": "Su único lugar de parada para encontrar todos sus servicios locales necesarios y dónde puede disfrutar de servicios rápidos y de alta calidad.",
+            "appDescription": "Su único lugar de parada para encontrar todos sus negocios locales.Si tiene un negocio y desea anunciarlo, puede ",
+            "clickHere": "haga clic aquí",
             "services": "Servicios"
           }
         }

@@ -193,6 +193,16 @@ const String aPersonalCare = "assets/images/customer/personalCare.png";
 const String aVehicle = "assets/images/customer/vehicle.png";
 const String aProperty = "assets/images/customer/property.png";
 
+const String aHouseRentalAgency =
+    "assets/images/customer/houseRentalAgency.png";
+const String aLaundryBusiness = "assets/images/customer/laundryBusiness.png";
+const String aRestaurantBusiness =
+    "assets/images/customer/restaurantBusiness.png";
+const String aTourismAgency = "assets/images/customer/tourismAgency.png";
+const String aMealPlanning = "assets/images/customer/mealPlanning.png";
+const String aRealEstate = "assets/images/customer/realEstate.png";
+const String aLanguageSchool = "assets/images/customer/languageSchool.png";
+
 // Rental Images, Icons
 const String aRentals = "assets/images/customer/rentals.png";
 const String aHomes = "assets/images/customer/rental/homes.png";

@@ -247,9 +247,13 @@ class _CustBusinessAdditionalData extends StatelessWidget {
           } else {
             wholeString.write("$circle $value ");
           }
-          if (key == "length") {
+
+          if (key == "minLength") {
+            wholeString.write("inch ");
+          } else if (key == "maxLength") {
             wholeString.write("inch ");
           }
+
           return MapEntry(key, value);
         },
       );

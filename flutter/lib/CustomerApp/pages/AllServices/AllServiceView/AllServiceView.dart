@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/AllServiceListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/JoinUs/JoinUsView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -95,15 +96,24 @@ class _AllServiceViewState extends State<AllServiceView> {
   }
 
   Widget mezkalaDescription(TextStyle textStyle) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      alignment: Alignment.centerLeft,
-      child: Obx(
-        () => Text(
-          "${_i18n()['appDescription']}",
-          style: textStyle,
-          textAlign: TextAlign.left,
-        ),
+    return GestureDetector(
+      onTap: () => JoinUsView.navigate(),
+      child: Container(
+        margin: EdgeInsets.all(5),
+        alignment: Alignment.centerLeft,
+        child: Obx(() => Text.rich(
+              textAlign: TextAlign.left,
+              TextSpan(
+                  text: "${_i18n()['appDescription']}",
+                  style: textStyle,
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: "${_i18n()['clickHere']}",
+                        style: textStyle.copyWith(
+                            color: primaryBlueColor,
+                            decoration: TextDecoration.underline))
+                  ]),
+            )),
       ),
     );
   }
