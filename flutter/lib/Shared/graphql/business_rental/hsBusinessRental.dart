@@ -164,6 +164,7 @@ Future<HomeWithBusinessCard?> get_home_by_id(
     if (data != null) {
       final HomeWithBusinessCard returnedRental = HomeWithBusinessCard(
           home: Home(
+            locationId: data.location_id,
             location: HomeLocation(
               name: data.location!.name,
               location: Location(
@@ -281,6 +282,7 @@ Future<List<HomeCard>> get_home_rentals(
           businessName: data.business!.details.name,
           currency: data.business!.details.currency.toCurrency(),
           home: Home(
+            locationId: data.location_id,
             location: HomeLocation(
               name: data.location!.name,
               location: Location(
@@ -346,6 +348,7 @@ Future<List<HomeCard>> get_business_home_rentals(
           businessName: data.business!.details.name,
           currency: data.business!.details.currency.toCurrency(),
           home: Home(
+            locationId: data.location_id,
             location: HomeLocation(
               name: data.location!.name,
               location: Location(
@@ -416,6 +419,7 @@ Future<List<HomeCard>> get_real_estate(
           businessName: data.business!.details.name,
           currency: data.business!.details.currency.toCurrency(),
           home: Home(
+            locationId: data.location_id,
             location: HomeLocation(
               name: data.location!.name,
               location: Location(
@@ -482,6 +486,7 @@ Future<List<HomeCard>> get_business_real_estate(
           businessName: data.business!.details.name,
           currency: data.business!.details.currency.toCurrency(),
           home: Home(
+            locationId: data.location_id,
             location: HomeLocation(
               name: data.location!.name,
               location: Location(
@@ -739,8 +744,9 @@ Future<Home?> update_business_home_rental(
   final QueryResult<Mutation$update_home_location> res2 =
       await _db.graphQLClient.mutate$update_home_location(
     Options$Mutation$update_home_location(
+      fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Mutation$update_home_location(
-        id: id,
+        id: rental.locationId!,
         address: rental.location.location.address,
         name: rental.location.name,
         gps: Geography(
@@ -754,27 +760,30 @@ Future<Home?> update_business_home_rental(
     mezDbgPrint(
         "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data}");
     throwError(res.exception);
-  } else if (res.parsedData?.update_business_home_by_pk != null ||
-      res2.parsedData?.update_business_home_location_by_pk != null) {
+  } else if (res.parsedData?.update_business_home_by_pk != null &&
+      res2.parsedData?.update_business_home_location != null) {
     final Mutation$update_home_by_id$update_business_home_by_pk data =
         res.parsedData!.update_business_home_by_pk!;
     return Home(
+      locationId: res2
+            .parsedData!.update_business_home_location!.returning.first.id,
       location: HomeLocation(
-        name: res2.parsedData!.update_business_home_location_by_pk!.name,
+        name: res2
+            .parsedData!.update_business_home_location!.returning.first.name,
         location: Location(
-          lat: res2
-              .parsedData!.update_business_home_location_by_pk!.gps.latitude,
-          lng: res2
-              .parsedData!.update_business_home_location_by_pk!.gps.longitude,
-          address:
-              res2.parsedData!.update_business_home_location_by_pk!.address,
+          lat: res2.parsedData!.update_business_home_location!.returning.first
+              .gps.latitude,
+          lng: res2.parsedData!.update_business_home_location!.returning.first
+              .gps.longitude,
+          address: res2.parsedData!.update_business_home_location!.returning
+              .first.address,
         ),
       ),
       availableFor: data.available_for.toHomeAvailabilityOption(),
       id: data.id,
       category1: data.details!.category1.toHomeCategory1(),
       details: BusinessItemDetails(
-        id: data.id,
+        id: data.details!.id,
         nameId: data.details!.name_id,
         descriptionId: data.details!.description_id,
         name: toLanguageMap(translations: data.details!.name.translations),
@@ -789,10 +798,12 @@ Future<Home?> update_business_home_rental(
       bathrooms: data.bathrooms,
       bedrooms: data.bedrooms,
       gpsLocation: Location(
-        lat: res2.parsedData!.update_business_home_location_by_pk!.gps.latitude,
-        lng:
-            res2.parsedData!.update_business_home_location_by_pk!.gps.longitude,
-        address: res2.parsedData!.update_business_home_location_by_pk!.address,
+        lat: res2.parsedData!.update_business_home_location!.returning.first.gps
+            .latitude,
+        lng: res2.parsedData!.update_business_home_location!.returning.first.gps
+            .longitude,
+        address: res2
+            .parsedData!.update_business_home_location!.returning.first.address,
       ),
     );
   }

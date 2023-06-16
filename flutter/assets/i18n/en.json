@@ -322,7 +322,11 @@
           "villa": "Villa",
           "condo": "Condo",
           "bungalow": "Bungalow",
-          "hotel": "Hotel"
+          "hotel": "Hotel",
+          "petFriendly": "Pet Friendly",
+          "petFriendlyHint": "Select if you allow pets or not",
+          "yes": "Yes",
+          "no" : "No"
         },
         "languageSchool": {
           "otherServicesTitle": "Other services",

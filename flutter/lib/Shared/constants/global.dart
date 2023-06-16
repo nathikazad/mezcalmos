@@ -361,7 +361,7 @@ Future<void> launchAppStoreLink() async {
         break;
       case TargetPlatform.iOS:
         await launchUrl(
-            Uri.parse("https://apps.apple.com/us/app/mezcalmos/id1595882320"));
+            Uri.parse("https://apps.apple.com/us/app/mezkala/id1595882320"));
         break;
       default:
     }

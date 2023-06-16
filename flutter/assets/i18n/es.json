@@ -323,7 +323,11 @@
           "villa": "Villa",
           "condo": "Condominio",
           "bungalow": "Bungalow",
-          "hotel": "Hotel"
+          "hotel": "Hotel",
+          "petFriendly": "Mascota amigable",
+          "petFriendlyHint": "Seleccione si permite mascotas o no",
+          "yes": "Sí",
+          "no": "No"
         },
         "languageSchool": {
           "otherServicesTitle": "Otros servicios",

@@ -33,6 +33,7 @@ class BsHomeRentalViewController {
   Rxn<Home> _rental = Rxn<Home>();
   Rxn<Location> homeLocation = Rxn<Location>();
   Rxn<HomeCategory1> homeType = Rxn<HomeCategory1>();
+  Rxn<String> petFriendly = Rxn<String>();
   // getters //
   Home? get rental => _rental.value;
   bool get isEditing => _rental.value != null;
@@ -90,6 +91,7 @@ class BsHomeRentalViewController {
               .replaceAll("sq ft", "")
               .trim() ??
           "";
+      petFriendly.value = rental!.details.additionalParameters?["petFriendly"];
       homeLocation.value = rental!.gpsLocation;
       homeType.value = rental!.category1;
     }
@@ -104,6 +106,7 @@ class BsHomeRentalViewController {
         await detailsController.contructDetails();
     details.additionalParameters = {
       "area": areaController.text.trim() + " sq ft",
+      "petFriendly": petFriendly.value,
     };
     final Home rental = Home(
       availableFor: HomeAvailabilityOption.Rent,
@@ -120,8 +123,11 @@ class BsHomeRentalViewController {
 
   Home _constructRental() {
     final Home rental = Home(
+      locationId: this.rental!.locationId,
       location: HomeLocation(
-          name: homeLocation.value!.address, location: homeLocation.value!),
+        name: homeLocation.value!.address,
+        location: homeLocation.value!,
+      ),
       category1: homeType.value!,
       availableFor: HomeAvailabilityOption.Rent,
       gpsLocation: homeLocation.value,
@@ -143,6 +149,7 @@ class BsHomeRentalViewController {
             id: rental!.details.id.toInt(),
             additionalParams: {
               "area": areaController.text.trim() + " sq ft",
+              "petFriendly": petFriendly.value,
             },
           );
           showSavedSnackBar();
