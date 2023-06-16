@@ -1,3 +1,4 @@
+import { $ } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { OrderRequestDetails } from "../../../../business/orderRequest";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, MezError } from "../../../models/Generic/Generic";
@@ -30,7 +31,7 @@ export async function createOrderRequest(
     let items = cart.items.map((i:BusinessOrderItem) => {
         return {
             item_id: i.itemId,
-            parameters: JSON.stringify(i.parameters),
+            parameters: i.parameters,
             time: i.time,
             cost: i.cost,
             offering_type: i.offeringType,
@@ -46,7 +47,7 @@ export async function createOrderRequest(
                 customer_app_type: orderRequestDetails.customerAppType,
                 notes: orderRequestDetails.notes,
                 items: {
-                    data: items
+                    data: $`items`
                 },
                 chat: {
                     data: {
@@ -70,6 +71,8 @@ export async function createOrderRequest(
                 id: true
             }]
         }],
+    }, {
+        "items": items,
     })
 
     if(response.insert_business_order_request_one == null) {

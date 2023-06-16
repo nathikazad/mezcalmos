@@ -44,7 +44,7 @@ export async function getBusinessOrderRequest(orderId: number): Promise<Business
             offeringType: i.offering_type as OfferingType,
             orderRequestId: orderId,
             time: i.time,
-            parameters: JSON.parse(i.parameters) as BusinessItemParameters,
+            parameters: i.parameters as BusinessItemParameters,
             available: i.available,
         }
     });
