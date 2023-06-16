@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/chat/__generated/hsChat.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -20,8 +21,10 @@ List<Message> _get_messages(List<Object?>? msgs) {
     mezDbgPrint("$jsonString :: type :: ${jsonString.runtimeType}");
     // I use the timestamp as key
     if (jsonString != null) {
-      final Map<String, dynamic> msg = jsonString
-          as Map<String, dynamic>; //mapFromJson(jsonString as String);
+      final Map<String, dynamic> msg = jsonString.runtimeType == String
+          ? mapFromJson(jsonString as String)
+          : jsonString
+              as Map<String, dynamic>; //mapFromJson(jsonString as String);
       RetMsgs.add(
         Message(
           message: msg['message'],
@@ -291,8 +294,9 @@ Stream<List<Message>> listen_on_chat_messages({required int chatId}) {
     final List<Message> msgs = [];
     final List<dynamic>? chatMsgs = event.parsedData?.chat_by_pk?.messages;
     chatMsgs?.forEach((_msg) {
-      final Map<String, dynamic> msg =
-          _msg as Map<String, dynamic>; //mapFromJson(_msg as String);
+      final Map<String, dynamic> msg = _msg.runtimeType == String
+          ? mapFromJson(_msg as String)
+          : _msg as Map<String, dynamic>; //mapFromJson(_msg as String);
       msgs.add(
         Message(
           message: msg['message'],
