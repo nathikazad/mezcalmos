@@ -252,7 +252,7 @@ Future<ServiceTree> get_service_tree(
       realEstateResponse.parsedData?.business_home_aggregate.aggregate?.count ??
           0,
       root);
-  if (classes.count > 0) {
+  if (realEstate.count > 0) {
     root.children.add(realEstate);
   }
 

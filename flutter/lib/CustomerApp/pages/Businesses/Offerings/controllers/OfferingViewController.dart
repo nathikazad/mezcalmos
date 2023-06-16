@@ -20,6 +20,8 @@ class CustServiceViewController {
   Rxn<Map<TimeUnit, num>> _timeCost = Rxn();
   Rx<double> totalOrderCost = Rx(0);
   Rx<String> orderString = Rx("-");
+  Rx<bool> isEditingMode = Rx<bool>(false);
+  Rxn<int> _cartId = Rxn<int>();
 
   // getters //
   ServiceWithBusinessCard? get service => _service.value;
@@ -27,6 +29,24 @@ class CustServiceViewController {
   Rx<int> get totalHours => _totalHours;
   Rxn<Map<TimeUnit, num>> get timeCost => _timeCost;
   // methods //
+  Future<void> init({
+    required int serviceId,
+    int? cartId,
+    DateTime? startDate,
+    Map<TimeUnit, num>? timeCost,
+    int? duration,
+  }) async {
+    await fetchData(serviceId: serviceId);
+    if (startDate != null && duration != null) {
+      _startDate.value = startDate;
+      _timeCost.value = timeCost;
+      _totalHours.value = duration;
+      isEditingMode.value = true;
+      _cartId.value = cartId;
+    }
+    _calcTotalOrderCost();
+  }
+
   Future<void> fetchData({required int serviceId}) async {
     _service.value = await get_service_by_id(id: serviceId, withCache: false);
     _setInitialTimeCost();
@@ -68,20 +88,38 @@ class CustServiceViewController {
   }
 
   Future<void> bookOffering() async {
-    await custBusinessCartController.addCartItem(
-      BusinessCartItem(
-        businessId: _service.value!.business.id,
-        itemId: _service.value!.id!,
-        offeringType: OfferingType.Service,
-        time: startDate.value!.toString(),
-        parameters: BusinessItemParameters(
-          numberOfUnits: totalHours.value,
-          timeUnit: timeCost.value!.keys.first,
+    if (isEditingMode.value) {
+      await custBusinessCartController.updateCartItem(
+        BusinessCartItem(
+          id: _cartId.value,
+          businessId: _service.value!.business.id,
+          itemId: _service.value!.id!,
+          offeringType: OfferingType.Service,
+          time: startDate.value!.toString(),
+          parameters: BusinessItemParameters(
+            numberOfUnits: totalHours.value,
+            timeUnit: timeCost.value!.keys.first,
+          ),
+          cost: totalOrderCost.value,
+          service: _service.value,
         ),
-        cost: totalOrderCost.value,
-        service: _service.value,
-      ),
-    );
+      );
+    } else {
+      await custBusinessCartController.addCartItem(
+        BusinessCartItem(
+          businessId: _service.value!.business.id,
+          itemId: _service.value!.id!,
+          offeringType: OfferingType.Service,
+          time: startDate.value!.toString(),
+          parameters: BusinessItemParameters(
+            numberOfUnits: totalHours.value,
+            timeUnit: timeCost.value!.keys.first,
+          ),
+          cost: totalOrderCost.value,
+          service: _service.value,
+        ),
+      );
+    }
     await CustCartView.navigate();
     orderString.value = "-";
     totalOrderCost.value = 0;
@@ -151,6 +189,8 @@ class CustEventViewController {
   Rxn<Map<TimeUnit, num>> _timeCost = Rxn();
   Rx<double> totalOrderCost = Rx(0);
   Rx<int> _totalHours = Rx(1);
+  Rx<bool> isEditingMode = Rx<bool>(false);
+  Rxn<int> _cartId = Rxn<int>();
 
   // getters //
   EventWithBusinessCard? get event => _event.value;
@@ -158,6 +198,24 @@ class CustEventViewController {
   Rxn<Map<TimeUnit, num>> get timeCost => _timeCost;
   Rx<int> get totalHours => _totalHours;
   // methods //
+  Future<void> init({
+    required int eventId,
+    int? cartId,
+    DateTime? startDate,
+    Map<TimeUnit, num>? timeCost,
+    int? duration,
+  }) async {
+    await fetchData(eventId: eventId);
+    if (startDate != null && duration != null) {
+      _startDate.value = startDate;
+      _timeCost.value = timeCost;
+      _totalHours.value = duration;
+      isEditingMode.value = true;
+      _cartId.value = cartId;
+    }
+    _calcTotalOrderCost();
+  }
+
   Future<void> fetchData({required int eventId}) async {
     _event.value = await get_event_by_id(id: eventId, withCache: false);
     _setInitialTimeCost();
@@ -194,22 +252,42 @@ class CustEventViewController {
   }
 
   Future<void> bookOffering() async {
-    await custBusinessCartController.addCartItem(
-      BusinessCartItem(
-        businessId: _event.value!.business.id,
-        itemId: _event.value!.id!,
-        offeringType: OfferingType.Event,
-        time: _event.value!.scheduleType == ScheduleType.OneTime
-            ? _event.value!.startsAt
-            : startDate.value!.toString(),
-        parameters: BusinessItemParameters(
-          numberOfUnits: totalHours.value,
-          timeUnit: timeCost.value!.keys.first,
+    if (isEditingMode.value) {
+      await custBusinessCartController.updateCartItem(
+        BusinessCartItem(
+          id: _cartId.value,
+          businessId: _event.value!.business.id,
+          itemId: _event.value!.id!,
+          offeringType: OfferingType.Event,
+          time: _event.value!.scheduleType == ScheduleType.OneTime
+              ? _event.value!.startsAt
+              : startDate.value!.toString(),
+          parameters: BusinessItemParameters(
+            numberOfUnits: totalHours.value,
+            timeUnit: timeCost.value!.keys.first,
+          ),
+          cost: totalOrderCost.value,
+          event: _event.value,
         ),
-        cost: totalOrderCost.value,
-        event: _event.value,
-      ),
-    );
+      );
+    } else {
+      await custBusinessCartController.addCartItem(
+        BusinessCartItem(
+          businessId: _event.value!.business.id,
+          itemId: _event.value!.id!,
+          offeringType: OfferingType.Event,
+          time: _event.value!.scheduleType == ScheduleType.OneTime
+              ? _event.value!.startsAt
+              : startDate.value!.toString(),
+          parameters: BusinessItemParameters(
+            numberOfUnits: totalHours.value,
+            timeUnit: timeCost.value!.keys.first,
+          ),
+          cost: totalOrderCost.value,
+          event: _event.value,
+        ),
+      );
+    }
     await CustCartView.navigate();
     orderString.value = "-";
     totalOrderCost.value = 0;
@@ -306,7 +384,7 @@ class CustHomeRentalViewController {
           id: _cartId.value,
           businessId: _homeRental.value!.business.id,
           itemId: _homeRental.value!.id!,
-          offeringType: OfferingType.Rental,
+          offeringType: OfferingType.Home,
           time: startDate.value!.toString(),
           parameters: BusinessItemParameters(
             guests: _totalGuests.value,
@@ -322,7 +400,7 @@ class CustHomeRentalViewController {
         BusinessCartItem(
           businessId: _homeRental.value!.business.id,
           itemId: _homeRental.value!.id!,
-          offeringType: OfferingType.Rental,
+          offeringType: OfferingType.Home,
           time: startDate.value!.toString(),
           parameters: BusinessItemParameters(
             guests: _totalGuests.value,
@@ -352,6 +430,8 @@ class CustRentalViewController {
   Rx<int> _duration = Rx(1);
   Rx<String> orderString = Rx("-");
   Rx<double> totalOrderCost = Rx(0);
+  Rx<bool> isEditingMode = Rx<bool>(false);
+  Rxn<int> _cartId = Rxn<int>();
 
   // getters //
   RentalWithBusinessCard? get rental => _rental.value;
@@ -359,6 +439,24 @@ class CustRentalViewController {
   Rxn<Map<TimeUnit, num>> get timeCost => _timeCost;
   Rx<int> get duration => _duration;
   // methods //
+  Future<void> init({
+    required int rentalId,
+    int? cartId,
+    DateTime? startDate,
+    Map<TimeUnit, num>? timeCost,
+    int? duration,
+  }) async {
+    await fetchData(rentalId: rentalId);
+    if (startDate != null && duration != null) {
+      _startDate.value = startDate;
+      _timeCost.value = timeCost;
+      _duration.value = duration;
+      isEditingMode.value = true;
+      _cartId.value = cartId;
+    }
+    _calcTotalOrderCost();
+  }
+
   Future<void> fetchData({required int rentalId}) async {
     _rental.value = await get_rental_by_id(
       id: rentalId,
@@ -396,20 +494,38 @@ class CustRentalViewController {
   Future<void> bookOffering() async {
     final CustBusinessCartController custBusinessCartController =
         Get.find<CustBusinessCartController>();
-    await custBusinessCartController.addCartItem(
-      BusinessCartItem(
-        businessId: _rental.value!.business.id,
-        itemId: _rental.value!.id!,
-        offeringType: OfferingType.Rental,
-        time: startDate.value!.toString(),
-        parameters: BusinessItemParameters(
-          numberOfUnits: _duration.value,
-          timeUnit: timeCost.value!.keys.first,
+    if (isEditingMode.value) {
+      await custBusinessCartController.updateCartItem(
+        BusinessCartItem(
+          id: _cartId.value,
+          businessId: _rental.value!.business.id,
+          itemId: _rental.value!.id!,
+          offeringType: OfferingType.Rental,
+          time: startDate.value!.toString(),
+          parameters: BusinessItemParameters(
+            numberOfUnits: _duration.value,
+            timeUnit: timeCost.value!.keys.first,
+          ),
+          cost: totalOrderCost.value,
+          rental: _rental.value,
         ),
-        cost: totalOrderCost.value,
-        rental: _rental.value,
-      ),
-    );
+      );
+    } else {
+      await custBusinessCartController.addCartItem(
+        BusinessCartItem(
+          businessId: _rental.value!.business.id,
+          itemId: _rental.value!.id!,
+          offeringType: OfferingType.Rental,
+          time: startDate.value!.toString(),
+          parameters: BusinessItemParameters(
+            numberOfUnits: _duration.value,
+            timeUnit: timeCost.value!.keys.first,
+          ),
+          cost: totalOrderCost.value,
+          rental: _rental.value,
+        ),
+      );
+    }
     await CustCartView.navigate();
     _duration.value = 1;
     orderString.value = "-";

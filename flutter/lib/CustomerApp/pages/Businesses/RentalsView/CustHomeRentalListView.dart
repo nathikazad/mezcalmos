@@ -396,7 +396,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                       ),
                                     ],
                                   ),
-                                  if (viewController.rentals[0].bedrooms !=
+                                  if (viewController.rentals[index].bedrooms !=
                                       null)
                                     Row(
                                       crossAxisAlignment:
@@ -406,7 +406,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                         Icon(Icons.single_bed_outlined,
                                             size: 15.mezSp),
                                         Text(
-                                            ' ${viewController.rentals[0].bedrooms} ${_i18n()['bedrooms']}',
+                                            ' ${viewController.rentals[index].bedrooms} ${_i18n()['bedrooms']}',
                                             style: context.textTheme.bodyLarge
                                                 ?.copyWith(
                                                     fontSize: 12.5.mezSp,

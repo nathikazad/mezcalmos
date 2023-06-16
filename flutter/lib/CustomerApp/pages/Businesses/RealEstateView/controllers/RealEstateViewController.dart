@@ -138,7 +138,7 @@ class CustRealEstateViewController {
           "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_home(
-          homeType: HomeAvailabilityOption.Rent,
+          homeType: HomeAvailabilityOption.Sale,
           distance: 1000000000000,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
@@ -192,16 +192,16 @@ class CustRealEstateViewController {
   Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
     try {
       if (currentPostitionBased) {
-        _mapViewBusinesses.value = await get_business_by_rental_category1(
-            categories1: [],
+        _mapViewBusinesses.value = await get_business_by_home(
+            homeType: HomeAvailabilityOption.Sale,
             distance: 25000,
             fromLocation: _fromLocation!,
             offset: 0,
             limit: 25,
             withCache: false);
       } else {
-        _mapViewBusinesses.value = await get_business_by_rental_category1(
-            categories1: [],
+        _mapViewBusinesses.value = await get_business_by_home(
+            homeType: HomeAvailabilityOption.Sale,
             distance: _calculateDistance(
                 await _googleMapController!.getVisibleRegion()),
             fromLocation: Location(
