@@ -255,6 +255,8 @@
           "motorcycleTypeHint": "Select your motorcycle type",
           "length": "Length",
           "surfLength": "Surf board length",
+          "surfMinLength": "Minimum length",
+          "surfMaxLength": "Maximum length",
           "surfLengthError": "Please enter surf board length",
           "feet": "Feet"
         },
@@ -320,7 +322,11 @@
           "villa": "Villa",
           "condo": "Condo",
           "bungalow": "Bungalow",
-          "hotel": "Hotel"
+          "hotel": "Hotel",
+          "petFriendly": "Pet Friendly",
+          "petFriendlyHint": "Select if you allow pets or not",
+          "yes": "Yes",
+          "no" : "No"
         },
         "languageSchool": {
           "otherServicesTitle": "Other services",
@@ -517,6 +523,89 @@
       }
     },
     "pages": {
+      "JoinUsView": {
+        "joinUs": "Join us",
+        "restaurantBusiness": {
+          "title": "Restaurant business",
+          "subtitle": "If you own a restaurant and want to expand it online."
+        },
+        "laundryBusiness": {
+          "title": "Laundry business",
+          "subtitle": "If you own a laundry and want to earn more online."
+        },
+        "houseRentalAgency": {
+          "title": "House Rental Agency",
+          "subtitle": "If you own house rental agency want to expand it online."
+        },
+        "surfShop": {
+          "title": "Surf Shop",
+          "subtitle": "If you own Surf Shop want to expand it online."
+        },
+        "vehicleRental": {
+          "title": "Vehicle Rental",
+          "subtitle": "If you own vehicle rental store want to expand it online."
+        },
+        "yogaStudio": {
+          "title": "Yoga Studio",
+          "subtitle": "If you own Yoga Studio want to expand it online."
+        },
+        "wellnessPractitioner": {
+          "title": "Wellness Practitioner",
+          "subtitle": "If you are Wellness Practitioner and want to expand your business online."
+        },
+        "entertainmentEvent": {
+          "title": "Entertainment Event",
+          "subtitle": "If you own Entertainment Event and want to expand it online."
+        },
+        "volunteerOrganisations": {
+          "title": "Volunteer Organisations",
+          "subtitle": "If you own Volunteer Organisations want to expand it online."
+        },
+        "tourismAgency": {
+          "title": "Tourism Agency",
+          "subtitle": "If you own Tourism Agency want to expand it online."
+        },
+        "mealPlanning": {
+          "title": "Meal Planning",
+          "subtitle": "If you are a Meal Planner and want to expand your business online."
+        },
+        "tattooArtist": {
+          "title": "Tattoo Artist",
+          "subtitle": "If you are a Tattoo Artist and want to expand your business online."
+        },
+        "beautySalon": {
+          "title": "Beauty Salon",
+          "subtitle": "If you own Beauty Salon want to expand it online."
+        },
+        "photographer": {
+          "title": "Photographer",
+          "subtitle": "If you are a Photographer want to expand your business online."
+        },
+        "cleaningService": {
+          "title": "Cleaning Service",
+          "subtitle": "If you own Cleaning Service and want to expand it online."
+        },
+        "petSitter": {
+          "title": "Pet Sitter",
+          "subtitle": "If you are a Pet Sitter want to expand your business online."
+        },
+        "artisanal Products": {
+          "title": "Artisanal Products",
+          "subtitle": "If you own Artisanal Products and want to sell it online."
+        },
+        "realEstate": {
+          "title": "Real Estate",
+          "subtitle": "If you are a Real Estate Agent want to expand your business online."
+        },
+        "languageSchool": {
+          "title": "Language School",
+          "subtitle": "If you own Language School and want to sell it online."
+        },
+        "deliveryDriver": {
+          "title": "Delivery Company",
+          "subtitle": "If you own a Delivery company and want to earn more."
+        }
+      },
       "Offerings": {
         "hour": "hour",
         "day": "day",
@@ -534,6 +623,7 @@
         "condo": "Condo",
         "bungalow": "Bungalow",
         "hotel": "Hotel",
+        "to": "to",
         "components": {
           "loading": "Loading",
           "schedule": "Schedule",
@@ -1173,7 +1263,8 @@
         "AllServiceView": {
           "AllServiceView": {
             "welcomeText": "Welcome to MEZKALA 👋",
-            "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
+            "appDescription": "Your one stop place to find all your local businesses. If you have a business and want to advertise it, you can ",
+            "clickHere": "click here",
             "services": "Services"
           }
         }

@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -387,17 +388,41 @@ class _BsOpRentalViewState extends State<BsOpRentalView>
                       style: context.textTheme.bodyLarge,
                     ),
                     smallSepartor,
-                    Text(
-                      _i18n()["vehicleRental"]["length"],
-                      style: context.textTheme.bodySmall
-                          ?.copyWith(fontWeight: FontWeight.w700),
-                    ),
+                    Text('${_i18n()["vehicleRental"]["surfMinLength"]}',
+                        style: context.textTheme.bodyLarge
+                            ?.copyWith(fontSize: 10.5.sp)),
                     smallSepartor,
                     TextFormField(
-                      controller: viewController.surfBoardLengthController,
+                      controller: viewController.surfBoardMinLengthController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        hintText: _i18n()["vehicleRental"]["surfLength"],
+                        hintText: _i18n()["vehicleRental"]["surfMinLength"],
+                        suffixIconConstraints: BoxConstraints(
+                          minWidth: 0,
+                          minHeight: 0,
+                        ).tighten(width: 50),
+                        suffixIcon: Text(
+                          "${_i18n()["vehicleRental"]["feet"]}",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "${_i18n()["vehicleRental"]["surfLengthError"]}";
+                        }
+                        return null;
+                      },
+                    ),
+                    smallSepartor,
+                    Text('${_i18n()["vehicleRental"]["surfMaxLength"]}',
+                        style: context.textTheme.bodyLarge
+                            ?.copyWith(fontSize: 10.5.sp)),
+                    smallSepartor,
+                    TextFormField(
+                      controller: viewController.surfBoardMaxLengthController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: _i18n()["vehicleRental"]["surfMaxLength"],
                         suffixIconConstraints: BoxConstraints(
                           minWidth: 0,
                           minHeight: 0,

@@ -53,7 +53,8 @@ class BsRentalViewController {
   late RentalCategory1 rentalCategory1;
   Rxn<RentalCategory2> rentalCategory2 = Rxn();
   Rxn<RentalCategory3> rentalCategory3 = Rxn();
-  TextEditingController surfBoardLengthController = TextEditingController();
+  TextEditingController surfBoardMinLengthController = TextEditingController();
+  TextEditingController surfBoardMaxLengthController = TextEditingController();
   ServiceProviderLanguage? get languages => languageTabsController.language;
   bool get hasSecondaryLang => languages?.secondary != null;
   bool get hasData {
@@ -96,8 +97,10 @@ class BsRentalViewController {
       rentalCategory2.value = rental!.category2;
       rentalCategory3.value = rental!.category3;
       if (rentalCategory1 == RentalCategory1.Surf) {
-        surfBoardLengthController.text =
-            rental!.details.additionalParameters?["length"] ?? "";
+        surfBoardMinLengthController.text =
+            rental!.details.additionalParameters?["minLength"] ?? "";
+        surfBoardMaxLengthController.text =
+            rental!.details.additionalParameters?["maxLength"] ?? "";
       }
     }
   }
@@ -111,7 +114,8 @@ class BsRentalViewController {
         await detailsController.contructDetails();
     if (rentalCategory1 == RentalCategory1.Surf) {
       details.additionalParameters = {
-        "length": surfBoardLengthController.text.trim(),
+        "minLength": surfBoardMinLengthController.text.trim(),
+        "maxLength": surfBoardMaxLengthController.text.trim(),
       };
     }
     final Rental rental = Rental(
@@ -152,7 +156,8 @@ class BsRentalViewController {
             await update_item_additional_params(
               id: rental!.details.id.toInt(),
               additionalParams: {
-                "length": surfBoardLengthController.text.trim(),
+                "minLength": surfBoardMinLengthController.text.trim(),
+                "maxLength": surfBoardMaxLengthController.text.trim(),
               },
             );
           }
