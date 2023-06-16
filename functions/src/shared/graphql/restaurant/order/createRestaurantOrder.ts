@@ -1,3 +1,4 @@
+import { $ } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
@@ -51,15 +52,9 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
           data: {
             customer_id: customerCart.customerId,
             order_type: OrderType.Restaurant,
-            dropoff_gps: JSON.stringify({
-              "type": "Point",
-              "coordinates": [checkoutReq.customerLocation.lng, checkoutReq.customerLocation.lat ],
-            }),
+            dropoff_gps: $`dropoff_gps`,
             dropoff_address: checkoutReq.customerLocation.address,
-            pickup_gps: JSON.stringify({
-              "type": "Point",
-              "coordinates": [restaurant.location.lng, restaurant.location.lat ],
-            }),
+            pickup_gps: $`pickup_gps`,
             pickup_address: restaurant.location.address,
             schedule_time: checkoutReq.scheduledTime,
             chat_with_customer: {
@@ -98,32 +93,14 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
           }
         }: undefined,
         payment_type: checkoutReq.paymentType,
-        to_location_gps: JSON.stringify({
-          "type": "Point",
-          "coordinates": [checkoutReq.customerLocation.lng, checkoutReq.customerLocation.lat ],
-        }),
+        to_location_gps: $`dropoff_gps`,
         to_location_address: checkoutReq.customerLocation.address,
         notes: checkoutReq.notes,
         status: RestaurantOrderStatus.OrderReceived,
         discount_value: checkoutReq.discountValue ?? undefined,
         tax: checkoutReq.tax ?? undefined,
         items: {
-          data: customerCart.items!.map((i:any) => {
-            console.log("+ SelectedOptions of item ", i.itemId , ": ",i.selectedOptions);
-            console.log("+ ItemName ", i.name);
-            return {
-              cost_per_one: i.costPerOne,
-              notes: i.notes,
-              quantity: i.quantity,
-              restaurant_item_id: i.itemId,
-              in_json: 
-               JSON.stringify({
-                name: i.name,
-                image : i.image,
-                selected_options: i.selectedOptions
-              }),
-            };
-          })
+          data: $`data` 
         },
       }
     }, {
@@ -136,7 +113,36 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         chat_with_service_provider_id: true,
       }
     }],
+  }, {
+    "dropoff_gps": {
+      "type": "Point",
+      "coordinates": [checkoutReq.customerLocation.lng, checkoutReq.customerLocation.lat ],
+    },
+    "pickup_gps": {
+      "type": "Point",
+      "coordinates": [restaurant.location.lng, restaurant.location.lat ],
+    },
+    "data": customerCart.items!.map((i:any) => {
+      console.log("+ SelectedOptions of item ", i.itemId , ": ",i.selectedOptions);
+      console.log("+ ItemName ", i.name);
+      return {
+        cost_per_one: i.costPerOne,
+        notes: i.notes,
+        quantity: i.quantity,
+        restaurant_item_id: i.itemId,
+        in_json: {
+          name: i.name,
+          image : i.image,
+          selected_options: parseSelectedOptions(i.selectedOptions)
+        },
+      };
+    })
   });
+
+
+  
+
+  
 
   if(response.insert_restaurant_order_one == null) {
     throw new MezError("orderCreationError");
@@ -230,5 +236,17 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
     }
   }
   return {restaurantOrder, deliveryOrder}
+
+  function parseSelectedOptions(selectedOptions: object | string) {
+    if (typeof selectedOptions === 'string') {
+      try {
+        return JSON.parse(selectedOptions);
+      } catch (e) {
+        // Handle JSON parsing error if needed
+        return null; // or any other default value
+      }
+    }
+    return selectedOptions;
+  }
 }
 

@@ -5,6 +5,7 @@ import { SetupStripeError, UpdateStripeError } from "../../../utilities/stripe/s
 import { ChangeUniqueIdError } from "../../changeUniqueId";
 import { AppType, MezError } from "../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
+import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 
 export async function createServiceProviderStripe(serviceProvider: ServiceProvider) {
     let chain = getHasura();
@@ -17,7 +18,7 @@ export async function createServiceProviderStripe(serviceProvider: ServiceProvid
                 details_submitted: serviceProvider.stripeInfo!.detailsSubmitted,
                 email: serviceProvider.stripeInfo!.email ?? undefined,
                 payouts_enabled: serviceProvider.stripeInfo!.payoutsEnabled,
-                requirements: JSON.stringify(serviceProvider.stripeInfo!.requirements),
+                requirements: $`requirements`,
                 stripe_id: serviceProvider.stripeInfo!.id,
                 status: serviceProvider.stripeInfo!.status,
             },
@@ -28,6 +29,8 @@ export async function createServiceProviderStripe(serviceProvider: ServiceProvid
         }, {
             id: true,
         }]
+    }, {
+        "requirements": serviceProvider.stripeInfo!.requirements
     })
     if(!(stripeResponse.insert_service_provider_stripe_info_one)) {
         throw new MezError(SetupStripeError.StripeUpdateError);
@@ -63,12 +66,14 @@ export async function updateServiceProviderStripe(stripeInfo: ServiceProviderStr
                 details_submitted: stripeInfo.detailsSubmitted,
                 email: stripeInfo.email ?? undefined,
                 payouts_enabled: stripeInfo.payoutsEnabled,
-                requirements: JSON.stringify(stripeInfo.requirements),
+                requirements: $`requirements`,
                 status: stripeInfo.status,
             }
         }, {
             affected_rows: true
         }]
+    }, {
+        "requirements": stripeInfo.requirements
     });
     if(response.update_service_provider_stripe_info == null) {
         throw new MezError(UpdateStripeError.NoStripeAccount);
@@ -83,11 +88,13 @@ export async function updateServiceProviderPayment(serviceProvider: ServiceProvi
                 id: serviceProvider.serviceProviderDetailsId
             },
             _set: {
-                accepted_payments: JSON.stringify(serviceProvider.acceptedPayments)
+                accepted_payments: $`accepted_payments`
             }
         }, {
             id: true
         }]
+    }, {
+        "accepted_payments": serviceProvider.acceptedPayments
     });
 }
 

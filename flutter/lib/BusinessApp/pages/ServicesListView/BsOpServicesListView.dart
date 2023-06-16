@@ -2,10 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/Components/BsHomeRentalCard.dart'
+    as homeCard;
 import 'package:mezcalmos/BusinessApp/pages/Components/BsProductCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsEventCard.dart';
-import 'package:mezcalmos/BusinessApp/pages/components/BsHomeRentalCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsRentalCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsServiceCard.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
@@ -388,6 +389,21 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
             element.category1 == ServiceCategory1.MealPlanning)
         .toList()
         .obs;
+    final RxList<ServiceCard> beautyService = viewController.services
+        .where((ServiceCard element) =>
+            element.category1 == ServiceCategory1.Beauty)
+        .toList()
+        .obs;
+    final RxList<ServiceCard> photoService = viewController.services
+        .where((ServiceCard element) =>
+            element.category1 == ServiceCategory1.Photography)
+        .toList()
+        .obs;
+    final RxList<ServiceCard> tattooService = viewController.services
+        .where((ServiceCard element) =>
+            element.category1 == ServiceCategory1.Tattoo)
+        .toList()
+        .obs;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -466,6 +482,90 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                                   serviceCategory:
                                       ServiceCategory1.MealPlanning,
                                   id: mealPlanningService[index].id!.toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
+        if (beautyService.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["beauty"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      beautyService.length,
+                      (int index) => BsServiceCard(
+                            service: beautyService[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToService(
+                                  serviceCategory:
+                                      ServiceCategory1.Beauty,
+                                  id: beautyService[index].id!.toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
+        if (photoService.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["photo"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      photoService.length,
+                      (int index) => BsServiceCard(
+                            service: photoService[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToService(
+                                  serviceCategory:
+                                      ServiceCategory1.Photography,
+                                  id: photoService[index].id!.toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
+        if (tattooService.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["tattoo"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      tattooService.length,
+                      (int index) => BsServiceCard(
+                            service: tattooService[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToService(
+                                  serviceCategory:
+                                      ServiceCategory1.Tattoo,
+                                  id: tattooService[index].id!.toInt());
                             },
                           )),
                 ),
@@ -729,8 +829,14 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   }
 
   Widget _homeRentals(BuildContext context) {
-    return viewController.homeRentals.length > 0
-        ? Column(
+    final RxList<HomeCard> homeRentals =
+        viewController.homeRentals.where((e) => e.forRent).toList().obs;
+    final RxList<HomeCard> realEstate =
+        viewController.homeRentals.where((e) => e.forSale).toList().obs;
+    return Column(
+      children: [
+        if (homeRentals.isNotEmpty)
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -741,22 +847,48 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
               Obx(
                 () => Column(
                   children: List.generate(
-                      viewController.homeRentals.length,
-                      (int index) => BsHomeRentalCard(
-                            rental: viewController.homeRentals[index],
+                      homeRentals.length,
+                      (int index) => homeCard.BsHomeRentalCard(
+                            home: homeRentals[index],
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToHomeRental(
-                                  id: viewController.homeRentals[index].id!
-                                      .toInt());
+                                  id: homeRentals[index].id!.toInt());
                             },
                           )),
                 ),
               ),
               bigSeperator,
             ],
-          )
-        : SizedBox.shrink();
+          ),
+        if (realEstate.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Real Estate",
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      realEstate.length,
+                      (int index) => homeCard.BsHomeRentalCard(
+                            home: realEstate[index],
+                            viewController: viewController,
+                            onClick: () {
+                              viewController.navigateToHomeRental(
+                                  id: realEstate[index].id!.toInt());
+                            },
+                          )),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
+      ],
+    );
   }
 
   MezButton _addServiceButton(BuildContext context) {

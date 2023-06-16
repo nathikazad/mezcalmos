@@ -1,4 +1,5 @@
 import '../../__generated/schema.graphql.dart';
+import '../../buisness_order/__generated/business_order.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -904,56 +905,6 @@ const documentNodeQueryget_rental_by_category = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'home_rental'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'bathrooms'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'bedrooms'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'gps_location'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'home_type'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'address'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -1086,7 +1037,6 @@ class Query$get_rental_by_category$business_rental {
     required this.id,
     required this.category3,
     required this.business,
-    this.home_rental,
     required this.$__typename,
   });
 
@@ -1096,7 +1046,6 @@ class Query$get_rental_by_category$business_rental {
     final l$id = json['id'];
     final l$category3 = json['category3'];
     final l$business = json['business'];
-    final l$home_rental = json['home_rental'];
     final l$$__typename = json['__typename'];
     return Query$get_rental_by_category$business_rental(
       details: Query$get_rental_by_category$business_rental$details.fromJson(
@@ -1105,10 +1054,6 @@ class Query$get_rental_by_category$business_rental {
       category3: (l$category3 as String),
       business: Query$get_rental_by_category$business_rental$business.fromJson(
           (l$business as Map<String, dynamic>)),
-      home_rental: l$home_rental == null
-          ? null
-          : Query$get_rental_by_category$business_rental$home_rental.fromJson(
-              (l$home_rental as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1120,8 +1065,6 @@ class Query$get_rental_by_category$business_rental {
   final String category3;
 
   final Query$get_rental_by_category$business_rental$business business;
-
-  final Query$get_rental_by_category$business_rental$home_rental? home_rental;
 
   final String $__typename;
 
@@ -1135,8 +1078,6 @@ class Query$get_rental_by_category$business_rental {
     _resultData['category3'] = l$category3;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
-    final l$home_rental = home_rental;
-    _resultData['home_rental'] = l$home_rental?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1148,14 +1089,12 @@ class Query$get_rental_by_category$business_rental {
     final l$id = id;
     final l$category3 = category3;
     final l$business = business;
-    final l$home_rental = home_rental;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$details,
       l$id,
       l$category3,
       l$business,
-      l$home_rental,
       l$$__typename,
     ]);
   }
@@ -1187,11 +1126,6 @@ class Query$get_rental_by_category$business_rental {
     final l$business = business;
     final lOther$business = other.business;
     if (l$business != lOther$business) {
-      return false;
-    }
-    final l$home_rental = home_rental;
-    final lOther$home_rental = other.home_rental;
-    if (l$home_rental != lOther$home_rental) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1227,15 +1161,12 @@ abstract class CopyWith$Query$get_rental_by_category$business_rental<TRes> {
     int? id,
     String? category3,
     Query$get_rental_by_category$business_rental$business? business,
-    Query$get_rental_by_category$business_rental$home_rental? home_rental,
     String? $__typename,
   });
   CopyWith$Query$get_rental_by_category$business_rental$details<TRes>
       get details;
   CopyWith$Query$get_rental_by_category$business_rental$business<TRes>
       get business;
-  CopyWith$Query$get_rental_by_category$business_rental$home_rental<TRes>
-      get home_rental;
 }
 
 class _CopyWithImpl$Query$get_rental_by_category$business_rental<TRes>
@@ -1256,7 +1187,6 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental<TRes>
     Object? id = _undefined,
     Object? category3 = _undefined,
     Object? business = _undefined,
-    Object? home_rental = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_rental_by_category$business_rental(
@@ -1271,10 +1201,6 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental<TRes>
             ? _instance.business
             : (business
                 as Query$get_rental_by_category$business_rental$business),
-        home_rental: home_rental == _undefined
-            ? _instance.home_rental
-            : (home_rental
-                as Query$get_rental_by_category$business_rental$home_rental?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1292,16 +1218,6 @@ class _CopyWithImpl$Query$get_rental_by_category$business_rental<TRes>
     return CopyWith$Query$get_rental_by_category$business_rental$business(
         local$business, (e) => call(business: e));
   }
-
-  CopyWith$Query$get_rental_by_category$business_rental$home_rental<TRes>
-      get home_rental {
-    final local$home_rental = _instance.home_rental;
-    return local$home_rental == null
-        ? CopyWith$Query$get_rental_by_category$business_rental$home_rental
-            .stub(_then(_instance))
-        : CopyWith$Query$get_rental_by_category$business_rental$home_rental(
-            local$home_rental, (e) => call(home_rental: e));
-  }
 }
 
 class _CopyWithStubImpl$Query$get_rental_by_category$business_rental<TRes>
@@ -1315,7 +1231,6 @@ class _CopyWithStubImpl$Query$get_rental_by_category$business_rental<TRes>
     int? id,
     String? category3,
     Query$get_rental_by_category$business_rental$business? business,
-    Query$get_rental_by_category$business_rental$home_rental? home_rental,
     String? $__typename,
   }) =>
       _res;
@@ -1327,10 +1242,6 @@ class _CopyWithStubImpl$Query$get_rental_by_category$business_rental<TRes>
       get business =>
           CopyWith$Query$get_rental_by_category$business_rental$business.stub(
               _res);
-  CopyWith$Query$get_rental_by_category$business_rental$home_rental<TRes>
-      get home_rental =>
-          CopyWith$Query$get_rental_by_category$business_rental$home_rental
-              .stub(_res);
 }
 
 class Query$get_rental_by_category$business_rental$details {
@@ -2591,225 +2502,6 @@ class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$business$de
       _res;
 }
 
-class Query$get_rental_by_category$business_rental$home_rental {
-  Query$get_rental_by_category$business_rental$home_rental({
-    required this.bathrooms,
-    required this.bedrooms,
-    required this.gps_location,
-    required this.home_type,
-    required this.address,
-    required this.$__typename,
-  });
-
-  factory Query$get_rental_by_category$business_rental$home_rental.fromJson(
-      Map<String, dynamic> json) {
-    final l$bathrooms = json['bathrooms'];
-    final l$bedrooms = json['bedrooms'];
-    final l$gps_location = json['gps_location'];
-    final l$home_type = json['home_type'];
-    final l$address = json['address'];
-    final l$$__typename = json['__typename'];
-    return Query$get_rental_by_category$business_rental$home_rental(
-      bathrooms: (l$bathrooms as int),
-      bedrooms: (l$bedrooms as int),
-      gps_location: geographyFromJson(l$gps_location),
-      home_type: (l$home_type as String),
-      address: (l$address as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int bathrooms;
-
-  final int bedrooms;
-
-  final Geography gps_location;
-
-  final String home_type;
-
-  final String address;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$bathrooms = bathrooms;
-    _resultData['bathrooms'] = l$bathrooms;
-    final l$bedrooms = bedrooms;
-    _resultData['bedrooms'] = l$bedrooms;
-    final l$gps_location = gps_location;
-    _resultData['gps_location'] = geographyToJson(l$gps_location);
-    final l$home_type = home_type;
-    _resultData['home_type'] = l$home_type;
-    final l$address = address;
-    _resultData['address'] = l$address;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$bathrooms = bathrooms;
-    final l$bedrooms = bedrooms;
-    final l$gps_location = gps_location;
-    final l$home_type = home_type;
-    final l$address = address;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$bathrooms,
-      l$bedrooms,
-      l$gps_location,
-      l$home_type,
-      l$address,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$get_rental_by_category$business_rental$home_rental) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$bathrooms = bathrooms;
-    final lOther$bathrooms = other.bathrooms;
-    if (l$bathrooms != lOther$bathrooms) {
-      return false;
-    }
-    final l$bedrooms = bedrooms;
-    final lOther$bedrooms = other.bedrooms;
-    if (l$bedrooms != lOther$bedrooms) {
-      return false;
-    }
-    final l$gps_location = gps_location;
-    final lOther$gps_location = other.gps_location;
-    if (l$gps_location != lOther$gps_location) {
-      return false;
-    }
-    final l$home_type = home_type;
-    final lOther$home_type = other.home_type;
-    if (l$home_type != lOther$home_type) {
-      return false;
-    }
-    final l$address = address;
-    final lOther$address = other.address;
-    if (l$address != lOther$address) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_rental_by_category$business_rental$home_rental
-    on Query$get_rental_by_category$business_rental$home_rental {
-  CopyWith$Query$get_rental_by_category$business_rental$home_rental<
-          Query$get_rental_by_category$business_rental$home_rental>
-      get copyWith =>
-          CopyWith$Query$get_rental_by_category$business_rental$home_rental(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_rental_by_category$business_rental$home_rental<
-    TRes> {
-  factory CopyWith$Query$get_rental_by_category$business_rental$home_rental(
-    Query$get_rental_by_category$business_rental$home_rental instance,
-    TRes Function(Query$get_rental_by_category$business_rental$home_rental)
-        then,
-  ) = _CopyWithImpl$Query$get_rental_by_category$business_rental$home_rental;
-
-  factory CopyWith$Query$get_rental_by_category$business_rental$home_rental.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_rental_by_category$business_rental$home_rental;
-
-  TRes call({
-    int? bathrooms,
-    int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_rental_by_category$business_rental$home_rental<
-        TRes>
-    implements
-        CopyWith$Query$get_rental_by_category$business_rental$home_rental<
-            TRes> {
-  _CopyWithImpl$Query$get_rental_by_category$business_rental$home_rental(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_rental_by_category$business_rental$home_rental _instance;
-
-  final TRes Function(Query$get_rental_by_category$business_rental$home_rental)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? bathrooms = _undefined,
-    Object? bedrooms = _undefined,
-    Object? gps_location = _undefined,
-    Object? home_type = _undefined,
-    Object? address = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_rental_by_category$business_rental$home_rental(
-        bathrooms: bathrooms == _undefined || bathrooms == null
-            ? _instance.bathrooms
-            : (bathrooms as int),
-        bedrooms: bedrooms == _undefined || bedrooms == null
-            ? _instance.bedrooms
-            : (bedrooms as int),
-        gps_location: gps_location == _undefined || gps_location == null
-            ? _instance.gps_location
-            : (gps_location as Geography),
-        home_type: home_type == _undefined || home_type == null
-            ? _instance.home_type
-            : (home_type as String),
-        address: address == _undefined || address == null
-            ? _instance.address
-            : (address as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_rental_by_category$business_rental$home_rental<
-        TRes>
-    implements
-        CopyWith$Query$get_rental_by_category$business_rental$home_rental<
-            TRes> {
-  _CopyWithStubImpl$Query$get_rental_by_category$business_rental$home_rental(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? bathrooms,
-    int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
 class Variables$Query$get_rental_by_id {
   factory Variables$Query$get_rental_by_id({required int id}) =>
       Variables$Query$get_rental_by_id._({
@@ -3437,56 +3129,6 @@ const documentNodeQueryget_rental_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'home_rental'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'bathrooms'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'bedrooms'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'gps_location'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'home_type'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'address'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -3613,7 +3255,6 @@ class Query$get_rental_by_id$business_rental_by_pk {
     required this.business,
     required this.details,
     required this.category3,
-    this.home_rental,
     required this.$__typename,
   });
 
@@ -3623,7 +3264,6 @@ class Query$get_rental_by_id$business_rental_by_pk {
     final l$business = json['business'];
     final l$details = json['details'];
     final l$category3 = json['category3'];
-    final l$home_rental = json['home_rental'];
     final l$$__typename = json['__typename'];
     return Query$get_rental_by_id$business_rental_by_pk(
       id: (l$id as int),
@@ -3632,10 +3272,6 @@ class Query$get_rental_by_id$business_rental_by_pk {
       details: Query$get_rental_by_id$business_rental_by_pk$details.fromJson(
           (l$details as Map<String, dynamic>)),
       category3: (l$category3 as String),
-      home_rental: l$home_rental == null
-          ? null
-          : Query$get_rental_by_id$business_rental_by_pk$home_rental.fromJson(
-              (l$home_rental as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -3647,8 +3283,6 @@ class Query$get_rental_by_id$business_rental_by_pk {
   final Query$get_rental_by_id$business_rental_by_pk$details details;
 
   final String category3;
-
-  final Query$get_rental_by_id$business_rental_by_pk$home_rental? home_rental;
 
   final String $__typename;
 
@@ -3662,8 +3296,6 @@ class Query$get_rental_by_id$business_rental_by_pk {
     _resultData['details'] = l$details.toJson();
     final l$category3 = category3;
     _resultData['category3'] = l$category3;
-    final l$home_rental = home_rental;
-    _resultData['home_rental'] = l$home_rental?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3675,14 +3307,12 @@ class Query$get_rental_by_id$business_rental_by_pk {
     final l$business = business;
     final l$details = details;
     final l$category3 = category3;
-    final l$home_rental = home_rental;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$business,
       l$details,
       l$category3,
-      l$home_rental,
       l$$__typename,
     ]);
   }
@@ -3714,11 +3344,6 @@ class Query$get_rental_by_id$business_rental_by_pk {
     final l$category3 = category3;
     final lOther$category3 = other.category3;
     if (l$category3 != lOther$category3) {
-      return false;
-    }
-    final l$home_rental = home_rental;
-    final lOther$home_rental = other.home_rental;
-    if (l$home_rental != lOther$home_rental) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3754,15 +3379,12 @@ abstract class CopyWith$Query$get_rental_by_id$business_rental_by_pk<TRes> {
     Query$get_rental_by_id$business_rental_by_pk$business? business,
     Query$get_rental_by_id$business_rental_by_pk$details? details,
     String? category3,
-    Query$get_rental_by_id$business_rental_by_pk$home_rental? home_rental,
     String? $__typename,
   });
   CopyWith$Query$get_rental_by_id$business_rental_by_pk$business<TRes>
       get business;
   CopyWith$Query$get_rental_by_id$business_rental_by_pk$details<TRes>
       get details;
-  CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental<TRes>
-      get home_rental;
 }
 
 class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk<TRes>
@@ -3783,7 +3405,6 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk<TRes>
     Object? business = _undefined,
     Object? details = _undefined,
     Object? category3 = _undefined,
-    Object? home_rental = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_rental_by_id$business_rental_by_pk(
@@ -3798,10 +3419,6 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk<TRes>
         category3: category3 == _undefined || category3 == null
             ? _instance.category3
             : (category3 as String),
-        home_rental: home_rental == _undefined
-            ? _instance.home_rental
-            : (home_rental
-                as Query$get_rental_by_id$business_rental_by_pk$home_rental?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3819,16 +3436,6 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk<TRes>
     return CopyWith$Query$get_rental_by_id$business_rental_by_pk$details(
         local$details, (e) => call(details: e));
   }
-
-  CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental<TRes>
-      get home_rental {
-    final local$home_rental = _instance.home_rental;
-    return local$home_rental == null
-        ? CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental
-            .stub(_then(_instance))
-        : CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental(
-            local$home_rental, (e) => call(home_rental: e));
-  }
 }
 
 class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk<TRes>
@@ -3842,7 +3449,6 @@ class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk<TRes>
     Query$get_rental_by_id$business_rental_by_pk$business? business,
     Query$get_rental_by_id$business_rental_by_pk$details? details,
     String? category3,
-    Query$get_rental_by_id$business_rental_by_pk$home_rental? home_rental,
     String? $__typename,
   }) =>
       _res;
@@ -3854,10 +3460,6 @@ class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk<TRes>
       get details =>
           CopyWith$Query$get_rental_by_id$business_rental_by_pk$details.stub(
               _res);
-  CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental<TRes>
-      get home_rental =>
-          CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental
-              .stub(_res);
 }
 
 class Query$get_rental_by_id$business_rental_by_pk$business {
@@ -6107,58 +5709,127 @@ class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk$details$nam
       _res;
 }
 
-class Query$get_rental_by_id$business_rental_by_pk$home_rental {
-  Query$get_rental_by_id$business_rental_by_pk$home_rental({
-    required this.bathrooms,
-    required this.bedrooms,
-    required this.gps_location,
-    required this.home_type,
-    required this.address,
+class Variables$Query$get_home_by_id {
+  factory Variables$Query$get_home_by_id({required int id}) =>
+      Variables$Query$get_home_by_id._({
+        r'id': id,
+      });
+
+  Variables$Query$get_home_by_id._(this._$data);
+
+  factory Variables$Query$get_home_by_id.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Query$get_home_by_id._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_home_by_id<Variables$Query$get_home_by_id>
+      get copyWith => CopyWith$Variables$Query$get_home_by_id(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_home_by_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_home_by_id<TRes> {
+  factory CopyWith$Variables$Query$get_home_by_id(
+    Variables$Query$get_home_by_id instance,
+    TRes Function(Variables$Query$get_home_by_id) then,
+  ) = _CopyWithImpl$Variables$Query$get_home_by_id;
+
+  factory CopyWith$Variables$Query$get_home_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_home_by_id;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Query$get_home_by_id<TRes>
+    implements CopyWith$Variables$Query$get_home_by_id<TRes> {
+  _CopyWithImpl$Variables$Query$get_home_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_home_by_id _instance;
+
+  final TRes Function(Variables$Query$get_home_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Query$get_home_by_id._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_home_by_id<TRes>
+    implements CopyWith$Variables$Query$get_home_by_id<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_home_by_id(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Query$get_home_by_id {
+  Query$get_home_by_id({
+    this.business_home_by_pk,
     required this.$__typename,
   });
 
-  factory Query$get_rental_by_id$business_rental_by_pk$home_rental.fromJson(
-      Map<String, dynamic> json) {
-    final l$bathrooms = json['bathrooms'];
-    final l$bedrooms = json['bedrooms'];
-    final l$gps_location = json['gps_location'];
-    final l$home_type = json['home_type'];
-    final l$address = json['address'];
+  factory Query$get_home_by_id.fromJson(Map<String, dynamic> json) {
+    final l$business_home_by_pk = json['business_home_by_pk'];
     final l$$__typename = json['__typename'];
-    return Query$get_rental_by_id$business_rental_by_pk$home_rental(
-      bathrooms: (l$bathrooms as int),
-      bedrooms: (l$bedrooms as int),
-      gps_location: geographyFromJson(l$gps_location),
-      home_type: (l$home_type as String),
-      address: (l$address as String),
+    return Query$get_home_by_id(
+      business_home_by_pk: l$business_home_by_pk == null
+          ? null
+          : Query$get_home_by_id$business_home_by_pk.fromJson(
+              (l$business_home_by_pk as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final int bathrooms;
-
-  final int bedrooms;
-
-  final Geography gps_location;
-
-  final String home_type;
-
-  final String address;
+  final Query$get_home_by_id$business_home_by_pk? business_home_by_pk;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$bathrooms = bathrooms;
-    _resultData['bathrooms'] = l$bathrooms;
-    final l$bedrooms = bedrooms;
-    _resultData['bedrooms'] = l$bedrooms;
-    final l$gps_location = gps_location;
-    _resultData['gps_location'] = geographyToJson(l$gps_location);
-    final l$home_type = home_type;
-    _resultData['home_type'] = l$home_type;
-    final l$address = address;
-    _resultData['address'] = l$address;
+    final l$business_home_by_pk = business_home_by_pk;
+    _resultData['business_home_by_pk'] = l$business_home_by_pk?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -6166,18 +5837,10 @@ class Query$get_rental_by_id$business_rental_by_pk$home_rental {
 
   @override
   int get hashCode {
-    final l$bathrooms = bathrooms;
-    final l$bedrooms = bedrooms;
-    final l$gps_location = gps_location;
-    final l$home_type = home_type;
-    final l$address = address;
+    final l$business_home_by_pk = business_home_by_pk;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$bathrooms,
-      l$bedrooms,
-      l$gps_location,
-      l$home_type,
-      l$address,
+      l$business_home_by_pk,
       l$$__typename,
     ]);
   }
@@ -6187,8 +5850,771 @@ class Query$get_rental_by_id$business_rental_by_pk$home_rental {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_rental_by_id$business_rental_by_pk$home_rental) ||
+    if (!(other is Query$get_home_by_id) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_home_by_pk = business_home_by_pk;
+    final lOther$business_home_by_pk = other.business_home_by_pk;
+    if (l$business_home_by_pk != lOther$business_home_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id on Query$get_home_by_id {
+  CopyWith$Query$get_home_by_id<Query$get_home_by_id> get copyWith =>
+      CopyWith$Query$get_home_by_id(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$get_home_by_id<TRes> {
+  factory CopyWith$Query$get_home_by_id(
+    Query$get_home_by_id instance,
+    TRes Function(Query$get_home_by_id) then,
+  ) = _CopyWithImpl$Query$get_home_by_id;
+
+  factory CopyWith$Query$get_home_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id;
+
+  TRes call({
+    Query$get_home_by_id$business_home_by_pk? business_home_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$get_home_by_id$business_home_by_pk<TRes>
+      get business_home_by_pk;
+}
+
+class _CopyWithImpl$Query$get_home_by_id<TRes>
+    implements CopyWith$Query$get_home_by_id<TRes> {
+  _CopyWithImpl$Query$get_home_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id _instance;
+
+  final TRes Function(Query$get_home_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_home_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home_by_id(
+        business_home_by_pk: business_home_by_pk == _undefined
+            ? _instance.business_home_by_pk
+            : (business_home_by_pk
+                as Query$get_home_by_id$business_home_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_home_by_id$business_home_by_pk<TRes>
+      get business_home_by_pk {
+    final local$business_home_by_pk = _instance.business_home_by_pk;
+    return local$business_home_by_pk == null
+        ? CopyWith$Query$get_home_by_id$business_home_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$get_home_by_id$business_home_by_pk(
+            local$business_home_by_pk, (e) => call(business_home_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id<TRes>
+    implements CopyWith$Query$get_home_by_id<TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_home_by_id$business_home_by_pk? business_home_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_home_by_id$business_home_by_pk<TRes>
+      get business_home_by_pk =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk.stub(_res);
+}
+
+const documentNodeQueryget_home_by_id = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_home_by_id'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_home_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'additional_parameters'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category1'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category2'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'position'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'tags'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'business'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'last_active_time'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'accepted_payments'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'business'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'reviews_aggregate'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'aggregate'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'avg'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: SelectionSetNode(selections: [
+                                  FieldNode(
+                                    name: NameNode(value: 'rating'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null,
+                                  ),
+                                  FieldNode(
+                                    name: NameNode(value: '__typename'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null,
+                                  ),
+                                ]),
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'count'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'bathrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'bedrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'address'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'available_for'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'offering_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_home_by_id _parserFn$Query$get_home_by_id(
+        Map<String, dynamic> data) =>
+    Query$get_home_by_id.fromJson(data);
+
+class Options$Query$get_home_by_id
+    extends graphql.QueryOptions<Query$get_home_by_id> {
+  Options$Query$get_home_by_id({
+    String? operationName,
+    required Variables$Query$get_home_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_home_by_id,
+          parserFn: _parserFn$Query$get_home_by_id,
+        );
+}
+
+class WatchOptions$Query$get_home_by_id
+    extends graphql.WatchQueryOptions<Query$get_home_by_id> {
+  WatchOptions$Query$get_home_by_id({
+    String? operationName,
+    required Variables$Query$get_home_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_home_by_id,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_home_by_id,
+        );
+}
+
+class FetchMoreOptions$Query$get_home_by_id extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_home_by_id({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$get_home_by_id variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryget_home_by_id,
+        );
+}
+
+extension ClientExtension$Query$get_home_by_id on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_home_by_id>> query$get_home_by_id(
+          Options$Query$get_home_by_id options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$get_home_by_id> watchQuery$get_home_by_id(
+          WatchOptions$Query$get_home_by_id options) =>
+      this.watchQuery(options);
+  void writeQuery$get_home_by_id({
+    required Query$get_home_by_id data,
+    required Variables$Query$get_home_by_id variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQueryget_home_by_id),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_home_by_id? readQuery$get_home_by_id({
+    required Variables$Query$get_home_by_id variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(document: documentNodeQueryget_home_by_id),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$get_home_by_id.fromJson(result);
+  }
+}
+
+class Query$get_home_by_id$business_home_by_pk {
+  Query$get_home_by_id$business_home_by_pk({
+    this.details,
+    required this.id,
+    this.business,
+    required this.bathrooms,
+    required this.bedrooms,
+    this.location,
+    required this.available_for,
+    required this.offering_type,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$id = json['id'];
+    final l$business = json['business'];
+    final l$bathrooms = json['bathrooms'];
+    final l$bedrooms = json['bedrooms'];
+    final l$location = json['location'];
+    final l$available_for = json['available_for'];
+    final l$offering_type = json['offering_type'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk(
+      details: l$details == null
+          ? null
+          : Query$get_home_by_id$business_home_by_pk$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      id: (l$id as int),
+      business: l$business == null
+          ? null
+          : Query$get_home_by_id$business_home_by_pk$business.fromJson(
+              (l$business as Map<String, dynamic>)),
+      bathrooms: (l$bathrooms as int),
+      bedrooms: (l$bedrooms as int),
+      location: l$location == null
+          ? null
+          : Query$get_home_by_id$business_home_by_pk$location.fromJson(
+              (l$location as Map<String, dynamic>)),
+      available_for: (l$available_for as String),
+      offering_type: (l$offering_type as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_home_by_id$business_home_by_pk$details? details;
+
+  final int id;
+
+  final Query$get_home_by_id$business_home_by_pk$business? business;
+
+  final int bathrooms;
+
+  final int bedrooms;
+
+  final Query$get_home_by_id$business_home_by_pk$location? location;
+
+  final String available_for;
+
+  final String offering_type;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
+    final l$bathrooms = bathrooms;
+    _resultData['bathrooms'] = l$bathrooms;
+    final l$bedrooms = bedrooms;
+    _resultData['bedrooms'] = l$bedrooms;
+    final l$location = location;
+    _resultData['location'] = l$location?.toJson();
+    final l$available_for = available_for;
+    _resultData['available_for'] = l$available_for;
+    final l$offering_type = offering_type;
+    _resultData['offering_type'] = l$offering_type;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$id = id;
+    final l$business = business;
+    final l$bathrooms = bathrooms;
+    final l$bedrooms = bedrooms;
+    final l$location = location;
+    final l$available_for = available_for;
+    final l$offering_type = offering_type;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$id,
+      l$business,
+      l$bathrooms,
+      l$bedrooms,
+      l$location,
+      l$available_for,
+      l$offering_type,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_home_by_id$business_home_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
       return false;
     }
     final l$bathrooms = bathrooms;
@@ -6201,14 +6627,1415 @@ class Query$get_rental_by_id$business_rental_by_pk$home_rental {
     if (l$bedrooms != lOther$bedrooms) {
       return false;
     }
-    final l$gps_location = gps_location;
-    final lOther$gps_location = other.gps_location;
-    if (l$gps_location != lOther$gps_location) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
-    final l$home_type = home_type;
-    final lOther$home_type = other.home_type;
-    if (l$home_type != lOther$home_type) {
+    final l$available_for = available_for;
+    final lOther$available_for = other.available_for;
+    if (l$available_for != lOther$available_for) {
+      return false;
+    }
+    final l$offering_type = offering_type;
+    final lOther$offering_type = other.offering_type;
+    if (l$offering_type != lOther$offering_type) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk
+    on Query$get_home_by_id$business_home_by_pk {
+  CopyWith$Query$get_home_by_id$business_home_by_pk<
+          Query$get_home_by_id$business_home_by_pk>
+      get copyWith => CopyWith$Query$get_home_by_id$business_home_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk<TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk(
+    Query$get_home_by_id$business_home_by_pk instance,
+    TRes Function(Query$get_home_by_id$business_home_by_pk) then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk;
+
+  TRes call({
+    Query$get_home_by_id$business_home_by_pk$details? details,
+    int? id,
+    Query$get_home_by_id$business_home_by_pk$business? business,
+    int? bathrooms,
+    int? bedrooms,
+    Query$get_home_by_id$business_home_by_pk$location? location,
+    String? available_for,
+    String? offering_type,
+    String? $__typename,
+  });
+  CopyWith$Query$get_home_by_id$business_home_by_pk$details<TRes> get details;
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business<TRes> get business;
+  CopyWith$Query$get_home_by_id$business_home_by_pk$location<TRes> get location;
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk<TRes>
+    implements CopyWith$Query$get_home_by_id$business_home_by_pk<TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk _instance;
+
+  final TRes Function(Query$get_home_by_id$business_home_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? id = _undefined,
+    Object? business = _undefined,
+    Object? bathrooms = _undefined,
+    Object? bedrooms = _undefined,
+    Object? location = _undefined,
+    Object? available_for = _undefined,
+    Object? offering_type = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home_by_id$business_home_by_pk(
+        details: details == _undefined
+            ? _instance.details
+            : (details as Query$get_home_by_id$business_home_by_pk$details?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business: business == _undefined
+            ? _instance.business
+            : (business as Query$get_home_by_id$business_home_by_pk$business?),
+        bathrooms: bathrooms == _undefined || bathrooms == null
+            ? _instance.bathrooms
+            : (bathrooms as int),
+        bedrooms: bedrooms == _undefined || bedrooms == null
+            ? _instance.bedrooms
+            : (bedrooms as int),
+        location: location == _undefined
+            ? _instance.location
+            : (location as Query$get_home_by_id$business_home_by_pk$location?),
+        available_for: available_for == _undefined || available_for == null
+            ? _instance.available_for
+            : (available_for as String),
+        offering_type: offering_type == _undefined || offering_type == null
+            ? _instance.offering_type
+            : (offering_type as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_home_by_id$business_home_by_pk$details<TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$get_home_by_id$business_home_by_pk$details.stub(
+            _then(_instance))
+        : CopyWith$Query$get_home_by_id$business_home_by_pk$details(
+            local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business<TRes>
+      get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Query$get_home_by_id$business_home_by_pk$business.stub(
+            _then(_instance))
+        : CopyWith$Query$get_home_by_id$business_home_by_pk$business(
+            local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Query$get_home_by_id$business_home_by_pk$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Query$get_home_by_id$business_home_by_pk$location.stub(
+            _then(_instance))
+        : CopyWith$Query$get_home_by_id$business_home_by_pk$location(
+            local$location, (e) => call(location: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk<TRes>
+    implements CopyWith$Query$get_home_by_id$business_home_by_pk<TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_home_by_id$business_home_by_pk$details? details,
+    int? id,
+    Query$get_home_by_id$business_home_by_pk$business? business,
+    int? bathrooms,
+    int? bedrooms,
+    Query$get_home_by_id$business_home_by_pk$location? location,
+    String? available_for,
+    String? offering_type,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_home_by_id$business_home_by_pk$details<TRes> get details =>
+      CopyWith$Query$get_home_by_id$business_home_by_pk$details.stub(_res);
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business<TRes>
+      get business =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business.stub(_res);
+  CopyWith$Query$get_home_by_id$business_home_by_pk$location<TRes>
+      get location =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$location.stub(_res);
+}
+
+class Query$get_home_by_id$business_home_by_pk$details {
+  Query$get_home_by_id$business_home_by_pk$details({
+    required this.name_id,
+    this.description_id,
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.available,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$available = json['available'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$details(
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
+      id: (l$id as int),
+      name: Query$get_home_by_id$business_home_by_pk$details$name.fromJson(
+          (l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      available: (l$available as bool),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int name_id;
+
+  final int? description_id;
+
+  final int id;
+
+  final Query$get_home_by_id$business_home_by_pk$details$name name;
+
+  final dynamic? additional_parameters;
+
+  final bool available;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$available = available;
+    _resultData['available'] = l$available;
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name_id = name_id;
+    final l$description_id = description_id;
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$available = available;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name_id,
+      l$description_id,
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$available,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_home_by_id$business_home_by_pk$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$details
+    on Query$get_home_by_id$business_home_by_pk$details {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$details<
+          Query$get_home_by_id$business_home_by_pk$details>
+      get copyWith => CopyWith$Query$get_home_by_id$business_home_by_pk$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$details<TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$details(
+    Query$get_home_by_id$business_home_by_pk$details instance,
+    TRes Function(Query$get_home_by_id$business_home_by_pk$details) then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$details;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$details;
+
+  TRes call({
+    int? name_id,
+    int? description_id,
+    int? id,
+    Query$get_home_by_id$business_home_by_pk$details$name? name,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Query$get_home_by_id$business_home_by_pk$details$name<TRes> get name;
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$details<TRes>
+    implements CopyWith$Query$get_home_by_id$business_home_by_pk$details<TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk$details _instance;
+
+  final TRes Function(Query$get_home_by_id$business_home_by_pk$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? available = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home_by_id$business_home_by_pk$details(
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as Query$get_home_by_id$business_home_by_pk$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        available: available == _undefined || available == null
+            ? _instance.available
+            : (available as bool),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_home_by_id$business_home_by_pk$details$name<TRes>
+      get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$get_home_by_id$business_home_by_pk$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$details<TRes>
+    implements CopyWith$Query$get_home_by_id$business_home_by_pk$details<TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$details(this._res);
+
+  TRes _res;
+
+  call({
+    int? name_id,
+    int? description_id,
+    int? id,
+    Query$get_home_by_id$business_home_by_pk$details$name? name,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_home_by_id$business_home_by_pk$details$name<TRes>
+      get name =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$details$name.stub(
+              _res);
+}
+
+class Query$get_home_by_id$business_home_by_pk$details$name {
+  Query$get_home_by_id$business_home_by_pk$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_home_by_id$business_home_by_pk$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$get_home_by_id$business_home_by_pk$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_home_by_id$business_home_by_pk$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$details$name
+    on Query$get_home_by_id$business_home_by_pk$details$name {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$details$name<
+          Query$get_home_by_id$business_home_by_pk$details$name>
+      get copyWith =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$details$name<
+    TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$details$name(
+    Query$get_home_by_id$business_home_by_pk$details$name instance,
+    TRes Function(Query$get_home_by_id$business_home_by_pk$details$name) then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$details$name;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$details$name;
+
+  TRes call({
+    List<Query$get_home_by_id$business_home_by_pk$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_home_by_id$business_home_by_pk$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_home_by_id$business_home_by_pk$details$name$translations<
+                      Query$get_home_by_id$business_home_by_pk$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$details$name<TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$details$name<TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk$details$name _instance;
+
+  final TRes Function(Query$get_home_by_id$business_home_by_pk$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home_by_id$business_home_by_pk$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_home_by_id$business_home_by_pk$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_home_by_id$business_home_by_pk$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_home_by_id$business_home_by_pk$details$name$translations<
+                          Query$get_home_by_id$business_home_by_pk$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_home_by_id$business_home_by_pk$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$details$name<TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_home_by_id$business_home_by_pk$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_home_by_id$business_home_by_pk$details$name$translations {
+  Query$get_home_by_id$business_home_by_pk$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_home_by_id$business_home_by_pk$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$details$name$translations
+    on Query$get_home_by_id$business_home_by_pk$details$name$translations {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$details$name$translations<
+          Query$get_home_by_id$business_home_by_pk$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$details$name$translations(
+    Query$get_home_by_id$business_home_by_pk$details$name$translations instance,
+    TRes Function(
+            Query$get_home_by_id$business_home_by_pk$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$details$name$translations;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk$details$name$translations
+      _instance;
+
+  final TRes Function(
+      Query$get_home_by_id$business_home_by_pk$details$name$translations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home_by_id$business_home_by_pk$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_home_by_id$business_home_by_pk$business {
+  Query$get_home_by_id$business_home_by_pk$business({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$business(
+      id: (l$id as int),
+      details:
+          Query$get_home_by_id$business_home_by_pk$business$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$get_home_by_id$business_home_by_pk$business$details details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_home_by_id$business_home_by_pk$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$business
+    on Query$get_home_by_id$business_home_by_pk$business {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business<
+          Query$get_home_by_id$business_home_by_pk$business>
+      get copyWith =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$business<
+    TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business(
+    Query$get_home_by_id$business_home_by_pk$business instance,
+    TRes Function(Query$get_home_by_id$business_home_by_pk$business) then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business;
+
+  TRes call({
+    int? id,
+    Query$get_home_by_id$business_home_by_pk$business$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details<TRes>
+      get details;
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business<TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business<TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk$business _instance;
+
+  final TRes Function(Query$get_home_by_id$business_home_by_pk$business) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home_by_id$business_home_by_pk$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_home_by_id$business_home_by_pk$business$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_home_by_id$business_home_by_pk$business$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business<TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business<TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$get_home_by_id$business_home_by_pk$business$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details<TRes>
+      get details =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details
+              .stub(_res);
+}
+
+class Query$get_home_by_id$business_home_by_pk$business$details {
+  Query$get_home_by_id$business_home_by_pk$business$details({
+    required this.last_active_time,
+    required this.id,
+    required this.name,
+    required this.currency,
+    required this.location,
+    required this.image,
+    required this.accepted_payments,
+    this.business,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$business$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$last_active_time = json['last_active_time'];
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$currency = json['currency'];
+    final l$location = json['location'];
+    final l$image = json['image'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$business = json['business'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$business$details(
+      last_active_time: (l$last_active_time as String),
+      id: (l$id as int),
+      name: (l$name as String),
+      currency: (l$currency as String),
+      location:
+          Query$get_home_by_id$business_home_by_pk$business$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
+      image: (l$image as String),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      business: l$business == null
+          ? null
+          : Query$get_home_by_id$business_home_by_pk$business$details$business
+              .fromJson((l$business as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String last_active_time;
+
+  final int id;
+
+  final String name;
+
+  final String currency;
+
+  final Query$get_home_by_id$business_home_by_pk$business$details$location
+      location;
+
+  final String image;
+
+  final dynamic accepted_payments;
+
+  final Query$get_home_by_id$business_home_by_pk$business$details$business?
+      business;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$last_active_time = last_active_time;
+    _resultData['last_active_time'] = l$last_active_time;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$last_active_time = last_active_time;
+    final l$id = id;
+    final l$name = name;
+    final l$currency = currency;
+    final l$location = location;
+    final l$image = image;
+    final l$accepted_payments = accepted_payments;
+    final l$business = business;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$last_active_time,
+      l$id,
+      l$name,
+      l$currency,
+      l$location,
+      l$image,
+      l$accepted_payments,
+      l$business,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_home_by_id$business_home_by_pk$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$last_active_time = last_active_time;
+    final lOther$last_active_time = other.last_active_time;
+    if (l$last_active_time != lOther$last_active_time) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$business$details
+    on Query$get_home_by_id$business_home_by_pk$business$details {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details<
+          Query$get_home_by_id$business_home_by_pk$business$details>
+      get copyWith =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$business$details<
+    TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details(
+    Query$get_home_by_id$business_home_by_pk$business$details instance,
+    TRes Function(Query$get_home_by_id$business_home_by_pk$business$details)
+        then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details;
+
+  TRes call({
+    String? last_active_time,
+    int? id,
+    String? name,
+    String? currency,
+    Query$get_home_by_id$business_home_by_pk$business$details$location?
+        location,
+    String? image,
+    dynamic? accepted_payments,
+    Query$get_home_by_id$business_home_by_pk$business$details$business?
+        business,
+    String? $__typename,
+  });
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location<
+      TRes> get location;
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business<
+      TRes> get business;
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details<
+            TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk$business$details _instance;
+
+  final TRes Function(Query$get_home_by_id$business_home_by_pk$business$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? last_active_time = _undefined,
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? currency = _undefined,
+    Object? location = _undefined,
+    Object? image = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? business = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home_by_id$business_home_by_pk$business$details(
+        last_active_time:
+            last_active_time == _undefined || last_active_time == null
+                ? _instance.last_active_time
+                : (last_active_time as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_home_by_id$business_home_by_pk$business$details$location),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        business: business == _undefined
+            ? _instance.business
+            : (business
+                as Query$get_home_by_id$business_home_by_pk$business$details$business?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location(
+        local$location, (e) => call(location: e));
+  }
+
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business<
+      TRes> get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business
+            .stub(_then(_instance))
+        : CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business(
+            local$business, (e) => call(business: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? last_active_time,
+    int? id,
+    String? name,
+    String? currency,
+    Query$get_home_by_id$business_home_by_pk$business$details$location?
+        location,
+    String? image,
+    dynamic? accepted_payments,
+    Query$get_home_by_id$business_home_by_pk$business$details$business?
+        business,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location
+              .stub(_res);
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business<
+          TRes>
+      get business =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business
+              .stub(_res);
+}
+
+class Query$get_home_by_id$business_home_by_pk$business$details$location {
+  Query$get_home_by_id$business_home_by_pk$business$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$business$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$business$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_home_by_id$business_home_by_pk$business$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
       return false;
     }
     final l$address = address;
@@ -6225,77 +8052,64 @@ class Query$get_rental_by_id$business_rental_by_pk$home_rental {
   }
 }
 
-extension UtilityExtension$Query$get_rental_by_id$business_rental_by_pk$home_rental
-    on Query$get_rental_by_id$business_rental_by_pk$home_rental {
-  CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental<
-          Query$get_rental_by_id$business_rental_by_pk$home_rental>
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$business$details$location
+    on Query$get_home_by_id$business_home_by_pk$business$details$location {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location<
+          Query$get_home_by_id$business_home_by_pk$business$details$location>
       get copyWith =>
-          CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental(
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental<
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location<
     TRes> {
-  factory CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental(
-    Query$get_rental_by_id$business_rental_by_pk$home_rental instance,
-    TRes Function(Query$get_rental_by_id$business_rental_by_pk$home_rental)
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location(
+    Query$get_home_by_id$business_home_by_pk$business$details$location instance,
+    TRes Function(
+            Query$get_home_by_id$business_home_by_pk$business$details$location)
         then,
-  ) = _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$home_rental;
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$location;
 
-  factory CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental.stub(
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk$home_rental;
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$location;
 
   TRes call({
-    int? bathrooms,
-    int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
+    Geography? gps,
     String? address,
     String? $__typename,
   });
 }
 
-class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$home_rental<
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$location<
         TRes>
     implements
-        CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental<
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location<
             TRes> {
-  _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$home_rental(
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$location(
     this._instance,
     this._then,
   );
 
-  final Query$get_rental_by_id$business_rental_by_pk$home_rental _instance;
+  final Query$get_home_by_id$business_home_by_pk$business$details$location
+      _instance;
 
-  final TRes Function(Query$get_rental_by_id$business_rental_by_pk$home_rental)
-      _then;
+  final TRes Function(
+      Query$get_home_by_id$business_home_by_pk$business$details$location) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? bathrooms = _undefined,
-    Object? bedrooms = _undefined,
-    Object? gps_location = _undefined,
-    Object? home_type = _undefined,
+    Object? gps = _undefined,
     Object? address = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_rental_by_id$business_rental_by_pk$home_rental(
-        bathrooms: bathrooms == _undefined || bathrooms == null
-            ? _instance.bathrooms
-            : (bathrooms as int),
-        bedrooms: bedrooms == _undefined || bedrooms == null
-            ? _instance.bedrooms
-            : (bedrooms as int),
-        gps_location: gps_location == _undefined || gps_location == null
-            ? _instance.gps_location
-            : (gps_location as Geography),
-        home_type: home_type == _undefined || home_type == null
-            ? _instance.home_type
-            : (home_type as String),
+      _then(Query$get_home_by_id$business_home_by_pk$business$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
         address: address == _undefined || address == null
             ? _instance.address
             : (address as String),
@@ -6305,44 +8119,875 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$home_rental<
       ));
 }
 
-class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk$home_rental<
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$location<
         TRes>
     implements
-        CopyWith$Query$get_rental_by_id$business_rental_by_pk$home_rental<
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$location<
             TRes> {
-  _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk$home_rental(
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$location(
       this._res);
 
   TRes _res;
 
   call({
-    int? bathrooms,
-    int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
+    Geography? gps,
     String? address,
     String? $__typename,
   }) =>
       _res;
 }
 
-class Variables$Query$get_home_rentals {
-  factory Variables$Query$get_home_rentals({
+class Query$get_home_by_id$business_home_by_pk$business$details$business {
+  Query$get_home_by_id$business_home_by_pk$business$details$business({
+    required this.reviews_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$business$details$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$reviews_aggregate = json['reviews_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$business$details$business(
+      reviews_aggregate:
+          Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate
+              .fromJson((l$reviews_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate
+      reviews_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$reviews_aggregate = reviews_aggregate;
+    _resultData['reviews_aggregate'] = l$reviews_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$reviews_aggregate = reviews_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$reviews_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_home_by_id$business_home_by_pk$business$details$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$reviews_aggregate = reviews_aggregate;
+    final lOther$reviews_aggregate = other.reviews_aggregate;
+    if (l$reviews_aggregate != lOther$reviews_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$business$details$business
+    on Query$get_home_by_id$business_home_by_pk$business$details$business {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business<
+          Query$get_home_by_id$business_home_by_pk$business$details$business>
+      get copyWith =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business<
+    TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business(
+    Query$get_home_by_id$business_home_by_pk$business$details$business instance,
+    TRes Function(
+            Query$get_home_by_id$business_home_by_pk$business$details$business)
+        then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business;
+
+  TRes call({
+    Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate?
+        reviews_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate<
+      TRes> get reviews_aggregate;
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business<
+            TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk$business$details$business
+      _instance;
+
+  final TRes Function(
+      Query$get_home_by_id$business_home_by_pk$business$details$business) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? reviews_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home_by_id$business_home_by_pk$business$details$business(
+        reviews_aggregate: reviews_aggregate == _undefined ||
+                reviews_aggregate == null
+            ? _instance.reviews_aggregate
+            : (reviews_aggregate
+                as Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate<
+      TRes> get reviews_aggregate {
+    final local$reviews_aggregate = _instance.reviews_aggregate;
+    return CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate(
+        local$reviews_aggregate, (e) => call(reviews_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business<
+            TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate?
+        reviews_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate<
+          TRes>
+      get reviews_aggregate =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate
+              .stub(_res);
+}
+
+class Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate {
+  Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate
+    on Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate<
+          Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate>
+      get copyWith =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate<
+    TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate(
+    Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate
+        instance,
+    TRes Function(
+            Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate;
+
+  TRes call({
+    Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate
+      _instance;
+
+  final TRes Function(
+          Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate {
+  Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate({
+    this.avg,
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$avg = json['avg'];
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate(
+      avg: l$avg == null
+          ? null
+          : Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg
+              .fromJson((l$avg as Map<String, dynamic>)),
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg?
+      avg;
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$avg = avg;
+    _resultData['avg'] = l$avg?.toJson();
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$avg = avg;
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$avg,
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$avg = avg;
+    final lOther$avg = other.avg;
+    if (l$avg != lOther$avg) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate
+    on Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate<
+          Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate(
+    Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate;
+
+  TRes call({
+    Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg?
+        avg,
+    int? count,
+    String? $__typename,
+  });
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg<
+      TRes> get avg;
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? avg = _undefined,
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate(
+        avg: avg == _undefined
+            ? _instance.avg
+            : (avg
+                as Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg?),
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg<
+      TRes> get avg {
+    final local$avg = _instance.avg;
+    return local$avg == null
+        ? CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg
+            .stub(_then(_instance))
+        : CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg(
+            local$avg, (e) => call(avg: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg?
+        avg,
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg<
+          TRes>
+      get avg =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg
+              .stub(_res);
+}
+
+class Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg {
+  Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg({
+    this.rating,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg.fromJson(
+      Map<String, dynamic> json) {
+    final l$rating = json['rating'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg(
+      rating: (l$rating as num?)?.toDouble(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double? rating;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$rating = rating;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$rating,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg
+    on Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg<
+          Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg>
+      get copyWith =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg<
+    TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg(
+    Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg
+        instance,
+    TRes Function(
+            Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg)
+        then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg;
+
+  TRes call({
+    double? rating,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg
+      _instance;
+
+  final TRes Function(
+          Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? rating = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg(
+        rating: rating == _undefined ? _instance.rating : (rating as double?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$details$business$reviews_aggregate$aggregate$avg(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? rating,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_home_by_id$business_home_by_pk$location {
+  Query$get_home_by_id$business_home_by_pk$location({
+    required this.address,
+    required this.gps,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_home_by_id$business_home_by_pk$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$address = json['address'];
+    final l$gps = json['gps'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home_by_id$business_home_by_pk$location(
+      address: (l$address as String),
+      gps: geographyFromJson(l$gps),
+      name: (l$name as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String address;
+
+  final Geography gps;
+
+  final String name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$address = address;
+    final l$gps = gps;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$address,
+      l$gps,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_home_by_id$business_home_by_pk$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home_by_id$business_home_by_pk$location
+    on Query$get_home_by_id$business_home_by_pk$location {
+  CopyWith$Query$get_home_by_id$business_home_by_pk$location<
+          Query$get_home_by_id$business_home_by_pk$location>
+      get copyWith =>
+          CopyWith$Query$get_home_by_id$business_home_by_pk$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$location<
+    TRes> {
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$location(
+    Query$get_home_by_id$business_home_by_pk$location instance,
+    TRes Function(Query$get_home_by_id$business_home_by_pk$location) then,
+  ) = _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$location;
+
+  factory CopyWith$Query$get_home_by_id$business_home_by_pk$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$location;
+
+  TRes call({
+    String? address,
+    Geography? gps,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$location<TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$location<TRes> {
+  _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home_by_id$business_home_by_pk$location _instance;
+
+  final TRes Function(Query$get_home_by_id$business_home_by_pk$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? address = _undefined,
+    Object? gps = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home_by_id$business_home_by_pk$location(
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$location<TRes>
+    implements
+        CopyWith$Query$get_home_by_id$business_home_by_pk$location<TRes> {
+  _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? address,
+    Geography? gps,
+    String? name,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$get_home {
+  factory Variables$Query$get_home({
     required Geography location,
     int? limit,
     int? offset,
     required double distance,
   }) =>
-      Variables$Query$get_home_rentals._({
+      Variables$Query$get_home._({
         r'location': location,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
         r'distance': distance,
       });
 
-  Variables$Query$get_home_rentals._(this._$data);
+  Variables$Query$get_home._(this._$data);
 
-  factory Variables$Query$get_home_rentals.fromJson(Map<String, dynamic> data) {
+  factory Variables$Query$get_home.fromJson(Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$location = data['location'];
     result$data['location'] = geographyFromJson(l$location);
@@ -6356,7 +9001,7 @@ class Variables$Query$get_home_rentals {
     }
     final l$distance = data['distance'];
     result$data['distance'] = (l$distance as num).toDouble();
-    return Variables$Query$get_home_rentals._(result$data);
+    return Variables$Query$get_home._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -6382,17 +9027,17 @@ class Variables$Query$get_home_rentals {
     return result$data;
   }
 
-  CopyWith$Variables$Query$get_home_rentals<Variables$Query$get_home_rentals>
-      get copyWith => CopyWith$Variables$Query$get_home_rentals(
-            this,
-            (i) => i,
-          );
+  CopyWith$Variables$Query$get_home<Variables$Query$get_home> get copyWith =>
+      CopyWith$Variables$Query$get_home(
+        this,
+        (i) => i,
+      );
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Query$get_home_rentals) ||
+    if (!(other is Variables$Query$get_home) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -6440,14 +9085,14 @@ class Variables$Query$get_home_rentals {
   }
 }
 
-abstract class CopyWith$Variables$Query$get_home_rentals<TRes> {
-  factory CopyWith$Variables$Query$get_home_rentals(
-    Variables$Query$get_home_rentals instance,
-    TRes Function(Variables$Query$get_home_rentals) then,
-  ) = _CopyWithImpl$Variables$Query$get_home_rentals;
+abstract class CopyWith$Variables$Query$get_home<TRes> {
+  factory CopyWith$Variables$Query$get_home(
+    Variables$Query$get_home instance,
+    TRes Function(Variables$Query$get_home) then,
+  ) = _CopyWithImpl$Variables$Query$get_home;
 
-  factory CopyWith$Variables$Query$get_home_rentals.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Query$get_home_rentals;
+  factory CopyWith$Variables$Query$get_home.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_home;
 
   TRes call({
     Geography? location,
@@ -6457,16 +9102,16 @@ abstract class CopyWith$Variables$Query$get_home_rentals<TRes> {
   });
 }
 
-class _CopyWithImpl$Variables$Query$get_home_rentals<TRes>
-    implements CopyWith$Variables$Query$get_home_rentals<TRes> {
-  _CopyWithImpl$Variables$Query$get_home_rentals(
+class _CopyWithImpl$Variables$Query$get_home<TRes>
+    implements CopyWith$Variables$Query$get_home<TRes> {
+  _CopyWithImpl$Variables$Query$get_home(
     this._instance,
     this._then,
   );
 
-  final Variables$Query$get_home_rentals _instance;
+  final Variables$Query$get_home _instance;
 
-  final TRes Function(Variables$Query$get_home_rentals) _then;
+  final TRes Function(Variables$Query$get_home) _then;
 
   static const _undefined = {};
 
@@ -6476,7 +9121,7 @@ class _CopyWithImpl$Variables$Query$get_home_rentals<TRes>
     Object? offset = _undefined,
     Object? distance = _undefined,
   }) =>
-      _then(Variables$Query$get_home_rentals._({
+      _then(Variables$Query$get_home._({
         ..._instance._$data,
         if (location != _undefined && location != null)
           'location': (location as Geography),
@@ -6487,9 +9132,9 @@ class _CopyWithImpl$Variables$Query$get_home_rentals<TRes>
       }));
 }
 
-class _CopyWithStubImpl$Variables$Query$get_home_rentals<TRes>
-    implements CopyWith$Variables$Query$get_home_rentals<TRes> {
-  _CopyWithStubImpl$Variables$Query$get_home_rentals(this._res);
+class _CopyWithStubImpl$Variables$Query$get_home<TRes>
+    implements CopyWith$Variables$Query$get_home<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_home(this._res);
 
   TRes _res;
 
@@ -6502,34 +9147,33 @@ class _CopyWithStubImpl$Variables$Query$get_home_rentals<TRes>
       _res;
 }
 
-class Query$get_home_rentals {
-  Query$get_home_rentals({
-    required this.business_get_home_rentals,
+class Query$get_home {
+  Query$get_home({
+    required this.business_home,
     required this.$__typename,
   });
 
-  factory Query$get_home_rentals.fromJson(Map<String, dynamic> json) {
-    final l$business_get_home_rentals = json['business_get_home_rentals'];
+  factory Query$get_home.fromJson(Map<String, dynamic> json) {
+    final l$business_home = json['business_home'];
     final l$$__typename = json['__typename'];
-    return Query$get_home_rentals(
-      business_get_home_rentals: (l$business_get_home_rentals as List<dynamic>)
-          .map((e) => Query$get_home_rentals$business_get_home_rentals.fromJson(
+    return Query$get_home(
+      business_home: (l$business_home as List<dynamic>)
+          .map((e) => Query$get_home$business_home.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$get_home_rentals$business_get_home_rentals>
-      business_get_home_rentals;
+  final List<Query$get_home$business_home> business_home;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$business_get_home_rentals = business_get_home_rentals;
-    _resultData['business_get_home_rentals'] =
-        l$business_get_home_rentals.map((e) => e.toJson()).toList();
+    final l$business_home = business_home;
+    _resultData['business_home'] =
+        l$business_home.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -6537,10 +9181,10 @@ class Query$get_home_rentals {
 
   @override
   int get hashCode {
-    final l$business_get_home_rentals = business_get_home_rentals;
+    final l$business_home = business_home;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$business_get_home_rentals.map((v) => v)),
+      Object.hashAll(l$business_home.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -6550,22 +9194,18 @@ class Query$get_home_rentals {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_home_rentals) ||
-        runtimeType != other.runtimeType) {
+    if (!(other is Query$get_home) || runtimeType != other.runtimeType) {
       return false;
     }
-    final l$business_get_home_rentals = business_get_home_rentals;
-    final lOther$business_get_home_rentals = other.business_get_home_rentals;
-    if (l$business_get_home_rentals.length !=
-        lOther$business_get_home_rentals.length) {
+    final l$business_home = business_home;
+    final lOther$business_home = other.business_home;
+    if (l$business_home.length != lOther$business_home.length) {
       return false;
     }
-    for (int i = 0; i < l$business_get_home_rentals.length; i++) {
-      final l$business_get_home_rentals$entry = l$business_get_home_rentals[i];
-      final lOther$business_get_home_rentals$entry =
-          lOther$business_get_home_rentals[i];
-      if (l$business_get_home_rentals$entry !=
-          lOther$business_get_home_rentals$entry) {
+    for (int i = 0; i < l$business_home.length; i++) {
+      final l$business_home$entry = l$business_home[i];
+      final lOther$business_home$entry = lOther$business_home[i];
+      if (l$business_home$entry != lOther$business_home$entry) {
         return false;
       }
     }
@@ -6578,97 +9218,92 @@ class Query$get_home_rentals {
   }
 }
 
-extension UtilityExtension$Query$get_home_rentals on Query$get_home_rentals {
-  CopyWith$Query$get_home_rentals<Query$get_home_rentals> get copyWith =>
-      CopyWith$Query$get_home_rentals(
+extension UtilityExtension$Query$get_home on Query$get_home {
+  CopyWith$Query$get_home<Query$get_home> get copyWith =>
+      CopyWith$Query$get_home(
         this,
         (i) => i,
       );
 }
 
-abstract class CopyWith$Query$get_home_rentals<TRes> {
-  factory CopyWith$Query$get_home_rentals(
-    Query$get_home_rentals instance,
-    TRes Function(Query$get_home_rentals) then,
-  ) = _CopyWithImpl$Query$get_home_rentals;
+abstract class CopyWith$Query$get_home<TRes> {
+  factory CopyWith$Query$get_home(
+    Query$get_home instance,
+    TRes Function(Query$get_home) then,
+  ) = _CopyWithImpl$Query$get_home;
 
-  factory CopyWith$Query$get_home_rentals.stub(TRes res) =
-      _CopyWithStubImpl$Query$get_home_rentals;
+  factory CopyWith$Query$get_home.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_home;
 
   TRes call({
-    List<Query$get_home_rentals$business_get_home_rentals>?
-        business_get_home_rentals,
+    List<Query$get_home$business_home>? business_home,
     String? $__typename,
   });
-  TRes business_get_home_rentals(
-      Iterable<Query$get_home_rentals$business_get_home_rentals> Function(
+  TRes business_home(
+      Iterable<Query$get_home$business_home> Function(
               Iterable<
-                  CopyWith$Query$get_home_rentals$business_get_home_rentals<
-                      Query$get_home_rentals$business_get_home_rentals>>)
+                  CopyWith$Query$get_home$business_home<
+                      Query$get_home$business_home>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$get_home_rentals<TRes>
-    implements CopyWith$Query$get_home_rentals<TRes> {
-  _CopyWithImpl$Query$get_home_rentals(
+class _CopyWithImpl$Query$get_home<TRes>
+    implements CopyWith$Query$get_home<TRes> {
+  _CopyWithImpl$Query$get_home(
     this._instance,
     this._then,
   );
 
-  final Query$get_home_rentals _instance;
+  final Query$get_home _instance;
 
-  final TRes Function(Query$get_home_rentals) _then;
+  final TRes Function(Query$get_home) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? business_get_home_rentals = _undefined,
+    Object? business_home = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_home_rentals(
-        business_get_home_rentals: business_get_home_rentals == _undefined ||
-                business_get_home_rentals == null
-            ? _instance.business_get_home_rentals
-            : (business_get_home_rentals
-                as List<Query$get_home_rentals$business_get_home_rentals>),
+      _then(Query$get_home(
+        business_home: business_home == _undefined || business_home == null
+            ? _instance.business_home
+            : (business_home as List<Query$get_home$business_home>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes business_get_home_rentals(
-          Iterable<Query$get_home_rentals$business_get_home_rentals> Function(
+  TRes business_home(
+          Iterable<Query$get_home$business_home> Function(
                   Iterable<
-                      CopyWith$Query$get_home_rentals$business_get_home_rentals<
-                          Query$get_home_rentals$business_get_home_rentals>>)
+                      CopyWith$Query$get_home$business_home<
+                          Query$get_home$business_home>>)
               _fn) =>
       call(
-          business_get_home_rentals: _fn(_instance.business_get_home_rentals
-              .map((e) =>
-                  CopyWith$Query$get_home_rentals$business_get_home_rentals(
+          business_home: _fn(_instance.business_home
+              .map((e) => CopyWith$Query$get_home$business_home(
                     e,
                     (i) => i,
                   ))).toList());
 }
 
-class _CopyWithStubImpl$Query$get_home_rentals<TRes>
-    implements CopyWith$Query$get_home_rentals<TRes> {
-  _CopyWithStubImpl$Query$get_home_rentals(this._res);
+class _CopyWithStubImpl$Query$get_home<TRes>
+    implements CopyWith$Query$get_home<TRes> {
+  _CopyWithStubImpl$Query$get_home(this._res);
 
   TRes _res;
 
   call({
-    List<Query$get_home_rentals$business_get_home_rentals>?
-        business_get_home_rentals,
+    List<Query$get_home$business_home>? business_home,
     String? $__typename,
   }) =>
       _res;
-  business_get_home_rentals(_fn) => _res;
+  business_home(_fn) => _res;
 }
 
-const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
+const documentNodeQueryget_home = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
-    name: NameNode(value: 'get_home_rentals'),
+    name: NameNode(value: 'get_home'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'location')),
@@ -6710,31 +9345,39 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'business_get_home_rentals'),
+        name: NameNode(value: 'business_home'),
         alias: null,
         arguments: [
-          ArgumentNode(
-            name: NameNode(value: 'args'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'location'),
-                value: VariableNode(name: NameNode(value: 'location')),
-              )
-            ]),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'limit'),
-            value: VariableNode(name: NameNode(value: 'limit')),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'offset'),
-            value: VariableNode(name: NameNode(value: 'offset')),
-          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'rental'),
+                name: NameNode(value: 'location'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'gps'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_st_d_within'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'distance'),
+                            value:
+                                VariableNode(name: NameNode(value: 'distance')),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'from'),
+                            value:
+                                VariableNode(name: NameNode(value: 'location')),
+                          ),
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: '_and'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
                     name: NameNode(value: 'business'),
@@ -6766,69 +9409,199 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
                         ]),
                       )
                     ]),
-                  )
-                ]),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'gps_location'),
-                value: ObjectValueNode(fields: [
+                  ),
                   ObjectFieldNode(
-                    name: NameNode(value: '_st_d_within'),
+                    name: NameNode(value: 'available_for'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: 'distance'),
-                        value: VariableNode(name: NameNode(value: 'distance')),
-                      ),
+                        name: NameNode(value: '_eq'),
+                        value: StringValueNode(
+                          value: 'rent',
+                          isBlock: false,
+                        ),
+                      )
+                    ]),
+                  ),
+                ]),
+              ),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'business'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: 'from'),
-                        value: VariableNode(name: NameNode(value: 'location')),
-                      ),
+                        name: NameNode(value: 'referral_points'),
+                        value: EnumValueNode(
+                            name: NameNode(value: 'desc_nulls_last')),
+                      )
                     ]),
                   )
                 ]),
-              ),
+              )
             ]),
           ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'bathrooms'),
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'additional_parameters'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category1'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category2'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'position'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'tags'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'bedrooms'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'gps_location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'home_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'address'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'rental'),
+            name: NameNode(value: 'business'),
             alias: null,
             arguments: [],
             directives: [],
@@ -6841,32 +9614,11 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'category3'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'details'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'name_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'description_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -6879,189 +9631,30 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
+                    selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'description'),
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'tags'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'additional_parameters'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'available'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category1'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category2'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'cost'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'image'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'position'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: 'business'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'details'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'id'),
+                        name: NameNode(value: 'gps'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
                       FieldNode(
-                        name: NameNode(value: 'name'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                      FieldNode(
-                        name: NameNode(value: 'currency'),
+                        name: NameNode(value: 'address'),
                         alias: null,
                         arguments: [],
                         directives: [],
@@ -7095,6 +9688,70 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'bathrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'bedrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'address'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'available_for'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'offering_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -7107,15 +9764,13 @@ const documentNodeQueryget_home_rentals = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Query$get_home_rentals _parserFn$Query$get_home_rentals(
-        Map<String, dynamic> data) =>
-    Query$get_home_rentals.fromJson(data);
+Query$get_home _parserFn$Query$get_home(Map<String, dynamic> data) =>
+    Query$get_home.fromJson(data);
 
-class Options$Query$get_home_rentals
-    extends graphql.QueryOptions<Query$get_home_rentals> {
-  Options$Query$get_home_rentals({
+class Options$Query$get_home extends graphql.QueryOptions<Query$get_home> {
+  Options$Query$get_home({
     String? operationName,
-    required Variables$Query$get_home_rentals variables,
+    required Variables$Query$get_home variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -7131,16 +9786,16 @@ class Options$Query$get_home_rentals
           optimisticResult: optimisticResult,
           pollInterval: pollInterval,
           context: context,
-          document: documentNodeQueryget_home_rentals,
-          parserFn: _parserFn$Query$get_home_rentals,
+          document: documentNodeQueryget_home,
+          parserFn: _parserFn$Query$get_home,
         );
 }
 
-class WatchOptions$Query$get_home_rentals
-    extends graphql.WatchQueryOptions<Query$get_home_rentals> {
-  WatchOptions$Query$get_home_rentals({
+class WatchOptions$Query$get_home
+    extends graphql.WatchQueryOptions<Query$get_home> {
+  WatchOptions$Query$get_home({
     String? operationName,
-    required Variables$Query$get_home_rentals variables,
+    required Variables$Query$get_home variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -7158,123 +9813,142 @@ class WatchOptions$Query$get_home_rentals
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeQueryget_home_rentals,
+          document: documentNodeQueryget_home,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Query$get_home_rentals,
+          parserFn: _parserFn$Query$get_home,
         );
 }
 
-class FetchMoreOptions$Query$get_home_rentals extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$get_home_rentals({
+class FetchMoreOptions$Query$get_home extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_home({
     required graphql.UpdateQuery updateQuery,
-    required Variables$Query$get_home_rentals variables,
+    required Variables$Query$get_home variables,
   }) : super(
           updateQuery: updateQuery,
           variables: variables.toJson(),
-          document: documentNodeQueryget_home_rentals,
+          document: documentNodeQueryget_home,
         );
 }
 
-extension ClientExtension$Query$get_home_rentals on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$get_home_rentals>> query$get_home_rentals(
-          Options$Query$get_home_rentals options) async =>
+extension ClientExtension$Query$get_home on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_home>> query$get_home(
+          Options$Query$get_home options) async =>
       await this.query(options);
-  graphql.ObservableQuery<Query$get_home_rentals> watchQuery$get_home_rentals(
-          WatchOptions$Query$get_home_rentals options) =>
+  graphql.ObservableQuery<Query$get_home> watchQuery$get_home(
+          WatchOptions$Query$get_home options) =>
       this.watchQuery(options);
-  void writeQuery$get_home_rentals({
-    required Query$get_home_rentals data,
-    required Variables$Query$get_home_rentals variables,
+  void writeQuery$get_home({
+    required Query$get_home data,
+    required Variables$Query$get_home variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-          operation:
-              graphql.Operation(document: documentNodeQueryget_home_rentals),
+          operation: graphql.Operation(document: documentNodeQueryget_home),
           variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$get_home_rentals? readQuery$get_home_rentals({
-    required Variables$Query$get_home_rentals variables,
+  Query$get_home? readQuery$get_home({
+    required Variables$Query$get_home variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
-        operation:
-            graphql.Operation(document: documentNodeQueryget_home_rentals),
+        operation: graphql.Operation(document: documentNodeQueryget_home),
         variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );
-    return result == null ? null : Query$get_home_rentals.fromJson(result);
+    return result == null ? null : Query$get_home.fromJson(result);
   }
 }
 
-class Query$get_home_rentals$business_get_home_rentals {
-  Query$get_home_rentals$business_get_home_rentals({
+class Query$get_home$business_home {
+  Query$get_home$business_home({
+    this.details,
+    required this.id,
+    this.business,
     required this.bathrooms,
     required this.bedrooms,
-    required this.gps_location,
-    required this.home_type,
-    required this.address,
-    required this.rental,
+    this.location,
+    required this.available_for,
+    required this.offering_type,
     required this.$__typename,
   });
 
-  factory Query$get_home_rentals$business_get_home_rentals.fromJson(
-      Map<String, dynamic> json) {
+  factory Query$get_home$business_home.fromJson(Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$id = json['id'];
+    final l$business = json['business'];
     final l$bathrooms = json['bathrooms'];
     final l$bedrooms = json['bedrooms'];
-    final l$gps_location = json['gps_location'];
-    final l$home_type = json['home_type'];
-    final l$address = json['address'];
-    final l$rental = json['rental'];
+    final l$location = json['location'];
+    final l$available_for = json['available_for'];
+    final l$offering_type = json['offering_type'];
     final l$$__typename = json['__typename'];
-    return Query$get_home_rentals$business_get_home_rentals(
+    return Query$get_home$business_home(
+      details: l$details == null
+          ? null
+          : Query$get_home$business_home$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      id: (l$id as int),
+      business: l$business == null
+          ? null
+          : Query$get_home$business_home$business.fromJson(
+              (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      gps_location: geographyFromJson(l$gps_location),
-      home_type: (l$home_type as String),
-      address: (l$address as String),
-      rental: Query$get_home_rentals$business_get_home_rentals$rental.fromJson(
-          (l$rental as Map<String, dynamic>)),
+      location: l$location == null
+          ? null
+          : Query$get_home$business_home$location.fromJson(
+              (l$location as Map<String, dynamic>)),
+      available_for: (l$available_for as String),
+      offering_type: (l$offering_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final Query$get_home$business_home$details? details;
+
+  final int id;
+
+  final Query$get_home$business_home$business? business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Geography gps_location;
+  final Query$get_home$business_home$location? location;
 
-  final String home_type;
+  final String available_for;
 
-  final String address;
-
-  final Query$get_home_rentals$business_get_home_rentals$rental rental;
+  final String offering_type;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
-    final l$gps_location = gps_location;
-    _resultData['gps_location'] = geographyToJson(l$gps_location);
-    final l$home_type = home_type;
-    _resultData['home_type'] = l$home_type;
-    final l$address = address;
-    _resultData['address'] = l$address;
-    final l$rental = rental;
-    _resultData['rental'] = l$rental.toJson();
+    final l$location = location;
+    _resultData['location'] = l$location?.toJson();
+    final l$available_for = available_for;
+    _resultData['available_for'] = l$available_for;
+    final l$offering_type = offering_type;
+    _resultData['offering_type'] = l$offering_type;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -7282,20 +9956,24 @@ class Query$get_home_rentals$business_get_home_rentals {
 
   @override
   int get hashCode {
+    final l$details = details;
+    final l$id = id;
+    final l$business = business;
     final l$bathrooms = bathrooms;
     final l$bedrooms = bedrooms;
-    final l$gps_location = gps_location;
-    final l$home_type = home_type;
-    final l$address = address;
-    final l$rental = rental;
+    final l$location = location;
+    final l$available_for = available_for;
+    final l$offering_type = offering_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$details,
+      l$id,
+      l$business,
       l$bathrooms,
       l$bedrooms,
-      l$gps_location,
-      l$home_type,
-      l$address,
-      l$rental,
+      l$location,
+      l$available_for,
+      l$offering_type,
       l$$__typename,
     ]);
   }
@@ -7305,8 +9983,23 @@ class Query$get_home_rentals$business_get_home_rentals {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_home_rentals$business_get_home_rentals) ||
+    if (!(other is Query$get_home$business_home) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
       return false;
     }
     final l$bathrooms = bathrooms;
@@ -7319,24 +10012,19 @@ class Query$get_home_rentals$business_get_home_rentals {
     if (l$bedrooms != lOther$bedrooms) {
       return false;
     }
-    final l$gps_location = gps_location;
-    final lOther$gps_location = other.gps_location;
-    if (l$gps_location != lOther$gps_location) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
-    final l$home_type = home_type;
-    final lOther$home_type = other.home_type;
-    if (l$home_type != lOther$home_type) {
+    final l$available_for = available_for;
+    final lOther$available_for = other.available_for;
+    if (l$available_for != lOther$available_for) {
       return false;
     }
-    final l$address = address;
-    final lOther$address = other.address;
-    if (l$address != lOther$address) {
-      return false;
-    }
-    final l$rental = rental;
-    final lOther$rental = other.rental;
-    if (l$rental != lOther$rental) {
+    final l$offering_type = offering_type;
+    final lOther$offering_type = other.offering_type;
+    if (l$offering_type != lOther$offering_type) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -7348,348 +10036,148 @@ class Query$get_home_rentals$business_get_home_rentals {
   }
 }
 
-extension UtilityExtension$Query$get_home_rentals$business_get_home_rentals
-    on Query$get_home_rentals$business_get_home_rentals {
-  CopyWith$Query$get_home_rentals$business_get_home_rentals<
-          Query$get_home_rentals$business_get_home_rentals>
-      get copyWith => CopyWith$Query$get_home_rentals$business_get_home_rentals(
+extension UtilityExtension$Query$get_home$business_home
+    on Query$get_home$business_home {
+  CopyWith$Query$get_home$business_home<Query$get_home$business_home>
+      get copyWith => CopyWith$Query$get_home$business_home(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals<TRes> {
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals(
-    Query$get_home_rentals$business_get_home_rentals instance,
-    TRes Function(Query$get_home_rentals$business_get_home_rentals) then,
-  ) = _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals;
+abstract class CopyWith$Query$get_home$business_home<TRes> {
+  factory CopyWith$Query$get_home$business_home(
+    Query$get_home$business_home instance,
+    TRes Function(Query$get_home$business_home) then,
+  ) = _CopyWithImpl$Query$get_home$business_home;
 
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals;
+  factory CopyWith$Query$get_home$business_home.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_home$business_home;
 
   TRes call({
+    Query$get_home$business_home$details? details,
+    int? id,
+    Query$get_home$business_home$business? business,
     int? bathrooms,
     int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    Query$get_home_rentals$business_get_home_rentals$rental? rental,
+    Query$get_home$business_home$location? location,
+    String? available_for,
+    String? offering_type,
     String? $__typename,
   });
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental<TRes>
-      get rental;
+  CopyWith$Query$get_home$business_home$details<TRes> get details;
+  CopyWith$Query$get_home$business_home$business<TRes> get business;
+  CopyWith$Query$get_home$business_home$location<TRes> get location;
 }
 
-class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals<TRes>
-    implements CopyWith$Query$get_home_rentals$business_get_home_rentals<TRes> {
-  _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals(
+class _CopyWithImpl$Query$get_home$business_home<TRes>
+    implements CopyWith$Query$get_home$business_home<TRes> {
+  _CopyWithImpl$Query$get_home$business_home(
     this._instance,
     this._then,
   );
 
-  final Query$get_home_rentals$business_get_home_rentals _instance;
+  final Query$get_home$business_home _instance;
 
-  final TRes Function(Query$get_home_rentals$business_get_home_rentals) _then;
+  final TRes Function(Query$get_home$business_home) _then;
 
   static const _undefined = {};
 
   TRes call({
+    Object? details = _undefined,
+    Object? id = _undefined,
+    Object? business = _undefined,
     Object? bathrooms = _undefined,
     Object? bedrooms = _undefined,
-    Object? gps_location = _undefined,
-    Object? home_type = _undefined,
-    Object? address = _undefined,
-    Object? rental = _undefined,
+    Object? location = _undefined,
+    Object? available_for = _undefined,
+    Object? offering_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_home_rentals$business_get_home_rentals(
+      _then(Query$get_home$business_home(
+        details: details == _undefined
+            ? _instance.details
+            : (details as Query$get_home$business_home$details?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business: business == _undefined
+            ? _instance.business
+            : (business as Query$get_home$business_home$business?),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        gps_location: gps_location == _undefined || gps_location == null
-            ? _instance.gps_location
-            : (gps_location as Geography),
-        home_type: home_type == _undefined || home_type == null
-            ? _instance.home_type
-            : (home_type as String),
-        address: address == _undefined || address == null
-            ? _instance.address
-            : (address as String),
-        rental: rental == _undefined || rental == null
-            ? _instance.rental
-            : (rental
-                as Query$get_home_rentals$business_get_home_rentals$rental),
+        location: location == _undefined
+            ? _instance.location
+            : (location as Query$get_home$business_home$location?),
+        available_for: available_for == _undefined || available_for == null
+            ? _instance.available_for
+            : (available_for as String),
+        offering_type: offering_type == _undefined || offering_type == null
+            ? _instance.offering_type
+            : (offering_type as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental<TRes>
-      get rental {
-    final local$rental = _instance.rental;
-    return CopyWith$Query$get_home_rentals$business_get_home_rentals$rental(
-        local$rental, (e) => call(rental: e));
+  CopyWith$Query$get_home$business_home$details<TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$get_home$business_home$details.stub(_then(_instance))
+        : CopyWith$Query$get_home$business_home$details(
+            local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Query$get_home$business_home$business<TRes> get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Query$get_home$business_home$business.stub(_then(_instance))
+        : CopyWith$Query$get_home$business_home$business(
+            local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Query$get_home$business_home$location<TRes> get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Query$get_home$business_home$location.stub(_then(_instance))
+        : CopyWith$Query$get_home$business_home$location(
+            local$location, (e) => call(location: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals<TRes>
-    implements CopyWith$Query$get_home_rentals$business_get_home_rentals<TRes> {
-  _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals(this._res);
+class _CopyWithStubImpl$Query$get_home$business_home<TRes>
+    implements CopyWith$Query$get_home$business_home<TRes> {
+  _CopyWithStubImpl$Query$get_home$business_home(this._res);
 
   TRes _res;
 
   call({
+    Query$get_home$business_home$details? details,
+    int? id,
+    Query$get_home$business_home$business? business,
     int? bathrooms,
     int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    Query$get_home_rentals$business_get_home_rentals$rental? rental,
+    Query$get_home$business_home$location? location,
+    String? available_for,
+    String? offering_type,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental<TRes>
-      get rental =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental.stub(
-              _res);
+  CopyWith$Query$get_home$business_home$details<TRes> get details =>
+      CopyWith$Query$get_home$business_home$details.stub(_res);
+  CopyWith$Query$get_home$business_home$business<TRes> get business =>
+      CopyWith$Query$get_home$business_home$business.stub(_res);
+  CopyWith$Query$get_home$business_home$location<TRes> get location =>
+      CopyWith$Query$get_home$business_home$location.stub(_res);
 }
 
-class Query$get_home_rentals$business_get_home_rentals$rental {
-  Query$get_home_rentals$business_get_home_rentals$rental({
-    required this.id,
-    required this.category3,
-    required this.details,
-    required this.business,
-    required this.$__typename,
-  });
-
-  factory Query$get_home_rentals$business_get_home_rentals$rental.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$category3 = json['category3'];
-    final l$details = json['details'];
-    final l$business = json['business'];
-    final l$$__typename = json['__typename'];
-    return Query$get_home_rentals$business_get_home_rentals$rental(
-      id: (l$id as int),
-      category3: (l$category3 as String),
-      details: Query$get_home_rentals$business_get_home_rentals$rental$details
-          .fromJson((l$details as Map<String, dynamic>)),
-      business: Query$get_home_rentals$business_get_home_rentals$rental$business
-          .fromJson((l$business as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String category3;
-
-  final Query$get_home_rentals$business_get_home_rentals$rental$details details;
-
-  final Query$get_home_rentals$business_get_home_rentals$rental$business
-      business;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$category3 = category3;
-    _resultData['category3'] = l$category3;
-    final l$details = details;
-    _resultData['details'] = l$details.toJson();
-    final l$business = business;
-    _resultData['business'] = l$business.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$category3 = category3;
-    final l$details = details;
-    final l$business = business;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$category3,
-      l$details,
-      l$business,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$get_home_rentals$business_get_home_rentals$rental) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$category3 = category3;
-    final lOther$category3 = other.category3;
-    if (l$category3 != lOther$category3) {
-      return false;
-    }
-    final l$details = details;
-    final lOther$details = other.details;
-    if (l$details != lOther$details) {
-      return false;
-    }
-    final l$business = business;
-    final lOther$business = other.business;
-    if (l$business != lOther$business) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_home_rentals$business_get_home_rentals$rental
-    on Query$get_home_rentals$business_get_home_rentals$rental {
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental<
-          Query$get_home_rentals$business_get_home_rentals$rental>
-      get copyWith =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals$rental<
-    TRes> {
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental(
-    Query$get_home_rentals$business_get_home_rentals$rental instance,
-    TRes Function(Query$get_home_rentals$business_get_home_rentals$rental) then,
-  ) = _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental;
-
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental;
-
-  TRes call({
-    int? id,
-    String? category3,
-    Query$get_home_rentals$business_get_home_rentals$rental$details? details,
-    Query$get_home_rentals$business_get_home_rentals$rental$business? business,
-    String? $__typename,
-  });
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details<TRes>
-      get details;
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business<
-      TRes> get business;
-}
-
-class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental<TRes> {
-  _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_home_rentals$business_get_home_rentals$rental _instance;
-
-  final TRes Function(Query$get_home_rentals$business_get_home_rentals$rental)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? category3 = _undefined,
-    Object? details = _undefined,
-    Object? business = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_home_rentals$business_get_home_rentals$rental(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        category3: category3 == _undefined || category3 == null
-            ? _instance.category3
-            : (category3 as String),
-        details: details == _undefined || details == null
-            ? _instance.details
-            : (details
-                as Query$get_home_rentals$business_get_home_rentals$rental$details),
-        business: business == _undefined || business == null
-            ? _instance.business
-            : (business
-                as Query$get_home_rentals$business_get_home_rentals$rental$business),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details<TRes>
-      get details {
-    final local$details = _instance.details;
-    return CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details(
-        local$details, (e) => call(details: e));
-  }
-
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business<
-      TRes> get business {
-    final local$business = _instance.business;
-    return CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business(
-        local$business, (e) => call(business: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental<TRes> {
-  _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? category3,
-    Query$get_home_rentals$business_get_home_rentals$rental$details? details,
-    Query$get_home_rentals$business_get_home_rentals$rental$business? business,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details<TRes>
-      get details =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details
-              .stub(_res);
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business<
-          TRes>
-      get business =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business
-              .stub(_res);
-}
-
-class Query$get_home_rentals$business_get_home_rentals$rental$details {
-  Query$get_home_rentals$business_get_home_rentals$rental$details({
+class Query$get_home$business_home$details {
+  Query$get_home$business_home$details({
     required this.name_id,
     this.description_id,
     required this.id,
     required this.name,
-    this.description,
-    required this.tags,
     this.additional_parameters,
     required this.available,
     required this.category1,
@@ -7697,17 +10185,16 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
     required this.cost,
     this.image,
     required this.position,
+    required this.tags,
     required this.$__typename,
   });
 
-  factory Query$get_home_rentals$business_get_home_rentals$rental$details.fromJson(
+  factory Query$get_home$business_home$details.fromJson(
       Map<String, dynamic> json) {
     final l$name_id = json['name_id'];
     final l$description_id = json['description_id'];
     final l$id = json['id'];
     final l$name = json['name'];
-    final l$description = json['description'];
-    final l$tags = json['tags'];
     final l$additional_parameters = json['additional_parameters'];
     final l$available = json['available'];
     final l$category1 = json['category1'];
@@ -7715,18 +10202,14 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
     final l$cost = json['cost'];
     final l$image = json['image'];
     final l$position = json['position'];
+    final l$tags = json['tags'];
     final l$$__typename = json['__typename'];
-    return Query$get_home_rentals$business_get_home_rentals$rental$details(
+    return Query$get_home$business_home$details(
       name_id: (l$name_id as int),
       description_id: (l$description_id as int?),
       id: (l$id as int),
-      name: Query$get_home_rentals$business_get_home_rentals$rental$details$name
-          .fromJson((l$name as Map<String, dynamic>)),
-      description: l$description == null
-          ? null
-          : Query$get_home_rentals$business_get_home_rentals$rental$details$description
-              .fromJson((l$description as Map<String, dynamic>)),
-      tags: mapFromJson(l$tags),
+      name: Query$get_home$business_home$details$name.fromJson(
+          (l$name as Map<String, dynamic>)),
       additional_parameters: l$additional_parameters == null
           ? null
           : mapFromJson(l$additional_parameters),
@@ -7736,6 +10219,7 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
       cost: mapFromJson(l$cost),
       image: l$image == null ? null : mapFromJson(l$image),
       position: (l$position as int),
+      tags: mapFromJson(l$tags),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -7746,13 +10230,7 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
 
   final int id;
 
-  final Query$get_home_rentals$business_get_home_rentals$rental$details$name
-      name;
-
-  final Query$get_home_rentals$business_get_home_rentals$rental$details$description?
-      description;
-
-  final dynamic tags;
+  final Query$get_home$business_home$details$name name;
 
   final dynamic? additional_parameters;
 
@@ -7768,6 +10246,8 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
 
   final int position;
 
+  final dynamic tags;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -7780,10 +10260,6 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name.toJson();
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
-    final l$tags = tags;
-    _resultData['tags'] = mapToJson(l$tags);
     final l$additional_parameters = additional_parameters;
     _resultData['additional_parameters'] = l$additional_parameters == null
         ? null
@@ -7800,6 +10276,8 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
     _resultData['image'] = l$image == null ? null : mapToJson(l$image);
     final l$position = position;
     _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -7811,8 +10289,6 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
     final l$description_id = description_id;
     final l$id = id;
     final l$name = name;
-    final l$description = description;
-    final l$tags = tags;
     final l$additional_parameters = additional_parameters;
     final l$available = available;
     final l$category1 = category1;
@@ -7820,14 +10296,13 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
     final l$cost = cost;
     final l$image = image;
     final l$position = position;
+    final l$tags = tags;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name_id,
       l$description_id,
       l$id,
       l$name,
-      l$description,
-      l$tags,
       l$additional_parameters,
       l$available,
       l$category1,
@@ -7835,6 +10310,7 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
       l$cost,
       l$image,
       l$position,
+      l$tags,
       l$$__typename,
     ]);
   }
@@ -7844,8 +10320,7 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_home_rentals$business_get_home_rentals$rental$details) ||
+    if (!(other is Query$get_home$business_home$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -7867,16 +10342,6 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
-      return false;
-    }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
-      return false;
-    }
-    final l$tags = tags;
-    final lOther$tags = other.tags;
-    if (l$tags != lOther$tags) {
       return false;
     }
     final l$additional_parameters = additional_parameters;
@@ -7914,6 +10379,11 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
     if (l$position != lOther$position) {
       return false;
     }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -7923,38 +10393,30 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details {
   }
 }
 
-extension UtilityExtension$Query$get_home_rentals$business_get_home_rentals$rental$details
-    on Query$get_home_rentals$business_get_home_rentals$rental$details {
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details<
-          Query$get_home_rentals$business_get_home_rentals$rental$details>
-      get copyWith =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details(
+extension UtilityExtension$Query$get_home$business_home$details
+    on Query$get_home$business_home$details {
+  CopyWith$Query$get_home$business_home$details<
+          Query$get_home$business_home$details>
+      get copyWith => CopyWith$Query$get_home$business_home$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details<
-    TRes> {
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details(
-    Query$get_home_rentals$business_get_home_rentals$rental$details instance,
-    TRes Function(
-            Query$get_home_rentals$business_get_home_rentals$rental$details)
-        then,
-  ) = _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details;
+abstract class CopyWith$Query$get_home$business_home$details<TRes> {
+  factory CopyWith$Query$get_home$business_home$details(
+    Query$get_home$business_home$details instance,
+    TRes Function(Query$get_home$business_home$details) then,
+  ) = _CopyWithImpl$Query$get_home$business_home$details;
 
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details;
+  factory CopyWith$Query$get_home$business_home$details.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_home$business_home$details;
 
   TRes call({
     int? name_id,
     int? description_id,
     int? id,
-    Query$get_home_rentals$business_get_home_rentals$rental$details$name? name,
-    Query$get_home_rentals$business_get_home_rentals$rental$details$description?
-        description,
-    dynamic? tags,
+    Query$get_home$business_home$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -7962,29 +10424,22 @@ abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$
     dynamic? cost,
     dynamic? image,
     int? position,
+    dynamic? tags,
     String? $__typename,
   });
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name<
-      TRes> get name;
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description<
-      TRes> get description;
+  CopyWith$Query$get_home$business_home$details$name<TRes> get name;
 }
 
-class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details<
-            TRes> {
-  _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details(
+class _CopyWithImpl$Query$get_home$business_home$details<TRes>
+    implements CopyWith$Query$get_home$business_home$details<TRes> {
+  _CopyWithImpl$Query$get_home$business_home$details(
     this._instance,
     this._then,
   );
 
-  final Query$get_home_rentals$business_get_home_rentals$rental$details
-      _instance;
+  final Query$get_home$business_home$details _instance;
 
-  final TRes Function(
-      Query$get_home_rentals$business_get_home_rentals$rental$details) _then;
+  final TRes Function(Query$get_home$business_home$details) _then;
 
   static const _undefined = {};
 
@@ -7993,8 +10448,6 @@ class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$deta
     Object? description_id = _undefined,
     Object? id = _undefined,
     Object? name = _undefined,
-    Object? description = _undefined,
-    Object? tags = _undefined,
     Object? additional_parameters = _undefined,
     Object? available = _undefined,
     Object? category1 = _undefined,
@@ -8002,9 +10455,10 @@ class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$deta
     Object? cost = _undefined,
     Object? image = _undefined,
     Object? position = _undefined,
+    Object? tags = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_home_rentals$business_get_home_rentals$rental$details(
+      _then(Query$get_home$business_home$details(
         name_id: name_id == _undefined || name_id == null
             ? _instance.name_id
             : (name_id as int),
@@ -8014,15 +10468,7 @@ class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$deta
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
-            : (name
-                as Query$get_home_rentals$business_get_home_rentals$rental$details$name),
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Query$get_home_rentals$business_get_home_rentals$rental$details$description?),
-        tags: tags == _undefined || tags == null
-            ? _instance.tags
-            : (tags as dynamic),
+            : (name as Query$get_home$business_home$details$name),
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),
@@ -8042,35 +10488,23 @@ class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$deta
         position: position == _undefined || position == null
             ? _instance.position
             : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name<
-      TRes> get name {
+  CopyWith$Query$get_home$business_home$details$name<TRes> get name {
     final local$name = _instance.name;
-    return CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name(
+    return CopyWith$Query$get_home$business_home$details$name(
         local$name, (e) => call(name: e));
-  }
-
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description<
-      TRes> get description {
-    final local$description = _instance.description;
-    return local$description == null
-        ? CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description
-            .stub(_then(_instance))
-        : CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description(
-            local$description, (e) => call(description: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details<
-            TRes> {
-  _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details(
-      this._res);
+class _CopyWithStubImpl$Query$get_home$business_home$details<TRes>
+    implements CopyWith$Query$get_home$business_home$details<TRes> {
+  _CopyWithStubImpl$Query$get_home$business_home$details(this._res);
 
   TRes _res;
 
@@ -8078,10 +10512,7 @@ class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$
     int? name_id,
     int? description_id,
     int? id,
-    Query$get_home_rentals$business_get_home_rentals$rental$details$name? name,
-    Query$get_home_rentals$business_get_home_rentals$rental$details$description?
-        description,
-    dynamic? tags,
+    Query$get_home$business_home$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -8089,43 +10520,35 @@ class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$
     dynamic? cost,
     dynamic? image,
     int? position,
+    dynamic? tags,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name<
-          TRes>
-      get name =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name
-              .stub(_res);
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description<
-          TRes>
-      get description =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description
-              .stub(_res);
+  CopyWith$Query$get_home$business_home$details$name<TRes> get name =>
+      CopyWith$Query$get_home$business_home$details$name.stub(_res);
 }
 
-class Query$get_home_rentals$business_get_home_rentals$rental$details$name {
-  Query$get_home_rentals$business_get_home_rentals$rental$details$name({
+class Query$get_home$business_home$details$name {
+  Query$get_home$business_home$details$name({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$get_home_rentals$business_get_home_rentals$rental$details$name.fromJson(
+  factory Query$get_home$business_home$details$name.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$get_home_rentals$business_get_home_rentals$rental$details$name(
+    return Query$get_home$business_home$details$name(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations
-                  .fromJson((e as Map<String, dynamic>)))
+              Query$get_home$business_home$details$name$translations.fromJson(
+                  (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<
-          Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations>
+  final List<Query$get_home$business_home$details$name$translations>
       translations;
 
   final String $__typename;
@@ -8155,8 +10578,7 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details$name {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_home_rentals$business_get_home_rentals$rental$details$name) ||
+    if (!(other is Query$get_home$business_home$details$name) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -8181,60 +10603,47 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details$name {
   }
 }
 
-extension UtilityExtension$Query$get_home_rentals$business_get_home_rentals$rental$details$name
-    on Query$get_home_rentals$business_get_home_rentals$rental$details$name {
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name<
-          Query$get_home_rentals$business_get_home_rentals$rental$details$name>
-      get copyWith =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name(
+extension UtilityExtension$Query$get_home$business_home$details$name
+    on Query$get_home$business_home$details$name {
+  CopyWith$Query$get_home$business_home$details$name<
+          Query$get_home$business_home$details$name>
+      get copyWith => CopyWith$Query$get_home$business_home$details$name(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name<
-    TRes> {
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name(
-    Query$get_home_rentals$business_get_home_rentals$rental$details$name
-        instance,
-    TRes Function(
-            Query$get_home_rentals$business_get_home_rentals$rental$details$name)
-        then,
-  ) = _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name;
+abstract class CopyWith$Query$get_home$business_home$details$name<TRes> {
+  factory CopyWith$Query$get_home$business_home$details$name(
+    Query$get_home$business_home$details$name instance,
+    TRes Function(Query$get_home$business_home$details$name) then,
+  ) = _CopyWithImpl$Query$get_home$business_home$details$name;
 
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name;
+  factory CopyWith$Query$get_home$business_home$details$name.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_home$business_home$details$name;
 
   TRes call({
-    List<Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations>?
-        translations,
+    List<Query$get_home$business_home$details$name$translations>? translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations> Function(
+      Iterable<Query$get_home$business_home$details$name$translations> Function(
               Iterable<
-                  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations<
-                      Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations>>)
+                  CopyWith$Query$get_home$business_home$details$name$translations<
+                      Query$get_home$business_home$details$name$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name<
-            TRes> {
-  _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name(
+class _CopyWithImpl$Query$get_home$business_home$details$name<TRes>
+    implements CopyWith$Query$get_home$business_home$details$name<TRes> {
+  _CopyWithImpl$Query$get_home$business_home$details$name(
     this._instance,
     this._then,
   );
 
-  final Query$get_home_rentals$business_get_home_rentals$rental$details$name
-      _instance;
+  final Query$get_home$business_home$details$name _instance;
 
-  final TRes Function(
-          Query$get_home_rentals$business_get_home_rentals$rental$details$name)
-      _then;
+  final TRes Function(Query$get_home$business_home$details$name) _then;
 
   static const _undefined = {};
 
@@ -8242,62 +10651,56 @@ class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$deta
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_home_rentals$business_get_home_rentals$rental$details$name(
+      _then(Query$get_home$business_home$details$name(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations>),
+                Query$get_home$business_home$details$name$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations> Function(
+          Iterable<Query$get_home$business_home$details$name$translations> Function(
                   Iterable<
-                      CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations<
-                          Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations>>)
+                      CopyWith$Query$get_home$business_home$details$name$translations<
+                          Query$get_home$business_home$details$name$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations(
+              CopyWith$Query$get_home$business_home$details$name$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name<
-            TRes> {
-  _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name(
-      this._res);
+class _CopyWithStubImpl$Query$get_home$business_home$details$name<TRes>
+    implements CopyWith$Query$get_home$business_home$details$name<TRes> {
+  _CopyWithStubImpl$Query$get_home$business_home$details$name(this._res);
 
   TRes _res;
 
   call({
-    List<Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations>?
-        translations,
+    List<Query$get_home$business_home$details$name$translations>? translations,
     String? $__typename,
   }) =>
       _res;
   translations(_fn) => _res;
 }
 
-class Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations {
-  Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations({
+class Query$get_home$business_home$details$name$translations {
+  Query$get_home$business_home$details$name$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations.fromJson(
+  factory Query$get_home$business_home$details$name$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations(
+    return Query$get_home$business_home$details$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -8338,8 +10741,7 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details$name$trans
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations) ||
+    if (!(other is Query$get_home$business_home$details$name$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -8362,30 +10764,27 @@ class Query$get_home_rentals$business_get_home_rentals$rental$details$name$trans
   }
 }
 
-extension UtilityExtension$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations
-    on Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations {
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations<
-          Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations>
+extension UtilityExtension$Query$get_home$business_home$details$name$translations
+    on Query$get_home$business_home$details$name$translations {
+  CopyWith$Query$get_home$business_home$details$name$translations<
+          Query$get_home$business_home$details$name$translations>
       get copyWith =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations(
+          CopyWith$Query$get_home$business_home$details$name$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations<
+abstract class CopyWith$Query$get_home$business_home$details$name$translations<
     TRes> {
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations(
-    Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations
-        instance,
-    TRes Function(
-            Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations)
-        then,
-  ) = _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations;
+  factory CopyWith$Query$get_home$business_home$details$name$translations(
+    Query$get_home$business_home$details$name$translations instance,
+    TRes Function(Query$get_home$business_home$details$name$translations) then,
+  ) = _CopyWithImpl$Query$get_home$business_home$details$name$translations;
 
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations.stub(
+  factory CopyWith$Query$get_home$business_home$details$name$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations;
+      _CopyWithStubImpl$Query$get_home$business_home$details$name$translations;
 
   TRes call({
     String? language_id,
@@ -8394,21 +10793,17 @@ abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$
   });
 }
 
-class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations<
-        TRes>
+class _CopyWithImpl$Query$get_home$business_home$details$name$translations<TRes>
     implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations<
-            TRes> {
-  _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations(
+        CopyWith$Query$get_home$business_home$details$name$translations<TRes> {
+  _CopyWithImpl$Query$get_home$business_home$details$name$translations(
     this._instance,
     this._then,
   );
 
-  final Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations
-      _instance;
+  final Query$get_home$business_home$details$name$translations _instance;
 
-  final TRes Function(
-          Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations)
+  final TRes Function(Query$get_home$business_home$details$name$translations)
       _then;
 
   static const _undefined = {};
@@ -8418,8 +10813,7 @@ class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$deta
     Object? value = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations(
+      _then(Query$get_home$business_home$details$name$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -8432,12 +10826,11 @@ class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$deta
       ));
 }
 
-class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations<
+class _CopyWithStubImpl$Query$get_home$business_home$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$name$translations(
+        CopyWith$Query$get_home$business_home$details$name$translations<TRes> {
+  _CopyWithStubImpl$Query$get_home$business_home$details$name$translations(
       this._res);
 
   TRes _res;
@@ -8450,377 +10843,29 @@ class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$
       _res;
 }
 
-class Query$get_home_rentals$business_get_home_rentals$rental$details$description {
-  Query$get_home_rentals$business_get_home_rentals$rental$details$description({
-    required this.translations,
-    required this.$__typename,
-  });
-
-  factory Query$get_home_rentals$business_get_home_rentals$rental$details$description.fromJson(
-      Map<String, dynamic> json) {
-    final l$translations = json['translations'];
-    final l$$__typename = json['__typename'];
-    return Query$get_home_rentals$business_get_home_rentals$rental$details$description(
-      translations: (l$translations as List<dynamic>)
-          .map((e) =>
-              Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<
-          Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations>
-      translations;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$translations = translations;
-    _resultData['translations'] =
-        l$translations.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$translations = translations;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$translations.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_home_rentals$business_get_home_rentals$rental$details$description) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$translations = translations;
-    final lOther$translations = other.translations;
-    if (l$translations.length != lOther$translations.length) {
-      return false;
-    }
-    for (int i = 0; i < l$translations.length; i++) {
-      final l$translations$entry = l$translations[i];
-      final lOther$translations$entry = lOther$translations[i];
-      if (l$translations$entry != lOther$translations$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_home_rentals$business_get_home_rentals$rental$details$description
-    on Query$get_home_rentals$business_get_home_rentals$rental$details$description {
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description<
-          Query$get_home_rentals$business_get_home_rentals$rental$details$description>
-      get copyWith =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description<
-    TRes> {
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description(
-    Query$get_home_rentals$business_get_home_rentals$rental$details$description
-        instance,
-    TRes Function(
-            Query$get_home_rentals$business_get_home_rentals$rental$details$description)
-        then,
-  ) = _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description;
-
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description;
-
-  TRes call({
-    List<Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations>?
-        translations,
-    String? $__typename,
-  });
-  TRes translations(
-      Iterable<Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations> Function(
-              Iterable<
-                  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations<
-                      Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description<
-            TRes> {
-  _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_home_rentals$business_get_home_rentals$rental$details$description
-      _instance;
-
-  final TRes Function(
-          Query$get_home_rentals$business_get_home_rentals$rental$details$description)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? translations = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_home_rentals$business_get_home_rentals$rental$details$description(
-        translations: translations == _undefined || translations == null
-            ? _instance.translations
-            : (translations as List<
-                Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes translations(
-          Iterable<Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations> Function(
-                  Iterable<
-                      CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations<
-                          Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations>>)
-              _fn) =>
-      call(
-          translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description<
-            TRes> {
-  _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations>?
-        translations,
-    String? $__typename,
-  }) =>
-      _res;
-  translations(_fn) => _res;
-}
-
-class Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations {
-  Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations({
-    required this.language_id,
-    required this.value,
-    required this.$__typename,
-  });
-
-  factory Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations.fromJson(
-      Map<String, dynamic> json) {
-    final l$language_id = json['language_id'];
-    final l$value = json['value'];
-    final l$$__typename = json['__typename'];
-    return Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations(
-      language_id: (l$language_id as String),
-      value: (l$value as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String language_id;
-
-  final String value;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$value = value;
-    _resultData['value'] = l$value;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$language_id = language_id;
-    final l$value = value;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$language_id,
-      l$value,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations
-    on Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations {
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations<
-          Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations>
-      get copyWith =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations<
-    TRes> {
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations(
-    Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations
-        instance,
-    TRes Function(
-            Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations)
-        then,
-  ) = _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations;
-
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations;
-
-  TRes call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations<
-            TRes> {
-  _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations
-      _instance;
-
-  final TRes Function(
-          Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? language_id = _undefined,
-    Object? value = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations(
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$details$description$translations(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$get_home_rentals$business_get_home_rentals$rental$business {
-  Query$get_home_rentals$business_get_home_rentals$rental$business({
+class Query$get_home$business_home$business {
+  Query$get_home$business_home$business({
     required this.id,
     required this.details,
     required this.$__typename,
   });
 
-  factory Query$get_home_rentals$business_get_home_rentals$rental$business.fromJson(
+  factory Query$get_home$business_home$business.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
-    return Query$get_home_rentals$business_get_home_rentals$rental$business(
+    return Query$get_home$business_home$business(
       id: (l$id as int),
-      details:
-          Query$get_home_rentals$business_get_home_rentals$rental$business$details
-              .fromJson((l$details as Map<String, dynamic>)),
+      details: Query$get_home$business_home$business$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
 
-  final Query$get_home_rentals$business_get_home_rentals$rental$business$details
-      details;
+  final Query$get_home$business_home$business$details details;
 
   final String $__typename;
 
@@ -8852,8 +10897,7 @@ class Query$get_home_rentals$business_get_home_rentals$rental$business {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_home_rentals$business_get_home_rentals$rental$business) ||
+    if (!(other is Query$get_home$business_home$business) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -8876,55 +10920,43 @@ class Query$get_home_rentals$business_get_home_rentals$rental$business {
   }
 }
 
-extension UtilityExtension$Query$get_home_rentals$business_get_home_rentals$rental$business
-    on Query$get_home_rentals$business_get_home_rentals$rental$business {
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business<
-          Query$get_home_rentals$business_get_home_rentals$rental$business>
-      get copyWith =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business(
+extension UtilityExtension$Query$get_home$business_home$business
+    on Query$get_home$business_home$business {
+  CopyWith$Query$get_home$business_home$business<
+          Query$get_home$business_home$business>
+      get copyWith => CopyWith$Query$get_home$business_home$business(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business<
-    TRes> {
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business(
-    Query$get_home_rentals$business_get_home_rentals$rental$business instance,
-    TRes Function(
-            Query$get_home_rentals$business_get_home_rentals$rental$business)
-        then,
-  ) = _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$business;
+abstract class CopyWith$Query$get_home$business_home$business<TRes> {
+  factory CopyWith$Query$get_home$business_home$business(
+    Query$get_home$business_home$business instance,
+    TRes Function(Query$get_home$business_home$business) then,
+  ) = _CopyWithImpl$Query$get_home$business_home$business;
 
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$business;
+  factory CopyWith$Query$get_home$business_home$business.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_home$business_home$business;
 
   TRes call({
     int? id,
-    Query$get_home_rentals$business_get_home_rentals$rental$business$details?
-        details,
+    Query$get_home$business_home$business$details? details,
     String? $__typename,
   });
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details<
-      TRes> get details;
+  CopyWith$Query$get_home$business_home$business$details<TRes> get details;
 }
 
-class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$business<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business<
-            TRes> {
-  _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$business(
+class _CopyWithImpl$Query$get_home$business_home$business<TRes>
+    implements CopyWith$Query$get_home$business_home$business<TRes> {
+  _CopyWithImpl$Query$get_home$business_home$business(
     this._instance,
     this._then,
   );
 
-  final Query$get_home_rentals$business_get_home_rentals$rental$business
-      _instance;
+  final Query$get_home$business_home$business _instance;
 
-  final TRes Function(
-      Query$get_home_rentals$business_get_home_rentals$rental$business) _then;
+  final TRes Function(Query$get_home$business_home$business) _then;
 
   static const _undefined = {};
 
@@ -8933,66 +10965,60 @@ class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$busi
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_home_rentals$business_get_home_rentals$rental$business(
+      _then(Query$get_home$business_home$business(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
-            : (details
-                as Query$get_home_rentals$business_get_home_rentals$rental$business$details),
+            : (details as Query$get_home$business_home$business$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details<
-      TRes> get details {
+  CopyWith$Query$get_home$business_home$business$details<TRes> get details {
     final local$details = _instance.details;
-    return CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details(
+    return CopyWith$Query$get_home$business_home$business$details(
         local$details, (e) => call(details: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$business<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business<
-            TRes> {
-  _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$business(
-      this._res);
+class _CopyWithStubImpl$Query$get_home$business_home$business<TRes>
+    implements CopyWith$Query$get_home$business_home$business<TRes> {
+  _CopyWithStubImpl$Query$get_home$business_home$business(this._res);
 
   TRes _res;
 
   call({
     int? id,
-    Query$get_home_rentals$business_get_home_rentals$rental$business$details?
-        details,
+    Query$get_home$business_home$business$details? details,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details<
-          TRes>
-      get details =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details
-              .stub(_res);
+  CopyWith$Query$get_home$business_home$business$details<TRes> get details =>
+      CopyWith$Query$get_home$business_home$business$details.stub(_res);
 }
 
-class Query$get_home_rentals$business_get_home_rentals$rental$business$details {
-  Query$get_home_rentals$business_get_home_rentals$rental$business$details({
+class Query$get_home$business_home$business$details {
+  Query$get_home$business_home$business$details({
     required this.id,
     required this.name,
     required this.currency,
+    required this.location,
     required this.$__typename,
   });
 
-  factory Query$get_home_rentals$business_get_home_rentals$rental$business$details.fromJson(
+  factory Query$get_home$business_home$business$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
     final l$currency = json['currency'];
+    final l$location = json['location'];
     final l$$__typename = json['__typename'];
-    return Query$get_home_rentals$business_get_home_rentals$rental$business$details(
+    return Query$get_home$business_home$business$details(
       id: (l$id as int),
       name: (l$name as String),
       currency: (l$currency as String),
+      location: Query$get_home$business_home$business$details$location.fromJson(
+          (l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -9002,6 +11028,8 @@ class Query$get_home_rentals$business_get_home_rentals$rental$business$details {
   final String name;
 
   final String currency;
+
+  final Query$get_home$business_home$business$details$location location;
 
   final String $__typename;
 
@@ -9013,6 +11041,8 @@ class Query$get_home_rentals$business_get_home_rentals$rental$business$details {
     _resultData['name'] = l$name;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -9023,11 +11053,13 @@ class Query$get_home_rentals$business_get_home_rentals$rental$business$details {
     final l$id = id;
     final l$name = name;
     final l$currency = currency;
+    final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
       l$currency,
+      l$location,
       l$$__typename,
     ]);
   }
@@ -9037,8 +11069,7 @@ class Query$get_home_rentals$business_get_home_rentals$rental$business$details {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_home_rentals$business_get_home_rentals$rental$business$details) ||
+    if (!(other is Query$get_home$business_home$business$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -9057,6 +11088,11 @@ class Query$get_home_rentals$business_get_home_rentals$rental$business$details {
     if (l$currency != lOther$currency) {
       return false;
     }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -9066,55 +11102,47 @@ class Query$get_home_rentals$business_get_home_rentals$rental$business$details {
   }
 }
 
-extension UtilityExtension$Query$get_home_rentals$business_get_home_rentals$rental$business$details
-    on Query$get_home_rentals$business_get_home_rentals$rental$business$details {
-  CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details<
-          Query$get_home_rentals$business_get_home_rentals$rental$business$details>
-      get copyWith =>
-          CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details(
+extension UtilityExtension$Query$get_home$business_home$business$details
+    on Query$get_home$business_home$business$details {
+  CopyWith$Query$get_home$business_home$business$details<
+          Query$get_home$business_home$business$details>
+      get copyWith => CopyWith$Query$get_home$business_home$business$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details<
-    TRes> {
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details(
-    Query$get_home_rentals$business_get_home_rentals$rental$business$details
-        instance,
-    TRes Function(
-            Query$get_home_rentals$business_get_home_rentals$rental$business$details)
-        then,
-  ) = _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$business$details;
+abstract class CopyWith$Query$get_home$business_home$business$details<TRes> {
+  factory CopyWith$Query$get_home$business_home$business$details(
+    Query$get_home$business_home$business$details instance,
+    TRes Function(Query$get_home$business_home$business$details) then,
+  ) = _CopyWithImpl$Query$get_home$business_home$business$details;
 
-  factory CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details.stub(
+  factory CopyWith$Query$get_home$business_home$business$details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$business$details;
+      _CopyWithStubImpl$Query$get_home$business_home$business$details;
 
   TRes call({
     int? id,
     String? name,
     String? currency,
+    Query$get_home$business_home$business$details$location? location,
     String? $__typename,
   });
+  CopyWith$Query$get_home$business_home$business$details$location<TRes>
+      get location;
 }
 
-class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$business$details<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details<
-            TRes> {
-  _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$business$details(
+class _CopyWithImpl$Query$get_home$business_home$business$details<TRes>
+    implements CopyWith$Query$get_home$business_home$business$details<TRes> {
+  _CopyWithImpl$Query$get_home$business_home$business$details(
     this._instance,
     this._then,
   );
 
-  final Query$get_home_rentals$business_get_home_rentals$rental$business$details
-      _instance;
+  final Query$get_home$business_home$business$details _instance;
 
-  final TRes Function(
-          Query$get_home_rentals$business_get_home_rentals$rental$business$details)
-      _then;
+  final TRes Function(Query$get_home$business_home$business$details) _then;
 
   static const _undefined = {};
 
@@ -9122,10 +11150,10 @@ class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$busi
     Object? id = _undefined,
     Object? name = _undefined,
     Object? currency = _undefined,
+    Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_home_rentals$business_get_home_rentals$rental$business$details(
+      _then(Query$get_home$business_home$business$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -9133,19 +11161,25 @@ class _CopyWithImpl$Query$get_home_rentals$business_get_home_rentals$rental$busi
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_home$business_home$business$details$location),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_home$business_home$business$details$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_home$business_home$business$details$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
-class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$business$details<
-        TRes>
-    implements
-        CopyWith$Query$get_home_rentals$business_get_home_rentals$rental$business$details<
-            TRes> {
-  _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$business$details(
-      this._res);
+class _CopyWithStubImpl$Query$get_home$business_home$business$details<TRes>
+    implements CopyWith$Query$get_home$business_home$business$details<TRes> {
+  _CopyWithStubImpl$Query$get_home$business_home$business$details(this._res);
 
   TRes _res;
 
@@ -9153,6 +11187,333 @@ class _CopyWithStubImpl$Query$get_home_rentals$business_get_home_rentals$rental$
     int? id,
     String? name,
     String? currency,
+    Query$get_home$business_home$business$details$location? location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_home$business_home$business$details$location<TRes>
+      get location =>
+          CopyWith$Query$get_home$business_home$business$details$location.stub(
+              _res);
+}
+
+class Query$get_home$business_home$business$details$location {
+  Query$get_home$business_home$business$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_home$business_home$business$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home$business_home$business$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_home$business_home$business$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home$business_home$business$details$location
+    on Query$get_home$business_home$business$details$location {
+  CopyWith$Query$get_home$business_home$business$details$location<
+          Query$get_home$business_home$business$details$location>
+      get copyWith =>
+          CopyWith$Query$get_home$business_home$business$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home$business_home$business$details$location<
+    TRes> {
+  factory CopyWith$Query$get_home$business_home$business$details$location(
+    Query$get_home$business_home$business$details$location instance,
+    TRes Function(Query$get_home$business_home$business$details$location) then,
+  ) = _CopyWithImpl$Query$get_home$business_home$business$details$location;
+
+  factory CopyWith$Query$get_home$business_home$business$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_home$business_home$business$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_home$business_home$business$details$location<TRes>
+    implements
+        CopyWith$Query$get_home$business_home$business$details$location<TRes> {
+  _CopyWithImpl$Query$get_home$business_home$business$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home$business_home$business$details$location _instance;
+
+  final TRes Function(Query$get_home$business_home$business$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home$business_home$business$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_home$business_home$business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_home$business_home$business$details$location<TRes> {
+  _CopyWithStubImpl$Query$get_home$business_home$business$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_home$business_home$location {
+  Query$get_home$business_home$location({
+    required this.address,
+    required this.gps,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_home$business_home$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$address = json['address'];
+    final l$gps = json['gps'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_home$business_home$location(
+      address: (l$address as String),
+      gps: geographyFromJson(l$gps),
+      name: (l$name as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String address;
+
+  final Geography gps;
+
+  final String name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$address = address;
+    final l$gps = gps;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$address,
+      l$gps,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_home$business_home$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_home$business_home$location
+    on Query$get_home$business_home$location {
+  CopyWith$Query$get_home$business_home$location<
+          Query$get_home$business_home$location>
+      get copyWith => CopyWith$Query$get_home$business_home$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_home$business_home$location<TRes> {
+  factory CopyWith$Query$get_home$business_home$location(
+    Query$get_home$business_home$location instance,
+    TRes Function(Query$get_home$business_home$location) then,
+  ) = _CopyWithImpl$Query$get_home$business_home$location;
+
+  factory CopyWith$Query$get_home$business_home$location.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_home$business_home$location;
+
+  TRes call({
+    String? address,
+    Geography? gps,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_home$business_home$location<TRes>
+    implements CopyWith$Query$get_home$business_home$location<TRes> {
+  _CopyWithImpl$Query$get_home$business_home$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_home$business_home$location _instance;
+
+  final TRes Function(Query$get_home$business_home$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? address = _undefined,
+    Object? gps = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_home$business_home$location(
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_home$business_home$location<TRes>
+    implements CopyWith$Query$get_home$business_home$location<TRes> {
+  _CopyWithStubImpl$Query$get_home$business_home$location(this._res);
+
+  TRes _res;
+
+  call({
+    String? address,
+    Geography? gps,
+    String? name,
     String? $__typename,
   }) =>
       _res;
@@ -9336,32 +11697,31 @@ class _CopyWithStubImpl$Variables$Query$get_real_estates<TRes>
 
 class Query$get_real_estates {
   Query$get_real_estates({
-    required this.business_get_home_rentals,
+    required this.business_home,
     required this.$__typename,
   });
 
   factory Query$get_real_estates.fromJson(Map<String, dynamic> json) {
-    final l$business_get_home_rentals = json['business_get_home_rentals'];
+    final l$business_home = json['business_home'];
     final l$$__typename = json['__typename'];
     return Query$get_real_estates(
-      business_get_home_rentals: (l$business_get_home_rentals as List<dynamic>)
-          .map((e) => Query$get_real_estates$business_get_home_rentals.fromJson(
+      business_home: (l$business_home as List<dynamic>)
+          .map((e) => Query$get_real_estates$business_home.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$get_real_estates$business_get_home_rentals>
-      business_get_home_rentals;
+  final List<Query$get_real_estates$business_home> business_home;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$business_get_home_rentals = business_get_home_rentals;
-    _resultData['business_get_home_rentals'] =
-        l$business_get_home_rentals.map((e) => e.toJson()).toList();
+    final l$business_home = business_home;
+    _resultData['business_home'] =
+        l$business_home.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -9369,10 +11729,10 @@ class Query$get_real_estates {
 
   @override
   int get hashCode {
-    final l$business_get_home_rentals = business_get_home_rentals;
+    final l$business_home = business_home;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$business_get_home_rentals.map((v) => v)),
+      Object.hashAll(l$business_home.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -9386,18 +11746,15 @@ class Query$get_real_estates {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$business_get_home_rentals = business_get_home_rentals;
-    final lOther$business_get_home_rentals = other.business_get_home_rentals;
-    if (l$business_get_home_rentals.length !=
-        lOther$business_get_home_rentals.length) {
+    final l$business_home = business_home;
+    final lOther$business_home = other.business_home;
+    if (l$business_home.length != lOther$business_home.length) {
       return false;
     }
-    for (int i = 0; i < l$business_get_home_rentals.length; i++) {
-      final l$business_get_home_rentals$entry = l$business_get_home_rentals[i];
-      final lOther$business_get_home_rentals$entry =
-          lOther$business_get_home_rentals[i];
-      if (l$business_get_home_rentals$entry !=
-          lOther$business_get_home_rentals$entry) {
+    for (int i = 0; i < l$business_home.length; i++) {
+      final l$business_home$entry = l$business_home[i];
+      final lOther$business_home$entry = lOther$business_home[i];
+      if (l$business_home$entry != lOther$business_home$entry) {
         return false;
       }
     }
@@ -9428,15 +11785,14 @@ abstract class CopyWith$Query$get_real_estates<TRes> {
       _CopyWithStubImpl$Query$get_real_estates;
 
   TRes call({
-    List<Query$get_real_estates$business_get_home_rentals>?
-        business_get_home_rentals,
+    List<Query$get_real_estates$business_home>? business_home,
     String? $__typename,
   });
-  TRes business_get_home_rentals(
-      Iterable<Query$get_real_estates$business_get_home_rentals> Function(
+  TRes business_home(
+      Iterable<Query$get_real_estates$business_home> Function(
               Iterable<
-                  CopyWith$Query$get_real_estates$business_get_home_rentals<
-                      Query$get_real_estates$business_get_home_rentals>>)
+                  CopyWith$Query$get_real_estates$business_home<
+                      Query$get_real_estates$business_home>>)
           _fn);
 }
 
@@ -9454,29 +11810,26 @@ class _CopyWithImpl$Query$get_real_estates<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? business_get_home_rentals = _undefined,
+    Object? business_home = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_real_estates(
-        business_get_home_rentals: business_get_home_rentals == _undefined ||
-                business_get_home_rentals == null
-            ? _instance.business_get_home_rentals
-            : (business_get_home_rentals
-                as List<Query$get_real_estates$business_get_home_rentals>),
+        business_home: business_home == _undefined || business_home == null
+            ? _instance.business_home
+            : (business_home as List<Query$get_real_estates$business_home>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes business_get_home_rentals(
-          Iterable<Query$get_real_estates$business_get_home_rentals> Function(
+  TRes business_home(
+          Iterable<Query$get_real_estates$business_home> Function(
                   Iterable<
-                      CopyWith$Query$get_real_estates$business_get_home_rentals<
-                          Query$get_real_estates$business_get_home_rentals>>)
+                      CopyWith$Query$get_real_estates$business_home<
+                          Query$get_real_estates$business_home>>)
               _fn) =>
       call(
-          business_get_home_rentals: _fn(_instance.business_get_home_rentals
-              .map((e) =>
-                  CopyWith$Query$get_real_estates$business_get_home_rentals(
+          business_home: _fn(_instance.business_home
+              .map((e) => CopyWith$Query$get_real_estates$business_home(
                     e,
                     (i) => i,
                   ))).toList());
@@ -9489,12 +11842,11 @@ class _CopyWithStubImpl$Query$get_real_estates<TRes>
   TRes _res;
 
   call({
-    List<Query$get_real_estates$business_get_home_rentals>?
-        business_get_home_rentals,
+    List<Query$get_real_estates$business_home>? business_home,
     String? $__typename,
   }) =>
       _res;
-  business_get_home_rentals(_fn) => _res;
+  business_home(_fn) => _res;
 }
 
 const documentNodeQueryget_real_estates = DocumentNode(definitions: [
@@ -9542,31 +11894,39 @@ const documentNodeQueryget_real_estates = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'business_get_home_rentals'),
+        name: NameNode(value: 'business_home'),
         alias: null,
         arguments: [
-          ArgumentNode(
-            name: NameNode(value: 'args'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'location'),
-                value: VariableNode(name: NameNode(value: 'location')),
-              )
-            ]),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'limit'),
-            value: VariableNode(name: NameNode(value: 'limit')),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'offset'),
-            value: VariableNode(name: NameNode(value: 'offset')),
-          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'rental'),
+                name: NameNode(value: 'location'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'gps'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_st_d_within'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'distance'),
+                            value:
+                                VariableNode(name: NameNode(value: 'distance')),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'from'),
+                            value:
+                                VariableNode(name: NameNode(value: 'location')),
+                          ),
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: '_and'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
                     name: NameNode(value: 'business'),
@@ -9600,84 +11960,197 @@ const documentNodeQueryget_real_estates = DocumentNode(definitions: [
                     ]),
                   ),
                   ObjectFieldNode(
-                    name: NameNode(value: 'details'),
+                    name: NameNode(value: 'available_for'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: 'category1'),
-                        value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: '_eq'),
-                            value: StringValueNode(
-                              value: 'realEstate',
-                              isBlock: false,
-                            ),
-                          )
-                        ]),
+                        name: NameNode(value: '_eq'),
+                        value: StringValueNode(
+                          value: 'sale',
+                          isBlock: false,
+                        ),
                       )
                     ]),
                   ),
                 ]),
               ),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'gps_location'),
+                name: NameNode(value: 'business'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: '_st_d_within'),
+                    name: NameNode(value: 'details'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: 'distance'),
-                        value: VariableNode(name: NameNode(value: 'distance')),
-                      ),
-                      ObjectFieldNode(
-                        name: NameNode(value: 'from'),
-                        value: VariableNode(name: NameNode(value: 'location')),
-                      ),
+                        name: NameNode(value: 'referral_points'),
+                        value: EnumValueNode(
+                            name: NameNode(value: 'desc_nulls_last')),
+                      )
                     ]),
                   )
                 ]),
-              ),
+              )
             ]),
           ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'bathrooms'),
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'additional_parameters'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category1'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category2'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'position'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'tags'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'bedrooms'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'gps_location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'home_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'address'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'rental'),
+            name: NameNode(value: 'business'),
             alias: null,
             arguments: [],
             directives: [],
@@ -9690,32 +12163,11 @@ const documentNodeQueryget_real_estates = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'category3'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'details'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'name_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'description_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -9728,189 +12180,30 @@ const documentNodeQueryget_real_estates = DocumentNode(definitions: [
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
+                    selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'description'),
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'tags'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'additional_parameters'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'available'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category1'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category2'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'cost'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'image'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'position'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: 'business'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'details'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'id'),
+                        name: NameNode(value: 'gps'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
                       FieldNode(
-                        name: NameNode(value: 'name'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                      FieldNode(
-                        name: NameNode(value: 'currency'),
+                        name: NameNode(value: 'address'),
                         alias: null,
                         arguments: [],
                         directives: [],
@@ -9942,6 +12235,70 @@ const documentNodeQueryget_real_estates = DocumentNode(definitions: [
                 selectionSet: null,
               ),
             ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'bathrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'bedrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'address'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'available_for'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'offering_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -10064,66 +12421,88 @@ extension ClientExtension$Query$get_real_estates on graphql.GraphQLClient {
   }
 }
 
-class Query$get_real_estates$business_get_home_rentals {
-  Query$get_real_estates$business_get_home_rentals({
+class Query$get_real_estates$business_home {
+  Query$get_real_estates$business_home({
+    this.details,
+    required this.id,
+    this.business,
     required this.bathrooms,
     required this.bedrooms,
-    required this.gps_location,
-    required this.home_type,
-    required this.address,
-    required this.rental,
+    this.location,
+    required this.available_for,
+    required this.offering_type,
     required this.$__typename,
   });
 
-  factory Query$get_real_estates$business_get_home_rentals.fromJson(
+  factory Query$get_real_estates$business_home.fromJson(
       Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$id = json['id'];
+    final l$business = json['business'];
     final l$bathrooms = json['bathrooms'];
     final l$bedrooms = json['bedrooms'];
-    final l$gps_location = json['gps_location'];
-    final l$home_type = json['home_type'];
-    final l$address = json['address'];
-    final l$rental = json['rental'];
+    final l$location = json['location'];
+    final l$available_for = json['available_for'];
+    final l$offering_type = json['offering_type'];
     final l$$__typename = json['__typename'];
-    return Query$get_real_estates$business_get_home_rentals(
+    return Query$get_real_estates$business_home(
+      details: l$details == null
+          ? null
+          : Query$get_real_estates$business_home$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      id: (l$id as int),
+      business: l$business == null
+          ? null
+          : Query$get_real_estates$business_home$business.fromJson(
+              (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      gps_location: geographyFromJson(l$gps_location),
-      home_type: (l$home_type as String),
-      address: (l$address as String),
-      rental: Query$get_real_estates$business_get_home_rentals$rental.fromJson(
-          (l$rental as Map<String, dynamic>)),
+      location: l$location == null
+          ? null
+          : Query$get_real_estates$business_home$location.fromJson(
+              (l$location as Map<String, dynamic>)),
+      available_for: (l$available_for as String),
+      offering_type: (l$offering_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final Query$get_real_estates$business_home$details? details;
+
+  final int id;
+
+  final Query$get_real_estates$business_home$business? business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Geography gps_location;
+  final Query$get_real_estates$business_home$location? location;
 
-  final String home_type;
+  final String available_for;
 
-  final String address;
-
-  final Query$get_real_estates$business_get_home_rentals$rental rental;
+  final String offering_type;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
-    final l$gps_location = gps_location;
-    _resultData['gps_location'] = geographyToJson(l$gps_location);
-    final l$home_type = home_type;
-    _resultData['home_type'] = l$home_type;
-    final l$address = address;
-    _resultData['address'] = l$address;
-    final l$rental = rental;
-    _resultData['rental'] = l$rental.toJson();
+    final l$location = location;
+    _resultData['location'] = l$location?.toJson();
+    final l$available_for = available_for;
+    _resultData['available_for'] = l$available_for;
+    final l$offering_type = offering_type;
+    _resultData['offering_type'] = l$offering_type;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -10131,20 +12510,24 @@ class Query$get_real_estates$business_get_home_rentals {
 
   @override
   int get hashCode {
+    final l$details = details;
+    final l$id = id;
+    final l$business = business;
     final l$bathrooms = bathrooms;
     final l$bedrooms = bedrooms;
-    final l$gps_location = gps_location;
-    final l$home_type = home_type;
-    final l$address = address;
-    final l$rental = rental;
+    final l$location = location;
+    final l$available_for = available_for;
+    final l$offering_type = offering_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$details,
+      l$id,
+      l$business,
       l$bathrooms,
       l$bedrooms,
-      l$gps_location,
-      l$home_type,
-      l$address,
-      l$rental,
+      l$location,
+      l$available_for,
+      l$offering_type,
       l$$__typename,
     ]);
   }
@@ -10154,8 +12537,23 @@ class Query$get_real_estates$business_get_home_rentals {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_real_estates$business_get_home_rentals) ||
+    if (!(other is Query$get_real_estates$business_home) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
       return false;
     }
     final l$bathrooms = bathrooms;
@@ -10168,24 +12566,19 @@ class Query$get_real_estates$business_get_home_rentals {
     if (l$bedrooms != lOther$bedrooms) {
       return false;
     }
-    final l$gps_location = gps_location;
-    final lOther$gps_location = other.gps_location;
-    if (l$gps_location != lOther$gps_location) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
-    final l$home_type = home_type;
-    final lOther$home_type = other.home_type;
-    if (l$home_type != lOther$home_type) {
+    final l$available_for = available_for;
+    final lOther$available_for = other.available_for;
+    if (l$available_for != lOther$available_for) {
       return false;
     }
-    final l$address = address;
-    final lOther$address = other.address;
-    if (l$address != lOther$address) {
-      return false;
-    }
-    final l$rental = rental;
-    final lOther$rental = other.rental;
-    if (l$rental != lOther$rental) {
+    final l$offering_type = offering_type;
+    final lOther$offering_type = other.offering_type;
+    if (l$offering_type != lOther$offering_type) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -10197,348 +12590,152 @@ class Query$get_real_estates$business_get_home_rentals {
   }
 }
 
-extension UtilityExtension$Query$get_real_estates$business_get_home_rentals
-    on Query$get_real_estates$business_get_home_rentals {
-  CopyWith$Query$get_real_estates$business_get_home_rentals<
-          Query$get_real_estates$business_get_home_rentals>
-      get copyWith => CopyWith$Query$get_real_estates$business_get_home_rentals(
+extension UtilityExtension$Query$get_real_estates$business_home
+    on Query$get_real_estates$business_home {
+  CopyWith$Query$get_real_estates$business_home<
+          Query$get_real_estates$business_home>
+      get copyWith => CopyWith$Query$get_real_estates$business_home(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_real_estates$business_get_home_rentals<TRes> {
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals(
-    Query$get_real_estates$business_get_home_rentals instance,
-    TRes Function(Query$get_real_estates$business_get_home_rentals) then,
-  ) = _CopyWithImpl$Query$get_real_estates$business_get_home_rentals;
+abstract class CopyWith$Query$get_real_estates$business_home<TRes> {
+  factory CopyWith$Query$get_real_estates$business_home(
+    Query$get_real_estates$business_home instance,
+    TRes Function(Query$get_real_estates$business_home) then,
+  ) = _CopyWithImpl$Query$get_real_estates$business_home;
 
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals;
+  factory CopyWith$Query$get_real_estates$business_home.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_real_estates$business_home;
 
   TRes call({
+    Query$get_real_estates$business_home$details? details,
+    int? id,
+    Query$get_real_estates$business_home$business? business,
     int? bathrooms,
     int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    Query$get_real_estates$business_get_home_rentals$rental? rental,
+    Query$get_real_estates$business_home$location? location,
+    String? available_for,
+    String? offering_type,
     String? $__typename,
   });
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental<TRes>
-      get rental;
+  CopyWith$Query$get_real_estates$business_home$details<TRes> get details;
+  CopyWith$Query$get_real_estates$business_home$business<TRes> get business;
+  CopyWith$Query$get_real_estates$business_home$location<TRes> get location;
 }
 
-class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals<TRes>
-    implements CopyWith$Query$get_real_estates$business_get_home_rentals<TRes> {
-  _CopyWithImpl$Query$get_real_estates$business_get_home_rentals(
+class _CopyWithImpl$Query$get_real_estates$business_home<TRes>
+    implements CopyWith$Query$get_real_estates$business_home<TRes> {
+  _CopyWithImpl$Query$get_real_estates$business_home(
     this._instance,
     this._then,
   );
 
-  final Query$get_real_estates$business_get_home_rentals _instance;
+  final Query$get_real_estates$business_home _instance;
 
-  final TRes Function(Query$get_real_estates$business_get_home_rentals) _then;
+  final TRes Function(Query$get_real_estates$business_home) _then;
 
   static const _undefined = {};
 
   TRes call({
+    Object? details = _undefined,
+    Object? id = _undefined,
+    Object? business = _undefined,
     Object? bathrooms = _undefined,
     Object? bedrooms = _undefined,
-    Object? gps_location = _undefined,
-    Object? home_type = _undefined,
-    Object? address = _undefined,
-    Object? rental = _undefined,
+    Object? location = _undefined,
+    Object? available_for = _undefined,
+    Object? offering_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_real_estates$business_get_home_rentals(
+      _then(Query$get_real_estates$business_home(
+        details: details == _undefined
+            ? _instance.details
+            : (details as Query$get_real_estates$business_home$details?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business: business == _undefined
+            ? _instance.business
+            : (business as Query$get_real_estates$business_home$business?),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        gps_location: gps_location == _undefined || gps_location == null
-            ? _instance.gps_location
-            : (gps_location as Geography),
-        home_type: home_type == _undefined || home_type == null
-            ? _instance.home_type
-            : (home_type as String),
-        address: address == _undefined || address == null
-            ? _instance.address
-            : (address as String),
-        rental: rental == _undefined || rental == null
-            ? _instance.rental
-            : (rental
-                as Query$get_real_estates$business_get_home_rentals$rental),
+        location: location == _undefined
+            ? _instance.location
+            : (location as Query$get_real_estates$business_home$location?),
+        available_for: available_for == _undefined || available_for == null
+            ? _instance.available_for
+            : (available_for as String),
+        offering_type: offering_type == _undefined || offering_type == null
+            ? _instance.offering_type
+            : (offering_type as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental<TRes>
-      get rental {
-    final local$rental = _instance.rental;
-    return CopyWith$Query$get_real_estates$business_get_home_rentals$rental(
-        local$rental, (e) => call(rental: e));
+  CopyWith$Query$get_real_estates$business_home$details<TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$get_real_estates$business_home$details.stub(
+            _then(_instance))
+        : CopyWith$Query$get_real_estates$business_home$details(
+            local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Query$get_real_estates$business_home$business<TRes> get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Query$get_real_estates$business_home$business.stub(
+            _then(_instance))
+        : CopyWith$Query$get_real_estates$business_home$business(
+            local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Query$get_real_estates$business_home$location<TRes> get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Query$get_real_estates$business_home$location.stub(
+            _then(_instance))
+        : CopyWith$Query$get_real_estates$business_home$location(
+            local$location, (e) => call(location: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals<TRes>
-    implements CopyWith$Query$get_real_estates$business_get_home_rentals<TRes> {
-  _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals(this._res);
+class _CopyWithStubImpl$Query$get_real_estates$business_home<TRes>
+    implements CopyWith$Query$get_real_estates$business_home<TRes> {
+  _CopyWithStubImpl$Query$get_real_estates$business_home(this._res);
 
   TRes _res;
 
   call({
+    Query$get_real_estates$business_home$details? details,
+    int? id,
+    Query$get_real_estates$business_home$business? business,
     int? bathrooms,
     int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    Query$get_real_estates$business_get_home_rentals$rental? rental,
+    Query$get_real_estates$business_home$location? location,
+    String? available_for,
+    String? offering_type,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental<TRes>
-      get rental =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental.stub(
-              _res);
+  CopyWith$Query$get_real_estates$business_home$details<TRes> get details =>
+      CopyWith$Query$get_real_estates$business_home$details.stub(_res);
+  CopyWith$Query$get_real_estates$business_home$business<TRes> get business =>
+      CopyWith$Query$get_real_estates$business_home$business.stub(_res);
+  CopyWith$Query$get_real_estates$business_home$location<TRes> get location =>
+      CopyWith$Query$get_real_estates$business_home$location.stub(_res);
 }
 
-class Query$get_real_estates$business_get_home_rentals$rental {
-  Query$get_real_estates$business_get_home_rentals$rental({
-    required this.id,
-    required this.category3,
-    required this.details,
-    required this.business,
-    required this.$__typename,
-  });
-
-  factory Query$get_real_estates$business_get_home_rentals$rental.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$category3 = json['category3'];
-    final l$details = json['details'];
-    final l$business = json['business'];
-    final l$$__typename = json['__typename'];
-    return Query$get_real_estates$business_get_home_rentals$rental(
-      id: (l$id as int),
-      category3: (l$category3 as String),
-      details: Query$get_real_estates$business_get_home_rentals$rental$details
-          .fromJson((l$details as Map<String, dynamic>)),
-      business: Query$get_real_estates$business_get_home_rentals$rental$business
-          .fromJson((l$business as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String category3;
-
-  final Query$get_real_estates$business_get_home_rentals$rental$details details;
-
-  final Query$get_real_estates$business_get_home_rentals$rental$business
-      business;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$category3 = category3;
-    _resultData['category3'] = l$category3;
-    final l$details = details;
-    _resultData['details'] = l$details.toJson();
-    final l$business = business;
-    _resultData['business'] = l$business.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$category3 = category3;
-    final l$details = details;
-    final l$business = business;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$category3,
-      l$details,
-      l$business,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$get_real_estates$business_get_home_rentals$rental) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$category3 = category3;
-    final lOther$category3 = other.category3;
-    if (l$category3 != lOther$category3) {
-      return false;
-    }
-    final l$details = details;
-    final lOther$details = other.details;
-    if (l$details != lOther$details) {
-      return false;
-    }
-    final l$business = business;
-    final lOther$business = other.business;
-    if (l$business != lOther$business) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_real_estates$business_get_home_rentals$rental
-    on Query$get_real_estates$business_get_home_rentals$rental {
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental<
-          Query$get_real_estates$business_get_home_rentals$rental>
-      get copyWith =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_real_estates$business_get_home_rentals$rental<
-    TRes> {
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental(
-    Query$get_real_estates$business_get_home_rentals$rental instance,
-    TRes Function(Query$get_real_estates$business_get_home_rentals$rental) then,
-  ) = _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental;
-
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental;
-
-  TRes call({
-    int? id,
-    String? category3,
-    Query$get_real_estates$business_get_home_rentals$rental$details? details,
-    Query$get_real_estates$business_get_home_rentals$rental$business? business,
-    String? $__typename,
-  });
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details<TRes>
-      get details;
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business<
-      TRes> get business;
-}
-
-class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental<
-        TRes>
-    implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental<TRes> {
-  _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_real_estates$business_get_home_rentals$rental _instance;
-
-  final TRes Function(Query$get_real_estates$business_get_home_rentals$rental)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? category3 = _undefined,
-    Object? details = _undefined,
-    Object? business = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_real_estates$business_get_home_rentals$rental(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        category3: category3 == _undefined || category3 == null
-            ? _instance.category3
-            : (category3 as String),
-        details: details == _undefined || details == null
-            ? _instance.details
-            : (details
-                as Query$get_real_estates$business_get_home_rentals$rental$details),
-        business: business == _undefined || business == null
-            ? _instance.business
-            : (business
-                as Query$get_real_estates$business_get_home_rentals$rental$business),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details<TRes>
-      get details {
-    final local$details = _instance.details;
-    return CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details(
-        local$details, (e) => call(details: e));
-  }
-
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business<
-      TRes> get business {
-    final local$business = _instance.business;
-    return CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business(
-        local$business, (e) => call(business: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental<
-        TRes>
-    implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental<TRes> {
-  _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? category3,
-    Query$get_real_estates$business_get_home_rentals$rental$details? details,
-    Query$get_real_estates$business_get_home_rentals$rental$business? business,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details<TRes>
-      get details =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details
-              .stub(_res);
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business<
-          TRes>
-      get business =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business
-              .stub(_res);
-}
-
-class Query$get_real_estates$business_get_home_rentals$rental$details {
-  Query$get_real_estates$business_get_home_rentals$rental$details({
+class Query$get_real_estates$business_home$details {
+  Query$get_real_estates$business_home$details({
     required this.name_id,
     this.description_id,
     required this.id,
     required this.name,
-    this.description,
-    required this.tags,
     this.additional_parameters,
     required this.available,
     required this.category1,
@@ -10546,17 +12743,16 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
     required this.cost,
     this.image,
     required this.position,
+    required this.tags,
     required this.$__typename,
   });
 
-  factory Query$get_real_estates$business_get_home_rentals$rental$details.fromJson(
+  factory Query$get_real_estates$business_home$details.fromJson(
       Map<String, dynamic> json) {
     final l$name_id = json['name_id'];
     final l$description_id = json['description_id'];
     final l$id = json['id'];
     final l$name = json['name'];
-    final l$description = json['description'];
-    final l$tags = json['tags'];
     final l$additional_parameters = json['additional_parameters'];
     final l$available = json['available'];
     final l$category1 = json['category1'];
@@ -10564,18 +12760,14 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
     final l$cost = json['cost'];
     final l$image = json['image'];
     final l$position = json['position'];
+    final l$tags = json['tags'];
     final l$$__typename = json['__typename'];
-    return Query$get_real_estates$business_get_home_rentals$rental$details(
+    return Query$get_real_estates$business_home$details(
       name_id: (l$name_id as int),
       description_id: (l$description_id as int?),
       id: (l$id as int),
-      name: Query$get_real_estates$business_get_home_rentals$rental$details$name
-          .fromJson((l$name as Map<String, dynamic>)),
-      description: l$description == null
-          ? null
-          : Query$get_real_estates$business_get_home_rentals$rental$details$description
-              .fromJson((l$description as Map<String, dynamic>)),
-      tags: mapFromJson(l$tags),
+      name: Query$get_real_estates$business_home$details$name.fromJson(
+          (l$name as Map<String, dynamic>)),
       additional_parameters: l$additional_parameters == null
           ? null
           : mapFromJson(l$additional_parameters),
@@ -10585,6 +12777,7 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
       cost: mapFromJson(l$cost),
       image: l$image == null ? null : mapFromJson(l$image),
       position: (l$position as int),
+      tags: mapFromJson(l$tags),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -10595,13 +12788,7 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
 
   final int id;
 
-  final Query$get_real_estates$business_get_home_rentals$rental$details$name
-      name;
-
-  final Query$get_real_estates$business_get_home_rentals$rental$details$description?
-      description;
-
-  final dynamic tags;
+  final Query$get_real_estates$business_home$details$name name;
 
   final dynamic? additional_parameters;
 
@@ -10617,6 +12804,8 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
 
   final int position;
 
+  final dynamic tags;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -10629,10 +12818,6 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name.toJson();
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
-    final l$tags = tags;
-    _resultData['tags'] = mapToJson(l$tags);
     final l$additional_parameters = additional_parameters;
     _resultData['additional_parameters'] = l$additional_parameters == null
         ? null
@@ -10649,6 +12834,8 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
     _resultData['image'] = l$image == null ? null : mapToJson(l$image);
     final l$position = position;
     _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -10660,8 +12847,6 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
     final l$description_id = description_id;
     final l$id = id;
     final l$name = name;
-    final l$description = description;
-    final l$tags = tags;
     final l$additional_parameters = additional_parameters;
     final l$available = available;
     final l$category1 = category1;
@@ -10669,14 +12854,13 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
     final l$cost = cost;
     final l$image = image;
     final l$position = position;
+    final l$tags = tags;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name_id,
       l$description_id,
       l$id,
       l$name,
-      l$description,
-      l$tags,
       l$additional_parameters,
       l$available,
       l$category1,
@@ -10684,6 +12868,7 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
       l$cost,
       l$image,
       l$position,
+      l$tags,
       l$$__typename,
     ]);
   }
@@ -10693,8 +12878,7 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_real_estates$business_get_home_rentals$rental$details) ||
+    if (!(other is Query$get_real_estates$business_home$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -10716,16 +12900,6 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
-      return false;
-    }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
-      return false;
-    }
-    final l$tags = tags;
-    final lOther$tags = other.tags;
-    if (l$tags != lOther$tags) {
       return false;
     }
     final l$additional_parameters = additional_parameters;
@@ -10763,6 +12937,11 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
     if (l$position != lOther$position) {
       return false;
     }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -10772,38 +12951,30 @@ class Query$get_real_estates$business_get_home_rentals$rental$details {
   }
 }
 
-extension UtilityExtension$Query$get_real_estates$business_get_home_rentals$rental$details
-    on Query$get_real_estates$business_get_home_rentals$rental$details {
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details<
-          Query$get_real_estates$business_get_home_rentals$rental$details>
-      get copyWith =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details(
+extension UtilityExtension$Query$get_real_estates$business_home$details
+    on Query$get_real_estates$business_home$details {
+  CopyWith$Query$get_real_estates$business_home$details<
+          Query$get_real_estates$business_home$details>
+      get copyWith => CopyWith$Query$get_real_estates$business_home$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details<
-    TRes> {
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details(
-    Query$get_real_estates$business_get_home_rentals$rental$details instance,
-    TRes Function(
-            Query$get_real_estates$business_get_home_rentals$rental$details)
-        then,
-  ) = _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details;
+abstract class CopyWith$Query$get_real_estates$business_home$details<TRes> {
+  factory CopyWith$Query$get_real_estates$business_home$details(
+    Query$get_real_estates$business_home$details instance,
+    TRes Function(Query$get_real_estates$business_home$details) then,
+  ) = _CopyWithImpl$Query$get_real_estates$business_home$details;
 
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details;
+  factory CopyWith$Query$get_real_estates$business_home$details.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_real_estates$business_home$details;
 
   TRes call({
     int? name_id,
     int? description_id,
     int? id,
-    Query$get_real_estates$business_get_home_rentals$rental$details$name? name,
-    Query$get_real_estates$business_get_home_rentals$rental$details$description?
-        description,
-    dynamic? tags,
+    Query$get_real_estates$business_home$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -10811,29 +12982,22 @@ abstract class CopyWith$Query$get_real_estates$business_get_home_rentals$rental$
     dynamic? cost,
     dynamic? image,
     int? position,
+    dynamic? tags,
     String? $__typename,
   });
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name<
-      TRes> get name;
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description<
-      TRes> get description;
+  CopyWith$Query$get_real_estates$business_home$details$name<TRes> get name;
 }
 
-class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details<
-        TRes>
-    implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details<
-            TRes> {
-  _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details(
+class _CopyWithImpl$Query$get_real_estates$business_home$details<TRes>
+    implements CopyWith$Query$get_real_estates$business_home$details<TRes> {
+  _CopyWithImpl$Query$get_real_estates$business_home$details(
     this._instance,
     this._then,
   );
 
-  final Query$get_real_estates$business_get_home_rentals$rental$details
-      _instance;
+  final Query$get_real_estates$business_home$details _instance;
 
-  final TRes Function(
-      Query$get_real_estates$business_get_home_rentals$rental$details) _then;
+  final TRes Function(Query$get_real_estates$business_home$details) _then;
 
   static const _undefined = {};
 
@@ -10842,8 +13006,6 @@ class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$deta
     Object? description_id = _undefined,
     Object? id = _undefined,
     Object? name = _undefined,
-    Object? description = _undefined,
-    Object? tags = _undefined,
     Object? additional_parameters = _undefined,
     Object? available = _undefined,
     Object? category1 = _undefined,
@@ -10851,9 +13013,10 @@ class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$deta
     Object? cost = _undefined,
     Object? image = _undefined,
     Object? position = _undefined,
+    Object? tags = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_real_estates$business_get_home_rentals$rental$details(
+      _then(Query$get_real_estates$business_home$details(
         name_id: name_id == _undefined || name_id == null
             ? _instance.name_id
             : (name_id as int),
@@ -10863,15 +13026,7 @@ class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$deta
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
-            : (name
-                as Query$get_real_estates$business_get_home_rentals$rental$details$name),
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Query$get_real_estates$business_get_home_rentals$rental$details$description?),
-        tags: tags == _undefined || tags == null
-            ? _instance.tags
-            : (tags as dynamic),
+            : (name as Query$get_real_estates$business_home$details$name),
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),
@@ -10891,35 +13046,23 @@ class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$deta
         position: position == _undefined || position == null
             ? _instance.position
             : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name<
-      TRes> get name {
+  CopyWith$Query$get_real_estates$business_home$details$name<TRes> get name {
     final local$name = _instance.name;
-    return CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name(
+    return CopyWith$Query$get_real_estates$business_home$details$name(
         local$name, (e) => call(name: e));
-  }
-
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description<
-      TRes> get description {
-    final local$description = _instance.description;
-    return local$description == null
-        ? CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description
-            .stub(_then(_instance))
-        : CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description(
-            local$description, (e) => call(description: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details<
-        TRes>
-    implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details<
-            TRes> {
-  _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details(
-      this._res);
+class _CopyWithStubImpl$Query$get_real_estates$business_home$details<TRes>
+    implements CopyWith$Query$get_real_estates$business_home$details<TRes> {
+  _CopyWithStubImpl$Query$get_real_estates$business_home$details(this._res);
 
   TRes _res;
 
@@ -10927,10 +13070,7 @@ class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$
     int? name_id,
     int? description_id,
     int? id,
-    Query$get_real_estates$business_get_home_rentals$rental$details$name? name,
-    Query$get_real_estates$business_get_home_rentals$rental$details$description?
-        description,
-    dynamic? tags,
+    Query$get_real_estates$business_home$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -10938,43 +13078,35 @@ class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$
     dynamic? cost,
     dynamic? image,
     int? position,
+    dynamic? tags,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name<
-          TRes>
-      get name =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name
-              .stub(_res);
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description<
-          TRes>
-      get description =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description
-              .stub(_res);
+  CopyWith$Query$get_real_estates$business_home$details$name<TRes> get name =>
+      CopyWith$Query$get_real_estates$business_home$details$name.stub(_res);
 }
 
-class Query$get_real_estates$business_get_home_rentals$rental$details$name {
-  Query$get_real_estates$business_get_home_rentals$rental$details$name({
+class Query$get_real_estates$business_home$details$name {
+  Query$get_real_estates$business_home$details$name({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$get_real_estates$business_get_home_rentals$rental$details$name.fromJson(
+  factory Query$get_real_estates$business_home$details$name.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$get_real_estates$business_get_home_rentals$rental$details$name(
+    return Query$get_real_estates$business_home$details$name(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$get_real_estates$business_get_home_rentals$rental$details$name$translations
+              Query$get_real_estates$business_home$details$name$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<
-          Query$get_real_estates$business_get_home_rentals$rental$details$name$translations>
+  final List<Query$get_real_estates$business_home$details$name$translations>
       translations;
 
   final String $__typename;
@@ -11004,8 +13136,7 @@ class Query$get_real_estates$business_get_home_rentals$rental$details$name {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_real_estates$business_get_home_rentals$rental$details$name) ||
+    if (!(other is Query$get_real_estates$business_home$details$name) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -11030,60 +13161,52 @@ class Query$get_real_estates$business_get_home_rentals$rental$details$name {
   }
 }
 
-extension UtilityExtension$Query$get_real_estates$business_get_home_rentals$rental$details$name
-    on Query$get_real_estates$business_get_home_rentals$rental$details$name {
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name<
-          Query$get_real_estates$business_get_home_rentals$rental$details$name>
+extension UtilityExtension$Query$get_real_estates$business_home$details$name
+    on Query$get_real_estates$business_home$details$name {
+  CopyWith$Query$get_real_estates$business_home$details$name<
+          Query$get_real_estates$business_home$details$name>
       get copyWith =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name(
+          CopyWith$Query$get_real_estates$business_home$details$name(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name<
+abstract class CopyWith$Query$get_real_estates$business_home$details$name<
     TRes> {
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name(
-    Query$get_real_estates$business_get_home_rentals$rental$details$name
-        instance,
-    TRes Function(
-            Query$get_real_estates$business_get_home_rentals$rental$details$name)
-        then,
-  ) = _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name;
+  factory CopyWith$Query$get_real_estates$business_home$details$name(
+    Query$get_real_estates$business_home$details$name instance,
+    TRes Function(Query$get_real_estates$business_home$details$name) then,
+  ) = _CopyWithImpl$Query$get_real_estates$business_home$details$name;
 
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name.stub(
+  factory CopyWith$Query$get_real_estates$business_home$details$name.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name;
+      _CopyWithStubImpl$Query$get_real_estates$business_home$details$name;
 
   TRes call({
-    List<Query$get_real_estates$business_get_home_rentals$rental$details$name$translations>?
+    List<Query$get_real_estates$business_home$details$name$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$get_real_estates$business_get_home_rentals$rental$details$name$translations> Function(
+      Iterable<Query$get_real_estates$business_home$details$name$translations> Function(
               Iterable<
-                  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations<
-                      Query$get_real_estates$business_get_home_rentals$rental$details$name$translations>>)
+                  CopyWith$Query$get_real_estates$business_home$details$name$translations<
+                      Query$get_real_estates$business_home$details$name$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name<
-        TRes>
+class _CopyWithImpl$Query$get_real_estates$business_home$details$name<TRes>
     implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name<
-            TRes> {
-  _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name(
+        CopyWith$Query$get_real_estates$business_home$details$name<TRes> {
+  _CopyWithImpl$Query$get_real_estates$business_home$details$name(
     this._instance,
     this._then,
   );
 
-  final Query$get_real_estates$business_get_home_rentals$rental$details$name
-      _instance;
+  final Query$get_real_estates$business_home$details$name _instance;
 
-  final TRes Function(
-          Query$get_real_estates$business_get_home_rentals$rental$details$name)
-      _then;
+  final TRes Function(Query$get_real_estates$business_home$details$name) _then;
 
   static const _undefined = {};
 
@@ -11091,42 +13214,39 @@ class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$deta
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_real_estates$business_get_home_rentals$rental$details$name(
+      _then(Query$get_real_estates$business_home$details$name(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$get_real_estates$business_get_home_rentals$rental$details$name$translations>),
+                Query$get_real_estates$business_home$details$name$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$get_real_estates$business_get_home_rentals$rental$details$name$translations> Function(
+          Iterable<Query$get_real_estates$business_home$details$name$translations> Function(
                   Iterable<
-                      CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations<
-                          Query$get_real_estates$business_get_home_rentals$rental$details$name$translations>>)
+                      CopyWith$Query$get_real_estates$business_home$details$name$translations<
+                          Query$get_real_estates$business_home$details$name$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations(
+              CopyWith$Query$get_real_estates$business_home$details$name$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name<
-        TRes>
+class _CopyWithStubImpl$Query$get_real_estates$business_home$details$name<TRes>
     implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name<
-            TRes> {
-  _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name(
+        CopyWith$Query$get_real_estates$business_home$details$name<TRes> {
+  _CopyWithStubImpl$Query$get_real_estates$business_home$details$name(
       this._res);
 
   TRes _res;
 
   call({
-    List<Query$get_real_estates$business_get_home_rentals$rental$details$name$translations>?
+    List<Query$get_real_estates$business_home$details$name$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -11134,19 +13254,19 @@ class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$
   translations(_fn) => _res;
 }
 
-class Query$get_real_estates$business_get_home_rentals$rental$details$name$translations {
-  Query$get_real_estates$business_get_home_rentals$rental$details$name$translations({
+class Query$get_real_estates$business_home$details$name$translations {
+  Query$get_real_estates$business_home$details$name$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$get_real_estates$business_get_home_rentals$rental$details$name$translations.fromJson(
+  factory Query$get_real_estates$business_home$details$name$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$get_real_estates$business_get_home_rentals$rental$details$name$translations(
+    return Query$get_real_estates$business_home$details$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -11188,7 +13308,7 @@ class Query$get_real_estates$business_get_home_rentals$rental$details$name$trans
       return true;
     }
     if (!(other
-            is Query$get_real_estates$business_get_home_rentals$rental$details$name$translations) ||
+            is Query$get_real_estates$business_home$details$name$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -11211,30 +13331,29 @@ class Query$get_real_estates$business_get_home_rentals$rental$details$name$trans
   }
 }
 
-extension UtilityExtension$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations
-    on Query$get_real_estates$business_get_home_rentals$rental$details$name$translations {
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations<
-          Query$get_real_estates$business_get_home_rentals$rental$details$name$translations>
+extension UtilityExtension$Query$get_real_estates$business_home$details$name$translations
+    on Query$get_real_estates$business_home$details$name$translations {
+  CopyWith$Query$get_real_estates$business_home$details$name$translations<
+          Query$get_real_estates$business_home$details$name$translations>
       get copyWith =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations(
+          CopyWith$Query$get_real_estates$business_home$details$name$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations<
+abstract class CopyWith$Query$get_real_estates$business_home$details$name$translations<
     TRes> {
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations(
-    Query$get_real_estates$business_get_home_rentals$rental$details$name$translations
-        instance,
+  factory CopyWith$Query$get_real_estates$business_home$details$name$translations(
+    Query$get_real_estates$business_home$details$name$translations instance,
     TRes Function(
-            Query$get_real_estates$business_get_home_rentals$rental$details$name$translations)
+            Query$get_real_estates$business_home$details$name$translations)
         then,
-  ) = _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations;
+  ) = _CopyWithImpl$Query$get_real_estates$business_home$details$name$translations;
 
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations.stub(
+  factory CopyWith$Query$get_real_estates$business_home$details$name$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations;
+      _CopyWithStubImpl$Query$get_real_estates$business_home$details$name$translations;
 
   TRes call({
     String? language_id,
@@ -11243,22 +13362,21 @@ abstract class CopyWith$Query$get_real_estates$business_get_home_rentals$rental$
   });
 }
 
-class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations<
+class _CopyWithImpl$Query$get_real_estates$business_home$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations<
+        CopyWith$Query$get_real_estates$business_home$details$name$translations<
             TRes> {
-  _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations(
+  _CopyWithImpl$Query$get_real_estates$business_home$details$name$translations(
     this._instance,
     this._then,
   );
 
-  final Query$get_real_estates$business_get_home_rentals$rental$details$name$translations
+  final Query$get_real_estates$business_home$details$name$translations
       _instance;
 
   final TRes Function(
-          Query$get_real_estates$business_get_home_rentals$rental$details$name$translations)
-      _then;
+      Query$get_real_estates$business_home$details$name$translations) _then;
 
   static const _undefined = {};
 
@@ -11267,8 +13385,7 @@ class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$deta
     Object? value = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_real_estates$business_get_home_rentals$rental$details$name$translations(
+      _then(Query$get_real_estates$business_home$details$name$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -11281,12 +13398,12 @@ class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$deta
       ));
 }
 
-class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations<
+class _CopyWithStubImpl$Query$get_real_estates$business_home$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations<
+        CopyWith$Query$get_real_estates$business_home$details$name$translations<
             TRes> {
-  _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$name$translations(
+  _CopyWithStubImpl$Query$get_real_estates$business_home$details$name$translations(
       this._res);
 
   TRes _res;
@@ -11299,377 +13416,29 @@ class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$
       _res;
 }
 
-class Query$get_real_estates$business_get_home_rentals$rental$details$description {
-  Query$get_real_estates$business_get_home_rentals$rental$details$description({
-    required this.translations,
-    required this.$__typename,
-  });
-
-  factory Query$get_real_estates$business_get_home_rentals$rental$details$description.fromJson(
-      Map<String, dynamic> json) {
-    final l$translations = json['translations'];
-    final l$$__typename = json['__typename'];
-    return Query$get_real_estates$business_get_home_rentals$rental$details$description(
-      translations: (l$translations as List<dynamic>)
-          .map((e) =>
-              Query$get_real_estates$business_get_home_rentals$rental$details$description$translations
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<
-          Query$get_real_estates$business_get_home_rentals$rental$details$description$translations>
-      translations;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$translations = translations;
-    _resultData['translations'] =
-        l$translations.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$translations = translations;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$translations.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_real_estates$business_get_home_rentals$rental$details$description) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$translations = translations;
-    final lOther$translations = other.translations;
-    if (l$translations.length != lOther$translations.length) {
-      return false;
-    }
-    for (int i = 0; i < l$translations.length; i++) {
-      final l$translations$entry = l$translations[i];
-      final lOther$translations$entry = lOther$translations[i];
-      if (l$translations$entry != lOther$translations$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_real_estates$business_get_home_rentals$rental$details$description
-    on Query$get_real_estates$business_get_home_rentals$rental$details$description {
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description<
-          Query$get_real_estates$business_get_home_rentals$rental$details$description>
-      get copyWith =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description<
-    TRes> {
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description(
-    Query$get_real_estates$business_get_home_rentals$rental$details$description
-        instance,
-    TRes Function(
-            Query$get_real_estates$business_get_home_rentals$rental$details$description)
-        then,
-  ) = _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description;
-
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description;
-
-  TRes call({
-    List<Query$get_real_estates$business_get_home_rentals$rental$details$description$translations>?
-        translations,
-    String? $__typename,
-  });
-  TRes translations(
-      Iterable<Query$get_real_estates$business_get_home_rentals$rental$details$description$translations> Function(
-              Iterable<
-                  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations<
-                      Query$get_real_estates$business_get_home_rentals$rental$details$description$translations>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description<
-        TRes>
-    implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description<
-            TRes> {
-  _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_real_estates$business_get_home_rentals$rental$details$description
-      _instance;
-
-  final TRes Function(
-          Query$get_real_estates$business_get_home_rentals$rental$details$description)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? translations = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_real_estates$business_get_home_rentals$rental$details$description(
-        translations: translations == _undefined || translations == null
-            ? _instance.translations
-            : (translations as List<
-                Query$get_real_estates$business_get_home_rentals$rental$details$description$translations>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes translations(
-          Iterable<Query$get_real_estates$business_get_home_rentals$rental$details$description$translations> Function(
-                  Iterable<
-                      CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations<
-                          Query$get_real_estates$business_get_home_rentals$rental$details$description$translations>>)
-              _fn) =>
-      call(
-          translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description<
-        TRes>
-    implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description<
-            TRes> {
-  _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$get_real_estates$business_get_home_rentals$rental$details$description$translations>?
-        translations,
-    String? $__typename,
-  }) =>
-      _res;
-  translations(_fn) => _res;
-}
-
-class Query$get_real_estates$business_get_home_rentals$rental$details$description$translations {
-  Query$get_real_estates$business_get_home_rentals$rental$details$description$translations({
-    required this.language_id,
-    required this.value,
-    required this.$__typename,
-  });
-
-  factory Query$get_real_estates$business_get_home_rentals$rental$details$description$translations.fromJson(
-      Map<String, dynamic> json) {
-    final l$language_id = json['language_id'];
-    final l$value = json['value'];
-    final l$$__typename = json['__typename'];
-    return Query$get_real_estates$business_get_home_rentals$rental$details$description$translations(
-      language_id: (l$language_id as String),
-      value: (l$value as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String language_id;
-
-  final String value;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$value = value;
-    _resultData['value'] = l$value;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$language_id = language_id;
-    final l$value = value;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$language_id,
-      l$value,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_real_estates$business_get_home_rentals$rental$details$description$translations) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations
-    on Query$get_real_estates$business_get_home_rentals$rental$details$description$translations {
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations<
-          Query$get_real_estates$business_get_home_rentals$rental$details$description$translations>
-      get copyWith =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations<
-    TRes> {
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations(
-    Query$get_real_estates$business_get_home_rentals$rental$details$description$translations
-        instance,
-    TRes Function(
-            Query$get_real_estates$business_get_home_rentals$rental$details$description$translations)
-        then,
-  ) = _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations;
-
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations;
-
-  TRes call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations<
-            TRes> {
-  _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_real_estates$business_get_home_rentals$rental$details$description$translations
-      _instance;
-
-  final TRes Function(
-          Query$get_real_estates$business_get_home_rentals$rental$details$description$translations)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? language_id = _undefined,
-    Object? value = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_real_estates$business_get_home_rentals$rental$details$description$translations(
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$details$description$translations(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$get_real_estates$business_get_home_rentals$rental$business {
-  Query$get_real_estates$business_get_home_rentals$rental$business({
+class Query$get_real_estates$business_home$business {
+  Query$get_real_estates$business_home$business({
     required this.id,
     required this.details,
     required this.$__typename,
   });
 
-  factory Query$get_real_estates$business_get_home_rentals$rental$business.fromJson(
+  factory Query$get_real_estates$business_home$business.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
-    return Query$get_real_estates$business_get_home_rentals$rental$business(
+    return Query$get_real_estates$business_home$business(
       id: (l$id as int),
-      details:
-          Query$get_real_estates$business_get_home_rentals$rental$business$details
-              .fromJson((l$details as Map<String, dynamic>)),
+      details: Query$get_real_estates$business_home$business$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
 
-  final Query$get_real_estates$business_get_home_rentals$rental$business$details
-      details;
+  final Query$get_real_estates$business_home$business$details details;
 
   final String $__typename;
 
@@ -11701,8 +13470,7 @@ class Query$get_real_estates$business_get_home_rentals$rental$business {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_real_estates$business_get_home_rentals$rental$business) ||
+    if (!(other is Query$get_real_estates$business_home$business) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -11725,55 +13493,45 @@ class Query$get_real_estates$business_get_home_rentals$rental$business {
   }
 }
 
-extension UtilityExtension$Query$get_real_estates$business_get_home_rentals$rental$business
-    on Query$get_real_estates$business_get_home_rentals$rental$business {
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business<
-          Query$get_real_estates$business_get_home_rentals$rental$business>
-      get copyWith =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business(
+extension UtilityExtension$Query$get_real_estates$business_home$business
+    on Query$get_real_estates$business_home$business {
+  CopyWith$Query$get_real_estates$business_home$business<
+          Query$get_real_estates$business_home$business>
+      get copyWith => CopyWith$Query$get_real_estates$business_home$business(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business<
-    TRes> {
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business(
-    Query$get_real_estates$business_get_home_rentals$rental$business instance,
-    TRes Function(
-            Query$get_real_estates$business_get_home_rentals$rental$business)
-        then,
-  ) = _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$business;
+abstract class CopyWith$Query$get_real_estates$business_home$business<TRes> {
+  factory CopyWith$Query$get_real_estates$business_home$business(
+    Query$get_real_estates$business_home$business instance,
+    TRes Function(Query$get_real_estates$business_home$business) then,
+  ) = _CopyWithImpl$Query$get_real_estates$business_home$business;
 
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business.stub(
+  factory CopyWith$Query$get_real_estates$business_home$business.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$business;
+      _CopyWithStubImpl$Query$get_real_estates$business_home$business;
 
   TRes call({
     int? id,
-    Query$get_real_estates$business_get_home_rentals$rental$business$details?
-        details,
+    Query$get_real_estates$business_home$business$details? details,
     String? $__typename,
   });
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details<
-      TRes> get details;
+  CopyWith$Query$get_real_estates$business_home$business$details<TRes>
+      get details;
 }
 
-class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$business<
-        TRes>
-    implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business<
-            TRes> {
-  _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$business(
+class _CopyWithImpl$Query$get_real_estates$business_home$business<TRes>
+    implements CopyWith$Query$get_real_estates$business_home$business<TRes> {
+  _CopyWithImpl$Query$get_real_estates$business_home$business(
     this._instance,
     this._then,
   );
 
-  final Query$get_real_estates$business_get_home_rentals$rental$business
-      _instance;
+  final Query$get_real_estates$business_home$business _instance;
 
-  final TRes Function(
-      Query$get_real_estates$business_get_home_rentals$rental$business) _then;
+  final TRes Function(Query$get_real_estates$business_home$business) _then;
 
   static const _undefined = {};
 
@@ -11782,66 +13540,64 @@ class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$busi
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_real_estates$business_get_home_rentals$rental$business(
+      _then(Query$get_real_estates$business_home$business(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Query$get_real_estates$business_get_home_rentals$rental$business$details),
+                as Query$get_real_estates$business_home$business$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details<
-      TRes> get details {
+  CopyWith$Query$get_real_estates$business_home$business$details<TRes>
+      get details {
     final local$details = _instance.details;
-    return CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details(
+    return CopyWith$Query$get_real_estates$business_home$business$details(
         local$details, (e) => call(details: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$business<
-        TRes>
-    implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business<
-            TRes> {
-  _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$business(
-      this._res);
+class _CopyWithStubImpl$Query$get_real_estates$business_home$business<TRes>
+    implements CopyWith$Query$get_real_estates$business_home$business<TRes> {
+  _CopyWithStubImpl$Query$get_real_estates$business_home$business(this._res);
 
   TRes _res;
 
   call({
     int? id,
-    Query$get_real_estates$business_get_home_rentals$rental$business$details?
-        details,
+    Query$get_real_estates$business_home$business$details? details,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details<
-          TRes>
+  CopyWith$Query$get_real_estates$business_home$business$details<TRes>
       get details =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details
-              .stub(_res);
+          CopyWith$Query$get_real_estates$business_home$business$details.stub(
+              _res);
 }
 
-class Query$get_real_estates$business_get_home_rentals$rental$business$details {
-  Query$get_real_estates$business_get_home_rentals$rental$business$details({
+class Query$get_real_estates$business_home$business$details {
+  Query$get_real_estates$business_home$business$details({
     required this.id,
     required this.name,
     required this.currency,
+    required this.location,
     required this.$__typename,
   });
 
-  factory Query$get_real_estates$business_get_home_rentals$rental$business$details.fromJson(
+  factory Query$get_real_estates$business_home$business$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
     final l$currency = json['currency'];
+    final l$location = json['location'];
     final l$$__typename = json['__typename'];
-    return Query$get_real_estates$business_get_home_rentals$rental$business$details(
+    return Query$get_real_estates$business_home$business$details(
       id: (l$id as int),
       name: (l$name as String),
       currency: (l$currency as String),
+      location: Query$get_real_estates$business_home$business$details$location
+          .fromJson((l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -11851,6 +13607,8 @@ class Query$get_real_estates$business_get_home_rentals$rental$business$details {
   final String name;
 
   final String currency;
+
+  final Query$get_real_estates$business_home$business$details$location location;
 
   final String $__typename;
 
@@ -11862,6 +13620,8 @@ class Query$get_real_estates$business_get_home_rentals$rental$business$details {
     _resultData['name'] = l$name;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -11872,11 +13632,13 @@ class Query$get_real_estates$business_get_home_rentals$rental$business$details {
     final l$id = id;
     final l$name = name;
     final l$currency = currency;
+    final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
       l$currency,
+      l$location,
       l$$__typename,
     ]);
   }
@@ -11886,8 +13648,7 @@ class Query$get_real_estates$business_get_home_rentals$rental$business$details {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_real_estates$business_get_home_rentals$rental$business$details) ||
+    if (!(other is Query$get_real_estates$business_home$business$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -11906,6 +13667,11 @@ class Query$get_real_estates$business_get_home_rentals$rental$business$details {
     if (l$currency != lOther$currency) {
       return false;
     }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -11915,54 +13681,50 @@ class Query$get_real_estates$business_get_home_rentals$rental$business$details {
   }
 }
 
-extension UtilityExtension$Query$get_real_estates$business_get_home_rentals$rental$business$details
-    on Query$get_real_estates$business_get_home_rentals$rental$business$details {
-  CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details<
-          Query$get_real_estates$business_get_home_rentals$rental$business$details>
+extension UtilityExtension$Query$get_real_estates$business_home$business$details
+    on Query$get_real_estates$business_home$business$details {
+  CopyWith$Query$get_real_estates$business_home$business$details<
+          Query$get_real_estates$business_home$business$details>
       get copyWith =>
-          CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details(
+          CopyWith$Query$get_real_estates$business_home$business$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details<
+abstract class CopyWith$Query$get_real_estates$business_home$business$details<
     TRes> {
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details(
-    Query$get_real_estates$business_get_home_rentals$rental$business$details
-        instance,
-    TRes Function(
-            Query$get_real_estates$business_get_home_rentals$rental$business$details)
-        then,
-  ) = _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$business$details;
+  factory CopyWith$Query$get_real_estates$business_home$business$details(
+    Query$get_real_estates$business_home$business$details instance,
+    TRes Function(Query$get_real_estates$business_home$business$details) then,
+  ) = _CopyWithImpl$Query$get_real_estates$business_home$business$details;
 
-  factory CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details.stub(
+  factory CopyWith$Query$get_real_estates$business_home$business$details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$business$details;
+      _CopyWithStubImpl$Query$get_real_estates$business_home$business$details;
 
   TRes call({
     int? id,
     String? name,
     String? currency,
+    Query$get_real_estates$business_home$business$details$location? location,
     String? $__typename,
   });
+  CopyWith$Query$get_real_estates$business_home$business$details$location<TRes>
+      get location;
 }
 
-class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$business$details<
-        TRes>
+class _CopyWithImpl$Query$get_real_estates$business_home$business$details<TRes>
     implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details<
-            TRes> {
-  _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$business$details(
+        CopyWith$Query$get_real_estates$business_home$business$details<TRes> {
+  _CopyWithImpl$Query$get_real_estates$business_home$business$details(
     this._instance,
     this._then,
   );
 
-  final Query$get_real_estates$business_get_home_rentals$rental$business$details
-      _instance;
+  final Query$get_real_estates$business_home$business$details _instance;
 
-  final TRes Function(
-          Query$get_real_estates$business_get_home_rentals$rental$business$details)
+  final TRes Function(Query$get_real_estates$business_home$business$details)
       _then;
 
   static const _undefined = {};
@@ -11971,10 +13733,10 @@ class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$busi
     Object? id = _undefined,
     Object? name = _undefined,
     Object? currency = _undefined,
+    Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_real_estates$business_get_home_rentals$rental$business$details(
+      _then(Query$get_real_estates$business_home$business$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -11982,18 +13744,27 @@ class _CopyWithImpl$Query$get_real_estates$business_get_home_rentals$rental$busi
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_real_estates$business_home$business$details$location),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_real_estates$business_home$business$details$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_real_estates$business_home$business$details$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
-class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$business$details<
+class _CopyWithStubImpl$Query$get_real_estates$business_home$business$details<
         TRes>
     implements
-        CopyWith$Query$get_real_estates$business_get_home_rentals$rental$business$details<
-            TRes> {
-  _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$business$details(
+        CopyWith$Query$get_real_estates$business_home$business$details<TRes> {
+  _CopyWithStubImpl$Query$get_real_estates$business_home$business$details(
       this._res);
 
   TRes _res;
@@ -12002,26 +13773,361 @@ class _CopyWithStubImpl$Query$get_real_estates$business_get_home_rentals$rental$
     int? id,
     String? name,
     String? currency,
+    Query$get_real_estates$business_home$business$details$location? location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_real_estates$business_home$business$details$location<TRes>
+      get location =>
+          CopyWith$Query$get_real_estates$business_home$business$details$location
+              .stub(_res);
+}
+
+class Query$get_real_estates$business_home$business$details$location {
+  Query$get_real_estates$business_home$business$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_real_estates$business_home$business$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_real_estates$business_home$business$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_real_estates$business_home$business$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_real_estates$business_home$business$details$location
+    on Query$get_real_estates$business_home$business$details$location {
+  CopyWith$Query$get_real_estates$business_home$business$details$location<
+          Query$get_real_estates$business_home$business$details$location>
+      get copyWith =>
+          CopyWith$Query$get_real_estates$business_home$business$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_real_estates$business_home$business$details$location<
+    TRes> {
+  factory CopyWith$Query$get_real_estates$business_home$business$details$location(
+    Query$get_real_estates$business_home$business$details$location instance,
+    TRes Function(
+            Query$get_real_estates$business_home$business$details$location)
+        then,
+  ) = _CopyWithImpl$Query$get_real_estates$business_home$business$details$location;
+
+  factory CopyWith$Query$get_real_estates$business_home$business$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_real_estates$business_home$business$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_real_estates$business_home$business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_real_estates$business_home$business$details$location<
+            TRes> {
+  _CopyWithImpl$Query$get_real_estates$business_home$business$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_real_estates$business_home$business$details$location
+      _instance;
+
+  final TRes Function(
+      Query$get_real_estates$business_home$business$details$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_real_estates$business_home$business$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_real_estates$business_home$business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_real_estates$business_home$business$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_real_estates$business_home$business$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
 }
 
-class Variables$Query$get_business_home_rentals {
-  factory Variables$Query$get_business_home_rentals({
+class Query$get_real_estates$business_home$location {
+  Query$get_real_estates$business_home$location({
+    required this.address,
+    required this.gps,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_real_estates$business_home$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$address = json['address'];
+    final l$gps = json['gps'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_real_estates$business_home$location(
+      address: (l$address as String),
+      gps: geographyFromJson(l$gps),
+      name: (l$name as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String address;
+
+  final Geography gps;
+
+  final String name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$address = address;
+    final l$gps = gps;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$address,
+      l$gps,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_real_estates$business_home$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_real_estates$business_home$location
+    on Query$get_real_estates$business_home$location {
+  CopyWith$Query$get_real_estates$business_home$location<
+          Query$get_real_estates$business_home$location>
+      get copyWith => CopyWith$Query$get_real_estates$business_home$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_real_estates$business_home$location<TRes> {
+  factory CopyWith$Query$get_real_estates$business_home$location(
+    Query$get_real_estates$business_home$location instance,
+    TRes Function(Query$get_real_estates$business_home$location) then,
+  ) = _CopyWithImpl$Query$get_real_estates$business_home$location;
+
+  factory CopyWith$Query$get_real_estates$business_home$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_real_estates$business_home$location;
+
+  TRes call({
+    String? address,
+    Geography? gps,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_real_estates$business_home$location<TRes>
+    implements CopyWith$Query$get_real_estates$business_home$location<TRes> {
+  _CopyWithImpl$Query$get_real_estates$business_home$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_real_estates$business_home$location _instance;
+
+  final TRes Function(Query$get_real_estates$business_home$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? address = _undefined,
+    Object? gps = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_real_estates$business_home$location(
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_real_estates$business_home$location<TRes>
+    implements CopyWith$Query$get_real_estates$business_home$location<TRes> {
+  _CopyWithStubImpl$Query$get_real_estates$business_home$location(this._res);
+
+  TRes _res;
+
+  call({
+    String? address,
+    Geography? gps,
+    String? name,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$get_business_home {
+  factory Variables$Query$get_business_home({
     required int businessId,
     int? limit,
     int? offset,
   }) =>
-      Variables$Query$get_business_home_rentals._({
+      Variables$Query$get_business_home._({
         r'businessId': businessId,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
       });
 
-  Variables$Query$get_business_home_rentals._(this._$data);
+  Variables$Query$get_business_home._(this._$data);
 
-  factory Variables$Query$get_business_home_rentals.fromJson(
+  factory Variables$Query$get_business_home.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$businessId = data['businessId'];
@@ -12034,7 +14140,7 @@ class Variables$Query$get_business_home_rentals {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
     }
-    return Variables$Query$get_business_home_rentals._(result$data);
+    return Variables$Query$get_business_home._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -12057,9 +14163,8 @@ class Variables$Query$get_business_home_rentals {
     return result$data;
   }
 
-  CopyWith$Variables$Query$get_business_home_rentals<
-          Variables$Query$get_business_home_rentals>
-      get copyWith => CopyWith$Variables$Query$get_business_home_rentals(
+  CopyWith$Variables$Query$get_business_home<Variables$Query$get_business_home>
+      get copyWith => CopyWith$Variables$Query$get_business_home(
             this,
             (i) => i,
           );
@@ -12068,7 +14173,7 @@ class Variables$Query$get_business_home_rentals {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Query$get_business_home_rentals) ||
+    if (!(other is Variables$Query$get_business_home) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -12109,14 +14214,14 @@ class Variables$Query$get_business_home_rentals {
   }
 }
 
-abstract class CopyWith$Variables$Query$get_business_home_rentals<TRes> {
-  factory CopyWith$Variables$Query$get_business_home_rentals(
-    Variables$Query$get_business_home_rentals instance,
-    TRes Function(Variables$Query$get_business_home_rentals) then,
-  ) = _CopyWithImpl$Variables$Query$get_business_home_rentals;
+abstract class CopyWith$Variables$Query$get_business_home<TRes> {
+  factory CopyWith$Variables$Query$get_business_home(
+    Variables$Query$get_business_home instance,
+    TRes Function(Variables$Query$get_business_home) then,
+  ) = _CopyWithImpl$Variables$Query$get_business_home;
 
-  factory CopyWith$Variables$Query$get_business_home_rentals.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Query$get_business_home_rentals;
+  factory CopyWith$Variables$Query$get_business_home.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_business_home;
 
   TRes call({
     int? businessId,
@@ -12125,16 +14230,16 @@ abstract class CopyWith$Variables$Query$get_business_home_rentals<TRes> {
   });
 }
 
-class _CopyWithImpl$Variables$Query$get_business_home_rentals<TRes>
-    implements CopyWith$Variables$Query$get_business_home_rentals<TRes> {
-  _CopyWithImpl$Variables$Query$get_business_home_rentals(
+class _CopyWithImpl$Variables$Query$get_business_home<TRes>
+    implements CopyWith$Variables$Query$get_business_home<TRes> {
+  _CopyWithImpl$Variables$Query$get_business_home(
     this._instance,
     this._then,
   );
 
-  final Variables$Query$get_business_home_rentals _instance;
+  final Variables$Query$get_business_home _instance;
 
-  final TRes Function(Variables$Query$get_business_home_rentals) _then;
+  final TRes Function(Variables$Query$get_business_home) _then;
 
   static const _undefined = {};
 
@@ -12143,7 +14248,7 @@ class _CopyWithImpl$Variables$Query$get_business_home_rentals<TRes>
     Object? limit = _undefined,
     Object? offset = _undefined,
   }) =>
-      _then(Variables$Query$get_business_home_rentals._({
+      _then(Variables$Query$get_business_home._({
         ..._instance._$data,
         if (businessId != _undefined && businessId != null)
           'businessId': (businessId as int),
@@ -12152,9 +14257,9 @@ class _CopyWithImpl$Variables$Query$get_business_home_rentals<TRes>
       }));
 }
 
-class _CopyWithStubImpl$Variables$Query$get_business_home_rentals<TRes>
-    implements CopyWith$Variables$Query$get_business_home_rentals<TRes> {
-  _CopyWithStubImpl$Variables$Query$get_business_home_rentals(this._res);
+class _CopyWithStubImpl$Variables$Query$get_business_home<TRes>
+    implements CopyWith$Variables$Query$get_business_home<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_business_home(this._res);
 
   TRes _res;
 
@@ -12166,35 +14271,33 @@ class _CopyWithStubImpl$Variables$Query$get_business_home_rentals<TRes>
       _res;
 }
 
-class Query$get_business_home_rentals {
-  Query$get_business_home_rentals({
-    required this.business_home_rental,
+class Query$get_business_home {
+  Query$get_business_home({
+    required this.business_home,
     required this.$__typename,
   });
 
-  factory Query$get_business_home_rentals.fromJson(Map<String, dynamic> json) {
-    final l$business_home_rental = json['business_home_rental'];
+  factory Query$get_business_home.fromJson(Map<String, dynamic> json) {
+    final l$business_home = json['business_home'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_home_rentals(
-      business_home_rental: (l$business_home_rental as List<dynamic>)
-          .map((e) =>
-              Query$get_business_home_rentals$business_home_rental.fromJson(
-                  (e as Map<String, dynamic>)))
+    return Query$get_business_home(
+      business_home: (l$business_home as List<dynamic>)
+          .map((e) => Query$get_business_home$business_home.fromJson(
+              (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$get_business_home_rentals$business_home_rental>
-      business_home_rental;
+  final List<Query$get_business_home$business_home> business_home;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$business_home_rental = business_home_rental;
-    _resultData['business_home_rental'] =
-        l$business_home_rental.map((e) => e.toJson()).toList();
+    final l$business_home = business_home;
+    _resultData['business_home'] =
+        l$business_home.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -12202,10 +14305,10 @@ class Query$get_business_home_rentals {
 
   @override
   int get hashCode {
-    final l$business_home_rental = business_home_rental;
+    final l$business_home = business_home;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$business_home_rental.map((v) => v)),
+      Object.hashAll(l$business_home.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -12215,19 +14318,19 @@ class Query$get_business_home_rentals {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_business_home_rentals) ||
+    if (!(other is Query$get_business_home) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$business_home_rental = business_home_rental;
-    final lOther$business_home_rental = other.business_home_rental;
-    if (l$business_home_rental.length != lOther$business_home_rental.length) {
+    final l$business_home = business_home;
+    final lOther$business_home = other.business_home;
+    if (l$business_home.length != lOther$business_home.length) {
       return false;
     }
-    for (int i = 0; i < l$business_home_rental.length; i++) {
-      final l$business_home_rental$entry = l$business_home_rental[i];
-      final lOther$business_home_rental$entry = lOther$business_home_rental[i];
-      if (l$business_home_rental$entry != lOther$business_home_rental$entry) {
+    for (int i = 0; i < l$business_home.length; i++) {
+      final l$business_home$entry = l$business_home[i];
+      final lOther$business_home$entry = lOther$business_home[i];
+      if (l$business_home$entry != lOther$business_home$entry) {
         return false;
       }
     }
@@ -12240,97 +14343,92 @@ class Query$get_business_home_rentals {
   }
 }
 
-extension UtilityExtension$Query$get_business_home_rentals
-    on Query$get_business_home_rentals {
-  CopyWith$Query$get_business_home_rentals<Query$get_business_home_rentals>
-      get copyWith => CopyWith$Query$get_business_home_rentals(
-            this,
-            (i) => i,
-          );
+extension UtilityExtension$Query$get_business_home on Query$get_business_home {
+  CopyWith$Query$get_business_home<Query$get_business_home> get copyWith =>
+      CopyWith$Query$get_business_home(
+        this,
+        (i) => i,
+      );
 }
 
-abstract class CopyWith$Query$get_business_home_rentals<TRes> {
-  factory CopyWith$Query$get_business_home_rentals(
-    Query$get_business_home_rentals instance,
-    TRes Function(Query$get_business_home_rentals) then,
-  ) = _CopyWithImpl$Query$get_business_home_rentals;
+abstract class CopyWith$Query$get_business_home<TRes> {
+  factory CopyWith$Query$get_business_home(
+    Query$get_business_home instance,
+    TRes Function(Query$get_business_home) then,
+  ) = _CopyWithImpl$Query$get_business_home;
 
-  factory CopyWith$Query$get_business_home_rentals.stub(TRes res) =
-      _CopyWithStubImpl$Query$get_business_home_rentals;
+  factory CopyWith$Query$get_business_home.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_business_home;
 
   TRes call({
-    List<Query$get_business_home_rentals$business_home_rental>?
-        business_home_rental,
+    List<Query$get_business_home$business_home>? business_home,
     String? $__typename,
   });
-  TRes business_home_rental(
-      Iterable<Query$get_business_home_rentals$business_home_rental> Function(
+  TRes business_home(
+      Iterable<Query$get_business_home$business_home> Function(
               Iterable<
-                  CopyWith$Query$get_business_home_rentals$business_home_rental<
-                      Query$get_business_home_rentals$business_home_rental>>)
+                  CopyWith$Query$get_business_home$business_home<
+                      Query$get_business_home$business_home>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$get_business_home_rentals<TRes>
-    implements CopyWith$Query$get_business_home_rentals<TRes> {
-  _CopyWithImpl$Query$get_business_home_rentals(
+class _CopyWithImpl$Query$get_business_home<TRes>
+    implements CopyWith$Query$get_business_home<TRes> {
+  _CopyWithImpl$Query$get_business_home(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_home_rentals _instance;
+  final Query$get_business_home _instance;
 
-  final TRes Function(Query$get_business_home_rentals) _then;
+  final TRes Function(Query$get_business_home) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? business_home_rental = _undefined,
+    Object? business_home = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_business_home_rentals(
-        business_home_rental: business_home_rental == _undefined ||
-                business_home_rental == null
-            ? _instance.business_home_rental
-            : (business_home_rental
-                as List<Query$get_business_home_rentals$business_home_rental>),
+      _then(Query$get_business_home(
+        business_home: business_home == _undefined || business_home == null
+            ? _instance.business_home
+            : (business_home as List<Query$get_business_home$business_home>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes business_home_rental(
-          Iterable<Query$get_business_home_rentals$business_home_rental> Function(
+  TRes business_home(
+          Iterable<Query$get_business_home$business_home> Function(
                   Iterable<
-                      CopyWith$Query$get_business_home_rentals$business_home_rental<
-                          Query$get_business_home_rentals$business_home_rental>>)
+                      CopyWith$Query$get_business_home$business_home<
+                          Query$get_business_home$business_home>>)
               _fn) =>
       call(
-          business_home_rental: _fn(_instance.business_home_rental.map((e) =>
-              CopyWith$Query$get_business_home_rentals$business_home_rental(
-                e,
-                (i) => i,
-              ))).toList());
+          business_home: _fn(_instance.business_home
+              .map((e) => CopyWith$Query$get_business_home$business_home(
+                    e,
+                    (i) => i,
+                  ))).toList());
 }
 
-class _CopyWithStubImpl$Query$get_business_home_rentals<TRes>
-    implements CopyWith$Query$get_business_home_rentals<TRes> {
-  _CopyWithStubImpl$Query$get_business_home_rentals(this._res);
+class _CopyWithStubImpl$Query$get_business_home<TRes>
+    implements CopyWith$Query$get_business_home<TRes> {
+  _CopyWithStubImpl$Query$get_business_home(this._res);
 
   TRes _res;
 
   call({
-    List<Query$get_business_home_rentals$business_home_rental>?
-        business_home_rental,
+    List<Query$get_business_home$business_home>? business_home,
     String? $__typename,
   }) =>
       _res;
-  business_home_rental(_fn) => _res;
+  business_home(_fn) => _res;
 }
 
-const documentNodeQueryget_business_home_rentals = DocumentNode(definitions: [
+const documentNodeQueryget_business_home = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
-    name: NameNode(value: 'get_business_home_rentals'),
+    name: NameNode(value: 'get_business_home'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'businessId')),
@@ -12363,24 +14461,18 @@ const documentNodeQueryget_business_home_rentals = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'business_home_rental'),
+        name: NameNode(value: 'business_home'),
         alias: null,
         arguments: [
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'rental'),
+                name: NameNode(value: 'business_id'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: 'business_id'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: '_eq'),
-                        value:
-                            VariableNode(name: NameNode(value: 'businessId')),
-                      )
-                    ]),
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'businessId')),
                   )
                 ]),
               )
@@ -12398,42 +14490,150 @@ const documentNodeQueryget_business_home_rentals = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'bathrooms'),
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'additional_parameters'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category1'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category2'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'position'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'tags'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'bedrooms'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'gps_location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'home_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'address'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'rental'),
+            name: NameNode(value: 'business'),
             alias: null,
             arguments: [],
             directives: [],
@@ -12446,32 +14646,11 @@ const documentNodeQueryget_business_home_rentals = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'category3'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'details'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'name_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'description_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -12484,189 +14663,30 @@ const documentNodeQueryget_business_home_rentals = DocumentNode(definitions: [
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
+                    selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'description'),
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'tags'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'additional_parameters'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'available'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category1'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category2'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'cost'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'image'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'position'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: 'business'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'details'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'id'),
+                        name: NameNode(value: 'gps'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
                       FieldNode(
-                        name: NameNode(value: 'name'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                      FieldNode(
-                        name: NameNode(value: 'currency'),
+                        name: NameNode(value: 'address'),
                         alias: null,
                         arguments: [],
                         directives: [],
@@ -12700,6 +14720,70 @@ const documentNodeQueryget_business_home_rentals = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'bathrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'bedrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'address'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'available_for'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'offering_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -12712,15 +14796,15 @@ const documentNodeQueryget_business_home_rentals = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Query$get_business_home_rentals _parserFn$Query$get_business_home_rentals(
+Query$get_business_home _parserFn$Query$get_business_home(
         Map<String, dynamic> data) =>
-    Query$get_business_home_rentals.fromJson(data);
+    Query$get_business_home.fromJson(data);
 
-class Options$Query$get_business_home_rentals
-    extends graphql.QueryOptions<Query$get_business_home_rentals> {
-  Options$Query$get_business_home_rentals({
+class Options$Query$get_business_home
+    extends graphql.QueryOptions<Query$get_business_home> {
+  Options$Query$get_business_home({
     String? operationName,
-    required Variables$Query$get_business_home_rentals variables,
+    required Variables$Query$get_business_home variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -12736,16 +14820,16 @@ class Options$Query$get_business_home_rentals
           optimisticResult: optimisticResult,
           pollInterval: pollInterval,
           context: context,
-          document: documentNodeQueryget_business_home_rentals,
-          parserFn: _parserFn$Query$get_business_home_rentals,
+          document: documentNodeQueryget_business_home,
+          parserFn: _parserFn$Query$get_business_home,
         );
 }
 
-class WatchOptions$Query$get_business_home_rentals
-    extends graphql.WatchQueryOptions<Query$get_business_home_rentals> {
-  WatchOptions$Query$get_business_home_rentals({
+class WatchOptions$Query$get_business_home
+    extends graphql.WatchQueryOptions<Query$get_business_home> {
+  WatchOptions$Query$get_business_home({
     String? operationName,
-    required Variables$Query$get_business_home_rentals variables,
+    required Variables$Query$get_business_home variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -12763,130 +14847,146 @@ class WatchOptions$Query$get_business_home_rentals
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeQueryget_business_home_rentals,
+          document: documentNodeQueryget_business_home,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Query$get_business_home_rentals,
+          parserFn: _parserFn$Query$get_business_home,
         );
 }
 
-class FetchMoreOptions$Query$get_business_home_rentals
+class FetchMoreOptions$Query$get_business_home
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$get_business_home_rentals({
+  FetchMoreOptions$Query$get_business_home({
     required graphql.UpdateQuery updateQuery,
-    required Variables$Query$get_business_home_rentals variables,
+    required Variables$Query$get_business_home variables,
   }) : super(
           updateQuery: updateQuery,
           variables: variables.toJson(),
-          document: documentNodeQueryget_business_home_rentals,
+          document: documentNodeQueryget_business_home,
         );
 }
 
-extension ClientExtension$Query$get_business_home_rentals
-    on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$get_business_home_rentals>>
-      query$get_business_home_rentals(
-              Options$Query$get_business_home_rentals options) async =>
-          await this.query(options);
-  graphql.ObservableQuery<Query$get_business_home_rentals>
-      watchQuery$get_business_home_rentals(
-              WatchOptions$Query$get_business_home_rentals options) =>
-          this.watchQuery(options);
-  void writeQuery$get_business_home_rentals({
-    required Query$get_business_home_rentals data,
-    required Variables$Query$get_business_home_rentals variables,
+extension ClientExtension$Query$get_business_home on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_business_home>> query$get_business_home(
+          Options$Query$get_business_home options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$get_business_home> watchQuery$get_business_home(
+          WatchOptions$Query$get_business_home options) =>
+      this.watchQuery(options);
+  void writeQuery$get_business_home({
+    required Query$get_business_home data,
+    required Variables$Query$get_business_home variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-          operation: graphql.Operation(
-              document: documentNodeQueryget_business_home_rentals),
+          operation:
+              graphql.Operation(document: documentNodeQueryget_business_home),
           variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$get_business_home_rentals? readQuery$get_business_home_rentals({
-    required Variables$Query$get_business_home_rentals variables,
+  Query$get_business_home? readQuery$get_business_home({
+    required Variables$Query$get_business_home variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
-        operation: graphql.Operation(
-            document: documentNodeQueryget_business_home_rentals),
+        operation:
+            graphql.Operation(document: documentNodeQueryget_business_home),
         variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );
-    return result == null
-        ? null
-        : Query$get_business_home_rentals.fromJson(result);
+    return result == null ? null : Query$get_business_home.fromJson(result);
   }
 }
 
-class Query$get_business_home_rentals$business_home_rental {
-  Query$get_business_home_rentals$business_home_rental({
+class Query$get_business_home$business_home {
+  Query$get_business_home$business_home({
+    this.details,
+    required this.id,
+    this.business,
     required this.bathrooms,
     required this.bedrooms,
-    required this.gps_location,
-    required this.home_type,
-    required this.address,
-    required this.rental,
+    this.location,
+    required this.available_for,
+    required this.offering_type,
     required this.$__typename,
   });
 
-  factory Query$get_business_home_rentals$business_home_rental.fromJson(
+  factory Query$get_business_home$business_home.fromJson(
       Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$id = json['id'];
+    final l$business = json['business'];
     final l$bathrooms = json['bathrooms'];
     final l$bedrooms = json['bedrooms'];
-    final l$gps_location = json['gps_location'];
-    final l$home_type = json['home_type'];
-    final l$address = json['address'];
-    final l$rental = json['rental'];
+    final l$location = json['location'];
+    final l$available_for = json['available_for'];
+    final l$offering_type = json['offering_type'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_home_rentals$business_home_rental(
+    return Query$get_business_home$business_home(
+      details: l$details == null
+          ? null
+          : Query$get_business_home$business_home$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      id: (l$id as int),
+      business: l$business == null
+          ? null
+          : Query$get_business_home$business_home$business.fromJson(
+              (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      gps_location: geographyFromJson(l$gps_location),
-      home_type: (l$home_type as String),
-      address: (l$address as String),
-      rental:
-          Query$get_business_home_rentals$business_home_rental$rental.fromJson(
-              (l$rental as Map<String, dynamic>)),
+      location: l$location == null
+          ? null
+          : Query$get_business_home$business_home$location.fromJson(
+              (l$location as Map<String, dynamic>)),
+      available_for: (l$available_for as String),
+      offering_type: (l$offering_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final Query$get_business_home$business_home$details? details;
+
+  final int id;
+
+  final Query$get_business_home$business_home$business? business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Geography gps_location;
+  final Query$get_business_home$business_home$location? location;
 
-  final String home_type;
+  final String available_for;
 
-  final String address;
-
-  final Query$get_business_home_rentals$business_home_rental$rental rental;
+  final String offering_type;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
-    final l$gps_location = gps_location;
-    _resultData['gps_location'] = geographyToJson(l$gps_location);
-    final l$home_type = home_type;
-    _resultData['home_type'] = l$home_type;
-    final l$address = address;
-    _resultData['address'] = l$address;
-    final l$rental = rental;
-    _resultData['rental'] = l$rental.toJson();
+    final l$location = location;
+    _resultData['location'] = l$location?.toJson();
+    final l$available_for = available_for;
+    _resultData['available_for'] = l$available_for;
+    final l$offering_type = offering_type;
+    _resultData['offering_type'] = l$offering_type;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -12894,20 +14994,24 @@ class Query$get_business_home_rentals$business_home_rental {
 
   @override
   int get hashCode {
+    final l$details = details;
+    final l$id = id;
+    final l$business = business;
     final l$bathrooms = bathrooms;
     final l$bedrooms = bedrooms;
-    final l$gps_location = gps_location;
-    final l$home_type = home_type;
-    final l$address = address;
-    final l$rental = rental;
+    final l$location = location;
+    final l$available_for = available_for;
+    final l$offering_type = offering_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$details,
+      l$id,
+      l$business,
       l$bathrooms,
       l$bedrooms,
-      l$gps_location,
-      l$home_type,
-      l$address,
-      l$rental,
+      l$location,
+      l$available_for,
+      l$offering_type,
       l$$__typename,
     ]);
   }
@@ -12917,8 +15021,23 @@ class Query$get_business_home_rentals$business_home_rental {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_business_home_rentals$business_home_rental) ||
+    if (!(other is Query$get_business_home$business_home) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
       return false;
     }
     final l$bathrooms = bathrooms;
@@ -12931,24 +15050,19 @@ class Query$get_business_home_rentals$business_home_rental {
     if (l$bedrooms != lOther$bedrooms) {
       return false;
     }
-    final l$gps_location = gps_location;
-    final lOther$gps_location = other.gps_location;
-    if (l$gps_location != lOther$gps_location) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
-    final l$home_type = home_type;
-    final lOther$home_type = other.home_type;
-    if (l$home_type != lOther$home_type) {
+    final l$available_for = available_for;
+    final lOther$available_for = other.available_for;
+    if (l$available_for != lOther$available_for) {
       return false;
     }
-    final l$address = address;
-    final lOther$address = other.address;
-    if (l$address != lOther$address) {
-      return false;
-    }
-    final l$rental = rental;
-    final lOther$rental = other.rental;
-    if (l$rental != lOther$rental) {
+    final l$offering_type = offering_type;
+    final lOther$offering_type = other.offering_type;
+    if (l$offering_type != lOther$offering_type) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -12960,367 +15074,152 @@ class Query$get_business_home_rentals$business_home_rental {
   }
 }
 
-extension UtilityExtension$Query$get_business_home_rentals$business_home_rental
-    on Query$get_business_home_rentals$business_home_rental {
-  CopyWith$Query$get_business_home_rentals$business_home_rental<
-          Query$get_business_home_rentals$business_home_rental>
-      get copyWith =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental(
+extension UtilityExtension$Query$get_business_home$business_home
+    on Query$get_business_home$business_home {
+  CopyWith$Query$get_business_home$business_home<
+          Query$get_business_home$business_home>
+      get copyWith => CopyWith$Query$get_business_home$business_home(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_home_rentals$business_home_rental<
-    TRes> {
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental(
-    Query$get_business_home_rentals$business_home_rental instance,
-    TRes Function(Query$get_business_home_rentals$business_home_rental) then,
-  ) = _CopyWithImpl$Query$get_business_home_rentals$business_home_rental;
+abstract class CopyWith$Query$get_business_home$business_home<TRes> {
+  factory CopyWith$Query$get_business_home$business_home(
+    Query$get_business_home$business_home instance,
+    TRes Function(Query$get_business_home$business_home) then,
+  ) = _CopyWithImpl$Query$get_business_home$business_home;
 
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental;
+  factory CopyWith$Query$get_business_home$business_home.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_business_home$business_home;
 
   TRes call({
+    Query$get_business_home$business_home$details? details,
+    int? id,
+    Query$get_business_home$business_home$business? business,
     int? bathrooms,
     int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    Query$get_business_home_rentals$business_home_rental$rental? rental,
+    Query$get_business_home$business_home$location? location,
+    String? available_for,
+    String? offering_type,
     String? $__typename,
   });
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental<TRes>
-      get rental;
+  CopyWith$Query$get_business_home$business_home$details<TRes> get details;
+  CopyWith$Query$get_business_home$business_home$business<TRes> get business;
+  CopyWith$Query$get_business_home$business_home$location<TRes> get location;
 }
 
-class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental<TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental<TRes> {
-  _CopyWithImpl$Query$get_business_home_rentals$business_home_rental(
+class _CopyWithImpl$Query$get_business_home$business_home<TRes>
+    implements CopyWith$Query$get_business_home$business_home<TRes> {
+  _CopyWithImpl$Query$get_business_home$business_home(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_home_rentals$business_home_rental _instance;
+  final Query$get_business_home$business_home _instance;
 
-  final TRes Function(Query$get_business_home_rentals$business_home_rental)
-      _then;
+  final TRes Function(Query$get_business_home$business_home) _then;
 
   static const _undefined = {};
 
   TRes call({
+    Object? details = _undefined,
+    Object? id = _undefined,
+    Object? business = _undefined,
     Object? bathrooms = _undefined,
     Object? bedrooms = _undefined,
-    Object? gps_location = _undefined,
-    Object? home_type = _undefined,
-    Object? address = _undefined,
-    Object? rental = _undefined,
+    Object? location = _undefined,
+    Object? available_for = _undefined,
+    Object? offering_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_business_home_rentals$business_home_rental(
+      _then(Query$get_business_home$business_home(
+        details: details == _undefined
+            ? _instance.details
+            : (details as Query$get_business_home$business_home$details?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business: business == _undefined
+            ? _instance.business
+            : (business as Query$get_business_home$business_home$business?),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        gps_location: gps_location == _undefined || gps_location == null
-            ? _instance.gps_location
-            : (gps_location as Geography),
-        home_type: home_type == _undefined || home_type == null
-            ? _instance.home_type
-            : (home_type as String),
-        address: address == _undefined || address == null
-            ? _instance.address
-            : (address as String),
-        rental: rental == _undefined || rental == null
-            ? _instance.rental
-            : (rental
-                as Query$get_business_home_rentals$business_home_rental$rental),
+        location: location == _undefined
+            ? _instance.location
+            : (location as Query$get_business_home$business_home$location?),
+        available_for: available_for == _undefined || available_for == null
+            ? _instance.available_for
+            : (available_for as String),
+        offering_type: offering_type == _undefined || offering_type == null
+            ? _instance.offering_type
+            : (offering_type as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental<TRes>
-      get rental {
-    final local$rental = _instance.rental;
-    return CopyWith$Query$get_business_home_rentals$business_home_rental$rental(
-        local$rental, (e) => call(rental: e));
+  CopyWith$Query$get_business_home$business_home$details<TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$get_business_home$business_home$details.stub(
+            _then(_instance))
+        : CopyWith$Query$get_business_home$business_home$details(
+            local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Query$get_business_home$business_home$business<TRes> get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Query$get_business_home$business_home$business.stub(
+            _then(_instance))
+        : CopyWith$Query$get_business_home$business_home$business(
+            local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Query$get_business_home$business_home$location<TRes> get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Query$get_business_home$business_home$location.stub(
+            _then(_instance))
+        : CopyWith$Query$get_business_home$business_home$location(
+            local$location, (e) => call(location: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental<TRes> {
-  _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental(
-      this._res);
+class _CopyWithStubImpl$Query$get_business_home$business_home<TRes>
+    implements CopyWith$Query$get_business_home$business_home<TRes> {
+  _CopyWithStubImpl$Query$get_business_home$business_home(this._res);
 
   TRes _res;
 
   call({
+    Query$get_business_home$business_home$details? details,
+    int? id,
+    Query$get_business_home$business_home$business? business,
     int? bathrooms,
     int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    Query$get_business_home_rentals$business_home_rental$rental? rental,
+    Query$get_business_home$business_home$location? location,
+    String? available_for,
+    String? offering_type,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental<TRes>
-      get rental =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental
-              .stub(_res);
+  CopyWith$Query$get_business_home$business_home$details<TRes> get details =>
+      CopyWith$Query$get_business_home$business_home$details.stub(_res);
+  CopyWith$Query$get_business_home$business_home$business<TRes> get business =>
+      CopyWith$Query$get_business_home$business_home$business.stub(_res);
+  CopyWith$Query$get_business_home$business_home$location<TRes> get location =>
+      CopyWith$Query$get_business_home$business_home$location.stub(_res);
 }
 
-class Query$get_business_home_rentals$business_home_rental$rental {
-  Query$get_business_home_rentals$business_home_rental$rental({
-    required this.id,
-    required this.category3,
-    required this.details,
-    required this.business,
-    required this.$__typename,
-  });
-
-  factory Query$get_business_home_rentals$business_home_rental$rental.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$category3 = json['category3'];
-    final l$details = json['details'];
-    final l$business = json['business'];
-    final l$$__typename = json['__typename'];
-    return Query$get_business_home_rentals$business_home_rental$rental(
-      id: (l$id as int),
-      category3: (l$category3 as String),
-      details:
-          Query$get_business_home_rentals$business_home_rental$rental$details
-              .fromJson((l$details as Map<String, dynamic>)),
-      business:
-          Query$get_business_home_rentals$business_home_rental$rental$business
-              .fromJson((l$business as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String category3;
-
-  final Query$get_business_home_rentals$business_home_rental$rental$details
-      details;
-
-  final Query$get_business_home_rentals$business_home_rental$rental$business
-      business;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$category3 = category3;
-    _resultData['category3'] = l$category3;
-    final l$details = details;
-    _resultData['details'] = l$details.toJson();
-    final l$business = business;
-    _resultData['business'] = l$business.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$category3 = category3;
-    final l$details = details;
-    final l$business = business;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$category3,
-      l$details,
-      l$business,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_business_home_rentals$business_home_rental$rental) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$category3 = category3;
-    final lOther$category3 = other.category3;
-    if (l$category3 != lOther$category3) {
-      return false;
-    }
-    final l$details = details;
-    final lOther$details = other.details;
-    if (l$details != lOther$details) {
-      return false;
-    }
-    final l$business = business;
-    final lOther$business = other.business;
-    if (l$business != lOther$business) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_business_home_rentals$business_home_rental$rental
-    on Query$get_business_home_rentals$business_home_rental$rental {
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental<
-          Query$get_business_home_rentals$business_home_rental$rental>
-      get copyWith =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$rental<
-    TRes> {
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental(
-    Query$get_business_home_rentals$business_home_rental$rental instance,
-    TRes Function(Query$get_business_home_rentals$business_home_rental$rental)
-        then,
-  ) = _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental;
-
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental;
-
-  TRes call({
-    int? id,
-    String? category3,
-    Query$get_business_home_rentals$business_home_rental$rental$details?
-        details,
-    Query$get_business_home_rentals$business_home_rental$rental$business?
-        business,
-    String? $__typename,
-  });
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details<
-      TRes> get details;
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business<
-      TRes> get business;
-}
-
-class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental<
-            TRes> {
-  _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_business_home_rentals$business_home_rental$rental _instance;
-
-  final TRes Function(
-      Query$get_business_home_rentals$business_home_rental$rental) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? category3 = _undefined,
-    Object? details = _undefined,
-    Object? business = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_business_home_rentals$business_home_rental$rental(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        category3: category3 == _undefined || category3 == null
-            ? _instance.category3
-            : (category3 as String),
-        details: details == _undefined || details == null
-            ? _instance.details
-            : (details
-                as Query$get_business_home_rentals$business_home_rental$rental$details),
-        business: business == _undefined || business == null
-            ? _instance.business
-            : (business
-                as Query$get_business_home_rentals$business_home_rental$rental$business),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details<
-      TRes> get details {
-    final local$details = _instance.details;
-    return CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details(
-        local$details, (e) => call(details: e));
-  }
-
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business<
-      TRes> get business {
-    final local$business = _instance.business;
-    return CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business(
-        local$business, (e) => call(business: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? category3,
-    Query$get_business_home_rentals$business_home_rental$rental$details?
-        details,
-    Query$get_business_home_rentals$business_home_rental$rental$business?
-        business,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details<
-          TRes>
-      get details =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details
-              .stub(_res);
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business<
-          TRes>
-      get business =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business
-              .stub(_res);
-}
-
-class Query$get_business_home_rentals$business_home_rental$rental$details {
-  Query$get_business_home_rentals$business_home_rental$rental$details({
+class Query$get_business_home$business_home$details {
+  Query$get_business_home$business_home$details({
     required this.name_id,
     this.description_id,
     required this.id,
     required this.name,
-    this.description,
-    required this.tags,
     this.additional_parameters,
     required this.available,
     required this.category1,
@@ -13328,17 +15227,16 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     required this.cost,
     this.image,
     required this.position,
+    required this.tags,
     required this.$__typename,
   });
 
-  factory Query$get_business_home_rentals$business_home_rental$rental$details.fromJson(
+  factory Query$get_business_home$business_home$details.fromJson(
       Map<String, dynamic> json) {
     final l$name_id = json['name_id'];
     final l$description_id = json['description_id'];
     final l$id = json['id'];
     final l$name = json['name'];
-    final l$description = json['description'];
-    final l$tags = json['tags'];
     final l$additional_parameters = json['additional_parameters'];
     final l$available = json['available'];
     final l$category1 = json['category1'];
@@ -13346,19 +15244,14 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     final l$cost = json['cost'];
     final l$image = json['image'];
     final l$position = json['position'];
+    final l$tags = json['tags'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_home_rentals$business_home_rental$rental$details(
+    return Query$get_business_home$business_home$details(
       name_id: (l$name_id as int),
       description_id: (l$description_id as int?),
       id: (l$id as int),
-      name:
-          Query$get_business_home_rentals$business_home_rental$rental$details$name
-              .fromJson((l$name as Map<String, dynamic>)),
-      description: l$description == null
-          ? null
-          : Query$get_business_home_rentals$business_home_rental$rental$details$description
-              .fromJson((l$description as Map<String, dynamic>)),
-      tags: mapFromJson(l$tags),
+      name: Query$get_business_home$business_home$details$name.fromJson(
+          (l$name as Map<String, dynamic>)),
       additional_parameters: l$additional_parameters == null
           ? null
           : mapFromJson(l$additional_parameters),
@@ -13368,6 +15261,7 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
       cost: mapFromJson(l$cost),
       image: l$image == null ? null : mapFromJson(l$image),
       position: (l$position as int),
+      tags: mapFromJson(l$tags),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -13378,13 +15272,7 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
 
   final int id;
 
-  final Query$get_business_home_rentals$business_home_rental$rental$details$name
-      name;
-
-  final Query$get_business_home_rentals$business_home_rental$rental$details$description?
-      description;
-
-  final dynamic tags;
+  final Query$get_business_home$business_home$details$name name;
 
   final dynamic? additional_parameters;
 
@@ -13400,6 +15288,8 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
 
   final int position;
 
+  final dynamic tags;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -13412,10 +15302,6 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name.toJson();
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
-    final l$tags = tags;
-    _resultData['tags'] = mapToJson(l$tags);
     final l$additional_parameters = additional_parameters;
     _resultData['additional_parameters'] = l$additional_parameters == null
         ? null
@@ -13432,6 +15318,8 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     _resultData['image'] = l$image == null ? null : mapToJson(l$image);
     final l$position = position;
     _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -13443,8 +15331,6 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     final l$description_id = description_id;
     final l$id = id;
     final l$name = name;
-    final l$description = description;
-    final l$tags = tags;
     final l$additional_parameters = additional_parameters;
     final l$available = available;
     final l$category1 = category1;
@@ -13452,14 +15338,13 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     final l$cost = cost;
     final l$image = image;
     final l$position = position;
+    final l$tags = tags;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name_id,
       l$description_id,
       l$id,
       l$name,
-      l$description,
-      l$tags,
       l$additional_parameters,
       l$available,
       l$category1,
@@ -13467,6 +15352,7 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
       l$cost,
       l$image,
       l$position,
+      l$tags,
       l$$__typename,
     ]);
   }
@@ -13476,8 +15362,7 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_business_home_rentals$business_home_rental$rental$details) ||
+    if (!(other is Query$get_business_home$business_home$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -13499,16 +15384,6 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
-      return false;
-    }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
-      return false;
-    }
-    final l$tags = tags;
-    final lOther$tags = other.tags;
-    if (l$tags != lOther$tags) {
       return false;
     }
     final l$additional_parameters = additional_parameters;
@@ -13546,6 +15421,11 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
     if (l$position != lOther$position) {
       return false;
     }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -13555,40 +15435,31 @@ class Query$get_business_home_rentals$business_home_rental$rental$details {
   }
 }
 
-extension UtilityExtension$Query$get_business_home_rentals$business_home_rental$rental$details
-    on Query$get_business_home_rentals$business_home_rental$rental$details {
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details<
-          Query$get_business_home_rentals$business_home_rental$rental$details>
-      get copyWith =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details(
+extension UtilityExtension$Query$get_business_home$business_home$details
+    on Query$get_business_home$business_home$details {
+  CopyWith$Query$get_business_home$business_home$details<
+          Query$get_business_home$business_home$details>
+      get copyWith => CopyWith$Query$get_business_home$business_home$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details<
-    TRes> {
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details(
-    Query$get_business_home_rentals$business_home_rental$rental$details
-        instance,
-    TRes Function(
-            Query$get_business_home_rentals$business_home_rental$rental$details)
-        then,
-  ) = _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details;
+abstract class CopyWith$Query$get_business_home$business_home$details<TRes> {
+  factory CopyWith$Query$get_business_home$business_home$details(
+    Query$get_business_home$business_home$details instance,
+    TRes Function(Query$get_business_home$business_home$details) then,
+  ) = _CopyWithImpl$Query$get_business_home$business_home$details;
 
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details.stub(
+  factory CopyWith$Query$get_business_home$business_home$details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details;
+      _CopyWithStubImpl$Query$get_business_home$business_home$details;
 
   TRes call({
     int? name_id,
     int? description_id,
     int? id,
-    Query$get_business_home_rentals$business_home_rental$rental$details$name?
-        name,
-    Query$get_business_home_rentals$business_home_rental$rental$details$description?
-        description,
-    dynamic? tags,
+    Query$get_business_home$business_home$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -13596,30 +15467,22 @@ abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$ren
     dynamic? cost,
     dynamic? image,
     int? position,
+    dynamic? tags,
     String? $__typename,
   });
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name<
-      TRes> get name;
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description<
-      TRes> get description;
+  CopyWith$Query$get_business_home$business_home$details$name<TRes> get name;
 }
 
-class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details<
-            TRes> {
-  _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details(
+class _CopyWithImpl$Query$get_business_home$business_home$details<TRes>
+    implements CopyWith$Query$get_business_home$business_home$details<TRes> {
+  _CopyWithImpl$Query$get_business_home$business_home$details(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_home_rentals$business_home_rental$rental$details
-      _instance;
+  final Query$get_business_home$business_home$details _instance;
 
-  final TRes Function(
-          Query$get_business_home_rentals$business_home_rental$rental$details)
-      _then;
+  final TRes Function(Query$get_business_home$business_home$details) _then;
 
   static const _undefined = {};
 
@@ -13628,8 +15491,6 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
     Object? description_id = _undefined,
     Object? id = _undefined,
     Object? name = _undefined,
-    Object? description = _undefined,
-    Object? tags = _undefined,
     Object? additional_parameters = _undefined,
     Object? available = _undefined,
     Object? category1 = _undefined,
@@ -13637,9 +15498,10 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
     Object? cost = _undefined,
     Object? image = _undefined,
     Object? position = _undefined,
+    Object? tags = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_business_home_rentals$business_home_rental$rental$details(
+      _then(Query$get_business_home$business_home$details(
         name_id: name_id == _undefined || name_id == null
             ? _instance.name_id
             : (name_id as int),
@@ -13649,15 +15511,7 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
-            : (name
-                as Query$get_business_home_rentals$business_home_rental$rental$details$name),
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Query$get_business_home_rentals$business_home_rental$rental$details$description?),
-        tags: tags == _undefined || tags == null
-            ? _instance.tags
-            : (tags as dynamic),
+            : (name as Query$get_business_home$business_home$details$name),
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),
@@ -13677,35 +15531,23 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
         position: position == _undefined || position == null
             ? _instance.position
             : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name<
-      TRes> get name {
+  CopyWith$Query$get_business_home$business_home$details$name<TRes> get name {
     final local$name = _instance.name;
-    return CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name(
+    return CopyWith$Query$get_business_home$business_home$details$name(
         local$name, (e) => call(name: e));
-  }
-
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description<
-      TRes> get description {
-    final local$description = _instance.description;
-    return local$description == null
-        ? CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description
-            .stub(_then(_instance))
-        : CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description(
-            local$description, (e) => call(description: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details(
-      this._res);
+class _CopyWithStubImpl$Query$get_business_home$business_home$details<TRes>
+    implements CopyWith$Query$get_business_home$business_home$details<TRes> {
+  _CopyWithStubImpl$Query$get_business_home$business_home$details(this._res);
 
   TRes _res;
 
@@ -13713,11 +15555,7 @@ class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$ren
     int? name_id,
     int? description_id,
     int? id,
-    Query$get_business_home_rentals$business_home_rental$rental$details$name?
-        name,
-    Query$get_business_home_rentals$business_home_rental$rental$details$description?
-        description,
-    dynamic? tags,
+    Query$get_business_home$business_home$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -13725,43 +15563,35 @@ class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$ren
     dynamic? cost,
     dynamic? image,
     int? position,
+    dynamic? tags,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name<
-          TRes>
-      get name =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name
-              .stub(_res);
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description<
-          TRes>
-      get description =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description
-              .stub(_res);
+  CopyWith$Query$get_business_home$business_home$details$name<TRes> get name =>
+      CopyWith$Query$get_business_home$business_home$details$name.stub(_res);
 }
 
-class Query$get_business_home_rentals$business_home_rental$rental$details$name {
-  Query$get_business_home_rentals$business_home_rental$rental$details$name({
+class Query$get_business_home$business_home$details$name {
+  Query$get_business_home$business_home$details$name({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$get_business_home_rentals$business_home_rental$rental$details$name.fromJson(
+  factory Query$get_business_home$business_home$details$name.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_home_rentals$business_home_rental$rental$details$name(
+    return Query$get_business_home$business_home$details$name(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$get_business_home_rentals$business_home_rental$rental$details$name$translations
+              Query$get_business_home$business_home$details$name$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<
-          Query$get_business_home_rentals$business_home_rental$rental$details$name$translations>
+  final List<Query$get_business_home$business_home$details$name$translations>
       translations;
 
   final String $__typename;
@@ -13791,8 +15621,7 @@ class Query$get_business_home_rentals$business_home_rental$rental$details$name {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_business_home_rentals$business_home_rental$rental$details$name) ||
+    if (!(other is Query$get_business_home$business_home$details$name) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -13817,60 +15646,52 @@ class Query$get_business_home_rentals$business_home_rental$rental$details$name {
   }
 }
 
-extension UtilityExtension$Query$get_business_home_rentals$business_home_rental$rental$details$name
-    on Query$get_business_home_rentals$business_home_rental$rental$details$name {
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name<
-          Query$get_business_home_rentals$business_home_rental$rental$details$name>
+extension UtilityExtension$Query$get_business_home$business_home$details$name
+    on Query$get_business_home$business_home$details$name {
+  CopyWith$Query$get_business_home$business_home$details$name<
+          Query$get_business_home$business_home$details$name>
       get copyWith =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name(
+          CopyWith$Query$get_business_home$business_home$details$name(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name<
+abstract class CopyWith$Query$get_business_home$business_home$details$name<
     TRes> {
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name(
-    Query$get_business_home_rentals$business_home_rental$rental$details$name
-        instance,
-    TRes Function(
-            Query$get_business_home_rentals$business_home_rental$rental$details$name)
-        then,
-  ) = _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name;
+  factory CopyWith$Query$get_business_home$business_home$details$name(
+    Query$get_business_home$business_home$details$name instance,
+    TRes Function(Query$get_business_home$business_home$details$name) then,
+  ) = _CopyWithImpl$Query$get_business_home$business_home$details$name;
 
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name.stub(
+  factory CopyWith$Query$get_business_home$business_home$details$name.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name;
+      _CopyWithStubImpl$Query$get_business_home$business_home$details$name;
 
   TRes call({
-    List<Query$get_business_home_rentals$business_home_rental$rental$details$name$translations>?
+    List<Query$get_business_home$business_home$details$name$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$get_business_home_rentals$business_home_rental$rental$details$name$translations> Function(
+      Iterable<Query$get_business_home$business_home$details$name$translations> Function(
               Iterable<
-                  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations<
-                      Query$get_business_home_rentals$business_home_rental$rental$details$name$translations>>)
+                  CopyWith$Query$get_business_home$business_home$details$name$translations<
+                      Query$get_business_home$business_home$details$name$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name<
-        TRes>
+class _CopyWithImpl$Query$get_business_home$business_home$details$name<TRes>
     implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name<
-            TRes> {
-  _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name(
+        CopyWith$Query$get_business_home$business_home$details$name<TRes> {
+  _CopyWithImpl$Query$get_business_home$business_home$details$name(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_home_rentals$business_home_rental$rental$details$name
-      _instance;
+  final Query$get_business_home$business_home$details$name _instance;
 
-  final TRes Function(
-          Query$get_business_home_rentals$business_home_rental$rental$details$name)
-      _then;
+  final TRes Function(Query$get_business_home$business_home$details$name) _then;
 
   static const _undefined = {};
 
@@ -13878,42 +15699,39 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_business_home_rentals$business_home_rental$rental$details$name(
+      _then(Query$get_business_home$business_home$details$name(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$get_business_home_rentals$business_home_rental$rental$details$name$translations>),
+                Query$get_business_home$business_home$details$name$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$get_business_home_rentals$business_home_rental$rental$details$name$translations> Function(
+          Iterable<Query$get_business_home$business_home$details$name$translations> Function(
                   Iterable<
-                      CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations<
-                          Query$get_business_home_rentals$business_home_rental$rental$details$name$translations>>)
+                      CopyWith$Query$get_business_home$business_home$details$name$translations<
+                          Query$get_business_home$business_home$details$name$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations(
+              CopyWith$Query$get_business_home$business_home$details$name$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name<
-        TRes>
+class _CopyWithStubImpl$Query$get_business_home$business_home$details$name<TRes>
     implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name(
+        CopyWith$Query$get_business_home$business_home$details$name<TRes> {
+  _CopyWithStubImpl$Query$get_business_home$business_home$details$name(
       this._res);
 
   TRes _res;
 
   call({
-    List<Query$get_business_home_rentals$business_home_rental$rental$details$name$translations>?
+    List<Query$get_business_home$business_home$details$name$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -13921,19 +15739,19 @@ class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$ren
   translations(_fn) => _res;
 }
 
-class Query$get_business_home_rentals$business_home_rental$rental$details$name$translations {
-  Query$get_business_home_rentals$business_home_rental$rental$details$name$translations({
+class Query$get_business_home$business_home$details$name$translations {
+  Query$get_business_home$business_home$details$name$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$get_business_home_rentals$business_home_rental$rental$details$name$translations.fromJson(
+  factory Query$get_business_home$business_home$details$name$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_home_rentals$business_home_rental$rental$details$name$translations(
+    return Query$get_business_home$business_home$details$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -13975,7 +15793,7 @@ class Query$get_business_home_rentals$business_home_rental$rental$details$name$t
       return true;
     }
     if (!(other
-            is Query$get_business_home_rentals$business_home_rental$rental$details$name$translations) ||
+            is Query$get_business_home$business_home$details$name$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -13998,30 +15816,29 @@ class Query$get_business_home_rentals$business_home_rental$rental$details$name$t
   }
 }
 
-extension UtilityExtension$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations
-    on Query$get_business_home_rentals$business_home_rental$rental$details$name$translations {
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations<
-          Query$get_business_home_rentals$business_home_rental$rental$details$name$translations>
+extension UtilityExtension$Query$get_business_home$business_home$details$name$translations
+    on Query$get_business_home$business_home$details$name$translations {
+  CopyWith$Query$get_business_home$business_home$details$name$translations<
+          Query$get_business_home$business_home$details$name$translations>
       get copyWith =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations(
+          CopyWith$Query$get_business_home$business_home$details$name$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations<
+abstract class CopyWith$Query$get_business_home$business_home$details$name$translations<
     TRes> {
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations(
-    Query$get_business_home_rentals$business_home_rental$rental$details$name$translations
-        instance,
+  factory CopyWith$Query$get_business_home$business_home$details$name$translations(
+    Query$get_business_home$business_home$details$name$translations instance,
     TRes Function(
-            Query$get_business_home_rentals$business_home_rental$rental$details$name$translations)
+            Query$get_business_home$business_home$details$name$translations)
         then,
-  ) = _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations;
+  ) = _CopyWithImpl$Query$get_business_home$business_home$details$name$translations;
 
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations.stub(
+  factory CopyWith$Query$get_business_home$business_home$details$name$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations;
+      _CopyWithStubImpl$Query$get_business_home$business_home$details$name$translations;
 
   TRes call({
     String? language_id,
@@ -14030,22 +15847,21 @@ abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$ren
   });
 }
 
-class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations<
+class _CopyWithImpl$Query$get_business_home$business_home$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations<
+        CopyWith$Query$get_business_home$business_home$details$name$translations<
             TRes> {
-  _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations(
+  _CopyWithImpl$Query$get_business_home$business_home$details$name$translations(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_home_rentals$business_home_rental$rental$details$name$translations
+  final Query$get_business_home$business_home$details$name$translations
       _instance;
 
   final TRes Function(
-          Query$get_business_home_rentals$business_home_rental$rental$details$name$translations)
-      _then;
+      Query$get_business_home$business_home$details$name$translations) _then;
 
   static const _undefined = {};
 
@@ -14054,8 +15870,7 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
     Object? value = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_business_home_rentals$business_home_rental$rental$details$name$translations(
+      _then(Query$get_business_home$business_home$details$name$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -14068,12 +15883,12 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
       ));
 }
 
-class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations<
+class _CopyWithStubImpl$Query$get_business_home$business_home$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations<
+        CopyWith$Query$get_business_home$business_home$details$name$translations<
             TRes> {
-  _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$name$translations(
+  _CopyWithStubImpl$Query$get_business_home$business_home$details$name$translations(
       this._res);
 
   TRes _res;
@@ -14086,377 +15901,29 @@ class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$ren
       _res;
 }
 
-class Query$get_business_home_rentals$business_home_rental$rental$details$description {
-  Query$get_business_home_rentals$business_home_rental$rental$details$description({
-    required this.translations,
-    required this.$__typename,
-  });
-
-  factory Query$get_business_home_rentals$business_home_rental$rental$details$description.fromJson(
-      Map<String, dynamic> json) {
-    final l$translations = json['translations'];
-    final l$$__typename = json['__typename'];
-    return Query$get_business_home_rentals$business_home_rental$rental$details$description(
-      translations: (l$translations as List<dynamic>)
-          .map((e) =>
-              Query$get_business_home_rentals$business_home_rental$rental$details$description$translations
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<
-          Query$get_business_home_rentals$business_home_rental$rental$details$description$translations>
-      translations;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$translations = translations;
-    _resultData['translations'] =
-        l$translations.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$translations = translations;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$translations.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_business_home_rentals$business_home_rental$rental$details$description) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$translations = translations;
-    final lOther$translations = other.translations;
-    if (l$translations.length != lOther$translations.length) {
-      return false;
-    }
-    for (int i = 0; i < l$translations.length; i++) {
-      final l$translations$entry = l$translations[i];
-      final lOther$translations$entry = lOther$translations[i];
-      if (l$translations$entry != lOther$translations$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_business_home_rentals$business_home_rental$rental$details$description
-    on Query$get_business_home_rentals$business_home_rental$rental$details$description {
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description<
-          Query$get_business_home_rentals$business_home_rental$rental$details$description>
-      get copyWith =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description<
-    TRes> {
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description(
-    Query$get_business_home_rentals$business_home_rental$rental$details$description
-        instance,
-    TRes Function(
-            Query$get_business_home_rentals$business_home_rental$rental$details$description)
-        then,
-  ) = _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description;
-
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description;
-
-  TRes call({
-    List<Query$get_business_home_rentals$business_home_rental$rental$details$description$translations>?
-        translations,
-    String? $__typename,
-  });
-  TRes translations(
-      Iterable<Query$get_business_home_rentals$business_home_rental$rental$details$description$translations> Function(
-              Iterable<
-                  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations<
-                      Query$get_business_home_rentals$business_home_rental$rental$details$description$translations>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description<
-            TRes> {
-  _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_business_home_rentals$business_home_rental$rental$details$description
-      _instance;
-
-  final TRes Function(
-          Query$get_business_home_rentals$business_home_rental$rental$details$description)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? translations = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_business_home_rentals$business_home_rental$rental$details$description(
-        translations: translations == _undefined || translations == null
-            ? _instance.translations
-            : (translations as List<
-                Query$get_business_home_rentals$business_home_rental$rental$details$description$translations>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes translations(
-          Iterable<Query$get_business_home_rentals$business_home_rental$rental$details$description$translations> Function(
-                  Iterable<
-                      CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations<
-                          Query$get_business_home_rentals$business_home_rental$rental$details$description$translations>>)
-              _fn) =>
-      call(
-          translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$get_business_home_rentals$business_home_rental$rental$details$description$translations>?
-        translations,
-    String? $__typename,
-  }) =>
-      _res;
-  translations(_fn) => _res;
-}
-
-class Query$get_business_home_rentals$business_home_rental$rental$details$description$translations {
-  Query$get_business_home_rentals$business_home_rental$rental$details$description$translations({
-    required this.language_id,
-    required this.value,
-    required this.$__typename,
-  });
-
-  factory Query$get_business_home_rentals$business_home_rental$rental$details$description$translations.fromJson(
-      Map<String, dynamic> json) {
-    final l$language_id = json['language_id'];
-    final l$value = json['value'];
-    final l$$__typename = json['__typename'];
-    return Query$get_business_home_rentals$business_home_rental$rental$details$description$translations(
-      language_id: (l$language_id as String),
-      value: (l$value as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String language_id;
-
-  final String value;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$value = value;
-    _resultData['value'] = l$value;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$language_id = language_id;
-    final l$value = value;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$language_id,
-      l$value,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_business_home_rentals$business_home_rental$rental$details$description$translations) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations
-    on Query$get_business_home_rentals$business_home_rental$rental$details$description$translations {
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations<
-          Query$get_business_home_rentals$business_home_rental$rental$details$description$translations>
-      get copyWith =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations<
-    TRes> {
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations(
-    Query$get_business_home_rentals$business_home_rental$rental$details$description$translations
-        instance,
-    TRes Function(
-            Query$get_business_home_rentals$business_home_rental$rental$details$description$translations)
-        then,
-  ) = _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations;
-
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations;
-
-  TRes call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations<
-            TRes> {
-  _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_business_home_rentals$business_home_rental$rental$details$description$translations
-      _instance;
-
-  final TRes Function(
-          Query$get_business_home_rentals$business_home_rental$rental$details$description$translations)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? language_id = _undefined,
-    Object? value = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_business_home_rentals$business_home_rental$rental$details$description$translations(
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$details$description$translations(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$get_business_home_rentals$business_home_rental$rental$business {
-  Query$get_business_home_rentals$business_home_rental$rental$business({
+class Query$get_business_home$business_home$business {
+  Query$get_business_home$business_home$business({
     required this.id,
     required this.details,
     required this.$__typename,
   });
 
-  factory Query$get_business_home_rentals$business_home_rental$rental$business.fromJson(
+  factory Query$get_business_home$business_home$business.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_home_rentals$business_home_rental$rental$business(
+    return Query$get_business_home$business_home$business(
       id: (l$id as int),
-      details:
-          Query$get_business_home_rentals$business_home_rental$rental$business$details
-              .fromJson((l$details as Map<String, dynamic>)),
+      details: Query$get_business_home$business_home$business$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
 
-  final Query$get_business_home_rentals$business_home_rental$rental$business$details
-      details;
+  final Query$get_business_home$business_home$business$details details;
 
   final String $__typename;
 
@@ -14488,8 +15955,7 @@ class Query$get_business_home_rentals$business_home_rental$rental$business {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_business_home_rentals$business_home_rental$rental$business) ||
+    if (!(other is Query$get_business_home$business_home$business) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -14512,57 +15978,45 @@ class Query$get_business_home_rentals$business_home_rental$rental$business {
   }
 }
 
-extension UtilityExtension$Query$get_business_home_rentals$business_home_rental$rental$business
-    on Query$get_business_home_rentals$business_home_rental$rental$business {
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business<
-          Query$get_business_home_rentals$business_home_rental$rental$business>
-      get copyWith =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business(
+extension UtilityExtension$Query$get_business_home$business_home$business
+    on Query$get_business_home$business_home$business {
+  CopyWith$Query$get_business_home$business_home$business<
+          Query$get_business_home$business_home$business>
+      get copyWith => CopyWith$Query$get_business_home$business_home$business(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business<
-    TRes> {
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business(
-    Query$get_business_home_rentals$business_home_rental$rental$business
-        instance,
-    TRes Function(
-            Query$get_business_home_rentals$business_home_rental$rental$business)
-        then,
-  ) = _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$business;
+abstract class CopyWith$Query$get_business_home$business_home$business<TRes> {
+  factory CopyWith$Query$get_business_home$business_home$business(
+    Query$get_business_home$business_home$business instance,
+    TRes Function(Query$get_business_home$business_home$business) then,
+  ) = _CopyWithImpl$Query$get_business_home$business_home$business;
 
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business.stub(
+  factory CopyWith$Query$get_business_home$business_home$business.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$business;
+      _CopyWithStubImpl$Query$get_business_home$business_home$business;
 
   TRes call({
     int? id,
-    Query$get_business_home_rentals$business_home_rental$rental$business$details?
-        details,
+    Query$get_business_home$business_home$business$details? details,
     String? $__typename,
   });
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details<
-      TRes> get details;
+  CopyWith$Query$get_business_home$business_home$business$details<TRes>
+      get details;
 }
 
-class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$business<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business<
-            TRes> {
-  _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$business(
+class _CopyWithImpl$Query$get_business_home$business_home$business<TRes>
+    implements CopyWith$Query$get_business_home$business_home$business<TRes> {
+  _CopyWithImpl$Query$get_business_home$business_home$business(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_home_rentals$business_home_rental$rental$business
-      _instance;
+  final Query$get_business_home$business_home$business _instance;
 
-  final TRes Function(
-          Query$get_business_home_rentals$business_home_rental$rental$business)
-      _then;
+  final TRes Function(Query$get_business_home$business_home$business) _then;
 
   static const _undefined = {};
 
@@ -14571,67 +16025,64 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_business_home_rentals$business_home_rental$rental$business(
+      _then(Query$get_business_home$business_home$business(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Query$get_business_home_rentals$business_home_rental$rental$business$details),
+                as Query$get_business_home$business_home$business$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details<
-      TRes> get details {
+  CopyWith$Query$get_business_home$business_home$business$details<TRes>
+      get details {
     final local$details = _instance.details;
-    return CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details(
+    return CopyWith$Query$get_business_home$business_home$business$details(
         local$details, (e) => call(details: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$business<
-        TRes>
-    implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$business(
-      this._res);
+class _CopyWithStubImpl$Query$get_business_home$business_home$business<TRes>
+    implements CopyWith$Query$get_business_home$business_home$business<TRes> {
+  _CopyWithStubImpl$Query$get_business_home$business_home$business(this._res);
 
   TRes _res;
 
   call({
     int? id,
-    Query$get_business_home_rentals$business_home_rental$rental$business$details?
-        details,
+    Query$get_business_home$business_home$business$details? details,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details<
-          TRes>
+  CopyWith$Query$get_business_home$business_home$business$details<TRes>
       get details =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details
-              .stub(_res);
+          CopyWith$Query$get_business_home$business_home$business$details.stub(
+              _res);
 }
 
-class Query$get_business_home_rentals$business_home_rental$rental$business$details {
-  Query$get_business_home_rentals$business_home_rental$rental$business$details({
+class Query$get_business_home$business_home$business$details {
+  Query$get_business_home$business_home$business$details({
     required this.id,
     required this.name,
     required this.currency,
+    required this.location,
     required this.$__typename,
   });
 
-  factory Query$get_business_home_rentals$business_home_rental$rental$business$details.fromJson(
+  factory Query$get_business_home$business_home$business$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
     final l$currency = json['currency'];
+    final l$location = json['location'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_home_rentals$business_home_rental$rental$business$details(
+    return Query$get_business_home$business_home$business$details(
       id: (l$id as int),
       name: (l$name as String),
       currency: (l$currency as String),
+      location: Query$get_business_home$business_home$business$details$location
+          .fromJson((l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -14641,6 +16092,9 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
   final String name;
 
   final String currency;
+
+  final Query$get_business_home$business_home$business$details$location
+      location;
 
   final String $__typename;
 
@@ -14652,6 +16106,8 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
     _resultData['name'] = l$name;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -14662,11 +16118,13 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
     final l$id = id;
     final l$name = name;
     final l$currency = currency;
+    final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
       l$currency,
+      l$location,
       l$$__typename,
     ]);
   }
@@ -14676,8 +16134,7 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_business_home_rentals$business_home_rental$rental$business$details) ||
+    if (!(other is Query$get_business_home$business_home$business$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -14696,6 +16153,11 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
     if (l$currency != lOther$currency) {
       return false;
     }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -14705,54 +16167,50 @@ class Query$get_business_home_rentals$business_home_rental$rental$business$detai
   }
 }
 
-extension UtilityExtension$Query$get_business_home_rentals$business_home_rental$rental$business$details
-    on Query$get_business_home_rentals$business_home_rental$rental$business$details {
-  CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details<
-          Query$get_business_home_rentals$business_home_rental$rental$business$details>
+extension UtilityExtension$Query$get_business_home$business_home$business$details
+    on Query$get_business_home$business_home$business$details {
+  CopyWith$Query$get_business_home$business_home$business$details<
+          Query$get_business_home$business_home$business$details>
       get copyWith =>
-          CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details(
+          CopyWith$Query$get_business_home$business_home$business$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details<
+abstract class CopyWith$Query$get_business_home$business_home$business$details<
     TRes> {
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details(
-    Query$get_business_home_rentals$business_home_rental$rental$business$details
-        instance,
-    TRes Function(
-            Query$get_business_home_rentals$business_home_rental$rental$business$details)
-        then,
-  ) = _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$business$details;
+  factory CopyWith$Query$get_business_home$business_home$business$details(
+    Query$get_business_home$business_home$business$details instance,
+    TRes Function(Query$get_business_home$business_home$business$details) then,
+  ) = _CopyWithImpl$Query$get_business_home$business_home$business$details;
 
-  factory CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details.stub(
+  factory CopyWith$Query$get_business_home$business_home$business$details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$business$details;
+      _CopyWithStubImpl$Query$get_business_home$business_home$business$details;
 
   TRes call({
     int? id,
     String? name,
     String? currency,
+    Query$get_business_home$business_home$business$details$location? location,
     String? $__typename,
   });
+  CopyWith$Query$get_business_home$business_home$business$details$location<TRes>
+      get location;
 }
 
-class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$business$details<
-        TRes>
+class _CopyWithImpl$Query$get_business_home$business_home$business$details<TRes>
     implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details<
-            TRes> {
-  _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$business$details(
+        CopyWith$Query$get_business_home$business_home$business$details<TRes> {
+  _CopyWithImpl$Query$get_business_home$business_home$business$details(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_home_rentals$business_home_rental$rental$business$details
-      _instance;
+  final Query$get_business_home$business_home$business$details _instance;
 
-  final TRes Function(
-          Query$get_business_home_rentals$business_home_rental$rental$business$details)
+  final TRes Function(Query$get_business_home$business_home$business$details)
       _then;
 
   static const _undefined = {};
@@ -14761,10 +16219,10 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
     Object? id = _undefined,
     Object? name = _undefined,
     Object? currency = _undefined,
+    Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_business_home_rentals$business_home_rental$rental$business$details(
+      _then(Query$get_business_home$business_home$business$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -14772,18 +16230,27 @@ class _CopyWithImpl$Query$get_business_home_rentals$business_home_rental$rental$
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_business_home$business_home$business$details$location),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_business_home$business_home$business$details$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_business_home$business_home$business$details$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
-class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$business$details<
+class _CopyWithStubImpl$Query$get_business_home$business_home$business$details<
         TRes>
     implements
-        CopyWith$Query$get_business_home_rentals$business_home_rental$rental$business$details<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$rental$business$details(
+        CopyWith$Query$get_business_home$business_home$business$details<TRes> {
+  _CopyWithStubImpl$Query$get_business_home$business_home$business$details(
       this._res);
 
   TRes _res;
@@ -14792,6 +16259,341 @@ class _CopyWithStubImpl$Query$get_business_home_rentals$business_home_rental$ren
     int? id,
     String? name,
     String? currency,
+    Query$get_business_home$business_home$business$details$location? location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_home$business_home$business$details$location<TRes>
+      get location =>
+          CopyWith$Query$get_business_home$business_home$business$details$location
+              .stub(_res);
+}
+
+class Query$get_business_home$business_home$business$details$location {
+  Query$get_business_home$business_home$business$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_home$business_home$business$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_home$business_home$business$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_home$business_home$business$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_home$business_home$business$details$location
+    on Query$get_business_home$business_home$business$details$location {
+  CopyWith$Query$get_business_home$business_home$business$details$location<
+          Query$get_business_home$business_home$business$details$location>
+      get copyWith =>
+          CopyWith$Query$get_business_home$business_home$business$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_home$business_home$business$details$location<
+    TRes> {
+  factory CopyWith$Query$get_business_home$business_home$business$details$location(
+    Query$get_business_home$business_home$business$details$location instance,
+    TRes Function(
+            Query$get_business_home$business_home$business$details$location)
+        then,
+  ) = _CopyWithImpl$Query$get_business_home$business_home$business$details$location;
+
+  factory CopyWith$Query$get_business_home$business_home$business$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_home$business_home$business$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_home$business_home$business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_home$business_home$business$details$location<
+            TRes> {
+  _CopyWithImpl$Query$get_business_home$business_home$business$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_home$business_home$business$details$location
+      _instance;
+
+  final TRes Function(
+      Query$get_business_home$business_home$business$details$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_home$business_home$business$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_home$business_home$business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_home$business_home$business$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_home$business_home$business$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_home$business_home$location {
+  Query$get_business_home$business_home$location({
+    required this.address,
+    required this.gps,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_home$business_home$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$address = json['address'];
+    final l$gps = json['gps'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_home$business_home$location(
+      address: (l$address as String),
+      gps: geographyFromJson(l$gps),
+      name: (l$name as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String address;
+
+  final Geography gps;
+
+  final String name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$address = address;
+    final l$gps = gps;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$address,
+      l$gps,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_business_home$business_home$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_home$business_home$location
+    on Query$get_business_home$business_home$location {
+  CopyWith$Query$get_business_home$business_home$location<
+          Query$get_business_home$business_home$location>
+      get copyWith => CopyWith$Query$get_business_home$business_home$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_home$business_home$location<TRes> {
+  factory CopyWith$Query$get_business_home$business_home$location(
+    Query$get_business_home$business_home$location instance,
+    TRes Function(Query$get_business_home$business_home$location) then,
+  ) = _CopyWithImpl$Query$get_business_home$business_home$location;
+
+  factory CopyWith$Query$get_business_home$business_home$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_home$business_home$location;
+
+  TRes call({
+    String? address,
+    Geography? gps,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_home$business_home$location<TRes>
+    implements CopyWith$Query$get_business_home$business_home$location<TRes> {
+  _CopyWithImpl$Query$get_business_home$business_home$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_home$business_home$location _instance;
+
+  final TRes Function(Query$get_business_home$business_home$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? address = _undefined,
+    Object? gps = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_home$business_home$location(
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_home$business_home$location<TRes>
+    implements CopyWith$Query$get_business_home$business_home$location<TRes> {
+  _CopyWithStubImpl$Query$get_business_home$business_home$location(this._res);
+
+  TRes _res;
+
+  call({
+    String? address,
+    Geography? gps,
+    String? name,
     String? $__typename,
   }) =>
       _res;
@@ -14958,33 +16760,31 @@ class _CopyWithStubImpl$Variables$Query$get_business_real_estate<TRes>
 
 class Query$get_business_real_estate {
   Query$get_business_real_estate({
-    required this.business_home_rental,
+    required this.business_home,
     required this.$__typename,
   });
 
   factory Query$get_business_real_estate.fromJson(Map<String, dynamic> json) {
-    final l$business_home_rental = json['business_home_rental'];
+    final l$business_home = json['business_home'];
     final l$$__typename = json['__typename'];
     return Query$get_business_real_estate(
-      business_home_rental: (l$business_home_rental as List<dynamic>)
-          .map((e) =>
-              Query$get_business_real_estate$business_home_rental.fromJson(
-                  (e as Map<String, dynamic>)))
+      business_home: (l$business_home as List<dynamic>)
+          .map((e) => Query$get_business_real_estate$business_home.fromJson(
+              (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$get_business_real_estate$business_home_rental>
-      business_home_rental;
+  final List<Query$get_business_real_estate$business_home> business_home;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$business_home_rental = business_home_rental;
-    _resultData['business_home_rental'] =
-        l$business_home_rental.map((e) => e.toJson()).toList();
+    final l$business_home = business_home;
+    _resultData['business_home'] =
+        l$business_home.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -14992,10 +16792,10 @@ class Query$get_business_real_estate {
 
   @override
   int get hashCode {
-    final l$business_home_rental = business_home_rental;
+    final l$business_home = business_home;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$business_home_rental.map((v) => v)),
+      Object.hashAll(l$business_home.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -15009,15 +16809,15 @@ class Query$get_business_real_estate {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$business_home_rental = business_home_rental;
-    final lOther$business_home_rental = other.business_home_rental;
-    if (l$business_home_rental.length != lOther$business_home_rental.length) {
+    final l$business_home = business_home;
+    final lOther$business_home = other.business_home;
+    if (l$business_home.length != lOther$business_home.length) {
       return false;
     }
-    for (int i = 0; i < l$business_home_rental.length; i++) {
-      final l$business_home_rental$entry = l$business_home_rental[i];
-      final lOther$business_home_rental$entry = lOther$business_home_rental[i];
-      if (l$business_home_rental$entry != lOther$business_home_rental$entry) {
+    for (int i = 0; i < l$business_home.length; i++) {
+      final l$business_home$entry = l$business_home[i];
+      final lOther$business_home$entry = lOther$business_home[i];
+      if (l$business_home$entry != lOther$business_home$entry) {
         return false;
       }
     }
@@ -15049,15 +16849,14 @@ abstract class CopyWith$Query$get_business_real_estate<TRes> {
       _CopyWithStubImpl$Query$get_business_real_estate;
 
   TRes call({
-    List<Query$get_business_real_estate$business_home_rental>?
-        business_home_rental,
+    List<Query$get_business_real_estate$business_home>? business_home,
     String? $__typename,
   });
-  TRes business_home_rental(
-      Iterable<Query$get_business_real_estate$business_home_rental> Function(
+  TRes business_home(
+      Iterable<Query$get_business_real_estate$business_home> Function(
               Iterable<
-                  CopyWith$Query$get_business_real_estate$business_home_rental<
-                      Query$get_business_real_estate$business_home_rental>>)
+                  CopyWith$Query$get_business_real_estate$business_home<
+                      Query$get_business_real_estate$business_home>>)
           _fn);
 }
 
@@ -15075,31 +16874,30 @@ class _CopyWithImpl$Query$get_business_real_estate<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? business_home_rental = _undefined,
+    Object? business_home = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_business_real_estate(
-        business_home_rental: business_home_rental == _undefined ||
-                business_home_rental == null
-            ? _instance.business_home_rental
-            : (business_home_rental
-                as List<Query$get_business_real_estate$business_home_rental>),
+        business_home: business_home == _undefined || business_home == null
+            ? _instance.business_home
+            : (business_home
+                as List<Query$get_business_real_estate$business_home>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes business_home_rental(
-          Iterable<Query$get_business_real_estate$business_home_rental> Function(
+  TRes business_home(
+          Iterable<Query$get_business_real_estate$business_home> Function(
                   Iterable<
-                      CopyWith$Query$get_business_real_estate$business_home_rental<
-                          Query$get_business_real_estate$business_home_rental>>)
+                      CopyWith$Query$get_business_real_estate$business_home<
+                          Query$get_business_real_estate$business_home>>)
               _fn) =>
       call(
-          business_home_rental: _fn(_instance.business_home_rental.map((e) =>
-              CopyWith$Query$get_business_real_estate$business_home_rental(
-                e,
-                (i) => i,
-              ))).toList());
+          business_home: _fn(_instance.business_home
+              .map((e) => CopyWith$Query$get_business_real_estate$business_home(
+                    e,
+                    (i) => i,
+                  ))).toList());
 }
 
 class _CopyWithStubImpl$Query$get_business_real_estate<TRes>
@@ -15109,12 +16907,11 @@ class _CopyWithStubImpl$Query$get_business_real_estate<TRes>
   TRes _res;
 
   call({
-    List<Query$get_business_real_estate$business_home_rental>?
-        business_home_rental,
+    List<Query$get_business_real_estate$business_home>? business_home,
     String? $__typename,
   }) =>
       _res;
-  business_home_rental(_fn) => _res;
+  business_home(_fn) => _res;
 }
 
 const documentNodeQueryget_business_real_estate = DocumentNode(definitions: [
@@ -15153,44 +16950,33 @@ const documentNodeQueryget_business_real_estate = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'business_home_rental'),
+        name: NameNode(value: 'business_home'),
         alias: null,
         arguments: [
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'rental'),
+                name: NameNode(value: 'business_id'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: 'business_id'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: '_eq'),
-                        value:
-                            VariableNode(name: NameNode(value: 'businessId')),
-                      )
-                    ]),
-                  ),
-                  ObjectFieldNode(
-                    name: NameNode(value: 'details'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: 'category1'),
-                        value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: '_eq'),
-                            value: StringValueNode(
-                              value: 'realEstate',
-                              isBlock: false,
-                            ),
-                          )
-                        ]),
-                      )
-                    ]),
-                  ),
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'businessId')),
+                  )
                 ]),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'available_for'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'forSale',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              ),
             ]),
           ),
           ArgumentNode(
@@ -15205,42 +16991,150 @@ const documentNodeQueryget_business_real_estate = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'bathrooms'),
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'additional_parameters'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category1'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category2'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'position'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'tags'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'bedrooms'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'gps_location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'home_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'address'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'rental'),
+            name: NameNode(value: 'business'),
             alias: null,
             arguments: [],
             directives: [],
@@ -15253,32 +17147,11 @@ const documentNodeQueryget_business_real_estate = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'category3'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'details'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'name_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'description_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -15291,189 +17164,30 @@ const documentNodeQueryget_business_real_estate = DocumentNode(definitions: [
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
+                    selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'description'),
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'tags'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'additional_parameters'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'available'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category1'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category2'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'cost'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'image'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'position'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: 'business'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'details'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'id'),
+                        name: NameNode(value: 'gps'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
                       FieldNode(
-                        name: NameNode(value: 'name'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                      FieldNode(
-                        name: NameNode(value: 'currency'),
+                        name: NameNode(value: 'address'),
                         alias: null,
                         arguments: [],
                         directives: [],
@@ -15505,6 +17219,70 @@ const documentNodeQueryget_business_real_estate = DocumentNode(definitions: [
                 selectionSet: null,
               ),
             ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'bathrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'bedrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'address'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'available_for'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'offering_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -15633,67 +17411,88 @@ extension ClientExtension$Query$get_business_real_estate
   }
 }
 
-class Query$get_business_real_estate$business_home_rental {
-  Query$get_business_real_estate$business_home_rental({
+class Query$get_business_real_estate$business_home {
+  Query$get_business_real_estate$business_home({
+    this.details,
+    required this.id,
+    this.business,
     required this.bathrooms,
     required this.bedrooms,
-    required this.gps_location,
-    required this.home_type,
-    required this.address,
-    required this.rental,
+    this.location,
+    required this.available_for,
+    required this.offering_type,
     required this.$__typename,
   });
 
-  factory Query$get_business_real_estate$business_home_rental.fromJson(
+  factory Query$get_business_real_estate$business_home.fromJson(
       Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$id = json['id'];
+    final l$business = json['business'];
     final l$bathrooms = json['bathrooms'];
     final l$bedrooms = json['bedrooms'];
-    final l$gps_location = json['gps_location'];
-    final l$home_type = json['home_type'];
-    final l$address = json['address'];
-    final l$rental = json['rental'];
+    final l$location = json['location'];
+    final l$available_for = json['available_for'];
+    final l$offering_type = json['offering_type'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_real_estate$business_home_rental(
+    return Query$get_business_real_estate$business_home(
+      details: l$details == null
+          ? null
+          : Query$get_business_real_estate$business_home$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      id: (l$id as int),
+      business: l$business == null
+          ? null
+          : Query$get_business_real_estate$business_home$business.fromJson(
+              (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      gps_location: geographyFromJson(l$gps_location),
-      home_type: (l$home_type as String),
-      address: (l$address as String),
-      rental:
-          Query$get_business_real_estate$business_home_rental$rental.fromJson(
-              (l$rental as Map<String, dynamic>)),
+      location: l$location == null
+          ? null
+          : Query$get_business_real_estate$business_home$location.fromJson(
+              (l$location as Map<String, dynamic>)),
+      available_for: (l$available_for as String),
+      offering_type: (l$offering_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final Query$get_business_real_estate$business_home$details? details;
+
+  final int id;
+
+  final Query$get_business_real_estate$business_home$business? business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Geography gps_location;
+  final Query$get_business_real_estate$business_home$location? location;
 
-  final String home_type;
+  final String available_for;
 
-  final String address;
-
-  final Query$get_business_real_estate$business_home_rental$rental rental;
+  final String offering_type;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
-    final l$gps_location = gps_location;
-    _resultData['gps_location'] = geographyToJson(l$gps_location);
-    final l$home_type = home_type;
-    _resultData['home_type'] = l$home_type;
-    final l$address = address;
-    _resultData['address'] = l$address;
-    final l$rental = rental;
-    _resultData['rental'] = l$rental.toJson();
+    final l$location = location;
+    _resultData['location'] = l$location?.toJson();
+    final l$available_for = available_for;
+    _resultData['available_for'] = l$available_for;
+    final l$offering_type = offering_type;
+    _resultData['offering_type'] = l$offering_type;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -15701,20 +17500,24 @@ class Query$get_business_real_estate$business_home_rental {
 
   @override
   int get hashCode {
+    final l$details = details;
+    final l$id = id;
+    final l$business = business;
     final l$bathrooms = bathrooms;
     final l$bedrooms = bedrooms;
-    final l$gps_location = gps_location;
-    final l$home_type = home_type;
-    final l$address = address;
-    final l$rental = rental;
+    final l$location = location;
+    final l$available_for = available_for;
+    final l$offering_type = offering_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$details,
+      l$id,
+      l$business,
       l$bathrooms,
       l$bedrooms,
-      l$gps_location,
-      l$home_type,
-      l$address,
-      l$rental,
+      l$location,
+      l$available_for,
+      l$offering_type,
       l$$__typename,
     ]);
   }
@@ -15724,8 +17527,23 @@ class Query$get_business_real_estate$business_home_rental {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_business_real_estate$business_home_rental) ||
+    if (!(other is Query$get_business_real_estate$business_home) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
       return false;
     }
     final l$bathrooms = bathrooms;
@@ -15738,24 +17556,19 @@ class Query$get_business_real_estate$business_home_rental {
     if (l$bedrooms != lOther$bedrooms) {
       return false;
     }
-    final l$gps_location = gps_location;
-    final lOther$gps_location = other.gps_location;
-    if (l$gps_location != lOther$gps_location) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
-    final l$home_type = home_type;
-    final lOther$home_type = other.home_type;
-    if (l$home_type != lOther$home_type) {
+    final l$available_for = available_for;
+    final lOther$available_for = other.available_for;
+    if (l$available_for != lOther$available_for) {
       return false;
     }
-    final l$address = address;
-    final lOther$address = other.address;
-    if (l$address != lOther$address) {
-      return false;
-    }
-    final l$rental = rental;
-    final lOther$rental = other.rental;
-    if (l$rental != lOther$rental) {
+    final l$offering_type = offering_type;
+    final lOther$offering_type = other.offering_type;
+    if (l$offering_type != lOther$offering_type) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -15767,365 +17580,167 @@ class Query$get_business_real_estate$business_home_rental {
   }
 }
 
-extension UtilityExtension$Query$get_business_real_estate$business_home_rental
-    on Query$get_business_real_estate$business_home_rental {
-  CopyWith$Query$get_business_real_estate$business_home_rental<
-          Query$get_business_real_estate$business_home_rental>
-      get copyWith =>
-          CopyWith$Query$get_business_real_estate$business_home_rental(
+extension UtilityExtension$Query$get_business_real_estate$business_home
+    on Query$get_business_real_estate$business_home {
+  CopyWith$Query$get_business_real_estate$business_home<
+          Query$get_business_real_estate$business_home>
+      get copyWith => CopyWith$Query$get_business_real_estate$business_home(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_real_estate$business_home_rental<
-    TRes> {
-  factory CopyWith$Query$get_business_real_estate$business_home_rental(
-    Query$get_business_real_estate$business_home_rental instance,
-    TRes Function(Query$get_business_real_estate$business_home_rental) then,
-  ) = _CopyWithImpl$Query$get_business_real_estate$business_home_rental;
+abstract class CopyWith$Query$get_business_real_estate$business_home<TRes> {
+  factory CopyWith$Query$get_business_real_estate$business_home(
+    Query$get_business_real_estate$business_home instance,
+    TRes Function(Query$get_business_real_estate$business_home) then,
+  ) = _CopyWithImpl$Query$get_business_real_estate$business_home;
 
-  factory CopyWith$Query$get_business_real_estate$business_home_rental.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental;
+  factory CopyWith$Query$get_business_real_estate$business_home.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_business_real_estate$business_home;
 
   TRes call({
+    Query$get_business_real_estate$business_home$details? details,
+    int? id,
+    Query$get_business_real_estate$business_home$business? business,
     int? bathrooms,
     int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    Query$get_business_real_estate$business_home_rental$rental? rental,
+    Query$get_business_real_estate$business_home$location? location,
+    String? available_for,
+    String? offering_type,
     String? $__typename,
   });
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental<TRes>
-      get rental;
+  CopyWith$Query$get_business_real_estate$business_home$details<TRes>
+      get details;
+  CopyWith$Query$get_business_real_estate$business_home$business<TRes>
+      get business;
+  CopyWith$Query$get_business_real_estate$business_home$location<TRes>
+      get location;
 }
 
-class _CopyWithImpl$Query$get_business_real_estate$business_home_rental<TRes>
-    implements
-        CopyWith$Query$get_business_real_estate$business_home_rental<TRes> {
-  _CopyWithImpl$Query$get_business_real_estate$business_home_rental(
+class _CopyWithImpl$Query$get_business_real_estate$business_home<TRes>
+    implements CopyWith$Query$get_business_real_estate$business_home<TRes> {
+  _CopyWithImpl$Query$get_business_real_estate$business_home(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_real_estate$business_home_rental _instance;
+  final Query$get_business_real_estate$business_home _instance;
 
-  final TRes Function(Query$get_business_real_estate$business_home_rental)
-      _then;
+  final TRes Function(Query$get_business_real_estate$business_home) _then;
 
   static const _undefined = {};
 
   TRes call({
+    Object? details = _undefined,
+    Object? id = _undefined,
+    Object? business = _undefined,
     Object? bathrooms = _undefined,
     Object? bedrooms = _undefined,
-    Object? gps_location = _undefined,
-    Object? home_type = _undefined,
-    Object? address = _undefined,
-    Object? rental = _undefined,
+    Object? location = _undefined,
+    Object? available_for = _undefined,
+    Object? offering_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_business_real_estate$business_home_rental(
+      _then(Query$get_business_real_estate$business_home(
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$get_business_real_estate$business_home$details?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business: business == _undefined
+            ? _instance.business
+            : (business
+                as Query$get_business_real_estate$business_home$business?),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        gps_location: gps_location == _undefined || gps_location == null
-            ? _instance.gps_location
-            : (gps_location as Geography),
-        home_type: home_type == _undefined || home_type == null
-            ? _instance.home_type
-            : (home_type as String),
-        address: address == _undefined || address == null
-            ? _instance.address
-            : (address as String),
-        rental: rental == _undefined || rental == null
-            ? _instance.rental
-            : (rental
-                as Query$get_business_real_estate$business_home_rental$rental),
+        location: location == _undefined
+            ? _instance.location
+            : (location
+                as Query$get_business_real_estate$business_home$location?),
+        available_for: available_for == _undefined || available_for == null
+            ? _instance.available_for
+            : (available_for as String),
+        offering_type: offering_type == _undefined || offering_type == null
+            ? _instance.offering_type
+            : (offering_type as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental<TRes>
-      get rental {
-    final local$rental = _instance.rental;
-    return CopyWith$Query$get_business_real_estate$business_home_rental$rental(
-        local$rental, (e) => call(rental: e));
+  CopyWith$Query$get_business_real_estate$business_home$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$get_business_real_estate$business_home$details.stub(
+            _then(_instance))
+        : CopyWith$Query$get_business_real_estate$business_home$details(
+            local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Query$get_business_real_estate$business_home$business<TRes>
+      get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Query$get_business_real_estate$business_home$business.stub(
+            _then(_instance))
+        : CopyWith$Query$get_business_real_estate$business_home$business(
+            local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Query$get_business_real_estate$business_home$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Query$get_business_real_estate$business_home$location.stub(
+            _then(_instance))
+        : CopyWith$Query$get_business_real_estate$business_home$location(
+            local$location, (e) => call(location: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental<
-        TRes>
-    implements
-        CopyWith$Query$get_business_real_estate$business_home_rental<TRes> {
-  _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental(
-      this._res);
+class _CopyWithStubImpl$Query$get_business_real_estate$business_home<TRes>
+    implements CopyWith$Query$get_business_real_estate$business_home<TRes> {
+  _CopyWithStubImpl$Query$get_business_real_estate$business_home(this._res);
 
   TRes _res;
 
   call({
+    Query$get_business_real_estate$business_home$details? details,
+    int? id,
+    Query$get_business_real_estate$business_home$business? business,
     int? bathrooms,
     int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    Query$get_business_real_estate$business_home_rental$rental? rental,
+    Query$get_business_real_estate$business_home$location? location,
+    String? available_for,
+    String? offering_type,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental<TRes>
-      get rental =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental
-              .stub(_res);
-}
-
-class Query$get_business_real_estate$business_home_rental$rental {
-  Query$get_business_real_estate$business_home_rental$rental({
-    required this.id,
-    required this.category3,
-    required this.details,
-    required this.business,
-    required this.$__typename,
-  });
-
-  factory Query$get_business_real_estate$business_home_rental$rental.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$category3 = json['category3'];
-    final l$details = json['details'];
-    final l$business = json['business'];
-    final l$$__typename = json['__typename'];
-    return Query$get_business_real_estate$business_home_rental$rental(
-      id: (l$id as int),
-      category3: (l$category3 as String),
-      details:
-          Query$get_business_real_estate$business_home_rental$rental$details
-              .fromJson((l$details as Map<String, dynamic>)),
-      business:
-          Query$get_business_real_estate$business_home_rental$rental$business
-              .fromJson((l$business as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String category3;
-
-  final Query$get_business_real_estate$business_home_rental$rental$details
-      details;
-
-  final Query$get_business_real_estate$business_home_rental$rental$business
-      business;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$category3 = category3;
-    _resultData['category3'] = l$category3;
-    final l$details = details;
-    _resultData['details'] = l$details.toJson();
-    final l$business = business;
-    _resultData['business'] = l$business.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$category3 = category3;
-    final l$details = details;
-    final l$business = business;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$category3,
-      l$details,
-      l$business,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_business_real_estate$business_home_rental$rental) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$category3 = category3;
-    final lOther$category3 = other.category3;
-    if (l$category3 != lOther$category3) {
-      return false;
-    }
-    final l$details = details;
-    final lOther$details = other.details;
-    if (l$details != lOther$details) {
-      return false;
-    }
-    final l$business = business;
-    final lOther$business = other.business;
-    if (l$business != lOther$business) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_business_real_estate$business_home_rental$rental
-    on Query$get_business_real_estate$business_home_rental$rental {
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental<
-          Query$get_business_real_estate$business_home_rental$rental>
-      get copyWith =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_business_real_estate$business_home_rental$rental<
-    TRes> {
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental(
-    Query$get_business_real_estate$business_home_rental$rental instance,
-    TRes Function(Query$get_business_real_estate$business_home_rental$rental)
-        then,
-  ) = _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental;
-
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental;
-
-  TRes call({
-    int? id,
-    String? category3,
-    Query$get_business_real_estate$business_home_rental$rental$details? details,
-    Query$get_business_real_estate$business_home_rental$rental$business?
-        business,
-    String? $__typename,
-  });
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details<
-      TRes> get details;
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$business<
-      TRes> get business;
-}
-
-class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental<
-        TRes>
-    implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental<
-            TRes> {
-  _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_business_real_estate$business_home_rental$rental _instance;
-
-  final TRes Function(
-      Query$get_business_real_estate$business_home_rental$rental) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? category3 = _undefined,
-    Object? details = _undefined,
-    Object? business = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_business_real_estate$business_home_rental$rental(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        category3: category3 == _undefined || category3 == null
-            ? _instance.category3
-            : (category3 as String),
-        details: details == _undefined || details == null
-            ? _instance.details
-            : (details
-                as Query$get_business_real_estate$business_home_rental$rental$details),
-        business: business == _undefined || business == null
-            ? _instance.business
-            : (business
-                as Query$get_business_real_estate$business_home_rental$rental$business),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details<
-      TRes> get details {
-    final local$details = _instance.details;
-    return CopyWith$Query$get_business_real_estate$business_home_rental$rental$details(
-        local$details, (e) => call(details: e));
-  }
-
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$business<
-      TRes> get business {
-    final local$business = _instance.business;
-    return CopyWith$Query$get_business_real_estate$business_home_rental$rental$business(
-        local$business, (e) => call(business: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental<
-        TRes>
-    implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? category3,
-    Query$get_business_real_estate$business_home_rental$rental$details? details,
-    Query$get_business_real_estate$business_home_rental$rental$business?
-        business,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details<
-          TRes>
+  CopyWith$Query$get_business_real_estate$business_home$details<TRes>
       get details =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$details
-              .stub(_res);
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$business<
-          TRes>
+          CopyWith$Query$get_business_real_estate$business_home$details.stub(
+              _res);
+  CopyWith$Query$get_business_real_estate$business_home$business<TRes>
       get business =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$business
-              .stub(_res);
+          CopyWith$Query$get_business_real_estate$business_home$business.stub(
+              _res);
+  CopyWith$Query$get_business_real_estate$business_home$location<TRes>
+      get location =>
+          CopyWith$Query$get_business_real_estate$business_home$location.stub(
+              _res);
 }
 
-class Query$get_business_real_estate$business_home_rental$rental$details {
-  Query$get_business_real_estate$business_home_rental$rental$details({
+class Query$get_business_real_estate$business_home$details {
+  Query$get_business_real_estate$business_home$details({
     required this.name_id,
     this.description_id,
     required this.id,
     required this.name,
-    this.description,
-    required this.tags,
     this.additional_parameters,
     required this.available,
     required this.category1,
@@ -16133,17 +17748,16 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
     required this.cost,
     this.image,
     required this.position,
+    required this.tags,
     required this.$__typename,
   });
 
-  factory Query$get_business_real_estate$business_home_rental$rental$details.fromJson(
+  factory Query$get_business_real_estate$business_home$details.fromJson(
       Map<String, dynamic> json) {
     final l$name_id = json['name_id'];
     final l$description_id = json['description_id'];
     final l$id = json['id'];
     final l$name = json['name'];
-    final l$description = json['description'];
-    final l$tags = json['tags'];
     final l$additional_parameters = json['additional_parameters'];
     final l$available = json['available'];
     final l$category1 = json['category1'];
@@ -16151,19 +17765,14 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
     final l$cost = json['cost'];
     final l$image = json['image'];
     final l$position = json['position'];
+    final l$tags = json['tags'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_real_estate$business_home_rental$rental$details(
+    return Query$get_business_real_estate$business_home$details(
       name_id: (l$name_id as int),
       description_id: (l$description_id as int?),
       id: (l$id as int),
-      name:
-          Query$get_business_real_estate$business_home_rental$rental$details$name
-              .fromJson((l$name as Map<String, dynamic>)),
-      description: l$description == null
-          ? null
-          : Query$get_business_real_estate$business_home_rental$rental$details$description
-              .fromJson((l$description as Map<String, dynamic>)),
-      tags: mapFromJson(l$tags),
+      name: Query$get_business_real_estate$business_home$details$name.fromJson(
+          (l$name as Map<String, dynamic>)),
       additional_parameters: l$additional_parameters == null
           ? null
           : mapFromJson(l$additional_parameters),
@@ -16173,6 +17782,7 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
       cost: mapFromJson(l$cost),
       image: l$image == null ? null : mapFromJson(l$image),
       position: (l$position as int),
+      tags: mapFromJson(l$tags),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -16183,13 +17793,7 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
 
   final int id;
 
-  final Query$get_business_real_estate$business_home_rental$rental$details$name
-      name;
-
-  final Query$get_business_real_estate$business_home_rental$rental$details$description?
-      description;
-
-  final dynamic tags;
+  final Query$get_business_real_estate$business_home$details$name name;
 
   final dynamic? additional_parameters;
 
@@ -16205,6 +17809,8 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
 
   final int position;
 
+  final dynamic tags;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -16217,10 +17823,6 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name.toJson();
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
-    final l$tags = tags;
-    _resultData['tags'] = mapToJson(l$tags);
     final l$additional_parameters = additional_parameters;
     _resultData['additional_parameters'] = l$additional_parameters == null
         ? null
@@ -16237,6 +17839,8 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
     _resultData['image'] = l$image == null ? null : mapToJson(l$image);
     final l$position = position;
     _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -16248,8 +17852,6 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
     final l$description_id = description_id;
     final l$id = id;
     final l$name = name;
-    final l$description = description;
-    final l$tags = tags;
     final l$additional_parameters = additional_parameters;
     final l$available = available;
     final l$category1 = category1;
@@ -16257,14 +17859,13 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
     final l$cost = cost;
     final l$image = image;
     final l$position = position;
+    final l$tags = tags;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name_id,
       l$description_id,
       l$id,
       l$name,
-      l$description,
-      l$tags,
       l$additional_parameters,
       l$available,
       l$category1,
@@ -16272,6 +17873,7 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
       l$cost,
       l$image,
       l$position,
+      l$tags,
       l$$__typename,
     ]);
   }
@@ -16281,8 +17883,7 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_business_real_estate$business_home_rental$rental$details) ||
+    if (!(other is Query$get_business_real_estate$business_home$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -16304,16 +17905,6 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
-      return false;
-    }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
-      return false;
-    }
-    final l$tags = tags;
-    final lOther$tags = other.tags;
-    if (l$tags != lOther$tags) {
       return false;
     }
     final l$additional_parameters = additional_parameters;
@@ -16351,6 +17942,11 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
     if (l$position != lOther$position) {
       return false;
     }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -16360,39 +17956,33 @@ class Query$get_business_real_estate$business_home_rental$rental$details {
   }
 }
 
-extension UtilityExtension$Query$get_business_real_estate$business_home_rental$rental$details
-    on Query$get_business_real_estate$business_home_rental$rental$details {
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details<
-          Query$get_business_real_estate$business_home_rental$rental$details>
+extension UtilityExtension$Query$get_business_real_estate$business_home$details
+    on Query$get_business_real_estate$business_home$details {
+  CopyWith$Query$get_business_real_estate$business_home$details<
+          Query$get_business_real_estate$business_home$details>
       get copyWith =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$details(
+          CopyWith$Query$get_business_real_estate$business_home$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_real_estate$business_home_rental$rental$details<
+abstract class CopyWith$Query$get_business_real_estate$business_home$details<
     TRes> {
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$details(
-    Query$get_business_real_estate$business_home_rental$rental$details instance,
-    TRes Function(
-            Query$get_business_real_estate$business_home_rental$rental$details)
-        then,
-  ) = _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details;
+  factory CopyWith$Query$get_business_real_estate$business_home$details(
+    Query$get_business_real_estate$business_home$details instance,
+    TRes Function(Query$get_business_real_estate$business_home$details) then,
+  ) = _CopyWithImpl$Query$get_business_real_estate$business_home$details;
 
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$details.stub(
+  factory CopyWith$Query$get_business_real_estate$business_home$details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details;
+      _CopyWithStubImpl$Query$get_business_real_estate$business_home$details;
 
   TRes call({
     int? name_id,
     int? description_id,
     int? id,
-    Query$get_business_real_estate$business_home_rental$rental$details$name?
-        name,
-    Query$get_business_real_estate$business_home_rental$rental$details$description?
-        description,
-    dynamic? tags,
+    Query$get_business_real_estate$business_home$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -16400,29 +17990,25 @@ abstract class CopyWith$Query$get_business_real_estate$business_home_rental$rent
     dynamic? cost,
     dynamic? image,
     int? position,
+    dynamic? tags,
     String? $__typename,
   });
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name<
-      TRes> get name;
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description<
-      TRes> get description;
+  CopyWith$Query$get_business_real_estate$business_home$details$name<TRes>
+      get name;
 }
 
-class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details<
-        TRes>
+class _CopyWithImpl$Query$get_business_real_estate$business_home$details<TRes>
     implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$details<
-            TRes> {
-  _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details(
+        CopyWith$Query$get_business_real_estate$business_home$details<TRes> {
+  _CopyWithImpl$Query$get_business_real_estate$business_home$details(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_real_estate$business_home_rental$rental$details
-      _instance;
+  final Query$get_business_real_estate$business_home$details _instance;
 
-  final TRes Function(
-      Query$get_business_real_estate$business_home_rental$rental$details) _then;
+  final TRes Function(Query$get_business_real_estate$business_home$details)
+      _then;
 
   static const _undefined = {};
 
@@ -16431,8 +18017,6 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$d
     Object? description_id = _undefined,
     Object? id = _undefined,
     Object? name = _undefined,
-    Object? description = _undefined,
-    Object? tags = _undefined,
     Object? additional_parameters = _undefined,
     Object? available = _undefined,
     Object? category1 = _undefined,
@@ -16440,9 +18024,10 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$d
     Object? cost = _undefined,
     Object? image = _undefined,
     Object? position = _undefined,
+    Object? tags = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_business_real_estate$business_home_rental$rental$details(
+      _then(Query$get_business_real_estate$business_home$details(
         name_id: name_id == _undefined || name_id == null
             ? _instance.name_id
             : (name_id as int),
@@ -16453,14 +18038,7 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$d
         name: name == _undefined || name == null
             ? _instance.name
             : (name
-                as Query$get_business_real_estate$business_home_rental$rental$details$name),
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Query$get_business_real_estate$business_home_rental$rental$details$description?),
-        tags: tags == _undefined || tags == null
-            ? _instance.tags
-            : (tags as dynamic),
+                as Query$get_business_real_estate$business_home$details$name),
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),
@@ -16480,34 +18058,26 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$d
         position: position == _undefined || position == null
             ? _instance.position
             : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name<
-      TRes> get name {
+  CopyWith$Query$get_business_real_estate$business_home$details$name<TRes>
+      get name {
     final local$name = _instance.name;
-    return CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name(
+    return CopyWith$Query$get_business_real_estate$business_home$details$name(
         local$name, (e) => call(name: e));
-  }
-
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description<
-      TRes> get description {
-    final local$description = _instance.description;
-    return local$description == null
-        ? CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description
-            .stub(_then(_instance))
-        : CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description(
-            local$description, (e) => call(description: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details<
+class _CopyWithStubImpl$Query$get_business_real_estate$business_home$details<
         TRes>
     implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$details<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details(
+        CopyWith$Query$get_business_real_estate$business_home$details<TRes> {
+  _CopyWithStubImpl$Query$get_business_real_estate$business_home$details(
       this._res);
 
   TRes _res;
@@ -16516,11 +18086,7 @@ class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rent
     int? name_id,
     int? description_id,
     int? id,
-    Query$get_business_real_estate$business_home_rental$rental$details$name?
-        name,
-    Query$get_business_real_estate$business_home_rental$rental$details$description?
-        description,
-    dynamic? tags,
+    Query$get_business_real_estate$business_home$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -16528,35 +18094,30 @@ class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rent
     dynamic? cost,
     dynamic? image,
     int? position,
+    dynamic? tags,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name<
-          TRes>
+  CopyWith$Query$get_business_real_estate$business_home$details$name<TRes>
       get name =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name
-              .stub(_res);
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description<
-          TRes>
-      get description =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description
+          CopyWith$Query$get_business_real_estate$business_home$details$name
               .stub(_res);
 }
 
-class Query$get_business_real_estate$business_home_rental$rental$details$name {
-  Query$get_business_real_estate$business_home_rental$rental$details$name({
+class Query$get_business_real_estate$business_home$details$name {
+  Query$get_business_real_estate$business_home$details$name({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$get_business_real_estate$business_home_rental$rental$details$name.fromJson(
+  factory Query$get_business_real_estate$business_home$details$name.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_real_estate$business_home_rental$rental$details$name(
+    return Query$get_business_real_estate$business_home$details$name(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$get_business_real_estate$business_home_rental$rental$details$name$translations
+              Query$get_business_real_estate$business_home$details$name$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -16564,7 +18125,7 @@ class Query$get_business_real_estate$business_home_rental$rental$details$name {
   }
 
   final List<
-          Query$get_business_real_estate$business_home_rental$rental$details$name$translations>
+          Query$get_business_real_estate$business_home$details$name$translations>
       translations;
 
   final String $__typename;
@@ -16594,8 +18155,7 @@ class Query$get_business_real_estate$business_home_rental$rental$details$name {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_business_real_estate$business_home_rental$rental$details$name) ||
+    if (!(other is Query$get_business_real_estate$business_home$details$name) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -16620,59 +18180,55 @@ class Query$get_business_real_estate$business_home_rental$rental$details$name {
   }
 }
 
-extension UtilityExtension$Query$get_business_real_estate$business_home_rental$rental$details$name
-    on Query$get_business_real_estate$business_home_rental$rental$details$name {
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name<
-          Query$get_business_real_estate$business_home_rental$rental$details$name>
+extension UtilityExtension$Query$get_business_real_estate$business_home$details$name
+    on Query$get_business_real_estate$business_home$details$name {
+  CopyWith$Query$get_business_real_estate$business_home$details$name<
+          Query$get_business_real_estate$business_home$details$name>
       get copyWith =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name(
+          CopyWith$Query$get_business_real_estate$business_home$details$name(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name<
+abstract class CopyWith$Query$get_business_real_estate$business_home$details$name<
     TRes> {
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name(
-    Query$get_business_real_estate$business_home_rental$rental$details$name
-        instance,
-    TRes Function(
-            Query$get_business_real_estate$business_home_rental$rental$details$name)
+  factory CopyWith$Query$get_business_real_estate$business_home$details$name(
+    Query$get_business_real_estate$business_home$details$name instance,
+    TRes Function(Query$get_business_real_estate$business_home$details$name)
         then,
-  ) = _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$name;
+  ) = _CopyWithImpl$Query$get_business_real_estate$business_home$details$name;
 
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name.stub(
+  factory CopyWith$Query$get_business_real_estate$business_home$details$name.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$name;
+      _CopyWithStubImpl$Query$get_business_real_estate$business_home$details$name;
 
   TRes call({
-    List<Query$get_business_real_estate$business_home_rental$rental$details$name$translations>?
+    List<Query$get_business_real_estate$business_home$details$name$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$get_business_real_estate$business_home_rental$rental$details$name$translations> Function(
+      Iterable<Query$get_business_real_estate$business_home$details$name$translations> Function(
               Iterable<
-                  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name$translations<
-                      Query$get_business_real_estate$business_home_rental$rental$details$name$translations>>)
+                  CopyWith$Query$get_business_real_estate$business_home$details$name$translations<
+                      Query$get_business_real_estate$business_home$details$name$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$name<
+class _CopyWithImpl$Query$get_business_real_estate$business_home$details$name<
         TRes>
     implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name<
+        CopyWith$Query$get_business_real_estate$business_home$details$name<
             TRes> {
-  _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$name(
+  _CopyWithImpl$Query$get_business_real_estate$business_home$details$name(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_real_estate$business_home_rental$rental$details$name
-      _instance;
+  final Query$get_business_real_estate$business_home$details$name _instance;
 
-  final TRes Function(
-          Query$get_business_real_estate$business_home_rental$rental$details$name)
+  final TRes Function(Query$get_business_real_estate$business_home$details$name)
       _then;
 
   static const _undefined = {};
@@ -16681,42 +18237,41 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$d
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_business_real_estate$business_home_rental$rental$details$name(
+      _then(Query$get_business_real_estate$business_home$details$name(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$get_business_real_estate$business_home_rental$rental$details$name$translations>),
+                Query$get_business_real_estate$business_home$details$name$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$get_business_real_estate$business_home_rental$rental$details$name$translations> Function(
+          Iterable<Query$get_business_real_estate$business_home$details$name$translations> Function(
                   Iterable<
-                      CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name$translations<
-                          Query$get_business_real_estate$business_home_rental$rental$details$name$translations>>)
+                      CopyWith$Query$get_business_real_estate$business_home$details$name$translations<
+                          Query$get_business_real_estate$business_home$details$name$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name$translations(
+              CopyWith$Query$get_business_real_estate$business_home$details$name$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$name<
+class _CopyWithStubImpl$Query$get_business_real_estate$business_home$details$name<
         TRes>
     implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name<
+        CopyWith$Query$get_business_real_estate$business_home$details$name<
             TRes> {
-  _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$name(
+  _CopyWithStubImpl$Query$get_business_real_estate$business_home$details$name(
       this._res);
 
   TRes _res;
 
   call({
-    List<Query$get_business_real_estate$business_home_rental$rental$details$name$translations>?
+    List<Query$get_business_real_estate$business_home$details$name$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -16724,19 +18279,19 @@ class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rent
   translations(_fn) => _res;
 }
 
-class Query$get_business_real_estate$business_home_rental$rental$details$name$translations {
-  Query$get_business_real_estate$business_home_rental$rental$details$name$translations({
+class Query$get_business_real_estate$business_home$details$name$translations {
+  Query$get_business_real_estate$business_home$details$name$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$get_business_real_estate$business_home_rental$rental$details$name$translations.fromJson(
+  factory Query$get_business_real_estate$business_home$details$name$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_real_estate$business_home_rental$rental$details$name$translations(
+    return Query$get_business_real_estate$business_home$details$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -16778,7 +18333,7 @@ class Query$get_business_real_estate$business_home_rental$rental$details$name$tr
       return true;
     }
     if (!(other
-            is Query$get_business_real_estate$business_home_rental$rental$details$name$translations) ||
+            is Query$get_business_real_estate$business_home$details$name$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -16801,30 +18356,30 @@ class Query$get_business_real_estate$business_home_rental$rental$details$name$tr
   }
 }
 
-extension UtilityExtension$Query$get_business_real_estate$business_home_rental$rental$details$name$translations
-    on Query$get_business_real_estate$business_home_rental$rental$details$name$translations {
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name$translations<
-          Query$get_business_real_estate$business_home_rental$rental$details$name$translations>
+extension UtilityExtension$Query$get_business_real_estate$business_home$details$name$translations
+    on Query$get_business_real_estate$business_home$details$name$translations {
+  CopyWith$Query$get_business_real_estate$business_home$details$name$translations<
+          Query$get_business_real_estate$business_home$details$name$translations>
       get copyWith =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name$translations(
+          CopyWith$Query$get_business_real_estate$business_home$details$name$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name$translations<
+abstract class CopyWith$Query$get_business_real_estate$business_home$details$name$translations<
     TRes> {
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name$translations(
-    Query$get_business_real_estate$business_home_rental$rental$details$name$translations
+  factory CopyWith$Query$get_business_real_estate$business_home$details$name$translations(
+    Query$get_business_real_estate$business_home$details$name$translations
         instance,
     TRes Function(
-            Query$get_business_real_estate$business_home_rental$rental$details$name$translations)
+            Query$get_business_real_estate$business_home$details$name$translations)
         then,
-  ) = _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$name$translations;
+  ) = _CopyWithImpl$Query$get_business_real_estate$business_home$details$name$translations;
 
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name$translations.stub(
+  factory CopyWith$Query$get_business_real_estate$business_home$details$name$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$name$translations;
+      _CopyWithStubImpl$Query$get_business_real_estate$business_home$details$name$translations;
 
   TRes call({
     String? language_id,
@@ -16833,21 +18388,21 @@ abstract class CopyWith$Query$get_business_real_estate$business_home_rental$rent
   });
 }
 
-class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$name$translations<
+class _CopyWithImpl$Query$get_business_real_estate$business_home$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name$translations<
+        CopyWith$Query$get_business_real_estate$business_home$details$name$translations<
             TRes> {
-  _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$name$translations(
+  _CopyWithImpl$Query$get_business_real_estate$business_home$details$name$translations(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_real_estate$business_home_rental$rental$details$name$translations
+  final Query$get_business_real_estate$business_home$details$name$translations
       _instance;
 
   final TRes Function(
-          Query$get_business_real_estate$business_home_rental$rental$details$name$translations)
+          Query$get_business_real_estate$business_home$details$name$translations)
       _then;
 
   static const _undefined = {};
@@ -16858,7 +18413,7 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$d
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$get_business_real_estate$business_home_rental$rental$details$name$translations(
+          Query$get_business_real_estate$business_home$details$name$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -16871,12 +18426,12 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$d
       ));
 }
 
-class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$name$translations<
+class _CopyWithStubImpl$Query$get_business_real_estate$business_home$details$name$translations<
         TRes>
     implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$name$translations<
+        CopyWith$Query$get_business_real_estate$business_home$details$name$translations<
             TRes> {
-  _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$name$translations(
+  _CopyWithStubImpl$Query$get_business_real_estate$business_home$details$name$translations(
       this._res);
 
   TRes _res;
@@ -16889,377 +18444,29 @@ class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rent
       _res;
 }
 
-class Query$get_business_real_estate$business_home_rental$rental$details$description {
-  Query$get_business_real_estate$business_home_rental$rental$details$description({
-    required this.translations,
-    required this.$__typename,
-  });
-
-  factory Query$get_business_real_estate$business_home_rental$rental$details$description.fromJson(
-      Map<String, dynamic> json) {
-    final l$translations = json['translations'];
-    final l$$__typename = json['__typename'];
-    return Query$get_business_real_estate$business_home_rental$rental$details$description(
-      translations: (l$translations as List<dynamic>)
-          .map((e) =>
-              Query$get_business_real_estate$business_home_rental$rental$details$description$translations
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<
-          Query$get_business_real_estate$business_home_rental$rental$details$description$translations>
-      translations;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$translations = translations;
-    _resultData['translations'] =
-        l$translations.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$translations = translations;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$translations.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_business_real_estate$business_home_rental$rental$details$description) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$translations = translations;
-    final lOther$translations = other.translations;
-    if (l$translations.length != lOther$translations.length) {
-      return false;
-    }
-    for (int i = 0; i < l$translations.length; i++) {
-      final l$translations$entry = l$translations[i];
-      final lOther$translations$entry = lOther$translations[i];
-      if (l$translations$entry != lOther$translations$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_business_real_estate$business_home_rental$rental$details$description
-    on Query$get_business_real_estate$business_home_rental$rental$details$description {
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description<
-          Query$get_business_real_estate$business_home_rental$rental$details$description>
-      get copyWith =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description<
-    TRes> {
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description(
-    Query$get_business_real_estate$business_home_rental$rental$details$description
-        instance,
-    TRes Function(
-            Query$get_business_real_estate$business_home_rental$rental$details$description)
-        then,
-  ) = _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$description;
-
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$description;
-
-  TRes call({
-    List<Query$get_business_real_estate$business_home_rental$rental$details$description$translations>?
-        translations,
-    String? $__typename,
-  });
-  TRes translations(
-      Iterable<Query$get_business_real_estate$business_home_rental$rental$details$description$translations> Function(
-              Iterable<
-                  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description$translations<
-                      Query$get_business_real_estate$business_home_rental$rental$details$description$translations>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$description<
-        TRes>
-    implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description<
-            TRes> {
-  _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$description(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_business_real_estate$business_home_rental$rental$details$description
-      _instance;
-
-  final TRes Function(
-          Query$get_business_real_estate$business_home_rental$rental$details$description)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? translations = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_business_real_estate$business_home_rental$rental$details$description(
-        translations: translations == _undefined || translations == null
-            ? _instance.translations
-            : (translations as List<
-                Query$get_business_real_estate$business_home_rental$rental$details$description$translations>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes translations(
-          Iterable<Query$get_business_real_estate$business_home_rental$rental$details$description$translations> Function(
-                  Iterable<
-                      CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description$translations<
-                          Query$get_business_real_estate$business_home_rental$rental$details$description$translations>>)
-              _fn) =>
-      call(
-          translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description$translations(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$description<
-        TRes>
-    implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$description(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$get_business_real_estate$business_home_rental$rental$details$description$translations>?
-        translations,
-    String? $__typename,
-  }) =>
-      _res;
-  translations(_fn) => _res;
-}
-
-class Query$get_business_real_estate$business_home_rental$rental$details$description$translations {
-  Query$get_business_real_estate$business_home_rental$rental$details$description$translations({
-    required this.language_id,
-    required this.value,
-    required this.$__typename,
-  });
-
-  factory Query$get_business_real_estate$business_home_rental$rental$details$description$translations.fromJson(
-      Map<String, dynamic> json) {
-    final l$language_id = json['language_id'];
-    final l$value = json['value'];
-    final l$$__typename = json['__typename'];
-    return Query$get_business_real_estate$business_home_rental$rental$details$description$translations(
-      language_id: (l$language_id as String),
-      value: (l$value as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String language_id;
-
-  final String value;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$value = value;
-    _resultData['value'] = l$value;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$language_id = language_id;
-    final l$value = value;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$language_id,
-      l$value,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_business_real_estate$business_home_rental$rental$details$description$translations) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_business_real_estate$business_home_rental$rental$details$description$translations
-    on Query$get_business_real_estate$business_home_rental$rental$details$description$translations {
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description$translations<
-          Query$get_business_real_estate$business_home_rental$rental$details$description$translations>
-      get copyWith =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description$translations(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description$translations<
-    TRes> {
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description$translations(
-    Query$get_business_real_estate$business_home_rental$rental$details$description$translations
-        instance,
-    TRes Function(
-            Query$get_business_real_estate$business_home_rental$rental$details$description$translations)
-        then,
-  ) = _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$description$translations;
-
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description$translations.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$description$translations;
-
-  TRes call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description$translations<
-            TRes> {
-  _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$details$description$translations(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_business_real_estate$business_home_rental$rental$details$description$translations
-      _instance;
-
-  final TRes Function(
-          Query$get_business_real_estate$business_home_rental$rental$details$description$translations)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? language_id = _undefined,
-    Object? value = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_business_real_estate$business_home_rental$rental$details$description$translations(
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$details$description$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$details$description$translations(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$get_business_real_estate$business_home_rental$rental$business {
-  Query$get_business_real_estate$business_home_rental$rental$business({
+class Query$get_business_real_estate$business_home$business {
+  Query$get_business_real_estate$business_home$business({
     required this.id,
     required this.details,
     required this.$__typename,
   });
 
-  factory Query$get_business_real_estate$business_home_rental$rental$business.fromJson(
+  factory Query$get_business_real_estate$business_home$business.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_real_estate$business_home_rental$rental$business(
+    return Query$get_business_real_estate$business_home$business(
       id: (l$id as int),
-      details:
-          Query$get_business_real_estate$business_home_rental$rental$business$details
-              .fromJson((l$details as Map<String, dynamic>)),
+      details: Query$get_business_real_estate$business_home$business$details
+          .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
 
-  final Query$get_business_real_estate$business_home_rental$rental$business$details
-      details;
+  final Query$get_business_real_estate$business_home$business$details details;
 
   final String $__typename;
 
@@ -17291,8 +18498,7 @@ class Query$get_business_real_estate$business_home_rental$rental$business {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_business_real_estate$business_home_rental$rental$business) ||
+    if (!(other is Query$get_business_real_estate$business_home$business) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -17315,56 +18521,48 @@ class Query$get_business_real_estate$business_home_rental$rental$business {
   }
 }
 
-extension UtilityExtension$Query$get_business_real_estate$business_home_rental$rental$business
-    on Query$get_business_real_estate$business_home_rental$rental$business {
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$business<
-          Query$get_business_real_estate$business_home_rental$rental$business>
+extension UtilityExtension$Query$get_business_real_estate$business_home$business
+    on Query$get_business_real_estate$business_home$business {
+  CopyWith$Query$get_business_real_estate$business_home$business<
+          Query$get_business_real_estate$business_home$business>
       get copyWith =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$business(
+          CopyWith$Query$get_business_real_estate$business_home$business(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_real_estate$business_home_rental$rental$business<
+abstract class CopyWith$Query$get_business_real_estate$business_home$business<
     TRes> {
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$business(
-    Query$get_business_real_estate$business_home_rental$rental$business
-        instance,
-    TRes Function(
-            Query$get_business_real_estate$business_home_rental$rental$business)
-        then,
-  ) = _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$business;
+  factory CopyWith$Query$get_business_real_estate$business_home$business(
+    Query$get_business_real_estate$business_home$business instance,
+    TRes Function(Query$get_business_real_estate$business_home$business) then,
+  ) = _CopyWithImpl$Query$get_business_real_estate$business_home$business;
 
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$business.stub(
+  factory CopyWith$Query$get_business_real_estate$business_home$business.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$business;
+      _CopyWithStubImpl$Query$get_business_real_estate$business_home$business;
 
   TRes call({
     int? id,
-    Query$get_business_real_estate$business_home_rental$rental$business$details?
-        details,
+    Query$get_business_real_estate$business_home$business$details? details,
     String? $__typename,
   });
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details<
-      TRes> get details;
+  CopyWith$Query$get_business_real_estate$business_home$business$details<TRes>
+      get details;
 }
 
-class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$business<
-        TRes>
+class _CopyWithImpl$Query$get_business_real_estate$business_home$business<TRes>
     implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$business<
-            TRes> {
-  _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$business(
+        CopyWith$Query$get_business_real_estate$business_home$business<TRes> {
+  _CopyWithImpl$Query$get_business_real_estate$business_home$business(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_real_estate$business_home_rental$rental$business
-      _instance;
+  final Query$get_business_real_estate$business_home$business _instance;
 
-  final TRes Function(
-          Query$get_business_real_estate$business_home_rental$rental$business)
+  final TRes Function(Query$get_business_real_estate$business_home$business)
       _then;
 
   static const _undefined = {};
@@ -17374,66 +18572,68 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$b
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_business_real_estate$business_home_rental$rental$business(
+      _then(Query$get_business_real_estate$business_home$business(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Query$get_business_real_estate$business_home_rental$rental$business$details),
+                as Query$get_business_real_estate$business_home$business$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details<
-      TRes> get details {
+  CopyWith$Query$get_business_real_estate$business_home$business$details<TRes>
+      get details {
     final local$details = _instance.details;
-    return CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details(
+    return CopyWith$Query$get_business_real_estate$business_home$business$details(
         local$details, (e) => call(details: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$business<
+class _CopyWithStubImpl$Query$get_business_real_estate$business_home$business<
         TRes>
     implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$business<
-            TRes> {
-  _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$business(
+        CopyWith$Query$get_business_real_estate$business_home$business<TRes> {
+  _CopyWithStubImpl$Query$get_business_real_estate$business_home$business(
       this._res);
 
   TRes _res;
 
   call({
     int? id,
-    Query$get_business_real_estate$business_home_rental$rental$business$details?
-        details,
+    Query$get_business_real_estate$business_home$business$details? details,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details<
-          TRes>
+  CopyWith$Query$get_business_real_estate$business_home$business$details<TRes>
       get details =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details
+          CopyWith$Query$get_business_real_estate$business_home$business$details
               .stub(_res);
 }
 
-class Query$get_business_real_estate$business_home_rental$rental$business$details {
-  Query$get_business_real_estate$business_home_rental$rental$business$details({
+class Query$get_business_real_estate$business_home$business$details {
+  Query$get_business_real_estate$business_home$business$details({
     required this.id,
     required this.name,
     required this.currency,
+    required this.location,
     required this.$__typename,
   });
 
-  factory Query$get_business_real_estate$business_home_rental$rental$business$details.fromJson(
+  factory Query$get_business_real_estate$business_home$business$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
     final l$currency = json['currency'];
+    final l$location = json['location'];
     final l$$__typename = json['__typename'];
-    return Query$get_business_real_estate$business_home_rental$rental$business$details(
+    return Query$get_business_real_estate$business_home$business$details(
       id: (l$id as int),
       name: (l$name as String),
       currency: (l$currency as String),
+      location:
+          Query$get_business_real_estate$business_home$business$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -17443,6 +18643,9 @@ class Query$get_business_real_estate$business_home_rental$rental$business$detail
   final String name;
 
   final String currency;
+
+  final Query$get_business_real_estate$business_home$business$details$location
+      location;
 
   final String $__typename;
 
@@ -17454,6 +18657,8 @@ class Query$get_business_real_estate$business_home_rental$rental$business$detail
     _resultData['name'] = l$name;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -17464,11 +18669,13 @@ class Query$get_business_real_estate$business_home_rental$rental$business$detail
     final l$id = id;
     final l$name = name;
     final l$currency = currency;
+    final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
       l$currency,
+      l$location,
       l$$__typename,
     ]);
   }
@@ -17479,7 +18686,7 @@ class Query$get_business_real_estate$business_home_rental$rental$business$detail
       return true;
     }
     if (!(other
-            is Query$get_business_real_estate$business_home_rental$rental$business$details) ||
+            is Query$get_business_real_estate$business_home$business$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -17498,6 +18705,11 @@ class Query$get_business_real_estate$business_home_rental$rental$business$detail
     if (l$currency != lOther$currency) {
       return false;
     }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -17507,55 +18719,55 @@ class Query$get_business_real_estate$business_home_rental$rental$business$detail
   }
 }
 
-extension UtilityExtension$Query$get_business_real_estate$business_home_rental$rental$business$details
-    on Query$get_business_real_estate$business_home_rental$rental$business$details {
-  CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details<
-          Query$get_business_real_estate$business_home_rental$rental$business$details>
+extension UtilityExtension$Query$get_business_real_estate$business_home$business$details
+    on Query$get_business_real_estate$business_home$business$details {
+  CopyWith$Query$get_business_real_estate$business_home$business$details<
+          Query$get_business_real_estate$business_home$business$details>
       get copyWith =>
-          CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details(
+          CopyWith$Query$get_business_real_estate$business_home$business$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details<
+abstract class CopyWith$Query$get_business_real_estate$business_home$business$details<
     TRes> {
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details(
-    Query$get_business_real_estate$business_home_rental$rental$business$details
-        instance,
-    TRes Function(
-            Query$get_business_real_estate$business_home_rental$rental$business$details)
+  factory CopyWith$Query$get_business_real_estate$business_home$business$details(
+    Query$get_business_real_estate$business_home$business$details instance,
+    TRes Function(Query$get_business_real_estate$business_home$business$details)
         then,
-  ) = _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$business$details;
+  ) = _CopyWithImpl$Query$get_business_real_estate$business_home$business$details;
 
-  factory CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details.stub(
+  factory CopyWith$Query$get_business_real_estate$business_home$business$details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$business$details;
+      _CopyWithStubImpl$Query$get_business_real_estate$business_home$business$details;
 
   TRes call({
     int? id,
     String? name,
     String? currency,
+    Query$get_business_real_estate$business_home$business$details$location?
+        location,
     String? $__typename,
   });
+  CopyWith$Query$get_business_real_estate$business_home$business$details$location<
+      TRes> get location;
 }
 
-class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$business$details<
+class _CopyWithImpl$Query$get_business_real_estate$business_home$business$details<
         TRes>
     implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details<
+        CopyWith$Query$get_business_real_estate$business_home$business$details<
             TRes> {
-  _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$business$details(
+  _CopyWithImpl$Query$get_business_real_estate$business_home$business$details(
     this._instance,
     this._then,
   );
 
-  final Query$get_business_real_estate$business_home_rental$rental$business$details
-      _instance;
+  final Query$get_business_real_estate$business_home$business$details _instance;
 
   final TRes Function(
-          Query$get_business_real_estate$business_home_rental$rental$business$details)
-      _then;
+      Query$get_business_real_estate$business_home$business$details) _then;
 
   static const _undefined = {};
 
@@ -17563,10 +18775,10 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$b
     Object? id = _undefined,
     Object? name = _undefined,
     Object? currency = _undefined,
+    Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_business_real_estate$business_home_rental$rental$business$details(
+      _then(Query$get_business_real_estate$business_home$business$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -17574,18 +18786,28 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home_rental$rental$b
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_business_real_estate$business_home$business$details$location),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_business_real_estate$business_home$business$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_business_real_estate$business_home$business$details$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
-class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$business$details<
+class _CopyWithStubImpl$Query$get_business_real_estate$business_home$business$details<
         TRes>
     implements
-        CopyWith$Query$get_business_real_estate$business_home_rental$rental$business$details<
+        CopyWith$Query$get_business_real_estate$business_home$business$details<
             TRes> {
-  _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rental$business$details(
+  _CopyWithStubImpl$Query$get_business_real_estate$business_home$business$details(
       this._res);
 
   TRes _res;
@@ -17594,6 +18816,353 @@ class _CopyWithStubImpl$Query$get_business_real_estate$business_home_rental$rent
     int? id,
     String? name,
     String? currency,
+    Query$get_business_real_estate$business_home$business$details$location?
+        location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_real_estate$business_home$business$details$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_business_real_estate$business_home$business$details$location
+              .stub(_res);
+}
+
+class Query$get_business_real_estate$business_home$business$details$location {
+  Query$get_business_real_estate$business_home$business$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_real_estate$business_home$business$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_real_estate$business_home$business$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_real_estate$business_home$business$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_real_estate$business_home$business$details$location
+    on Query$get_business_real_estate$business_home$business$details$location {
+  CopyWith$Query$get_business_real_estate$business_home$business$details$location<
+          Query$get_business_real_estate$business_home$business$details$location>
+      get copyWith =>
+          CopyWith$Query$get_business_real_estate$business_home$business$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_real_estate$business_home$business$details$location<
+    TRes> {
+  factory CopyWith$Query$get_business_real_estate$business_home$business$details$location(
+    Query$get_business_real_estate$business_home$business$details$location
+        instance,
+    TRes Function(
+            Query$get_business_real_estate$business_home$business$details$location)
+        then,
+  ) = _CopyWithImpl$Query$get_business_real_estate$business_home$business$details$location;
+
+  factory CopyWith$Query$get_business_real_estate$business_home$business$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_real_estate$business_home$business$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_real_estate$business_home$business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_real_estate$business_home$business$details$location<
+            TRes> {
+  _CopyWithImpl$Query$get_business_real_estate$business_home$business$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_real_estate$business_home$business$details$location
+      _instance;
+
+  final TRes Function(
+          Query$get_business_real_estate$business_home$business$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_real_estate$business_home$business$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_real_estate$business_home$business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_real_estate$business_home$business$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_real_estate$business_home$business$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_real_estate$business_home$location {
+  Query$get_business_real_estate$business_home$location({
+    required this.address,
+    required this.gps,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_real_estate$business_home$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$address = json['address'];
+    final l$gps = json['gps'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_real_estate$business_home$location(
+      address: (l$address as String),
+      gps: geographyFromJson(l$gps),
+      name: (l$name as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String address;
+
+  final Geography gps;
+
+  final String name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$address = address;
+    final l$gps = gps;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$address,
+      l$gps,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_business_real_estate$business_home$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_real_estate$business_home$location
+    on Query$get_business_real_estate$business_home$location {
+  CopyWith$Query$get_business_real_estate$business_home$location<
+          Query$get_business_real_estate$business_home$location>
+      get copyWith =>
+          CopyWith$Query$get_business_real_estate$business_home$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_real_estate$business_home$location<
+    TRes> {
+  factory CopyWith$Query$get_business_real_estate$business_home$location(
+    Query$get_business_real_estate$business_home$location instance,
+    TRes Function(Query$get_business_real_estate$business_home$location) then,
+  ) = _CopyWithImpl$Query$get_business_real_estate$business_home$location;
+
+  factory CopyWith$Query$get_business_real_estate$business_home$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_real_estate$business_home$location;
+
+  TRes call({
+    String? address,
+    Geography? gps,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_real_estate$business_home$location<TRes>
+    implements
+        CopyWith$Query$get_business_real_estate$business_home$location<TRes> {
+  _CopyWithImpl$Query$get_business_real_estate$business_home$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_real_estate$business_home$location _instance;
+
+  final TRes Function(Query$get_business_real_estate$business_home$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? address = _undefined,
+    Object? gps = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_real_estate$business_home$location(
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_real_estate$business_home$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_real_estate$business_home$location<TRes> {
+  _CopyWithStubImpl$Query$get_business_real_estate$business_home$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? address,
+    Geography? gps,
+    String? name,
     String? $__typename,
   }) =>
       _res;
@@ -19830,28 +21399,27 @@ class _CopyWithStubImpl$Mutation$create_rental$insert_business_rental_one<TRes>
       _res;
 }
 
-class Variables$Mutation$add_home_rental {
-  factory Variables$Mutation$add_home_rental(
-          {required Input$business_home_rental_insert_input object}) =>
-      Variables$Mutation$add_home_rental._({
+class Variables$Mutation$add_home {
+  factory Variables$Mutation$add_home(
+          {required Input$business_home_insert_input object}) =>
+      Variables$Mutation$add_home._({
         r'object': object,
       });
 
-  Variables$Mutation$add_home_rental._(this._$data);
+  Variables$Mutation$add_home._(this._$data);
 
-  factory Variables$Mutation$add_home_rental.fromJson(
-      Map<String, dynamic> data) {
+  factory Variables$Mutation$add_home.fromJson(Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$object = data['object'];
-    result$data['object'] = Input$business_home_rental_insert_input.fromJson(
+    result$data['object'] = Input$business_home_insert_input.fromJson(
         (l$object as Map<String, dynamic>));
-    return Variables$Mutation$add_home_rental._(result$data);
+    return Variables$Mutation$add_home._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  Input$business_home_rental_insert_input get object =>
-      (_$data['object'] as Input$business_home_rental_insert_input);
+  Input$business_home_insert_input get object =>
+      (_$data['object'] as Input$business_home_insert_input);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$object = object;
@@ -19859,9 +21427,8 @@ class Variables$Mutation$add_home_rental {
     return result$data;
   }
 
-  CopyWith$Variables$Mutation$add_home_rental<
-          Variables$Mutation$add_home_rental>
-      get copyWith => CopyWith$Variables$Mutation$add_home_rental(
+  CopyWith$Variables$Mutation$add_home<Variables$Mutation$add_home>
+      get copyWith => CopyWith$Variables$Mutation$add_home(
             this,
             (i) => i,
           );
@@ -19870,7 +21437,7 @@ class Variables$Mutation$add_home_rental {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Mutation$add_home_rental) ||
+    if (!(other is Variables$Mutation$add_home) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -19889,77 +21456,75 @@ class Variables$Mutation$add_home_rental {
   }
 }
 
-abstract class CopyWith$Variables$Mutation$add_home_rental<TRes> {
-  factory CopyWith$Variables$Mutation$add_home_rental(
-    Variables$Mutation$add_home_rental instance,
-    TRes Function(Variables$Mutation$add_home_rental) then,
-  ) = _CopyWithImpl$Variables$Mutation$add_home_rental;
+abstract class CopyWith$Variables$Mutation$add_home<TRes> {
+  factory CopyWith$Variables$Mutation$add_home(
+    Variables$Mutation$add_home instance,
+    TRes Function(Variables$Mutation$add_home) then,
+  ) = _CopyWithImpl$Variables$Mutation$add_home;
 
-  factory CopyWith$Variables$Mutation$add_home_rental.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$add_home_rental;
+  factory CopyWith$Variables$Mutation$add_home.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$add_home;
 
-  TRes call({Input$business_home_rental_insert_input? object});
+  TRes call({Input$business_home_insert_input? object});
 }
 
-class _CopyWithImpl$Variables$Mutation$add_home_rental<TRes>
-    implements CopyWith$Variables$Mutation$add_home_rental<TRes> {
-  _CopyWithImpl$Variables$Mutation$add_home_rental(
+class _CopyWithImpl$Variables$Mutation$add_home<TRes>
+    implements CopyWith$Variables$Mutation$add_home<TRes> {
+  _CopyWithImpl$Variables$Mutation$add_home(
     this._instance,
     this._then,
   );
 
-  final Variables$Mutation$add_home_rental _instance;
+  final Variables$Mutation$add_home _instance;
 
-  final TRes Function(Variables$Mutation$add_home_rental) _then;
+  final TRes Function(Variables$Mutation$add_home) _then;
 
   static const _undefined = {};
 
   TRes call({Object? object = _undefined}) =>
-      _then(Variables$Mutation$add_home_rental._({
+      _then(Variables$Mutation$add_home._({
         ..._instance._$data,
         if (object != _undefined && object != null)
-          'object': (object as Input$business_home_rental_insert_input),
+          'object': (object as Input$business_home_insert_input),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Mutation$add_home_rental<TRes>
-    implements CopyWith$Variables$Mutation$add_home_rental<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$add_home_rental(this._res);
+class _CopyWithStubImpl$Variables$Mutation$add_home<TRes>
+    implements CopyWith$Variables$Mutation$add_home<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$add_home(this._res);
 
   TRes _res;
 
-  call({Input$business_home_rental_insert_input? object}) => _res;
+  call({Input$business_home_insert_input? object}) => _res;
 }
 
-class Mutation$add_home_rental {
-  Mutation$add_home_rental({
-    this.insert_business_home_rental_one,
+class Mutation$add_home {
+  Mutation$add_home({
+    this.insert_business_home_one,
     required this.$__typename,
   });
 
-  factory Mutation$add_home_rental.fromJson(Map<String, dynamic> json) {
-    final l$insert_business_home_rental_one =
-        json['insert_business_home_rental_one'];
+  factory Mutation$add_home.fromJson(Map<String, dynamic> json) {
+    final l$insert_business_home_one = json['insert_business_home_one'];
     final l$$__typename = json['__typename'];
-    return Mutation$add_home_rental(
-      insert_business_home_rental_one: l$insert_business_home_rental_one == null
+    return Mutation$add_home(
+      insert_business_home_one: l$insert_business_home_one == null
           ? null
-          : Mutation$add_home_rental$insert_business_home_rental_one.fromJson(
-              (l$insert_business_home_rental_one as Map<String, dynamic>)),
+          : Mutation$add_home$insert_business_home_one.fromJson(
+              (l$insert_business_home_one as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$add_home_rental$insert_business_home_rental_one?
-      insert_business_home_rental_one;
+  final Mutation$add_home$insert_business_home_one? insert_business_home_one;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$insert_business_home_rental_one = insert_business_home_rental_one;
-    _resultData['insert_business_home_rental_one'] =
-        l$insert_business_home_rental_one?.toJson();
+    final l$insert_business_home_one = insert_business_home_one;
+    _resultData['insert_business_home_one'] =
+        l$insert_business_home_one?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -19967,10 +21532,10 @@ class Mutation$add_home_rental {
 
   @override
   int get hashCode {
-    final l$insert_business_home_rental_one = insert_business_home_rental_one;
+    final l$insert_business_home_one = insert_business_home_one;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$insert_business_home_rental_one,
+      l$insert_business_home_one,
       l$$__typename,
     ]);
   }
@@ -19980,15 +21545,12 @@ class Mutation$add_home_rental {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$add_home_rental) ||
-        runtimeType != other.runtimeType) {
+    if (!(other is Mutation$add_home) || runtimeType != other.runtimeType) {
       return false;
     }
-    final l$insert_business_home_rental_one = insert_business_home_rental_one;
-    final lOther$insert_business_home_rental_one =
-        other.insert_business_home_rental_one;
-    if (l$insert_business_home_rental_one !=
-        lOther$insert_business_home_rental_one) {
+    final l$insert_business_home_one = insert_business_home_one;
+    final lOther$insert_business_home_one = other.insert_business_home_one;
+    if (l$insert_business_home_one != lOther$insert_business_home_one) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -20000,100 +21562,94 @@ class Mutation$add_home_rental {
   }
 }
 
-extension UtilityExtension$Mutation$add_home_rental
-    on Mutation$add_home_rental {
-  CopyWith$Mutation$add_home_rental<Mutation$add_home_rental> get copyWith =>
-      CopyWith$Mutation$add_home_rental(
+extension UtilityExtension$Mutation$add_home on Mutation$add_home {
+  CopyWith$Mutation$add_home<Mutation$add_home> get copyWith =>
+      CopyWith$Mutation$add_home(
         this,
         (i) => i,
       );
 }
 
-abstract class CopyWith$Mutation$add_home_rental<TRes> {
-  factory CopyWith$Mutation$add_home_rental(
-    Mutation$add_home_rental instance,
-    TRes Function(Mutation$add_home_rental) then,
-  ) = _CopyWithImpl$Mutation$add_home_rental;
+abstract class CopyWith$Mutation$add_home<TRes> {
+  factory CopyWith$Mutation$add_home(
+    Mutation$add_home instance,
+    TRes Function(Mutation$add_home) then,
+  ) = _CopyWithImpl$Mutation$add_home;
 
-  factory CopyWith$Mutation$add_home_rental.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$add_home_rental;
+  factory CopyWith$Mutation$add_home.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$add_home;
 
   TRes call({
-    Mutation$add_home_rental$insert_business_home_rental_one?
-        insert_business_home_rental_one,
+    Mutation$add_home$insert_business_home_one? insert_business_home_one,
     String? $__typename,
   });
-  CopyWith$Mutation$add_home_rental$insert_business_home_rental_one<TRes>
-      get insert_business_home_rental_one;
+  CopyWith$Mutation$add_home$insert_business_home_one<TRes>
+      get insert_business_home_one;
 }
 
-class _CopyWithImpl$Mutation$add_home_rental<TRes>
-    implements CopyWith$Mutation$add_home_rental<TRes> {
-  _CopyWithImpl$Mutation$add_home_rental(
+class _CopyWithImpl$Mutation$add_home<TRes>
+    implements CopyWith$Mutation$add_home<TRes> {
+  _CopyWithImpl$Mutation$add_home(
     this._instance,
     this._then,
   );
 
-  final Mutation$add_home_rental _instance;
+  final Mutation$add_home _instance;
 
-  final TRes Function(Mutation$add_home_rental) _then;
+  final TRes Function(Mutation$add_home) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? insert_business_home_rental_one = _undefined,
+    Object? insert_business_home_one = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$add_home_rental(
-        insert_business_home_rental_one: insert_business_home_rental_one ==
-                _undefined
-            ? _instance.insert_business_home_rental_one
-            : (insert_business_home_rental_one
-                as Mutation$add_home_rental$insert_business_home_rental_one?),
+      _then(Mutation$add_home(
+        insert_business_home_one: insert_business_home_one == _undefined
+            ? _instance.insert_business_home_one
+            : (insert_business_home_one
+                as Mutation$add_home$insert_business_home_one?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$add_home_rental$insert_business_home_rental_one<TRes>
-      get insert_business_home_rental_one {
-    final local$insert_business_home_rental_one =
-        _instance.insert_business_home_rental_one;
-    return local$insert_business_home_rental_one == null
-        ? CopyWith$Mutation$add_home_rental$insert_business_home_rental_one
-            .stub(_then(_instance))
-        : CopyWith$Mutation$add_home_rental$insert_business_home_rental_one(
-            local$insert_business_home_rental_one,
-            (e) => call(insert_business_home_rental_one: e));
+  CopyWith$Mutation$add_home$insert_business_home_one<TRes>
+      get insert_business_home_one {
+    final local$insert_business_home_one = _instance.insert_business_home_one;
+    return local$insert_business_home_one == null
+        ? CopyWith$Mutation$add_home$insert_business_home_one.stub(
+            _then(_instance))
+        : CopyWith$Mutation$add_home$insert_business_home_one(
+            local$insert_business_home_one,
+            (e) => call(insert_business_home_one: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$add_home_rental<TRes>
-    implements CopyWith$Mutation$add_home_rental<TRes> {
-  _CopyWithStubImpl$Mutation$add_home_rental(this._res);
+class _CopyWithStubImpl$Mutation$add_home<TRes>
+    implements CopyWith$Mutation$add_home<TRes> {
+  _CopyWithStubImpl$Mutation$add_home(this._res);
 
   TRes _res;
 
   call({
-    Mutation$add_home_rental$insert_business_home_rental_one?
-        insert_business_home_rental_one,
+    Mutation$add_home$insert_business_home_one? insert_business_home_one,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$add_home_rental$insert_business_home_rental_one<TRes>
-      get insert_business_home_rental_one =>
-          CopyWith$Mutation$add_home_rental$insert_business_home_rental_one
-              .stub(_res);
+  CopyWith$Mutation$add_home$insert_business_home_one<TRes>
+      get insert_business_home_one =>
+          CopyWith$Mutation$add_home$insert_business_home_one.stub(_res);
 }
 
-const documentNodeMutationadd_home_rental = DocumentNode(definitions: [
+const documentNodeMutationadd_home = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.mutation,
-    name: NameNode(value: 'add_home_rental'),
+    name: NameNode(value: 'add_home'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'object')),
         type: NamedTypeNode(
-          name: NameNode(value: 'business_home_rental_insert_input'),
+          name: NameNode(value: 'business_home_insert_input'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -20103,7 +21659,7 @@ const documentNodeMutationadd_home_rental = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'insert_business_home_rental_one'),
+        name: NameNode(value: 'insert_business_home_one'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -20114,33 +21670,18 @@ const documentNodeMutationadd_home_rental = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'rental_id'),
+            name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'rental'),
+            name: NameNode(value: 'details_id'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'details_id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
+            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -20155,26 +21696,25 @@ const documentNodeMutationadd_home_rental = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Mutation$add_home_rental _parserFn$Mutation$add_home_rental(
-        Map<String, dynamic> data) =>
-    Mutation$add_home_rental.fromJson(data);
-typedef OnMutationCompleted$Mutation$add_home_rental = FutureOr<void> Function(
+Mutation$add_home _parserFn$Mutation$add_home(Map<String, dynamic> data) =>
+    Mutation$add_home.fromJson(data);
+typedef OnMutationCompleted$Mutation$add_home = FutureOr<void> Function(
   dynamic,
-  Mutation$add_home_rental?,
+  Mutation$add_home?,
 );
 
-class Options$Mutation$add_home_rental
-    extends graphql.MutationOptions<Mutation$add_home_rental> {
-  Options$Mutation$add_home_rental({
+class Options$Mutation$add_home
+    extends graphql.MutationOptions<Mutation$add_home> {
+  Options$Mutation$add_home({
     String? operationName,
-    required Variables$Mutation$add_home_rental variables,
+    required Variables$Mutation$add_home variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
     Object? optimisticResult,
     graphql.Context? context,
-    OnMutationCompleted$Mutation$add_home_rental? onCompleted,
-    graphql.OnMutationUpdate<Mutation$add_home_rental>? update,
+    OnMutationCompleted$Mutation$add_home? onCompleted,
+    graphql.OnMutationUpdate<Mutation$add_home>? update,
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
@@ -20189,17 +21729,15 @@ class Options$Mutation$add_home_rental
               ? null
               : (data) => onCompleted(
                     data,
-                    data == null
-                        ? null
-                        : _parserFn$Mutation$add_home_rental(data),
+                    data == null ? null : _parserFn$Mutation$add_home(data),
                   ),
           update: update,
           onError: onError,
-          document: documentNodeMutationadd_home_rental,
-          parserFn: _parserFn$Mutation$add_home_rental,
+          document: documentNodeMutationadd_home,
+          parserFn: _parserFn$Mutation$add_home,
         );
 
-  final OnMutationCompleted$Mutation$add_home_rental? onCompletedWithParsed;
+  final OnMutationCompleted$Mutation$add_home? onCompletedWithParsed;
 
   @override
   List<Object?> get properties => [
@@ -20210,11 +21748,11 @@ class Options$Mutation$add_home_rental
       ];
 }
 
-class WatchOptions$Mutation$add_home_rental
-    extends graphql.WatchQueryOptions<Mutation$add_home_rental> {
-  WatchOptions$Mutation$add_home_rental({
+class WatchOptions$Mutation$add_home
+    extends graphql.WatchQueryOptions<Mutation$add_home> {
+  WatchOptions$Mutation$add_home({
     String? operationName,
-    required Variables$Mutation$add_home_rental variables,
+    required Variables$Mutation$add_home variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -20232,213 +21770,44 @@ class WatchOptions$Mutation$add_home_rental
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeMutationadd_home_rental,
+          document: documentNodeMutationadd_home,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$add_home_rental,
+          parserFn: _parserFn$Mutation$add_home,
         );
 }
 
-extension ClientExtension$Mutation$add_home_rental on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$add_home_rental>> mutate$add_home_rental(
-          Options$Mutation$add_home_rental options) async =>
+extension ClientExtension$Mutation$add_home on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$add_home>> mutate$add_home(
+          Options$Mutation$add_home options) async =>
       await this.mutate(options);
-  graphql.ObservableQuery<Mutation$add_home_rental>
-      watchMutation$add_home_rental(
-              WatchOptions$Mutation$add_home_rental options) =>
-          this.watchMutation(options);
+  graphql.ObservableQuery<Mutation$add_home> watchMutation$add_home(
+          WatchOptions$Mutation$add_home options) =>
+      this.watchMutation(options);
 }
 
-class Mutation$add_home_rental$insert_business_home_rental_one {
-  Mutation$add_home_rental$insert_business_home_rental_one({
-    required this.rental_id,
-    required this.rental,
-    required this.$__typename,
-  });
-
-  factory Mutation$add_home_rental$insert_business_home_rental_one.fromJson(
-      Map<String, dynamic> json) {
-    final l$rental_id = json['rental_id'];
-    final l$rental = json['rental'];
-    final l$$__typename = json['__typename'];
-    return Mutation$add_home_rental$insert_business_home_rental_one(
-      rental_id: (l$rental_id as int),
-      rental: Mutation$add_home_rental$insert_business_home_rental_one$rental
-          .fromJson((l$rental as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int rental_id;
-
-  final Mutation$add_home_rental$insert_business_home_rental_one$rental rental;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$rental_id = rental_id;
-    _resultData['rental_id'] = l$rental_id;
-    final l$rental = rental;
-    _resultData['rental'] = l$rental.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$rental_id = rental_id;
-    final l$rental = rental;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$rental_id,
-      l$rental,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Mutation$add_home_rental$insert_business_home_rental_one) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$rental_id = rental_id;
-    final lOther$rental_id = other.rental_id;
-    if (l$rental_id != lOther$rental_id) {
-      return false;
-    }
-    final l$rental = rental;
-    final lOther$rental = other.rental;
-    if (l$rental != lOther$rental) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$add_home_rental$insert_business_home_rental_one
-    on Mutation$add_home_rental$insert_business_home_rental_one {
-  CopyWith$Mutation$add_home_rental$insert_business_home_rental_one<
-          Mutation$add_home_rental$insert_business_home_rental_one>
-      get copyWith =>
-          CopyWith$Mutation$add_home_rental$insert_business_home_rental_one(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Mutation$add_home_rental$insert_business_home_rental_one<
-    TRes> {
-  factory CopyWith$Mutation$add_home_rental$insert_business_home_rental_one(
-    Mutation$add_home_rental$insert_business_home_rental_one instance,
-    TRes Function(Mutation$add_home_rental$insert_business_home_rental_one)
-        then,
-  ) = _CopyWithImpl$Mutation$add_home_rental$insert_business_home_rental_one;
-
-  factory CopyWith$Mutation$add_home_rental$insert_business_home_rental_one.stub(
-          TRes res) =
-      _CopyWithStubImpl$Mutation$add_home_rental$insert_business_home_rental_one;
-
-  TRes call({
-    int? rental_id,
-    Mutation$add_home_rental$insert_business_home_rental_one$rental? rental,
-    String? $__typename,
-  });
-  CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental<TRes>
-      get rental;
-}
-
-class _CopyWithImpl$Mutation$add_home_rental$insert_business_home_rental_one<
-        TRes>
-    implements
-        CopyWith$Mutation$add_home_rental$insert_business_home_rental_one<
-            TRes> {
-  _CopyWithImpl$Mutation$add_home_rental$insert_business_home_rental_one(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$add_home_rental$insert_business_home_rental_one _instance;
-
-  final TRes Function(Mutation$add_home_rental$insert_business_home_rental_one)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? rental_id = _undefined,
-    Object? rental = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Mutation$add_home_rental$insert_business_home_rental_one(
-        rental_id: rental_id == _undefined || rental_id == null
-            ? _instance.rental_id
-            : (rental_id as int),
-        rental: rental == _undefined || rental == null
-            ? _instance.rental
-            : (rental
-                as Mutation$add_home_rental$insert_business_home_rental_one$rental),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental<TRes>
-      get rental {
-    final local$rental = _instance.rental;
-    return CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental(
-        local$rental, (e) => call(rental: e));
-  }
-}
-
-class _CopyWithStubImpl$Mutation$add_home_rental$insert_business_home_rental_one<
-        TRes>
-    implements
-        CopyWith$Mutation$add_home_rental$insert_business_home_rental_one<
-            TRes> {
-  _CopyWithStubImpl$Mutation$add_home_rental$insert_business_home_rental_one(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? rental_id,
-    Mutation$add_home_rental$insert_business_home_rental_one$rental? rental,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental<TRes>
-      get rental =>
-          CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental
-              .stub(_res);
-}
-
-class Mutation$add_home_rental$insert_business_home_rental_one$rental {
-  Mutation$add_home_rental$insert_business_home_rental_one$rental({
+class Mutation$add_home$insert_business_home_one {
+  Mutation$add_home$insert_business_home_one({
+    required this.id,
     required this.details_id,
     required this.$__typename,
   });
 
-  factory Mutation$add_home_rental$insert_business_home_rental_one$rental.fromJson(
+  factory Mutation$add_home$insert_business_home_one.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details_id = json['details_id'];
     final l$$__typename = json['__typename'];
-    return Mutation$add_home_rental$insert_business_home_rental_one$rental(
+    return Mutation$add_home$insert_business_home_one(
+      id: (l$id as int),
       details_id: (l$details_id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final int details_id;
 
@@ -20446,6 +21815,8 @@ class Mutation$add_home_rental$insert_business_home_rental_one$rental {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details_id = details_id;
     _resultData['details_id'] = l$details_id;
     final l$$__typename = $__typename;
@@ -20455,9 +21826,11 @@ class Mutation$add_home_rental$insert_business_home_rental_one$rental {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details_id = details_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details_id,
       l$$__typename,
     ]);
@@ -20468,9 +21841,13 @@ class Mutation$add_home_rental$insert_business_home_rental_one$rental {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Mutation$add_home_rental$insert_business_home_rental_one$rental) ||
+    if (!(other is Mutation$add_home$insert_business_home_one) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details_id = details_id;
@@ -20487,59 +21864,52 @@ class Mutation$add_home_rental$insert_business_home_rental_one$rental {
   }
 }
 
-extension UtilityExtension$Mutation$add_home_rental$insert_business_home_rental_one$rental
-    on Mutation$add_home_rental$insert_business_home_rental_one$rental {
-  CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental<
-          Mutation$add_home_rental$insert_business_home_rental_one$rental>
-      get copyWith =>
-          CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental(
+extension UtilityExtension$Mutation$add_home$insert_business_home_one
+    on Mutation$add_home$insert_business_home_one {
+  CopyWith$Mutation$add_home$insert_business_home_one<
+          Mutation$add_home$insert_business_home_one>
+      get copyWith => CopyWith$Mutation$add_home$insert_business_home_one(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental<
-    TRes> {
-  factory CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental(
-    Mutation$add_home_rental$insert_business_home_rental_one$rental instance,
-    TRes Function(
-            Mutation$add_home_rental$insert_business_home_rental_one$rental)
-        then,
-  ) = _CopyWithImpl$Mutation$add_home_rental$insert_business_home_rental_one$rental;
+abstract class CopyWith$Mutation$add_home$insert_business_home_one<TRes> {
+  factory CopyWith$Mutation$add_home$insert_business_home_one(
+    Mutation$add_home$insert_business_home_one instance,
+    TRes Function(Mutation$add_home$insert_business_home_one) then,
+  ) = _CopyWithImpl$Mutation$add_home$insert_business_home_one;
 
-  factory CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental.stub(
-          TRes res) =
-      _CopyWithStubImpl$Mutation$add_home_rental$insert_business_home_rental_one$rental;
+  factory CopyWith$Mutation$add_home$insert_business_home_one.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$add_home$insert_business_home_one;
 
   TRes call({
+    int? id,
     int? details_id,
     String? $__typename,
   });
 }
 
-class _CopyWithImpl$Mutation$add_home_rental$insert_business_home_rental_one$rental<
-        TRes>
-    implements
-        CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental<
-            TRes> {
-  _CopyWithImpl$Mutation$add_home_rental$insert_business_home_rental_one$rental(
+class _CopyWithImpl$Mutation$add_home$insert_business_home_one<TRes>
+    implements CopyWith$Mutation$add_home$insert_business_home_one<TRes> {
+  _CopyWithImpl$Mutation$add_home$insert_business_home_one(
     this._instance,
     this._then,
   );
 
-  final Mutation$add_home_rental$insert_business_home_rental_one$rental
-      _instance;
+  final Mutation$add_home$insert_business_home_one _instance;
 
-  final TRes Function(
-      Mutation$add_home_rental$insert_business_home_rental_one$rental) _then;
+  final TRes Function(Mutation$add_home$insert_business_home_one) _then;
 
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$add_home_rental$insert_business_home_rental_one$rental(
+      _then(Mutation$add_home$insert_business_home_one(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details_id: details_id == _undefined || details_id == null
             ? _instance.details_id
             : (details_id as int),
@@ -20549,36 +21919,33 @@ class _CopyWithImpl$Mutation$add_home_rental$insert_business_home_rental_one$ren
       ));
 }
 
-class _CopyWithStubImpl$Mutation$add_home_rental$insert_business_home_rental_one$rental<
-        TRes>
-    implements
-        CopyWith$Mutation$add_home_rental$insert_business_home_rental_one$rental<
-            TRes> {
-  _CopyWithStubImpl$Mutation$add_home_rental$insert_business_home_rental_one$rental(
-      this._res);
+class _CopyWithStubImpl$Mutation$add_home$insert_business_home_one<TRes>
+    implements CopyWith$Mutation$add_home$insert_business_home_one<TRes> {
+  _CopyWithStubImpl$Mutation$add_home$insert_business_home_one(this._res);
 
   TRes _res;
 
   call({
+    int? id,
     int? details_id,
     String? $__typename,
   }) =>
       _res;
 }
 
-class Variables$Mutation$update_home_rental_by_id {
-  factory Variables$Mutation$update_home_rental_by_id({
+class Variables$Mutation$update_home_by_id {
+  factory Variables$Mutation$update_home_by_id({
     required int id,
-    Input$business_home_rental_set_input? object,
+    Input$business_home_set_input? object,
   }) =>
-      Variables$Mutation$update_home_rental_by_id._({
+      Variables$Mutation$update_home_by_id._({
         r'id': id,
         if (object != null) r'object': object,
       });
 
-  Variables$Mutation$update_home_rental_by_id._(this._$data);
+  Variables$Mutation$update_home_by_id._(this._$data);
 
-  factory Variables$Mutation$update_home_rental_by_id.fromJson(
+  factory Variables$Mutation$update_home_by_id.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$id = data['id'];
@@ -20587,17 +21954,17 @@ class Variables$Mutation$update_home_rental_by_id {
       final l$object = data['object'];
       result$data['object'] = l$object == null
           ? null
-          : Input$business_home_rental_set_input.fromJson(
+          : Input$business_home_set_input.fromJson(
               (l$object as Map<String, dynamic>));
     }
-    return Variables$Mutation$update_home_rental_by_id._(result$data);
+    return Variables$Mutation$update_home_by_id._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get id => (_$data['id'] as int);
-  Input$business_home_rental_set_input? get object =>
-      (_$data['object'] as Input$business_home_rental_set_input?);
+  Input$business_home_set_input? get object =>
+      (_$data['object'] as Input$business_home_set_input?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$id = id;
@@ -20609,9 +21976,9 @@ class Variables$Mutation$update_home_rental_by_id {
     return result$data;
   }
 
-  CopyWith$Variables$Mutation$update_home_rental_by_id<
-          Variables$Mutation$update_home_rental_by_id>
-      get copyWith => CopyWith$Variables$Mutation$update_home_rental_by_id(
+  CopyWith$Variables$Mutation$update_home_by_id<
+          Variables$Mutation$update_home_by_id>
+      get copyWith => CopyWith$Variables$Mutation$update_home_by_id(
             this,
             (i) => i,
           );
@@ -20620,7 +21987,7 @@ class Variables$Mutation$update_home_rental_by_id {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Mutation$update_home_rental_by_id) ||
+    if (!(other is Variables$Mutation$update_home_by_id) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -20651,31 +22018,31 @@ class Variables$Mutation$update_home_rental_by_id {
   }
 }
 
-abstract class CopyWith$Variables$Mutation$update_home_rental_by_id<TRes> {
-  factory CopyWith$Variables$Mutation$update_home_rental_by_id(
-    Variables$Mutation$update_home_rental_by_id instance,
-    TRes Function(Variables$Mutation$update_home_rental_by_id) then,
-  ) = _CopyWithImpl$Variables$Mutation$update_home_rental_by_id;
+abstract class CopyWith$Variables$Mutation$update_home_by_id<TRes> {
+  factory CopyWith$Variables$Mutation$update_home_by_id(
+    Variables$Mutation$update_home_by_id instance,
+    TRes Function(Variables$Mutation$update_home_by_id) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_home_by_id;
 
-  factory CopyWith$Variables$Mutation$update_home_rental_by_id.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$update_home_rental_by_id;
+  factory CopyWith$Variables$Mutation$update_home_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_home_by_id;
 
   TRes call({
     int? id,
-    Input$business_home_rental_set_input? object,
+    Input$business_home_set_input? object,
   });
 }
 
-class _CopyWithImpl$Variables$Mutation$update_home_rental_by_id<TRes>
-    implements CopyWith$Variables$Mutation$update_home_rental_by_id<TRes> {
-  _CopyWithImpl$Variables$Mutation$update_home_rental_by_id(
+class _CopyWithImpl$Variables$Mutation$update_home_by_id<TRes>
+    implements CopyWith$Variables$Mutation$update_home_by_id<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_home_by_id(
     this._instance,
     this._then,
   );
 
-  final Variables$Mutation$update_home_rental_by_id _instance;
+  final Variables$Mutation$update_home_by_id _instance;
 
-  final TRes Function(Variables$Mutation$update_home_rental_by_id) _then;
+  final TRes Function(Variables$Mutation$update_home_by_id) _then;
 
   static const _undefined = {};
 
@@ -20683,60 +22050,55 @@ class _CopyWithImpl$Variables$Mutation$update_home_rental_by_id<TRes>
     Object? id = _undefined,
     Object? object = _undefined,
   }) =>
-      _then(Variables$Mutation$update_home_rental_by_id._({
+      _then(Variables$Mutation$update_home_by_id._({
         ..._instance._$data,
         if (id != _undefined && id != null) 'id': (id as int),
         if (object != _undefined)
-          'object': (object as Input$business_home_rental_set_input?),
+          'object': (object as Input$business_home_set_input?),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Mutation$update_home_rental_by_id<TRes>
-    implements CopyWith$Variables$Mutation$update_home_rental_by_id<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$update_home_rental_by_id(this._res);
+class _CopyWithStubImpl$Variables$Mutation$update_home_by_id<TRes>
+    implements CopyWith$Variables$Mutation$update_home_by_id<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_home_by_id(this._res);
 
   TRes _res;
 
   call({
     int? id,
-    Input$business_home_rental_set_input? object,
+    Input$business_home_set_input? object,
   }) =>
       _res;
 }
 
-class Mutation$update_home_rental_by_id {
-  Mutation$update_home_rental_by_id({
-    this.update_business_home_rental_by_pk,
+class Mutation$update_home_by_id {
+  Mutation$update_home_by_id({
+    this.update_business_home_by_pk,
     required this.$__typename,
   });
 
-  factory Mutation$update_home_rental_by_id.fromJson(
-      Map<String, dynamic> json) {
-    final l$update_business_home_rental_by_pk =
-        json['update_business_home_rental_by_pk'];
+  factory Mutation$update_home_by_id.fromJson(Map<String, dynamic> json) {
+    final l$update_business_home_by_pk = json['update_business_home_by_pk'];
     final l$$__typename = json['__typename'];
-    return Mutation$update_home_rental_by_id(
-      update_business_home_rental_by_pk: l$update_business_home_rental_by_pk ==
-              null
+    return Mutation$update_home_by_id(
+      update_business_home_by_pk: l$update_business_home_by_pk == null
           ? null
-          : Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
-              .fromJson((l$update_business_home_rental_by_pk
-                  as Map<String, dynamic>)),
+          : Mutation$update_home_by_id$update_business_home_by_pk.fromJson(
+              (l$update_business_home_by_pk as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk?
-      update_business_home_rental_by_pk;
+  final Mutation$update_home_by_id$update_business_home_by_pk?
+      update_business_home_by_pk;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$update_business_home_rental_by_pk =
-        update_business_home_rental_by_pk;
-    _resultData['update_business_home_rental_by_pk'] =
-        l$update_business_home_rental_by_pk?.toJson();
+    final l$update_business_home_by_pk = update_business_home_by_pk;
+    _resultData['update_business_home_by_pk'] =
+        l$update_business_home_by_pk?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -20744,11 +22106,10 @@ class Mutation$update_home_rental_by_id {
 
   @override
   int get hashCode {
-    final l$update_business_home_rental_by_pk =
-        update_business_home_rental_by_pk;
+    final l$update_business_home_by_pk = update_business_home_by_pk;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$update_business_home_rental_by_pk,
+      l$update_business_home_by_pk,
       l$$__typename,
     ]);
   }
@@ -20758,16 +22119,13 @@ class Mutation$update_home_rental_by_id {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$update_home_rental_by_id) ||
+    if (!(other is Mutation$update_home_by_id) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$update_business_home_rental_by_pk =
-        update_business_home_rental_by_pk;
-    final lOther$update_business_home_rental_by_pk =
-        other.update_business_home_rental_by_pk;
-    if (l$update_business_home_rental_by_pk !=
-        lOther$update_business_home_rental_by_pk) {
+    final l$update_business_home_by_pk = update_business_home_by_pk;
+    final lOther$update_business_home_by_pk = other.update_business_home_by_pk;
+    if (l$update_business_home_by_pk != lOther$update_business_home_by_pk) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -20779,96 +22137,94 @@ class Mutation$update_home_rental_by_id {
   }
 }
 
-extension UtilityExtension$Mutation$update_home_rental_by_id
-    on Mutation$update_home_rental_by_id {
-  CopyWith$Mutation$update_home_rental_by_id<Mutation$update_home_rental_by_id>
-      get copyWith => CopyWith$Mutation$update_home_rental_by_id(
+extension UtilityExtension$Mutation$update_home_by_id
+    on Mutation$update_home_by_id {
+  CopyWith$Mutation$update_home_by_id<Mutation$update_home_by_id>
+      get copyWith => CopyWith$Mutation$update_home_by_id(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$update_home_rental_by_id<TRes> {
-  factory CopyWith$Mutation$update_home_rental_by_id(
-    Mutation$update_home_rental_by_id instance,
-    TRes Function(Mutation$update_home_rental_by_id) then,
-  ) = _CopyWithImpl$Mutation$update_home_rental_by_id;
+abstract class CopyWith$Mutation$update_home_by_id<TRes> {
+  factory CopyWith$Mutation$update_home_by_id(
+    Mutation$update_home_by_id instance,
+    TRes Function(Mutation$update_home_by_id) then,
+  ) = _CopyWithImpl$Mutation$update_home_by_id;
 
-  factory CopyWith$Mutation$update_home_rental_by_id.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$update_home_rental_by_id;
+  factory CopyWith$Mutation$update_home_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_by_id;
 
   TRes call({
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk?
-        update_business_home_rental_by_pk,
+    Mutation$update_home_by_id$update_business_home_by_pk?
+        update_business_home_by_pk,
     String? $__typename,
   });
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
-      TRes> get update_business_home_rental_by_pk;
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk<TRes>
+      get update_business_home_by_pk;
 }
 
-class _CopyWithImpl$Mutation$update_home_rental_by_id<TRes>
-    implements CopyWith$Mutation$update_home_rental_by_id<TRes> {
-  _CopyWithImpl$Mutation$update_home_rental_by_id(
+class _CopyWithImpl$Mutation$update_home_by_id<TRes>
+    implements CopyWith$Mutation$update_home_by_id<TRes> {
+  _CopyWithImpl$Mutation$update_home_by_id(
     this._instance,
     this._then,
   );
 
-  final Mutation$update_home_rental_by_id _instance;
+  final Mutation$update_home_by_id _instance;
 
-  final TRes Function(Mutation$update_home_rental_by_id) _then;
+  final TRes Function(Mutation$update_home_by_id) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? update_business_home_rental_by_pk = _undefined,
+    Object? update_business_home_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$update_home_rental_by_id(
-        update_business_home_rental_by_pk: update_business_home_rental_by_pk ==
-                _undefined
-            ? _instance.update_business_home_rental_by_pk
-            : (update_business_home_rental_by_pk
-                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk?),
+      _then(Mutation$update_home_by_id(
+        update_business_home_by_pk: update_business_home_by_pk == _undefined
+            ? _instance.update_business_home_by_pk
+            : (update_business_home_by_pk
+                as Mutation$update_home_by_id$update_business_home_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
-      TRes> get update_business_home_rental_by_pk {
-    final local$update_business_home_rental_by_pk =
-        _instance.update_business_home_rental_by_pk;
-    return local$update_business_home_rental_by_pk == null
-        ? CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
-            .stub(_then(_instance))
-        : CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
-            local$update_business_home_rental_by_pk,
-            (e) => call(update_business_home_rental_by_pk: e));
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk<TRes>
+      get update_business_home_by_pk {
+    final local$update_business_home_by_pk =
+        _instance.update_business_home_by_pk;
+    return local$update_business_home_by_pk == null
+        ? CopyWith$Mutation$update_home_by_id$update_business_home_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Mutation$update_home_by_id$update_business_home_by_pk(
+            local$update_business_home_by_pk,
+            (e) => call(update_business_home_by_pk: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$update_home_rental_by_id<TRes>
-    implements CopyWith$Mutation$update_home_rental_by_id<TRes> {
-  _CopyWithStubImpl$Mutation$update_home_rental_by_id(this._res);
+class _CopyWithStubImpl$Mutation$update_home_by_id<TRes>
+    implements CopyWith$Mutation$update_home_by_id<TRes> {
+  _CopyWithStubImpl$Mutation$update_home_by_id(this._res);
 
   TRes _res;
 
   call({
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk?
-        update_business_home_rental_by_pk,
+    Mutation$update_home_by_id$update_business_home_by_pk?
+        update_business_home_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
-          TRes>
-      get update_business_home_rental_by_pk =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
-              .stub(_res);
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk<TRes>
+      get update_business_home_by_pk =>
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk.stub(
+              _res);
 }
 
-const documentNodeMutationupdate_home_rental_by_id = DocumentNode(definitions: [
+const documentNodeMutationupdate_home_by_id = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.mutation,
-    name: NameNode(value: 'update_home_rental_by_id'),
+    name: NameNode(value: 'update_home_by_id'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'id')),
@@ -20882,7 +22238,7 @@ const documentNodeMutationupdate_home_rental_by_id = DocumentNode(definitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'object')),
         type: NamedTypeNode(
-          name: NameNode(value: 'business_home_rental_set_input'),
+          name: NameNode(value: 'business_home_set_input'),
           isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -20892,14 +22248,14 @@ const documentNodeMutationupdate_home_rental_by_id = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'update_business_home_rental_by_pk'),
+        name: NameNode(value: 'update_business_home_by_pk'),
         alias: null,
         arguments: [
           ArgumentNode(
             name: NameNode(value: 'pk_columns'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'rental_id'),
+                name: NameNode(value: 'id'),
                 value: VariableNode(name: NameNode(value: 'id')),
               )
             ]),
@@ -20912,42 +22268,150 @@ const documentNodeMutationupdate_home_rental_by_id = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'bathrooms'),
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'additional_parameters'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category1'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'category2'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'position'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'tags'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'bedrooms'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'gps_location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'home_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'address'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'rental'),
+            name: NameNode(value: 'business'),
             alias: null,
             arguments: [],
             directives: [],
@@ -20960,32 +22424,11 @@ const documentNodeMutationupdate_home_rental_by_id = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'category3'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'details'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'name_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'description_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -20998,182 +22441,30 @@ const documentNodeMutationupdate_home_rental_by_id = DocumentNode(definitions: [
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
+                    selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'description'),
+                    name: NameNode(value: 'currency'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'tags'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'additional_parameters'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'available'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category1'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category2'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'cost'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'image'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'position'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: 'business'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'details'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'id'),
+                        name: NameNode(value: 'gps'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
                       FieldNode(
-                        name: NameNode(value: 'name'),
+                        name: NameNode(value: 'address'),
                         alias: null,
                         arguments: [],
                         directives: [],
@@ -21207,6 +22498,70 @@ const documentNodeMutationupdate_home_rental_by_id = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'bathrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'bedrooms'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'address'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'available_for'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'offering_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -21219,27 +22574,27 @@ const documentNodeMutationupdate_home_rental_by_id = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Mutation$update_home_rental_by_id _parserFn$Mutation$update_home_rental_by_id(
+Mutation$update_home_by_id _parserFn$Mutation$update_home_by_id(
         Map<String, dynamic> data) =>
-    Mutation$update_home_rental_by_id.fromJson(data);
-typedef OnMutationCompleted$Mutation$update_home_rental_by_id = FutureOr<void>
+    Mutation$update_home_by_id.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_home_by_id = FutureOr<void>
     Function(
   dynamic,
-  Mutation$update_home_rental_by_id?,
+  Mutation$update_home_by_id?,
 );
 
-class Options$Mutation$update_home_rental_by_id
-    extends graphql.MutationOptions<Mutation$update_home_rental_by_id> {
-  Options$Mutation$update_home_rental_by_id({
+class Options$Mutation$update_home_by_id
+    extends graphql.MutationOptions<Mutation$update_home_by_id> {
+  Options$Mutation$update_home_by_id({
     String? operationName,
-    required Variables$Mutation$update_home_rental_by_id variables,
+    required Variables$Mutation$update_home_by_id variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
     Object? optimisticResult,
     graphql.Context? context,
-    OnMutationCompleted$Mutation$update_home_rental_by_id? onCompleted,
-    graphql.OnMutationUpdate<Mutation$update_home_rental_by_id>? update,
+    OnMutationCompleted$Mutation$update_home_by_id? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_home_by_id>? update,
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
@@ -21256,16 +22611,15 @@ class Options$Mutation$update_home_rental_by_id
                     data,
                     data == null
                         ? null
-                        : _parserFn$Mutation$update_home_rental_by_id(data),
+                        : _parserFn$Mutation$update_home_by_id(data),
                   ),
           update: update,
           onError: onError,
-          document: documentNodeMutationupdate_home_rental_by_id,
-          parserFn: _parserFn$Mutation$update_home_rental_by_id,
+          document: documentNodeMutationupdate_home_by_id,
+          parserFn: _parserFn$Mutation$update_home_by_id,
         );
 
-  final OnMutationCompleted$Mutation$update_home_rental_by_id?
-      onCompletedWithParsed;
+  final OnMutationCompleted$Mutation$update_home_by_id? onCompletedWithParsed;
 
   @override
   List<Object?> get properties => [
@@ -21276,11 +22630,11 @@ class Options$Mutation$update_home_rental_by_id
       ];
 }
 
-class WatchOptions$Mutation$update_home_rental_by_id
-    extends graphql.WatchQueryOptions<Mutation$update_home_rental_by_id> {
-  WatchOptions$Mutation$update_home_rental_by_id({
+class WatchOptions$Mutation$update_home_by_id
+    extends graphql.WatchQueryOptions<Mutation$update_home_by_id> {
+  WatchOptions$Mutation$update_home_by_id({
     String? operationName,
-    required Variables$Mutation$update_home_rental_by_id variables,
+    required Variables$Mutation$update_home_by_id variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -21298,89 +22652,110 @@ class WatchOptions$Mutation$update_home_rental_by_id
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeMutationupdate_home_rental_by_id,
+          document: documentNodeMutationupdate_home_by_id,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$update_home_rental_by_id,
+          parserFn: _parserFn$Mutation$update_home_by_id,
         );
 }
 
-extension ClientExtension$Mutation$update_home_rental_by_id
-    on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$update_home_rental_by_id>>
-      mutate$update_home_rental_by_id(
-              Options$Mutation$update_home_rental_by_id options) async =>
+extension ClientExtension$Mutation$update_home_by_id on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_home_by_id>>
+      mutate$update_home_by_id(
+              Options$Mutation$update_home_by_id options) async =>
           await this.mutate(options);
-  graphql.ObservableQuery<Mutation$update_home_rental_by_id>
-      watchMutation$update_home_rental_by_id(
-              WatchOptions$Mutation$update_home_rental_by_id options) =>
+  graphql.ObservableQuery<Mutation$update_home_by_id>
+      watchMutation$update_home_by_id(
+              WatchOptions$Mutation$update_home_by_id options) =>
           this.watchMutation(options);
 }
 
-class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk {
-  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk({
+class Mutation$update_home_by_id$update_business_home_by_pk {
+  Mutation$update_home_by_id$update_business_home_by_pk({
+    this.details,
+    required this.id,
+    this.business,
     required this.bathrooms,
     required this.bedrooms,
-    required this.gps_location,
-    required this.home_type,
-    required this.address,
-    required this.rental,
+    this.location,
+    required this.available_for,
+    required this.offering_type,
     required this.$__typename,
   });
 
-  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk.fromJson(
+  factory Mutation$update_home_by_id$update_business_home_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$id = json['id'];
+    final l$business = json['business'];
     final l$bathrooms = json['bathrooms'];
     final l$bedrooms = json['bedrooms'];
-    final l$gps_location = json['gps_location'];
-    final l$home_type = json['home_type'];
-    final l$address = json['address'];
-    final l$rental = json['rental'];
+    final l$location = json['location'];
+    final l$available_for = json['available_for'];
+    final l$offering_type = json['offering_type'];
     final l$$__typename = json['__typename'];
-    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+    return Mutation$update_home_by_id$update_business_home_by_pk(
+      details: l$details == null
+          ? null
+          : Mutation$update_home_by_id$update_business_home_by_pk$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      id: (l$id as int),
+      business: l$business == null
+          ? null
+          : Mutation$update_home_by_id$update_business_home_by_pk$business
+              .fromJson((l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      gps_location: geographyFromJson(l$gps_location),
-      home_type: (l$home_type as String),
-      address: (l$address as String),
-      rental:
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
-              .fromJson((l$rental as Map<String, dynamic>)),
+      location: l$location == null
+          ? null
+          : Mutation$update_home_by_id$update_business_home_by_pk$location
+              .fromJson((l$location as Map<String, dynamic>)),
+      available_for: (l$available_for as String),
+      offering_type: (l$offering_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final Mutation$update_home_by_id$update_business_home_by_pk$details? details;
+
+  final int id;
+
+  final Mutation$update_home_by_id$update_business_home_by_pk$business?
+      business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Geography gps_location;
+  final Mutation$update_home_by_id$update_business_home_by_pk$location?
+      location;
 
-  final String home_type;
+  final String available_for;
 
-  final String address;
-
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
-      rental;
+  final String offering_type;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
-    final l$gps_location = gps_location;
-    _resultData['gps_location'] = geographyToJson(l$gps_location);
-    final l$home_type = home_type;
-    _resultData['home_type'] = l$home_type;
-    final l$address = address;
-    _resultData['address'] = l$address;
-    final l$rental = rental;
-    _resultData['rental'] = l$rental.toJson();
+    final l$location = location;
+    _resultData['location'] = l$location?.toJson();
+    final l$available_for = available_for;
+    _resultData['available_for'] = l$available_for;
+    final l$offering_type = offering_type;
+    _resultData['offering_type'] = l$offering_type;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -21388,20 +22763,24 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk {
 
   @override
   int get hashCode {
+    final l$details = details;
+    final l$id = id;
+    final l$business = business;
     final l$bathrooms = bathrooms;
     final l$bedrooms = bedrooms;
-    final l$gps_location = gps_location;
-    final l$home_type = home_type;
-    final l$address = address;
-    final l$rental = rental;
+    final l$location = location;
+    final l$available_for = available_for;
+    final l$offering_type = offering_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$details,
+      l$id,
+      l$business,
       l$bathrooms,
       l$bedrooms,
-      l$gps_location,
-      l$home_type,
-      l$address,
-      l$rental,
+      l$location,
+      l$available_for,
+      l$offering_type,
       l$$__typename,
     ]);
   }
@@ -21411,9 +22790,23 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk) ||
+    if (!(other is Mutation$update_home_by_id$update_business_home_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
       return false;
     }
     final l$bathrooms = bathrooms;
@@ -21426,24 +22819,19 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk {
     if (l$bedrooms != lOther$bedrooms) {
       return false;
     }
-    final l$gps_location = gps_location;
-    final lOther$gps_location = other.gps_location;
-    if (l$gps_location != lOther$gps_location) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
-    final l$home_type = home_type;
-    final lOther$home_type = other.home_type;
-    if (l$home_type != lOther$home_type) {
+    final l$available_for = available_for;
+    final lOther$available_for = other.available_for;
+    if (l$available_for != lOther$available_for) {
       return false;
     }
-    final l$address = address;
-    final lOther$address = other.address;
-    if (l$address != lOther$address) {
-      return false;
-    }
-    final l$rental = rental;
-    final lOther$rental = other.rental;
-    if (l$rental != lOther$rental) {
+    final l$offering_type = offering_type;
+    final lOther$offering_type = other.offering_type;
+    if (l$offering_type != lOther$offering_type) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -21455,383 +22843,175 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk {
   }
 }
 
-extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
-    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk {
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk>
+extension UtilityExtension$Mutation$update_home_by_id$update_business_home_by_pk
+    on Mutation$update_home_by_id$update_business_home_by_pk {
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk<
+          Mutation$update_home_by_id$update_business_home_by_pk>
       get copyWith =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+abstract class CopyWith$Mutation$update_home_by_id$update_business_home_by_pk<
     TRes> {
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
-        instance,
-    TRes Function(
-            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk)
-        then,
-  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk;
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk(
+    Mutation$update_home_by_id$update_business_home_by_pk instance,
+    TRes Function(Mutation$update_home_by_id$update_business_home_by_pk) then,
+  ) = _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk;
 
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk.stub(
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk;
+      _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk;
 
   TRes call({
+    Mutation$update_home_by_id$update_business_home_by_pk$details? details,
+    int? id,
+    Mutation$update_home_by_id$update_business_home_by_pk$business? business,
     int? bathrooms,
     int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental?
-        rental,
+    Mutation$update_home_by_id$update_business_home_by_pk$location? location,
+    String? available_for,
+    String? offering_type,
     String? $__typename,
   });
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
-      TRes> get rental;
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details<TRes>
+      get details;
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business<TRes>
+      get business;
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location<TRes>
+      get location;
 }
 
-class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
-        TRes>
+class _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk<TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
-            TRes> {
-  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk<TRes> {
+  _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk(
     this._instance,
     this._then,
   );
 
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
-      _instance;
+  final Mutation$update_home_by_id$update_business_home_by_pk _instance;
 
-  final TRes Function(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk)
+  final TRes Function(Mutation$update_home_by_id$update_business_home_by_pk)
       _then;
 
   static const _undefined = {};
 
   TRes call({
+    Object? details = _undefined,
+    Object? id = _undefined,
+    Object? business = _undefined,
     Object? bathrooms = _undefined,
     Object? bedrooms = _undefined,
-    Object? gps_location = _undefined,
-    Object? home_type = _undefined,
-    Object? address = _undefined,
-    Object? rental = _undefined,
+    Object? location = _undefined,
+    Object? available_for = _undefined,
+    Object? offering_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+      _then(Mutation$update_home_by_id$update_business_home_by_pk(
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Mutation$update_home_by_id$update_business_home_by_pk$details?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business: business == _undefined
+            ? _instance.business
+            : (business
+                as Mutation$update_home_by_id$update_business_home_by_pk$business?),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        gps_location: gps_location == _undefined || gps_location == null
-            ? _instance.gps_location
-            : (gps_location as Geography),
-        home_type: home_type == _undefined || home_type == null
-            ? _instance.home_type
-            : (home_type as String),
-        address: address == _undefined || address == null
-            ? _instance.address
-            : (address as String),
-        rental: rental == _undefined || rental == null
-            ? _instance.rental
-            : (rental
-                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental),
+        location: location == _undefined
+            ? _instance.location
+            : (location
+                as Mutation$update_home_by_id$update_business_home_by_pk$location?),
+        available_for: available_for == _undefined || available_for == null
+            ? _instance.available_for
+            : (available_for as String),
+        offering_type: offering_type == _undefined || offering_type == null
+            ? _instance.offering_type
+            : (offering_type as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
-      TRes> get rental {
-    final local$rental = _instance.rental;
-    return CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
-        local$rental, (e) => call(rental: e));
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details(
+            local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business<TRes>
+      get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business(
+            local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location(
+            local$location, (e) => call(location: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
+class _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk<
-            TRes> {
-  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk(
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk<TRes> {
+  _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk(
       this._res);
 
   TRes _res;
 
   call({
+    Mutation$update_home_by_id$update_business_home_by_pk$details? details,
+    int? id,
+    Mutation$update_home_by_id$update_business_home_by_pk$business? business,
     int? bathrooms,
     int? bedrooms,
-    Geography? gps_location,
-    String? home_type,
-    String? address,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental?
-        rental,
+    Mutation$update_home_by_id$update_business_home_by_pk$location? location,
+    String? available_for,
+    String? offering_type,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
-          TRes>
-      get rental =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
-              .stub(_res);
-}
-
-class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental {
-  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental({
-    required this.id,
-    required this.category3,
-    required this.details,
-    required this.business,
-    required this.$__typename,
-  });
-
-  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$category3 = json['category3'];
-    final l$details = json['details'];
-    final l$business = json['business'];
-    final l$$__typename = json['__typename'];
-    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
-      id: (l$id as int),
-      category3: (l$category3 as String),
-      details:
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
-              .fromJson((l$details as Map<String, dynamic>)),
-      business:
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
-              .fromJson((l$business as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String category3;
-
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
-      details;
-
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
-      business;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$category3 = category3;
-    _resultData['category3'] = l$category3;
-    final l$details = details;
-    _resultData['details'] = l$details.toJson();
-    final l$business = business;
-    _resultData['business'] = l$business.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$category3 = category3;
-    final l$details = details;
-    final l$business = business;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$category3,
-      l$details,
-      l$business,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$category3 = category3;
-    final lOther$category3 = other.category3;
-    if (l$category3 != lOther$category3) {
-      return false;
-    }
-    final l$details = details;
-    final lOther$details = other.details;
-    if (l$details != lOther$details) {
-      return false;
-    }
-    final l$business = business;
-    final lOther$business = other.business;
-    if (l$business != lOther$business) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
-    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental {
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental>
-      get copyWith =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
-    TRes> {
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
-        instance,
-    TRes Function(
-            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental)
-        then,
-  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental;
-
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental.stub(
-          TRes res) =
-      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental;
-
-  TRes call({
-    int? id,
-    String? category3,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details?
-        details,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business?
-        business,
-    String? $__typename,
-  });
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
-      TRes> get details;
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
-      TRes> get business;
-}
-
-class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
-        TRes>
-    implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
-            TRes> {
-  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
-      _instance;
-
-  final TRes Function(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? category3 = _undefined,
-    Object? details = _undefined,
-    Object? business = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        category3: category3 == _undefined || category3 == null
-            ? _instance.category3
-            : (category3 as String),
-        details: details == _undefined || details == null
-            ? _instance.details
-            : (details
-                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details),
-        business: business == _undefined || business == null
-            ? _instance.business
-            : (business
-                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
-      TRes> get details {
-    final local$details = _instance.details;
-    return CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
-        local$details, (e) => call(details: e));
-  }
-
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
-      TRes> get business {
-    final local$business = _instance.business;
-    return CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
-        local$business, (e) => call(business: e));
-  }
-}
-
-class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
-        TRes>
-    implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental<
-            TRes> {
-  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? category3,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details?
-        details,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business?
-        business,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
-          TRes>
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details<TRes>
       get details =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details
               .stub(_res);
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
-          TRes>
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business<TRes>
       get business =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business
+              .stub(_res);
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location<TRes>
+      get location =>
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location
               .stub(_res);
 }
 
-class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details {
-  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details({
+class Mutation$update_home_by_id$update_business_home_by_pk$details {
+  Mutation$update_home_by_id$update_business_home_by_pk$details({
     required this.name_id,
     this.description_id,
     required this.id,
     required this.name,
-    this.description,
-    required this.tags,
     this.additional_parameters,
     required this.available,
     required this.category1,
@@ -21839,17 +23019,16 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
     required this.cost,
     this.image,
     required this.position,
+    required this.tags,
     required this.$__typename,
   });
 
-  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details.fromJson(
+  factory Mutation$update_home_by_id$update_business_home_by_pk$details.fromJson(
       Map<String, dynamic> json) {
     final l$name_id = json['name_id'];
     final l$description_id = json['description_id'];
     final l$id = json['id'];
     final l$name = json['name'];
-    final l$description = json['description'];
-    final l$tags = json['tags'];
     final l$additional_parameters = json['additional_parameters'];
     final l$available = json['available'];
     final l$category1 = json['category1'];
@@ -21857,19 +23036,14 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
     final l$cost = json['cost'];
     final l$image = json['image'];
     final l$position = json['position'];
+    final l$tags = json['tags'];
     final l$$__typename = json['__typename'];
-    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+    return Mutation$update_home_by_id$update_business_home_by_pk$details(
       name_id: (l$name_id as int),
       description_id: (l$description_id as int?),
       id: (l$id as int),
-      name:
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
-              .fromJson((l$name as Map<String, dynamic>)),
-      description: l$description == null
-          ? null
-          : Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
-              .fromJson((l$description as Map<String, dynamic>)),
-      tags: mapFromJson(l$tags),
+      name: Mutation$update_home_by_id$update_business_home_by_pk$details$name
+          .fromJson((l$name as Map<String, dynamic>)),
       additional_parameters: l$additional_parameters == null
           ? null
           : mapFromJson(l$additional_parameters),
@@ -21879,6 +23053,7 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
       cost: mapFromJson(l$cost),
       image: l$image == null ? null : mapFromJson(l$image),
       position: (l$position as int),
+      tags: mapFromJson(l$tags),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -21889,13 +23064,7 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
 
   final int id;
 
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
-      name;
-
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description?
-      description;
-
-  final dynamic tags;
+  final Mutation$update_home_by_id$update_business_home_by_pk$details$name name;
 
   final dynamic? additional_parameters;
 
@@ -21911,6 +23080,8 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
 
   final int position;
 
+  final dynamic tags;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -21923,10 +23094,6 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name.toJson();
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
-    final l$tags = tags;
-    _resultData['tags'] = mapToJson(l$tags);
     final l$additional_parameters = additional_parameters;
     _resultData['additional_parameters'] = l$additional_parameters == null
         ? null
@@ -21943,6 +23110,8 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
     _resultData['image'] = l$image == null ? null : mapToJson(l$image);
     final l$position = position;
     _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -21954,8 +23123,6 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
     final l$description_id = description_id;
     final l$id = id;
     final l$name = name;
-    final l$description = description;
-    final l$tags = tags;
     final l$additional_parameters = additional_parameters;
     final l$available = available;
     final l$category1 = category1;
@@ -21963,14 +23130,13 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
     final l$cost = cost;
     final l$image = image;
     final l$position = position;
+    final l$tags = tags;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name_id,
       l$description_id,
       l$id,
       l$name,
-      l$description,
-      l$tags,
       l$additional_parameters,
       l$available,
       l$category1,
@@ -21978,6 +23144,7 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
       l$cost,
       l$image,
       l$position,
+      l$tags,
       l$$__typename,
     ]);
   }
@@ -21988,7 +23155,7 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
       return true;
     }
     if (!(other
-            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details) ||
+            is Mutation$update_home_by_id$update_business_home_by_pk$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -22010,16 +23177,6 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
-      return false;
-    }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
-      return false;
-    }
-    final l$tags = tags;
-    final lOther$tags = other.tags;
-    if (l$tags != lOther$tags) {
       return false;
     }
     final l$additional_parameters = additional_parameters;
@@ -22057,6 +23214,11 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
     if (l$position != lOther$position) {
       return false;
     }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -22066,40 +23228,34 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
   }
 }
 
-extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
-    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details {
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details>
+extension UtilityExtension$Mutation$update_home_by_id$update_business_home_by_pk$details
+    on Mutation$update_home_by_id$update_business_home_by_pk$details {
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details<
+          Mutation$update_home_by_id$update_business_home_by_pk$details>
       get copyWith =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+abstract class CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details<
     TRes> {
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
-        instance,
-    TRes Function(
-            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details)
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details(
+    Mutation$update_home_by_id$update_business_home_by_pk$details instance,
+    TRes Function(Mutation$update_home_by_id$update_business_home_by_pk$details)
         then,
-  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details;
+  ) = _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$details;
 
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details.stub(
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details;
+      _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$details;
 
   TRes call({
     int? name_id,
     int? description_id,
     int? id,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name?
-        name,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description?
-        description,
-    dynamic? tags,
+    Mutation$update_home_by_id$update_business_home_by_pk$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -22107,30 +23263,27 @@ abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_r
     dynamic? cost,
     dynamic? image,
     int? position,
+    dynamic? tags,
     String? $__typename,
   });
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name<
       TRes> get name;
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
-      TRes> get description;
 }
 
-class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+class _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$details<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details<
             TRes> {
-  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+  _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$details(
     this._instance,
     this._then,
   );
 
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details
-      _instance;
+  final Mutation$update_home_by_id$update_business_home_by_pk$details _instance;
 
   final TRes Function(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details)
-      _then;
+      Mutation$update_home_by_id$update_business_home_by_pk$details) _then;
 
   static const _undefined = {};
 
@@ -22139,8 +23292,6 @@ class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_renta
     Object? description_id = _undefined,
     Object? id = _undefined,
     Object? name = _undefined,
-    Object? description = _undefined,
-    Object? tags = _undefined,
     Object? additional_parameters = _undefined,
     Object? available = _undefined,
     Object? category1 = _undefined,
@@ -22148,10 +23299,10 @@ class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_renta
     Object? cost = _undefined,
     Object? image = _undefined,
     Object? position = _undefined,
+    Object? tags = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+      _then(Mutation$update_home_by_id$update_business_home_by_pk$details(
         name_id: name_id == _undefined || name_id == null
             ? _instance.name_id
             : (name_id as int),
@@ -22162,14 +23313,7 @@ class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_renta
         name: name == _undefined || name == null
             ? _instance.name
             : (name
-                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name),
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description?),
-        tags: tags == _undefined || tags == null
-            ? _instance.tags
-            : (tags as dynamic),
+                as Mutation$update_home_by_id$update_business_home_by_pk$details$name),
         additional_parameters: additional_parameters == _undefined
             ? _instance.additional_parameters
             : (additional_parameters as dynamic?),
@@ -22189,34 +23333,27 @@ class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_renta
         position: position == _undefined || position == null
             ? _instance.position
             : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name<
       TRes> get name {
     final local$name = _instance.name;
-    return CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+    return CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name(
         local$name, (e) => call(name: e));
-  }
-
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
-      TRes> get description {
-    final local$description = _instance.description;
-    return local$description == null
-        ? CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
-            .stub(_then(_instance))
-        : CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
-            local$description, (e) => call(description: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+class _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$details<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details<
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details<
             TRes> {
-  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details(
+  _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$details(
       this._res);
 
   TRes _res;
@@ -22225,11 +23362,7 @@ class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_r
     int? name_id,
     int? description_id,
     int? id,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name?
-        name,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description?
-        description,
-    dynamic? tags,
+    Mutation$update_home_by_id$update_business_home_by_pk$details$name? name,
     dynamic? additional_parameters,
     bool? available,
     String? category1,
@@ -22237,35 +23370,31 @@ class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_r
     dynamic? cost,
     dynamic? image,
     int? position,
+    dynamic? tags,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name<
           TRes>
       get name =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
-              .stub(_res);
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
-          TRes>
-      get description =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name
               .stub(_res);
 }
 
-class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name {
-  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name({
+class Mutation$update_home_by_id$update_business_home_by_pk$details$name {
+  Mutation$update_home_by_id$update_business_home_by_pk$details$name({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name.fromJson(
+  factory Mutation$update_home_by_id$update_business_home_by_pk$details$name.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+    return Mutation$update_home_by_id$update_business_home_by_pk$details$name(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations
+              Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -22273,7 +23402,7 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
   }
 
   final List<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>
+          Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations>
       translations;
 
   final String $__typename;
@@ -22304,7 +23433,7 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
       return true;
     }
     if (!(other
-            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name) ||
+            is Mutation$update_home_by_id$update_business_home_by_pk$details$name) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -22329,60 +23458,58 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
   }
 }
 
-extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
-    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name {
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name>
+extension UtilityExtension$Mutation$update_home_by_id$update_business_home_by_pk$details$name
+    on Mutation$update_home_by_id$update_business_home_by_pk$details$name {
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name<
+          Mutation$update_home_by_id$update_business_home_by_pk$details$name>
       get copyWith =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+abstract class CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name<
     TRes> {
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
-        instance,
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name(
+    Mutation$update_home_by_id$update_business_home_by_pk$details$name instance,
     TRes Function(
-            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name)
+            Mutation$update_home_by_id$update_business_home_by_pk$details$name)
         then,
-  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name;
+  ) = _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name;
 
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name.stub(
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name;
+      _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name;
 
   TRes call({
-    List<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>?
+    List<Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations> Function(
+      Iterable<Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations> Function(
               Iterable<
-                  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
-                      Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>>)
+                  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations<
+                      Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+class _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name<
             TRes> {
-  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+  _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name(
     this._instance,
     this._then,
   );
 
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name
+  final Mutation$update_home_by_id$update_business_home_by_pk$details$name
       _instance;
 
   final TRes Function(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name)
-      _then;
+      Mutation$update_home_by_id$update_business_home_by_pk$details$name) _then;
 
   static const _undefined = {};
 
@@ -22390,42 +23517,41 @@ class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_renta
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+      _then(Mutation$update_home_by_id$update_business_home_by_pk$details$name(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>),
+                Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations> Function(
+          Iterable<Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations> Function(
                   Iterable<
-                      CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
-                          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>>)
+                      CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations<
+                          Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+              CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+class _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name<
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name<
             TRes> {
-  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name(
+  _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name(
       this._res);
 
   TRes _res;
 
   call({
-    List<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>?
+    List<Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -22433,19 +23559,19 @@ class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_r
   translations(_fn) => _res;
 }
 
-class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations {
-  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations({
+class Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations {
+  Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations.fromJson(
+  factory Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+    return Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -22487,7 +23613,7 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
       return true;
     }
     if (!(other
-            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations) ||
+            is Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -22510,30 +23636,30 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
   }
 }
 
-extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations
-    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations {
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations>
+extension UtilityExtension$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations
+    on Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations {
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations<
+          Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations>
       get copyWith =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+abstract class CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations<
     TRes> {
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations(
+    Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations
         instance,
     TRes Function(
-            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations)
+            Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations)
         then,
-  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations;
+  ) = _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations;
 
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations.stub(
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations;
+      _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations;
 
   TRes call({
     String? language_id,
@@ -22542,21 +23668,21 @@ abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_r
   });
 }
 
-class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+class _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations<
             TRes> {
-  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+  _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations(
     this._instance,
     this._then,
   );
 
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations
+  final Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations
       _instance;
 
   final TRes Function(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations)
+          Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations)
       _then;
 
   static const _undefined = {};
@@ -22567,7 +23693,7 @@ class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_renta
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+          Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -22580,12 +23706,12 @@ class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_renta
       ));
 }
 
-class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+class _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations<
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations<
             TRes> {
-  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$name$translations(
+  _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$details$name$translations(
       this._res);
 
   TRes _res;
@@ -22598,368 +23724,22 @@ class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_r
       _res;
 }
 
-class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description {
-  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description({
-    required this.translations,
-    required this.$__typename,
-  });
-
-  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description.fromJson(
-      Map<String, dynamic> json) {
-    final l$translations = json['translations'];
-    final l$$__typename = json['__typename'];
-    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
-      translations: (l$translations as List<dynamic>)
-          .map((e) =>
-              Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>
-      translations;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$translations = translations;
-    _resultData['translations'] =
-        l$translations.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$translations = translations;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$translations.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$translations = translations;
-    final lOther$translations = other.translations;
-    if (l$translations.length != lOther$translations.length) {
-      return false;
-    }
-    for (int i = 0; i < l$translations.length; i++) {
-      final l$translations$entry = l$translations[i];
-      final lOther$translations$entry = lOther$translations[i];
-      if (l$translations$entry != lOther$translations$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
-    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description {
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description>
-      get copyWith =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
-    TRes> {
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
-        instance,
-    TRes Function(
-            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description)
-        then,
-  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description;
-
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description.stub(
-          TRes res) =
-      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description;
-
-  TRes call({
-    List<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>?
-        translations,
-    String? $__typename,
-  });
-  TRes translations(
-      Iterable<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations> Function(
-              Iterable<
-                  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
-                      Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>>)
-          _fn);
-}
-
-class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
-        TRes>
-    implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
-            TRes> {
-  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description
-      _instance;
-
-  final TRes Function(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? translations = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
-        translations: translations == _undefined || translations == null
-            ? _instance.translations
-            : (translations as List<
-                Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes translations(
-          Iterable<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations> Function(
-                  Iterable<
-                      CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
-                          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>>)
-              _fn) =>
-      call(
-          translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
-        TRes>
-    implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description<
-            TRes> {
-  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>?
-        translations,
-    String? $__typename,
-  }) =>
-      _res;
-  translations(_fn) => _res;
-}
-
-class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations {
-  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations({
-    required this.language_id,
-    required this.value,
-    required this.$__typename,
-  });
-
-  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations.fromJson(
-      Map<String, dynamic> json) {
-    final l$language_id = json['language_id'];
-    final l$value = json['value'];
-    final l$$__typename = json['__typename'];
-    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
-      language_id: (l$language_id as String),
-      value: (l$value as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String language_id;
-
-  final String value;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$value = value;
-    _resultData['value'] = l$value;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$language_id = language_id;
-    final l$value = value;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$language_id,
-      l$value,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations
-    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations {
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations>
-      get copyWith =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
-    TRes> {
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations
-        instance,
-    TRes Function(
-            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations)
-        then,
-  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations;
-
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations.stub(
-          TRes res) =
-      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations;
-
-  TRes call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
-        TRes>
-    implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
-            TRes> {
-  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations
-      _instance;
-
-  final TRes Function(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? language_id = _undefined,
-    Object? value = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
-        TRes>
-    implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations<
-            TRes> {
-  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$details$description$translations(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business {
-  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business({
+class Mutation$update_home_by_id$update_business_home_by_pk$business {
+  Mutation$update_home_by_id$update_business_home_by_pk$business({
     required this.id,
     required this.details,
     required this.$__typename,
   });
 
-  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business.fromJson(
+  factory Mutation$update_home_by_id$update_business_home_by_pk$business.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
-    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+    return Mutation$update_home_by_id$update_business_home_by_pk$business(
       id: (l$id as int),
       details:
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
+          Mutation$update_home_by_id$update_business_home_by_pk$business$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -22967,7 +23747,7 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
 
   final int id;
 
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
+  final Mutation$update_home_by_id$update_business_home_by_pk$business$details
       details;
 
   final String $__typename;
@@ -23001,7 +23781,7 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
       return true;
     }
     if (!(other
-            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business) ||
+            is Mutation$update_home_by_id$update_business_home_by_pk$business) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -23024,57 +23804,55 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
   }
 }
 
-extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
-    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business {
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business>
+extension UtilityExtension$Mutation$update_home_by_id$update_business_home_by_pk$business
+    on Mutation$update_home_by_id$update_business_home_by_pk$business {
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business<
+          Mutation$update_home_by_id$update_business_home_by_pk$business>
       get copyWith =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+abstract class CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business<
     TRes> {
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
-        instance,
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business(
+    Mutation$update_home_by_id$update_business_home_by_pk$business instance,
     TRes Function(
-            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business)
+            Mutation$update_home_by_id$update_business_home_by_pk$business)
         then,
-  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business;
+  ) = _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$business;
 
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business.stub(
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business;
+      _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$business;
 
   TRes call({
     int? id,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details?
+    Mutation$update_home_by_id$update_business_home_by_pk$business$details?
         details,
     String? $__typename,
   });
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details<
       TRes> get details;
 }
 
-class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+class _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$business<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business<
             TRes> {
-  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+  _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$business(
     this._instance,
     this._then,
   );
 
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business
+  final Mutation$update_home_by_id$update_business_home_by_pk$business
       _instance;
 
   final TRes Function(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business)
-      _then;
+      Mutation$update_home_by_id$update_business_home_by_pk$business) _then;
 
   static const _undefined = {};
 
@@ -23083,64 +23861,71 @@ class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_renta
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+      _then(Mutation$update_home_by_id$update_business_home_by_pk$business(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details),
+                as Mutation$update_home_by_id$update_business_home_by_pk$business$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details<
       TRes> get details {
     final local$details = _instance.details;
-    return CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+    return CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details(
         local$details, (e) => call(details: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+class _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$business<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business<
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business<
             TRes> {
-  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business(
+  _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$business(
       this._res);
 
   TRes _res;
 
   call({
     int? id,
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details?
+    Mutation$update_home_by_id$update_business_home_by_pk$business$details?
         details,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details<
           TRes>
       get details =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details
               .stub(_res);
 }
 
-class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details {
-  Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details({
+class Mutation$update_home_by_id$update_business_home_by_pk$business$details {
+  Mutation$update_home_by_id$update_business_home_by_pk$business$details({
     required this.id,
     required this.name,
+    required this.currency,
+    required this.location,
     required this.$__typename,
   });
 
-  factory Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details.fromJson(
+  factory Mutation$update_home_by_id$update_business_home_by_pk$business$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
+    final l$currency = json['currency'];
+    final l$location = json['location'];
     final l$$__typename = json['__typename'];
-    return Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+    return Mutation$update_home_by_id$update_business_home_by_pk$business$details(
       id: (l$id as int),
       name: (l$name as String),
+      currency: (l$currency as String),
+      location:
+          Mutation$update_home_by_id$update_business_home_by_pk$business$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -23148,6 +23933,11 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
   final int id;
 
   final String name;
+
+  final String currency;
+
+  final Mutation$update_home_by_id$update_business_home_by_pk$business$details$location
+      location;
 
   final String $__typename;
 
@@ -23157,6 +23947,10 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -23166,9 +23960,388 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
   int get hashCode {
     final l$id = id;
     final l$name = name;
+    final l$currency = currency;
+    final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$name,
+      l$currency,
+      l$location,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_by_id$update_business_home_by_pk$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_by_id$update_business_home_by_pk$business$details
+    on Mutation$update_home_by_id$update_business_home_by_pk$business$details {
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details<
+          Mutation$update_home_by_id$update_business_home_by_pk$business$details>
+      get copyWith =>
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details<
+    TRes> {
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details(
+    Mutation$update_home_by_id$update_business_home_by_pk$business$details
+        instance,
+    TRes Function(
+            Mutation$update_home_by_id$update_business_home_by_pk$business$details)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details;
+
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details;
+
+  TRes call({
+    int? id,
+    String? name,
+    String? currency,
+    Mutation$update_home_by_id$update_business_home_by_pk$business$details$location?
+        location,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location<
+      TRes> get location;
+}
+
+class _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_by_id$update_business_home_by_pk$business$details
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_by_id$update_business_home_by_pk$business$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? currency = _undefined,
+    Object? location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_home_by_id$update_business_home_by_pk$business$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Mutation$update_home_by_id$update_business_home_by_pk$business$details$location),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location(
+        local$location, (e) => call(location: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? name,
+    String? currency,
+    Mutation$update_home_by_id$update_business_home_by_pk$business$details$location?
+        location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location<
+          TRes>
+      get location =>
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location
+              .stub(_res);
+}
+
+class Mutation$update_home_by_id$update_business_home_by_pk$business$details$location {
+  Mutation$update_home_by_id$update_business_home_by_pk$business$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_by_id$update_business_home_by_pk$business$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_by_id$update_business_home_by_pk$business$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_by_id$update_business_home_by_pk$business$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location
+    on Mutation$update_home_by_id$update_business_home_by_pk$business$details$location {
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location<
+          Mutation$update_home_by_id$update_business_home_by_pk$business$details$location>
+      get copyWith =>
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location<
+    TRes> {
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location(
+    Mutation$update_home_by_id$update_business_home_by_pk$business$details$location
+        instance,
+    TRes Function(
+            Mutation$update_home_by_id$update_business_home_by_pk$business$details$location)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location;
+
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_by_id$update_business_home_by_pk$business$details$location
+      _instance;
+
+  final TRes Function(
+          Mutation$update_home_by_id$update_business_home_by_pk$business$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_home_by_id$update_business_home_by_pk$business$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$business$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Mutation$update_home_by_id$update_business_home_by_pk$location {
+  Mutation$update_home_by_id$update_business_home_by_pk$location({
+    required this.address,
+    required this.gps,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_by_id$update_business_home_by_pk$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$address = json['address'];
+    final l$gps = json['gps'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_by_id$update_business_home_by_pk$location(
+      address: (l$address as String),
+      gps: geographyFromJson(l$gps),
+      name: (l$name as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String address;
+
+  final Geography gps;
+
+  final String name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$address = address;
+    final l$gps = gps;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$address,
+      l$gps,
       l$name,
       l$$__typename,
     ]);
@@ -23180,13 +24353,18 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
       return true;
     }
     if (!(other
-            is Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details) ||
+            is Mutation$update_home_by_id$update_business_home_by_pk$location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
       return false;
     }
     final l$name = name;
@@ -23203,65 +24381,69 @@ class Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental
   }
 }
 
-extension UtilityExtension$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
-    on Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details {
-  CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details>
+extension UtilityExtension$Mutation$update_home_by_id$update_business_home_by_pk$location
+    on Mutation$update_home_by_id$update_business_home_by_pk$location {
+  CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location<
+          Mutation$update_home_by_id$update_business_home_by_pk$location>
       get copyWith =>
-          CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+          CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+abstract class CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location<
     TRes> {
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
-    Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
-        instance,
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location(
+    Mutation$update_home_by_id$update_business_home_by_pk$location instance,
     TRes Function(
-            Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details)
+            Mutation$update_home_by_id$update_business_home_by_pk$location)
         then,
-  ) = _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details;
+  ) = _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$location;
 
-  factory CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details.stub(
+  factory CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details;
+      _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$location;
 
   TRes call({
-    int? id,
+    String? address,
+    Geography? gps,
     String? name,
     String? $__typename,
   });
 }
 
-class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+class _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$location<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location<
             TRes> {
-  _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+  _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk$location(
     this._instance,
     this._then,
   );
 
-  final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details
+  final Mutation$update_home_by_id$update_business_home_by_pk$location
       _instance;
 
   final TRes Function(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details)
-      _then;
+      Mutation$update_home_by_id$update_business_home_by_pk$location) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? id = _undefined,
+    Object? address = _undefined,
+    Object? gps = _undefined,
     Object? name = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
+      _then(Mutation$update_home_by_id$update_business_home_by_pk$location(
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -23271,12 +24453,752 @@ class _CopyWithImpl$Mutation$update_home_rental_by_id$update_business_home_renta
       ));
 }
 
-class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+class _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$location<
         TRes>
     implements
-        CopyWith$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details<
+        CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location<
             TRes> {
-  _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_rental_by_pk$rental$business$details(
+  _CopyWithStubImpl$Mutation$update_home_by_id$update_business_home_by_pk$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? address,
+    Geography? gps,
+    String? name,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_home_location {
+  factory Variables$Mutation$update_home_location({
+    required int id,
+    required String address,
+    required Geography gps,
+    required String name,
+  }) =>
+      Variables$Mutation$update_home_location._({
+        r'id': id,
+        r'address': address,
+        r'gps': gps,
+        r'name': name,
+      });
+
+  Variables$Mutation$update_home_location._(this._$data);
+
+  factory Variables$Mutation$update_home_location.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$address = data['address'];
+    result$data['address'] = (l$address as String);
+    final l$gps = data['gps'];
+    result$data['gps'] = geographyFromJson(l$gps);
+    final l$name = data['name'];
+    result$data['name'] = (l$name as String);
+    return Variables$Mutation$update_home_location._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  String get address => (_$data['address'] as String);
+  Geography get gps => (_$data['gps'] as Geography);
+  String get name => (_$data['name'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$address = address;
+    result$data['address'] = l$address;
+    final l$gps = gps;
+    result$data['gps'] = geographyToJson(l$gps);
+    final l$name = name;
+    result$data['name'] = l$name;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_home_location<
+          Variables$Mutation$update_home_location>
+      get copyWith => CopyWith$Variables$Mutation$update_home_location(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_home_location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$address = address;
+    final l$gps = gps;
+    final l$name = name;
+    return Object.hashAll([
+      l$id,
+      l$address,
+      l$gps,
+      l$name,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_home_location<TRes> {
+  factory CopyWith$Variables$Mutation$update_home_location(
+    Variables$Mutation$update_home_location instance,
+    TRes Function(Variables$Mutation$update_home_location) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_home_location;
+
+  factory CopyWith$Variables$Mutation$update_home_location.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_home_location;
+
+  TRes call({
+    int? id,
+    String? address,
+    Geography? gps,
+    String? name,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_home_location<TRes>
+    implements CopyWith$Variables$Mutation$update_home_location<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_home_location(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_home_location _instance;
+
+  final TRes Function(Variables$Mutation$update_home_location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? address = _undefined,
+    Object? gps = _undefined,
+    Object? name = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_home_location._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (address != _undefined && address != null)
+          'address': (address as String),
+        if (gps != _undefined && gps != null) 'gps': (gps as Geography),
+        if (name != _undefined && name != null) 'name': (name as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_home_location<TRes>
+    implements CopyWith$Variables$Mutation$update_home_location<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_home_location(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? address,
+    Geography? gps,
+    String? name,
+  }) =>
+      _res;
+}
+
+class Mutation$update_home_location {
+  Mutation$update_home_location({
+    this.update_business_home_location_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_location.fromJson(Map<String, dynamic> json) {
+    final l$update_business_home_location_by_pk =
+        json['update_business_home_location_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_location(
+      update_business_home_location_by_pk:
+          l$update_business_home_location_by_pk == null
+              ? null
+              : Mutation$update_home_location$update_business_home_location_by_pk
+                  .fromJson((l$update_business_home_location_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_home_location$update_business_home_location_by_pk?
+      update_business_home_location_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_home_location_by_pk =
+        update_business_home_location_by_pk;
+    _resultData['update_business_home_location_by_pk'] =
+        l$update_business_home_location_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_home_location_by_pk =
+        update_business_home_location_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_home_location_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_home_location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_home_location_by_pk =
+        update_business_home_location_by_pk;
+    final lOther$update_business_home_location_by_pk =
+        other.update_business_home_location_by_pk;
+    if (l$update_business_home_location_by_pk !=
+        lOther$update_business_home_location_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_location
+    on Mutation$update_home_location {
+  CopyWith$Mutation$update_home_location<Mutation$update_home_location>
+      get copyWith => CopyWith$Mutation$update_home_location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_location<TRes> {
+  factory CopyWith$Mutation$update_home_location(
+    Mutation$update_home_location instance,
+    TRes Function(Mutation$update_home_location) then,
+  ) = _CopyWithImpl$Mutation$update_home_location;
+
+  factory CopyWith$Mutation$update_home_location.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_location;
+
+  TRes call({
+    Mutation$update_home_location$update_business_home_location_by_pk?
+        update_business_home_location_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+      TRes> get update_business_home_location_by_pk;
+}
+
+class _CopyWithImpl$Mutation$update_home_location<TRes>
+    implements CopyWith$Mutation$update_home_location<TRes> {
+  _CopyWithImpl$Mutation$update_home_location(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_location _instance;
+
+  final TRes Function(Mutation$update_home_location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_home_location_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_home_location(
+        update_business_home_location_by_pk: update_business_home_location_by_pk ==
+                _undefined
+            ? _instance.update_business_home_location_by_pk
+            : (update_business_home_location_by_pk
+                as Mutation$update_home_location$update_business_home_location_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+      TRes> get update_business_home_location_by_pk {
+    final local$update_business_home_location_by_pk =
+        _instance.update_business_home_location_by_pk;
+    return local$update_business_home_location_by_pk == null
+        ? CopyWith$Mutation$update_home_location$update_business_home_location_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_home_location$update_business_home_location_by_pk(
+            local$update_business_home_location_by_pk,
+            (e) => call(update_business_home_location_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_home_location<TRes>
+    implements CopyWith$Mutation$update_home_location<TRes> {
+  _CopyWithStubImpl$Mutation$update_home_location(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_home_location$update_business_home_location_by_pk?
+        update_business_home_location_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+          TRes>
+      get update_business_home_location_by_pk =>
+          CopyWith$Mutation$update_home_location$update_business_home_location_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_home_location = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_home_location'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'address')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'gps')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'name')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_home_location_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'address'),
+                value: VariableNode(name: NameNode(value: 'address')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'gps'),
+                value: VariableNode(name: NameNode(value: 'gps')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'name'),
+                value: VariableNode(name: NameNode(value: 'name')),
+              ),
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'gps'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_home_location _parserFn$Mutation$update_home_location(
+        Map<String, dynamic> data) =>
+    Mutation$update_home_location.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_home_location = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_home_location?,
+);
+
+class Options$Mutation$update_home_location
+    extends graphql.MutationOptions<Mutation$update_home_location> {
+  Options$Mutation$update_home_location({
+    String? operationName,
+    required Variables$Mutation$update_home_location variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_home_location? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_home_location>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_home_location(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_home_location,
+          parserFn: _parserFn$Mutation$update_home_location,
+        );
+
+  final OnMutationCompleted$Mutation$update_home_location?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_home_location
+    extends graphql.WatchQueryOptions<Mutation$update_home_location> {
+  WatchOptions$Mutation$update_home_location({
+    String? operationName,
+    required Variables$Mutation$update_home_location variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_home_location,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_home_location,
+        );
+}
+
+extension ClientExtension$Mutation$update_home_location
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_home_location>>
+      mutate$update_home_location(
+              Options$Mutation$update_home_location options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_home_location>
+      watchMutation$update_home_location(
+              WatchOptions$Mutation$update_home_location options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_home_location$update_business_home_location_by_pk {
+  Mutation$update_home_location$update_business_home_location_by_pk({
+    required this.id,
+    required this.name,
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_location$update_business_home_location_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_location$update_business_home_location_by_pk(
+      id: (l$id as int),
+      name: (l$name as String),
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String name;
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_location$update_business_home_location_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_location$update_business_home_location_by_pk
+    on Mutation$update_home_location$update_business_home_location_by_pk {
+  CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+          Mutation$update_home_location$update_business_home_location_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$update_home_location$update_business_home_location_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$update_home_location$update_business_home_location_by_pk(
+    Mutation$update_home_location$update_business_home_location_by_pk instance,
+    TRes Function(
+            Mutation$update_home_location$update_business_home_location_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_location$update_business_home_location_by_pk;
+
+  factory CopyWith$Mutation$update_home_location$update_business_home_location_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_location$update_business_home_location_by_pk;
+
+  TRes call({
+    int? id,
+    String? name,
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_home_location$update_business_home_location_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_location$update_business_home_location_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_location$update_business_home_location_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$update_home_location$update_business_home_location_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_home_location$update_business_home_location_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_home_location$update_business_home_location_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_location$update_business_home_location_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_location$update_business_home_location_by_pk(
       this._res);
 
   TRes _res;
@@ -23284,6 +25206,8 @@ class _CopyWithStubImpl$Mutation$update_home_rental_by_id$update_business_home_r
   call({
     int? id,
     String? name,
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;

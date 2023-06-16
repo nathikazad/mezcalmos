@@ -53,7 +53,53 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
         avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
         reviewCount: data.reviews_aggregate.aggregate?.count,
         location: constructLocation(
-                data.details.location.gps, data.details.location.address),
+            data.details.location.gps, data.details.location.address),
+      ));
+    });
+    return _businesses;
+  } else {
+    return [];
+  }
+}
+
+Future<List<BusinessCard>> get_business_by_home(
+    {required double distance,
+    required Location fromLocation,
+    int? offset,
+    int? limit,
+    required HomeAvailabilityOption? homeType,
+    required bool withCache}) async {
+  final List<BusinessCard> _businesses = <BusinessCard>[];
+
+  final QueryResult<Query$get_business_by_home> response = await _db
+      .graphQLClient
+      .query$get_business_by_home(Options$Query$get_business_by_home(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$get_business_by_home(
+              distance: distance,
+              homeType: homeType!.toFirebaseFormatString(),
+              from: Geography(
+                  fromLocation.lat as double, fromLocation.lng as double),
+              offset: offset,
+              limit: limit)));
+
+  if (response.parsedData?.business_business != null) {
+    response.parsedData?.business_business
+        .forEach((Query$get_business_by_home$business_business data) async {
+      final PaymentInfo _paymentInfo = PaymentInfo.fromData(
+          stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
+      _businesses.add(BusinessCard(
+        id: data.id,
+        detailsId: data.details.id,
+        name: data.details.name,
+        image: data.details.image,
+        currency: data.details.currency.toCurrency(),
+        acceptedPayments: _paymentInfo.acceptedPayments,
+        avgRating: data.reviews_aggregate.aggregate?.avg?.rating,
+        reviewCount: data.reviews_aggregate.aggregate?.count,
+        location: constructLocation(
+            data.details.location.gps, data.details.location.address),
       ));
     });
     return _businesses;
@@ -82,6 +128,36 @@ Future<Business?> get_business_by_id(
         response.parsedData?.business_business_by_pk!;
 
     if (data != null) {
+      final List<Home> _home = <Home>[];
+      data.home.forEach(
+          (Query$get_business_by_id$business_business_by_pk$home home) async {
+        _home.add(Home(
+          availableFor: home.available_for.toHomeAvailabilityOption(),
+          location: HomeLocation(
+            name: home.location!.name,
+            location: Location(
+              lat: home.location!.gps.latitude,
+              lng: home.location!.gps.longitude,
+              address: home.location!.address,
+            ),
+          ),
+          category1: home.details!.category1.toHomeCategory1(),
+          details: BusinessItemDetails(
+            id: home.id,
+            name: toLanguageMap(translations: home.details!.name.translations),
+            position: home.details!.position,
+            businessId: data.id,
+            available: home.details!.available,
+            cost: constructBusinessServiceCost(home.details!.cost),
+            image: home.details!.image
+                    ?.map<String>((e) => e.toString())
+                    .toList() ??
+                [],
+          ),
+          // bathrooms: home.
+        ));
+      });
+
       final List<Rental> _rentals = <Rental>[];
       data.rentals.forEach(
           (Query$get_business_by_id$business_business_by_pk$rentals
@@ -204,6 +280,7 @@ Future<Business?> get_business_by_id(
         events: _events,
         products: _products,
         services: _service,
+        homes: _home,
       );
     }
   } else

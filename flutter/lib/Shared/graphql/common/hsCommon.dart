@@ -124,12 +124,25 @@ Future<ServiceTree> get_service_tree(
   final ServiceTree rentals = ServiceTree(MezService.Rentals, 0, root);
   List<Future<void>> futures = [];
   RentalCategory1.values.forEach((RentalCategory1 element) async {
-    if (element == RentalCategory1.Uncategorized || element == RentalCategory1.RealEstate) return;
+    if (element == RentalCategory1.Uncategorized) return;
 
     futures.add(rentalsQuery(withCache, distance, lat, lng, element, rentals));
   });
+  final QueryResult<Query$number_of_home> homeResponse = await _db.graphQLClient
+      .query$number_of_home(Options$Query$number_of_home(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_home(
+              distance: distance, from: Geography(lat, lng))));
+  final ServiceTree home = ServiceTree(
+      MezService.Home,
+      homeResponse.parsedData?.business_home_aggregate.aggregate?.count ?? 0,
+      root);
   await Future.wait(futures);
   if (rentals.count > 0) {
+    if (home.count > 0) {
+      rentals.children.add(home);
+    }
     root.children.add(rentals);
   }
 
@@ -236,11 +249,10 @@ Future<ServiceTree> get_service_tree(
               distance: distance, from: Geography(lat, lng))));
   final ServiceTree realEstate = ServiceTree(
       MezService.RealEstate,
-      realEstateResponse
-              .parsedData?.business_rental_aggregate.aggregate?.count ??
+      realEstateResponse.parsedData?.business_home_aggregate.aggregate?.count ??
           0,
       root);
-  if (classes.count > 0) {
+  if (realEstate.count > 0) {
     root.children.add(realEstate);
   }
 
@@ -387,8 +399,21 @@ enum MezService {
 
 extension ParseMezServiceToString on MezService {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  OrderType toOrderType() {
+    switch (this) {
+      case MezService.Restaurants:
+        return OrderType.Restaurant;
+      case MezService.Laundry:
+        return OrderType.Laundry;
+      case MezService.Courier:
+        return OrderType.Courier;
+      default:
+        throw Exception("Invalid service");
+    }
   }
 }
 

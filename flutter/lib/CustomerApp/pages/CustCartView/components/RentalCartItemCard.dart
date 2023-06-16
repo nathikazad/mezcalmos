@@ -137,7 +137,7 @@ class RentalCartItemCard extends StatelessWidget {
                           color: primaryBlueColor,
                         ),
                       ),
-                      onTap: () async{
+                      onTap: () async {
                         await controller.editCartItem(item);
                       },
                     ),

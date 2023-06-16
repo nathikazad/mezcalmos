@@ -45,7 +45,7 @@ export async function getCart(customerId: number): Promise<Cart> {
         return {
             cartItemId: i.id,
             customerId,
-            selectedOptions : JSON.parse(i.selected_options),
+            selectedOptions : (i.selected_options),
             costPerOne: i.cost_per_one,
             quantity: i.quantity,
             itemId: i.restaurant_item_id,

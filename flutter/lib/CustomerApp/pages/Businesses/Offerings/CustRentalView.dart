@@ -29,10 +29,25 @@ dynamic _i18n() =>
 
 class CustRentalView extends StatefulWidget {
   const CustRentalView({super.key});
-  static Future<void> navigate({required int rentalId}) async {
-    final String route =
-        CustBusinessRoutes.custRentalRoute.replaceFirst(":id", "$rentalId");
-    return MezRouter.toPath(route);
+
+  static String constructRoute(int rentalId) {
+    return CustBusinessRoutes.custRentalRoute.replaceFirst(":id", "$rentalId");
+  }
+
+  static Future<void> navigate({
+    required int rentalId,
+    int? cartId,
+    DateTime? startDate,
+    Map<TimeUnit, num>? timeCost,
+    int? duration,
+  }) async {
+    final String route = constructRoute(rentalId);
+    return MezRouter.toPath(route, arguments: {
+      "startDate": startDate,
+      "timeCost": timeCost,
+      "duration": duration,
+      "cartId": cartId,
+    });
   }
 
   @override
@@ -46,8 +61,21 @@ class _CustRentalViewState extends State<CustRentalView> {
   void initState() {
     rentalId = int.tryParse(MezRouter.urlArguments["id"].toString());
     mezDbgPrint("✅ init rental view with id => $rentalId");
+    final DateTime? startDate =
+        MezRouter.bodyArguments!["startDate"] as DateTime?;
+    final Map<TimeUnit, num>? timeCost =
+        MezRouter.bodyArguments!["timeCost"] as Map<TimeUnit, num>?;
+    final int? duration = MezRouter.bodyArguments!["duration"] as int?;
+    final int? cartId = MezRouter.bodyArguments!["cartId"] as int?;
     if (rentalId != null) {
-      viewController.fetchData(rentalId: rentalId!);
+      viewController.init(
+        rentalId: rentalId!,
+        startDate: startDate,
+        timeCost: timeCost,
+        duration: duration,
+        cartId: cartId,
+      );
+      // viewController.fetchData(rentalId: rentalId!);
     } else {
       showErrorSnackBar(errorText: "Error: Rental ID $rentalId not found");
     }
@@ -57,13 +85,17 @@ class _CustRentalViewState extends State<CustRentalView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MezButton(
-        label: "Add to cart",
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.bookOffering();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: viewController.isEditingMode.value
+              ? "Update Item"
+              : "Add to cart",
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.bookOffering();
+          },
+        ),
       ),
       body: Obx(() {
         if (viewController.rental != null) {
@@ -99,17 +131,18 @@ class _CustRentalViewState extends State<CustRentalView> {
                         cost: viewController.rental!.details.cost,
                       ),
                       _description(context),
-                      viewController.rental!.gpsLocation == null
+                      viewController.rental!.business.location == null
                           ? const SizedBox.shrink()
                           : ServiceLocationCard(
                               height: 20.h,
                               location: MezLocation(
-                                viewController.rental!.gpsLocation?.address ??
+                                viewController
+                                        .rental!.business.location?.address ??
                                     "",
                                 MezLocation.buildLocationData(
-                                  viewController.rental!.gpsLocation!.lat
+                                  viewController.rental!.business.location!.lat
                                       .toDouble(),
-                                  viewController.rental!.gpsLocation!.lng
+                                  viewController.rental!.business.location!.lng
                                       .toDouble(),
                                 ),
                               ),
@@ -140,6 +173,7 @@ class _CustRentalViewState extends State<CustRentalView> {
                       bigSeperator,
                       CustBusinessDurationPicker(
                         costUnits: viewController.rental!.details.cost,
+                        unitValue: viewController.timeCost.value?.keys.first,
                         label: "Duration",
                         value: viewController.duration.value,
                         validator: (TimeUnit? p0) {

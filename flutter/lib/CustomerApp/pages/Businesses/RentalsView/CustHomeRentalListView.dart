@@ -8,7 +8,6 @@ import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.da
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -160,7 +159,6 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                   minimumSize: Size.zero),
                               onPressed: () {
                                 viewController.setFilter(timeUnits[index]);
-                                setState(() {});
                               },
                               child: Text(
                                 '${_i18n()[timeUnits[index].toFirebaseFormatString()]}',
@@ -201,7 +199,9 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
               child: Obx(
                 () => viewController.showFetchButton.value
                     ? InkWell(
-                        onTap: () => viewController.fetchMapViewRentals(),
+                        onTap: () async{
+                          await viewController.fetchMapViewRentals();
+                        },
                         child: Material(
                             color: Colors.white,
                             elevation: 1,
@@ -396,7 +396,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                       ),
                                     ],
                                   ),
-                                  if (viewController.rentals[0].bedrooms !=
+                                  if (viewController.rentals[index].bedrooms !=
                                       null)
                                     Row(
                                       crossAxisAlignment:
@@ -406,7 +406,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                         Icon(Icons.single_bed_outlined,
                                             size: 15.mezSp),
                                         Text(
-                                            ' ${viewController.rentals[0].bedrooms} ${_i18n()['bedrooms']}',
+                                            ' ${viewController.rentals[index].bedrooms} ${_i18n()['bedrooms']}',
                                             style: context.textTheme.bodyLarge
                                                 ?.copyWith(
                                                     fontSize: 12.5.mezSp,

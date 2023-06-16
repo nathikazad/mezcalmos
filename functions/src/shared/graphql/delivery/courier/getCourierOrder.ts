@@ -104,7 +104,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
         fromLocationText: response.delivery_courier_order_by_pk.from_location_text,
         toLocation,
         customerId: response.delivery_courier_order_by_pk.customer_id,
-        stripeInfo: JSON.parse(response.delivery_courier_order_by_pk.stripe_info),
+        stripeInfo: (response.delivery_courier_order_by_pk.stripe_info),
         stripeFees: response.delivery_courier_order_by_pk.stripe_fees,
         tax: response.delivery_courier_order_by_pk.tax,
         items,
@@ -138,7 +138,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
             tripDuration: response.delivery_courier_order_by_pk.delivery_order.trip_duration,
             tripPolyline: response.delivery_courier_order_by_pk.delivery_order.trip_polyline,
             changePriceRequest: (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
-                ? JSON.parse(response.delivery_courier_order_by_pk.delivery_order.change_price_request)
+                ? (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
                 : undefined,
             deliveryDriver: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver) ? {
                 id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.id,
@@ -227,7 +227,7 @@ export async function getCourierOrderFromDelivery(deliveryOrder: DeliveryOrder):
         fromLocationText: response.delivery_courier_order[0].from_location_text,
         toLocation,
         customerId: response.delivery_courier_order[0].customer_id,
-        stripeInfo: JSON.parse(response.delivery_courier_order[0].stripe_info),
+        stripeInfo: (response.delivery_courier_order[0].stripe_info),
         stripeFees: response.delivery_courier_order[0].stripe_fees,
         tax: response.delivery_courier_order[0].tax,
         items,

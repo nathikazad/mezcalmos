@@ -30,7 +30,7 @@ query number_of_delivery($distance: Float!, $from: geography!) {
 }
 
 query number_of_real_estate($distance: Float!, $from: geography!) {
-  business_rental_aggregate(
+  business_home_aggregate(
     where: {
       business: {
         details: {
@@ -41,7 +41,30 @@ query number_of_real_estate($distance: Float!, $from: geography!) {
           open_status: { _neq: "closedIndefinitely" }
         }
       }
-      details: { category1: { _eq: "realEstate" } }
+      details: {}
+      available_for: { _eq: "sale" }
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query number_of_home($distance: Float!, $from: geography!) {
+  business_home_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+        }
+      }
+      details: {}
+      available_for: { _eq: "rent" }
     }
   ) {
     aggregate {

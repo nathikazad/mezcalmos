@@ -100,24 +100,24 @@ class _UserProfileViewState extends State<UserProfileView> {
                   if (!viewController.isEditingInfo)
                     _editAndDeleteBtns(context),
                   if (viewController.isEditingInfo) _userNameInput(),
-                  if (!viewController.isEditingInfo)
-                    MezButton(
-                      label: "Delete account",
-                      backgroundColor: offRedColor,
-                      textColor: redAccentColor,
-                      onClick: () async {
-                        await showConfirmationDialog(
-                          context,
-                          title: '${_i18n()["deleteTitle"]}',
-                          primaryButtonText: "${_i18n()["deletePrBtn"]}",
-                          secondaryButtonText: "${_i18n()["deleteScBtn"]}",
-                          helperText: "${_i18n()["deleteHelper"]}",
-                          onYesClick: () async {
-                            await viewController.deleteAccount(context);
-                          },
-                        );
-                      },
-                    ),
+                  // if (!viewController.isEditingInfo)
+                  //   MezButton(
+                  //     label: "Delete account",
+                  //     backgroundColor: offRedColor,
+                  //     textColor: redAccentColor,
+                  //     onClick: () async {
+                  //       await showConfirmationDialog(
+                  //         context,
+                  //         title: '${_i18n()["deleteTitle"]}',
+                  //         primaryButtonText: "${_i18n()["deletePrBtn"]}",
+                  //         secondaryButtonText: "${_i18n()["deleteScBtn"]}",
+                  //         helperText: "${_i18n()["deleteHelper"]}",
+                  //         onYesClick: () async {
+                  //           await viewController.deleteAccount(context);
+                  //         },
+                  //       );
+                  //     },
+                  //   ),
                 ],
               ),
             )));

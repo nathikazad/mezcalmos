@@ -169,7 +169,7 @@ Future<List<MinimalOrder>> get_customer_orders(
     {required int customerId,
     required bool inProcess,
     required int limit,
-    required offest}) async {
+    required int offest}) async {
   final QueryResult<Query$get_customer_orders> res =
       await _graphClient.query$get_customer_orders(
     Options$Query$get_customer_orders(
@@ -295,4 +295,24 @@ Future<int?> addDriverOrderReviewId(
   }
   return res
       .parsedData?.update_delivery_order_by_pk?.driver_review_by_customer_id;
+}
+
+Future<int?> get_customer_orders_by_type(
+    {required int customerId, required OrderType orderType}) async {
+  QueryResult<Query$getCustomerOrdersByType> res = await _graphClient
+      .query$getCustomerOrdersByType(Options$Query$getCustomerOrdersByType(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Query$getCustomerOrdersByType(
+              custId: customerId,
+              orderType: orderType.toFirebaseFormatString())));
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  if (res.parsedData == null) {
+    return null;
+  }
+  if (res.parsedData!.customer_minimal_orders_aggregate.nodes.isEmpty) {
+    return null;
+  }
+  return res.parsedData?.customer_minimal_orders_aggregate.nodes.first.id;
 }

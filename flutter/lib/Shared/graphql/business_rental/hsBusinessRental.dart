@@ -48,31 +48,22 @@ Future<List<RentalCard>> get_rental_by_category(
         businessName: data.business.details.name,
         currency: data.business.details.currency.toCurrency(),
         rental: Rental(
-            category1: data.details.category1.toRentalCategory1(),
-            category2: data.details.category2.toRentalCategory2(),
-            category3: data.category3.toRentalCategory3(),
-            details: BusinessItemDetails(
-              id: data.id,
-              name: toLanguageMap(translations: data.details.name.translations),
-              position: data.details.position,
-              businessId: data.business.id,
-              available: data.details.available,
-              image: data.details.image
-                      ?.map<String>((e) => e.toString())
-                      .toList() ??
-                  [],
-              cost: constructBusinessServiceCost(data.details.cost),
-              additionalParameters: data.details.additional_parameters,
-            ),
-            bathrooms: data.home_rental?.bathrooms,
-            bedrooms: data.home_rental?.bedrooms,
-            homeType: data.home_rental?.home_type.toHomeType(),
-            gpsLocation: (data.home_rental != null)
-                ? Location(
-                    lat: data.home_rental!.gps_location.latitude,
-                    lng: data.home_rental!.gps_location.longitude,
-                    address: data.home_rental!.address)
-                : null),
+          category1: data.details.category1.toRentalCategory1(),
+          category2: data.details.category2.toRentalCategory2(),
+          category3: data.category3.toRentalCategory3(),
+          details: BusinessItemDetails(
+            id: data.id,
+            name: toLanguageMap(translations: data.details.name.translations),
+            position: data.details.position,
+            businessId: data.business.id,
+            available: data.details.available,
+            image:
+                data.details.image?.map<String>((e) => e.toString()).toList() ??
+                    [],
+            cost: constructBusinessServiceCost(data.details.cost),
+            additionalParameters: data.details.additional_parameters,
+          ),
+        ),
       ));
     });
     return _rentals;
@@ -102,37 +93,28 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
     if (data != null) {
       final RentalWithBusinessCard returnedRental = RentalWithBusinessCard(
           rental: Rental(
-              id: data.id,
-              category1: data.details.category1.toRentalCategory1(),
-              category2: data.details.category2.toRentalCategory2(),
-              category3: data.category3.toRentalCategory3(),
-              details: BusinessItemDetails(
-                nameId: data.details.name_id,
-                descriptionId: data.details.description_id,
-                id: data.details.id,
-                name:
-                    toLanguageMap(translations: data.details.name.translations),
-                position: data.details.position,
-                businessId: data.business.id,
-                available: data.details.available,
-                cost: constructBusinessServiceCost(data.details.cost),
-                image: data.details.image
-                        ?.map<String>((e) => e.toString())
-                        .toList() ??
-                    [],
-                additionalParameters: data.details.additional_parameters,
-                description: toLanguageMap(
-                    translations: data.details.description?.translations ?? []),
-              ),
-              bathrooms: data.home_rental?.bathrooms,
-              bedrooms: data.home_rental?.bedrooms,
-              homeType: data.home_rental?.home_type.toHomeType(),
-              gpsLocation: (data.home_rental != null)
-                  ? Location(
-                      lat: data.home_rental!.gps_location.latitude,
-                      lng: data.home_rental!.gps_location.longitude,
-                      address: data.home_rental!.address)
-                  : null),
+            id: data.id,
+            category1: data.details.category1.toRentalCategory1(),
+            category2: data.details.category2.toRentalCategory2(),
+            category3: data.category3.toRentalCategory3(),
+            details: BusinessItemDetails(
+              nameId: data.details.name_id,
+              descriptionId: data.details.description_id,
+              id: data.details.id,
+              name: toLanguageMap(translations: data.details.name.translations),
+              position: data.details.position,
+              businessId: data.business.id,
+              available: data.details.available,
+              cost: constructBusinessServiceCost(data.details.cost),
+              image: data.details.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+              additionalParameters: data.details.additional_parameters,
+              description: toLanguageMap(
+                  translations: data.details.description?.translations ?? []),
+            ),
+          ),
           business: BusinessCard(
             lastActive: data.business.details.last_active_time != null
                 ? DateTime.parse(data.business.details.last_active_time!)
@@ -154,6 +136,92 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
                 lng: data.business.details.location.gps.longitude,
                 address: data.business.details.location.address),
             reviewCount: data.business.reviews_aggregate.aggregate?.count,
+          ));
+      returnedRental.id = id;
+      return returnedRental;
+    }
+  } else
+    return null;
+  return null;
+}
+
+Future<HomeWithBusinessCard?> get_home_by_id(
+    {required int id, required bool withCache}) async {
+  final QueryResult<Query$get_home_by_id> response = await _db.graphQLClient
+      .query$get_home_by_id(Options$Query$get_home_by_id(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$get_home_by_id(id: id)));
+
+  mezDbgPrint("[+] -> id : $id");
+  if (response.parsedData?.business_home_by_pk == null) {
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  } else if (response.parsedData != null) {
+    mezDbgPrint("✅✅✅✅ Hasura query success ");
+    final Query$get_home_by_id$business_home_by_pk? data =
+        response.parsedData?.business_home_by_pk!;
+
+    if (data != null) {
+      final HomeWithBusinessCard returnedRental = HomeWithBusinessCard(
+          home: Home(
+            location: HomeLocation(
+              name: data.location!.name,
+              location: Location(
+                lat: data.location!.gps.latitude,
+                lng: data.location!.gps.longitude,
+                address: data.location!.address,
+              ),
+            ),
+            availableFor: data.available_for.toHomeAvailabilityOption(),
+            id: data.id,
+            category1: data.details!.category1.toHomeCategory1(),
+            details: BusinessItemDetails(
+              id: data.details!.id.toInt(),
+              nameId: data.details!.name_id,
+              descriptionId: data.details!.description_id,
+              name:
+                  toLanguageMap(translations: data.details!.name.translations),
+              position: data.details!.position,
+              businessId: data.business!.id,
+              available: data.details!.available,
+              image: data.details!.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+              cost: constructBusinessServiceCost(data.details!.cost),
+              additionalParameters: data.details!.additional_parameters,
+            ),
+            bathrooms: data.bathrooms,
+            bedrooms: data.bedrooms,
+            gpsLocation: Location(
+              lat: data.location!.gps.latitude,
+              lng: data.location!.gps.longitude,
+              address: data.location!.address,
+            ),
+          ),
+          business: BusinessCard(
+            lastActive: data.business!.details.last_active_time != null
+                ? DateTime.parse(data.business!.details.last_active_time!)
+                : null,
+            id: data.business!.id,
+            detailsId: data.business!.details.id,
+            name: data.business!.details.name,
+            image: data.business!.details.image,
+            currency: data.business!.details.currency.toCurrency(),
+            acceptedPayments: PaymentInfo.fromData(
+                    stripeInfo: {},
+                    acceptedPayments: data.business!.details.accepted_payments)
+                .acceptedPayments,
+            avgRating: double.tryParse(data.business!.details.business!
+                    .reviews_aggregate.aggregate?.avg
+                    .toString() ??
+                '0.0'),
+            location: Location(
+                lat: data.business!.details.location.gps.latitude,
+                lng: data.business!.details.location.gps.longitude,
+                address: data.business!.details.location.address),
+            reviewCount: data
+                .business!.details.business!.reviews_aggregate.aggregate?.count,
           ));
       returnedRental.id = id;
       return returnedRental;
@@ -185,19 +253,19 @@ Future<int?> get_number_of_rental(
   }
 }
 
-Future<List<RentalCard>> get_home_rentals(
+Future<List<HomeCard>> get_home_rentals(
     {required double distance,
     required Location fromLocation,
     int? offset,
     int? limit,
     required bool withCache}) async {
-  final List<RentalCard> _homes = <RentalCard>[];
-
-  final QueryResult<Query$get_home_rentals> response = await _db.graphQLClient
-      .query$get_home_rentals(Options$Query$get_home_rentals(
-          fetchPolicy:
-              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-          variables: Variables$Query$get_home_rentals(
+  final List<HomeCard> _homes = <HomeCard>[];
+  mezDbgPrint(
+      "distance $distance location ${fromLocation.lat.toDouble()} ${fromLocation.lng.toDouble()}");
+  final QueryResult<Query$get_home> response = await _db.graphQLClient
+      .query$get_home(Options$Query$get_home(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Query$get_home(
               distance: distance,
               location: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
@@ -206,38 +274,47 @@ Future<List<RentalCard>> get_home_rentals(
 
   mezDbgPrint("get_home_rentals $response");
 
-  if (response.parsedData?.business_get_home_rentals != null) {
-    response.parsedData?.business_get_home_rentals
-        .forEach((Query$get_home_rentals$business_get_home_rentals data) async {
-      _homes.add(RentalCard(
-          businessName: data.rental.business.details.name,
-          currency: data.rental.business.details.currency.toCurrency(),
-          rental: Rental(
-            id: data.rental.id,
-            category1: data.rental.details.category1.toRentalCategory1(),
+  if (response.parsedData?.business_home != null) {
+    response.parsedData?.business_home
+        .forEach((Query$get_home$business_home data) async {
+      _homes.add(HomeCard(
+          businessName: data.business!.details.name,
+          currency: data.business!.details.currency.toCurrency(),
+          home: Home(
+            location: HomeLocation(
+              name: data.location!.name,
+              location: Location(
+                lat: data.location!.gps.latitude,
+                lng: data.location!.gps.longitude,
+                address: data.location!.address,
+              ),
+            ),
+            availableFor: data.available_for.toHomeAvailabilityOption(),
+            id: data.id,
+            category1: data.details!.category1.toHomeCategory1(),
             details: BusinessItemDetails(
-              id: data.rental.id,
-              nameId: data.rental.details.name_id,
-              descriptionId: data.rental.details.description_id,
-              name: toLanguageMap(
-                  translations: data.rental.details.name.translations),
-              position: data.rental.details.position,
-              businessId: data.rental.business.id,
-              available: data.rental.details.available,
-              image: data.rental.details.image
+              id: data.id,
+              nameId: data.details!.name_id,
+              descriptionId: data.details!.description_id,
+              name:
+                  toLanguageMap(translations: data.details!.name.translations),
+              position: data.details!.position,
+              businessId: data.business!.id,
+              available: data.details!.available,
+              image: data.details!.image
                       ?.map<String>((e) => e.toString())
                       .toList() ??
                   [],
-              cost: constructBusinessServiceCost(data.rental.details.cost),
-              additionalParameters: data.rental.details.additional_parameters,
+              cost: constructBusinessServiceCost(data.details!.cost),
+              additionalParameters: data.details!.additional_parameters,
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
             gpsLocation: Location(
-                lat: data.gps_location.latitude,
-                lng: data.gps_location.longitude,
-                address: data.address),
-            homeType: data.home_type.toHomeType(),
+              lat: data.location!.gps.latitude,
+              lng: data.location!.gps.longitude,
+              address: data.location!.address,
+            ),
           )));
     });
     return _homes;
@@ -246,53 +323,63 @@ Future<List<RentalCard>> get_home_rentals(
   }
 }
 
-Future<List<RentalCard>> get_business_home_rentals(
+Future<List<HomeCard>> get_business_home_rentals(
     {required int busniessId,
     int? offset,
     int? limit,
     required bool withCache}) async {
-  final List<RentalCard> _homes = <RentalCard>[];
+  final List<HomeCard> _homes = <HomeCard>[];
 
-  final QueryResult<Query$get_business_home_rentals> response = await _db
-      .graphQLClient
-      .query$get_business_home_rentals(Options$Query$get_business_home_rentals(
+  final QueryResult<Query$get_business_home> response = await _db.graphQLClient
+      .query$get_business_home(Options$Query$get_business_home(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-          variables: Variables$Query$get_business_home_rentals(
+          variables: Variables$Query$get_business_home(
               businessId: busniessId, offset: offset, limit: limit)));
 
   mezDbgPrint("get_home_rentals $response");
 
-  if (response.parsedData?.business_home_rental != null) {
-    response.parsedData?.business_home_rental.forEach(
-        (Query$get_business_home_rentals$business_home_rental data) async {
-      _homes.add(RentalCard(
-          businessName: data.rental.business.details.name,
-          currency: data.rental.business.details.currency.toCurrency(),
-          rental: Rental(
-            id: data.rental.id,
-            category1: data.rental.details.category1.toRentalCategory1(),
+  if (response.parsedData?.business_home != null) {
+    response.parsedData?.business_home
+        .forEach((Query$get_business_home$business_home data) async {
+      _homes.add(HomeCard(
+          businessName: data.business!.details.name,
+          currency: data.business!.details.currency.toCurrency(),
+          home: Home(
+            location: HomeLocation(
+              name: data.location!.name,
+              location: Location(
+                lat: data.location!.gps.latitude,
+                lng: data.location!.gps.longitude,
+                address: data.location!.address,
+              ),
+            ),
+            availableFor: data.available_for.toHomeAvailabilityOption(),
+            id: data.id,
+            category1: data.details!.category1.toHomeCategory1(),
             details: BusinessItemDetails(
-              id: data.rental.details.id,
-              name: toLanguageMap(
-                  translations: data.rental.details.name.translations),
-              position: data.rental.details.position,
-              businessId: data.rental.business.id,
-              available: data.rental.details.available,
-              image: data.rental.details.image
+              id: data.details!.id.toInt(),
+              nameId: data.details!.name_id,
+              descriptionId: data.details!.description_id,
+              name:
+                  toLanguageMap(translations: data.details!.name.translations),
+              position: data.details!.position,
+              businessId: data.business!.id,
+              available: data.details!.available,
+              image: data.details!.image
                       ?.map<String>((e) => e.toString())
                       .toList() ??
                   [],
-              cost: constructBusinessServiceCost(data.rental.details.cost),
-              additionalParameters: data.rental.details.additional_parameters,
+              cost: constructBusinessServiceCost(data.details!.cost),
+              additionalParameters: data.details!.additional_parameters,
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
             gpsLocation: Location(
-                lat: data.gps_location.latitude,
-                lng: data.gps_location.longitude,
-                address: data.address),
-            homeType: data.home_type.toHomeType(),
+              lat: data.location!.gps.latitude,
+              lng: data.location!.gps.longitude,
+              address: data.location!.address,
+            ),
           )));
     });
     return _homes;
@@ -301,13 +388,13 @@ Future<List<RentalCard>> get_business_home_rentals(
   }
 }
 
-Future<List<RentalCard>> get_real_estate(
+Future<List<HomeCard>> get_real_estate(
     {required double distance,
     required Location fromLocation,
     int? offset,
     int? limit,
     required bool withCache}) async {
-  final List<RentalCard> _homes = <RentalCard>[];
+  final List<HomeCard> _homes = <HomeCard>[];
 
   final QueryResult<Query$get_real_estates> response = await _db.graphQLClient
       .query$get_real_estates(Options$Query$get_real_estates(
@@ -322,37 +409,47 @@ Future<List<RentalCard>> get_real_estate(
 
   mezDbgPrint("get_real_estates $response");
 
-  if (response.parsedData?.business_get_home_rentals != null) {
-    response.parsedData?.business_get_home_rentals
-        .forEach((Query$get_real_estates$business_get_home_rentals data) async {
-      _homes.add(RentalCard(
-          businessName: data.rental.business.details.name,
-          currency: data.rental.business.details.currency.toCurrency(),
-          rental: Rental(
-            category1: data.rental.details.category1.toRentalCategory1(),
+  if (response.parsedData?.business_home != null) {
+    response.parsedData?.business_home
+        .forEach((Query$get_real_estates$business_home data) async {
+      _homes.add(HomeCard(
+          businessName: data.business!.details.name,
+          currency: data.business!.details.currency.toCurrency(),
+          home: Home(
+            location: HomeLocation(
+              name: data.location!.name,
+              location: Location(
+                lat: data.location!.gps.latitude,
+                lng: data.location!.gps.longitude,
+                address: data.location!.address,
+              ),
+            ),
+            availableFor: data.available_for.toHomeAvailabilityOption(),
+            id: data.id,
+            category1: data.details!.category1.toHomeCategory1(),
             details: BusinessItemDetails(
-              id: data.rental.id,
-              nameId: data.rental.details.name_id,
-              descriptionId: data.rental.details.description_id,
-              name: toLanguageMap(
-                  translations: data.rental.details.name.translations),
-              position: data.rental.details.position,
-              businessId: data.rental.business.id,
-              available: data.rental.details.available,
-              image: data.rental.details.image
+              id: data.id,
+              nameId: data.details!.name_id,
+              descriptionId: data.details!.description_id,
+              name:
+                  toLanguageMap(translations: data.details!.name.translations),
+              position: data.details!.position,
+              businessId: data.business!.id,
+              available: data.details!.available,
+              image: data.details!.image
                       ?.map<String>((e) => e.toString())
                       .toList() ??
                   [],
-              cost: constructBusinessServiceCost(data.rental.details.cost),
-              additionalParameters: data.rental.details.additional_parameters,
+              cost: constructBusinessServiceCost(data.details!.cost),
+              additionalParameters: data.details!.additional_parameters,
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
             gpsLocation: Location(
-                lat: data.gps_location.latitude,
-                lng: data.gps_location.longitude,
-                address: data.address),
-            homeType: data.home_type.toHomeType(),
+              lat: data.location!.gps.latitude,
+              lng: data.location!.gps.longitude,
+              address: data.location!.address,
+            ),
           )));
     });
     return _homes;
@@ -361,12 +458,12 @@ Future<List<RentalCard>> get_real_estate(
   }
 }
 
-Future<List<RentalCard>> get_business_real_estate(
+Future<List<HomeCard>> get_business_real_estate(
     {required int busniessId,
     int? offset,
     int? limit,
     required bool withCache}) async {
-  final List<RentalCard> _homes = <RentalCard>[];
+  final List<HomeCard> _homes = <HomeCard>[];
 
   final QueryResult<Query$get_business_real_estate> response = await _db
       .graphQLClient
@@ -378,36 +475,47 @@ Future<List<RentalCard>> get_business_real_estate(
 
   mezDbgPrint("get_business_real_estate $response");
 
-  if (response.parsedData?.business_home_rental != null) {
-    response.parsedData?.business_home_rental.forEach(
-        (Query$get_business_real_estate$business_home_rental data) async {
-      _homes.add(RentalCard(
-          businessName: data.rental.business.details.name,
-          currency: data.rental.business.details.currency.toCurrency(),
-          rental: Rental(
-            id: data.rental.id,
-            category1: data.rental.details.category1.toRentalCategory1(),
+  if (response.parsedData?.business_home != null) {
+    response.parsedData?.business_home
+        .forEach((Query$get_business_real_estate$business_home data) async {
+      _homes.add(HomeCard(
+          businessName: data.business!.details.name,
+          currency: data.business!.details.currency.toCurrency(),
+          home: Home(
+            location: HomeLocation(
+              name: data.location!.name,
+              location: Location(
+                lat: data.location!.gps.latitude,
+                lng: data.location!.gps.longitude,
+                address: data.location!.address,
+              ),
+            ),
+            availableFor: data.available_for.toHomeAvailabilityOption(),
+            id: data.id,
+            category1: data.details!.category1.toHomeCategory1(),
             details: BusinessItemDetails(
-              id: data.rental.details.id,
-              name: toLanguageMap(
-                  translations: data.rental.details.name.translations),
-              position: data.rental.details.position,
-              businessId: data.rental.business.id,
-              available: data.rental.details.available,
-              image: data.rental.details.image
+              id: data.id,
+              nameId: data.details!.name_id,
+              descriptionId: data.details!.description_id,
+              name:
+                  toLanguageMap(translations: data.details!.name.translations),
+              position: data.details!.position,
+              businessId: data.business!.id,
+              available: data.details!.available,
+              image: data.details!.image
                       ?.map<String>((e) => e.toString())
                       .toList() ??
                   [],
-              cost: constructBusinessServiceCost(data.rental.details.cost),
-              additionalParameters: data.rental.details.additional_parameters,
+              cost: constructBusinessServiceCost(data.details!.cost),
+              additionalParameters: data.details!.additional_parameters,
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
             gpsLocation: Location(
-                lat: data.gps_location.latitude,
-                lng: data.gps_location.longitude,
-                address: data.address),
-            homeType: data.home_type.toHomeType(),
+              lat: data.location!.gps.latitude,
+              lng: data.location!.gps.longitude,
+              address: data.location!.address,
+            ),
           )));
     });
     return _homes;
@@ -536,32 +644,33 @@ Future<int?> add_one_rental({required Rental rental}) async {
   return null;
 }
 
-Future<int?> add_one_home_rental({required Rental rental}) async {
+Future<int?> add_one_home_rental({required Home rental}) async {
   // mezDbgPrint("Adding this rental 🇹🇳 ${rental.toJson()}");
 
-  final QueryResult<Mutation$add_home_rental> response = await _db.graphQLClient
-      .mutate$add_home_rental(Options$Mutation$add_home_rental(
-          variables: Variables$Mutation$add_home_rental(
-              object: Input$business_home_rental_insert_input(
-    bathrooms: rental.bathrooms?.toInt(),
-    bedrooms: rental.bedrooms?.toInt(),
-    gps_location: (rental.gpsLocation != null)
-        ? Geography(rental.gpsLocation!.lat.toDouble(),
-            rental.gpsLocation!.lng.toDouble())
-        : null,
-    home_type: rental.homeType?.toFirebaseFormatString(),
-    address: rental.gpsLocation?.address,
-    rental: Input$business_rental_obj_rel_insert_input(
-        data: Input$business_rental_insert_input(
+  final QueryResult<Mutation$add_home> response =
+      await _db.graphQLClient.mutate$add_home(Options$Mutation$add_home(
+    variables: Variables$Mutation$add_home(
+        object: Input$business_home_insert_input(
             business_id: rental.details.businessId.toInt(),
-            category3: rental.category3?.toFirebaseFormatString(),
+            available_for: rental.availableFor.toFirebaseFormatString(),
+            offering_type: "home",
+            bathrooms: rental.bathrooms?.toInt(),
+            bedrooms: rental.bedrooms?.toInt(),
+            location: Input$business_home_location_obj_rel_insert_input(
+              data: Input$business_home_location_insert_input(
+                address: rental.location.name,
+                name: rental.location.name,
+                gps: Geography(
+                  rental.location.location.lat.toDouble(),
+                  rental.location.location.lng.toDouble(),
+                ),
+              ),
+            ),
             details: Input$business_item_details_obj_rel_insert_input(
                 data: Input$business_item_details_insert_input(
-                    available: rental.details.available,
                     business_id: rental.details.businessId.toInt(),
+                    available: rental.details.available,
                     category1: rental.category1.toFirebaseFormatString(),
-                    category2: rental.category2?.toFirebaseFormatString() ??
-                        RentalCategory2.Uncategorized.toFirebaseFormatString(),
                     cost: rental.details.cost.map((TimeUnit key, num value) =>
                         MapEntry(
                             key.toFirebaseFormatString(), value.toDouble())),
@@ -602,77 +711,90 @@ Future<int?> add_one_home_rental({required Rental rental}) async {
                             ),
                           ))
                         : null)))),
-  ))));
+  ));
   if (response.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura add rental mutation exception =>${response.exception}");
   } else {
     mezDbgPrint("✅✅✅ Hasura add rental mutation success => ${response.data}");
-    return response.parsedData?.insert_business_home_rental_one?.rental_id;
+    return response.parsedData?.insert_business_home_one?.id;
   }
   return null;
 }
 
-Future<Rental?> update_business_home_rental(
-    {required int id, required Rental rental}) async {
-  final QueryResult<Mutation$update_home_rental_by_id> res =
-      await _db.graphQLClient.mutate$update_home_rental_by_id(
-    Options$Mutation$update_home_rental_by_id(
-      variables: Variables$Mutation$update_home_rental_by_id(
+Future<Home?> update_business_home_rental(
+    {required int id, required Home rental}) async {
+  final QueryResult<Mutation$update_home_by_id> res =
+      await _db.graphQLClient.mutate$update_home_by_id(
+    Options$Mutation$update_home_by_id(
+      variables: Variables$Mutation$update_home_by_id(
         id: id,
-        object: Input$business_home_rental_set_input(
+        object: Input$business_home_set_input(
           bathrooms: rental.bathrooms?.toInt(),
           bedrooms: rental.bedrooms?.toInt(),
-          gps_location: (rental.gpsLocation != null)
-              ? Geography(rental.gpsLocation!.lat.toDouble(),
-                  rental.gpsLocation!.lng.toDouble())
-              : null,
-          home_type: rental.homeType?.toFirebaseFormatString(),
-          address: rental.gpsLocation?.address,
         ),
       ),
     ),
   );
-  if (res.hasException) {
+  final QueryResult<Mutation$update_home_location> res2 =
+      await _db.graphQLClient.mutate$update_home_location(
+    Options$Mutation$update_home_location(
+      variables: Variables$Mutation$update_home_location(
+        id: id,
+        address: rental.location.location.address,
+        name: rental.location.name,
+        gps: Geography(
+          rental.location.location.lat.toDouble(),
+          rental.location.location.lng.toDouble(),
+        ),
+      ),
+    ),
+  );
+  if (res.hasException || res2.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data}");
     throwError(res.exception);
-  } else if (res.parsedData?.update_business_home_rental_by_pk != null) {
-    final Mutation$update_home_rental_by_id$update_business_home_rental_by_pk
-        data = res.parsedData!.update_business_home_rental_by_pk!;
-    return Rental(
-        id: id,
-        category1: data.rental.details.category1.toRentalCategory1(),
-        category2: data.rental.details.category2.toRentalCategory2(),
-        category3: data.rental.category3.toRentalCategory3(),
-        details: BusinessItemDetails(
-          nameId: data.rental.details.name_id,
-          descriptionId: data.rental.details.description_id,
-          id: data.rental.details.id,
-          name: toLanguageMap(
-              translations: data.rental.details.name.translations),
-          position: data.rental.details.position,
-          businessId: data.rental.business.id,
-          available: data.rental.details.available,
-          cost: constructBusinessServiceCost(data.rental.details.cost),
-          image: data.rental.details.image
-                  ?.map<String>((e) => e.toString())
-                  .toList() ??
-              [],
-          additionalParameters: data.rental.details.additional_parameters,
-          description: toLanguageMap(
-              translations:
-                  data.rental.details.description?.translations ?? []),
+  } else if (res.parsedData?.update_business_home_by_pk != null ||
+      res2.parsedData?.update_business_home_location_by_pk != null) {
+    final Mutation$update_home_by_id$update_business_home_by_pk data =
+        res.parsedData!.update_business_home_by_pk!;
+    return Home(
+      location: HomeLocation(
+        name: res2.parsedData!.update_business_home_location_by_pk!.name,
+        location: Location(
+          lat: res2
+              .parsedData!.update_business_home_location_by_pk!.gps.latitude,
+          lng: res2
+              .parsedData!.update_business_home_location_by_pk!.gps.longitude,
+          address:
+              res2.parsedData!.update_business_home_location_by_pk!.address,
         ),
-        bathrooms: data.bathrooms,
-        bedrooms: data.bedrooms,
-        homeType: data.home_type.toHomeType(),
-        gpsLocation: (data.gps_location != null)
-            ? Location(
-                lat: data.gps_location.latitude,
-                lng: data.gps_location.longitude,
-                address: data.address)
-            : null);
+      ),
+      availableFor: data.available_for.toHomeAvailabilityOption(),
+      id: data.id,
+      category1: data.details!.category1.toHomeCategory1(),
+      details: BusinessItemDetails(
+        id: data.id,
+        nameId: data.details!.name_id,
+        descriptionId: data.details!.description_id,
+        name: toLanguageMap(translations: data.details!.name.translations),
+        position: data.details!.position,
+        businessId: data.business!.id,
+        available: data.details!.available,
+        image: data.details!.image?.map<String>((e) => e.toString()).toList() ??
+            [],
+        cost: constructBusinessServiceCost(data.details!.cost),
+        additionalParameters: data.details!.additional_parameters,
+      ),
+      bathrooms: data.bathrooms,
+      bedrooms: data.bedrooms,
+      gpsLocation: Location(
+        lat: res2.parsedData!.update_business_home_location_by_pk!.gps.latitude,
+        lng:
+            res2.parsedData!.update_business_home_location_by_pk!.gps.longitude,
+        address: res2.parsedData!.update_business_home_location_by_pk!.address,
+      ),
+    );
   }
 
   return null;

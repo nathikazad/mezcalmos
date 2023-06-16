@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessHomeCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessPaymentMethods.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessProductCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessRentalCard.dart';
@@ -89,6 +90,9 @@ class _CustBusinessViewState extends State<CustBusinessView>
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   children: [
+                    if (_viewController.business!.homes != null &&
+                        _viewController.business!.homes!.isNotEmpty)
+                      _home(context),
                     if (_viewController.business!.rentals != null &&
                         _viewController.business!.rentals!.isNotEmpty)
                       _rentals(context),
@@ -193,6 +197,62 @@ class _CustBusinessViewState extends State<CustBusinessView>
         );
       }
     }));
+  }
+
+  Column _home(BuildContext context) {
+    final List<Home> homes = _viewController.business!.homes!
+        .where((Home element) => element.forRent)
+        .toList();
+    final List<Home> realEstate = _viewController.business!.homes!
+        .where((Home element) => element.forSale)
+        .toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        /// Home Rentals
+        if (homes.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['homesRentals']}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Home home in homes)
+                CustBusinessHomeCard(
+                  margin: EdgeInsets.only(bottom: 10),
+                  rental: home,
+                  elevation: 0,
+                ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        if (realEstate.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['realEstate']}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Home home in realEstate)
+                CustBusinessHomeCard(
+                  margin: EdgeInsets.only(bottom: 10),
+                  rental: home,
+                  elevation: 0,
+                ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+      ],
+    );
   }
 
   Column _rentals(BuildContext context) {

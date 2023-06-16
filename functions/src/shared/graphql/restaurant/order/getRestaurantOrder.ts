@@ -93,7 +93,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     customerAppType: response.restaurant_order_by_pk.customer_app_type as CustomerAppType,
     deliveryCost: parseFloat(response.restaurant_order_by_pk.delivery_cost.replace("$","")),
     items,
-    stripeInfo: JSON.parse(response.restaurant_order_by_pk.stripe_info),
+    stripeInfo: (response.restaurant_order_by_pk.stripe_info),
     totalCost: parseFloat(response.restaurant_order_by_pk.total_cost.replace("$",""))
   }
   if(response.restaurant_order_by_pk.delivery_id != undefined) {
@@ -196,7 +196,7 @@ export async function getRestaurantOrderFromDelivery(deliveryOrderId: number): P
     customerAppType: response.restaurant_order[0].customer_app_type as CustomerAppType,
     deliveryCost: parseFloat(response.restaurant_order[0].delivery_cost.replace("$","")),
     items,
-    stripeInfo: JSON.parse(response.restaurant_order[0].stripe_info),
+    stripeInfo: (response.restaurant_order[0].stripe_info),
     totalCost: parseFloat(response.restaurant_order[0].total_cost.replace("$","")),
     deliveryId: deliveryOrderId
   }
@@ -340,7 +340,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         image: o.restaurant.details.image,
         location: o.restaurant.details.location.gps as Location,
         operators: restaurantOperators,
-        language: JSON.parse(o.restaurant.details.language),
+        language: (o.restaurant.details.language),
         deliveryDetails: {
           minimumCost:o.restaurant.delivery_details.minimum_cost,
           costPerKm: o.restaurant.delivery_details.cost_per_km,

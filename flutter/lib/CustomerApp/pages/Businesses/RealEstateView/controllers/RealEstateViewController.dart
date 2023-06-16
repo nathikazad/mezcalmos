@@ -16,7 +16,7 @@ import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class CustRealEstateViewController {
-  RxList<RentalCard> _realEstates = <RentalCard>[].obs;
+  RxList<HomeCard> _realEstates = <HomeCard>[].obs;
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
   // RxList<BusinessCard> _filtredBusiness = <BusinessCard>[].obs;
 
@@ -46,7 +46,7 @@ class CustRealEstateViewController {
   // getters //
   bool get isLoading => _isLoading.value;
 
-  List<RentalCard> get realEstate => _realEstates.value;
+  List<HomeCard> get realEstate => _realEstates.value;
   List<BusinessCard> get businesses => _businesses.value;
 
   // Map view //
@@ -109,7 +109,7 @@ class CustRealEstateViewController {
       _realEstateFetchingData = true;
       mezDbgPrint(
           "👋 _fetchRentals called  \n ferchSize : $realEstateFetchSize \n offset: $_realEstateCurrentOffset");
-      List<RentalCard> newList = await get_real_estate(
+      List<HomeCard> newList = await get_real_estate(
         fromLocation: _fromLocation!,
         distance: 1000000000000,
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
@@ -137,8 +137,8 @@ class CustRealEstateViewController {
       mezDbgPrint(
           "👋 _fetchBusinesses called with ferchSize : $businessFetchSize offset: $_businessCurrentOffset");
       _businessFetchingData = true;
-      List<BusinessCard> newList = await get_business_by_rental_category1(
-          categories1: [RentalCategory1.RealEstate],
+      List<BusinessCard> newList = await get_business_by_home(
+          homeType: HomeAvailabilityOption.Sale,
           distance: 1000000000000,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
@@ -192,16 +192,16 @@ class CustRealEstateViewController {
   Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
     try {
       if (currentPostitionBased) {
-        _mapViewBusinesses.value = await get_business_by_rental_category1(
-            categories1: [],
+        _mapViewBusinesses.value = await get_business_by_home(
+            homeType: HomeAvailabilityOption.Sale,
             distance: 25000,
             fromLocation: _fromLocation!,
             offset: 0,
             limit: 25,
             withCache: false);
       } else {
-        _mapViewBusinesses.value = await get_business_by_rental_category1(
-            categories1: [],
+        _mapViewBusinesses.value = await get_business_by_home(
+            homeType: HomeAvailabilityOption.Sale,
             distance: _calculateDistance(
                 await _googleMapController!.getVisibleRegion()),
             fromLocation: Location(

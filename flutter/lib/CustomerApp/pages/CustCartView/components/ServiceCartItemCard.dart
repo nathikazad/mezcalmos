@@ -142,7 +142,9 @@ class ServiceCartItemCard extends StatelessWidget {
                           color: primaryBlueColor,
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () async {
+                        await controller.editCartItem(item);
+                      },
                     ),
                   )
                 : SizedBox.shrink(),

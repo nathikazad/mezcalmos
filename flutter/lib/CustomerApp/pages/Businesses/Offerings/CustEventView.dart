@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
@@ -31,10 +33,24 @@ dynamic _i18n() =>
 
 class CustEventView extends StatefulWidget {
   const CustEventView({super.key});
-  static Future<void> navigate({required int eventId}) async {
-    final String route =
-        CustBusinessRoutes.custEventRoute.replaceFirst(":id", "$eventId");
-    return MezRouter.toPath(route);
+  static String constructRoute(int eventId) {
+    return CustBusinessRoutes.custEventRoute.replaceFirst(":id", "$eventId");
+  }
+
+  static Future<void> navigate({
+    required int eventId,
+    int? cartId,
+    DateTime? startDate,
+    Map<TimeUnit, num>? timeCost,
+    int? duration,
+  }) async {
+    final String route = constructRoute(eventId);
+    return MezRouter.toPath(route, arguments: {
+      "startDate": startDate,
+      "timeCost": timeCost,
+      "duration": duration,
+      "cartId": cartId,
+    });
   }
 
   @override
@@ -48,8 +64,21 @@ class _CustEventViewState extends State<CustEventView> {
   void initState() {
     eventId = int.tryParse(MezRouter.urlArguments["id"].toString());
     mezDbgPrint("✅ init event view with id => $eventId");
+    final DateTime? startDate =
+        MezRouter.bodyArguments!["startDate"] as DateTime?;
+    final Map<TimeUnit, num>? timeCost =
+        MezRouter.bodyArguments!["timeCost"] as Map<TimeUnit, num>?;
+    final int? duration = MezRouter.bodyArguments!["duration"] as int?;
+    final int? cartId = MezRouter.bodyArguments!["cartId"] as int?;
     if (eventId != null) {
-      viewController.fetchData(eventId: eventId!);
+      viewController.init(
+        eventId: eventId!,
+        startDate: startDate,
+        timeCost: timeCost,
+        duration: duration,
+        cartId: cartId,
+      );
+      // viewController.fetchData(eventId: eventId!);
     } else {
       showErrorSnackBar(errorText: "Error: Event ID $eventId not found");
     }
@@ -87,13 +116,17 @@ class _CustEventViewState extends State<CustEventView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MezButton(
-        label: "Add to cart",
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.bookOffering();
-        },
+      bottomNavigationBar: Obx(
+        () => MezButton(
+          label: viewController.isEditingMode.value
+              ? "Update Item"
+              : "Add to cart",
+          withGradient: true,
+          borderRadius: 0,
+          onClick: () async {
+            await viewController.bookOffering();
+          },
+        ),
       ),
       body: Obx(() {
         if (viewController.event != null) {

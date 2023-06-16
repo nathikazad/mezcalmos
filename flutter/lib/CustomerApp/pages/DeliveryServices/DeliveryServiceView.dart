@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/CustLaundriesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -13,7 +16,9 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
+import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -118,19 +123,43 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
   }
 
   Widget mezListOfServices() {
-    void navigateToListView(MezService mezService) {
+    Future<void> navigateToListView(MezService mezService) async {
+      if (Get.find<AuthController>().hasuraUserId != null) {
+        int? orderId = await get_customer_orders_by_type(
+            customerId: Get.find<AuthController>().hasuraUserId!,
+            orderType: mezService.toOrderType());
+        if (orderId != null && orderId > 0) {
+          switch (mezService) {
+            case MezService.Courier:
+              await CustCourierOrderView.navigate(orderId: orderId);
+              break;
+            case MezService.Restaurants:
+              await ViewRestaurantOrderScreen.navigate(orderId: orderId);
+              break;
+            case MezService.Laundry:
+              await CustLaundryOrderView.navigate(orderId: orderId);
+              break;
+            default:
+              await MezRouter.back(backResult: true);
+          }
+          return;
+        }
+      }
       switch (mezService) {
         case MezService.Food:
-          CustRestaurantListView.navigate();
+          unawaited(CustRestaurantListView.navigate());
           return;
         case MezService.Laundry:
-          CustLaundriesListView.navigate();
+          await CustLaundriesListView.navigate();
           return;
         case MezService.Courier:
-          CustCourierServicesListView.navigate();
+          await CustCourierServicesListView.navigate();
           return;
+        default:
+          throw Exception("Invalid service");
       }
     }
+    // function taht accepts MezService and return order type
 
     String getCardImage(MezService mezService) {
       switch (mezService) {
@@ -147,7 +176,7 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
     return Column(
       children: List.generate(
         serviceTree.length,
-        (index) {
+        (int index) {
           final MezService currentService = serviceTree[index].name;
           return Obx(
             () => ServicesCard(

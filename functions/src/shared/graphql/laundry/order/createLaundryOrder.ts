@@ -1,3 +1,4 @@
+import { $ } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { LaundryRequestDetails, ReqLaundryError } from "../../../../laundry/laundryRequest";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
@@ -42,10 +43,7 @@ export async function createLaundryOrder(
                 scheduled_time: laundryRequestDetails.scheduledTime,
                 stripe_fees: laundryRequestDetails.stripeFees ?? undefined,
                 discount_value: laundryRequestDetails.discountValue ?? undefined,
-                customer_location_gps: JSON.stringify({
-                    "type": "Point",
-                    "coordinates": [laundryRequestDetails.customerLocation.lng, laundryRequestDetails.customerLocation.lat ],
-                }),
+                customer_location_gps: $`customer_location_gps`,
                 customer_address: laundryRequestDetails.customerLocation.address,
                 delivery_cost: laundryRequestDetails.deliveryCost,
                 status: LaundryOrderStatus.OrderReceived,
@@ -65,15 +63,9 @@ export async function createLaundryOrder(
                     data: {
                         customer_id: customerId,
                         order_type: OrderType.Laundry,
-                        dropoff_gps: JSON.stringify({
-                            "type": "Point",
-                            "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],
-                        }),
+                        dropoff_gps: $`dropoff_gps` ,
                         dropoff_address: laundryStore.location.address,
-                        pickup_gps: JSON.stringify({
-                            "type": "Point",
-                            "coordinates": [laundryRequestDetails.customerLocation.lng, laundryRequestDetails.customerLocation.lat ],
-                        }),
+                        pickup_gps: $`customer_location_gps`,
                         package_ready:true,
                         pickup_address: laundryRequestDetails.customerLocation.address,
                         schedule_time: laundryRequestDetails.scheduledTime,
@@ -123,6 +115,15 @@ export async function createLaundryOrder(
                 chat_with_service_provider_id: true,
             },
         }],
+    }, {
+        "customer_location_gps": {
+            "type": "Point",
+            "coordinates": [laundryRequestDetails.customerLocation.lng, laundryRequestDetails.customerLocation.lat ],
+        },
+        "dropoff_gps": {
+            "type": "Point",
+            "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],
+        }
     })
 
     if(response.insert_laundry_order_one == null) {
