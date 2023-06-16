@@ -36,7 +36,7 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
             cost: i.cost,
             time: i.time,
             offeringType: i.offering_type as OfferingType,
-            parameters: JSON.parse(i.parameters) as BusinessItemParameters,
+            parameters: i.parameters as BusinessItemParameters,
         }
     })
     return {
