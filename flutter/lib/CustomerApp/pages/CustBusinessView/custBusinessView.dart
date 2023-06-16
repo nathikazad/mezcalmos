@@ -200,12 +200,17 @@ class _CustBusinessViewState extends State<CustBusinessView>
   }
 
   Column _home(BuildContext context) {
-    final List<Home> homes = _viewController.business!.homes!;
+    final List<Home> homes = _viewController.business!.homes!
+        .where((Home element) => element.forRent)
+        .toList();
+    final List<Home> realEstate = _viewController.business!.homes!
+        .where((Home element) => element.forSale)
+        .toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// Surf Rentals
+        /// Home Rentals
         if (homes.isNotEmpty)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,6 +221,26 @@ class _CustBusinessViewState extends State<CustBusinessView>
               ),
               SizedBox(height: 5),
               for (Home home in homes)
+                CustBusinessHomeCard(
+                  margin: EdgeInsets.only(bottom: 10),
+                  rental: home,
+                  elevation: 0,
+                ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        if (realEstate.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${_i18n()['realEstate']}',
+                style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+              ),
+              SizedBox(height: 5),
+              for (Home home in realEstate)
                 CustBusinessHomeCard(
                   margin: EdgeInsets.only(bottom: 10),
                   rental: home,
