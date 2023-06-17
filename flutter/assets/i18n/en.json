@@ -526,11 +526,11 @@
       "JoinUsView": {
         "joinUs": "Join us",
         "restaurantBusiness": {
-          "title": "Restaurant business",
+          "title": "Restaurant",
           "subtitle": "If you own a restaurant and want to expand it online."
         },
         "laundryBusiness": {
-          "title": "Laundry business",
+          "title": "Laundry",
           "subtitle": "If you own a laundry and want to earn more online."
         },
         "houseRentalAgency": {
