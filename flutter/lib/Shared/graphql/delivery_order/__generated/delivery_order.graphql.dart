@@ -8434,6 +8434,57 @@ const documentNodeSubscriptionlisten_on_driver_order_variables =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_driver'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'user'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -8539,6 +8590,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     this.estimated_package_ready_time,
     required this.status,
     required this.package_ready,
+    this.delivery_driver,
     required this.$__typename,
   });
 
@@ -8553,6 +8605,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     final l$estimated_package_ready_time = json['estimated_package_ready_time'];
     final l$status = json['status'];
     final l$package_ready = json['package_ready'];
+    final l$delivery_driver = json['delivery_driver'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_driver_order_variables$delivery_order_by_pk(
       cancellation_time: (l$cancellation_time as String?),
@@ -8564,6 +8617,10 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
       estimated_package_ready_time: (l$estimated_package_ready_time as String?),
       status: (l$status as String),
       package_ready: (l$package_ready as bool),
+      delivery_driver: l$delivery_driver == null
+          ? null
+          : Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver
+              .fromJson((l$delivery_driver as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -8581,6 +8638,9 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
   final String status;
 
   final bool package_ready;
+
+  final Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver?
+      delivery_driver;
 
   final String $__typename;
 
@@ -8604,6 +8664,8 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     _resultData['status'] = l$status;
     final l$package_ready = package_ready;
     _resultData['package_ready'] = l$package_ready;
+    final l$delivery_driver = delivery_driver;
+    _resultData['delivery_driver'] = l$delivery_driver?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8619,6 +8681,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     final l$estimated_package_ready_time = estimated_package_ready_time;
     final l$status = status;
     final l$package_ready = package_ready;
+    final l$delivery_driver = delivery_driver;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cancellation_time,
@@ -8628,6 +8691,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
       l$estimated_package_ready_time,
       l$status,
       l$package_ready,
+      l$delivery_driver,
       l$$__typename,
     ]);
   }
@@ -8683,6 +8747,11 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     if (l$package_ready != lOther$package_ready) {
       return false;
     }
+    final l$delivery_driver = delivery_driver;
+    final lOther$delivery_driver = other.delivery_driver;
+    if (l$delivery_driver != lOther$delivery_driver) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -8724,8 +8793,12 @@ abstract class CopyWith$Subscription$listen_on_driver_order_variables$delivery_o
     String? estimated_package_ready_time,
     String? status,
     bool? package_ready,
+    Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver?
+        delivery_driver,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver<
+      TRes> get delivery_driver;
 }
 
 class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk<
@@ -8754,6 +8827,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order
     Object? estimated_package_ready_time = _undefined,
     Object? status = _undefined,
     Object? package_ready = _undefined,
+    Object? delivery_driver = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$listen_on_driver_order_variables$delivery_order_by_pk(
@@ -8780,10 +8854,23 @@ class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order
         package_ready: package_ready == _undefined || package_ready == null
             ? _instance.package_ready
             : (package_ready as bool),
+        delivery_driver: delivery_driver == _undefined
+            ? _instance.delivery_driver
+            : (delivery_driver
+                as Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver<
+      TRes> get delivery_driver {
+    final local$delivery_driver = _instance.delivery_driver;
+    return local$delivery_driver == null
+        ? CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver(
+            local$delivery_driver, (e) => call(delivery_driver: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk<
@@ -8804,6 +8891,356 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_o
     String? estimated_package_ready_time,
     String? status,
     bool? package_ready,
+    Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver?
+        delivery_driver,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver<
+          TRes>
+      get delivery_driver =>
+          CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver
+              .stub(_res);
+}
+
+class Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver {
+  Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver({
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver(
+      user:
+          Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user
+              .fromJson((l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user
+      user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver
+    on Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver {
+  CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver<
+          Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver(
+    Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver
+        instance,
+    TRes Function(
+            Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver;
+
+  factory CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver;
+
+  TRes call({
+    Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user?
+        user,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user<
+      TRes> get user;
+}
+
+class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver(
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user?
+        user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user<
+          TRes>
+      get user =>
+          CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user
+              .stub(_res);
+}
+
+class Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user {
+  Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user({
+    required this.id,
+    this.image,
+    this.name,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user(
+      id: (l$id as int),
+      image: (l$image as String?),
+      name: (l$name as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String? image;
+
+  final String? name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user
+    on Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user {
+  CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user<
+          Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user(
+    Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user
+        instance,
+    TRes Function(
+            Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user;
+
+  factory CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user;
+
+  TRes call({
+    int? id,
+    String? image,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
+        name: name == _undefined ? _instance.name : (name as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? image,
+    String? name,
     String? $__typename,
   }) =>
       _res;

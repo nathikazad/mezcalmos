@@ -207,6 +207,13 @@ subscription listen_on_driver_order_variables($orderId: Int!) {
     estimated_package_ready_time
     status
     package_ready
+    delivery_driver{
+      user {
+        id
+        image
+        name
+      }
+    }
   }
 }
 
