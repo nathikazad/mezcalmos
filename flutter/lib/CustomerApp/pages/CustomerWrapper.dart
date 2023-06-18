@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderListView.dart';
@@ -19,7 +18,6 @@ import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
@@ -27,6 +25,9 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
+import 'package:badges/badges.dart' as badge;
+import 'package:uni_links/uni_links.dart';
+import 'package:mezcalmos/Shared/helpers/ReferralsHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
@@ -68,8 +69,10 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       _checkOrders();
     }
     startAuthListener();
-    DeepLinkHandler.startDynamicLinkCheckRoutine(
-        CustomerDeepLinkHandler.handleDeepLink);
+    // DeepLinkHandler.startDynamicLinkCheckRoutine(
+    //     CustomerDeepLinkHandler.handleDeepLink);
+
+    _startListeningForLinks();
   }
 
   void _checkOrders() {
@@ -250,6 +253,40 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             customerNotificationsNode(userId!), customerNotificationHandler);
+  }
+
+  Future<void> _startListeningForLinks() async {
+    String? initialLink;
+    try {
+      initialLink = await getInitialLink();
+    } catch (error) {
+      // Handle error
+    }
+
+    // Parse the initial link (if it exists)
+    if (initialLink != null) {
+      final Uri initialUri = Uri.parse(initialLink);
+      final String? referralCode = initialUri.queryParameters['referral'];
+      if (referralCode != null) {
+        await saveReferral(referralCode);
+        // todo: @Sanchit Uke call routing function CustomerDeepLinkHandler.handleDeepLink
+      }
+    }
+
+    // Subscribe to incoming links
+    linkStream.listen((String? link) {
+      // Parse the link
+      if (link != null) {
+        final Uri uri = Uri.parse(link);
+        final String? referralCode = uri.queryParameters['referral'];
+        if (referralCode != null) {
+          saveReferral(referralCode);
+          // todo: @Sanchit Uke call routing function CustomerDeepLinkHandler.handleDeepLink
+        }
+      }
+    }, onError: (err) {
+      // Handle error
+    });
   }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {
