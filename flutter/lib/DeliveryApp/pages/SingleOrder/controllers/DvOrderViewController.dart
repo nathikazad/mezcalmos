@@ -96,6 +96,7 @@ class DvOrderViewcontroller {
             _order.value!.cancellationTime = event.cancellationTime;
             _order.value!.status = event.status;
             _order.value!.packageReady = event.packageReady;
+            _order.value!.driverInfo = event.driverInfo;
             // _order.value = null;
             // _order.value = event;
 

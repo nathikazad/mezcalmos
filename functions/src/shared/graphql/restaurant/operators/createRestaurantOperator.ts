@@ -1,3 +1,4 @@
+import { notification_info_constraint, notification_info_update_column } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { AddOperatorDetails, AddOperatorError } from "../../../../serviceProvider/addOperator";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, AuthorizationStatus, MezError } from "../../../models/Generic/Generic";
@@ -46,15 +47,6 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
             user_id: operatorUserId,
             app_type_id: AppType.Restaurant,
             app_version: addOpDetails.appVersion,
-            notification_info: (addOpDetails.notificationToken) 
-              ? {
-                data: {
-                  token: addOpDetails.notificationToken,
-                  user_id: operatorUserId,
-                  turn_off_notifications: false,
-                  app_type_id: AppType.Restaurant
-                }
-              }: undefined,
             status: AuthorizationStatus.AwaitingApproval,
           }
         }
@@ -66,6 +58,28 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
   });
   if(mutationResponse.insert_restaurant_operator_one == null) {
     throw new MezError(AddOperatorError.OperatorCreationError);
+  }
+
+
+  if(addOpDetails.notificationToken) {
+    chain.mutation({
+      insert_notification_info_one: [{
+        object: {
+          app_type_id: AppType.Restaurant,
+          token: addOpDetails.notificationToken,
+          user_id: operatorUserId,
+          turn_off_notifications: false,
+        },
+        on_conflict: {
+          constraint: (
+            notification_info_constraint.notification_info_app_type_id_user_id_key
+          ),
+          update_columns: [notification_info_update_column.token]
+        }
+      }, {
+        id: true
+      }]
+    })
   }
   return {
     id: mutationResponse.insert_restaurant_operator_one.id,

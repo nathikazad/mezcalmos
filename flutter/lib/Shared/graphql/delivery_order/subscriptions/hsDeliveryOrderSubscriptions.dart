@@ -70,6 +70,12 @@ Stream<DeliveryOrderVariables?> listen_on_driver_order_variables(
         scheduleTime: (orderData.schedule_time != null)
             ? DateTime.tryParse(orderData.schedule_time!)
             : null,
+        driverInfo: (orderData.delivery_driver != null)
+            ? UserInfo(
+                hasuraId: orderData.delivery_driver!.user.id,
+                name: orderData.delivery_driver!.user.name,
+                image: orderData.delivery_driver!.user.image)
+            : null,
       );
     }
     return null;
