@@ -1,11 +1,10 @@
 import 'dart:io';
-
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
@@ -17,19 +16,25 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool internetStatus = true;
+  Timer? timer;
   @override
   void initState() {
     if (!kIsWeb) {
-      ConnectivityHelper.pingServer(firebaseAuthUrl)
-          .timeout(Duration(seconds: 10), onTimeout: () => false)
-          .then((bool result) {
-        setState(() {
-          internetStatus = result;
-        });
-      });
+      timer = Timer(
+          Duration(seconds: 7),
+          () => setState(() {
+                internetStatus = false;
+              }));
     }
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    timer = null;
+    super.dispose();
   }
 
   Language get _lang {

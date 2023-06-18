@@ -1184,7 +1184,7 @@
               "oneTime": "Retiro",
               "onDemand": "Privada"
             },
-            "all": "Alle",
+            "all": "Todo",
             "surf": "Navegar",
             "fitness": "Aptitud física",
             "yoga": "Yoga",
@@ -2075,7 +2075,7 @@
         "scLangError": "Por favor seleccione un idioma secundario",
         "sameLangErrorText": "Se utiliza este idioma, ingrese un idioma diferente.",
         "none": "Ninguna",
-        "en": "Inglesa",
+        "en": "Ingles",
         "es": "Español"
       },
       "SomethingWentWrongScreen": {
