@@ -8247,6 +8247,28 @@ const documentNodeQuerygetServiceProviderType = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'business'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -8379,6 +8401,7 @@ class Query$getServiceProviderType$service_provider_details {
     required this.service_provider_type,
     this.laundry_store,
     this.restaurant,
+    this.business,
     required this.$__typename,
   });
 
@@ -8388,6 +8411,7 @@ class Query$getServiceProviderType$service_provider_details {
     final l$service_provider_type = json['service_provider_type'];
     final l$laundry_store = json['laundry_store'];
     final l$restaurant = json['restaurant'];
+    final l$business = json['business'];
     final l$$__typename = json['__typename'];
     return Query$getServiceProviderType$service_provider_details(
       id: (l$id as int),
@@ -8400,6 +8424,10 @@ class Query$getServiceProviderType$service_provider_details {
           ? null
           : Query$getServiceProviderType$service_provider_details$restaurant
               .fromJson((l$restaurant as Map<String, dynamic>)),
+      business: l$business == null
+          ? null
+          : Query$getServiceProviderType$service_provider_details$business
+              .fromJson((l$business as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -8414,6 +8442,9 @@ class Query$getServiceProviderType$service_provider_details {
   final Query$getServiceProviderType$service_provider_details$restaurant?
       restaurant;
 
+  final Query$getServiceProviderType$service_provider_details$business?
+      business;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -8426,6 +8457,8 @@ class Query$getServiceProviderType$service_provider_details {
     _resultData['laundry_store'] = l$laundry_store?.toJson();
     final l$restaurant = restaurant;
     _resultData['restaurant'] = l$restaurant?.toJson();
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8437,12 +8470,14 @@ class Query$getServiceProviderType$service_provider_details {
     final l$service_provider_type = service_provider_type;
     final l$laundry_store = laundry_store;
     final l$restaurant = restaurant;
+    final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$service_provider_type,
       l$laundry_store,
       l$restaurant,
+      l$business,
       l$$__typename,
     ]);
   }
@@ -8474,6 +8509,11 @@ class Query$getServiceProviderType$service_provider_details {
     final l$restaurant = restaurant;
     final lOther$restaurant = other.restaurant;
     if (l$restaurant != lOther$restaurant) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -8514,12 +8554,15 @@ abstract class CopyWith$Query$getServiceProviderType$service_provider_details<
         laundry_store,
     Query$getServiceProviderType$service_provider_details$restaurant?
         restaurant,
+    Query$getServiceProviderType$service_provider_details$business? business,
     String? $__typename,
   });
   CopyWith$Query$getServiceProviderType$service_provider_details$laundry_store<
       TRes> get laundry_store;
   CopyWith$Query$getServiceProviderType$service_provider_details$restaurant<
       TRes> get restaurant;
+  CopyWith$Query$getServiceProviderType$service_provider_details$business<TRes>
+      get business;
 }
 
 class _CopyWithImpl$Query$getServiceProviderType$service_provider_details<TRes>
@@ -8542,6 +8585,7 @@ class _CopyWithImpl$Query$getServiceProviderType$service_provider_details<TRes>
     Object? service_provider_type = _undefined,
     Object? laundry_store = _undefined,
     Object? restaurant = _undefined,
+    Object? business = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getServiceProviderType$service_provider_details(
@@ -8558,6 +8602,10 @@ class _CopyWithImpl$Query$getServiceProviderType$service_provider_details<TRes>
             ? _instance.restaurant
             : (restaurant
                 as Query$getServiceProviderType$service_provider_details$restaurant?),
+        business: business == _undefined
+            ? _instance.business
+            : (business
+                as Query$getServiceProviderType$service_provider_details$business?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -8581,6 +8629,16 @@ class _CopyWithImpl$Query$getServiceProviderType$service_provider_details<TRes>
         : CopyWith$Query$getServiceProviderType$service_provider_details$restaurant(
             local$restaurant, (e) => call(restaurant: e));
   }
+
+  CopyWith$Query$getServiceProviderType$service_provider_details$business<TRes>
+      get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Query$getServiceProviderType$service_provider_details$business
+            .stub(_then(_instance))
+        : CopyWith$Query$getServiceProviderType$service_provider_details$business(
+            local$business, (e) => call(business: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$getServiceProviderType$service_provider_details<
@@ -8599,6 +8657,7 @@ class _CopyWithStubImpl$Query$getServiceProviderType$service_provider_details<
         laundry_store,
     Query$getServiceProviderType$service_provider_details$restaurant?
         restaurant,
+    Query$getServiceProviderType$service_provider_details$business? business,
     String? $__typename,
   }) =>
       _res;
@@ -8611,6 +8670,10 @@ class _CopyWithStubImpl$Query$getServiceProviderType$service_provider_details<
           TRes>
       get restaurant =>
           CopyWith$Query$getServiceProviderType$service_provider_details$restaurant
+              .stub(_res);
+  CopyWith$Query$getServiceProviderType$service_provider_details$business<TRes>
+      get business =>
+          CopyWith$Query$getServiceProviderType$service_provider_details$business
               .stub(_res);
 }
 
@@ -8885,6 +8948,146 @@ class _CopyWithStubImpl$Query$getServiceProviderType$service_provider_details$re
         CopyWith$Query$getServiceProviderType$service_provider_details$restaurant<
             TRes> {
   _CopyWithStubImpl$Query$getServiceProviderType$service_provider_details$restaurant(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getServiceProviderType$service_provider_details$business {
+  Query$getServiceProviderType$service_provider_details$business({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$getServiceProviderType$service_provider_details$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$getServiceProviderType$service_provider_details$business(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getServiceProviderType$service_provider_details$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getServiceProviderType$service_provider_details$business
+    on Query$getServiceProviderType$service_provider_details$business {
+  CopyWith$Query$getServiceProviderType$service_provider_details$business<
+          Query$getServiceProviderType$service_provider_details$business>
+      get copyWith =>
+          CopyWith$Query$getServiceProviderType$service_provider_details$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getServiceProviderType$service_provider_details$business<
+    TRes> {
+  factory CopyWith$Query$getServiceProviderType$service_provider_details$business(
+    Query$getServiceProviderType$service_provider_details$business instance,
+    TRes Function(
+            Query$getServiceProviderType$service_provider_details$business)
+        then,
+  ) = _CopyWithImpl$Query$getServiceProviderType$service_provider_details$business;
+
+  factory CopyWith$Query$getServiceProviderType$service_provider_details$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getServiceProviderType$service_provider_details$business;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getServiceProviderType$service_provider_details$business<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderType$service_provider_details$business<
+            TRes> {
+  _CopyWithImpl$Query$getServiceProviderType$service_provider_details$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getServiceProviderType$service_provider_details$business
+      _instance;
+
+  final TRes Function(
+      Query$getServiceProviderType$service_provider_details$business) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getServiceProviderType$service_provider_details$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getServiceProviderType$service_provider_details$business<
+        TRes>
+    implements
+        CopyWith$Query$getServiceProviderType$service_provider_details$business<
+            TRes> {
+  _CopyWithStubImpl$Query$getServiceProviderType$service_provider_details$business(
       this._res);
 
   TRes _res;

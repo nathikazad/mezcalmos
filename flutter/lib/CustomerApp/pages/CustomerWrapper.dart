@@ -1,3 +1,5 @@
+// ignore_for_file: unawaited_futures
+
 import 'dart:async';
 
 import 'package:badges/badges.dart' as badge;
@@ -7,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderListView.dart';
@@ -268,9 +271,9 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       final Uri initialUri = Uri.parse(initialLink);
       final String? referralCode = initialUri.queryParameters['referral'];
       if (referralCode != null) {
-        await saveReferral(referralCode);
-        // todo: @Sanchit Uke call routing function CustomerDeepLinkHandler.handleDeepLink
+        saveReferral(referralCode);
       }
+      CustomerDeepLinkHandler.handleDeepLink(initialUri);
     }
 
     // Subscribe to incoming links
@@ -281,8 +284,8 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
         final String? referralCode = uri.queryParameters['referral'];
         if (referralCode != null) {
           saveReferral(referralCode);
-          // todo: @Sanchit Uke call routing function CustomerDeepLinkHandler.handleDeepLink
         }
+        CustomerDeepLinkHandler.handleDeepLink(uri);
       }
     }, onError: (err) {
       // Handle error

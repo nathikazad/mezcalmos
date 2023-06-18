@@ -157,6 +157,9 @@ query getServiceProviderType($unique_id: String!) {
     restaurant {
       id
     }
+    business {
+      id
+    }
   }
 }
 
