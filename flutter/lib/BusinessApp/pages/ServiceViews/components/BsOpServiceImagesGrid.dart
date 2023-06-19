@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:badges/badges.dart' as badge;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -31,15 +30,18 @@ class BsOpServiceImagesGrid extends StatelessWidget {
                 children: List.generate(
                   5,
                   (int index) {
-                    bool hasImage = detailsController.getImage(index) != null;
+                    final bool hasImage =
+                        detailsController.getImage(index) != null;
                     return Stack(
                       clipBehavior: Clip.none,
                       children: [
                         InkWell(
-                          onTap: () {
-                            detailsController.addItemImage(
-                                itemIndex: index, context: context);
-                          },
+                          onTap: (detailsController.imagesUrls[index] != null)
+                              ? null
+                              : () {
+                                  detailsController.addItemImage(
+                                      itemIndex: index, context: context);
+                                },
                           borderRadius: BorderRadius.circular(10),
                           child: Ink(
                             width: 70,

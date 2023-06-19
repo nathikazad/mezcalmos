@@ -27,7 +27,7 @@ class BusinessCard {
 }
 
 Map<TimeUnit, num> constructBusinessServiceCost(cost) {
-  mezDbgPrint("log constructBusinessServiceCost $cost");
+  // mezDbgPrint("log constructBusinessServiceCost $cost");
   final Map<TimeUnit, num> _cost = {};
 
   cost?.forEach((String key, data) {

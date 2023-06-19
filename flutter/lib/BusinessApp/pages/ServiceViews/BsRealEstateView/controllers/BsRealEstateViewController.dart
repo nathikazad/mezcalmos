@@ -30,18 +30,15 @@ class BsRealEstateViewController {
   int? _homeRentalId;
   bool shouldRefetch = false;
   // state variables //
-  Rxn<Rental> _rental = Rxn<Rental>();
+  Rxn<Home> _rental = Rxn<Home>();
   Rxn<Location> homeLocation = Rxn<Location>();
   Rxn<HomeCategory1> homeType = Rxn<HomeCategory1>();
   // getters //
-  Rental? get rental => _rental.value;
+  Home? get rental => _rental.value;
   bool get isEditing => _rental.value != null;
 
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
-        // TimeUnit.PerHour,
-        TimeUnit.PerDay,
-        TimeUnit.PerWeek,
-        TimeUnit.PerMonth,
+        TimeUnit.Unit,
       ]);
   List<TimeUnit> get avalbleUnits => _possibleTimeUnits
       .where((TimeUnit element) =>
@@ -76,27 +73,31 @@ class BsRealEstateViewController {
   }
 
   Future<void> initEditMode({required int id}) async {
-    // _rental.value = await get_rental_by_id(id: id, withCache: false);
-    // mezDbgPrint(
-    //     "rental id : $id home type ============>>> ${rental!.homeType}");
-    // if (rental != null) {
-    //   detailsController.clearPrices();
-    //   await detailsController.initEditMode(
-    //       itemDetailsId: rental!.details.id.toInt());
-    //   bedroomsController.text = rental!.bedrooms.toString();
-    //   bathroomsController.text = rental!.bathrooms.toString();
-    //   areaController.text = rental!.details.additionalParameters?["area"]
-    //           .toString()
-    //           .replaceAll("sq ft", "")
-    //           .trim() ??
-    //       "";
-    //   homeLocation.value = rental!.gpsLocation;
-    //   homeType.value = rental!.homeType;
-    // }
+    _rental.value = await get_home_by_id(id: id, withCache: false);
+    mezDbgPrint(
+        "rental id : $id home type ============>>> ${rental!.category1}");
+    if (rental != null) {
+      detailsController.clearPrices();
+      await detailsController.initEditMode(
+          itemDetailsId: rental!.details.id.toInt());
+      bedroomsController.text = rental!.bedrooms.toString();
+      bathroomsController.text = rental!.bathrooms.toString();
+      areaController.text = rental!.details.additionalParameters?["area"]
+              .toString()
+              .replaceAll("sq ft", "")
+              .trim() ??
+          "";
+      homeLocation.value = rental!.gpsLocation;
+      homeType.value = rental!.category1;
+    }
+  }
+
+  void changeHomeType(HomeCategory1 newHomeType) {
+    homeType.value = newHomeType;
   }
 
   Future<void> saveItemDetails() async {
-    // await detailsController.updateItemDetails();
+    await detailsController.updateItemDetails();
   }
 
   Future<Home> _constructRentalWithDetails() async {
@@ -106,10 +107,10 @@ class BsRealEstateViewController {
       "area": areaController.text.trim() + " sq ft",
     };
     final Home rental = Home(
+      availableFor: HomeAvailabilityOption.Sale,
       location: HomeLocation(
           name: homeLocation.value!.address, location: homeLocation.value!),
       category1: homeType.value!,
-      availableFor: HomeAvailabilityOption.Sale,
       gpsLocation: homeLocation.value,
       details: details,
       bathrooms: int.tryParse(bathroomsController.text),
@@ -120,8 +121,11 @@ class BsRealEstateViewController {
 
   Home _constructRental() {
     final Home rental = Home(
+      locationId: this.rental!.locationId,
       location: HomeLocation(
-          name: homeLocation.value!.address, location: homeLocation.value!),
+        name: homeLocation.value!.address,
+        location: homeLocation.value!,
+      ),
       category1: homeType.value!,
       availableFor: HomeAvailabilityOption.Sale,
       gpsLocation: homeLocation.value,
@@ -133,63 +137,63 @@ class BsRealEstateViewController {
   }
 
   Future<void> save() async {
-    // if (languageTabsController.validate()) {
-    //   if (isEditing) {
-    //     try {
-    //       await saveItemDetails();
-    //       _rental.value = await update_business_home_rental(
-    //           id: rental!.id!.toInt(), rental: _constructRental());
-    //       await update_item_additional_params(
-    //         id: rental!.details.id.toInt(),
-    //         additionalParams: {
-    //           "area": areaController.text.trim() + " sq ft",
-    //         },
-    //       );
-    //       showSavedSnackBar();
-    //       shouldRefetch = true;
-    //     } catch (e, stk) {
-    //       mezDbgPrint(
-    //           " 🛑 ${rental?.id?.toInt()}  OperationException : ${e.toString()}");
-    //       mezDbgPrint(stk);
-    //       showErrorSnackBar();
-    //     }
-    //     shouldRefetch = true;
-    //   } else {
-    //     Rental _rental = await _constructRentalWithDetails();
-    //     await createItem(_rental);
-    //   }
-    // }
+    if (languageTabsController.validate()) {
+      if (isEditing) {
+        try {
+          await saveItemDetails();
+          _rental.value = await update_business_home_rental(
+              id: rental!.id!.toInt(), rental: _constructRental());
+          await update_item_additional_params(
+            id: rental!.details.id.toInt(),
+            additionalParams: {
+              "area": areaController.text.trim() + " sq ft",
+            },
+          );
+          showSavedSnackBar();
+          shouldRefetch = true;
+        } catch (e, stk) {
+          mezDbgPrint(
+              " 🛑 ${rental?.id?.toInt()}  OperationException : ${e.toString()}");
+          mezDbgPrint(stk);
+          showErrorSnackBar();
+        }
+        shouldRefetch = true;
+      } else {
+        Home _rental = await _constructRentalWithDetails();
+        await createItem(_rental);
+      }
+    }
   }
 
   void dispose() {
     languageTabsController.dispose();
   }
 
-  Future<void> createItem(Rental rental) async {
-    // mezDbgPrint(
-    //     "Create rental with this payload : ${rental.toFirebaseFormattedJson()}");
-    // try {
-    //   int? res = await add_one_home_rental(rental: rental);
+  Future<void> createItem(Home rental) async {
+    mezDbgPrint(
+        "Create rental with this payload : ${rental.toFirebaseFormattedJson()}");
+    try {
+      int? res = await add_one_home_rental(rental: rental);
 
-    //   if (res != null) {
-    //     showAddedSnackBar();
-    //     shouldRefetch = true;
-    //     detailsController.clearImages();
-    //     await initEditMode(id: res);
-    //   }
-    // } on OperationException catch (e) {
-    //   mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
-    // }
+      if (res != null) {
+        showAddedSnackBar();
+        shouldRefetch = true;
+        detailsController.clearImages();
+        await initEditMode(id: res);
+      }
+    } on OperationException catch (e) {
+      mezDbgPrint(" 🛑  OperationException : ${e.graphqlErrors[0].message}");
+    }
   }
 
   Future<void> deleteOffer() async {
-    // try {
-    //   await delete_busines_rental(rentalId: rental!.id!.toInt());
-    //   shouldRefetch = true;
-    // } catch (e, stk) {
-    //   showErrorSnackBar();
-    //   mezDbgPrint(e);
-    //   mezDbgPrint(stk);
-    // }
+    try {
+      await delete_busines_rental(rentalId: rental!.id!.toInt());
+      shouldRefetch = true;
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 }

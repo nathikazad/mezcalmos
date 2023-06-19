@@ -21,11 +21,13 @@ class BsHomeRentalCard extends StatelessWidget {
   final HomeCard home;
   final Function()? onClick;
   final BsServicesListViewController viewController;
+  final bool showUnit;
 
   const BsHomeRentalCard(
       {super.key,
       required this.home,
       required this.onClick,
+      this.showUnit = true,
       required this.viewController});
 
   @override
@@ -62,7 +64,7 @@ class BsHomeRentalCard extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                '${home.details.cost.values.first.toPriceString()}/${_i18n()[home.details.cost.keys.first.toStringDuration().toLowerCase()]}',
+                '${home.details.cost.values.first.toPriceString()}${showUnit ? "/" + _i18n()[home.details.cost.keys.first.toStringDuration().toLowerCase()] : ""}',
                 style: context.textTheme.bodyLarge
                     ?.copyWith(fontSize: 12.mezSp, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.right,
