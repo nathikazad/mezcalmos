@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -8,7 +9,10 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/hsSavedLocation.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/helpers/ReferralsHelper.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
@@ -20,8 +24,11 @@ class CustomerAuthController extends GetxController {
       StreamController<bool>();
   Future<void> onInit() async {
     super.onInit();
-
+    mezDbgPrint("CustomerAuthController onInit ");
     if (authController.fireAuthUser?.uid != null) {
+      final User user = fireAuth.FirebaseAuth.instance.currentUser!;
+      await ifUserJustSignedUp(user);
+
       // ignore: unawaited_futures
       Customer? value =
           await get_customer(user_id: authController.hasuraUserId!);

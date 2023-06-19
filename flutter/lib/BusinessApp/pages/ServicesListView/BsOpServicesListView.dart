@@ -2,11 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/BusinessApp/pages/Components/BsHomeRentalCard.dart'
-    as homeCard;
-import 'package:mezcalmos/BusinessApp/pages/Components/BsProductCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsEventCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsHomeRentalCard.dart';
+import 'package:mezcalmos/BusinessApp/pages/components/BsProductCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsRentalCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsServiceCard.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
@@ -507,8 +506,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToService(
-                                  serviceCategory:
-                                      ServiceCategory1.Beauty,
+                                  serviceCategory: ServiceCategory1.Beauty,
                                   id: beautyService[index].id!.toInt());
                             },
                           )),
@@ -535,8 +533,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToService(
-                                  serviceCategory:
-                                      ServiceCategory1.Photography,
+                                  serviceCategory: ServiceCategory1.Photography,
                                   id: photoService[index].id!.toInt());
                             },
                           )),
@@ -563,8 +560,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToService(
-                                  serviceCategory:
-                                      ServiceCategory1.Tattoo,
+                                  serviceCategory: ServiceCategory1.Tattoo,
                                   id: tattooService[index].id!.toInt());
                             },
                           )),
@@ -829,10 +825,14 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
   }
 
   Widget _homeRentals(BuildContext context) {
-    final RxList<HomeCard> homeRentals =
-        viewController.homeRentals.where((e) => e.forRent).toList().obs;
-    final RxList<HomeCard> realEstate =
-        viewController.homeRentals.where((e) => e.forSale).toList().obs;
+    final RxList<HomeCard> homeRentals = viewController.homeRentals
+        .where((HomeCard e) => e.forRent)
+        .toList()
+        .obs;
+    final RxList<HomeCard> realEstate = viewController.homeRentals
+        .where((HomeCard e) => e.forSale)
+        .toList()
+        .obs;
     return Column(
       children: [
         if (homeRentals.isNotEmpty)
@@ -848,7 +848,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 () => Column(
                   children: List.generate(
                       homeRentals.length,
-                      (int index) => homeCard.BsHomeRentalCard(
+                      (int index) => BsHomeRentalCard(
                             home: homeRentals[index],
                             viewController: viewController,
                             onClick: () {
@@ -874,11 +874,12 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                 () => Column(
                   children: List.generate(
                       realEstate.length,
-                      (int index) => homeCard.BsHomeRentalCard(
+                      (int index) => BsHomeRentalCard(
+                            showUnit: false,
                             home: realEstate[index],
                             viewController: viewController,
                             onClick: () {
-                              viewController.navigateToHomeRental(
+                              viewController.navigateToRealEstate(
                                   id: realEstate[index].id!.toInt());
                             },
                           )),

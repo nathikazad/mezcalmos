@@ -76,11 +76,20 @@ class BusinessItemDetailsController {
       imagesUrls.refresh();
 
       details!.cost.forEach((TimeUnit key, num value) {
-        TextEditingController _controller = TextEditingController();
+        final TextEditingController _controller = TextEditingController();
         _controller.text = value.toDouble().toStringAsFixed(0);
         priceTimeUnitMap[key] = _controller;
       });
     }
+  }
+
+  /// This function is to setup cost data for additional rooms
+  void constructNewRoomsCost(Map<TimeUnit, num> cost) {
+    cost.forEach((TimeUnit key, num value) {
+      TextEditingController _controller = TextEditingController();
+      _controller.text = value.toDouble().toStringAsFixed(0);
+      priceTimeUnitMap[key] = _controller;
+    });
   }
 
   Future<BusinessItemDetails> contructDetails() async {
@@ -109,7 +118,7 @@ class BusinessItemDetailsController {
   }
 
   Future<void> _pushDetailsToDb() async {
-    BusinessItemDetails _details = await contructDetails();
+    final BusinessItemDetails _details = await contructDetails();
     try {
       int? res = await update_business_item_details(
           details: _details, id: _details.id.toInt());
@@ -122,7 +131,7 @@ class BusinessItemDetailsController {
     List<String?> _imagesUrls = List<String?>.from(imagesUrls);
 
     for (int i = 0; i < images.length; i++) {
-      if (images[i] != null) {
+      if (images[i] != null && _imagesUrls[i] == null) {
         _imagesUrls[i] = await uploadImgToFbStorage(
             imageFile: imPicker.XFile(images[i]!.path),
             storageFolder:
@@ -173,7 +182,7 @@ class BusinessItemDetailsController {
   void addPriceTimeUnit({
     required TimeUnit timeUnit,
   }) {
-    TextEditingController textEditingController = TextEditingController();
+    final TextEditingController textEditingController = TextEditingController();
     priceTimeUnitMap[timeUnit] = textEditingController;
     // priceTimeUnitMap.refresh();
   }

@@ -9,11 +9,9 @@ extension RestaurantFilters<T extends Service> on List<Service> {
 
   List<Service> showOnlyOpen(bool value) {
     if (value == true) {
-      return where((Service restaurant) => restaurant.isOpen == true)
-          .toList();
+      return where((Service service) => service.isOpen == true).toList();
     } else {
-      return where(
-              (Service restaurant) => restaurant.state.isClosedIndef == false)
+      return where((Service service) => service.state.isClosedIndef == false)
           .toList();
     }
   }

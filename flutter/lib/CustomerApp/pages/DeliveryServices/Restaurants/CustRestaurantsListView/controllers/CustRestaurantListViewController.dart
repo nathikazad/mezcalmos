@@ -80,6 +80,12 @@ class CustRestaurantListViewController {
         _currentLocation = LatLng(location.latitude!, location.longitude!);
     });
 
+    await fetchRestaurants();
+    callbackId = appLifeCycleController.attachCallback(
+        AppLifecycleState.resumed, () => filter());
+  }
+
+  Future<void> fetchRestaurants() async {
     isLoading.value = true;
 
     await fetch_restaurants(
@@ -87,6 +93,7 @@ class CustRestaurantListViewController {
                 lat: _currentLocation.latitude,
                 lng: _currentLocation.longitude,
                 address: ''),
+            is_open: showOnlyOpen.value,
             withCache: false,
             distance: 25000)
         .then((List<Restaurant> list) {
@@ -98,8 +105,6 @@ class CustRestaurantListViewController {
     }).whenComplete(() {
       isLoading.value = false;
     });
-    callbackId = appLifeCycleController.attachCallback(
-        AppLifecycleState.resumed, () => filter());
   }
 
   void _getCustomerCurrentLocation() {
@@ -110,11 +115,12 @@ class CustRestaurantListViewController {
 
   void changeAlwaysOpenSwitch(bool value) {
     showOnlyOpen.value = value;
+    fetchRestaurants();
   }
 
   void _assignServiceIds() {
     servicesIds = _restaurants
-        .where((Restaurant element) => element.isOpen)
+        // .where((Restaurant element) => element.isOpen)
         .map((Restaurant e) => e.info.hasuraId)
         .toList();
   }
@@ -122,14 +128,11 @@ class CustRestaurantListViewController {
   void filter() {
     List<Restaurant> newList = new List<Restaurant>.from(_restaurants);
     if (searchType.value == SearchType.searchByRestaurantName) {
-      newList = newList
-          .searchByName(searchQuery.value)
-          .showOnlyOpen(showOnlyOpen.value) as List<Restaurant>;
+      newList = newList.searchByName(searchQuery.value) as List<Restaurant>;
       newList.sortByOpen();
       filteredRestaurants.value = newList;
     } else {
       servicesIds = newList
-          .showOnlyOpen(showOnlyOpen.value)
           .map(
             (Service e) => e.info.hasuraId,
           )
@@ -171,6 +174,7 @@ class CustRestaurantListViewController {
                 lat: _currentLocation.latitude,
                 lng: _currentLocation.longitude,
                 address: ''),
+            is_open: showOnlyOpen.value,
             withCache: false,
             distance: 25000);
       } else {
@@ -181,6 +185,7 @@ class CustRestaurantListViewController {
                 lat: _screenToWorldPosition!.latitude,
                 lng: _screenToWorldPosition!.longitude,
                 address: ''),
+            is_open: showOnlyOpen.value,
             withCache: false);
       }
     } catch (e) {

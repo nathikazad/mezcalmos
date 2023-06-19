@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/controllers/RealEstateViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealestateView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/controllers/CustRealEstateListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -21,13 +23,13 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['Businesses']['CustRealEstateView'];
+    ['pages']['Businesses']['CustRealEstateListView'];
 
-class CustRealEstateView extends StatefulWidget {
-  const CustRealEstateView({super.key});
+class CustRealEstateListView extends StatefulWidget {
+  const CustRealEstateListView({super.key});
 
   @override
-  State<CustRealEstateView> createState() => _CustRealEstateViewState();
+  State<CustRealEstateListView> createState() => _CustRealEstateListViewState();
 
   static Future<void> navigate() {
     final String route = CustBusinessRoutes.custRealEstateListRoute;
@@ -35,9 +37,9 @@ class CustRealEstateView extends StatefulWidget {
   }
 }
 
-class _CustRealEstateViewState extends State<CustRealEstateView> {
-  final CustRealEstateViewController viewController =
-      CustRealEstateViewController();
+class _CustRealEstateListViewState extends State<CustRealEstateListView> {
+  final CustRealEstateListViewController viewController =
+      CustRealEstateListViewController();
 
   @override
   void initState() {
@@ -250,31 +252,33 @@ class _CustRealEstateViewState extends State<CustRealEstateView> {
                     SizedBox(
                       width: 15,
                     ),
-                    Flexible(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.star,
-                            size: 17.5.mezSp,
-                            color: Color(0xFF6779FE),
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                              '${viewController.businesses[index].avgRating ?? '0'}',
-                              style: context.textTheme.bodySmall),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 2),
-                            child: Text(
-                              '(${viewController.businesses[index].reviewCount})',
-                              style: context.textTheme.bodyMedium,
+                    if (viewController.businesses[index].avgRating != null &&
+                        viewController.businesses[index].avgRating! > 0)
+                      Flexible(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              size: 17.5.mezSp,
+                              color: Color(0xFF6779FE),
                             ),
-                          )
-                        ],
-                      ),
-                    )
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Text(
+                                '${viewController.businesses[index].avgRating}',
+                                style: context.textTheme.bodySmall),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 2),
+                              child: Text(
+                                '(${viewController.businesses[index].reviewCount})',
+                                style: context.textTheme.bodyMedium,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
                   ],
                 )
               ],
@@ -288,69 +292,128 @@ class _CustRealEstateViewState extends State<CustRealEstateView> {
     if (viewController.realEstate.isNotEmpty) {
       return Column(
           children: List.generate(
-        viewController.realEstate.length,
-        (int index) => MezCard(
-          margin: EdgeInsets.only(bottom: 15),
-          elevation: 0,
-          onClick: () {
-            // CustRentalView.navigate(
-            //   rentalId: viewController.rentals[index].details.id.toInt(),
-            // );
-          },
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 55.mezW,
-                        child: Text(
+              viewController.realEstate.length,
+              (int index) => MezCard(
+                    margin: EdgeInsets.only(bottom: 15),
+                    elevation: 0,
+                    onClick: () {
+                      CustRealestateView.navigate(
+                        realestateId:
+                            viewController.realEstate[index].details.id.toInt(),
+                      );
+                    },
+                    content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                           viewController.realEstate[index].details.name
                               .getTranslation(userLanguage)!
                               .inCaps,
                           overflow: TextOverflow.ellipsis,
                           style: context.textTheme.displaySmall?.copyWith(
-                              fontSize: 12.mezSp, fontWeight: FontWeight.bold),
+                              fontSize: 12.5.mezSp,
+                              fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      Text(
-                        '${viewController.realEstate[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.realEstate[index].details.cost.keys.first.toStringDuration().toLowerCase()]} '}',
-                        overflow: TextOverflow.ellipsis,
-                        style: context.textTheme.bodyLarge?.copyWith(
-                            height: 2,
-                            fontSize: 12.5.mezSp,
-                            fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
-                  if (viewController.realEstate[index].details.image != null)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: CachedNetworkImage(
-                          width: 50.mezSp,
-                          height: 50.mezSp,
-                          fit: BoxFit.cover,
-                          imageUrl: viewController
-                              .realEstate[index].details.image![0]),
-                    )
-                ],
-              ),
-              Divider(), // TO FIx
-              Text(viewController.realEstate[index].businessName)
-            ],
-          ),
-          // action: (viewController.rentals[index].details.firstImage != null)
-          //     ? CachedNetworkImage(
-          //         width: 50.mezSp,
-          //         height: 50.mezSp,
-          //         imageUrl: viewController.rentals[index].details.firstImage!)
-          //     : null,
-        ),
-      ));
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Wrap(
+                                spacing: 10,
+                                runSpacing: 5,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.price_check),
+                                      Text(
+                                        '${viewController.realEstate[index].details.cost.values.first.toPriceString()}',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: context.textTheme.bodyLarge
+                                            ?.copyWith(
+                                                fontSize: 12.5.mezSp,
+                                                fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                  if (viewController
+                                          .realEstate[index].bedrooms !=
+                                      null)
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.single_bed_outlined,
+                                            size: 15.mezSp),
+                                        Text(
+                                            ' ${viewController.realEstate[index].bedrooms} ${_i18n()['bedrooms']}',
+                                            style: context.textTheme.bodyLarge
+                                                ?.copyWith(
+                                                    fontSize: 12.5.mezSp,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                      ],
+                                    ),
+                                  // if (viewController.rentals[0].bathrooms !=
+                                  //     null)
+                                  //   Row(
+                                  //     mainAxisSize: MainAxisSize.min,
+                                  //     children: [
+                                  //       Icon(Icons.bed, size: 15.mezSp),
+                                  //       Text(
+                                  //           ' ${viewController.rentals[0].bathrooms} ${_i18n()['bathrooms']}',
+                                  //           style: context.textTheme.bodyLarge
+                                  //               ?.copyWith(
+                                  //                   fontSize: 12.5.mezSp,
+                                  //                   fontWeight:
+                                  //                       FontWeight.w600)),
+                                  //     ],
+                                  //   ),
+                                  if (viewController.realEstate[index].details
+                                          .additionalParameters?['area'] !=
+                                      null)
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.house_siding,
+                                            size: 15.mezSp),
+                                        Text(
+                                            ' ${viewController.realEstate[index].details.additionalParameters?['area']}m²',
+                                            style: context.textTheme.bodyLarge
+                                                ?.copyWith(
+                                                    fontSize: 12.5.mezSp,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                      ],
+                                    )
+                                ],
+                              ),
+                            ),
+                            if (viewController
+                                    .realEstate[index].details.image !=
+                                null)
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: CachedNetworkImage(
+                                    width: 50.mezSp,
+                                    height: 50.mezSp,
+                                    fit: BoxFit.cover,
+                                    imageUrl: viewController
+                                        .realEstate[index].details.image![0]),
+                              )
+                          ],
+                        ),
+                        Divider(),
+                        Text(viewController.realEstate[index].businessName)
+                      ],
+                    ),
+                  )));
     } else
       return NoServicesFound();
   }

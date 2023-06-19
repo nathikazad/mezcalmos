@@ -317,17 +317,23 @@
           "bathroomsHint": "¿Cuántos cuartos de baño tiene su casa?",
           "bathroomsError": "Por favor, introduzca los baños",
           "areaHint": "¿Cuántas área tiene su hogar?",
-          "area": "Área",
+          "area": "Área de superficie(opcional)",
           "areaError": "Ingrese el área",
           "apartment": "Apartamento",
           "villa": "Villa",
           "condo": "Condominio",
           "bungalow": "Bungalow",
           "hotel": "Hotel",
+          "hostel": "Albergue",
+          "room": "Habitación",
           "petFriendly": "Mascota amigable",
           "petFriendlyHint": "Seleccione si permite mascotas o no",
           "yes": "Sí",
-          "no": "No"
+          "no": "No",
+          "singleBed": "Cama individual",
+          "doubleBed": "Cama matrimonialmonial",
+          "dormRoom": "Dormitorio",
+          "suite": "Suite"
         },
         "languageSchool": {
           "otherServicesTitle": "Otros servicios",
@@ -405,11 +411,12 @@
         "realEstate": {
           "otherServicesTitle": "Otros servicios",
           "otherServicesSubtitle": "El uso de otros servicios le permite agregar un servicio como un evento, una clase, un alquiler (automóvil, surf o hogar), un producto o un servicio.cto o un servicio.",
-          "rentalTitle": "Alquiler de bienes raíces",
-          "rentalSubtitle": "Utilizando un servicio de alquiler de bienes raíces, puede anunciar un bienes raíces en alquiler.",
-          "rentalDetails": "Detalles de alquiler",
-          "homeType": "Tipo de vivienda",
-          "homeTypeError": "Seleccione el tipo de vivienda",
+          "rentalTitle": "Bienes raíces",
+          "rentalSubtitle": "Usando un servicio de bienes raíces, puede anunciar una propiedad inmobiliaria para alquilar.",
+          "rentalDetails": "Detalles inmobiliarios",
+          "homeType": "Tipo inmobiliario",
+          "homeTypeError": "Seleccione el tipo de bienes raíces",
+          "land": "Tierra",
           "homeLocation": "Elegir ubicación de la casa",
           "bedrooms": "Dormitorios",
           "bedroomsHint": "¿Cuántas habitaciones tiene su casa?",
@@ -613,6 +620,12 @@
         "unit": "unidad",
         "none": "ninguna",
         "free": "GRATIS",
+        "perHour": "hora",
+        "perDay": "día",
+        "perWeek": "semana",
+        "perMonth": "mes",
+        "perPerson": "persona",
+        "perUnit": "unidad",
         "bedrooms": "Dormitorios",
         "bathrooms": "Baños",
         "apartment": "Departamento",
@@ -621,6 +634,10 @@
         "bungalow": "Bungalow",
         "hotel": "Hotel",
         "to": "a",
+        "singleBed": "Cama individual",
+        "doubleBed": "Cama matrimonial",
+        "dormRoom": "Dormitorio",
+        "suite": "Suite",
         "components": {
           "loading": "Cargando",
           "schedule": "Horario",
@@ -1329,7 +1346,7 @@
             "volunteer": "Voluntaria",
             "adventures": "Aventuras",
             "realEstate": "Properties",
-            "courier": "Mensajera"
+            "courier": "Entrega abierta"
           }
         },
         "AllServiceView": {
@@ -1422,7 +1439,7 @@
               "oneTime": "Retiro",
               "onDemand": "Privada"
             },
-            "all": "Alle",
+            "all": "Todo",
             "surf": "Navegar",
             "fitness": "Aptitud física",
             "yoga": "Yoga",
@@ -1513,7 +1530,7 @@
             "bicycle": "Bicicleta"
           }
         },
-        "CustRealEstateView": {
+        "CustRealEstateListView": {
           "home": "Hogar",
           "map": "Mapa",
           "realEstate": "Realestate",
@@ -1534,7 +1551,10 @@
           "noBusinessFound": "No se encontraron Buisinesses",
           "confirm": "Confirmar",
           "cancel": "Cancelar",
-          "filter": "Filtrar"
+          "filter": "Filtrar",
+          "total": "Total",
+          "bedrooms": "Dormitorios",
+          "bathrooms": "Baños"
         },
         "EventsViews": {
           "CustEventsListView": {
@@ -2402,7 +2422,7 @@
         "scLangError": "Por favor seleccione un idioma secundario",
         "sameLangErrorText": "Se utiliza este idioma, ingrese un idioma diferente.",
         "none": "Ninguna",
-        "en": "Inglesa",
+        "en": "Ingles",
         "es": "Español"
       },
       "SomethingWentWrongScreen": {
@@ -4033,7 +4053,7 @@
             "profile": "Perfil",
             "costs": "Costo",
             "accept": "Aceptar",
-            "reject": "Rechazar",
+            "reject": "Borrar",
             "offerings": "Ofertas"
           }
         }

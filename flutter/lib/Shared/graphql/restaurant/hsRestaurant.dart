@@ -21,27 +21,46 @@ Future<List<Restaurant>> fetch_restaurants(
     {required bool withCache,
     required cModels.Location fromLocation,
     required double distance,
-    bool? is_open,
+    required bool is_open,
     int? limit,
     int? offset}) async {
   final List<Restaurant> _restaurants = <Restaurant>[];
-
-  final QueryResult<Query$getRestaurants> response = await _db.graphQLClient
-      .query$getRestaurants(Options$Query$getRestaurants(
-          variables: Variables$Query$getRestaurants(
-              from: Geography(
-                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-              distance: distance,
-              is_open: is_open,
-              limit: limit,
-              offset: offset),
-          fetchPolicy: withCache
-              ? FetchPolicy.cacheAndNetwork
-              : FetchPolicy.networkOnly));
-
-  if (response.parsedData?.restaurant_restaurant != null) {
-    response.parsedData?.restaurant_restaurant
-        .forEach((Query$getRestaurants$restaurant_restaurant data) async {
+  dynamic parsedData;
+  dynamic exception;
+  if (is_open) {
+    final QueryResult<Query$getOpenRestaurants> response = await _db
+        .graphQLClient
+        .query$getOpenRestaurants(Options$Query$getOpenRestaurants(
+            variables: Variables$Query$getOpenRestaurants(
+                from: Geography(
+                    fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+                distance: distance,
+                limit: limit,
+                offset: offset),
+            fetchPolicy: withCache
+                ? FetchPolicy.cacheAndNetwork
+                : FetchPolicy.networkOnly));
+    parsedData = response.parsedData;
+    exception = response.exception;
+  } else {
+    final QueryResult<Query$getAllRestaurants> response = await _db
+        .graphQLClient
+        .query$getAllRestaurants(Options$Query$getAllRestaurants(
+            variables: Variables$Query$getAllRestaurants(
+                from: Geography(
+                    fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+                distance: distance,
+                limit: limit,
+                offset: offset),
+            fetchPolicy: withCache
+                ? FetchPolicy.cacheAndNetwork
+                : FetchPolicy.networkOnly));
+    parsedData = response.parsedData;
+    exception = response.exception;
+  }
+  if (parsedData?.restaurant_restaurant != null) {
+    parsedData?.restaurant_restaurant
+        .forEach((Fragment$RestaurantFields data) async {
       _restaurants.add(Restaurant(
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
@@ -83,8 +102,7 @@ Future<List<Restaurant>> fetch_restaurants(
     });
     return _restaurants;
   } else {
-    throw Exception(
-        "🛑🛑🛑 Get restaurants exceptions 🛑🛑🛑 \n ${response.exception} ");
+    throw Exception("🛑🛑🛑 Get restaurants exceptions 🛑🛑🛑 \n $exception ");
   }
 }
 

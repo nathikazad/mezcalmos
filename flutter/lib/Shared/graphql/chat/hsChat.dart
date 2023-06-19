@@ -91,6 +91,7 @@ Future<HasuraChat?> get_service_provider_customer_chat(
   final QueryResult<Query$get_service_provider_customer_chat> _chat =
       await _hasuraDb.graphQLClient.query$get_service_provider_customer_chat(
     Options$Query$get_service_provider_customer_chat(
+      fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Query$get_service_provider_customer_chat(
         customer_id: customerId,
         service_provider_id: serviceProviderId,
@@ -249,6 +250,53 @@ Future<List<HasuraChat>> get_business_provider_chats({
                   timestamp: DateTime.parse(data.chat.last_message['timestamp'])
                       .toLocal(),
                   userId: data.chat.last_message['userId'],
+                )
+              : null,
+          participants: []));
+    });
+    return _chats;
+  } else {
+    return [];
+  }
+}Future<List<HasuraChat>> get_admin_chats() async {
+  final List<HasuraChat> _chats = <HasuraChat>[];
+
+  final QueryResult<Query$get_admin_chats> response =
+      await _hasuraDb.graphQLClient.query$get_admin_chats(
+    Options$Query$get_admin_chats(
+      
+    ),
+  );
+  mezDbgPrint(
+      "chat response $response  ${response.parsedData?.mez_admin_chat}");
+  if (response.parsedData?.mez_admin_chat != null) {
+    response.parsedData!.mez_admin_chat.forEach(
+        (
+            Query$get_admin_chats$mez_admin_chat data) async {
+      _chats.add(HasuraChat(
+          chatInfo: HasuraChatInfo(
+            chatTite:
+                data.chat?.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['chatTitle'],
+            phoneNumber:
+                data.chat?.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['phoneNumber'],
+            chatImg:
+                data.chat?.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['chatImage'],
+            parentlink:
+                data.chat?.chat_info!['${MezEnv.appType.toChatInfoString()}']
+                    ['parentLink'],
+          ),
+          creationTime: DateTime.parse(data.chat!.creation_time).toLocal(),
+          id: data.chat!.id,
+          messages: _get_messages(data.chat!.messages),
+          lastMessage: data.chat!.last_message != null
+              ? Message(
+                  message: data.chat!.last_message['message'],
+                  timestamp: DateTime.parse(data.chat!.last_message['timestamp'])
+                      .toLocal(),
+                  userId: data.chat!.last_message['userId'],
                 )
               : null,
           participants: []));

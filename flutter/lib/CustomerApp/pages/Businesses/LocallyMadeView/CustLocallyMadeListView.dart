@@ -180,31 +180,33 @@ class _CustLocallyMadeListViewState extends State<CustLocallyMadeListView> {
                     SizedBox(
                       width: 15,
                     ),
-                    Flexible(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.star,
-                            size: 17.5.mezSp,
-                            color: Color(0xFF6779FE),
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                              '${viewController.businesses[index].avgRating ?? '0'}',
-                              style: context.textTheme.bodySmall),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 2),
-                            child: Text(
-                              '(${viewController.businesses[index].reviewCount})',
-                              style: context.textTheme.bodyMedium,
+                    if (viewController.businesses[index].avgRating != null &&
+                        viewController.businesses[index].avgRating! > 0)
+                      Flexible(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              size: 17.5.mezSp,
+                              color: Color(0xFF6779FE),
                             ),
-                          )
-                        ],
-                      ),
-                    )
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Text(
+                                '${viewController.businesses[index].avgRating}',
+                                style: context.textTheme.bodySmall),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 2),
+                              child: Text(
+                                '(${viewController.businesses[index].reviewCount})',
+                                style: context.textTheme.bodyMedium,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
                   ],
                 )
               ],

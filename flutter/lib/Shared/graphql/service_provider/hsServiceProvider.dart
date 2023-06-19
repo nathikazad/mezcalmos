@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
@@ -53,7 +54,7 @@ Future<ServiceLink?> get_service_link_by_id(
   return null;
 }
 
-Future<String?> get_service_link({required String uniqueId}) async {
+Future<ServicProviderInfo?> get_service_link({required String uniqueId}) async {
   final QueryResult<Query$getServiceProviderType> response = await _db
       .graphQLClient
       .query$getServiceProviderType(Options$Query$getServiceProviderType(
@@ -68,12 +69,16 @@ Future<String?> get_service_link({required String uniqueId}) async {
   switch (response
       .parsedData?.service_provider_details.first.service_provider_type) {
     case "restaurant":
-    // todo handle properly the routing
-    // return getRestaurantRoute(
-    //     response.parsedData!.service_provider_details.first.restaurant!.id);
+      return ServicProviderInfo(cModels.ServiceProviderType.Restaurant,
+          response.parsedData!.service_provider_details.first.restaurant!.id);
     case "laundry":
-    // return getLaundryRoute(response
-    //     .parsedData!.service_provider_details.first.laundry_store!.id);
+      return ServicProviderInfo(
+          cModels.ServiceProviderType.Laundry,
+          response
+              .parsedData!.service_provider_details.first.laundry_store!.id);
+    case "business":
+      return ServicProviderInfo(cModels.ServiceProviderType.Business,
+          response.parsedData!.service_provider_details.first.business!.id);
     default:
       return null;
   }

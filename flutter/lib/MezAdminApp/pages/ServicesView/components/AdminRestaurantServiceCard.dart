@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
@@ -56,11 +57,29 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                     Row(
                       children: [
                         Flexible(
-                          fit: FlexFit.tight,
-                          child: Text(
-                            restaurant.info.name,
-                            style: context.txt.bodyLarge,
-                          ),
+                            fit: FlexFit.tight,
+                            child: RichText(
+                                text: TextSpan(
+                                    text: restaurant.info.name,
+                                    style: context.txt.bodyLarge,
+                                    children: [
+                                  WidgetSpan(
+                                    child: MezIconButton(
+                                      onTap: () async {
+                                        await viewController.messageService(
+                                            serviceId: restaurant.info.hasuraId
+                                                .toInt(),
+                                            type: RecipientType.Restaurant);
+                                      },
+                                      icon: Icons.textsms_rounded,
+                                      backgroundColor: primaryBlueColor,
+                                      iconColor: Colors.white,
+                                      margin: EdgeInsets.only(left: 12),
+                                    ),
+                                  )
+                                ]))),
+                        SizedBox(
+                          width: 10,
                         ),
                         SizedBox(
                           height: 18,
@@ -80,9 +99,9 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                         )
                       ],
                     ),
-                    Container(
-                        margin: const EdgeInsets.symmetric(vertical: 5),
-                        child: Text(restaurant.info.name)),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -134,8 +153,12 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                             textColor: Colors.red,
                             label: "${_i18n()['reject']}",
                             onClick: () async {
-                               await viewController.approveService(
-                                  detailsId: restaurant.serviceDetailsId,approved: false);
+                              await viewController.deleteService(
+                                serviceProviderType:
+                                    ServiceProviderType.Restaurant,
+                                serviceProviderId:
+                                    restaurant.info.hasuraId.toInt(),
+                              );
                             })),
                     SizedBox(
                       width: 8,
@@ -148,7 +171,8 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                             label: "${_i18n()['accept']}",
                             onClick: () async {
                               await viewController.approveService(
-                                  detailsId: restaurant.serviceDetailsId,approved: true);
+                                detailsId: restaurant.serviceDetailsId,
+                              );
                             })),
                   ],
                 ),

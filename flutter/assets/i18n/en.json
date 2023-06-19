@@ -315,7 +315,7 @@
           "bathrooms": "Bathrooms",
           "bathroomsHint": "How many bathrooms does your home have?",
           "bathroomsError": "Please enter bathrooms",
-          "area": "Area",
+          "area": "Surface area(optional)",
           "areaHint": "How many area does your home have?",
           "areaError": "Please enter area",
           "apartment": "Apartment",
@@ -323,10 +323,16 @@
           "condo": "Condo",
           "bungalow": "Bungalow",
           "hotel": "Hotel",
+          "hostel": "Hostel",
+          "room": "Room",
           "petFriendly": "Pet Friendly",
           "petFriendlyHint": "Select if you allow pets or not",
           "yes": "Yes",
-          "no" : "No"
+          "no": "No",
+          "singleBed": "Single Bed",
+          "doubleBed": "Double Bed",
+          "dormRoom": "Dorm Room",
+          "suite": "Suite"
         },
         "languageSchool": {
           "otherServicesTitle": "Other services",
@@ -398,11 +404,11 @@
         "realEstate": {
           "otherServicesTitle": "Other services",
           "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
-          "rentalTitle": "Real Estate Rental",
-          "rentalSubtitle": "Using a real estate rental service, you can advertise a real estate for rent.",
-          "rentalDetails": "Rental details",
-          "homeType": "Home type",
-          "homeTypeError": "Please select home type",
+          "rentalTitle": "Real Estate",
+          "rentalSubtitle": "Using a real estate service, you can advertise a real estate for rent.",
+          "rentalDetails": "Real Estate details",
+          "homeType": "Real estate type",
+          "homeTypeError": "Please select Real estate type",
           "homeLocation": "Pick house location",
           "bedrooms": "Bedrooms",
           "bedroomsHint": "How many bedrooms does your home have?",
@@ -416,6 +422,7 @@
           "apartment": "Apartment",
           "villa": "Villa",
           "condo": "Condo",
+          "land": "Land",
           "bungalow": "Bungalow",
           "hotel": "Hotel"
         },
@@ -526,11 +533,11 @@
       "JoinUsView": {
         "joinUs": "Join us",
         "restaurantBusiness": {
-          "title": "Restaurant business",
+          "title": "Restaurant",
           "subtitle": "If you own a restaurant and want to expand it online."
         },
         "laundryBusiness": {
-          "title": "Laundry business",
+          "title": "Laundry",
           "subtitle": "If you own a laundry and want to earn more online."
         },
         "houseRentalAgency": {
@@ -614,6 +621,12 @@
         "person": "person",
         "total": "total",
         "unit": "unit",
+        "perHour": "hour",
+        "perDay": "day",
+        "perWeek": "week",
+        "perMonth": "month",
+        "perPerson": "person",
+        "perUnit": "unit",
         "none": "none",
         "free": "FREE",
         "bedrooms": "Bedrooms",
@@ -624,6 +637,10 @@
         "bungalow": "Bungalow",
         "hotel": "Hotel",
         "to": "to",
+        "singleBed": "Single Bed",
+        "doubleBed": "Double Bed",
+        "dormRoom": "Dorm Room",
+        "suite": "Suite",
         "components": {
           "loading": "Loading",
           "schedule": "Schedule",
@@ -1257,7 +1274,7 @@
             "volunteer": "Volunteer",
             "adventures": "Adventures",
             "realEstate": "Properties",
-            "courier": "Courier"
+            "courier": "Open Delivery"
           }
         },
         "AllServiceView": {
@@ -1478,7 +1495,7 @@
             "bicycle": "Bicycle"
           }
         },
-        "CustRealEstateView": {
+        "CustRealEstateListView": {
           "home": "Home",
           "map": "Map",
           "realEstate": "Realestate",
@@ -1499,7 +1516,10 @@
           "noBusinessFound": "No buisinesses found",
           "confirm": "Confirm",
           "cancel": "Cancel",
-          "filter": "Filter"
+          "filter": "Filter",
+          "total": "Total",
+          "bedrooms": "Bedrooms",
+          "bathrooms": "Bathrooms"
         },
         "EventsViews": {
           "CustEventsListView": {
@@ -3977,7 +3997,7 @@
             "profile": "Profile",
             "costs": "Costs",
             "accept": "Accept",
-            "reject": "Reject",
+            "reject": "Delete",
             "offerings": "Offerings"
           }
         }

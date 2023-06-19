@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/models/User.dart' as user;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class DeliveryOrder extends DeliverableOrder {
   int? serviceOrderId;
@@ -138,14 +138,15 @@ class DeliveryOrderVariables {
   DateTime? scheduleTime;
   DateTime? cancellationTime;
   DeliveryOrderStatus status;
+  user.UserInfo? driverInfo;
   bool packageReady;
-  DeliveryOrderVariables({
-    required this.status,
-    required this.packageReady,
-    this.estimatedArrivalAtPickup,
-    this.estimatedArrivalAtDropoff,
-    this.estimatedPackageReadyTime,
-    this.scheduleTime,
-    this.cancellationTime,
-  });
+  DeliveryOrderVariables(
+      {required this.status,
+      required this.packageReady,
+      this.estimatedArrivalAtPickup,
+      this.estimatedArrivalAtDropoff,
+      this.estimatedPackageReadyTime,
+      this.scheduleTime,
+      this.cancellationTime,
+      this.driverInfo});
 }

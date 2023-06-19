@@ -1,49 +1,66 @@
-query getRestaurants($is_open: Boolean, $limit: Int, $offset: Int, $distance: Float, $from: geography) {
-  restaurant_restaurant(where: {details: {is_open: {_eq: $is_open}, location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, limit: $limit, offset: $offset, order_by: {details: {referral_points: desc}}) {
+
+fragment RestaurantFields on restaurant_restaurant {
+  id
+  reviews_aggregate {
+    aggregate {
+      avg {
+        rating
+      }
+    }
+  }
+  delivery_details_of_deliverer {
+    cost_per_km
+    free_delivery_km_range
+    free_delivery_minimum_cost
     id
-    reviews_aggregate {
-      aggregate {
-        avg {
-          rating
-        }
+    minimum_cost
+    radius
+    self_delivery
+  }
+  details {
+    id
+    image
+    language
+    is_open
+    name
+    location {
+      gps
+      address
+    }
+    firebase_id
+    approved
+    description_id
+    schedule
+    description {
+      translations {
+        language_id
+        value
       }
     }
-    delivery_details_of_deliverer {
-      cost_per_km
-      free_delivery_km_range
-      free_delivery_minimum_cost
-      id
+    open_status
+    schedule
+  }
+}
 
-      minimum_cost
-      radius
-      self_delivery
-    }
-    details {
-      id
-      image
-      language
-      is_open
+query getOpenRestaurants($limit: Int, $offset: Int, $distance: Float!, $from: geography!) {
+  restaurant_restaurant(
+    where: { details: { is_open: { _eq: true }, location: { gps: { _st_d_within: { distance: $distance, from: $from } } } } },
+    limit: $limit,
+    offset: $offset,
+    order_by: { details: { referral_points: desc } }
+  ) {
+    ...RestaurantFields
+  }
+}
 
-      name
-      location {
-        gps
-        address
-      }
-      firebase_id
-      approved
-
-      description_id
-      schedule
-      description {
-        translations {
-          language_id
-          value
-        }
-      }
-
-      open_status
-      schedule
-    }
+query getAllRestaurants($limit: Int, $offset: Int, $distance: Float!, $from: geography!) {
+  restaurant_restaurant(
+    where: { details: { location: { gps: { _st_d_within: { distance: $distance, from: $from } } } } },
+    limit: $limit,
+    offset: $offset,
+    order_by: { details: { referral_points: desc } }
+  ) {
+    ...RestaurantFields
   }
 }
 

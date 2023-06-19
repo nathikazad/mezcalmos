@@ -4,15 +4,18 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/contro
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingLocationCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsDeleteOfferButton.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/RentalHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 
@@ -286,57 +289,6 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
               return null;
             },
           ),
-          bigSeperator,
-          Obx(
-            () => BsOpOfferingPricesList(
-              availbleUnits: viewController.avalbleUnits,
-              onAddPrice: (TimeUnit unit) {
-                viewController.detailsController
-                    .addPriceTimeUnit(timeUnit: unit);
-              },
-              onRemovePrice: (TimeUnit unit) {
-                viewController.detailsController.removeTimeUnit(unit);
-              },
-              seletedPrices: viewController.detailsController.priceTimeUnitMap,
-            ),
-          ),
-          bigSeperator,
-          Text(
-            _i18n()["homeRental"]["rentalDetails"],
-            style: context.textTheme.bodyLarge,
-          ),
-          smallSepartor,
-          Text(
-            '${_i18n()["homeRental"]["homeType"]}',
-            style: context.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-          ),
-          smallSepartor,
-          Obx(() {
-            List<HomeCategory1> possibleItems = [...HomeCategory1.values];
-            possibleItems.remove(HomeCategory1.Uncategorized);
-            return MezStringDropDown(
-              validator: (String? value) {
-                if (viewController.homeType.value == null) {
-                  return _i18n()["homeRental"]["homeTypeError"];
-                }
-                return null;
-              },
-              langPath: _i18n()["homeRental"],
-              items: possibleItems
-                  .map((HomeCategory1 e) => e.toFirebaseFormatString())
-                  .toList(),
-              value: viewController.homeType.value?.toFirebaseFormatString(),
-              onChanged: (String? newHomeType) {
-                if (newHomeType != null) {
-                  viewController.homeType.value = newHomeType.toHomeCategory1();
-                }
-              },
-              labelText: _i18n()["homeRental"]["homeType"],
-            );
-          }),
           smallSepartor,
           Obx(
             () => BsOpOfferingLocationCard(
@@ -359,95 +311,46 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           ),
           smallSepartor,
           Text(
-            _i18n()["homeRental"]["bedrooms"],
-            style: context.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-          ),
-          smallSepartor,
-          TextFormField(
-            focusNode: bedroomNode,
-            controller: viewController.bedroomsController,
-            decoration: InputDecoration(
-              hintText: _i18n()["homeRental"]["bedroomsHint"],
-            ),
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                _focus(bedroomNode);
-                return _i18n()["homeRental"]["bedroomsError"];
-              }
-              return null;
-            },
-          ),
-          smallSepartor,
-          Text(
-            _i18n()["homeRental"]["bathrooms"],
-            style: context.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-          ),
-          smallSepartor,
-          TextFormField(
-            focusNode: bathroomNode,
-            controller: viewController.bathroomsController,
-            decoration: InputDecoration(
-              hintText: _i18n()["homeRental"]["bathroomsHint"],
-            ),
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                _focus(bathroomNode);
-                return _i18n()["homeRental"]["bathroomsError"];
-              }
-              return null;
-            },
-          ),
-          smallSepartor,
-          Text(
-            _i18n()["homeRental"]["area"],
-            style: context.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-          ),
-          smallSepartor,
-          TextFormField(
-            controller: viewController.areaController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-                hintText: _i18n()["homeRental"]["areaHint"],
-                suffixText: "sq ft m²"),
-            // validator: (String? value) {
-            //   if (value == null || value.isEmpty) {
-            //     return _i18n()["homeRental"]["areaError"];
-            //   }
-            //   return null;
-            // },
-          ),
-          smallSepartor,
-          Text(
-            _i18n()["homeRental"]["petFriendly"],
-            style: context.textTheme.bodyMedium!.copyWith(
+            '${_i18n()["homeRental"]["homeType"]}',
+            style: context.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
           ),
           smallSepartor,
           Obx(() {
-            final List<String> possibleItems = ["yes", "no"];
+            List<HomeCategory1> possibleItems = [...HomeCategory1.values];
+            possibleItems.remove(HomeCategory1.Uncategorized);
+            possibleItems.remove(HomeCategory1.Land);
             return MezStringDropDown(
+              validator: (String? value) {
+                if (viewController.homeType.value == null) {
+                  return _i18n()["homeRental"]["homeTypeError"];
+                }
+                return null;
+              },
               langPath: _i18n()["homeRental"],
-              items: possibleItems,
-              value: viewController.petFriendly.value,
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  viewController.petFriendly.value = newValue;
+              items: possibleItems
+                  .map((HomeCategory1 e) => e.toFirebaseFormatString())
+                  .toList(),
+              value: viewController.homeType.value?.toFirebaseFormatString(),
+              onChanged: (String? newHomeType) {
+                if (newHomeType != null) {
+                  viewController.changeHomeType(newHomeType.toHomeCategory1());
                 }
               },
-              labelText: _i18n()["homeRental"]["petFriendlyHint"],
+              labelText: _i18n()["homeRental"]["homeType"],
             );
           }),
+          bigSeperator,
+
+          if (viewController.homeType != HomeCategory1.Hotel &&
+              viewController.homeType != HomeCategory1.Hostel)
+            _singlePriceView(),
+
+          if (viewController.homeType == HomeCategory1.Hotel ||
+              viewController.homeType == HomeCategory1.Hostel)
+            _multipleRoomPriceView(),
 
           if (viewController.isEditing)
             BsDeleteOfferButton(
@@ -458,6 +361,318 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
             )
         ],
       ),
+    );
+  }
+
+  Widget _multipleRoomPriceView() {
+    return Column(
+      children: [
+        Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Room Type 1",
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+                InkWell(
+                    onTap: () async {
+                      viewController.addNewRoom();
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.all(5),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.add_circle_outline,
+                            size: 20,
+                            color: primaryBlueColor,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            "Add additional room",
+                            style: context.textTheme.bodyLarge
+                                ?.copyWith(color: primaryBlueColor),
+                          ),
+                        ],
+                      ),
+                    )),
+              ],
+            ),
+            smallSepartor,
+            MezCard(
+              content: Column(
+                children: [
+                  Obx(() {
+                    return MezStringDropDown(
+                      validator: (String? value) {
+                        if (viewController.roomType.value == null) {
+                          return _i18n()["homeRental"]["homeTypeError"];
+                        }
+                        return null;
+                      },
+                      langPath: _i18n()["homeRental"],
+                      items: RoomType.values
+                          .map((RoomType e) => e.toFirebaseFormatString())
+                          .toList(),
+                      value: viewController.roomType.value
+                          ?.toFirebaseFormatString(),
+                      onChanged: (String? newRoomType) {
+                        if (newRoomType != null) {
+                          viewController.roomType.value =
+                              newRoomType.toRoomType();
+                        }
+                      },
+                      labelText: _i18n()["homeRental"]["homeType"],
+                    );
+                  }),
+                  smallSepartor,
+                  Obx(
+                    () => BsOpOfferingPricesList(
+                      availbleUnits: viewController.avalbleUnits,
+                      onAddPrice: (TimeUnit unit) {
+                        viewController.detailsController
+                            .addPriceTimeUnit(timeUnit: unit);
+                      },
+                      onRemovePrice: (TimeUnit unit) {
+                        viewController.detailsController.removeTimeUnit(unit);
+                      },
+                      seletedPrices:
+                          viewController.detailsController.priceTimeUnitMap,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        ...viewController.additionalRooms.asMap().entries.map(
+          (data) {
+            final int index = data.key;
+            return Column(
+              children: [
+                smallSepartor,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Room Type ${index + 2}",
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                    InkWell(
+                        onTap: () async {
+                          viewController.deleteNewRoom(index);
+                        },
+                        child: Ink(
+                          padding: const EdgeInsets.all(5),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.delete_outline,
+                                size: 20,
+                                color: Colors.red,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                "Remove",
+                                style: context.textTheme.bodyLarge
+                                    ?.copyWith(color: Colors.red),
+                              ),
+                            ],
+                          ),
+                        )),
+                  ],
+                ),
+                smallSepartor,
+                MezCard(
+                  content: Column(
+                    children: [
+                      Obx(() {
+                        return MezStringDropDown(
+                          validator: (String? value) {
+                            if (viewController.roomType.value == null) {
+                              return _i18n()["homeRental"]["homeTypeError"];
+                            }
+                            return null;
+                          },
+                          langPath: _i18n()["homeRental"],
+                          items: RoomType.values
+                              .map((RoomType e) => e.toFirebaseFormatString())
+                              .toList(),
+                          value: viewController.additionalRooms[index]
+                              ["roomType"],
+                          onChanged: (String? newRoomType) {
+                            if (newRoomType != null) {
+                              viewController.additionalRooms[index]
+                                  ["roomType"] = newRoomType;
+                            }
+                          },
+                          labelText: _i18n()["homeRental"]["homeType"],
+                        );
+                      }),
+                      smallSepartor,
+                      Obx(
+                        () => BsOpOfferingPricesList(
+                          availbleUnits: viewController.newRoomAvaiableUnits(
+                              viewController.additionalRooms[index]
+                                  ["controller"]),
+                          onAddPrice: (TimeUnit unit) {
+                            (viewController.additionalRooms[index]["controller"]
+                                    as BusinessItemDetailsController)
+                                .addPriceTimeUnit(timeUnit: unit);
+                          },
+                          onRemovePrice: (TimeUnit unit) {
+                            (viewController.additionalRooms[index]["controller"]
+                                    as BusinessItemDetailsController)
+                                .removeTimeUnit(unit);
+                          },
+                          seletedPrices: (viewController.additionalRooms[index]
+                                      ["controller"]
+                                  as BusinessItemDetailsController)
+                              .priceTimeUnitMap,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _singlePriceView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Obx(
+          () => BsOpOfferingPricesList(
+            availbleUnits: viewController.avalbleUnits,
+            onAddPrice: (TimeUnit unit) {
+              viewController.detailsController.addPriceTimeUnit(timeUnit: unit);
+            },
+            onRemovePrice: (TimeUnit unit) {
+              viewController.detailsController.removeTimeUnit(unit);
+            },
+            seletedPrices: viewController.detailsController.priceTimeUnitMap,
+          ),
+        ),
+        bigSeperator,
+        Text(
+          _i18n()["homeRental"]["rentalDetails"],
+          style: context.textTheme.bodyLarge,
+        ),
+        smallSepartor,
+        if (viewController.homeType != HomeCategory1.Room)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["homeRental"]["bedrooms"],
+                style: context.textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+              smallSepartor,
+              TextFormField(
+                focusNode: bedroomNode,
+                controller: viewController.bedroomsController,
+                decoration: InputDecoration(
+                  hintText: _i18n()["homeRental"]["bedroomsHint"],
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    _focus(bedroomNode);
+                    return _i18n()["homeRental"]["bedroomsError"];
+                  }
+                  return null;
+                },
+              ),
+              smallSepartor,
+              Text(
+                _i18n()["homeRental"]["bathrooms"],
+                style: context.textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+              smallSepartor,
+              TextFormField(
+                focusNode: bathroomNode,
+                controller: viewController.bathroomsController,
+                decoration: InputDecoration(
+                  hintText: _i18n()["homeRental"]["bathroomsHint"],
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    _focus(bathroomNode);
+                    return _i18n()["homeRental"]["bathroomsError"];
+                  }
+                  return null;
+                },
+              ),
+              smallSepartor,
+            ],
+          ),
+        Text(
+          _i18n()["homeRental"]["area"],
+          style: context.textTheme.bodyMedium!.copyWith(
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+        smallSepartor,
+        TextFormField(
+          controller: viewController.areaController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+              hintText: _i18n()["homeRental"]["areaHint"],
+              suffixText: "sq ft m²"),
+          // validator: (String? value) {
+          //   if (value == null || value.isEmpty) {
+          //     return _i18n()["homeRental"]["areaError"];
+          //   }
+          //   return null;
+          // },
+        ),
+        smallSepartor,
+        Text(
+          _i18n()["homeRental"]["petFriendly"],
+          style: context.textTheme.bodyMedium!.copyWith(
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+        smallSepartor,
+        Obx(() {
+          final List<String> possibleItems = ["yes", "no"];
+          return MezStringDropDown(
+            langPath: _i18n()["homeRental"],
+            items: possibleItems,
+            value: viewController.petFriendly.value,
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                viewController.petFriendly.value = newValue;
+              }
+            },
+            labelText: _i18n()["homeRental"]["petFriendlyHint"],
+          );
+        }),
+      ],
     );
   }
 }

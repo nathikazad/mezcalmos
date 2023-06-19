@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/controllers/mezAdminAuthController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
@@ -8,7 +7,10 @@ import 'package:mezcalmos/MezAdminApp/pages/ServicesView/AdminServiceView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
@@ -53,6 +55,11 @@ class _AdminTabsViewState extends State<AdminTabsView>
       case 1:
         return AdminServicesView(
           adminTabsViewController: viewController,
+        );
+      case 2:
+        return MessagesListView(
+          entityType: EntityType.Admin,
+          showAppbar: false,
         );
 
       default:

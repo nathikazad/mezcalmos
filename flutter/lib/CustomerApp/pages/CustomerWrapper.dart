@@ -1,7 +1,10 @@
+// ignore_for_file: unawaited_futures
+
 import 'dart:async';
 
 import 'package:badges/badges.dart' as badge;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
@@ -10,25 +13,25 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/deepLinkHandler.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:uni_links/uni_links.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -68,8 +71,10 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       _checkOrders();
     }
     startAuthListener();
-    DeepLinkHandler.startDynamicLinkCheckRoutine(
-        CustomerDeepLinkHandler.handleDeepLink);
+    // DeepLinkHandler.startDynamicLinkCheckRoutine(
+    //     CustomerDeepLinkHandler.handleDeepLink);
+
+    _startListeningForLinks();
   }
 
   void _checkOrders() {
@@ -167,7 +172,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
         );
       case 2:
         return MessagesListView(
-          serviceProviderType: ServiceProviderType.Customer,
+          entityType: EntityType.Customer,
         );
       case 3:
         return CustProfileView();
@@ -250,6 +255,30 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             customerNotificationsNode(userId!), customerNotificationHandler);
+  }
+
+  Future<void> _startListeningForLinks() async {
+    mezDbgPrint("startListeningForLinks");
+    String? initialLink;
+    try {
+      initialLink = await getInitialLink();
+    } catch (error) {
+      // Handle error
+    }
+    // Parse the initial link (if it exists)
+    if (initialLink != null) {
+      CustomerLinkHandler.handleLink(Uri.parse(initialLink));
+    }
+
+    // Subscribe to incoming links
+    if (kIsWeb == false) {
+      linkStream.listen((String? link) {
+        // Parse the link
+        if (link != null) {
+          CustomerLinkHandler.handleLink(Uri.parse(link));
+        }
+      });
+    }
   }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {

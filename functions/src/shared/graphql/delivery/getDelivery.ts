@@ -221,6 +221,7 @@ export async function getDeliveryCompany(deliveryCompanyId: number): Promise<Ser
         id: true,
         name: true,
         image: true,
+        phone_number: true,
         location: {
           gps: true,
           address: true,
@@ -269,6 +270,7 @@ export async function getDeliveryCompany(deliveryCompanyId: number): Promise<Ser
       address: response.delivery_company_by_pk?.details?.location.address
     },
     language: response.delivery_company_by_pk?.details?.language,
+    phoneNumber: response.delivery_company_by_pk?.details?.phone_number,
     deliveryDetails: {
       deliveryAvailable: true,
       customerPickup: false,
