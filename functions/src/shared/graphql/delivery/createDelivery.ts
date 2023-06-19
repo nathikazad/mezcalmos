@@ -1,4 +1,5 @@
 import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
+import { DeliveryRequestDetails } from "../../../laundry/deliveryRequest";
 import { getHasura } from "../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 import { AppType, MezError } from "../../models/Generic/Generic";
@@ -9,7 +10,8 @@ import { ServiceProvider } from "../../models/Services/Service";
 export async function createLaundryToCustomerDeliveryOrder(
     laundryOrder: LaundryOrder, 
     laundryStore: ServiceProvider, 
-    fromCustomerDelivery: DeliveryOrder
+    fromCustomerDelivery: DeliveryOrder,
+    deliveryRequestDetails: DeliveryRequestDetails
 ): Promise<DeliveryOrder> {
     let chain = getHasura();
 
@@ -44,14 +46,14 @@ export async function createLaundryToCustomerDeliveryOrder(
                 pickup_address: laundryStore.location.address,
                 schedule_time: laundryOrder.scheduledTime,
                 chat_with_customer: {
-                data: {
-                    chat_participants: {
-                        data: [{
-                            participant_id: laundryOrder.customerId,
-                            app_type_id: AppType.Customer
-                        },]
+                    data: {
+                        chat_participants: {
+                            data: [{
+                                participant_id: laundryOrder.customerId,
+                                app_type_id: AppType.Customer
+                            },]
+                        }
                     }
-                }
                 },
                 chat_with_service_provider: {
                     data: {
@@ -61,7 +63,7 @@ export async function createLaundryToCustomerDeliveryOrder(
                     }
                 },
                 payment_type: laundryOrder.paymentType,
-                delivery_cost: laundryOrder.deliveryCost - fromCustomerDelivery.deliveryCost,
+                // delivery_cost: laundryOrder.deliveryCost - fromCustomerDelivery.deliveryCost,
                 package_cost: laundryOrder.itemsCost,
                 package_ready: true,
                 status: DeliveryOrderStatus.OrderReceived,
@@ -73,7 +75,8 @@ export async function createLaundryToCustomerDeliveryOrder(
                     : DeliveryServiceProviderType.DeliveryCompany,
                 
                 scheduled_time: laundryOrder.scheduledTime,
-                chosen_companies: fromCustomerDelivery.chosenCompanies,
+                chosen_companies: deliveryRequestDetails.chosenCompanies,
+                customer_offer: deliveryRequestDetails.customerOffer,
                 trip_distance: fromCustomerDelivery.tripDistance,
                 trip_duration: fromCustomerDelivery.tripDuration,
                 trip_polyline: fromCustomerDelivery.tripPolyline,
@@ -120,13 +123,14 @@ export async function createLaundryToCustomerDeliveryOrder(
         paymentType: laundryOrder.paymentType,
         status: DeliveryOrderStatus.OrderReceived,
         customerId: laundryOrder.customerId,
-        deliveryCost: laundryOrder.deliveryCost / 2,
+        deliveryCost: 0,
         packageCost: laundryOrder.itemsCost,
         orderTime: response.insert_delivery_order_one.order_time,
         tripDistance : fromCustomerDelivery.tripDistance,
         tripDuration : fromCustomerDelivery.tripDuration,
         tripPolyline : fromCustomerDelivery.tripPolyline,
-        chosenCompanies: fromCustomerDelivery.chosenCompanies,
+        chosenCompanies: deliveryRequestDetails.chosenCompanies,
+        customerOffer: deliveryRequestDetails.customerOffer,
         notifiedDrivers: [],
         serviceProviderType: (laundryStore.deliveryDetails.selfDelivery == false) 
             ? DeliveryServiceProviderType.DeliveryCompany 

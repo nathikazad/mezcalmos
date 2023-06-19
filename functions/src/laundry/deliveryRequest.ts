@@ -1,32 +1,30 @@
-import { setLaundryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
+import { setLaundryToCustomerDeliveryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
+import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
+import { createLaundryToCustomerDeliveryOrder } from "../shared/graphql/delivery/createDelivery";
 import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
-import { createLaundryOrder } from "../shared/graphql/laundry/order/createLaundryOrder";
 import { getLaundryOrder } from "../shared/graphql/laundry/order/getLaundryOrder";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { notifyDeliveryDrivers } from "../shared/helper";
-import { ParticipantType } from "../shared/models/Generic/Chat";
-import { Language, MezError } from "../shared/models/Generic/Generic";
-import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
-import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { LaundryOrder, NewLaundryOrderNotification } from "../shared/models/Services/Laundry/LaundryOrder";
+import { MezError } from "../shared/models/Generic/Generic";
+import { CustomerInfo } from "../shared/models/Generic/User";
+import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 import { ServiceProvider } from "../shared/models/Services/Service";
-import { orderUrl } from "../utilities/senders/appRoutes";
-import { pushNotification } from "../utilities/senders/notifyUser";
-import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
+import { DeliveryOrder } from "../shared/models/Generic/Delivery";
 
 export interface DeliveryRequestDetails {
     orderId: number,
+    chosenCompanies: Array<number>,
+    customerOffer: number,
 }
 export interface ReqDeliveryResponse {
     success: boolean,
     error?: ReqDeliveryError
-    unhandledError?: string,
-    orderId?: number
+    unhandledError?: string
 }
 export enum ReqDeliveryError {
     UnhandledError = "unhandledError",
-    
+    IncorrectOrderId = "incorrectOrderId",
+    IncorrectOrderStatus = "incorrectOrderStatus",
 }
 
 export async function requestLaundryDelivery(customerId: number, deliveryRequestDetails: DeliveryRequestDetails): Promise<ReqDeliveryResponse> {
@@ -38,32 +36,24 @@ export async function requestLaundryDelivery(customerId: number, deliveryRequest
         let laundryOrder: LaundryOrder = response[0];
         let customer: CustomerInfo = response[1];
 
-        errorChecks(laundryStore, deliveryRequestDetails);
-        
-        
+        errorChecks(laundryOrder, customerId);
 
-        setLaundryOrderChatInfo(orderResponse.laundryOrder, laundryStore, orderResponse.fromCustomerDeliveryOrder, customer);
+        let response1 = await Promise.all([
+            getLaundryStore(laundryOrder.storeId),
+            getDeliveryOrder(laundryOrder.fromCustomerDeliveryId!),
+        ]);
+        let laundryStore: ServiceProvider = response1[0];
+        let fromCustomerDeliveryOrder: DeliveryOrder = response1[1];
 
-        // assign delivery company 
-        if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
+        let toCustomerDeliveryOrder: DeliveryOrder = await createLaundryToCustomerDeliveryOrder(laundryOrder, laundryStore, fromCustomerDeliveryOrder, deliveryRequestDetails);
 
-            notifyDeliveryDrivers(orderResponse.fromCustomerDeliveryOrder);
-        }
+        setLaundryToCustomerDeliveryOrderChatInfo(laundryOrder, laundryStore, toCustomerDeliveryOrder, customer);
 
-        notify(orderResponse.laundryOrder, laundryStore, mezAdmins);
-
-        // payment
-        if(deliveryRequestDetails.paymentType == PaymentType.Card) {
-            let paymentDetails: PaymentDetails = {
-                orderId: orderResponse.laundryOrder.orderId!,
-                serviceProviderDetailsId: laundryStore.serviceProviderDetailsId
-            }
-            await updateOrderIdAndFetchPaymentInfo(paymentDetails, deliveryRequestDetails.stripePaymentId!, deliveryRequestDetails.stripeFees ?? 0)
-        }
+        if(laundryStore.deliveryDetails.selfDelivery == false)
+            notifyDeliveryDrivers(toCustomerDeliveryOrder);
         
         return {
-            success: true,
-            orderId: orderResponse.laundryOrder.orderId
+            success: true
         }
     } catch(e: any) {
         if (e instanceof MezError) {
@@ -85,63 +75,15 @@ export async function requestLaundryDelivery(customerId: number, deliveryRequest
     }
 }
 
-function errorChecks(laundryStore: ServiceProvider, laundryRequestDetails: LaundryRequestDetails) {
+function errorChecks(laundryOrder: LaundryOrder, customerId: number) {
 
-    if(laundryStore.approved == false) {
-        throw new MezError(ReqLaundryError.LaundryStoreNotApproved);
+    if(laundryOrder.customerId != customerId) {
+        throw new MezError(ReqDeliveryError.IncorrectOrderId);
     }
-    if(laundryStore.openStatus != "open") {
-        throw new MezError(ReqLaundryError.StoreClosed);
+    if(laundryOrder.status != LaundryOrderStatus.ReadyForDelivery) {
+        throw new MezError(ReqDeliveryError.IncorrectOrderStatus);
     }
-    if(laundryRequestDetails.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.deliveryAvailable == false) {
-        throw new MezError(ReqLaundryError.DeliveryNotAvailable);
-    }
+    // if(laundryOrder.fromCustomerDeliveryId == undefined) {
+    //     throw new MezError(ReqLaundryError.NoPreviousDeliveryOrder);
+    // }
 }
-async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
-
-    let notification: Notification = {
-        foreground: <NewLaundryOrderNotification>{
-            time: (new Date()).toISOString(),
-            notificationType: NotificationType.NewOrder,
-            orderType: OrderType.Laundry,
-            orderId: laundryOrder.orderId,
-            notificationAction: NotificationAction.ShowSnackBarAlways,
-            laundryStore: {
-                name: laundryStore.name,
-                image: laundryStore.image,
-                id: laundryStore.id
-            }
-        },
-        background: {
-            [Language.ES]: {
-                title: "Nueva Pedido",
-                body: `Hay un nuevo pedido de lavandería.`
-            },
-            [Language.EN]: {
-                title: "New Order",
-                body: `There is a new laundry order`
-            }
-        },
-        linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId!)
-    }
-    mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
-    });
-    if(laundryStore.operators != undefined) {
-        laundryStore.operators.forEach((l) => {
-          if(l.user) {
-            pushNotification(l.user.firebaseId, notification, l.notificationInfo, ParticipantType.LaundryOperator);
-          }
-        });
-    }
-}
-  
-
-let laundryStore: ServiceProvider = await getLaundryStore(order.storeId);
-        
-        let toCustomerDeliveryOrder: DeliveryOrder = await createLaundryToCustomerDeliveryOrder(order, laundryStore, fromCustomerDeliveryOrder);
-        setLaundryToCustomerDeliveryOrderChatInfo(order, laundryStore, toCustomerDeliveryOrder, customer);
-
-        if(laundryStore.deliveryDetails.selfDelivery == false)
-          notifyDeliveryDrivers(toCustomerDeliveryOrder);
-        notify(customer);

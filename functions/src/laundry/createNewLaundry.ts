@@ -19,7 +19,6 @@ export interface LaundryDetails {
   schedule: Schedule,
   laundryOperatorNotificationToken?: string,
   firebaseId?: string,
-  deliveryPartnerId?: number,
   deliveryDetails: DeliveryDetails,
   language: ServiceProviderLanguage,
   uniqueId?: string
@@ -44,9 +43,10 @@ export async function createLaundry(userId: number, laundryDetails: LaundryDetai
     if(laundryDetails.deliveryDetails.deliveryAvailable) {
       if(laundryDetails.deliveryDetails.selfDelivery && !(laundryDetails.deliveryDetails.radius)) {
         throw new MezError(LaundryError.DeliveryDetailsNotSet);
-      } else if(!(laundryDetails.deliveryDetails.selfDelivery) && !(laundryDetails.deliveryPartnerId)) {
-        throw new MezError(LaundryError.NoDeliveryPartner);
-      }
+      } 
+      // else if(!(laundryDetails.deliveryDetails.selfDelivery) && !(laundryDetails.deliveryPartnerId)) {
+      //   throw new MezError(LaundryError.NoDeliveryPartner);
+      // }
     }
   
     let userPromise = getUser(userId);

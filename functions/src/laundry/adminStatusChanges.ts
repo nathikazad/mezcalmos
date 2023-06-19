@@ -1,7 +1,7 @@
 import { MezError } from "../shared/models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { orderInProcess, LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
-import { expectedPreviousStatus, passChecksForLaundry } from "./helper";
+import { passChecksForLaundry } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { orderUrl } from "../utilities/senders/appRoutes";
@@ -15,11 +15,6 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
-import { setLaundryToCustomerDeliveryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
-import { createLaundryToCustomerDeliveryOrder } from "../shared/graphql/delivery/createDelivery";
-import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
-import { ServiceProvider } from "../shared/models/Services/Service";
-import { notifyDeliveryDrivers } from "../shared/helper";
 
 interface ChangeStatusDetails {
   orderId: number,
@@ -81,12 +76,12 @@ export async function cancelOrder(userId: number, changeStatusDetails: ChangeSta
         toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
 
         updateDeliveryOrderStatus(toCustomerDeliveryOrder);
-        notify(customer, fromCustomerDeliveryOrder, toCustomerDeliveryOrder);
+        notify(order.orderId, customer, LaundryOrderStatus.CancelledByAdmin, fromCustomerDeliveryOrder, toCustomerDeliveryOrder);
       } else 
-      notify(customer, fromCustomerDeliveryOrder)
+      notify(order.orderId, customer, LaundryOrderStatus.CancelledByAdmin, fromCustomerDeliveryOrder)
 
     } else
-      notify(customer);
+      notify(order.orderId, customer, LaundryOrderStatus.CancelledByAdmin);
 
     return {
       success: true
@@ -126,7 +121,7 @@ export async function readyForDeliveryOrder(userId: number, changeStatusDetails:
     order.status = LaundryOrderStatus.ReadyForDelivery;
     updateLaundryOrderStatus(order);
 
-    notify(order.orderId, customer);
+    notify(order.orderId, customer, LaundryOrderStatus.ReadyForDelivery);
     return {
       success: true
     }
