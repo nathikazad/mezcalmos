@@ -7,7 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesList
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeWrapper.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/CustRealEstateView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/CustRealEstateListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyListView.dart';
@@ -98,7 +98,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         );
         return;
       case MezService.RealEstate:
-        CustRealEstateView.navigate();
+        CustRealEstateListView.navigate();
         return;
     }
   }

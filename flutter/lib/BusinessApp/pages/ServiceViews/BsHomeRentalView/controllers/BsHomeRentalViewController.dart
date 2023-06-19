@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/RentalHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 typedef OfferingPricesMap = Map<TimeUnit, TextEditingController>;
 
@@ -98,6 +99,24 @@ class BsHomeRentalViewController {
       petFriendly.value = rental!.details.additionalParameters?["petFriendly"];
       homeLocation.value = rental!.gpsLocation;
       homeType.value = rental!.category1;
+      final String? roomType1 =
+          rental!.details.additionalParameters?["roomType1"];
+      roomType.value = roomType1?.toRoomType();
+      additionalRooms.value = rental!
+              .details.additionalParameters?["additionalRooms"]
+              ?.map<Map<String, dynamic>>(
+            (dynamic e) {
+              final BusinessItemDetailsController ctrl =
+                  BusinessItemDetailsController();
+              ctrl.constructNewRoomsCost(
+                  constructBusinessServiceCost(e["cost"]));
+              return {
+                "roomType": e["roomType"],
+                "controller": ctrl,
+              };
+            },
+          )?.toList() as List<Map<String, dynamic>>? ??
+          [];
     }
   }
 
@@ -114,7 +133,7 @@ class BsHomeRentalViewController {
   }
 
   /// This adds new room with the new [BusinessItemDetailsController] ctrl
-  /// Coz using this we can use the [BsOpOfferingPricesList] 
+  /// Coz using this we can use the [BsOpOfferingPricesList]
   void addNewRoom() {
     final BusinessItemDetailsController ctrl = BusinessItemDetailsController();
     ctrl.addPriceTimeUnit(timeUnit: newRoomAvaiableUnits(ctrl).first);
@@ -181,6 +200,17 @@ class BsHomeRentalViewController {
             additionalParams: {
               "area": areaController.text.trim() + " sq ft",
               "petFriendly": petFriendly.value,
+              "roomType1": roomType.value?.toFirebaseFormatString(),
+              "additionalRooms": [
+                for (final Map<String, dynamic> room in additionalRooms)
+                  {
+                    "roomType": room["roomType"],
+                    "cost": room["controller"].priceTimeUnitMap.value.map(
+                        (TimeUnit key, TextEditingController value) => MapEntry(
+                            key.toFirebaseFormatString(),
+                            double.parse(value.text))),
+                  },
+              ],
             },
           );
           showSavedSnackBar();

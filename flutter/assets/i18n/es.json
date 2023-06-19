@@ -317,13 +317,15 @@
           "bathroomsHint": "¿Cuántos cuartos de baño tiene su casa?",
           "bathroomsError": "Por favor, introduzca los baños",
           "areaHint": "¿Cuántas área tiene su hogar?",
-          "area": "Área",
+          "area": "Área de superficie(opcional)",
           "areaError": "Ingrese el área",
           "apartment": "Apartamento",
           "villa": "Villa",
           "condo": "Condominio",
           "bungalow": "Bungalow",
           "hotel": "Hotel",
+          "hostel": "Albergue",
+          "room": "Habitación",
           "petFriendly": "Mascota amigable",
           "petFriendlyHint": "Seleccione si permite mascotas o no",
           "yes": "Sí",
@@ -409,11 +411,12 @@
         "realEstate": {
           "otherServicesTitle": "Otros servicios",
           "otherServicesSubtitle": "El uso de otros servicios le permite agregar un servicio como un evento, una clase, un alquiler (automóvil, surf o hogar), un producto o un servicio.cto o un servicio.",
-          "rentalTitle": "Alquiler de bienes raíces",
-          "rentalSubtitle": "Utilizando un servicio de alquiler de bienes raíces, puede anunciar un bienes raíces en alquiler.",
-          "rentalDetails": "Detalles de alquiler",
-          "homeType": "Tipo de vivienda",
-          "homeTypeError": "Seleccione el tipo de vivienda",
+          "rentalTitle": "Bienes raíces",
+          "rentalSubtitle": "Usando un servicio de bienes raíces, puede anunciar una propiedad inmobiliaria para alquilar.",
+          "rentalDetails": "Detalles inmobiliarios",
+          "homeType": "Tipo inmobiliario",
+          "homeTypeError": "Seleccione el tipo de bienes raíces",
+          "land": "Tierra",
           "homeLocation": "Elegir ubicación de la casa",
           "bedrooms": "Dormitorios",
           "bedroomsHint": "¿Cuántas habitaciones tiene su casa?",
@@ -1333,7 +1336,7 @@
             "volunteer": "Voluntaria",
             "adventures": "Aventuras",
             "realEstate": "Properties",
-            "courier": "Mensajera"
+            "courier": "Entrega abierta"
           }
         },
         "AllServiceView": {
@@ -1517,7 +1520,7 @@
             "bicycle": "Bicicleta"
           }
         },
-        "CustRealEstateView": {
+        "CustRealEstateListView": {
           "home": "Hogar",
           "map": "Mapa",
           "realEstate": "Realestate",
@@ -1538,7 +1541,10 @@
           "noBusinessFound": "No se encontraron Buisinesses",
           "confirm": "Confirmar",
           "cancel": "Cancelar",
-          "filter": "Filtrar"
+          "filter": "Filtrar",
+          "total": "Total",
+          "bedrooms": "Dormitorios",
+          "bathrooms": "Baños"
         },
         "EventsViews": {
           "CustEventsListView": {

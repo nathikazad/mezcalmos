@@ -17,11 +17,13 @@ class BsOpOfferingPricesList extends StatelessWidget {
       required this.availbleUnits,
       required this.onAddPrice,
       required this.onRemovePrice, // <--- this is the function that is called when the user clicks on the remove button
-      required this.seletedPrices});
+      required this.seletedPrices,
+      this.needSuffix = true});
   final OfferingPricesMap seletedPrices;
   final List<TimeUnit> availbleUnits;
   final Function(TimeUnit) onAddPrice;
   final Function(TimeUnit) onRemovePrice;
+  final bool needSuffix;
 
   @override
   Widget build(BuildContext context) {
@@ -122,10 +124,12 @@ class BsOpOfferingPricesList extends StatelessWidget {
                 hintStyle: context.textTheme.bodyLarge!.copyWith(
                   color: Theme.of(context).disabledColor,
                 ),
-                suffixIconConstraints: BoxConstraints(
-                  minWidth: 0,
-                  minHeight: 0,
-                ).tighten(width: 100),
+                suffixIconConstraints: needSuffix
+                    ? BoxConstraints(
+                        minWidth: 0,
+                        minHeight: 0,
+                      ).tighten(width: 100)
+                    : null,
                 prefixIconConstraints: BoxConstraints.tight(Size(24, 24)),
                 prefixIcon: Padding(
                     padding: EdgeInsets.only(left: 8),
@@ -133,16 +137,18 @@ class BsOpOfferingPricesList extends StatelessWidget {
                       Icons.attach_money,
                       color: Colors.black,
                     )),
-                suffixIcon: Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Text(
-                      _i18n()[timeUnit.toFirebaseFormatString()],
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                ),
+                suffixIcon: needSuffix
+                    ? Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Text(
+                            _i18n()[timeUnit.toFirebaseFormatString()],
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ),
+                      )
+                    : null,
               ),
               controller: textEditingController,
             ),

@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
-class CustRealEstateViewController {
+class CustRealEstateListViewController {
   RxList<HomeCard> _realEstates = <HomeCard>[].obs;
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
   // RxList<BusinessCard> _filtredBusiness = <BusinessCard>[].obs;

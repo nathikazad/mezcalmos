@@ -4,6 +4,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/contro
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingLocationCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpOfferingPricesList.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpServiceImagesGrid.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/controllers/BusinessDetailsController.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsDeleteOfferButton.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -320,6 +321,7 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           Obx(() {
             List<HomeCategory1> possibleItems = [...HomeCategory1.values];
             possibleItems.remove(HomeCategory1.Uncategorized);
+            possibleItems.remove(HomeCategory1.Land);
             return MezStringDropDown(
               validator: (String? value) {
                 if (viewController.homeType.value == null) {
@@ -342,10 +344,12 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           }),
           bigSeperator,
 
-          if (viewController.homeType != HomeCategory1.Hotel)
+          if (viewController.homeType != HomeCategory1.Hotel &&
+              viewController.homeType != HomeCategory1.Hostel)
             _singlePriceView(),
 
-          if (viewController.homeType == HomeCategory1.Hotel)
+          if (viewController.homeType == HomeCategory1.Hotel ||
+              viewController.homeType == HomeCategory1.Hostel)
             _multipleRoomPriceView(),
 
           if (viewController.isEditing)
@@ -524,15 +528,18 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
                               viewController.additionalRooms[index]
                                   ["controller"]),
                           onAddPrice: (TimeUnit unit) {
-                            viewController.additionalRooms[index]["controller"]
+                            (viewController.additionalRooms[index]["controller"]
+                                    as BusinessItemDetailsController)
                                 .addPriceTimeUnit(timeUnit: unit);
                           },
                           onRemovePrice: (TimeUnit unit) {
-                            viewController.additionalRooms[index]["controller"]
+                            (viewController.additionalRooms[index]["controller"]
+                                    as BusinessItemDetailsController)
                                 .removeTimeUnit(unit);
                           },
-                          seletedPrices: viewController
-                              .additionalRooms[index]["controller"]
+                          seletedPrices: (viewController.additionalRooms[index]
+                                      ["controller"]
+                                  as BusinessItemDetailsController)
                               .priceTimeUnitMap,
                         ),
                       ),
@@ -569,52 +576,58 @@ class _BsOpHomeRentalViewState extends State<BsOpHomeRentalView>
           style: context.textTheme.bodyLarge,
         ),
         smallSepartor,
-        Text(
-          _i18n()["homeRental"]["bedrooms"],
-          style: context.textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
+        if (viewController.homeType != HomeCategory1.Room)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["homeRental"]["bedrooms"],
+                style: context.textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+              smallSepartor,
+              TextFormField(
+                focusNode: bedroomNode,
+                controller: viewController.bedroomsController,
+                decoration: InputDecoration(
+                  hintText: _i18n()["homeRental"]["bedroomsHint"],
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    _focus(bedroomNode);
+                    return _i18n()["homeRental"]["bedroomsError"];
+                  }
+                  return null;
+                },
+              ),
+              smallSepartor,
+              Text(
+                _i18n()["homeRental"]["bathrooms"],
+                style: context.textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+              smallSepartor,
+              TextFormField(
+                focusNode: bathroomNode,
+                controller: viewController.bathroomsController,
+                decoration: InputDecoration(
+                  hintText: _i18n()["homeRental"]["bathroomsHint"],
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    _focus(bathroomNode);
+                    return _i18n()["homeRental"]["bathroomsError"];
+                  }
+                  return null;
+                },
+              ),
+              smallSepartor,
+            ],
           ),
-        ),
-        smallSepartor,
-        TextFormField(
-          focusNode: bedroomNode,
-          controller: viewController.bedroomsController,
-          decoration: InputDecoration(
-            hintText: _i18n()["homeRental"]["bedroomsHint"],
-          ),
-          validator: (String? value) {
-            if (value == null || value.isEmpty) {
-              _focus(bedroomNode);
-              return _i18n()["homeRental"]["bedroomsError"];
-            }
-            return null;
-          },
-        ),
-        smallSepartor,
-        Text(
-          _i18n()["homeRental"]["bathrooms"],
-          style: context.textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
-        smallSepartor,
-        TextFormField(
-          focusNode: bathroomNode,
-          controller: viewController.bathroomsController,
-          decoration: InputDecoration(
-            hintText: _i18n()["homeRental"]["bathroomsHint"],
-          ),
-          validator: (String? value) {
-            if (value == null || value.isEmpty) {
-              _focus(bathroomNode);
-              return _i18n()["homeRental"]["bathroomsError"];
-            }
-            return null;
-          },
-        ),
-        smallSepartor,
         Text(
           _i18n()["homeRental"]["area"],
           style: context.textTheme.bodyMedium!.copyWith(

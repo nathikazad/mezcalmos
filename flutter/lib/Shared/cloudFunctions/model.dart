@@ -1880,7 +1880,7 @@ extension ParseStringToRentalCategory1 on String {
 }
 
 
-enum HomeCategory1 { Apartment, Villa, Condo, Bungalow, Hotel, Uncategorized }
+enum HomeCategory1 { Land, Apartment, Villa, Condo, Bungalow, Hotel, Hostel, Room, Uncategorized }
 extension ParseHomeCategory1ToString on HomeCategory1 {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;
