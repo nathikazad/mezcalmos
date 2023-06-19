@@ -98,6 +98,10 @@
         "events": "Eventos",
         "noServicesFound": "Todavía no se ha agregado ningún servicio",
         "bodyMessage": "Al seleccionar \"Agregar servicio\", puede agregar su primer servicio y comenzar a construir su negocio en línea.",
+        "noMoreThanFiveServices": "No se permiten más de 5 servicios",
+        "cantHaveMoreThanFive": "No puede tener más de 5 servicios.",
+        "toAddNewRemoveOld": "Para agregar un nuevo servicio, primero debe eliminar los viejos.",
+        "okay": "Bueno",
         "event": {
           "event": "Evento",
           "class": "Clase",
@@ -667,7 +671,7 @@
       "courrier": {
         "CustCourierServicesListView": {
           "title": "Empresas de entrega a su alrededor",
-          "courier": "Mensajera",
+          "courier": "Entrega abierta",
           "min": "Min",
           "showOnlyOpenCompanies": "Mostrar solo compañías abiertas",
           "search": "Buscar"
@@ -682,7 +686,7 @@
           "viewAll": "Ver todo"
         },
         "CustRequestCourierView": {
-          "title": "Mandaditos",
+          "title": "Entrega abierta",
           "from": "De",
           "to": "A",
           "thisFieldCanBeEmpty": "Este campo puede estar vacío",
@@ -1876,7 +1880,7 @@
           "subtitle": "Haz que tu lavandería más cercana lave tu ropa"
         },
         "courier": {
-          "title": "Mandaditos",
+          "title": "Entrega abierta",
           "subtitle": "Obtenga la entrega de todo lo que desee a su ubicación."
         },
         "comingSoon": "Próximamente...",
@@ -3406,7 +3410,7 @@
         "title": "Entrega",
         "restaurant": "Restaurante",
         "laundry": "Lavadero",
-        "courier": "Mandaditos"
+        "courier": "Entrega abierta"
       }
     },
     "notificationHandler": {

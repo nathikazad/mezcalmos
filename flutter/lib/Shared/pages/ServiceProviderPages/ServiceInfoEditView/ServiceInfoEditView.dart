@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceEditLocationCard.dart';
@@ -155,33 +156,30 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                               } else
                                 return SizedBox();
                             }),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "${_i18n()['phoneNumber']}",
-                              style: context.textTheme.bodyLarge,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            TextFormField(
-                              controller: viewController.phoneNumber,
-                              style: context.txt.bodyLarge,
-                              keyboardType: TextInputType.phone,
-                              validator: (String? v) {
-                                if (v == null || v.isEmpty) {
-                                  return null;
-                                } else if (v.toString().validatePhoneNumber() ==
-                                    false) {
-                                  return "${_i18n()['phoneErrorText']}";
-                                }
-                                return null;
-                              },
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
+                            // SizedBox(
+                            //   height: 15,
+                            // ),
+                            _phoneNumber(context),
+                            // SizedBox(
+                            //   height: 5,
+                            // ),
+                            // TextFormField(
+                            //   controller: viewController.phoneNumber,
+                            //   style: context.txt.bodyLarge,
+                            //   keyboardType: TextInputType.phone,
+                            //   validator: (String? v) {
+                            //     if (v == null || v.isEmpty) {
+                            //       return null;
+                            //     } else if (v.toString().validatePhoneNumber() ==
+                            //         false) {
+                            //       return "${_i18n()['phoneErrorText']}";
+                            //     }
+                            //     return null;
+                            //   },
+                            // ),
+                            // SizedBox(
+                            //   height: 15,
+                            // ),
                             Text(
                               "${_i18n()['location']}",
                               style: context.textTheme.bodyLarge,
@@ -279,6 +277,64 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
           }
         },
       ),
+    );
+  }
+
+  Column _phoneNumber(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 10),
+        Text(
+          "${_i18n()['phoneNumber']}",
+          style: context.textTheme.bodyLarge,
+        ),
+        Row(
+          children: [
+            Container(
+              height: 49,
+              width: 75,
+              child: Expanded(
+                child: TextFormField(
+                    style: context.txt.bodyLarge,
+                    onChanged: (String s) {
+                      // if (_prefixTextFieldController.value.text.length > 0 &&
+                      //     _numberTextFieldController.value.text.length >= 8) {
+                      //   canSendOtp.value = true;
+                      // } else {
+                      //   canSendOtp.value = false;
+                      // }
+                      // mezDbgPrint(canSendOtp.value);
+                    },
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: "+52",
+                      border: InputBorder.none,
+                    ),
+                    controller: viewController.prefixTextFieldController,
+                    keyboardType: TextInputType.phone),
+              ),
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              child: TextFormField(
+                controller: viewController.phoneNumber,
+                style: context.txt.bodyLarge,
+                keyboardType: TextInputType.phone,
+                validator: (String? v) {
+                  if (v == null || v.isEmpty) {
+                    return null;
+                  } else if (v.toString().validatePhoneNumber() == false) {
+                    return "${_i18n()['phoneErrorText']}";
+                  }
+                  return null;
+                },
+              ),
+            )
+          ],
+        ),
+        SizedBox(width: 5),
+      ],
     );
   }
 

@@ -437,7 +437,6 @@ class BsServicesListViewController {
             route: () async {
               await navigateToService(serviceCategory: ServiceCategory1.Tattoo);
             },
-
           ),
           otherServices(),
         ];
@@ -602,6 +601,14 @@ class BsServicesListViewController {
     }
     return response;
   }
+
+  bool canAddService() =>
+      (homeRentals.length +
+          rentals.length +
+          events.length +
+          services.length +
+          product.length) <
+      5;
 
   void dispose() {}
 }
