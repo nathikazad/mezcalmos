@@ -160,7 +160,7 @@ class _BsRealEstateViewState extends State<BsRealEstateView>
     },
         titleWidget: Obx(() => Text(viewController.rental != null
             ? "${viewController.rental!.details.name.getTranslation(viewController.languages!.primary)}"
-            : _i18n()["homeRental"]["rentalTitle"])));
+            : _i18n()["realEstate"]["rentalTitle"])));
   }
 
   Widget _secondaryTab(BuildContext context) {
@@ -286,6 +286,7 @@ class _BsRealEstateViewState extends State<BsRealEstateView>
           bigSeperator,
           Obx(
             () => BsOpOfferingPricesList(
+              needSuffix: false,
               availbleUnits: viewController.avalbleUnits,
               onAddPrice: (TimeUnit unit) {
                 viewController.detailsController
@@ -299,12 +300,12 @@ class _BsRealEstateViewState extends State<BsRealEstateView>
           ),
           bigSeperator,
           Text(
-            _i18n()["homeRental"]["rentalDetails"],
+            _i18n()["realEstate"]["rentalDetails"],
             style: context.textTheme.bodyLarge,
           ),
           smallSepartor,
           Text(
-            '${_i18n()["homeRental"]["homeType"]}',
+            '${_i18n()["realEstate"]["homeType"]}',
             style: context.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
               color: Colors.black,
@@ -312,16 +313,20 @@ class _BsRealEstateViewState extends State<BsRealEstateView>
           ),
           smallSepartor,
           Obx(() {
-            List<HomeCategory1> possibleItems = [...HomeCategory1.values];
-            possibleItems.remove(HomeCategory1.Uncategorized);
+            final List<HomeCategory1> possibleItems = [
+              HomeCategory1.Land,
+              HomeCategory1.Apartment,
+              HomeCategory1.Villa,
+              HomeCategory1.Bungalow
+            ];
             return MezStringDropDown(
               validator: (String? value) {
                 if (viewController.homeType.value == null) {
-                  return _i18n()["homeRental"]["homeTypeError"];
+                  return _i18n()["realEstate"]["homeTypeError"];
                 }
                 return null;
               },
-              langPath: _i18n()["homeRental"],
+              langPath: _i18n()["realEstate"],
               items: possibleItems
                   .map((HomeCategory1 e) => e.toFirebaseFormatString())
                   .toList(),
@@ -331,14 +336,14 @@ class _BsRealEstateViewState extends State<BsRealEstateView>
                   viewController.homeType.value = newHomeType.toHomeCategory1();
                 }
               },
-              labelText: _i18n()["homeRental"]["homeType"],
+              labelText: _i18n()["realEstate"]["homeType"],
             );
           }),
           smallSepartor,
           Obx(
             () => BsOpOfferingLocationCard(
               location: viewController.homeLocation.value,
-              label: _i18n()["homeRental"]["homeLocation"],
+              label: _i18n()["realEstate"]["homeLocation"],
               locationLabelStyle: context.textTheme.bodyMedium!.copyWith(
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
@@ -355,54 +360,60 @@ class _BsRealEstateViewState extends State<BsRealEstateView>
             ),
           ),
           smallSepartor,
+          if (viewController.homeType.value != HomeCategory1.Land)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _i18n()["realEstate"]["bedrooms"],
+                  style: context.textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+                smallSepartor,
+                TextFormField(
+                  focusNode: bedroomNode,
+                  controller: viewController.bedroomsController,
+                  decoration: InputDecoration(
+                    hintText: _i18n()["realEstate"]["bedroomsHint"],
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      _focus(bedroomNode);
+                      return _i18n()["realEstate"]["bedroomsError"];
+                    }
+                    return null;
+                  },
+                ),
+                smallSepartor,
+                Text(
+                  _i18n()["realEstate"]["bathrooms"],
+                  style: context.textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                ),
+                smallSepartor,
+                TextFormField(
+                  focusNode: bathroomNode,
+                  controller: viewController.bathroomsController,
+                  decoration: InputDecoration(
+                    hintText: _i18n()["realEstate"]["bathroomsHint"],
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      _focus(bathroomNode);
+                      return _i18n()["realEstate"]["bathroomsError"];
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          smallSepartor,
           Text(
-            _i18n()["homeRental"]["bedrooms"],
-            style: context.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-          ),
-          smallSepartor,
-          TextFormField(
-            focusNode: bedroomNode,
-            controller: viewController.bedroomsController,
-            decoration: InputDecoration(
-              hintText: _i18n()["homeRental"]["bedroomsHint"],
-            ),
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                _focus(bedroomNode);
-                return _i18n()["homeRental"]["bedroomsError"];
-              }
-              return null;
-            },
-          ),
-          smallSepartor,
-          Text(
-            _i18n()["homeRental"]["bathrooms"],
-            style: context.textTheme.bodyMedium!.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-          ),
-          smallSepartor,
-          TextFormField(
-            focusNode: bathroomNode,
-            controller: viewController.bathroomsController,
-            decoration: InputDecoration(
-              hintText: _i18n()["homeRental"]["bathroomsHint"],
-            ),
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                _focus(bathroomNode);
-                return _i18n()["homeRental"]["bathroomsError"];
-              }
-              return null;
-            },
-          ),
-          smallSepartor,
-          Text(
-            _i18n()["homeRental"]["area"],
+            _i18n()["realEstate"]["area"],
             style: context.textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.w600,
               color: Colors.black,
@@ -413,11 +424,11 @@ class _BsRealEstateViewState extends State<BsRealEstateView>
             controller: viewController.areaController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-                hintText: _i18n()["homeRental"]["areaHint"],
+                hintText: _i18n()["realEstate"]["areaHint"],
                 suffixText: "sq ft m²"),
             // validator: (String? value) {
             //   if (value == null || value.isEmpty) {
-            //     return _i18n()["homeRental"]["areaError"];
+            //     return _i18n()["realEstate"]["areaError"];
             //   }
             //   return null;
             // },

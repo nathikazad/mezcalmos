@@ -507,8 +507,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToService(
-                                  serviceCategory:
-                                      ServiceCategory1.Beauty,
+                                  serviceCategory: ServiceCategory1.Beauty,
                                   id: beautyService[index].id!.toInt());
                             },
                           )),
@@ -535,8 +534,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToService(
-                                  serviceCategory:
-                                      ServiceCategory1.Photography,
+                                  serviceCategory: ServiceCategory1.Photography,
                                   id: photoService[index].id!.toInt());
                             },
                           )),
@@ -563,8 +561,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                             viewController: viewController,
                             onClick: () {
                               viewController.navigateToService(
-                                  serviceCategory:
-                                      ServiceCategory1.Tattoo,
+                                  serviceCategory: ServiceCategory1.Tattoo,
                                   id: tattooService[index].id!.toInt());
                             },
                           )),
@@ -875,10 +872,11 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                   children: List.generate(
                       realEstate.length,
                       (int index) => homeCard.BsHomeRentalCard(
+                            showUnit: false,
                             home: realEstate[index],
                             viewController: viewController,
                             onClick: () {
-                              viewController.navigateToHomeRental(
+                              viewController.navigateToRealEstate(
                                   id: realEstate[index].id!.toInt());
                             },
                           )),

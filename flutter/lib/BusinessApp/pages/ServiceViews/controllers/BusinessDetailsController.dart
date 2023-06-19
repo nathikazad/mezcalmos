@@ -83,6 +83,15 @@ class BusinessItemDetailsController {
     }
   }
 
+  /// This function is to setup cost data for additional rooms
+  void constructNewRoomsCost(Map<TimeUnit, num> cost) {
+    cost.forEach((TimeUnit key, num value) {
+      TextEditingController _controller = TextEditingController();
+      _controller.text = value.toDouble().toStringAsFixed(0);
+      priceTimeUnitMap[key] = _controller;
+    });
+  }
+
   Future<BusinessItemDetails> contructDetails() async {
     List<String> images = await uploadItemsImages();
     // final LanguageMap _name = constructName();
