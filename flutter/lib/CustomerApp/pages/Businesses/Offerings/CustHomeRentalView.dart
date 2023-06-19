@@ -116,20 +116,29 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                             .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
-                      _CustBusinessAdditionalData(
-                        homeRental: viewController.homeRental!,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        _i18n()['price'],
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      CustBusinessRentalCost(
-                        cost: viewController.homeRental!.details.cost,
-                      ),
+                      if (!viewController.isMultipleRooms.value)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _CustBusinessAdditionalData(
+                              homeRental: viewController.homeRental!,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              _i18n()['price'],
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            CustBusinessRentalCost(
+                              cost: viewController.homeRental!.details.cost,
+                            ),
+                          ],
+                        ),
                       _description(context),
+
+                      if (viewController.isMultipleRooms.value)
+                        _multipleRoomSelector(context),
                       if (viewController.homeRental?.gpsLocation != null)
                         ServiceLocationCard(
                           height: 20.h,
@@ -168,7 +177,9 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       ),
                       bigSeperator,
                       CustBusinessDurationPicker(
-                        costUnits: viewController.homeRental!.details.cost,
+                        costUnits: viewController.isMultipleRooms.value
+                            ? viewController.selectedRoomCostUnits.value!
+                            : viewController.homeRental!.details.cost,
                         label: "Duration",
                         value: viewController.duration.value,
                         unitValue: viewController.timeCost.value?.keys.first,
@@ -221,6 +232,65 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
           return CustCircularLoader();
         }
       }),
+    );
+  }
+
+  Widget _multipleRoomSelector(BuildContext context) {
+    return Column(
+      children: List.generate(
+        viewController.additionalRooms.length,
+        (index) {
+          final String roomType =
+              viewController.additionalRooms[index]["roomType"];
+          final Map<TimeUnit, num> costs =
+              viewController.additionalRooms[index]["cost"];
+          final bool isSelected = viewController.selectedRoom.value == index;
+          final String circle = "•";
+          return Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Wrap(
+                    children: [
+                      Text(
+                        "${_i18n()[roomType]}",
+                        style: context.textTheme.bodyMedium!.copyWith(
+                          color: isSelected ? primaryBlueColor : Colors.black,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.w600,
+                        ),
+                      ),
+                      ...costs.entries.map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            "$circle \$${e.value.toDouble().toStringAsFixed(0)}/${_i18n()[e.key.toFirebaseFormatString()]}",
+                            style: context.textTheme.bodyMedium!.copyWith(
+                              color: primaryBlueColor,
+                              fontWeight:
+                                  isSelected ? FontWeight.bold : FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Radio<int>(
+                  activeColor: primaryBlueColor,
+                  value: index,
+                  groupValue: viewController.selectedRoom.value,
+                  onChanged: (value) {
+                    mezDbgPrint("RADIO Value: $value");
+                    viewController.changeSelectedRoom(value!);
+                  },
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
