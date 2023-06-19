@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -82,7 +83,7 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
         );
       case BusinessOpTabView.Messages:
         return MessagesListView(
-          serviceProviderType: ServiceProviderType.Business,
+          entityType: EntityType.Business,
         );
 
       default:

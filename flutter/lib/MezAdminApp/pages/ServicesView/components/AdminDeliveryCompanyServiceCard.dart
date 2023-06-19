@@ -9,10 +9,10 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
     ["AdminServicesView"]["components"]["adminServiceCard"];
@@ -47,11 +47,29 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                 Row(
                   children: [
                     Flexible(
-                      fit: FlexFit.tight,
-                      child: Text(
-                        company.info.name,
-                        style: context.txt.bodyLarge,
-                      ),
+                        fit: FlexFit.tight,
+                        child: RichText(
+                            text: TextSpan(
+                                text: company.info.name,
+                                style: context.txt.bodyLarge,
+                                children: [
+                              WidgetSpan(
+                                child: MezIconButton(
+                                  onTap: () async {
+                                    await viewController.messageService(
+                                        serviceId:
+                                            company.info.hasuraId.toInt(),
+                                        type: RecipientType.DeliveryCompany);
+                                  },
+                                  icon: Icons.textsms_rounded,
+                                  backgroundColor: primaryBlueColor,
+                                  iconColor: Colors.white,
+                                  margin: EdgeInsets.only(left: 12),
+                                ),
+                              )
+                            ]))),
+                    SizedBox(
+                      width: 10,
                     ),
                     SizedBox(
                       height: 18,
@@ -69,8 +87,8 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                     )
                   ],
                 ),
-                Divider(
-                  color: Colors.grey.shade100,
+                SizedBox(
+                  height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,8 +145,12 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                                 textColor: Colors.red,
                                 label: "${_i18n()['reject']}",
                                 onClick: () async {
-                                    await viewController.approveService(
-                                  detailsId: company.serviceDetailsId,approved: false);
+                                  await viewController.deleteService(
+                                    serviceProviderType:
+                                        ServiceProviderType.DeliveryCompany,
+                                    serviceProviderId:
+                                        company.info.hasuraId.toInt(),
+                                  );
                                 })),
                         SizedBox(
                           width: 8,
@@ -140,8 +162,9 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                                 textColor: Colors.white,
                                 label: "${_i18n()['accept']}",
                                 onClick: () async {
-                                    await viewController.approveService(
-                                  detailsId: company.serviceDetailsId,approved: true);
+                                  await viewController.approveService(
+                                    detailsId: company.serviceDetailsId,
+                                  );
                                 })),
                       ],
                     ),

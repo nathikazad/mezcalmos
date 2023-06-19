@@ -18,7 +18,7 @@ class MezInkwell extends StatefulWidget {
     this.border,
     this.icon,
     this.padding = const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-    required this.label,
+    this.label,
     this.onClick,
     this.borderColor,
     this.fontSize,
@@ -26,7 +26,7 @@ class MezInkwell extends StatefulWidget {
 
   final bool enabled;
   final bool withGradient;
-  final String label;
+  final String? label;
 
   final Color? backgroundColor;
   final Color? borderColor;
@@ -106,22 +106,26 @@ class _MezInkwellState extends State<MezInkwell> {
                         children: [
                           if (widget.icon != null)
                             Padding(
-                              padding: const EdgeInsets.only(right: 12),
+                              padding: (widget.label != null)
+                                  ? const EdgeInsets.only(right: 12)
+                                  : EdgeInsets.all(3),
                               child: Icon(
                                 widget.icon,
                                 color: widget.textColor ?? Colors.white,
                                 size: 15.mezSp,
                               ),
                             ),
-                          Flexible(
-                            child: Text(
-                              widget.label,
-                              style: widget.textStyle ??
-                                  context.txt.bodyLarge?.copyWith(
-                                      fontSize: widget.fontSize,
-                                      color: widget.textColor ?? Colors.white),
+                          if (widget.label != null)
+                            Flexible(
+                              child: Text(
+                                widget.label!,
+                                style: widget.textStyle ??
+                                    context.txt.bodyLarge?.copyWith(
+                                        fontSize: widget.fontSize,
+                                        color:
+                                            widget.textColor ?? Colors.white),
+                              ),
                             ),
-                          ),
                         ],
                       ),
               ),

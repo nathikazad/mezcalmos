@@ -4460,6 +4460,774 @@ class _CopyWithStubImpl$Query$get_service_provider_chats$service_provider_custom
       _res;
 }
 
+class Query$get_admin_chats {
+  Query$get_admin_chats({
+    required this.mez_admin_chat,
+    required this.$__typename,
+  });
+
+  factory Query$get_admin_chats.fromJson(Map<String, dynamic> json) {
+    final l$mez_admin_chat = json['mez_admin_chat'];
+    final l$$__typename = json['__typename'];
+    return Query$get_admin_chats(
+      mez_admin_chat: (l$mez_admin_chat as List<dynamic>)
+          .map((e) => Query$get_admin_chats$mez_admin_chat.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$get_admin_chats$mez_admin_chat> mez_admin_chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$mez_admin_chat = mez_admin_chat;
+    _resultData['mez_admin_chat'] =
+        l$mez_admin_chat.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$mez_admin_chat = mez_admin_chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$mez_admin_chat.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_admin_chats) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$mez_admin_chat = mez_admin_chat;
+    final lOther$mez_admin_chat = other.mez_admin_chat;
+    if (l$mez_admin_chat.length != lOther$mez_admin_chat.length) {
+      return false;
+    }
+    for (int i = 0; i < l$mez_admin_chat.length; i++) {
+      final l$mez_admin_chat$entry = l$mez_admin_chat[i];
+      final lOther$mez_admin_chat$entry = lOther$mez_admin_chat[i];
+      if (l$mez_admin_chat$entry != lOther$mez_admin_chat$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_admin_chats on Query$get_admin_chats {
+  CopyWith$Query$get_admin_chats<Query$get_admin_chats> get copyWith =>
+      CopyWith$Query$get_admin_chats(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$get_admin_chats<TRes> {
+  factory CopyWith$Query$get_admin_chats(
+    Query$get_admin_chats instance,
+    TRes Function(Query$get_admin_chats) then,
+  ) = _CopyWithImpl$Query$get_admin_chats;
+
+  factory CopyWith$Query$get_admin_chats.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_admin_chats;
+
+  TRes call({
+    List<Query$get_admin_chats$mez_admin_chat>? mez_admin_chat,
+    String? $__typename,
+  });
+  TRes mez_admin_chat(
+      Iterable<Query$get_admin_chats$mez_admin_chat> Function(
+              Iterable<
+                  CopyWith$Query$get_admin_chats$mez_admin_chat<
+                      Query$get_admin_chats$mez_admin_chat>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_admin_chats<TRes>
+    implements CopyWith$Query$get_admin_chats<TRes> {
+  _CopyWithImpl$Query$get_admin_chats(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_admin_chats _instance;
+
+  final TRes Function(Query$get_admin_chats) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? mez_admin_chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_admin_chats(
+        mez_admin_chat: mez_admin_chat == _undefined || mez_admin_chat == null
+            ? _instance.mez_admin_chat
+            : (mez_admin_chat as List<Query$get_admin_chats$mez_admin_chat>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes mez_admin_chat(
+          Iterable<Query$get_admin_chats$mez_admin_chat> Function(
+                  Iterable<
+                      CopyWith$Query$get_admin_chats$mez_admin_chat<
+                          Query$get_admin_chats$mez_admin_chat>>)
+              _fn) =>
+      call(
+          mez_admin_chat: _fn(_instance.mez_admin_chat
+              .map((e) => CopyWith$Query$get_admin_chats$mez_admin_chat(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_admin_chats<TRes>
+    implements CopyWith$Query$get_admin_chats<TRes> {
+  _CopyWithStubImpl$Query$get_admin_chats(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_admin_chats$mez_admin_chat>? mez_admin_chat,
+    String? $__typename,
+  }) =>
+      _res;
+  mez_admin_chat(_fn) => _res;
+}
+
+const documentNodeQueryget_admin_chats = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_admin_chats'),
+    variableDefinitions: [],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'mez_admin_chat'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'chat'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'last_message_sent'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'recipient_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'recipient_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'chat'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'chat_info'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'messages'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'creation_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'last_message'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'last_message_sent'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_admin_chats _parserFn$Query$get_admin_chats(
+        Map<String, dynamic> data) =>
+    Query$get_admin_chats.fromJson(data);
+
+class Options$Query$get_admin_chats
+    extends graphql.QueryOptions<Query$get_admin_chats> {
+  Options$Query$get_admin_chats({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_admin_chats,
+          parserFn: _parserFn$Query$get_admin_chats,
+        );
+}
+
+class WatchOptions$Query$get_admin_chats
+    extends graphql.WatchQueryOptions<Query$get_admin_chats> {
+  WatchOptions$Query$get_admin_chats({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_admin_chats,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_admin_chats,
+        );
+}
+
+class FetchMoreOptions$Query$get_admin_chats extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_admin_chats(
+      {required graphql.UpdateQuery updateQuery})
+      : super(
+          updateQuery: updateQuery,
+          document: documentNodeQueryget_admin_chats,
+        );
+}
+
+extension ClientExtension$Query$get_admin_chats on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_admin_chats>> query$get_admin_chats(
+          [Options$Query$get_admin_chats? options]) async =>
+      await this.query(options ?? Options$Query$get_admin_chats());
+  graphql.ObservableQuery<Query$get_admin_chats> watchQuery$get_admin_chats(
+          [WatchOptions$Query$get_admin_chats? options]) =>
+      this.watchQuery(options ?? WatchOptions$Query$get_admin_chats());
+  void writeQuery$get_admin_chats({
+    required Query$get_admin_chats data,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+            operation:
+                graphql.Operation(document: documentNodeQueryget_admin_chats)),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_admin_chats? readQuery$get_admin_chats({bool optimistic = true}) {
+    final result = this.readQuery(
+      graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQueryget_admin_chats)),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$get_admin_chats.fromJson(result);
+  }
+}
+
+class Query$get_admin_chats$mez_admin_chat {
+  Query$get_admin_chats$mez_admin_chat({
+    required this.recipient_id,
+    required this.recipient_type,
+    this.chat,
+    required this.$__typename,
+  });
+
+  factory Query$get_admin_chats$mez_admin_chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$recipient_id = json['recipient_id'];
+    final l$recipient_type = json['recipient_type'];
+    final l$chat = json['chat'];
+    final l$$__typename = json['__typename'];
+    return Query$get_admin_chats$mez_admin_chat(
+      recipient_id: (l$recipient_id as int),
+      recipient_type: (l$recipient_type as String),
+      chat: l$chat == null
+          ? null
+          : Query$get_admin_chats$mez_admin_chat$chat.fromJson(
+              (l$chat as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int recipient_id;
+
+  final String recipient_type;
+
+  final Query$get_admin_chats$mez_admin_chat$chat? chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$recipient_id = recipient_id;
+    _resultData['recipient_id'] = l$recipient_id;
+    final l$recipient_type = recipient_type;
+    _resultData['recipient_type'] = l$recipient_type;
+    final l$chat = chat;
+    _resultData['chat'] = l$chat?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$recipient_id = recipient_id;
+    final l$recipient_type = recipient_type;
+    final l$chat = chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$recipient_id,
+      l$recipient_type,
+      l$chat,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_admin_chats$mez_admin_chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$recipient_id = recipient_id;
+    final lOther$recipient_id = other.recipient_id;
+    if (l$recipient_id != lOther$recipient_id) {
+      return false;
+    }
+    final l$recipient_type = recipient_type;
+    final lOther$recipient_type = other.recipient_type;
+    if (l$recipient_type != lOther$recipient_type) {
+      return false;
+    }
+    final l$chat = chat;
+    final lOther$chat = other.chat;
+    if (l$chat != lOther$chat) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_admin_chats$mez_admin_chat
+    on Query$get_admin_chats$mez_admin_chat {
+  CopyWith$Query$get_admin_chats$mez_admin_chat<
+          Query$get_admin_chats$mez_admin_chat>
+      get copyWith => CopyWith$Query$get_admin_chats$mez_admin_chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_admin_chats$mez_admin_chat<TRes> {
+  factory CopyWith$Query$get_admin_chats$mez_admin_chat(
+    Query$get_admin_chats$mez_admin_chat instance,
+    TRes Function(Query$get_admin_chats$mez_admin_chat) then,
+  ) = _CopyWithImpl$Query$get_admin_chats$mez_admin_chat;
+
+  factory CopyWith$Query$get_admin_chats$mez_admin_chat.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat;
+
+  TRes call({
+    int? recipient_id,
+    String? recipient_type,
+    Query$get_admin_chats$mez_admin_chat$chat? chat,
+    String? $__typename,
+  });
+  CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> get chat;
+}
+
+class _CopyWithImpl$Query$get_admin_chats$mez_admin_chat<TRes>
+    implements CopyWith$Query$get_admin_chats$mez_admin_chat<TRes> {
+  _CopyWithImpl$Query$get_admin_chats$mez_admin_chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_admin_chats$mez_admin_chat _instance;
+
+  final TRes Function(Query$get_admin_chats$mez_admin_chat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? recipient_id = _undefined,
+    Object? recipient_type = _undefined,
+    Object? chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_admin_chats$mez_admin_chat(
+        recipient_id: recipient_id == _undefined || recipient_id == null
+            ? _instance.recipient_id
+            : (recipient_id as int),
+        recipient_type: recipient_type == _undefined || recipient_type == null
+            ? _instance.recipient_type
+            : (recipient_type as String),
+        chat: chat == _undefined
+            ? _instance.chat
+            : (chat as Query$get_admin_chats$mez_admin_chat$chat?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> get chat {
+    final local$chat = _instance.chat;
+    return local$chat == null
+        ? CopyWith$Query$get_admin_chats$mez_admin_chat$chat.stub(
+            _then(_instance))
+        : CopyWith$Query$get_admin_chats$mez_admin_chat$chat(
+            local$chat, (e) => call(chat: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat<TRes>
+    implements CopyWith$Query$get_admin_chats$mez_admin_chat<TRes> {
+  _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat(this._res);
+
+  TRes _res;
+
+  call({
+    int? recipient_id,
+    String? recipient_type,
+    Query$get_admin_chats$mez_admin_chat$chat? chat,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> get chat =>
+      CopyWith$Query$get_admin_chats$mez_admin_chat$chat.stub(_res);
+}
+
+class Query$get_admin_chats$mez_admin_chat$chat {
+  Query$get_admin_chats$mez_admin_chat$chat({
+    required this.id,
+    this.chat_info,
+    required this.messages,
+    required this.creation_time,
+    this.last_message,
+    required this.last_message_sent,
+    required this.$__typename,
+  });
+
+  factory Query$get_admin_chats$mez_admin_chat$chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$chat_info = json['chat_info'];
+    final l$messages = json['messages'];
+    final l$creation_time = json['creation_time'];
+    final l$last_message = json['last_message'];
+    final l$last_message_sent = json['last_message_sent'];
+    final l$$__typename = json['__typename'];
+    return Query$get_admin_chats$mez_admin_chat$chat(
+      id: (l$id as int),
+      chat_info: l$chat_info == null ? null : mapFromJson(l$chat_info),
+      messages: mapFromJson(l$messages),
+      creation_time: (l$creation_time as String),
+      last_message: l$last_message == null ? null : mapFromJson(l$last_message),
+      last_message_sent: (l$last_message_sent as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic? chat_info;
+
+  final dynamic messages;
+
+  final String creation_time;
+
+  final dynamic? last_message;
+
+  final String last_message_sent;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$chat_info = chat_info;
+    _resultData['chat_info'] =
+        l$chat_info == null ? null : mapToJson(l$chat_info);
+    final l$messages = messages;
+    _resultData['messages'] = mapToJson(l$messages);
+    final l$creation_time = creation_time;
+    _resultData['creation_time'] = l$creation_time;
+    final l$last_message = last_message;
+    _resultData['last_message'] =
+        l$last_message == null ? null : mapToJson(l$last_message);
+    final l$last_message_sent = last_message_sent;
+    _resultData['last_message_sent'] = l$last_message_sent;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$chat_info = chat_info;
+    final l$messages = messages;
+    final l$creation_time = creation_time;
+    final l$last_message = last_message;
+    final l$last_message_sent = last_message_sent;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$chat_info,
+      l$messages,
+      l$creation_time,
+      l$last_message,
+      l$last_message_sent,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_admin_chats$mez_admin_chat$chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$chat_info = chat_info;
+    final lOther$chat_info = other.chat_info;
+    if (l$chat_info != lOther$chat_info) {
+      return false;
+    }
+    final l$messages = messages;
+    final lOther$messages = other.messages;
+    if (l$messages != lOther$messages) {
+      return false;
+    }
+    final l$creation_time = creation_time;
+    final lOther$creation_time = other.creation_time;
+    if (l$creation_time != lOther$creation_time) {
+      return false;
+    }
+    final l$last_message = last_message;
+    final lOther$last_message = other.last_message;
+    if (l$last_message != lOther$last_message) {
+      return false;
+    }
+    final l$last_message_sent = last_message_sent;
+    final lOther$last_message_sent = other.last_message_sent;
+    if (l$last_message_sent != lOther$last_message_sent) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_admin_chats$mez_admin_chat$chat
+    on Query$get_admin_chats$mez_admin_chat$chat {
+  CopyWith$Query$get_admin_chats$mez_admin_chat$chat<
+          Query$get_admin_chats$mez_admin_chat$chat>
+      get copyWith => CopyWith$Query$get_admin_chats$mez_admin_chat$chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> {
+  factory CopyWith$Query$get_admin_chats$mez_admin_chat$chat(
+    Query$get_admin_chats$mez_admin_chat$chat instance,
+    TRes Function(Query$get_admin_chats$mez_admin_chat$chat) then,
+  ) = _CopyWithImpl$Query$get_admin_chats$mez_admin_chat$chat;
+
+  factory CopyWith$Query$get_admin_chats$mez_admin_chat$chat.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat$chat;
+
+  TRes call({
+    int? id,
+    dynamic? chat_info,
+    dynamic? messages,
+    String? creation_time,
+    dynamic? last_message,
+    String? last_message_sent,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_admin_chats$mez_admin_chat$chat<TRes>
+    implements CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> {
+  _CopyWithImpl$Query$get_admin_chats$mez_admin_chat$chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_admin_chats$mez_admin_chat$chat _instance;
+
+  final TRes Function(Query$get_admin_chats$mez_admin_chat$chat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? chat_info = _undefined,
+    Object? messages = _undefined,
+    Object? creation_time = _undefined,
+    Object? last_message = _undefined,
+    Object? last_message_sent = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_admin_chats$mez_admin_chat$chat(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        chat_info: chat_info == _undefined
+            ? _instance.chat_info
+            : (chat_info as dynamic?),
+        messages: messages == _undefined || messages == null
+            ? _instance.messages
+            : (messages as dynamic),
+        creation_time: creation_time == _undefined || creation_time == null
+            ? _instance.creation_time
+            : (creation_time as String),
+        last_message: last_message == _undefined
+            ? _instance.last_message
+            : (last_message as dynamic?),
+        last_message_sent:
+            last_message_sent == _undefined || last_message_sent == null
+                ? _instance.last_message_sent
+                : (last_message_sent as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat$chat<TRes>
+    implements CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> {
+  _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat$chat(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? chat_info,
+    dynamic? messages,
+    String? creation_time,
+    dynamic? last_message,
+    String? last_message_sent,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Subscription$listen_on_chat_messages {
   factory Variables$Subscription$listen_on_chat_messages(
           {required int chat_id}) =>
