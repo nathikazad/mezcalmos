@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:badges/badges.dart' as badge;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
@@ -257,27 +258,27 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   }
 
   Future<void> _startListeningForLinks() async {
+    mezDbgPrint("startListeningForLinks");
     String? initialLink;
     try {
       initialLink = await getInitialLink();
     } catch (error) {
       // Handle error
     }
-
     // Parse the initial link (if it exists)
     if (initialLink != null) {
       CustomerLinkHandler.handleLink(Uri.parse(initialLink));
     }
 
     // Subscribe to incoming links
-    linkStream.listen((String? link) {
-      // Parse the link
-      if (link != null) {
-        CustomerLinkHandler.handleLink(Uri.parse(link));
-      }
-    }, onError: (err) {
-      // Handle error
-    });
+    if (kIsWeb == false) {
+      linkStream.listen((String? link) {
+        // Parse the link
+        if (link != null) {
+          CustomerLinkHandler.handleLink(Uri.parse(link));
+        }
+      });
+    }
   }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {
