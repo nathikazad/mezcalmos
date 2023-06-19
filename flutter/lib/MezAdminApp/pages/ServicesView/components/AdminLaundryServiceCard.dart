@@ -1,18 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
@@ -57,11 +57,29 @@ class AdminLaundryServiceCard extends StatelessWidget {
                     Row(
                       children: [
                         Flexible(
-                          fit: FlexFit.tight,
-                          child: Text(
-                            laundry.info.name,
-                            style: context.txt.bodyLarge,
-                          ),
+                            fit: FlexFit.tight,
+                            child: RichText(
+                                text: TextSpan(
+                                    text: laundry.info.name,
+                                    style: context.txt.bodyLarge,
+                                    children: [
+                                  WidgetSpan(
+                                    child: MezIconButton(
+                                      onTap: () async {
+                                        await viewController.messageService(
+                                            serviceId:
+                                                laundry.info.hasuraId.toInt(),
+                                            type: RecipientType.Laundry);
+                                      },
+                                      icon: Icons.textsms_rounded,
+                                      backgroundColor: primaryBlueColor,
+                                      iconColor: Colors.white,
+                                      margin: EdgeInsets.only(left: 12),
+                                    ),
+                                  )
+                                ]))),
+                        SizedBox(
+                          width: 10,
                         ),
                         SizedBox(
                           height: 18,
@@ -80,9 +98,9 @@ class AdminLaundryServiceCard extends StatelessWidget {
                         )
                       ],
                     ),
-                    Container(
-                        margin: const EdgeInsets.symmetric(vertical: 5),
-                        child: Text(laundry.info.name)),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -134,8 +152,12 @@ class AdminLaundryServiceCard extends StatelessWidget {
                             textColor: Colors.red,
                             label: "${_i18n()['reject']}",
                             onClick: () async {
-                                await viewController.approveService(
-                                  detailsId: laundry.serviceDetailsId,approved: false);
+                              await viewController.deleteService(
+                                serviceProviderType:
+                                    ServiceProviderType.Laundry,
+                                serviceProviderId:
+                                    laundry.info.hasuraId.toInt(),
+                              );
                             })),
                     SizedBox(
                       width: 8,
@@ -147,8 +169,9 @@ class AdminLaundryServiceCard extends StatelessWidget {
                             textColor: Colors.white,
                             label: "${_i18n()['accept']}",
                             onClick: () async {
-                             await viewController.approveService(
-                                  detailsId: laundry.serviceDetailsId,approved: true);
+                              await viewController.approveService(
+                                detailsId: laundry.serviceDetailsId,
+                              );
                             })),
                   ],
                 ),

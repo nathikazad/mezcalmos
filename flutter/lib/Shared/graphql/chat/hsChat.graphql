@@ -57,6 +57,21 @@ query get_service_provider_chats($service_id: Int, $service_provider_type: Strin
     }
   }
 }
+query get_admin_chats {
+  mez_admin_chat( order_by: {chat: {last_message_sent: desc}}) {
+     
+    recipient_id
+    recipient_type
+    chat {
+      id
+      chat_info
+      messages
+      creation_time
+      last_message
+      last_message_sent
+    }
+  }
+}
 
 
 # Get chat infos

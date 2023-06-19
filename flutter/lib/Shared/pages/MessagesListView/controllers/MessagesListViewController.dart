@@ -7,9 +7,9 @@ import 'package:mezcalmos/Shared/graphql/chat/hsChat.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 
 abstract class MessagesListViewController {
   AuthController _authController = Get.find<AuthController>();
@@ -113,7 +113,22 @@ class BsOpMessagesListViewController extends MessagesListViewController {
     _allChats.value = [];
     _allChats.value = chatData;
     mezDbgPrint(
-        "BsOpMessagesListViewController chats ${_allChats.map((element) => element.messages.isEmpty ? null : element.messages.last.message)}");
+        "BsOpMessagesListViewController chats ${_allChats.map((HasuraChat element) => element.messages.isEmpty ? null : element.messages.last.message)}");
+    isLoading.value = false;
+  }
+}
+
+class AdminMessagesListViewController extends MessagesListViewController {
+  @override
+  Future<void> getMessages() async {
+    isLoading.value = true;
+    // todo
+
+    final List<HasuraChat> chatData = await get_admin_chats();
+    _allChats.value = [];
+    _allChats.value = chatData;
+    mezDbgPrint(
+        "BsOpMessagesListViewController chats ${_allChats.map((HasuraChat element) => element.messages.isEmpty ? null : element.messages.last.message)}");
     isLoading.value = false;
   }
 }

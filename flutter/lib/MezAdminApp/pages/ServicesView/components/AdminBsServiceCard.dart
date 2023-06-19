@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
     ["AdminServicesView"]["components"]["adminServiceCard"];
@@ -46,20 +47,28 @@ class AdminBsServiceCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Flexible(
-                      fit: FlexFit.tight,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            business.details.name,
-                            style: context.txt.bodyLarge,
-                          ),
-                          Text(
-                            business.profile.name,
-                            style: context.txt.bodyMedium,
-                          ),
-                        ],
-                      ),
+                        fit: FlexFit.tight,
+                        child: RichText(
+                            text: TextSpan(
+                                text: business.details.name,
+                                style: context.txt.bodyLarge,
+                                children: [
+                              WidgetSpan(
+                                child: MezIconButton(
+                                  onTap: () async {
+                                    await viewController.messageService(
+                                        serviceId: business.id.toInt(),
+                                        type: RecipientType.Business);
+                                  },
+                                  icon: Icons.textsms_rounded,
+                                  backgroundColor: primaryBlueColor,
+                                  iconColor: Colors.white,
+                                  margin: EdgeInsets.only(left: 12),
+                                ),
+                              )
+                            ]))),
+                    SizedBox(
+                      width: 10,
                     ),
                     SizedBox(
                       height: 18,
@@ -77,8 +86,8 @@ class AdminBsServiceCard extends StatelessWidget {
                     )
                   ],
                 ),
-                Divider(
-                  color: Colors.grey.shade100,
+                SizedBox(
+                  height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -118,9 +127,11 @@ class AdminBsServiceCard extends StatelessWidget {
                                 textColor: Colors.red,
                                 label: "${_i18n()['reject']}",
                                 onClick: () async {
-                                  await viewController.approveService(
-                                      detailsId: business.details.id.toInt(),
-                                      approved: false);
+                                  await viewController.deleteService(
+                                    serviceProviderType:
+                                        ServiceProviderType.Business,
+                                    serviceProviderId: business.id.toInt(),
+                                  );
                                 })),
                         SizedBox(
                           width: 8,
@@ -133,8 +144,8 @@ class AdminBsServiceCard extends StatelessWidget {
                                 label: "${_i18n()['accept']}",
                                 onClick: () async {
                                   await viewController.approveService(
-                                      detailsId: business.details.id.toInt(),
-                                      approved: true);
+                                    detailsId: business.details.id.toInt(),
+                                  );
                                 })),
                       ],
                     ),

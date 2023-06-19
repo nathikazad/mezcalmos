@@ -13,10 +13,10 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -24,14 +24,14 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
-import 'package:uni_links/uni_links.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:uni_links/uni_links.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -172,7 +172,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
         );
       case 2:
         return MessagesListView(
-          serviceProviderType: ServiceProviderType.Customer,
+          entityType: EntityType.Customer,
         );
       case 3:
         return CustProfileView();

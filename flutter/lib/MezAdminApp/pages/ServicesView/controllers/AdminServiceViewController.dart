@@ -1,17 +1,23 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/admin/service_providers/hsAdminServiceProviders.dart';
+import 'package:mezcalmos/Shared/graphql/chat/hsChat.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 
 class AdminServicesViewController {
   late AdminTabsViewController adminTabsViewController;
@@ -23,7 +29,6 @@ class AdminServicesViewController {
   RxList<cModels.Business> _businesses = RxList.empty();
   RxBool isFetching = RxBool(false);
 
-  RxInt laundryLimit = RxInt(3);
   final int businessFetchSize = 10;
   int _businessCurrentOffset = 0;
   bool _businessFetchingData = false;
@@ -155,6 +160,7 @@ class AdminServicesViewController {
         status: value ? ServiceStatus.Open : ServiceStatus.ClosedTemporarily,
         detailsId: serviceDetailsId,
         approved: null);
+    await _resetData();
     fetchCurrent();
   }
 
@@ -191,10 +197,82 @@ class AdminServicesViewController {
     }
   }
 
-  Future<void> approveService(
-      {required int detailsId, required bool approved}) async {
+  Future<void> approveService({
+    required int detailsId,
+  }) async {
     await update_service_state(
-        status: null, detailsId: detailsId, approved: approved);
+        status: null, detailsId: detailsId, approved: true);
+
+    await _resetData();
     fetchCurrent();
+  }
+
+  Future<void> deleteService({
+    required cModels.ServiceProviderType serviceProviderType,
+    required int serviceProviderId,
+  }) async {
+    try {
+      final cModels.DeleteServiceProviderResponse res =
+          await CloudFunctions.serviceProvider_deleteServiceProvider(
+              serviceProviderType: serviceProviderType,
+              serviceProviderId: serviceProviderId);
+      mezlog(res.toFirebaseFormattedJson());
+      if (res.success) {
+        await _resetData();
+        fetchCurrent();
+      }
+    } on FirebaseException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezlog(stk);
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezlog(e);
+      mezlog(stk);
+    }
+  }
+
+  Future<void> messageService(
+      {required int serviceId, required cModels.RecipientType type}) async {
+    try {
+      int? chatId = await get_admin_chat_id(recepientId: serviceId, type: type);
+      mezlog("ChatId: $chatId");
+      if (chatId != null) {
+        unawaited(BaseMessagingScreen.navigate(chatId: chatId));
+      } else {
+        final MezAdminChatResponse res =
+            await CloudFunctions.serviceProvider_createMezAdminChat(
+                recipientId: serviceId, recipientType: type);
+        mezlog(res.toFirebaseFormattedJson());
+        if (res.success) {
+          unawaited(BaseMessagingScreen.navigate(chatId: res.chatId!.toInt()));
+        }
+      }
+    } on FirebaseException catch (e) {
+      showErrorSnackBar(errorText: e.message.toString());
+      throw Exception(e);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> _resetData() async {
+    _restaurants.value = RxList.empty();
+    _laundries.value = RxList.empty();
+    _dvCompanies.value = RxList.empty();
+    _businesses.value = RxList.empty();
+    _businessCurrentOffset = 0;
+    _businessFetchingData = false;
+    _businessReachedEndOfData = false;
+    _laundryCurrentOffset = 0;
+    _laundryFetchingData = false;
+    _laundryReachedEndOfData = false;
+    _restCurrentOffset = 0;
+    _restFetchingData = false;
+    _restReachedEndOfData = false;
+    _dvCurrentOffset = 0;
+    _dvFetchingData = false;
+    _dvReachedEndOfData = false;
+    await scrollController.animateTo(0,
+        duration: Duration(milliseconds: 1), curve: Curves.bounceIn);
   }
 }

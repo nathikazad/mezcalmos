@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewcontroller.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
 
 class MessagesListView extends StatefulWidget {
-  const MessagesListView({super.key, this.serviceProviderType});
-  final ServiceProviderType? serviceProviderType;
+  const MessagesListView({super.key, this.entityType, this.showAppbar = true});
+  final EntityType? entityType;
+  final bool showAppbar;
 
-  static Future<void> navigate(
-      {required ServiceProviderType serviceProviderType}) async {
+  static Future<void> navigate({required EntityType entityType}) async {
     return MezRouter.toPath(constructPath(),
-        arguments: {"serviceProviderType": serviceProviderType});
+        arguments: {"entityType": entityType});
   }
 
   static String constructPath() {
@@ -39,7 +39,7 @@ class MessagesListView extends StatefulWidget {
 
 class _MessagesListViewState extends State<MessagesListView> {
   late MessagesListViewController viewcontroller;
-  ServiceProviderType? serviceProvider;
+  EntityType? serviceProvider;
 
   @override
   void initState() {
@@ -53,11 +53,14 @@ class _MessagesListViewState extends State<MessagesListView> {
 
   void _initController() {
     switch (serviceProvider) {
-      case ServiceProviderType.Customer:
+      case EntityType.Customer:
         viewcontroller = CustMessagesListViewController();
         break;
-      case ServiceProviderType.Business:
+      case EntityType.Business:
         viewcontroller = BsOpMessagesListViewController();
+        break;
+      case EntityType.Admin:
+        viewcontroller = AdminMessagesListViewController();
         break;
       default:
         throw StateError(
@@ -66,8 +69,8 @@ class _MessagesListViewState extends State<MessagesListView> {
   }
 
   void _assignVariables() {
-    serviceProvider = widget.serviceProviderType ??
-        MezRouter.bodyArguments?["serviceProviderType"] as ServiceProviderType?;
+    serviceProvider = widget.entityType ??
+        MezRouter.bodyArguments?["entityType"] as EntityType?;
   }
 
   @override
@@ -75,11 +78,13 @@ class _MessagesListViewState extends State<MessagesListView> {
     return Scaffold(
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
-      appBar: MezcalmosAppBar(
-        AppBarLeftButtonType.Menu,
-        title: '${_i18n()["messages"]}',
-        showNotifications: true,
-      ),
+      appBar: (widget.showAppbar)
+          ? MezcalmosAppBar(
+              AppBarLeftButtonType.Menu,
+              title: '${_i18n()["messages"]}',
+              showNotifications: true,
+            )
+          : null,
       body: Obx(() {
         if (viewcontroller.isLoading.value) {
           return Center(

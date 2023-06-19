@@ -112,3 +112,14 @@ extension LanguageMapToFirebaseFormat on LanguageMap {
     }
   }
 }
+
+/// used only on the view side
+enum EntityType {
+  Business,
+  Customer,
+  Laundry,
+  DeliveryCompany,
+  Admin,
+  Restaurant,
+  Driver
+}
