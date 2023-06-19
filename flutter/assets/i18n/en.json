@@ -326,7 +326,11 @@
           "petFriendly": "Pet Friendly",
           "petFriendlyHint": "Select if you allow pets or not",
           "yes": "Yes",
-          "no" : "No"
+          "no": "No",
+          "singleBed": "Single Bed",
+          "doubleBed": "Double Bed",
+          "dormRoom": "Dorm Room",
+          "suite": "Suite"
         },
         "languageSchool": {
           "otherServicesTitle": "Other services",

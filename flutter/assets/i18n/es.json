@@ -327,7 +327,11 @@
           "petFriendly": "Mascota amigable",
           "petFriendlyHint": "Seleccione si permite mascotas o no",
           "yes": "Sí",
-          "no": "No"
+          "no": "No",
+          "singleBed": "Cama individual",
+          "doubleBed": "Cama matrimonialmonial",
+          "dormRoom": "Dormitorio",
+          "suite": "Suite"
         },
         "languageSchool": {
           "otherServicesTitle": "Otros servicios",

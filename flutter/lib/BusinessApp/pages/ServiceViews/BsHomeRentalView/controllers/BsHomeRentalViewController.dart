@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/RentalHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
@@ -37,6 +38,9 @@ class BsHomeRentalViewController {
   // getters //
   Home? get rental => _rental.value;
   bool get isEditing => _rental.value != null;
+
+  RxList<Map<String, dynamic>> additionalRooms = RxList();
+  Rxn<RoomType> roomType = Rxn<RoomType>();
 
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
         // TimeUnit.PerHour,
@@ -95,6 +99,33 @@ class BsHomeRentalViewController {
       homeLocation.value = rental!.gpsLocation;
       homeType.value = rental!.category1;
     }
+  }
+
+  void changeHomeType(HomeCategory1 newHomeType) {
+    homeType.value = newHomeType;
+  }
+
+  /// This checks the avaiable price units inside the new rooms on basis of ctrl.
+  List<TimeUnit> newRoomAvaiableUnits(BusinessItemDetailsController ctrl) {
+    return _possibleTimeUnits
+        .where((TimeUnit element) =>
+            ctrl.priceTimeUnitMap.keys.contains(element) == false)
+        .toList();
+  }
+
+  /// This adds new room with the new [BusinessItemDetailsController] ctrl
+  /// Coz using this we can use the [BsOpOfferingPricesList] 
+  void addNewRoom() {
+    final BusinessItemDetailsController ctrl = BusinessItemDetailsController();
+    ctrl.addPriceTimeUnit(timeUnit: newRoomAvaiableUnits(ctrl).first);
+    additionalRooms.add({
+      "roomType": RoomType.SingleBed.toFirebaseFormatString(),
+      "controller": ctrl,
+    });
+  }
+
+  void deleteNewRoom(int index) {
+    additionalRooms.removeAt(index);
   }
 
   Future<void> saveItemDetails() async {

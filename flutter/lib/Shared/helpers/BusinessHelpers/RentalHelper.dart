@@ -11,3 +11,19 @@ extension HomeHelper on Home {
   // bool get isHome => category1 == RentalCategory1.Home;
   bool get forSale => availableFor == HomeAvailabilityOption.Sale;
 }
+
+enum RoomType { SingleBed, DoubleBed, DormRoom, Suite }
+
+extension ParseRoomTypeToString on RoomType {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToRoomType on String {
+  RoomType toRoomType() {
+    return RoomType.values.firstWhere((RoomType roomType) =>
+        roomType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
