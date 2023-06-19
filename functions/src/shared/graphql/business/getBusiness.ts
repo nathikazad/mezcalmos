@@ -28,6 +28,7 @@ export async function getBusiness(businessId: number): Promise<Business> {
                     }]
                 },
                 open_status: true,
+                phone_number: true,
                 approved: true,
                 creation_time: true,
                 language: [{}, true],
@@ -76,6 +77,7 @@ export async function getBusiness(businessId: number): Promise<Business> {
             name: response.business_business_by_pk.details.name,
             image: response.business_business_by_pk.details.image,
             serviceProviderType: ServiceProviderType.Business,
+            phoneNumber: response.business_business_by_pk.details.phone_number,
             location: {
                 lat: response.business_business_by_pk.details.location.gps.coordinates[1],
                 lng: response.business_business_by_pk.details.location.gps.coordinates[0],
