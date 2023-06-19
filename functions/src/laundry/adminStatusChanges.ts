@@ -48,71 +48,46 @@ enum ChangeLaundryStatusError {
   DeliveryCompanyHasNoDrivers = "deliveryCompanyHasNoDrivers"
 }
 export async function cancelOrder(userId: number, changeStatusDetails: ChangeStatusDetails): Promise<ChangeLaundryStatusResponse> {
-  return await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.CancelledByAdmin, userId)
-};
-
-export async function readyForDeliveryOrder(userId: number, changeStatusDetails: ChangeStatusDetails): Promise<ChangeLaundryStatusResponse> {
-  return await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.ReadyForDelivery, userId)
-};
-
-async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, userId: number): Promise<ChangeLaundryStatusResponse> {
+  // return await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.CancelledByAdmin, userId)
   try {
-    await passChecksForLaundry(orderId, userId);
+    await passChecksForLaundry(changeStatusDetails.orderId, userId);
 
-    let order: LaundryOrder = await getLaundryOrder(orderId);
+    let order: LaundryOrder = await getLaundryOrder(changeStatusDetails.orderId);
     let customer: CustomerInfo = await getCustomer(order.customerId);
-  
-    if (newStatus == LaundryOrderStatus.Delivered || newStatus == LaundryOrderStatus.CancelledByAdmin) {
-      if (!orderInProcess(order.status)) {
-        throw new MezError(ChangeLaundryStatusError.OrderNotInProcess);
-      }
-    } else if (expectedPreviousStatus(newStatus) != order.status) {
-      throw new MezError(ChangeLaundryStatusError.InvalidStatus);
+
+    if (!orderInProcess(order.status)) {
+      throw new MezError(ChangeLaundryStatusError.OrderNotInProcess);
     }
-    if (newStatus == LaundryOrderStatus.CancelledByAdmin) {
-      if (order.paymentType == PaymentType.Card) {
-        let paymentDetails: PaymentDetails = {
-          orderId: orderId,
-          serviceProviderDetailsId: order.spDetailsId,
-          orderStripePaymentInfo: order.stripeInfo!
-        }
-        capturePayment(paymentDetails, 0)
+    if (order.paymentType == PaymentType.Card) {
+      let paymentDetails: PaymentDetails = {
+        orderId: changeStatusDetails.orderId,
+        serviceProviderDetailsId: order.spDetailsId,
+        orderStripePaymentInfo: order.stripeInfo!
       }
-      order.refundAmount = order.totalCost;
+      capturePayment(paymentDetails, 0)
     }
-  
-    order.status = newStatus
+    order.refundAmount = order.totalCost;
+    order.status = LaundryOrderStatus.CancelledByAdmin;
     updateLaundryOrderStatus(order);
-      
+
     if(order.deliveryType == DeliveryType.Delivery) {
 
       let fromCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.fromCustomerDeliveryId!);
+      fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+      updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
 
-      if(newStatus == LaundryOrderStatus.ReadyForDelivery) {
-        let laundryStore: ServiceProvider = await getLaundryStore(order.storeId);
-        
-        let toCustomerDeliveryOrder: DeliveryOrder = await createLaundryToCustomerDeliveryOrder(order, laundryStore, fromCustomerDeliveryOrder);
-        setLaundryToCustomerDeliveryOrderChatInfo(order, laundryStore, toCustomerDeliveryOrder, customer);
+      if(order.toCustomerDeliveryId) {
+        let toCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.toCustomerDeliveryId);
+        toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
 
-        if(laundryStore.deliveryDetails.selfDelivery == false)
-          notifyDeliveryDrivers(toCustomerDeliveryOrder);
-        notify(customer);
-      } else {
-        fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
-  
-        updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
+        updateDeliveryOrderStatus(toCustomerDeliveryOrder);
+        notify(customer, fromCustomerDeliveryOrder, toCustomerDeliveryOrder);
+      } else 
+      notify(customer, fromCustomerDeliveryOrder)
 
-        if(order.toCustomerDeliveryId) {
-          let toCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.toCustomerDeliveryId);
-          toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
-  
-          updateDeliveryOrderStatus(toCustomerDeliveryOrder);
-          notify(customer, fromCustomerDeliveryOrder, toCustomerDeliveryOrder);
-        } else 
-        notify(customer, fromCustomerDeliveryOrder)
-      }
     } else
       notify(customer);
+
     return {
       success: true
     }
@@ -134,49 +109,95 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
       throw e
     }
   }
+};
 
-  function notify(customer: CustomerInfo, fromCustomerDeliveryOrder?: DeliveryOrder, toCustomerDeliveryOrder?: DeliveryOrder) {
-    let notification: Notification = {
-      foreground: <LaundryOrderStatusChangeNotification>{
-        status: newStatus,
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.OrderStatusChange,
-        orderType: OrderType.Laundry,
-        notificationAction: newStatus != LaundryOrderStatus.CancelledByAdmin
-          ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
-        orderId: orderId
-      },
-      background: LaundryOrderStatusChangeMessages[newStatus],
-      linkUrl: orderUrl(OrderType.Laundry, orderId)
-    };
+export async function readyForDeliveryOrder(userId: number, changeStatusDetails: ChangeStatusDetails): Promise<ChangeLaundryStatusResponse> {
+  // return await changeStatus(changeStatusDetails.orderId, LaundryOrderStatus.ReadyForDelivery, userId)
+  try {
+    await passChecksForLaundry(changeStatusDetails.orderId, userId);
 
-    pushNotification(
-      customer.firebaseId,
-      notification,
-      customer.notificationInfo,
-      ParticipantType.Customer,
-      customer.language
-    );
-    if(fromCustomerDeliveryOrder && fromCustomerDeliveryOrder.deliveryDriver && fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
-        notification.linkUrl = `/orders/${fromCustomerDeliveryOrder.deliveryId}`;
-        pushNotification(fromCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
-          notification, 
-          fromCustomerDeliveryOrder.deliveryDriver.notificationInfo,
-          ParticipantType.DeliveryDriver,
-          fromCustomerDeliveryOrder.deliveryDriver.user?.language,
-        );
+    let order: LaundryOrder = await getLaundryOrder(changeStatusDetails.orderId);
+    let customer: CustomerInfo = await getCustomer(order.customerId);
+
+    if (order.status != LaundryOrderStatus.AtLaundry) {
+      throw new MezError(ChangeLaundryStatusError.InvalidStatus);
     }
-    if (toCustomerDeliveryOrder && toCustomerDeliveryOrder.deliveryDriver && toCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
-      notification.linkUrl = `/orders/${toCustomerDeliveryOrder.deliveryId}`;
-      pushNotification(toCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
-        notification, 
-        toCustomerDeliveryOrder.deliveryDriver.notificationInfo,
-        ParticipantType.DeliveryDriver,
-        toCustomerDeliveryOrder.deliveryDriver.user?.language,
-      );
+
+    order.status = LaundryOrderStatus.ReadyForDelivery;
+    updateLaundryOrderStatus(order);
+
+    notify(order.orderId, customer);
+    return {
+      success: true
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(ChangeLaundryStatusError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: ChangeLaundryStatusError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
     }
   }
+};
+
+function notify(
+  laundryOrderId: number,
+  customer: CustomerInfo, 
+  newStatus: LaundryOrderStatus,
+  fromCustomerDeliveryOrder?: DeliveryOrder, 
+  toCustomerDeliveryOrder?: DeliveryOrder, 
+) {
+  let notification: Notification = {
+    foreground: <LaundryOrderStatusChangeNotification>{
+      status: newStatus,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Laundry,
+      notificationAction: newStatus != LaundryOrderStatus.CancelledByAdmin
+        ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
+      orderId: laundryOrderId
+    },
+    background: LaundryOrderStatusChangeMessages[newStatus],
+    linkUrl: orderUrl(OrderType.Laundry, laundryOrderId)
+  };
+
+  pushNotification(
+    customer.firebaseId,
+    notification,
+    customer.notificationInfo,
+    ParticipantType.Customer,
+    customer.language
+  );
+  if(fromCustomerDeliveryOrder && fromCustomerDeliveryOrder.deliveryDriver && fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
+      notification.linkUrl = `/orders/${fromCustomerDeliveryOrder.deliveryId}`;
+      pushNotification(fromCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
+        notification, 
+        fromCustomerDeliveryOrder.deliveryDriver.notificationInfo,
+        ParticipantType.DeliveryDriver,
+        fromCustomerDeliveryOrder.deliveryDriver.user?.language,
+      );
+  }
+  if (toCustomerDeliveryOrder && toCustomerDeliveryOrder.deliveryDriver && toCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
+    notification.linkUrl = `/orders/${toCustomerDeliveryOrder.deliveryId}`;
+    pushNotification(toCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
+      notification, 
+      toCustomerDeliveryOrder.deliveryDriver.notificationInfo,
+      ParticipantType.DeliveryDriver,
+      toCustomerDeliveryOrder.deliveryDriver.user?.language,
+    );
+  }
 }
+
 // export async function setWeight(userId: number, data: any) {
 
 // //   if (data.costsByType == null) {
