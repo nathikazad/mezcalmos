@@ -1261,7 +1261,7 @@
             "volunteer": "Volunteer",
             "adventures": "Adventures",
             "realEstate": "Properties",
-            "courier": "Courier"
+            "courier": "Open Delivery"
           }
         },
         "AllServiceView": {
@@ -1482,7 +1482,7 @@
             "bicycle": "Bicycle"
           }
         },
-        "CustRealEstateView": {
+        "CustRealEstateListView": {
           "home": "Home",
           "map": "Map",
           "realEstate": "Realestate",
@@ -1503,7 +1503,10 @@
           "noBusinessFound": "No buisinesses found",
           "confirm": "Confirm",
           "cancel": "Cancel",
-          "filter": "Filter"
+          "filter": "Filter",
+          "total": "Total",
+          "bedrooms": "Bedrooms",
+          "bathrooms": "Bathrooms"
         },
         "EventsViews": {
           "CustEventsListView": {

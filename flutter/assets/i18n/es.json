@@ -1333,7 +1333,7 @@
             "volunteer": "Voluntaria",
             "adventures": "Aventuras",
             "realEstate": "Properties",
-            "courier": "Mensajera"
+            "courier": "Entrega abierta"
           }
         },
         "AllServiceView": {
@@ -1517,7 +1517,7 @@
             "bicycle": "Bicicleta"
           }
         },
-        "CustRealEstateView": {
+        "CustRealEstateListView": {
           "home": "Hogar",
           "map": "Mapa",
           "realEstate": "Realestate",
@@ -1538,7 +1538,10 @@
           "noBusinessFound": "No se encontraron Buisinesses",
           "confirm": "Confirmar",
           "cancel": "Cancelar",
-          "filter": "Filtrar"
+          "filter": "Filtrar",
+          "total": "Total",
+          "bedrooms": "Dormitorios",
+          "bathrooms": "Baños"
         },
         "EventsViews": {
           "CustEventsListView": {

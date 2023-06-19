@@ -12,8 +12,10 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView
     deferred as custServiceView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart'
     deferred as custHomeRentalsListView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/CustRealEstateView.dart'
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/CustRealEstateListView.dart'
     deferred as custRealEstateListView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealestateView.dart'
+    deferred as custRealestateView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart'
     deferred as custRentalsListView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsWrapper.dart'
@@ -60,6 +62,7 @@ class CustBusinessRoutes {
   static String custRentalsListRoute = "/customer/rentals";
   static String custHomeRentalsListRoute = "/customer/homeRentals";
   static String custRealEstateListRoute = "/customer/realEstate";
+  static String custRealestateViewRoute = "/customer/realEstateView/:id";
   static String custClassesListRoute = "/customer/classes";
   static String custTherapyListRoute = "/customer/therapy";
   static String custVolunteerListRoute = "/customer/volunteer";
@@ -141,9 +144,17 @@ class CustBusinessRoutes {
     QRoute(
       name: custRealEstateListRoute,
       path: custRealEstateListRoute,
-      builder: () => custRealEstateListView.CustRealEstateView(),
+      builder: () => custRealEstateListView.CustRealEstateListView(),
       middleware: <QMiddleware>[
         DefferedLoader(custRealEstateListView.loadLibrary),
+      ],
+    ),
+    QRoute(
+      name: custRealestateViewRoute,
+      path: custRealestateViewRoute,
+      builder: () => custRealestateView.CustRealestateView(),
+      middleware: <QMiddleware>[
+        DefferedLoader(custRealestateView.loadLibrary),
       ],
     ),
     QRoute(
