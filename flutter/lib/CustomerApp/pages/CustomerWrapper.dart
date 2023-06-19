@@ -28,9 +28,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
-import 'package:badges/badges.dart' as badge;
 import 'package:uni_links/uni_links.dart';
-import 'package:mezcalmos/Shared/helpers/ReferralsHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
@@ -268,24 +266,14 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
     // Parse the initial link (if it exists)
     if (initialLink != null) {
-      final Uri initialUri = Uri.parse(initialLink);
-      final String? referralCode = initialUri.queryParameters['referral'];
-      if (referralCode != null) {
-        saveReferral(referralCode);
-      }
-      CustomerDeepLinkHandler.handleDeepLink(initialUri);
+      CustomerLinkHandler.handleLink(Uri.parse(initialLink));
     }
 
     // Subscribe to incoming links
     linkStream.listen((String? link) {
       // Parse the link
       if (link != null) {
-        final Uri uri = Uri.parse(link);
-        final String? referralCode = uri.queryParameters['referral'];
-        if (referralCode != null) {
-          saveReferral(referralCode);
-        }
-        CustomerDeepLinkHandler.handleDeepLink(uri);
+        CustomerLinkHandler.handleLink(Uri.parse(link));
       }
     }, onError: (err) {
       // Handle error

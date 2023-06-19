@@ -9,6 +9,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/fakeCreds.dart';
@@ -189,7 +190,9 @@ class _SignInViewState extends State<SignInView> {
         child: TextButton(
             onPressed: () {
               clickedLogin.value = true;
-              signUp('${generateString()}@mezc.com', 'password')
+              String email = '${generateString()}@mezc.com';
+              mezDbgPrint("$email signing up 📡📡📡📡🪢🪢🪢🪢🪢");
+              signUp(email, 'password')
                   .whenComplete(() => clickedLogin.value = false);
             },
             style: TextButton.styleFrom(
