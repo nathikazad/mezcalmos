@@ -7759,7 +7759,7 @@ type customer_minimal_order {
   number_of_items: Int
   order_time: timestamptz!
   order_type: String!
-  payment_type: String!
+  payment_type: String
   status: String!
   to_address: String
   total_cost: money!

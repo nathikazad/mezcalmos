@@ -68,16 +68,11 @@ query get_event_by_category(
 ) {
   business_event(
     where: {
-      _and: {
-        details: {
-          _and: {
-            category1: { _in: $categories1 }
-            category2: { _in: $categories2 }
-            _not: { tags: { _has_key: "class" } }
-            tags: { _has_keys_all: $tags }
-          }
-        }
-        schedule_type: { _in: $schedule_type }
+      details: {
+        category1: { _in: $categories1 }
+        category2: { _in: $categories2 }
+        _not: { tags: { _has_key: "class" } }
+        tags: { _has_keys_all: $tags }
         business: {
           details: {
             approved: { _eq: true }
@@ -85,6 +80,8 @@ query get_event_by_category(
           }
         }
       }
+      schedule_type: { _in: $schedule_type }
+      _or: [{ ends_at: { _is_null: true } }, { ends_at: { _gte: "now()" } }]
     }
     limit: $limit
     offset: $offset

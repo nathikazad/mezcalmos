@@ -3775,72 +3775,51 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: '_and'),
+                name: NameNode(value: 'details'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: 'details'),
+                    name: NameNode(value: 'category1'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: '_and'),
+                        name: NameNode(value: '_in'),
+                        value:
+                            VariableNode(name: NameNode(value: 'categories1')),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'category2'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_in'),
+                        value:
+                            VariableNode(name: NameNode(value: 'categories2')),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: '_not'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'tags'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: 'category1'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: '_in'),
-                                value: VariableNode(
-                                    name: NameNode(value: 'categories1')),
-                              )
-                            ]),
-                          ),
-                          ObjectFieldNode(
-                            name: NameNode(value: 'category2'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: '_in'),
-                                value: VariableNode(
-                                    name: NameNode(value: 'categories2')),
-                              )
-                            ]),
-                          ),
-                          ObjectFieldNode(
-                            name: NameNode(value: '_not'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'tags'),
-                                value: ObjectValueNode(fields: [
-                                  ObjectFieldNode(
-                                    name: NameNode(value: '_has_key'),
-                                    value: StringValueNode(
-                                      value: 'class',
-                                      isBlock: false,
-                                    ),
-                                  )
-                                ]),
-                              )
-                            ]),
-                          ),
-                          ObjectFieldNode(
-                            name: NameNode(value: 'tags'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: '_has_keys_all'),
-                                value:
-                                    VariableNode(name: NameNode(value: 'tags')),
-                              )
-                            ]),
-                          ),
+                            name: NameNode(value: '_has_key'),
+                            value: StringValueNode(
+                              value: 'class',
+                              isBlock: false,
+                            ),
+                          )
                         ]),
                       )
                     ]),
                   ),
                   ObjectFieldNode(
-                    name: NameNode(value: 'schedule_type'),
+                    name: NameNode(value: 'tags'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: '_in'),
-                        value: VariableNode(
-                            name: NameNode(value: 'schedule_type')),
+                        name: NameNode(value: '_has_keys_all'),
+                        value: VariableNode(name: NameNode(value: 'tags')),
                       )
                     ]),
                   ),
@@ -3876,7 +3855,46 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
                     ]),
                   ),
                 ]),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'schedule_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_in'),
+                    value: VariableNode(name: NameNode(value: 'schedule_type')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: '_or'),
+                value: ListValueNode(values: [
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'ends_at'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: '_is_null'),
+                          value: BooleanValueNode(value: true),
+                        )
+                      ]),
+                    )
+                  ]),
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'ends_at'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: '_gte'),
+                          value: StringValueNode(
+                            value: 'now()',
+                            isBlock: false,
+                          ),
+                        )
+                      ]),
+                    )
+                  ]),
+                ]),
+              ),
             ]),
           ),
           ArgumentNode(
