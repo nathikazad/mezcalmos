@@ -347,6 +347,20 @@ const documentNodeQueryget_service_by_id = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'online_ordering'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: '__typename'),
                     alias: null,
                     arguments: [],
@@ -1151,6 +1165,8 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
     required this.image,
     required this.name,
     required this.currency,
+    this.phone_number,
+    required this.online_ordering,
     required this.$__typename,
   });
 
@@ -1162,6 +1178,8 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
     final l$image = json['image'];
     final l$name = json['name'];
     final l$currency = json['currency'];
+    final l$phone_number = json['phone_number'];
+    final l$online_ordering = json['online_ordering'];
     final l$$__typename = json['__typename'];
     return Query$get_service_by_id$business_service_by_pk$business$details(
       last_active_time: (l$last_active_time as String),
@@ -1170,6 +1188,8 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
       image: (l$image as String),
       name: (l$name as String),
       currency: (l$currency as String),
+      phone_number: (l$phone_number as String?),
+      online_ordering: (l$online_ordering as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1185,6 +1205,10 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
   final String name;
 
   final String currency;
+
+  final String? phone_number;
+
+  final bool online_ordering;
 
   final String $__typename;
 
@@ -1202,6 +1226,10 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
     _resultData['name'] = l$name;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1215,6 +1243,8 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
     final l$image = image;
     final l$name = name;
     final l$currency = currency;
+    final l$phone_number = phone_number;
+    final l$online_ordering = online_ordering;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$last_active_time,
@@ -1223,6 +1253,8 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
       l$image,
       l$name,
       l$currency,
+      l$phone_number,
+      l$online_ordering,
       l$$__typename,
     ]);
   }
@@ -1267,6 +1299,16 @@ class Query$get_service_by_id$business_service_by_pk$business$details {
     if (l$currency != lOther$currency) {
       return false;
     }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -1307,6 +1349,8 @@ abstract class CopyWith$Query$get_service_by_id$business_service_by_pk$business$
     String? image,
     String? name,
     String? currency,
+    String? phone_number,
+    bool? online_ordering,
     String? $__typename,
   });
 }
@@ -1336,6 +1380,8 @@ class _CopyWithImpl$Query$get_service_by_id$business_service_by_pk$business$deta
     Object? image = _undefined,
     Object? name = _undefined,
     Object? currency = _undefined,
+    Object? phone_number = _undefined,
+    Object? online_ordering = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_service_by_id$business_service_by_pk$business$details(
@@ -1357,6 +1403,13 @@ class _CopyWithImpl$Query$get_service_by_id$business_service_by_pk$business$deta
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1380,6 +1433,8 @@ class _CopyWithStubImpl$Query$get_service_by_id$business_service_by_pk$business$
     String? image,
     String? name,
     String? currency,
+    String? phone_number,
+    bool? online_ordering,
     String? $__typename,
   }) =>
       _res;

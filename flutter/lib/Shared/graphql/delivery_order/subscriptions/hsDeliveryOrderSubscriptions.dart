@@ -338,9 +338,9 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
       return OrderCosts(
           deliveryCost: data.delivery_cost.toDouble(),
           refundAmmount: null,
-          changePriceRequest: (data.change_price_request != null)
-              ? ChangePriceRequest.fromMap(data.change_price_request)
-              : null,
+          // changePriceRequest: (data.change_price_request != null)
+          //     ? ChangePriceRequest.fromMap(data.change_price_request)
+          //     : null,
           tax: data.tax,
           orderItemsCost: data.package_cost_comp,
           totalCost: data.total_cost);

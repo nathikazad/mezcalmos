@@ -36640,6 +36640,7 @@ type service_provider_details {
   location: service_provider_location!
   location_id: Int!
   name: String!
+  online_ordering: Boolean!
   open_status: String!
   phone_number: String
   referral_points: Int!
@@ -36733,6 +36734,7 @@ input service_provider_details_bool_exp {
   location: service_provider_location_bool_exp
   location_id: Int_comparison_exp
   name: String_comparison_exp
+  online_ordering: Boolean_comparison_exp
   open_status: String_comparison_exp
   phone_number: String_comparison_exp
   referral_points: Int_comparison_exp
@@ -36852,6 +36854,7 @@ input service_provider_details_insert_input {
   location: service_provider_location_obj_rel_insert_input
   location_id: Int
   name: String
+  online_ordering: Boolean
   open_status: String
   phone_number: String
   referral_points: Int
@@ -36959,6 +36962,7 @@ input service_provider_details_order_by {
   location: service_provider_location_order_by
   location_id: order_by
   name: order_by
+  online_ordering: order_by
   open_status: order_by
   phone_number: order_by
   referral_points: order_by
@@ -37031,6 +37035,9 @@ enum service_provider_details_select_column {
   name
 
   """column name"""
+  online_ordering
+
+  """column name"""
   open_status
 
   """column name"""
@@ -37077,6 +37084,7 @@ input service_provider_details_set_input {
   last_active_time: timestamp
   location_id: Int
   name: String
+  online_ordering: Boolean
   open_status: String
   phone_number: String
   referral_points: Int
@@ -37146,6 +37154,7 @@ input service_provider_details_stream_cursor_value_input {
   last_active_time: timestamp
   location_id: Int
   name: String
+  online_ordering: Boolean
   open_status: String
   phone_number: String
   referral_points: Int
@@ -37209,6 +37218,9 @@ enum service_provider_details_update_column {
 
   """column name"""
   name
+
+  """column name"""
+  online_ordering
 
   """column name"""
   open_status
