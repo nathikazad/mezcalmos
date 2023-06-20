@@ -217,7 +217,7 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
         }
       }
     }
-      change_price_request
+      # change_price_request
       schedule_time
         customer {
       user {

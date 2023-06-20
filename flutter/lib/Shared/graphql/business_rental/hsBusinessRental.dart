@@ -116,6 +116,8 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
             ),
           ),
           business: BusinessCard(
+            phoneNo: data.business.details.phone_number,
+            onlineOrdering: data.business.details.online_ordering,
             lastActive: data.business.details.last_active_time != null
                 ? DateTime.parse(data.business.details.last_active_time!)
                 : null,
@@ -201,6 +203,8 @@ Future<HomeWithBusinessCard?> get_home_by_id(
             ),
           ),
           business: BusinessCard(
+            phoneNo: data.business!.details.phone_number,
+            onlineOrdering: data.business!.details.online_ordering,
             lastActive: data.business!.details.last_active_time != null
                 ? DateTime.parse(data.business!.details.last_active_time!)
                 : null,

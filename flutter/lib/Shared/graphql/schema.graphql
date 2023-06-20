@@ -13192,14 +13192,6 @@ type delivery_order {
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
 
-  """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
-  """
-  change_price_request(
-    """JSON select path"""
-    path: String
-  ): jsonb
-
   """An object relationship"""
   chat_with_customer: chat!
   chat_with_customer_id: Int!
@@ -13207,11 +13199,26 @@ type delivery_order {
   """An object relationship"""
   chat_with_service_provider: chat
   chat_with_service_provider_id: Int
+
+  """Array of delivery company ids"""
+  chosen_companies(
+    """JSON select path"""
+    path: String
+  ): jsonb
+
+  """
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
+  """
+  counter_offers(
+    """JSON select path"""
+    path: String
+  ): jsonb
   current_gps: geography
 
   """An object relationship"""
   customer: customer_customer!
   customer_id: Int!
+  customer_offer: money
 
   """An object relationship"""
   customer_review_by_driver: review
@@ -13262,6 +13269,14 @@ type delivery_order {
   A computed field, executes function "delivery_notification_token"
   """
   notification_token: String
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers(
+    """JSON select path"""
+    path: String
+  ): jsonb
   order_time: timestamptz!
   order_type: String!
   package_cost: money!
@@ -13281,7 +13296,7 @@ type delivery_order {
   """An object relationship"""
   restaurant_order: restaurant_order
   schedule_time: String
-  service_provider_id: Int!
+  service_provider_id: Int
 
   """An object relationship"""
   service_provider_review_by_driver: review
@@ -13386,10 +13401,18 @@ input delivery_order_aggregate_order_by {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input delivery_order_append_input {
+  """Array of delivery company ids"""
+  chosen_companies: jsonb
+
   """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
   """
-  change_price_request: jsonb
+  counter_offers: jsonb
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: jsonb
 }
 
 """
@@ -13407,6 +13430,7 @@ type delivery_order_avg_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -13447,6 +13471,7 @@ input delivery_order_avg_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -13477,14 +13502,16 @@ input delivery_order_bool_exp {
   actual_delivered_time: timestamptz_comparison_exp
   actual_package_ready_time: timestamptz_comparison_exp
   cancellation_time: timestamptz_comparison_exp
-  change_price_request: jsonb_comparison_exp
   chat_with_customer: chat_bool_exp
   chat_with_customer_id: Int_comparison_exp
   chat_with_service_provider: chat_bool_exp
   chat_with_service_provider_id: Int_comparison_exp
+  chosen_companies: jsonb_comparison_exp
+  counter_offers: jsonb_comparison_exp
   current_gps: geography_comparison_exp
   customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
+  customer_offer: money_comparison_exp
   customer_review_by_driver: review_bool_exp
   customer_review_by_driver_id: Int_comparison_exp
   delivery_company: delivery_company_bool_exp
@@ -13509,6 +13536,7 @@ input delivery_order_bool_exp {
   laundry_pickup_order: laundry_order_bool_exp
   lock_time: timestamp_comparison_exp
   notification_token: String_comparison_exp
+  notified_drivers: jsonb_comparison_exp
   order_time: timestamptz_comparison_exp
   order_type: String_comparison_exp
   package_cost: money_comparison_exp
@@ -13546,10 +13574,18 @@ enum delivery_order_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input delivery_order_delete_at_path_input {
+  """Array of delivery company ids"""
+  chosen_companies: [String!]
+
   """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
   """
-  change_price_request: [String!]
+  counter_offers: [String!]
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: [String!]
 }
 
 """
@@ -13557,20 +13593,36 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input delivery_order_delete_elem_input {
+  """Array of delivery company ids"""
+  chosen_companies: Int
+
   """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
   """
-  change_price_request: Int
+  counter_offers: Int
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: Int
 }
 
 """
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input delivery_order_delete_key_input {
+  """Array of delivery company ids"""
+  chosen_companies: String
+
   """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
   """
-  change_price_request: String
+  counter_offers: String
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: String
 }
 
 """
@@ -13580,6 +13632,7 @@ input delivery_order_inc_input {
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -13607,18 +13660,22 @@ input delivery_order_insert_input {
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
-
-  """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
-  """
-  change_price_request: jsonb
   chat_with_customer: chat_obj_rel_insert_input
   chat_with_customer_id: Int
   chat_with_service_provider: chat_obj_rel_insert_input
   chat_with_service_provider_id: Int
+
+  """Array of delivery company ids"""
+  chosen_companies: jsonb
+
+  """
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
+  """
+  counter_offers: jsonb
   current_gps: geography
   customer: customer_customer_obj_rel_insert_input
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver: review_obj_rel_insert_input
   customer_review_by_driver_id: Int
   delivery_company: delivery_company_obj_rel_insert_input
@@ -13643,6 +13700,11 @@ input delivery_order_insert_input {
   laundry_delivery_order: laundry_order_obj_rel_insert_input
   laundry_pickup_order: laundry_order_obj_rel_insert_input
   lock_time: timestamp
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: jsonb
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -13685,6 +13747,7 @@ type delivery_order_max_fields {
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -13759,6 +13822,7 @@ input delivery_order_max_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -13811,6 +13875,7 @@ type delivery_order_min_fields {
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -13885,6 +13950,7 @@ input delivery_order_min_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -13964,14 +14030,16 @@ input delivery_order_order_by {
   actual_delivered_time: order_by
   actual_package_ready_time: order_by
   cancellation_time: order_by
-  change_price_request: order_by
   chat_with_customer: chat_order_by
   chat_with_customer_id: order_by
   chat_with_service_provider: chat_order_by
   chat_with_service_provider_id: order_by
+  chosen_companies: order_by
+  counter_offers: order_by
   current_gps: order_by
   customer: customer_customer_order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver: review_order_by
   customer_review_by_driver_id: order_by
   delivery_company: delivery_company_order_by
@@ -13996,6 +14064,7 @@ input delivery_order_order_by {
   laundry_pickup_order: laundry_order_order_by
   lock_time: order_by
   notification_token: order_by
+  notified_drivers: order_by
   order_time: order_by
   order_type: order_by
   package_cost: order_by
@@ -14026,10 +14095,18 @@ input delivery_order_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input delivery_order_prepend_input {
+  """Array of delivery company ids"""
+  chosen_companies: jsonb
+
   """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
   """
-  change_price_request: jsonb
+  counter_offers: jsonb
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: jsonb
 }
 
 """
@@ -14300,19 +14377,25 @@ enum delivery_order_select_column {
   cancellation_time
 
   """column name"""
-  change_price_request
-
-  """column name"""
   chat_with_customer_id
 
   """column name"""
   chat_with_service_provider_id
 
   """column name"""
+  chosen_companies
+
+  """column name"""
+  counter_offers
+
+  """column name"""
   current_gps
 
   """column name"""
   customer_id
+
+  """column name"""
+  customer_offer
 
   """column name"""
   customer_review_by_driver_id
@@ -14355,6 +14438,9 @@ enum delivery_order_select_column {
 
   """column name"""
   lock_time
+
+  """column name"""
+  notified_drivers
 
   """column name"""
   order_time
@@ -14427,15 +14513,19 @@ input delivery_order_set_input {
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
-
-  """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
-  """
-  change_price_request: jsonb
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
+
+  """Array of delivery company ids"""
+  chosen_companies: jsonb
+
+  """
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
+  """
+  counter_offers: jsonb
   current_gps: geography
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -14452,6 +14542,11 @@ input delivery_order_set_input {
   estimated_package_ready_time: timestamptz
   id: Int
   lock_time: timestamp
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: jsonb
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -14486,6 +14581,7 @@ type delivery_order_stddev_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -14526,6 +14622,7 @@ input delivery_order_stddev_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -14549,6 +14646,7 @@ type delivery_order_stddev_pop_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -14589,6 +14687,7 @@ input delivery_order_stddev_pop_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -14612,6 +14711,7 @@ type delivery_order_stddev_samp_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -14652,6 +14752,7 @@ input delivery_order_stddev_samp_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -14688,15 +14789,19 @@ input delivery_order_stream_cursor_value_input {
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
-
-  """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
-  """
-  change_price_request: jsonb
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
+
+  """Array of delivery company ids"""
+  chosen_companies: jsonb
+
+  """
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
+  """
+  counter_offers: jsonb
   current_gps: geography
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -14713,6 +14818,11 @@ input delivery_order_stream_cursor_value_input {
   estimated_package_ready_time: timestamptz
   id: Int
   lock_time: timestamp
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: jsonb
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -14747,6 +14857,7 @@ type delivery_order_sum_fields {
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -14787,6 +14898,7 @@ input delivery_order_sum_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -14825,19 +14937,25 @@ enum delivery_order_update_column {
   cancellation_time
 
   """column name"""
-  change_price_request
-
-  """column name"""
   chat_with_customer_id
 
   """column name"""
   chat_with_service_provider_id
 
   """column name"""
+  chosen_companies
+
+  """column name"""
+  counter_offers
+
+  """column name"""
   current_gps
 
   """column name"""
   customer_id
+
+  """column name"""
+  customer_offer
 
   """column name"""
   customer_review_by_driver_id
@@ -14880,6 +14998,9 @@ enum delivery_order_update_column {
 
   """column name"""
   lock_time
+
+  """column name"""
+  notified_drivers
 
   """column name"""
   order_time
@@ -14965,6 +15086,7 @@ type delivery_order_var_pop_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -15005,6 +15127,7 @@ input delivery_order_var_pop_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -15028,6 +15151,7 @@ type delivery_order_var_samp_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -15068,6 +15192,7 @@ input delivery_order_var_samp_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -15091,6 +15216,7 @@ type delivery_order_variance_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -15131,6 +15257,7 @@ input delivery_order_variance_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -18173,42 +18300,6 @@ type laundry_store {
     where: delivery_details_bool_exp
   ): [delivery_details!]
 
-  """An array relationship"""
-  delivery_partners(
-    """distinct select on columns"""
-    distinct_on: [service_provider_delivery_partner_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [service_provider_delivery_partner_order_by!]
-
-    """filter the rows returned"""
-    where: service_provider_delivery_partner_bool_exp
-  ): [service_provider_delivery_partner!]!
-
-  """An aggregate relationship"""
-  delivery_partners_aggregate(
-    """distinct select on columns"""
-    distinct_on: [service_provider_delivery_partner_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [service_provider_delivery_partner_order_by!]
-
-    """filter the rows returned"""
-    where: service_provider_delivery_partner_bool_exp
-  ): service_provider_delivery_partner_aggregate!
-
   """An object relationship"""
   details: service_provider_details
   details_id: Int!
@@ -18340,8 +18431,6 @@ input laundry_store_bool_exp {
   delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
   delivery_details_of_deliverer: delivery_details_bool_exp
-  delivery_partners: service_provider_delivery_partner_bool_exp
-  delivery_partners_aggregate: service_provider_delivery_partner_aggregate_bool_exp
   details: service_provider_details_bool_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
@@ -18394,7 +18483,6 @@ input laundry_store_insert_input {
   categories: laundry_category_arr_rel_insert_input
   delivery_details: delivery_details_obj_rel_insert_input
   delivery_details_id: Int
-  delivery_partners: service_provider_delivery_partner_arr_rel_insert_input
   details: service_provider_details_obj_rel_insert_input
   details_id: Int
   id: Int
@@ -18467,7 +18555,6 @@ input laundry_store_order_by {
   delivery_details: delivery_details_order_by
   delivery_details_id: order_by
   delivery_details_of_deliverer_aggregate: delivery_details_aggregate_order_by
-  delivery_partners_aggregate: service_provider_delivery_partner_aggregate_order_by
   details: service_provider_details_order_by
   details_id: order_by
   id: order_by
@@ -35153,42 +35240,6 @@ type restaurant_restaurant {
     where: delivery_details_bool_exp
   ): [delivery_details!]
 
-  """An array relationship"""
-  delivery_partners(
-    """distinct select on columns"""
-    distinct_on: [service_provider_delivery_partner_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [service_provider_delivery_partner_order_by!]
-
-    """filter the rows returned"""
-    where: service_provider_delivery_partner_bool_exp
-  ): [service_provider_delivery_partner!]!
-
-  """An aggregate relationship"""
-  delivery_partners_aggregate(
-    """distinct select on columns"""
-    distinct_on: [service_provider_delivery_partner_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [service_provider_delivery_partner_order_by!]
-
-    """filter the rows returned"""
-    where: service_provider_delivery_partner_bool_exp
-  ): service_provider_delivery_partner_aggregate!
-
   """An object relationship"""
   details: service_provider_details
   details_id: Int!
@@ -35401,8 +35452,6 @@ input restaurant_restaurant_bool_exp {
   delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
   delivery_details_of_deliverer: delivery_details_bool_exp
-  delivery_partners: service_provider_delivery_partner_bool_exp
-  delivery_partners_aggregate: service_provider_delivery_partner_aggregate_bool_exp
   details: service_provider_details_bool_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
@@ -35454,7 +35503,6 @@ input restaurant_restaurant_insert_input {
   categories: restaurant_category_arr_rel_insert_input
   delivery_details: delivery_details_obj_rel_insert_input
   delivery_details_id: Int
-  delivery_partners: service_provider_delivery_partner_arr_rel_insert_input
   details: service_provider_details_obj_rel_insert_input
   details_id: Int
   id: Int
@@ -35517,7 +35565,6 @@ input restaurant_restaurant_order_by {
   delivery_details: delivery_details_order_by
   delivery_details_id: order_by
   delivery_details_of_deliverer_aggregate: delivery_details_aggregate_order_by
-  delivery_partners_aggregate: service_provider_delivery_partner_aggregate_order_by
   details: service_provider_details_order_by
   details_id: order_by
   id: order_by
@@ -36523,17 +36570,6 @@ type service_provider_delivery_partner_aggregate {
   nodes: [service_provider_delivery_partner!]!
 }
 
-input service_provider_delivery_partner_aggregate_bool_exp {
-  count: service_provider_delivery_partner_aggregate_bool_exp_count
-}
-
-input service_provider_delivery_partner_aggregate_bool_exp_count {
-  arguments: [service_provider_delivery_partner_select_column!]
-  distinct: Boolean
-  filter: service_provider_delivery_partner_bool_exp
-  predicate: Int_comparison_exp!
-}
-
 """
 aggregate fields of "service_provider.delivery_partner"
 """
@@ -36551,47 +36587,11 @@ type service_provider_delivery_partner_aggregate_fields {
   variance: service_provider_delivery_partner_variance_fields
 }
 
-"""
-order by aggregate values of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_aggregate_order_by {
-  avg: service_provider_delivery_partner_avg_order_by
-  count: order_by
-  max: service_provider_delivery_partner_max_order_by
-  min: service_provider_delivery_partner_min_order_by
-  stddev: service_provider_delivery_partner_stddev_order_by
-  stddev_pop: service_provider_delivery_partner_stddev_pop_order_by
-  stddev_samp: service_provider_delivery_partner_stddev_samp_order_by
-  sum: service_provider_delivery_partner_sum_order_by
-  var_pop: service_provider_delivery_partner_var_pop_order_by
-  var_samp: service_provider_delivery_partner_var_samp_order_by
-  variance: service_provider_delivery_partner_variance_order_by
-}
-
-"""
-input type for inserting array relation for remote table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_arr_rel_insert_input {
-  data: [service_provider_delivery_partner_insert_input!]!
-
-  """upsert condition"""
-  on_conflict: service_provider_delivery_partner_on_conflict
-}
-
 """aggregate avg on columns"""
 type service_provider_delivery_partner_avg_fields {
   delivery_company_id: Float
   id: Float
   service_provider_id: Float
-}
-
-"""
-order by avg() on columns of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_avg_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  service_provider_id: order_by
 }
 
 """
@@ -36654,32 +36654,12 @@ type service_provider_delivery_partner_max_fields {
   service_provider_type: String
 }
 
-"""
-order by max() on columns of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_max_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  service_provider_id: order_by
-  service_provider_type: order_by
-}
-
 """aggregate min on columns"""
 type service_provider_delivery_partner_min_fields {
   delivery_company_id: Int
   id: Int
   service_provider_id: Int
   service_provider_type: String
-}
-
-"""
-order by min() on columns of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_min_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  service_provider_id: order_by
-  service_provider_type: order_by
 }
 
 """
@@ -36753,15 +36733,6 @@ type service_provider_delivery_partner_stddev_fields {
   service_provider_id: Float
 }
 
-"""
-order by stddev() on columns of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_stddev_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  service_provider_id: order_by
-}
-
 """aggregate stddev_pop on columns"""
 type service_provider_delivery_partner_stddev_pop_fields {
   delivery_company_id: Float
@@ -36769,29 +36740,11 @@ type service_provider_delivery_partner_stddev_pop_fields {
   service_provider_id: Float
 }
 
-"""
-order by stddev_pop() on columns of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_stddev_pop_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  service_provider_id: order_by
-}
-
 """aggregate stddev_samp on columns"""
 type service_provider_delivery_partner_stddev_samp_fields {
   delivery_company_id: Float
   id: Float
   service_provider_id: Float
-}
-
-"""
-order by stddev_samp() on columns of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_stddev_samp_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  service_provider_id: order_by
 }
 
 """
@@ -36818,15 +36771,6 @@ type service_provider_delivery_partner_sum_fields {
   delivery_company_id: Int
   id: Int
   service_provider_id: Int
-}
-
-"""
-order by sum() on columns of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_sum_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  service_provider_id: order_by
 }
 
 """
@@ -36864,15 +36808,6 @@ type service_provider_delivery_partner_var_pop_fields {
   service_provider_id: Float
 }
 
-"""
-order by var_pop() on columns of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_var_pop_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  service_provider_id: order_by
-}
-
 """aggregate var_samp on columns"""
 type service_provider_delivery_partner_var_samp_fields {
   delivery_company_id: Float
@@ -36880,29 +36815,11 @@ type service_provider_delivery_partner_var_samp_fields {
   service_provider_id: Float
 }
 
-"""
-order by var_samp() on columns of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_var_samp_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  service_provider_id: order_by
-}
-
 """aggregate variance on columns"""
 type service_provider_delivery_partner_variance_fields {
   delivery_company_id: Float
   id: Float
   service_provider_id: Float
-}
-
-"""
-order by variance() on columns of table "service_provider.delivery_partner"
-"""
-input service_provider_delivery_partner_variance_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  service_provider_id: order_by
 }
 
 """
@@ -36949,6 +36866,7 @@ type service_provider_details {
   location: service_provider_location!
   location_id: Int!
   name: String!
+  online_ordering: Boolean!
   open_status: String!
   phone_number: String
   referral_points: Int!
@@ -36969,7 +36887,7 @@ type service_provider_details {
   """An object relationship"""
   stripe_info: service_provider_stripe_info
   time_zone: String
-  unique_id: String
+  unique_id: String!
 }
 
 """
@@ -37041,6 +36959,7 @@ input service_provider_details_bool_exp {
   location: service_provider_location_bool_exp
   location_id: Int_comparison_exp
   name: String_comparison_exp
+  online_ordering: Boolean_comparison_exp
   open_status: String_comparison_exp
   phone_number: String_comparison_exp
   referral_points: Int_comparison_exp
@@ -37083,6 +37002,11 @@ enum service_provider_details_constraint {
   unique or primary key constraint on columns "stripe_id"
   """
   details_stripe_id_key
+
+  """
+  unique or primary key constraint on columns "unique_id"
+  """
+  details_unique_id_key
 }
 
 """
@@ -37154,6 +37078,7 @@ input service_provider_details_insert_input {
   location: service_provider_location_obj_rel_insert_input
   location_id: Int
   name: String
+  online_ordering: Boolean
   open_status: String
   phone_number: String
   referral_points: Int
@@ -37260,6 +37185,7 @@ input service_provider_details_order_by {
   location: service_provider_location_order_by
   location_id: order_by
   name: order_by
+  online_ordering: order_by
   open_status: order_by
   phone_number: order_by
   referral_points: order_by
@@ -37329,6 +37255,9 @@ enum service_provider_details_select_column {
   name
 
   """column name"""
+  online_ordering
+
+  """column name"""
   open_status
 
   """column name"""
@@ -37374,6 +37303,7 @@ input service_provider_details_set_input {
   last_active_time: timestamp
   location_id: Int
   name: String
+  online_ordering: Boolean
   open_status: String
   phone_number: String
   referral_points: Int
@@ -37442,6 +37372,7 @@ input service_provider_details_stream_cursor_value_input {
   last_active_time: timestamp
   location_id: Int
   name: String
+  online_ordering: Boolean
   open_status: String
   phone_number: String
   referral_points: Int
@@ -37502,6 +37433,9 @@ enum service_provider_details_update_column {
 
   """column name"""
   name
+
+  """column name"""
+  online_ordering
 
   """column name"""
   open_status
