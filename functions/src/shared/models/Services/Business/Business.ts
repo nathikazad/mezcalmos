@@ -97,6 +97,9 @@ export enum HomeCategory1 {
   Condo = "condo",
   Bungalow = "bungalow",
   Hotel = "hotel",
+  Land = "land",
+  Hostel = "hostel",
+  Room = "room",
   Uncategorized = "uncategorized",
 }
 export enum EventCategory1 {

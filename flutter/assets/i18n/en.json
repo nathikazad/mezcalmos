@@ -96,6 +96,10 @@
         "reorder": "Reorder",
         "noServicesFound": "No service have yet been added",
         "bodyMessage": "By selecting \"Add Service\" you can add your first service and start building your business online.",
+        "noMoreThanFiveServices": "More than 5 services are not allowed",
+        "cantHaveMoreThanFive": "You can’t have more than 5 services.",
+        "toAddNewRemoveOld": "To add new service, you must first remove the old ones.",
+        "okay": "Okay",
         "event": {
           "event": "Event",
           "class": "Class",
@@ -495,7 +499,7 @@
         "title": "No open services",
         "desc": "There are no open services in your area. Please try again later.",
         "restaurant": "restaurants",
-        "deliveryCompany": "couriers",
+        "deliveryCompany": "Open Deliveries",
         "laundry": "laundries",
         "btn": "Show closed services"
       },
@@ -621,6 +625,12 @@
         "person": "person",
         "total": "total",
         "unit": "unit",
+        "perHour": "hour",
+        "perDay": "day",
+        "perWeek": "week",
+        "perMonth": "month",
+        "perPerson": "person",
+        "perUnit": "unit",
         "none": "none",
         "free": "FREE",
         "bedrooms": "Bedrooms",
@@ -631,6 +641,10 @@
         "bungalow": "Bungalow",
         "hotel": "Hotel",
         "to": "to",
+        "singleBed": "Single Bed",
+        "doubleBed": "Double Bed",
+        "dormRoom": "Dorm Room",
+        "suite": "Suite",
         "components": {
           "loading": "Loading",
           "schedule": "Schedule",
@@ -673,7 +687,7 @@
       "courrier": {
         "CustCourierServicesListView": {
           "title": "Delivery companies arround you",
-          "courier": "Courier",
+          "courier": "Open Delivery",
           "min": "Min",
           "showOnlyOpenCompanies": "Show only open companies",
           "search": "Search"
@@ -688,7 +702,7 @@
           "viewAll": "View All"
         },
         "CustRequestCourierView": {
-          "title": "Courier",
+          "title": "Open Delivery",
           "from": "From",
           "to": "To",
           "thisFieldCanBeEmpty": "This field can be empty",
@@ -795,7 +809,8 @@
           "orders": {
             "noOrders": "No orders yet",
             "noOrdersBody": "You have currently no orders.",
-            "onGoingOrders": "Ongoing orders"
+            "onGoingOrders": "Ongoing orders",
+            "onGoingOfferingOrders": "Ongoing offering orders"
           }
         }
       },
@@ -1813,7 +1828,7 @@
           "title": "Laundry"
         },
         "courier": {
-          "title": "Courier",
+          "title": "Open Delivery",
           "subtitle": "Obtain delivery of anything you desire to your location."
         },
         "comingSoon": "Coming soon ...",
@@ -3217,7 +3232,7 @@
         "title": "Delivery",
         "restaurant": "Restaurant",
         "laundry": "Laundry",
-        "courier": "Courier"
+        "courier": "Open Delivery"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {

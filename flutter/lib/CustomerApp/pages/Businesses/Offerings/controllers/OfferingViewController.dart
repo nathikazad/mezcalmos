@@ -309,6 +309,10 @@ class CustHomeRentalViewController {
   Rx<double> totalOrderCost = Rx(0);
   Rx<bool> isEditingMode = Rx<bool>(false);
   Rxn<int> _cartId = Rxn<int>();
+  Rx<bool> isMultipleRooms = Rx<bool>(false);
+  RxList<Map<String, dynamic>> additionalRooms = RxList();
+  Rxn<String> selectedRoom = Rxn<String>();
+  Rxn<Map<TimeUnit, num>> selectedRoomCostUnits = Rxn();
 
   // getters //
   HomeWithBusinessCard? get homeRental => _homeRental.value;
@@ -325,15 +329,21 @@ class CustHomeRentalViewController {
     Map<TimeUnit, num>? timeCost,
     int? duration,
     int? guestCount,
+    String? roomType,
   }) async {
     await fetchData(rentalId: rentalId);
-    if (startDate != null && duration != null && guestCount != null) {
+    if (cartId != null &&
+        startDate != null &&
+        duration != null &&
+        guestCount != null &&
+        roomType != null) {
       _startDate.value = startDate;
       _timeCost.value = timeCost;
       _duration.value = duration;
       _totalGuests.value = guestCount;
       isEditingMode.value = true;
       _cartId.value = cartId;
+      changeSelectedRoom(roomType);
     }
     _calcTotalOrderCost();
   }
@@ -343,7 +353,39 @@ class CustHomeRentalViewController {
       id: rentalId,
       withCache: true,
     );
+    final bool? multiRooms = (_homeRental
+            .value!.details.additionalParameters?["additionalRooms"] as List?)
+        ?.isNotEmpty;
+    if (multiRooms != null) {
+      selectedRoom.value =
+          _homeRental.value!.details.additionalParameters?["additionalRooms"]
+                  ?[0]["roomType"] as String? ??
+              "";
+      isMultipleRooms.value = multiRooms;
+      additionalRooms.value = _homeRental
+              .value!.details.additionalParameters?["additionalRooms"]
+              ?.map<Map<String, dynamic>>(
+            (dynamic e) {
+              return {
+                "roomType": e["roomType"],
+                "cost": constructBusinessServiceCost(e["cost"]),
+              };
+            },
+          )?.toList() as List<Map<String, dynamic>>? ??
+          [];
+      selectedRoomCostUnits.value = additionalRooms[0]["cost"];
+    }
     _setInitialTimeCost();
+    _calcTotalOrderCost();
+  }
+
+  void changeSelectedRoom(String value) {
+    selectedRoom.value = value;
+    final int index = _homeRental.value!.details.additionalParameters![
+            "additionalRooms"]!
+        .indexWhere((dynamic e) => e["roomType"] == value);
+    _timeCost.value = additionalRooms[index]["cost"];
+    selectedRoomCostUnits.value = additionalRooms[index]["cost"];
     _calcTotalOrderCost();
   }
 
@@ -390,6 +432,7 @@ class CustHomeRentalViewController {
             guests: _totalGuests.value,
             numberOfUnits: _duration.value,
             timeUnit: timeCost.value!.keys.first,
+            roomType: selectedRoom.value,
           ),
           cost: totalOrderCost.value,
           home: _homeRental.value,
@@ -406,6 +449,7 @@ class CustHomeRentalViewController {
             guests: _totalGuests.value,
             numberOfUnits: _duration.value,
             timeUnit: timeCost.value!.keys.first,
+            roomType: selectedRoom.value,
           ),
           cost: totalOrderCost.value,
           home: _homeRental.value,

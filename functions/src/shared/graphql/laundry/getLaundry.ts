@@ -40,6 +40,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
                 },
                 open_status: true,
                 accepted_payments: [{}, true],
+                phone_number: true,
                 approved: true,
                 creation_time: true,
                 language: [{}, true],
@@ -106,6 +107,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             return prev;
         }, {}),
         openStatus: response.laundry_store_by_pk.details.open_status as OpenStatus,
+        phoneNumber: response.laundry_store_by_pk.details.phone_number,
         stripeInfo: (response.laundry_store_by_pk.details.stripe_info) 
         ? {
             id: response.laundry_store_by_pk.details.stripe_info.stripe_id,

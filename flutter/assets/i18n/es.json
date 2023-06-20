@@ -98,6 +98,10 @@
         "events": "Eventos",
         "noServicesFound": "Todavía no se ha agregado ningún servicio",
         "bodyMessage": "Al seleccionar \"Agregar servicio\", puede agregar su primer servicio y comenzar a construir su negocio en línea.",
+        "noMoreThanFiveServices": "No se permiten más de 5 servicios",
+        "cantHaveMoreThanFive": "No puede tener más de 5 servicios.",
+        "toAddNewRemoveOld": "Para agregar un nuevo servicio, primero debe eliminar los viejos.",
+        "okay": "Bueno",
         "event": {
           "event": "Evento",
           "class": "Clase",
@@ -620,6 +624,12 @@
         "unit": "unidad",
         "none": "ninguna",
         "free": "GRATIS",
+        "perHour": "hora",
+        "perDay": "día",
+        "perWeek": "semana",
+        "perMonth": "mes",
+        "perPerson": "persona",
+        "perUnit": "unidad",
         "bedrooms": "Dormitorios",
         "bathrooms": "Baños",
         "apartment": "Departamento",
@@ -628,6 +638,10 @@
         "bungalow": "Bungalow",
         "hotel": "Hotel",
         "to": "a",
+        "singleBed": "Cama individual",
+        "doubleBed": "Cama matrimonial",
+        "dormRoom": "Dormitorio",
+        "suite": "Suite",
         "components": {
           "loading": "Cargando",
           "schedule": "Horario",
@@ -670,7 +684,7 @@
       "courrier": {
         "CustCourierServicesListView": {
           "title": "Empresas de entrega a su alrededor",
-          "courier": "Mensajera",
+          "courier": "Entrega abierta",
           "min": "Min",
           "showOnlyOpenCompanies": "Mostrar solo compañías abiertas",
           "search": "Buscar"
@@ -685,7 +699,7 @@
           "viewAll": "Ver todo"
         },
         "CustRequestCourierView": {
-          "title": "Mandaditos",
+          "title": "Entrega abierta",
           "from": "De",
           "to": "A",
           "thisFieldCanBeEmpty": "Este campo puede estar vacío",
@@ -793,7 +807,8 @@
           "orders": {
             "noOrders": "Sin pedidos todavía",
             "noOrdersBody": "Actualmente no tienes pedidos.",
-            "onGoingOrders": "Órdenes actuales"
+            "onGoingOrders": "Órdenes actuales",
+            "onGoingOfferingOrders": "Órdenes de oferta continuas"
           }
         }
       },
@@ -1879,7 +1894,7 @@
           "subtitle": "Haz que tu lavandería más cercana lave tu ropa"
         },
         "courier": {
-          "title": "Mandaditos",
+          "title": "Entrega abierta",
           "subtitle": "Obtenga la entrega de todo lo que desee a su ubicación."
         },
         "comingSoon": "Próximamente...",
@@ -3412,7 +3427,7 @@
         "title": "Entrega",
         "restaurant": "Restaurante",
         "laundry": "Lavadero",
-        "courier": "Mandaditos"
+        "courier": "Entrega abierta"
       }
     },
     "notificationHandler": {
