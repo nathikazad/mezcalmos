@@ -2114,8 +2114,9 @@ class BusinessItemParameters {
   String? previoustime;
   num? numberOfUnits;
   num? guests;
+  String? roomType;
   BusinessItemParameters({
-    this.previousCost, this.timeUnit, this.previoustime, this.numberOfUnits, this.guests});
+    this.previousCost, this.timeUnit, this.previoustime, this.numberOfUnits, this.guests, this.roomType});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "previousCost": previousCost,
@@ -2123,6 +2124,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "previoustime": previoustime,
       "numberOfUnits": numberOfUnits,
       "guests": guests,
+      "roomType": roomType,
     };
   }
 

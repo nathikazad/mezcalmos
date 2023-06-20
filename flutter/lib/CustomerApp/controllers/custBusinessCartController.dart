@@ -249,6 +249,7 @@ class CustBusinessCartController extends GetxController {
           duration: item.parameters.numberOfUnits!.toInt(),
           guestCount: item.parameters.guests!.toInt(),
           startDate: DateTime.parse(item.time!),
+          roomType: item.parameters.roomType,
         );
         return;
       case OfferingType.Rental:
