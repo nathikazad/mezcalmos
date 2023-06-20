@@ -22,9 +22,6 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
                 free_delivery_minimum_cost: true,
                 free_delivery_km_range: true,
             },
-            delivery_partners: [{}, {
-                delivery_company_id: true
-            }],
             details: {
                 name: true,
                 image: true,
@@ -135,9 +132,6 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             selfDelivery: response.laundry_store_by_pk.delivery_details.self_delivery
         },
         operators: laundryOperators,
-        deliveryPartnerId: response.laundry_store_by_pk.delivery_partners[0] 
-            ? response.laundry_store_by_pk.delivery_partners[0].delivery_company_id
-            : undefined,
         serviceProviderType: ServiceProviderType.Laundry
     }
 }

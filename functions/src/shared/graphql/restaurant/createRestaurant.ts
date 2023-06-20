@@ -61,11 +61,6 @@ export async function createRestaurant(
             }
           }
         },
-        delivery_partners: (restaurantDetails.deliveryPartnerId) ? {
-          data: [{
-            delivery_company_id: restaurantDetails.deliveryPartnerId
-          }]
-        }: undefined,
         restaurant_operators: {
           data: [{
             user_id: restaurantOperatorUserId,
@@ -184,7 +179,6 @@ export async function createRestaurant(
     image: restaurantDetails.image,
     location: restaurantDetails.location,
     schedule: restaurantDetails.schedule,
-    deliveryPartnerId: restaurantDetails.deliveryPartnerId,
     deliveryDetails: restaurantDetails.deliveryDetails,
     language: restaurantDetails.language,
     firebaseId: restaurantDetails.firebaseId,

@@ -30,11 +30,6 @@ export async function createLaundryStore(
                     free_delivery_minimum_cost: laundryDetails.deliveryDetails.freeDeliveryMinimumCost,
                     free_delivery_km_range: laundryDetails.deliveryDetails.freeDeliveryKmRange
                 }},
-                delivery_partners: (laundryDetails.deliveryPartnerId) ? {
-                    data: [{
-                        delivery_company_id: laundryDetails.deliveryPartnerId
-                    }]
-                }: undefined,
                 details: {
                     data: {
                         name: laundryDetails.name,
@@ -117,7 +112,6 @@ export async function createLaundryStore(
         image: laundryDetails.image,
         location: laundryDetails.location,
         schedule: laundryDetails.schedule,
-        deliveryPartnerId: laundryDetails.deliveryPartnerId,
         deliveryDetails: laundryDetails.deliveryDetails,
         language: laundryDetails.language,
         firebaseId: laundryDetails.firebaseId,
