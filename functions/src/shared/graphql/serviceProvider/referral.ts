@@ -1,7 +1,7 @@
-import { AddReferralError } from "../../serviceProvider/addReferral";
-import { getHasura } from "../../utilities/hasura";
-import { MezError } from "../models/Generic/Generic";
-import { ServiceProviderType } from "../models/Services/Service";
+import { AddReferralError } from "../../../serviceProvider/addReferral";
+import { getHasura } from "../../../utilities/hasura";
+import { MezError } from "../../models/Generic/Generic";
+import { ServiceProviderType } from "../../models/Services/Service";
 
 
 export async function addReferral(customerId: number, uniqueId: string) {
