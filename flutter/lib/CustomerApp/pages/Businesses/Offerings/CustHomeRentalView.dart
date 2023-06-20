@@ -36,6 +36,7 @@ class CustHomeRentalView extends StatefulWidget {
     Map<TimeUnit, num>? timeCost,
     int? duration,
     int? guestCount,
+    String? roomType,
   }) async {
     final String route =
         CustBusinessRoutes.custHomeRentalRoute.replaceFirst(":id", "$rentalId");
@@ -45,6 +46,7 @@ class CustHomeRentalView extends StatefulWidget {
       "guestCount": guestCount,
       "duration": duration,
       "cartId": cartId,
+      "roomType": roomType,
     });
   }
 
@@ -66,6 +68,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
     final int? guestCount = MezRouter.bodyArguments!["guestCount"] as int?;
     final int? duration = MezRouter.bodyArguments!["duration"] as int?;
     final int? cartId = MezRouter.bodyArguments!["cartId"] as int?;
+    final String? roomType = MezRouter.bodyArguments!["roomType"] as String?;
 
     if (rentalId != null) {
       viewController.init(
@@ -75,6 +78,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
         duration: duration,
         guestCount: guestCount,
         cartId: cartId,
+        roomType: roomType,
       );
       // viewController.fetchData(rentalId: rentalId!);
     } else {
@@ -277,9 +281,9 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     ],
                   ),
                 ),
-                Radio<int>(
+                Radio<String>(
                   activeColor: primaryBlueColor,
-                  value: index,
+                  value: roomType,
                   groupValue: viewController.selectedRoom.value,
                   onChanged: (value) {
                     mezDbgPrint("RADIO Value: $value");

@@ -98,6 +98,10 @@
         "events": "Eventos",
         "noServicesFound": "Todavía no se ha agregado ningún servicio",
         "bodyMessage": "Al seleccionar \"Agregar servicio\", puede agregar su primer servicio y comenzar a construir su negocio en línea.",
+        "noMoreThanFiveServices": "No se permiten más de 5 servicios",
+        "cantHaveMoreThanFive": "No puede tener más de 5 servicios.",
+        "toAddNewRemoveOld": "Para agregar un nuevo servicio, primero debe eliminar los viejos.",
+        "okay": "Bueno",
         "event": {
           "event": "Evento",
           "class": "Clase",
@@ -680,7 +684,7 @@
       "courrier": {
         "CustCourierServicesListView": {
           "title": "Empresas de entrega a su alrededor",
-          "courier": "Mensajera",
+          "courier": "Entrega abierta",
           "min": "Min",
           "showOnlyOpenCompanies": "Mostrar solo compañías abiertas",
           "search": "Buscar"
@@ -695,7 +699,7 @@
           "viewAll": "Ver todo"
         },
         "CustRequestCourierView": {
-          "title": "Mandaditos",
+          "title": "Entrega abierta",
           "from": "De",
           "to": "A",
           "thisFieldCanBeEmpty": "Este campo puede estar vacío",
@@ -803,7 +807,8 @@
           "orders": {
             "noOrders": "Sin pedidos todavía",
             "noOrdersBody": "Actualmente no tienes pedidos.",
-            "onGoingOrders": "Órdenes actuales"
+            "onGoingOrders": "Órdenes actuales",
+            "onGoingOfferingOrders": "Órdenes de oferta continuas"
           }
         }
       },
@@ -1889,7 +1894,7 @@
           "subtitle": "Haz que tu lavandería más cercana lave tu ropa"
         },
         "courier": {
-          "title": "Mandaditos",
+          "title": "Entrega abierta",
           "subtitle": "Obtenga la entrega de todo lo que desee a su ubicación."
         },
         "comingSoon": "Próximamente...",
@@ -2247,8 +2252,11 @@
         "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación."
       },
       "CreateServiceView": {
+
         "pages": {
           "createServiceStartPage": {
+            "opNote" : "Si desea que lo agregue como operador a un negocio existente, solicite al propietario del negocio que le envíe código de invitación",
+
             "create": "Crear",
             "subtitle": {
               "restaurant": "Cree un nuevo restaurante y reciba pedidos de sus clientes locales..",
@@ -3419,7 +3427,7 @@
         "title": "Entrega",
         "restaurant": "Restaurante",
         "laundry": "Lavadero",
-        "courier": "Mandaditos"
+        "courier": "Entrega abierta"
       }
     },
     "notificationHandler": {
@@ -4071,6 +4079,7 @@
     "minutes": "minutos",
     "slowInternet": "Internet lento",
     "noInternet": "Sin conexión a Internet",
-    "min": "min"
+    "min": "min",
+    "addingOp" : "Agregarlo como operador"
   }
 }

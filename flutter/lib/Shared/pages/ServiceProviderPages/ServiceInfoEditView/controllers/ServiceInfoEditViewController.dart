@@ -20,6 +20,7 @@ class ServiceInfoEditViewController {
   // TEXT INPUTS //
   TextEditingController serviceNameTxt = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
+  TextEditingController prefixTextFieldController = TextEditingController();
   TextEditingController primaryServiceDesc = TextEditingController();
   TextEditingController secondayServiceDesc = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -52,6 +53,7 @@ class ServiceInfoEditViewController {
     required int serviceId,
     required ServiceProviderType serviceProvidertype,
   }) async {
+    prefixTextFieldController.text = '+52';
     serviceType = serviceProvidertype;
     detailsId = serviceDetailsId;
     this.serviceId = serviceId;
@@ -72,6 +74,9 @@ class ServiceInfoEditViewController {
       mezDbgPrint("Description id ========>>>${service.value?.description}");
       serviceNameTxt.text = service.value?.name ?? '';
       phoneNumber.text = service.value?.phoneNumber ?? '';
+
+      // phoneNumber.text = service.value?.phoneNumber ?? '';
+      // prefixTextFieldController.text = service.value?.countryCode ?? '';
 
       newLocation.value = service.value!.location;
       newImageUrl.value = service.value?.image;

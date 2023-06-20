@@ -39,6 +39,7 @@ export interface BusinessItemParameters {
     previoustime?: string;
     numberOfUnits?: number;
     guests?: number;
+    roomType?: string;
 }
 export enum BusinessOrderRequestStatus {
     RequestReceived = "requestReceived",

@@ -55,6 +55,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
               numberOfUnits: data.parameters?["numberOfUnits"],
               previousCost: data.parameters?["previousCost"],
               previoustime: data.parameters?["previoustime"],
+              roomType: data.parameters?["roomType"],
               timeUnit:
                   data.parameters?["timeUnit"]?.toString().toTimeUnit() ?? null,
             ),
@@ -327,6 +328,9 @@ extension HasuraBusinessOrderItem on BusinessCartItem {
         guests: parameters.guests,
         timeUnit: parameters.timeUnit,
         numberOfUnits: parameters.numberOfUnits,
+        roomType: parameters.roomType,
+        previousCost: parameters.previousCost,
+        previoustime: parameters.previoustime,
       ).toFirebaseFormattedJson(),
     );
   }
@@ -509,6 +513,7 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                               guests: data.parameters?["guests"],
                               numberOfUnits: data.parameters?["numberOfUnits"],
                               previousCost: data.parameters?["previousCost"],
+                              roomType: data.parameters?["roomType"],
                               previoustime: data.parameters?["previoustime"],
                               timeUnit: data.parameters?["timeUnit"]
                                       ?.toString()
@@ -567,7 +572,11 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                             data.home!.business!.details.id,
                                         available:
                                             data.home!.details!.available,
-                                        image: data.home!.details!.image,
+                                        image: data.home!.details!.image
+                                                ?.map<String>(
+                                                    (e) => e.toString())
+                                                .toList() ??
+                                            [],
                                       ),
                                     ),
                                   )

@@ -5,10 +5,14 @@ import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/CartItemImage.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
 
 class HomeCartItemCard extends StatelessWidget {
   const HomeCartItemCard({
@@ -85,6 +89,13 @@ class HomeCartItemCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
+                              if (item.parameters.roomType != null)
+                                Text(
+                                  "${_i18n()[item.parameters.roomType]}",
+                                  style: context.textTheme.bodyMedium,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
                               Row(
                                 children: [
                                   if (item.parameters.guests != null)

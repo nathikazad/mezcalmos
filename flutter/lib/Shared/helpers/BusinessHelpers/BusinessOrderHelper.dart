@@ -29,6 +29,10 @@ extension BusinessOrderRequestStatusExtensions on BusinessOrderRequestStatus {
   bool get isCancelled =>
       this == BusinessOrderRequestStatus.CancelledByBusiness ||
       this == BusinessOrderRequestStatus.CancelledByCustomer;
+  bool get isPending => this == BusinessOrderRequestStatus.RequestReceived;
+  bool get isPast =>
+      this == BusinessOrderRequestStatus.Completed ||
+      this == BusinessOrderRequestStatus.Confirmed;
   String toReadableString() {
     switch (this) {
       case BusinessOrderRequestStatus.RequestReceived:

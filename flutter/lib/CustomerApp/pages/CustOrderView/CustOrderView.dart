@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/EventCartItemCard.dart';
@@ -58,11 +59,12 @@ class _CustOrderViewState extends State<CustOrderView> {
                 BusinessOrderRequestStatus.Confirmed ||
             custBusinessCartController.currentOrderInView.value!.status ==
                 BusinessOrderRequestStatus.Completed) {
-          return MezButton(
-            label: "Write a review",
-            withGradient: true,
-            borderRadius: 0,
-            onClick: () async {},
+          return CustAddReviewButton(
+            orderId: custBusinessCartController.currentOrderInView.value!.id!,
+            toEntityId: custBusinessCartController
+                .currentOrderInView.value!.businessId!
+                .toInt(),
+            toEntityType: ServiceProviderType.Business,
           );
         } else {
           return SizedBox.shrink();
@@ -125,6 +127,7 @@ class _CustOrderViewState extends State<CustOrderView> {
                                   index: index,
                                   item: item,
                                   controller: custBusinessCartController,
+                                  isEditable: false,
                                 );
                               case OfferingType.Rental:
                                 return RentalCartItemCard(
