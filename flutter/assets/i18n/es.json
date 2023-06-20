@@ -2237,8 +2237,11 @@
         "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación."
       },
       "CreateServiceView": {
+
         "pages": {
           "createServiceStartPage": {
+            "opNote" : "Si desea que lo agregue como operador a un negocio existente, solicite al propietario del negocio que le envíe código de invitación",
+
             "create": "Crear",
             "subtitle": {
               "restaurant": "Cree un nuevo restaurante y reciba pedidos de sus clientes locales..",
@@ -4061,6 +4064,7 @@
     "minutes": "minutos",
     "slowInternet": "Internet lento",
     "noInternet": "Sin conexión a Internet",
-    "min": "min"
+    "min": "min",
+    "addingOp" : "Agregarlo como operador"
   }
 }

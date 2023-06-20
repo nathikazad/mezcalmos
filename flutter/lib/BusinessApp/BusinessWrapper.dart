@@ -45,6 +45,7 @@ class _BusinessWrapperState extends State<BusinessWrapper> {
     Future.microtask(() async {
       await DeepLinkHandler.startDynamicLinkCheckRoutine(
           BusinessOpDeepLinkHandler.handleDeeplink);
+
       businessOpAuthController
           .setupBusinessOperator()
           .whenComplete(() => handleState());
