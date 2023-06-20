@@ -809,7 +809,8 @@
           "orders": {
             "noOrders": "No orders yet",
             "noOrdersBody": "You have currently no orders.",
-            "onGoingOrders": "Ongoing orders"
+            "onGoingOrders": "Ongoing orders",
+            "onGoingOfferingOrders": "Ongoing offering orders"
           }
         }
       },

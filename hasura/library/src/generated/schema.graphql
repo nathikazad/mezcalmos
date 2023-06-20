@@ -677,6 +677,11 @@ type business_cart_aggregate_fields {
 """aggregate avg on columns"""
 type business_cart_avg_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1262,6 +1267,11 @@ input business_cart_item_variance_order_by {
 """aggregate max on columns"""
 type business_cart_max_fields {
   business_id: Int
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Int
   discount_value: money
 }
@@ -1269,6 +1279,11 @@ type business_cart_max_fields {
 """aggregate min on columns"""
 type business_cart_min_fields {
   business_id: Int
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Int
   discount_value: money
 }
@@ -1333,6 +1348,11 @@ input business_cart_set_input {
 """aggregate stddev on columns"""
 type business_cart_stddev_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1340,6 +1360,11 @@ type business_cart_stddev_fields {
 """aggregate stddev_pop on columns"""
 type business_cart_stddev_pop_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1347,6 +1372,11 @@ type business_cart_stddev_pop_fields {
 """aggregate stddev_samp on columns"""
 type business_cart_stddev_samp_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1372,6 +1402,11 @@ input business_cart_stream_cursor_value_input {
 """aggregate sum on columns"""
 type business_cart_sum_fields {
   business_id: Int
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Int
   discount_value: money
 }
@@ -1404,6 +1439,11 @@ input business_cart_updates {
 """aggregate var_pop on columns"""
 type business_cart_var_pop_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1411,6 +1451,11 @@ type business_cart_var_pop_fields {
 """aggregate var_samp on columns"""
 type business_cart_var_samp_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1418,6 +1463,11 @@ type business_cart_var_samp_fields {
 """aggregate variance on columns"""
 type business_cart_variance_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -3790,6 +3840,11 @@ type business_order_request_aggregate_fields {
 type business_order_request_avg_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   id: Float
   review_id: Float
@@ -4455,6 +4510,11 @@ type business_order_request_max_fields {
   business_id: Int
   cancellation_time: timestamptz
   chat_id: Int
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_app_type: String
   customer_id: Int
   id: Int
@@ -4469,6 +4529,11 @@ type business_order_request_min_fields {
   business_id: Int
   cancellation_time: timestamptz
   chat_id: Int
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_app_type: String
   customer_id: Int
   id: Int
@@ -4587,6 +4652,11 @@ input business_order_request_set_input {
 type business_order_request_stddev_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   id: Float
   review_id: Float
@@ -4596,6 +4666,11 @@ type business_order_request_stddev_fields {
 type business_order_request_stddev_pop_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   id: Float
   review_id: Float
@@ -4605,6 +4680,11 @@ type business_order_request_stddev_pop_fields {
 type business_order_request_stddev_samp_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   id: Float
   review_id: Float
@@ -4639,6 +4719,11 @@ input business_order_request_stream_cursor_value_input {
 type business_order_request_sum_fields {
   business_id: Int
   chat_id: Int
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Int
   id: Int
   review_id: Int
@@ -4694,6 +4779,11 @@ input business_order_request_updates {
 type business_order_request_var_pop_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   id: Float
   review_id: Float
@@ -4703,6 +4793,11 @@ type business_order_request_var_pop_fields {
 type business_order_request_var_samp_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   id: Float
   review_id: Float
@@ -4712,6 +4807,11 @@ type business_order_request_var_samp_fields {
 type business_order_request_variance_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   id: Float
   review_id: Float
@@ -10296,6 +10396,10 @@ input delivery_courier_order_append_input {
 
 """aggregate avg on columns"""
 type delivery_courier_order_avg_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -10303,6 +10407,11 @@ type delivery_courier_order_avg_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -10944,6 +11053,10 @@ input delivery_courier_order_item_variance_order_by {
 
 """aggregate max on columns"""
 type delivery_courier_order_max_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
@@ -10958,10 +11071,19 @@ type delivery_courier_order_max_fields {
   stripe_fees: money
   tax: money
   to_location_address: String
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate min on columns"""
 type delivery_courier_order_min_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
@@ -10976,6 +11098,11 @@ type delivery_courier_order_min_fields {
   stripe_fees: money
   tax: money
   to_location_address: String
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -11137,6 +11264,10 @@ input delivery_courier_order_set_input {
 
 """aggregate stddev on columns"""
 type delivery_courier_order_stddev_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11144,10 +11275,19 @@ type delivery_courier_order_stddev_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate stddev_pop on columns"""
 type delivery_courier_order_stddev_pop_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11155,10 +11295,19 @@ type delivery_courier_order_stddev_pop_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate stddev_samp on columns"""
 type delivery_courier_order_stddev_samp_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11166,6 +11315,11 @@ type delivery_courier_order_stddev_samp_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -11209,6 +11363,10 @@ input delivery_courier_order_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type delivery_courier_order_sum_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Int
   delivery_order_id: Int
   discount_value: money
@@ -11216,6 +11374,11 @@ type delivery_courier_order_sum_fields {
   refund_amount: money
   stripe_fees: money
   tax: money
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -11309,6 +11472,10 @@ input delivery_courier_order_updates {
 
 """aggregate var_pop on columns"""
 type delivery_courier_order_var_pop_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11316,10 +11483,19 @@ type delivery_courier_order_var_pop_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate var_samp on columns"""
 type delivery_courier_order_var_samp_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11327,10 +11503,19 @@ type delivery_courier_order_var_samp_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate variance on columns"""
 type delivery_courier_order_variance_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11338,6 +11523,11 @@ type delivery_courier_order_variance_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -13225,8 +13415,23 @@ type delivery_order_avg_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -13495,9 +13700,19 @@ type delivery_order_max_fields {
   estimated_package_ready_time: timestamptz
   id: Int
   lock_time: timestamp
+
+  """
+  A computed field, executes function "delivery_notification_token"
+  """
+  notification_token: String
   order_time: timestamptz
   order_type: String
   package_cost: money
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   payment_type: String
   pickup_address: String
   schedule_time: String
@@ -13513,6 +13728,16 @@ type delivery_order_max_fields {
   cancelledByServiceProvider
   """
   status: String
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Int
@@ -13601,9 +13826,19 @@ type delivery_order_min_fields {
   estimated_package_ready_time: timestamptz
   id: Int
   lock_time: timestamp
+
+  """
+  A computed field, executes function "delivery_notification_token"
+  """
+  notification_token: String
   order_time: timestamptz
   order_type: String
   package_cost: money
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   payment_type: String
   pickup_address: String
   schedule_time: String
@@ -13619,6 +13854,16 @@ type delivery_order_min_fields {
   cancelledByServiceProvider
   """
   status: String
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Int
@@ -14249,8 +14494,23 @@ type delivery_order_stddev_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -14297,8 +14557,23 @@ type delivery_order_stddev_pop_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -14345,8 +14620,23 @@ type delivery_order_stddev_samp_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -14465,8 +14755,23 @@ type delivery_order_sum_fields {
   driver_review_by_service_provider_id: Int
   id: Int
   package_cost: money
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Int
@@ -14668,8 +14973,23 @@ type delivery_order_var_pop_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -14716,8 +15036,23 @@ type delivery_order_var_samp_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -14764,8 +15099,23 @@ type delivery_order_variance_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -16439,12 +16789,22 @@ type laundry_order_avg_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -17154,6 +17514,11 @@ type laundry_order_max_fields {
   firebase_id: String
   from_customer_delivery_id: Int
   id: Int
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz
   payment_type: String
@@ -17165,6 +17530,11 @@ type laundry_order_max_fields {
   stripe_fees: money
   tax: money
   to_customer_delivery_id: Int
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate min on columns"""
@@ -17182,6 +17552,11 @@ type laundry_order_min_fields {
   firebase_id: String
   from_customer_delivery_id: Int
   id: Int
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz
   payment_type: String
@@ -17193,6 +17568,11 @@ type laundry_order_min_fields {
   stripe_fees: money
   tax: money
   to_customer_delivery_id: Int
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -17398,12 +17778,22 @@ type laundry_order_stddev_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate stddev_pop on columns"""
@@ -17414,12 +17804,22 @@ type laundry_order_stddev_pop_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate stddev_samp on columns"""
@@ -17430,12 +17830,22 @@ type laundry_order_stddev_samp_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -17487,12 +17897,22 @@ type laundry_order_sum_fields {
   discount_value: money
   from_customer_delivery_id: Int
   id: Int
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: money
   review_id: Int
   store_id: Int
   stripe_fees: money
   tax: money
   to_customer_delivery_id: Int
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -17619,12 +18039,22 @@ type laundry_order_var_pop_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate var_samp on columns"""
@@ -17635,12 +18065,22 @@ type laundry_order_var_samp_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate variance on columns"""
@@ -17651,12 +18091,22 @@ type laundry_order_variance_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -28128,6 +28578,10 @@ type restaurant_cart_aggregate_fields {
 
 """aggregate avg on columns"""
 type restaurant_cart_avg_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   restaurant_id: Float
 }
@@ -28666,12 +29120,20 @@ input restaurant_cart_item_variance_order_by {
 
 """aggregate max on columns"""
 type restaurant_cart_max_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Int
   restaurant_id: Int
 }
 
 """aggregate min on columns"""
 type restaurant_cart_min_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Int
   restaurant_id: Int
 }
@@ -28742,18 +29204,30 @@ input restaurant_cart_set_input {
 
 """aggregate stddev on columns"""
 type restaurant_cart_stddev_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   restaurant_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type restaurant_cart_stddev_pop_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   restaurant_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type restaurant_cart_stddev_samp_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   restaurant_id: Float
 }
@@ -28777,6 +29251,10 @@ input restaurant_cart_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type restaurant_cart_sum_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Int
   restaurant_id: Int
 }
@@ -28805,18 +29283,30 @@ input restaurant_cart_updates {
 
 """aggregate var_pop on columns"""
 type restaurant_cart_var_pop_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   restaurant_id: Float
 }
 
 """aggregate var_samp on columns"""
 type restaurant_cart_var_samp_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   restaurant_id: Float
 }
 
 """aggregate variance on columns"""
 type restaurant_cart_variance_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   restaurant_id: Float
 }
@@ -32765,11 +33255,21 @@ type restaurant_order_avg_fields {
   delivery_cost: Float
   delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -33521,6 +34021,11 @@ type restaurant_order_max_fields {
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz
   payment_type: String
@@ -33536,6 +34041,11 @@ type restaurant_order_max_fields {
   stripe_fees: money
   tax: money
   to_location_address: String
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -33583,6 +34093,11 @@ type restaurant_order_min_fields {
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz
   payment_type: String
@@ -33598,6 +34113,11 @@ type restaurant_order_min_fields {
   stripe_fees: money
   tax: money
   to_location_address: String
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -34128,11 +34648,21 @@ type restaurant_order_stddev_fields {
   delivery_cost: Float
   delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -34158,11 +34688,21 @@ type restaurant_order_stddev_pop_fields {
   delivery_cost: Float
   delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -34188,11 +34728,21 @@ type restaurant_order_stddev_samp_fields {
   delivery_cost: Float
   delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -34268,11 +34818,21 @@ type restaurant_order_sum_fields {
   delivery_cost: money
   delivery_id: Int
   id: Int
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: money
   restaurant_id: Int
   review_id: Int
   stripe_fees: money
   tax: money
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -34408,11 +34968,21 @@ type restaurant_order_var_pop_fields {
   delivery_cost: Float
   delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -34438,11 +35008,21 @@ type restaurant_order_var_samp_fields {
   delivery_cost: Float
   delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -34468,11 +35048,21 @@ type restaurant_order_variance_fields {
   delivery_cost: Float
   delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -35247,11 +35837,31 @@ type review_max_fields {
   created_at: timestamptz
   from_entity_id: Int
   from_entity_type: String
+
+  """
+  A computed field, executes function "fromimage"
+  """
+  from_image: String
+
+  """
+  A computed field, executes function "fromname"
+  """
+  from_name: String
   id: Int
   note: String
   rating: Int
   to_entity_id: Int
   to_entity_type: String
+
+  """
+  A computed field, executes function "toimage"
+  """
+  to_image: String
+
+  """
+  A computed field, executes function "toname"
+  """
+  to_name: String
 }
 
 """
@@ -35273,11 +35883,31 @@ type review_min_fields {
   created_at: timestamptz
   from_entity_id: Int
   from_entity_type: String
+
+  """
+  A computed field, executes function "fromimage"
+  """
+  from_image: String
+
+  """
+  A computed field, executes function "fromname"
+  """
+  from_name: String
   id: Int
   note: String
   rating: Int
   to_entity_id: Int
   to_entity_type: String
+
+  """
+  A computed field, executes function "toimage"
+  """
+  to_image: String
+
+  """
+  A computed field, executes function "toname"
+  """
+  to_name: String
 }
 
 """

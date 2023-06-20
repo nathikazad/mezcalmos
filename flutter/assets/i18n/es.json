@@ -807,7 +807,8 @@
           "orders": {
             "noOrders": "Sin pedidos todavía",
             "noOrdersBody": "Actualmente no tienes pedidos.",
-            "onGoingOrders": "Órdenes actuales"
+            "onGoingOrders": "Órdenes actuales",
+            "onGoingOfferingOrders": "Órdenes de oferta continuas"
           }
         }
       },

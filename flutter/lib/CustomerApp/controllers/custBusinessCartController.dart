@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
 
 class CustBusinessCartController extends GetxController {
 // instances //
@@ -27,6 +28,18 @@ class CustBusinessCartController extends GetxController {
   Rxn<int> currentOrderIdInView = Rxn<int>();
 
   Rxn<List<CustBusinessCart>?> previousOrders = Rxn<List<CustBusinessCart>?>();
+  RxBool get hasPendingOrder => previousOrders.value != null
+      ? previousOrders.value!.any((element) => element.status!.isPending).obs
+      : false.obs;
+  RxBool get hasPastOrder => previousOrders.value != null
+      ? previousOrders.value!.any((element) => element.status!.isPast).obs
+      : false.obs;
+  RxList<CustBusinessCart>? get pastOrders => previousOrders.value != null
+      ? previousOrders.value!
+          .where((element) => element.status!.isPast)
+          .toList()
+          .obs
+      : <CustBusinessCart>[].obs;
   // streams //
   StreamSubscription<List<CustBusinessCart>?>? cartStream;
   String? subscriptionId;
