@@ -347,11 +347,11 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
             deliveryCost: orderData.delivery_order.delivery_cost,
             refundAmmount: orderData.refund_amount,
             tax: orderData.tax,
-            changePriceRequest:
-                (orderData.delivery_order.change_price_request != null)
-                    ? ChangePriceRequest.fromMap(
-                        orderData.delivery_order.change_price_request)
-                    : null,
+            // changePriceRequest:
+            //     (orderData.delivery_order.change_price_request != null)
+            //         ? ChangePriceRequest.fromMap(
+            //             orderData.delivery_order.change_price_request)
+            //         : null,
             orderItemsCost: orderData.actual_items_cost,
             totalCost: orderData.total_cost),
       );

@@ -53,7 +53,7 @@ class _CreateServiceViewState extends State<CreateServiceView> {
     return Scaffold(
       // resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kTextTabBarHeight + 5),
+        preferredSize: Size.fromHeight(kToolbarHeight),
         child: Obx(
           () => MezcalmosAppBar(
               (viewController.currentPage.value != 0)

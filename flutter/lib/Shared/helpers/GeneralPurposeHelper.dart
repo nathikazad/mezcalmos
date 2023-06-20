@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -798,6 +799,37 @@ void showErrorSnackBar(
         size: 40,
         color: Colors.redAccent,
       ));
+}
+
+void showLoadingOverlay({String text = "Loading"}) {
+  BotToast.showCustomLoading(
+      backgroundColor: secondaryLightBlueColor.withOpacity(0.7),
+      toastBuilder: (_) => Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(
+                  color: primaryBlueColor,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  text,
+                  style: TextStyle(
+                    fontFamily: "Montserrat",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13.sp,
+                    color: primaryBlueColor,
+                  ),
+                ),
+              ],
+            ),
+          ));
+}
+
+void closeAllLoadings() {
+  BotToast.closeAllLoading();
 }
 
 void showServiceClosedSnackBar() {

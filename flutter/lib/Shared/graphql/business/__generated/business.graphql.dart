@@ -411,6 +411,13 @@ const documentNodeQueryget_business_by_id = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'phone_number'),
                 alias: null,
                 arguments: [],
@@ -1941,6 +1948,7 @@ class Query$get_business_by_id$business_business_by_pk$details {
     required this.location,
     required this.name,
     required this.open_status,
+    required this.online_ordering,
     this.phone_number,
     this.schedule,
     required this.currency,
@@ -1959,6 +1967,7 @@ class Query$get_business_by_id$business_business_by_pk$details {
     final l$location = json['location'];
     final l$name = json['name'];
     final l$open_status = json['open_status'];
+    final l$online_ordering = json['online_ordering'];
     final l$phone_number = json['phone_number'];
     final l$schedule = json['schedule'];
     final l$currency = json['currency'];
@@ -1979,6 +1988,7 @@ class Query$get_business_by_id$business_business_by_pk$details {
               .fromJson((l$location as Map<String, dynamic>)),
       name: (l$name as String),
       open_status: (l$open_status as String),
+      online_ordering: (l$online_ordering as bool),
       phone_number: (l$phone_number as String?),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       currency: (l$currency as String),
@@ -2007,6 +2017,8 @@ class Query$get_business_by_id$business_business_by_pk$details {
   final String name;
 
   final String open_status;
+
+  final bool online_ordering;
 
   final String? phone_number;
 
@@ -2038,6 +2050,8 @@ class Query$get_business_by_id$business_business_by_pk$details {
     _resultData['name'] = l$name;
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$phone_number = phone_number;
     _resultData['phone_number'] = l$phone_number;
     final l$schedule = schedule;
@@ -2061,6 +2075,7 @@ class Query$get_business_by_id$business_business_by_pk$details {
     final l$location = location;
     final l$name = name;
     final l$open_status = open_status;
+    final l$online_ordering = online_ordering;
     final l$phone_number = phone_number;
     final l$schedule = schedule;
     final l$currency = currency;
@@ -2076,6 +2091,7 @@ class Query$get_business_by_id$business_business_by_pk$details {
       l$location,
       l$name,
       l$open_status,
+      l$online_ordering,
       l$phone_number,
       l$schedule,
       l$currency,
@@ -2142,6 +2158,11 @@ class Query$get_business_by_id$business_business_by_pk$details {
     if (l$open_status != lOther$open_status) {
       return false;
     }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
     final l$phone_number = phone_number;
     final lOther$phone_number = other.phone_number;
     if (l$phone_number != lOther$phone_number) {
@@ -2201,6 +2222,7 @@ abstract class CopyWith$Query$get_business_by_id$business_business_by_pk$details
     Query$get_business_by_id$business_business_by_pk$details$location? location,
     String? name,
     String? open_status,
+    bool? online_ordering,
     String? phone_number,
     dynamic? schedule,
     String? currency,
@@ -2240,6 +2262,7 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$details<
     Object? location = _undefined,
     Object? name = _undefined,
     Object? open_status = _undefined,
+    Object? online_ordering = _undefined,
     Object? phone_number = _undefined,
     Object? schedule = _undefined,
     Object? currency = _undefined,
@@ -2277,6 +2300,10 @@ class _CopyWithImpl$Query$get_business_by_id$business_business_by_pk$details<
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         phone_number: phone_number == _undefined
             ? _instance.phone_number
             : (phone_number as String?),
@@ -2330,6 +2357,7 @@ class _CopyWithStubImpl$Query$get_business_by_id$business_business_by_pk$details
     Query$get_business_by_id$business_business_by_pk$details$location? location,
     String? name,
     String? open_status,
+    bool? online_ordering,
     String? phone_number,
     dynamic? schedule,
     String? currency,
@@ -8932,6 +8960,13 @@ const documentNodeQueryget_business_by_rental_category1 =
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'currency'),
                 alias: null,
                 arguments: [],
@@ -9384,6 +9419,7 @@ class Query$get_business_by_rental_category1$business_business$details {
     required this.accepted_payments,
     required this.image,
     required this.name,
+    required this.online_ordering,
     required this.currency,
     required this.location,
     required this.$__typename,
@@ -9395,6 +9431,7 @@ class Query$get_business_by_rental_category1$business_business$details {
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
     final l$name = json['name'];
+    final l$online_ordering = json['online_ordering'];
     final l$currency = json['currency'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
@@ -9403,6 +9440,7 @@ class Query$get_business_by_rental_category1$business_business$details {
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
       name: (l$name as String),
+      online_ordering: (l$online_ordering as bool),
       currency: (l$currency as String),
       location:
           Query$get_business_by_rental_category1$business_business$details$location
@@ -9418,6 +9456,8 @@ class Query$get_business_by_rental_category1$business_business$details {
   final String image;
 
   final String name;
+
+  final bool online_ordering;
 
   final String currency;
 
@@ -9436,6 +9476,8 @@ class Query$get_business_by_rental_category1$business_business$details {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
     final l$location = location;
@@ -9451,6 +9493,7 @@ class Query$get_business_by_rental_category1$business_business$details {
     final l$accepted_payments = accepted_payments;
     final l$image = image;
     final l$name = name;
+    final l$online_ordering = online_ordering;
     final l$currency = currency;
     final l$location = location;
     final l$$__typename = $__typename;
@@ -9459,6 +9502,7 @@ class Query$get_business_by_rental_category1$business_business$details {
       l$accepted_payments,
       l$image,
       l$name,
+      l$online_ordering,
       l$currency,
       l$location,
       l$$__typename,
@@ -9493,6 +9537,11 @@ class Query$get_business_by_rental_category1$business_business$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$currency = currency;
@@ -9543,6 +9592,7 @@ abstract class CopyWith$Query$get_business_by_rental_category1$business_business
     dynamic? accepted_payments,
     String? image,
     String? name,
+    bool? online_ordering,
     String? currency,
     Query$get_business_by_rental_category1$business_business$details$location?
         location,
@@ -9575,6 +9625,7 @@ class _CopyWithImpl$Query$get_business_by_rental_category1$business_business$det
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
+    Object? online_ordering = _undefined,
     Object? currency = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
@@ -9591,6 +9642,10 @@ class _CopyWithImpl$Query$get_business_by_rental_category1$business_business$det
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
@@ -9625,6 +9680,7 @@ class _CopyWithStubImpl$Query$get_business_by_rental_category1$business_business
     dynamic? accepted_payments,
     String? image,
     String? name,
+    bool? online_ordering,
     String? currency,
     Query$get_business_by_rental_category1$business_business$details$location?
         location,
@@ -10863,6 +10919,13 @@ const documentNodeQueryget_business_by_home = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'name'),
                 alias: null,
                 arguments: [],
@@ -11300,6 +11363,7 @@ class Query$get_business_by_home$business_business$details {
     required this.id,
     required this.accepted_payments,
     required this.image,
+    required this.online_ordering,
     required this.name,
     required this.currency,
     required this.location,
@@ -11311,6 +11375,7 @@ class Query$get_business_by_home$business_business$details {
     final l$id = json['id'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
+    final l$online_ordering = json['online_ordering'];
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$location = json['location'];
@@ -11319,6 +11384,7 @@ class Query$get_business_by_home$business_business$details {
       id: (l$id as int),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
+      online_ordering: (l$online_ordering as bool),
       name: (l$name as String),
       currency: (l$currency as String),
       location: Query$get_business_by_home$business_business$details$location
@@ -11332,6 +11398,8 @@ class Query$get_business_by_home$business_business$details {
   final dynamic accepted_payments;
 
   final String image;
+
+  final bool online_ordering;
 
   final String name;
 
@@ -11349,6 +11417,8 @@ class Query$get_business_by_home$business_business$details {
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$currency = currency;
@@ -11365,6 +11435,7 @@ class Query$get_business_by_home$business_business$details {
     final l$id = id;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
+    final l$online_ordering = online_ordering;
     final l$name = name;
     final l$currency = currency;
     final l$location = location;
@@ -11373,6 +11444,7 @@ class Query$get_business_by_home$business_business$details {
       l$id,
       l$accepted_payments,
       l$image,
+      l$online_ordering,
       l$name,
       l$currency,
       l$location,
@@ -11402,6 +11474,11 @@ class Query$get_business_by_home$business_business$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$name = name;
@@ -11454,6 +11531,7 @@ abstract class CopyWith$Query$get_business_by_home$business_business$details<
     int? id,
     dynamic? accepted_payments,
     String? image,
+    bool? online_ordering,
     String? name,
     String? currency,
     Query$get_business_by_home$business_business$details$location? location,
@@ -11482,6 +11560,7 @@ class _CopyWithImpl$Query$get_business_by_home$business_business$details<TRes>
     Object? id = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
+    Object? online_ordering = _undefined,
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? location = _undefined,
@@ -11496,6 +11575,10 @@ class _CopyWithImpl$Query$get_business_by_home$business_business$details<TRes>
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -11531,6 +11614,7 @@ class _CopyWithStubImpl$Query$get_business_by_home$business_business$details<
     int? id,
     dynamic? accepted_payments,
     String? image,
+    bool? online_ordering,
     String? name,
     String? currency,
     Query$get_business_by_home$business_business$details$location? location,
@@ -12859,6 +12943,13 @@ const documentNodeQueryget_business_by_event_category1 =
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'currency'),
                 alias: null,
                 arguments: [],
@@ -13277,6 +13368,7 @@ class Query$get_business_by_event_category1$business_business$details {
     required this.accepted_payments,
     required this.image,
     required this.name,
+    required this.online_ordering,
     required this.currency,
     required this.$__typename,
   });
@@ -13287,6 +13379,7 @@ class Query$get_business_by_event_category1$business_business$details {
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
     final l$name = json['name'];
+    final l$online_ordering = json['online_ordering'];
     final l$currency = json['currency'];
     final l$$__typename = json['__typename'];
     return Query$get_business_by_event_category1$business_business$details(
@@ -13294,6 +13387,7 @@ class Query$get_business_by_event_category1$business_business$details {
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
       name: (l$name as String),
+      online_ordering: (l$online_ordering as bool),
       currency: (l$currency as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -13306,6 +13400,8 @@ class Query$get_business_by_event_category1$business_business$details {
   final String image;
 
   final String name;
+
+  final bool online_ordering;
 
   final String currency;
 
@@ -13321,6 +13417,8 @@ class Query$get_business_by_event_category1$business_business$details {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
     final l$$__typename = $__typename;
@@ -13334,6 +13432,7 @@ class Query$get_business_by_event_category1$business_business$details {
     final l$accepted_payments = accepted_payments;
     final l$image = image;
     final l$name = name;
+    final l$online_ordering = online_ordering;
     final l$currency = currency;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -13341,6 +13440,7 @@ class Query$get_business_by_event_category1$business_business$details {
       l$accepted_payments,
       l$image,
       l$name,
+      l$online_ordering,
       l$currency,
       l$$__typename,
     ]);
@@ -13374,6 +13474,11 @@ class Query$get_business_by_event_category1$business_business$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$currency = currency;
@@ -13419,6 +13524,7 @@ abstract class CopyWith$Query$get_business_by_event_category1$business_business$
     dynamic? accepted_payments,
     String? image,
     String? name,
+    bool? online_ordering,
     String? currency,
     String? $__typename,
   });
@@ -13447,6 +13553,7 @@ class _CopyWithImpl$Query$get_business_by_event_category1$business_business$deta
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
+    Object? online_ordering = _undefined,
     Object? currency = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -13462,6 +13569,10 @@ class _CopyWithImpl$Query$get_business_by_event_category1$business_business$deta
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
@@ -13486,6 +13597,7 @@ class _CopyWithStubImpl$Query$get_business_by_event_category1$business_business$
     dynamic? accepted_payments,
     String? image,
     String? name,
+    bool? online_ordering,
     String? currency,
     String? $__typename,
   }) =>
@@ -14582,6 +14694,13 @@ const documentNodeQueryget_business_by_service_category1 =
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'currency'),
                 alias: null,
                 arguments: [],
@@ -15011,6 +15130,7 @@ class Query$get_business_by_service_category1$business_business$details {
     required this.id,
     required this.accepted_payments,
     required this.image,
+    required this.online_ordering,
     required this.currency,
     required this.name,
     required this.$__typename,
@@ -15021,6 +15141,7 @@ class Query$get_business_by_service_category1$business_business$details {
     final l$id = json['id'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
+    final l$online_ordering = json['online_ordering'];
     final l$currency = json['currency'];
     final l$name = json['name'];
     final l$$__typename = json['__typename'];
@@ -15028,6 +15149,7 @@ class Query$get_business_by_service_category1$business_business$details {
       id: (l$id as int),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
+      online_ordering: (l$online_ordering as bool),
       currency: (l$currency as String),
       name: (l$name as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -15039,6 +15161,8 @@ class Query$get_business_by_service_category1$business_business$details {
   final dynamic accepted_payments;
 
   final String image;
+
+  final bool online_ordering;
 
   final String currency;
 
@@ -15054,6 +15178,8 @@ class Query$get_business_by_service_category1$business_business$details {
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
     final l$name = name;
@@ -15068,6 +15194,7 @@ class Query$get_business_by_service_category1$business_business$details {
     final l$id = id;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
+    final l$online_ordering = online_ordering;
     final l$currency = currency;
     final l$name = name;
     final l$$__typename = $__typename;
@@ -15075,6 +15202,7 @@ class Query$get_business_by_service_category1$business_business$details {
       l$id,
       l$accepted_payments,
       l$image,
+      l$online_ordering,
       l$currency,
       l$name,
       l$$__typename,
@@ -15104,6 +15232,11 @@ class Query$get_business_by_service_category1$business_business$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$currency = currency;
@@ -15153,6 +15286,7 @@ abstract class CopyWith$Query$get_business_by_service_category1$business_busines
     int? id,
     dynamic? accepted_payments,
     String? image,
+    bool? online_ordering,
     String? currency,
     String? name,
     String? $__typename,
@@ -15181,6 +15315,7 @@ class _CopyWithImpl$Query$get_business_by_service_category1$business_business$de
     Object? id = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
+    Object? online_ordering = _undefined,
     Object? currency = _undefined,
     Object? name = _undefined,
     Object? $__typename = _undefined,
@@ -15194,6 +15329,10 @@ class _CopyWithImpl$Query$get_business_by_service_category1$business_business$de
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
@@ -15220,6 +15359,7 @@ class _CopyWithStubImpl$Query$get_business_by_service_category1$business_busines
     int? id,
     dynamic? accepted_payments,
     String? image,
+    bool? online_ordering,
     String? currency,
     String? name,
     String? $__typename,
@@ -16324,6 +16464,13 @@ const documentNodeQueryget_business_by_product_category1 =
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'name'),
                 alias: null,
                 arguments: [],
@@ -16747,6 +16894,7 @@ class Query$get_business_by_product_category1$business_business$details {
     required this.accepted_payments,
     required this.image,
     required this.currency,
+    required this.online_ordering,
     required this.name,
     required this.$__typename,
   });
@@ -16757,6 +16905,7 @@ class Query$get_business_by_product_category1$business_business$details {
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
     final l$currency = json['currency'];
+    final l$online_ordering = json['online_ordering'];
     final l$name = json['name'];
     final l$$__typename = json['__typename'];
     return Query$get_business_by_product_category1$business_business$details(
@@ -16764,6 +16913,7 @@ class Query$get_business_by_product_category1$business_business$details {
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
       currency: (l$currency as String),
+      online_ordering: (l$online_ordering as bool),
       name: (l$name as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -16776,6 +16926,8 @@ class Query$get_business_by_product_category1$business_business$details {
   final String image;
 
   final String currency;
+
+  final bool online_ordering;
 
   final String name;
 
@@ -16791,6 +16943,8 @@ class Query$get_business_by_product_category1$business_business$details {
     _resultData['image'] = l$image;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$$__typename = $__typename;
@@ -16804,6 +16958,7 @@ class Query$get_business_by_product_category1$business_business$details {
     final l$accepted_payments = accepted_payments;
     final l$image = image;
     final l$currency = currency;
+    final l$online_ordering = online_ordering;
     final l$name = name;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -16811,6 +16966,7 @@ class Query$get_business_by_product_category1$business_business$details {
       l$accepted_payments,
       l$image,
       l$currency,
+      l$online_ordering,
       l$name,
       l$$__typename,
     ]);
@@ -16844,6 +17000,11 @@ class Query$get_business_by_product_category1$business_business$details {
     final l$currency = currency;
     final lOther$currency = other.currency;
     if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$name = name;
@@ -16889,6 +17050,7 @@ abstract class CopyWith$Query$get_business_by_product_category1$business_busines
     dynamic? accepted_payments,
     String? image,
     String? currency,
+    bool? online_ordering,
     String? name,
     String? $__typename,
   });
@@ -16917,6 +17079,7 @@ class _CopyWithImpl$Query$get_business_by_product_category1$business_business$de
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
     Object? currency = _undefined,
+    Object? online_ordering = _undefined,
     Object? name = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -16932,6 +17095,10 @@ class _CopyWithImpl$Query$get_business_by_product_category1$business_business$de
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -16956,6 +17123,7 @@ class _CopyWithStubImpl$Query$get_business_by_product_category1$business_busines
     dynamic? accepted_payments,
     String? image,
     String? currency,
+    bool? online_ordering,
     String? name,
     String? $__typename,
   }) =>

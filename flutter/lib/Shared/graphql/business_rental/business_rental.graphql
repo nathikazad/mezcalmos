@@ -78,6 +78,8 @@ query get_rental_by_id($id: Int!) {
         name
         currency
         image
+        online_ordering
+        phone_number
         last_active_time
         location {
           gps
@@ -151,6 +153,8 @@ query get_home_by_id($id: Int!) {
         last_active_time
         id
         name
+        online_ordering
+        phone_number
         currency
         location {
           gps

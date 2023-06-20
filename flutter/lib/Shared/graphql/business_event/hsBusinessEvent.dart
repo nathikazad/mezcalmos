@@ -232,6 +232,8 @@ Future<EventWithBusinessCard?> get_event_by_id(
                   ? scheduleFromData(data.schedule)
                   : null),
           business: BusinessCard(
+            phoneNo: data.business.details.phone_number,
+            onlineOrdering: data.business.details.online_ordering,
             lastActive: data.business.details.last_active_time != null
                 ? DateTime.parse(data.business.details.last_active_time!)
                 : null,
@@ -662,6 +664,7 @@ Future<EventWithBusinessCard?> update_event_by_id(
                   : null),
           business: BusinessCard(
             id: data.business.id,
+            onlineOrdering: data.business.details.online_ordering,
             detailsId: data.business.details.id,
             name: data.business.details.name,
             image: data.business.details.image,

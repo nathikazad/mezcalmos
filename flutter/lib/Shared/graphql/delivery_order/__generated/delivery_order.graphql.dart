@@ -306,13 +306,6 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'change_price_request'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'delivery_company'),
             alias: null,
             arguments: [],
@@ -1524,7 +1517,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     required this.order_type,
     required this.direction,
     this.chat_with_service_provider_id,
-    this.change_price_request,
     this.delivery_company,
     required this.customer_id,
     this.customer_review_by_driver_id,
@@ -1548,7 +1540,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     this.pickup_address,
     this.pickup_gps,
     this.restaurant,
-    required this.service_provider_id,
+    this.service_provider_id,
     this.delivery_driver,
     this.service_provider_review_by_driver_id,
     required this.service_provider_type,
@@ -1570,7 +1562,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$direction = json['direction'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
-    final l$change_price_request = json['change_price_request'];
     final l$delivery_company = json['delivery_company'];
     final l$customer_id = json['customer_id'];
     final l$customer_review_by_driver_id = json['customer_review_by_driver_id'];
@@ -1616,9 +1607,6 @@ class Query$get_driver_order$delivery_order_by_pk {
       order_type: (l$order_type as String),
       direction: (l$direction as String),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
-      change_price_request: l$change_price_request == null
-          ? null
-          : mapFromJson(l$change_price_request),
       delivery_company: l$delivery_company == null
           ? null
           : Query$get_driver_order$delivery_order_by_pk$delivery_company
@@ -1664,7 +1652,7 @@ class Query$get_driver_order$delivery_order_by_pk {
           ? null
           : Query$get_driver_order$delivery_order_by_pk$restaurant.fromJson(
               (l$restaurant as Map<String, dynamic>)),
-      service_provider_id: (l$service_provider_id as int),
+      service_provider_id: (l$service_provider_id as int?),
       delivery_driver: l$delivery_driver == null
           ? null
           : Query$get_driver_order$delivery_order_by_pk$delivery_driver
@@ -1701,8 +1689,6 @@ class Query$get_driver_order$delivery_order_by_pk {
   final String direction;
 
   final int? chat_with_service_provider_id;
-
-  final dynamic? change_price_request;
 
   final Query$get_driver_order$delivery_order_by_pk$delivery_company?
       delivery_company;
@@ -1754,7 +1740,7 @@ class Query$get_driver_order$delivery_order_by_pk {
 
   final Query$get_driver_order$delivery_order_by_pk$restaurant? restaurant;
 
-  final int service_provider_id;
+  final int? service_provider_id;
 
   final Query$get_driver_order$delivery_order_by_pk$delivery_driver?
       delivery_driver;
@@ -1794,10 +1780,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     _resultData['chat_with_service_provider_id'] =
         l$chat_with_service_provider_id;
-    final l$change_price_request = change_price_request;
-    _resultData['change_price_request'] = l$change_price_request == null
-        ? null
-        : mapToJson(l$change_price_request);
     final l$delivery_company = delivery_company;
     _resultData['delivery_company'] = l$delivery_company?.toJson();
     final l$customer_id = customer_id;
@@ -1891,7 +1873,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$order_type = order_type;
     final l$direction = direction;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
-    final l$change_price_request = change_price_request;
     final l$delivery_company = delivery_company;
     final l$customer_id = customer_id;
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
@@ -1936,7 +1917,6 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$order_type,
       l$direction,
       l$chat_with_service_provider_id,
-      l$change_price_request,
       l$delivery_company,
       l$customer_id,
       l$customer_review_by_driver_id,
@@ -2009,11 +1989,6 @@ class Query$get_driver_order$delivery_order_by_pk {
         other.chat_with_service_provider_id;
     if (l$chat_with_service_provider_id !=
         lOther$chat_with_service_provider_id) {
-      return false;
-    }
-    final l$change_price_request = change_price_request;
-    final lOther$change_price_request = other.change_price_request;
-    if (l$change_price_request != lOther$change_price_request) {
       return false;
     }
     final l$delivery_company = delivery_company;
@@ -2233,7 +2208,6 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     String? order_type,
     String? direction,
     int? chat_with_service_provider_id,
-    dynamic? change_price_request,
     Query$get_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
     int? customer_id,
@@ -2318,7 +2292,6 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? order_type = _undefined,
     Object? direction = _undefined,
     Object? chat_with_service_provider_id = _undefined,
-    Object? change_price_request = _undefined,
     Object? delivery_company = _undefined,
     Object? customer_id = _undefined,
     Object? customer_review_by_driver_id = _undefined,
@@ -2373,9 +2346,6 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
             chat_with_service_provider_id == _undefined
                 ? _instance.chat_with_service_provider_id
                 : (chat_with_service_provider_id as int?),
-        change_price_request: change_price_request == _undefined
-            ? _instance.change_price_request
-            : (change_price_request as dynamic?),
         delivery_company: delivery_company == _undefined
             ? _instance.delivery_company
             : (delivery_company
@@ -2449,10 +2419,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
             ? _instance.restaurant
             : (restaurant
                 as Query$get_driver_order$delivery_order_by_pk$restaurant?),
-        service_provider_id:
-            service_provider_id == _undefined || service_provider_id == null
-                ? _instance.service_provider_id
-                : (service_provider_id as int),
+        service_provider_id: service_provider_id == _undefined
+            ? _instance.service_provider_id
+            : (service_provider_id as int?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -2608,7 +2577,6 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     String? order_type,
     String? direction,
     int? chat_with_service_provider_id,
-    dynamic? change_price_request,
     Query$get_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
     int? customer_id,
@@ -27936,7 +27904,7 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
     required this.payment_type,
     this.pickup_address,
     this.pickup_gps,
-    required this.service_provider_id,
+    this.service_provider_id,
     this.delivery_driver,
     required this.service_provider_type,
     required this.status,
@@ -27988,7 +27956,7 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
       payment_type: (l$payment_type as String),
       pickup_address: (l$pickup_address as String?),
       pickup_gps: l$pickup_gps == null ? null : geographyFromJson(l$pickup_gps),
-      service_provider_id: (l$service_provider_id as int),
+      service_provider_id: (l$service_provider_id as int?),
       delivery_driver: l$delivery_driver == null
           ? null
           : Query$get_pick_driver_order$delivery_order_by_pk$delivery_driver
@@ -28030,7 +27998,7 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
 
   final Geography? pickup_gps;
 
-  final int service_provider_id;
+  final int? service_provider_id;
 
   final Query$get_pick_driver_order$delivery_order_by_pk$delivery_driver?
       delivery_driver;
@@ -28391,10 +28359,9 @@ class _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk<TRes>
         pickup_gps: pickup_gps == _undefined
             ? _instance.pickup_gps
             : (pickup_gps as Geography?),
-        service_provider_id:
-            service_provider_id == _undefined || service_provider_id == null
-                ? _instance.service_provider_id
-                : (service_provider_id as int),
+        service_provider_id: service_provider_id == _undefined
+            ? _instance.service_provider_id
+            : (service_provider_id as int?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -33034,13 +33001,6 @@ const documentNodeSubscriptionlisten_driver_order_prices =
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'change_price_request'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -33142,7 +33102,6 @@ class Subscription$listen_driver_order_prices$delivery_order_by_pk {
     this.tax,
     required this.delivery_cost,
     this.package_cost_comp,
-    this.change_price_request,
     required this.$__typename,
   });
 
@@ -33152,7 +33111,6 @@ class Subscription$listen_driver_order_prices$delivery_order_by_pk {
     final l$tax = json['tax'];
     final l$delivery_cost = json['delivery_cost'];
     final l$package_cost_comp = json['package_cost_comp'];
-    final l$change_price_request = json['change_price_request'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_driver_order_prices$delivery_order_by_pk(
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
@@ -33161,9 +33119,6 @@ class Subscription$listen_driver_order_prices$delivery_order_by_pk {
       package_cost_comp: l$package_cost_comp == null
           ? null
           : moneyFromJson(l$package_cost_comp),
-      change_price_request: l$change_price_request == null
-          ? null
-          : mapFromJson(l$change_price_request),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -33175,8 +33130,6 @@ class Subscription$listen_driver_order_prices$delivery_order_by_pk {
   final double delivery_cost;
 
   final double? package_cost_comp;
-
-  final dynamic? change_price_request;
 
   final String $__typename;
 
@@ -33192,10 +33145,6 @@ class Subscription$listen_driver_order_prices$delivery_order_by_pk {
     final l$package_cost_comp = package_cost_comp;
     _resultData['package_cost_comp'] =
         l$package_cost_comp == null ? null : moneyToJson(l$package_cost_comp);
-    final l$change_price_request = change_price_request;
-    _resultData['change_price_request'] = l$change_price_request == null
-        ? null
-        : mapToJson(l$change_price_request);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -33207,14 +33156,12 @@ class Subscription$listen_driver_order_prices$delivery_order_by_pk {
     final l$tax = tax;
     final l$delivery_cost = delivery_cost;
     final l$package_cost_comp = package_cost_comp;
-    final l$change_price_request = change_price_request;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$total_cost,
       l$tax,
       l$delivery_cost,
       l$package_cost_comp,
-      l$change_price_request,
       l$$__typename,
     ]);
   }
@@ -33247,11 +33194,6 @@ class Subscription$listen_driver_order_prices$delivery_order_by_pk {
     final l$package_cost_comp = package_cost_comp;
     final lOther$package_cost_comp = other.package_cost_comp;
     if (l$package_cost_comp != lOther$package_cost_comp) {
-      return false;
-    }
-    final l$change_price_request = change_price_request;
-    final lOther$change_price_request = other.change_price_request;
-    if (l$change_price_request != lOther$change_price_request) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -33291,7 +33233,6 @@ abstract class CopyWith$Subscription$listen_driver_order_prices$delivery_order_b
     double? tax,
     double? delivery_cost,
     double? package_cost_comp,
-    dynamic? change_price_request,
     String? $__typename,
   });
 }
@@ -33318,7 +33259,6 @@ class _CopyWithImpl$Subscription$listen_driver_order_prices$delivery_order_by_pk
     Object? tax = _undefined,
     Object? delivery_cost = _undefined,
     Object? package_cost_comp = _undefined,
-    Object? change_price_request = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$listen_driver_order_prices$delivery_order_by_pk(
@@ -33332,9 +33272,6 @@ class _CopyWithImpl$Subscription$listen_driver_order_prices$delivery_order_by_pk
         package_cost_comp: package_cost_comp == _undefined
             ? _instance.package_cost_comp
             : (package_cost_comp as double?),
-        change_price_request: change_price_request == _undefined
-            ? _instance.change_price_request
-            : (change_price_request as dynamic?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -33356,7 +33293,6 @@ class _CopyWithStubImpl$Subscription$listen_driver_order_prices$delivery_order_b
     double? tax,
     double? delivery_cost,
     double? package_cost_comp,
-    dynamic? change_price_request,
     String? $__typename,
   }) =>
       _res;
