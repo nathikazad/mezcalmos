@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -91,16 +92,18 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Obx(
-        () => MezButton(
-          label: viewController.isEditingMode.value
-              ? "Update Item"
-              : "Add to cart",
-          withGradient: true,
-          borderRadius: 0,
-          onClick: () async {
-            await viewController.bookOffering();
-          },
-        ),
+        () => viewController.isOnlineOrdering.value!
+            ? MezButton(
+                label: viewController.isEditingMode.value
+                    ? "Update Item"
+                    : "Add to cart",
+                withGradient: true,
+                borderRadius: 0,
+                onClick: () async {
+                  await viewController.bookOffering();
+                },
+              )
+            : SizedBox.shrink(),
       ),
       body: Obx(() {
         if (viewController.homeRental != null) {
@@ -163,69 +166,78 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                         business: viewController.homeRental!.business,
                         offering: viewController.homeRental!.details,
                       ),
+                      if (!viewController.isOnlineOrdering.value!)
+                        CustBusinessNoOrderBanner(),
 
                       /// Bookings
-                      bigSeperator,
-                      BsOpDateTimePicker(
-                        fillColor: Colors.white,
-                        onNewPeriodSelected: (DateTime v) {
-                          viewController.startDate.value = v;
-                        },
-                        label: "Start Date",
-                        validator: (DateTime? p0) {
-                          if (p0 == null) return "Please select a time";
+                      if (viewController.isOnlineOrdering.value!)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            bigSeperator,
+                            BsOpDateTimePicker(
+                              fillColor: Colors.white,
+                              onNewPeriodSelected: (DateTime v) {
+                                viewController.startDate.value = v;
+                              },
+                              label: "Start Date",
+                              validator: (DateTime? p0) {
+                                if (p0 == null) return "Please select a time";
 
-                          return null;
-                        },
-                        time: viewController.startDate.value,
-                      ),
-                      bigSeperator,
-                      CustBusinessDurationPicker(
-                        costUnits: viewController.isMultipleRooms.value
-                            ? viewController.selectedRoomCostUnits.value!
-                            : viewController.homeRental!.details.cost,
-                        label: "Duration",
-                        value: viewController.duration.value,
-                        unitValue: viewController.timeCost.value?.keys.first,
-                        validator: (TimeUnit? p0) {
-                          if (p0 == null) return "Please select a time";
-                          return null;
-                        },
-                        onNewCostUnitSelected: (Map<TimeUnit, num> v) {
-                          viewController.setTimeCost(v);
-                        },
-                        onNewDurationSelected: (int v) {
-                          viewController.setDuration(v);
-                        },
-                      ),
-                      bigSeperator,
-                      CustGuestPicker(
-                        label: "Guests",
-                        icon: Icons.person,
-                        onNewGuestSelected: (int v) {
-                          viewController.setTotalGuests(v);
-                        },
-                        value: viewController.totalGuests.value,
-                        lowestValue: 1,
-                      ),
-                      bigSeperator,
-                      Text(
-                        "Notes",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      TextFormField(
-                        maxLines: 7,
-                        minLines: 5,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: "Write your notes here.",
+                                return null;
+                              },
+                              time: viewController.startDate.value,
+                            ),
+                            bigSeperator,
+                            CustBusinessDurationPicker(
+                              costUnits: viewController.isMultipleRooms.value
+                                  ? viewController.selectedRoomCostUnits.value!
+                                  : viewController.homeRental!.details.cost,
+                              label: "Duration",
+                              value: viewController.duration.value,
+                              unitValue:
+                                  viewController.timeCost.value?.keys.first,
+                              validator: (TimeUnit? p0) {
+                                if (p0 == null) return "Please select a time";
+                                return null;
+                              },
+                              onNewCostUnitSelected: (Map<TimeUnit, num> v) {
+                                viewController.setTimeCost(v);
+                              },
+                              onNewDurationSelected: (int v) {
+                                viewController.setDuration(v);
+                              },
+                            ),
+                            bigSeperator,
+                            CustGuestPicker(
+                              label: "Guests",
+                              icon: Icons.person,
+                              onNewGuestSelected: (int v) {
+                                viewController.setTotalGuests(v);
+                              },
+                              value: viewController.totalGuests.value,
+                              lowestValue: 1,
+                            ),
+                            bigSeperator,
+                            Text(
+                              "Notes",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            smallSepartor,
+                            TextFormField(
+                              maxLines: 7,
+                              minLines: 5,
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                hintText: "Write your notes here.",
+                              ),
+                            ),
+                            bigSeperator,
+                            CustOrderCostCard(
+                              orderCostString: viewController.orderString.value,
+                            ),
+                          ],
                         ),
-                      ),
-                      bigSeperator,
-                      CustOrderCostCard(
-                        orderCostString: viewController.orderString.value,
-                      ),
                     ],
                   ),
                 ),
@@ -272,8 +284,9 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                             "$circle \$${e.value.toDouble().toStringAsFixed(0)}/${_i18n()[e.key.toFirebaseFormatString()]}",
                             style: context.textTheme.bodyMedium!.copyWith(
                               color: primaryBlueColor,
-                              fontWeight:
-                                  isSelected ? FontWeight.bold : FontWeight.w600,
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.w600,
                             ),
                           ),
                         ),
@@ -281,15 +294,16 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     ],
                   ),
                 ),
-                Radio<String>(
-                  activeColor: primaryBlueColor,
-                  value: roomType,
-                  groupValue: viewController.selectedRoom.value,
-                  onChanged: (value) {
-                    mezDbgPrint("RADIO Value: $value");
-                    viewController.changeSelectedRoom(value!);
-                  },
-                )
+                if (viewController.isOnlineOrdering.value!)
+                  Radio<String>(
+                    activeColor: primaryBlueColor,
+                    value: roomType,
+                    groupValue: viewController.selectedRoom.value,
+                    onChanged: (value) {
+                      mezDbgPrint("RADIO Value: $value");
+                      viewController.changeSelectedRoom(value!);
+                    },
+                  )
               ],
             ),
           );

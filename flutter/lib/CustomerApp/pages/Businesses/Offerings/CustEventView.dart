@@ -117,16 +117,18 @@ class _CustEventViewState extends State<CustEventView> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Obx(
-        () => MezButton(
-          label: viewController.isEditingMode.value
-              ? "Update Item"
-              : "Add to cart",
-          withGradient: true,
-          borderRadius: 0,
-          onClick: () async {
-            await viewController.bookOffering();
-          },
-        ),
+        () => viewController.isOnlineOrdering.value!
+            ? MezButton(
+                label: viewController.isEditingMode.value
+                    ? "Update Item"
+                    : "Add to cart",
+                withGradient: true,
+                borderRadius: 0,
+                onClick: () async {
+                  await viewController.bookOffering();
+                },
+              )
+            : SizedBox.shrink(),
       ),
       body: Obx(() {
         if (viewController.event != null) {
@@ -185,64 +187,71 @@ class _CustEventViewState extends State<CustEventView> {
                         business: viewController.event!.business,
                         offering: viewController.event!.details,
                       ),
-                      // CustBusinessNoOrderBanner(),
+                      if (!viewController.isOnlineOrdering.value!)
+                        CustBusinessNoOrderBanner(),
 
                       /// Booking
-                      if (viewController.event!.scheduleType !=
-                          ScheduleType.OneTime)
-                        BsOpDateTimePicker(
-                          fillColor: Colors.white,
-                          onNewPeriodSelected: (DateTime v) {
-                            viewController.startDate.value = v;
-                          },
-                          label: "Start Date",
-                          validator: (DateTime? p0) {
-                            if (p0 == null) return "Please select a time";
-
-                            return null;
-                          },
-                          time: viewController.startDate.value,
-                        ),
-                      if (viewController.event!.scheduleType ==
-                          ScheduleType.OnDemand)
-                        Column(
-                          children: [
-                            CustGuestPicker(
-                              label: "Hours",
-                              icon: Icons.hourglass_bottom,
-                              onNewGuestSelected: (int v) {
-                                viewController.setTotalHours(v);
-                              },
-                              value: viewController.totalHours.value,
-                              lowestValue: 1,
-                            ),
-                            bigSeperator,
-                          ],
-                        ),
-                      if (viewController.event!.scheduleType ==
-                          ScheduleType.OnDemand)
+                      if (viewController.isOnlineOrdering.value!)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Notes",
-                              style: context.textTheme.bodyLarge,
-                            ),
-                            smallSepartor,
-                            TextFormField(
-                              maxLines: 5,
-                              minLines: 3,
-                              decoration: InputDecoration(
+                            if (viewController.event!.scheduleType !=
+                                ScheduleType.OneTime)
+                              BsOpDateTimePicker(
                                 fillColor: Colors.white,
-                                hintText: "Write your notes here.",
+                                onNewPeriodSelected: (DateTime v) {
+                                  viewController.startDate.value = v;
+                                },
+                                label: "Start Date",
+                                validator: (DateTime? p0) {
+                                  if (p0 == null) return "Please select a time";
+
+                                  return null;
+                                },
+                                time: viewController.startDate.value,
                               ),
+                            if (viewController.event!.scheduleType ==
+                                ScheduleType.OnDemand)
+                              Column(
+                                children: [
+                                  CustGuestPicker(
+                                    label: "Hours",
+                                    icon: Icons.hourglass_bottom,
+                                    onNewGuestSelected: (int v) {
+                                      viewController.setTotalHours(v);
+                                    },
+                                    value: viewController.totalHours.value,
+                                    lowestValue: 1,
+                                  ),
+                                  bigSeperator,
+                                ],
+                              ),
+                            if (viewController.event!.scheduleType ==
+                                ScheduleType.OnDemand)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Notes",
+                                    style: context.textTheme.bodyLarge,
+                                  ),
+                                  smallSepartor,
+                                  TextFormField(
+                                    maxLines: 5,
+                                    minLines: 3,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      hintText: "Write your notes here.",
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            bigSeperator,
+                            CustOrderCostCard(
+                              orderCostString: viewController.orderString.value,
                             ),
                           ],
-                        ),
-                      bigSeperator,
-                      CustOrderCostCard(
-                        orderCostString: viewController.orderString.value,
-                      ),
+                        )
                     ],
                   ),
                 ),
