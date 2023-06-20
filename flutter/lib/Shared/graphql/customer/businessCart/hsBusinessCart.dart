@@ -572,7 +572,11 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                             data.home!.business!.details.id,
                                         available:
                                             data.home!.details!.available,
-                                        image: data.home!.details!.image,
+                                        image: data.home!.details!.image
+                                                ?.map<String>(
+                                                    (e) => e.toString())
+                                                .toList() ??
+                                            [],
                                       ),
                                     ),
                                   )
