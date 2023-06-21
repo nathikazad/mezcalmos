@@ -124,9 +124,11 @@ class _CustEventViewState extends State<CustEventView> {
                     : "Add to cart",
                 withGradient: true,
                 borderRadius: 0,
-                onClick: () async {
-                  await viewController.bookOffering();
-                },
+                onClick: viewController.isValidated.value
+                    ? () async {
+                        await viewController.bookOffering();
+                      }
+                    : null,
               )
             : SizedBox.shrink(),
       ),

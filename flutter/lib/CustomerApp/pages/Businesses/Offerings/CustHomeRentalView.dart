@@ -99,9 +99,11 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     : "Add to cart",
                 withGradient: true,
                 borderRadius: 0,
-                onClick: () async {
-                  await viewController.bookOffering();
-                },
+                onClick: viewController.startDate.value == null
+                    ? null
+                    : () async {
+                        await viewController.bookOffering();
+                      },
               )
             : SizedBox.shrink(),
       ),

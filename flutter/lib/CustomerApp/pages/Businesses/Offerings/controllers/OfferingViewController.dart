@@ -196,6 +196,16 @@ class CustEventViewController {
   Rx<bool> isEditingMode = Rx<bool>(false);
   Rxn<int> _cartId = Rxn<int>();
   Rxn<bool> isOnlineOrdering = Rxn<bool>(false);
+  Rx<bool> get isValidated {
+    switch (_event.value!.scheduleType) {
+      case ScheduleType.Scheduled:
+        return _startDate.value != null ? Rx(true) : Rx(false);
+      case ScheduleType.OneTime:
+        return Rx(true);
+      case ScheduleType.OnDemand:
+        return _startDate.value != null ? Rx(true) : Rx(false);
+    }
+  }
 
   // getters //
   EventWithBusinessCard? get event => _event.value;
@@ -389,8 +399,8 @@ class CustHomeRentalViewController {
 
   void changeSelectedRoom(String value) {
     selectedRoom.value = value;
-    final int index = _homeRental.value!.details.additionalParameters![
-            "additionalRooms"]!
+    final int index = _homeRental
+        .value!.details.additionalParameters!["additionalRooms"]!
         .indexWhere((dynamic e) => e["roomType"] == value);
     _timeCost.value = additionalRooms[index]["cost"];
     selectedRoomCostUnits.value = additionalRooms[index]["cost"];

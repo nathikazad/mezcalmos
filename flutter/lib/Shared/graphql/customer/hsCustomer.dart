@@ -249,6 +249,8 @@ MinimalOrderStatus _getStatus(
       return status.toLaundryOrderStatus().toMinimalOrderStatus();
     case OrderType.Courier:
       return status.toDeliveryOrderStatus().toMinimalOrderStatus();
+    case OrderType.Business:
+      return status.toBusinessOrderRequestStatus().toMinimalOrderStatus();
 
     default:
       return status.toRestaurantOrderStatus().toMinimalOrderStatus();
