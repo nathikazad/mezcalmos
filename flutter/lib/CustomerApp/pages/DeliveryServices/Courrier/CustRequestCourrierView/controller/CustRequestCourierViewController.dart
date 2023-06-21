@@ -13,8 +13,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
-import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -43,15 +41,16 @@ class CustRequestCourierViewController {
   RxMap<int, imPicker.XFile> newImages = RxMap({});
   Rxn<MezLocation> toLoc = Rxn();
   Rxn<DateTime> deliveryTime = Rxn();
-  Rxn<DeliveryCompany> company = Rxn();
   RxInt currentPage = RxInt(0);
   GlobalKey<FormState> fromKey = GlobalKey<FormState>();
   GlobalKey<FormState> secondFormKey = GlobalKey<FormState>();
   Rxn<num> shippingCost = Rxn();
   DeliveryCost? deliveryCost;
+  RxDouble estDeliveryCost = RxDouble(40);
 
   MapHelper.RouteInformation? routeInfo;
-  late int courierId;
+  RxList<DeliveryCompany> deliveryCompanies = RxList.empty();
+  RxList<int> selectedCompanies = RxList.empty();
 
   // getters //
 
@@ -59,13 +58,9 @@ class CustRequestCourierViewController {
   // bool get canOrder
 
   // methods //
-  Future<void> init({required int courierId}) async {
-    this.courierId = courierId;
-
-    company.value = await get_delivery_company(companyId: courierId);
-    unawaited(
-        get_delivery_cost(deliveryDetailsId: company.value!.deliveryDetailsId!)
-            .then((DeliveryCost? value) => deliveryCost = value));
+  Future<void> init() async {
+    _fetchCompanies();
+    
     if (_authController.isUserSignedIn) {
       toLoc.value = Get.find<CustomerAuthController>()
           .customer
@@ -76,6 +71,17 @@ class CustRequestCourierViewController {
     }
 
     addNewEmptyItem();
+  }
+
+  void _fetchCompanies() {
+    get_dv_companies().then((List<DeliveryCompany>? value) {
+      if (value != null) {
+        deliveryCompanies.value = value;
+        selectedCompanies.value = deliveryCompanies
+            .map((DeliveryCompany element) => element.info.hasuraId)
+            .toList();
+      }
+    });
   }
 
   void addNewEmptyItem() {
@@ -133,12 +139,12 @@ class CustRequestCourierViewController {
   Future<void> _makeOrder() async {
     final bool nameAndImageChecker =
         await Get.find<AuthController>().nameAndImageChecker();
-    bool? isOpen =
-        await get_service_is_open(detailsId: company.value!.serviceDetailsId);
-    if (isOpen != true) {
-      showServiceClosedSnackBar();
-      return;
-    }
+    // bool? isOpen =
+    //     await get_service_is_open(detailsId: company.value!.serviceDetailsId);
+    // if (isOpen != true) {
+    //   showServiceClosedSnackBar();
+    //   return;
+    // }
     if (nameAndImageChecker) {
       await _callCloudFunc();
     }
@@ -174,7 +180,8 @@ class CustRequestCourierViewController {
                 lng: fromLoc.value!.position.longitude!,
                 address: fromLoc.value!.address)
             : null,
-        deliveryCompanyId: company.value!.info.hasuraId,
+        // todo @m66are
+        deliveryCompanyId: 0,
         deliveryCost: shippingCost.value,
         scheduledTime: deliveryTime.value?.toUtc().toString(),
         customerAppType: cModels.CustomerAppType.Native,
@@ -276,5 +283,15 @@ class CustRequestCourierViewController {
     toLoc.value = location;
     updateShippingPrice();
     mezDbgPrint("set to loc =========>${toLoc.value}");
+  }
+
+  void selectCompany({required int id}) {
+    if (selectedCompanies.contains(id)) {
+      selectedCompanies.remove(id);
+    } else {
+      selectedCompanies.add(id);
+    }
+    selectedCompanies.refresh();
+    mezDbgPrint("Selected Companies =====>{${selectedCompanies.length}");
   }
 }

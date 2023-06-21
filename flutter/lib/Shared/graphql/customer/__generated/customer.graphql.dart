@@ -4013,7 +4013,7 @@ class Query$get_customer_orders$customer_minimal_orders {
     this.to_address,
     required this.order_time,
     required this.order_type,
-    required this.payment_type,
+    this.payment_type,
     required this.status,
     required this.total_cost,
     required this.$__typename,
@@ -4042,7 +4042,7 @@ class Query$get_customer_orders$customer_minimal_orders {
       to_address: (l$to_address as String?),
       order_time: (l$order_time as String),
       order_type: (l$order_type as String),
-      payment_type: (l$payment_type as String),
+      payment_type: (l$payment_type as String?),
       status: (l$status as String),
       total_cost: moneyFromJson(l$total_cost),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4065,7 +4065,7 @@ class Query$get_customer_orders$customer_minimal_orders {
 
   final String order_type;
 
-  final String payment_type;
+  final String? payment_type;
 
   final String status;
 
@@ -4294,9 +4294,9 @@ class _CopyWithImpl$Query$get_customer_orders$customer_minimal_orders<TRes>
         order_type: order_type == _undefined || order_type == null
             ? _instance.order_type
             : (order_type as String),
-        payment_type: payment_type == _undefined || payment_type == null
+        payment_type: payment_type == _undefined
             ? _instance.payment_type
-            : (payment_type as String),
+            : (payment_type as String?),
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -4868,7 +4868,7 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
     this.to_address,
     required this.order_time,
     required this.order_type,
-    required this.payment_type,
+    this.payment_type,
     required this.status,
     required this.total_cost,
     required this.$__typename,
@@ -4897,7 +4897,7 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
       to_address: (l$to_address as String?),
       order_time: (l$order_time as String),
       order_type: (l$order_type as String),
-      payment_type: (l$payment_type as String),
+      payment_type: (l$payment_type as String?),
       status: (l$status as String),
       total_cost: moneyFromJson(l$total_cost),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4920,7 +4920,7 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
 
   final String order_type;
 
-  final String payment_type;
+  final String? payment_type;
 
   final String status;
 
@@ -5156,9 +5156,9 @@ class _CopyWithImpl$Subscription$listen_on_customer_orders$customer_minimal_orde
         order_type: order_type == _undefined || order_type == null
             ? _instance.order_type
             : (order_type as String),
-        payment_type: payment_type == _undefined || payment_type == null
+        payment_type: payment_type == _undefined
             ? _instance.payment_type
-            : (payment_type as String),
+            : (payment_type as String?),
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),

@@ -2185,6 +2185,104 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
       _res;
 }
 
+class Variables$Query$getDeliveryCompanies {
+  factory Variables$Query$getDeliveryCompanies({required bool is_open}) =>
+      Variables$Query$getDeliveryCompanies._({
+        r'is_open': is_open,
+      });
+
+  Variables$Query$getDeliveryCompanies._(this._$data);
+
+  factory Variables$Query$getDeliveryCompanies.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$is_open = data['is_open'];
+    result$data['is_open'] = (l$is_open as bool);
+    return Variables$Query$getDeliveryCompanies._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  bool get is_open => (_$data['is_open'] as bool);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$is_open = is_open;
+    result$data['is_open'] = l$is_open;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getDeliveryCompanies<
+          Variables$Query$getDeliveryCompanies>
+      get copyWith => CopyWith$Variables$Query$getDeliveryCompanies(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getDeliveryCompanies) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$is_open = is_open;
+    return Object.hashAll([l$is_open]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getDeliveryCompanies<TRes> {
+  factory CopyWith$Variables$Query$getDeliveryCompanies(
+    Variables$Query$getDeliveryCompanies instance,
+    TRes Function(Variables$Query$getDeliveryCompanies) then,
+  ) = _CopyWithImpl$Variables$Query$getDeliveryCompanies;
+
+  factory CopyWith$Variables$Query$getDeliveryCompanies.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getDeliveryCompanies;
+
+  TRes call({bool? is_open});
+}
+
+class _CopyWithImpl$Variables$Query$getDeliveryCompanies<TRes>
+    implements CopyWith$Variables$Query$getDeliveryCompanies<TRes> {
+  _CopyWithImpl$Variables$Query$getDeliveryCompanies(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getDeliveryCompanies _instance;
+
+  final TRes Function(Variables$Query$getDeliveryCompanies) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? is_open = _undefined}) =>
+      _then(Variables$Query$getDeliveryCompanies._({
+        ..._instance._$data,
+        if (is_open != _undefined && is_open != null)
+          'is_open': (is_open as bool),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getDeliveryCompanies<TRes>
+    implements CopyWith$Variables$Query$getDeliveryCompanies<TRes> {
+  _CopyWithStubImpl$Variables$Query$getDeliveryCompanies(this._res);
+
+  TRes _res;
+
+  call({bool? is_open}) => _res;
+}
+
 class Query$getDeliveryCompanies {
   Query$getDeliveryCompanies({
     required this.delivery_company,
@@ -2346,13 +2444,43 @@ const documentNodeQuerygetDeliveryCompanies = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
     name: NameNode(value: 'getDeliveryCompanies'),
-    variableDefinitions: [],
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'is_open')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
         name: NameNode(value: 'delivery_company'),
         alias: null,
-        arguments: [],
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'is_open'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value: VariableNode(name: NameNode(value: 'is_open')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
@@ -2699,6 +2827,7 @@ class Options$Query$getDeliveryCompanies
     extends graphql.QueryOptions<Query$getDeliveryCompanies> {
   Options$Query$getDeliveryCompanies({
     String? operationName,
+    required Variables$Query$getDeliveryCompanies variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -2706,6 +2835,7 @@ class Options$Query$getDeliveryCompanies
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -2722,6 +2852,7 @@ class WatchOptions$Query$getDeliveryCompanies
     extends graphql.WatchQueryOptions<Query$getDeliveryCompanies> {
   WatchOptions$Query$getDeliveryCompanies({
     String? operationName,
+    required Variables$Query$getDeliveryCompanies variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -2732,6 +2863,7 @@ class WatchOptions$Query$getDeliveryCompanies
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -2749,10 +2881,12 @@ class WatchOptions$Query$getDeliveryCompanies
 
 class FetchMoreOptions$Query$getDeliveryCompanies
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$getDeliveryCompanies(
-      {required graphql.UpdateQuery updateQuery})
-      : super(
+  FetchMoreOptions$Query$getDeliveryCompanies({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getDeliveryCompanies variables,
+  }) : super(
           updateQuery: updateQuery,
+          variables: variables.toJson(),
           document: documentNodeQuerygetDeliveryCompanies,
         );
 }
@@ -2760,29 +2894,36 @@ class FetchMoreOptions$Query$getDeliveryCompanies
 extension ClientExtension$Query$getDeliveryCompanies on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$getDeliveryCompanies>>
       query$getDeliveryCompanies(
-              [Options$Query$getDeliveryCompanies? options]) async =>
-          await this.query(options ?? Options$Query$getDeliveryCompanies());
+              Options$Query$getDeliveryCompanies options) async =>
+          await this.query(options);
   graphql.ObservableQuery<Query$getDeliveryCompanies>
       watchQuery$getDeliveryCompanies(
-              [WatchOptions$Query$getDeliveryCompanies? options]) =>
-          this.watchQuery(options ?? WatchOptions$Query$getDeliveryCompanies());
+              WatchOptions$Query$getDeliveryCompanies options) =>
+          this.watchQuery(options);
   void writeQuery$getDeliveryCompanies({
     required Query$getDeliveryCompanies data,
+    required Variables$Query$getDeliveryCompanies variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-            operation: graphql.Operation(
-                document: documentNodeQuerygetDeliveryCompanies)),
+          operation: graphql.Operation(
+              document: documentNodeQuerygetDeliveryCompanies),
+          variables: variables.toJson(),
+        ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$getDeliveryCompanies? readQuery$getDeliveryCompanies(
-      {bool optimistic = true}) {
+  Query$getDeliveryCompanies? readQuery$getDeliveryCompanies({
+    required Variables$Query$getDeliveryCompanies variables,
+    bool optimistic = true,
+  }) {
     final result = this.readQuery(
       graphql.Request(
-          operation: graphql.Operation(
-              document: documentNodeQuerygetDeliveryCompanies)),
+        operation:
+            graphql.Operation(document: documentNodeQuerygetDeliveryCompanies),
+        variables: variables.toJson(),
+      ),
       optimistic: optimistic,
     );
     return result == null ? null : Query$getDeliveryCompanies.fromJson(result);

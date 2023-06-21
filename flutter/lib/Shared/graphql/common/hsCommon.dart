@@ -419,7 +419,6 @@ extension ParseMezServiceToString on MezService {
 
 extension ParseStringToMezService on String {
   MezService toMezService() {
-    mezDbgPrint2("toMezService ${toLowerCase()}");
     return MezService.values.firstWhere((MezService mezService) =>
         mezService.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }

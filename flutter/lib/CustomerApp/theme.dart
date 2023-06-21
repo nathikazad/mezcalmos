@@ -20,6 +20,29 @@ class CustomerAppTheme {
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       scaffoldBackgroundColor: Color(0XFFFAFAFA),
+      checkboxTheme: CheckboxThemeData(
+          side: BorderSide(color: primaryBlueColor),
+          checkColor: MaterialStateProperty.all<Color>(Colors.white),
+          fillColor: MaterialStateColor.resolveWith(
+              (Set<MaterialState> states) => primaryBlueColor)),
+      sliderTheme: SliderThemeData(
+        thumbColor: primaryBlueColor,
+        showValueIndicator: ShowValueIndicator.always,
+        
+        valueIndicatorColor: secondaryLightBlueColor,
+        valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+        inactiveTrackColor: secondaryLightBlueColor,
+        activeTrackColor: primaryBlueColor,
+        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
+        overlayShape: RoundSliderOverlayShape(overlayRadius: 16),
+        trackHeight: 3,
+        valueIndicatorTextStyle: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w600,
+          fontSize: 13.mezSp,
+          color: Colors.white,
+        ),
+      ),
       progressIndicatorTheme:
           ProgressIndicatorThemeData(color: primaryBlueColor),
       appBarTheme: AppBarTheme(

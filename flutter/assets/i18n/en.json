@@ -705,6 +705,9 @@
           "title": "Open Delivery",
           "from": "From",
           "to": "To",
+          "chooseCompany" :"Choose your delivery company",
+          "chooseCompanyInfo" :"If you choose multiple the first company to accept your order will receive the order.",
+
           "thisFieldCanBeEmpty": "This field can be empty",
           "next": "Next",
           "orderNow": "Order now",

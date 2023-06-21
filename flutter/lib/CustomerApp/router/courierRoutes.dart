@@ -1,23 +1,18 @@
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart'
     deferred as viewCourierOrder;
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierRequest/CustCourierRequestView.dart'
-    deferred as kRequestCourierView;
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierRequest/CustCourierRequestView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierServiceView/CustCourierServiceView.dart'
     deferred as courierService;
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart'
     deferred as courierList;
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/CustRequestCourierView.dart'
     deferred as requestCourier;
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CourierRoutes {
   static const String kCouriersRoute = '/couriers';
   static const String kCourierServiceRoute = '/courier/:companyId';
-  static const String kCourierRequestRoute = '/requestCourier/:courierId';
-  static const String kRequestCourierViewRoute = '/requestCourierView';
+  static const String kCourierRequestRoute = '/requestCourier';
   static const String kCourierOrderView = '/courierOrders/:orderId';
   static String custCourierOrderRoute(int orderId) {
     return kCourierOrderView.replaceFirst(":orderId", "$orderId");
@@ -45,12 +40,5 @@ class CourierRoutes {
       middleware: <QMiddleware>[DefferedLoader(viewCourierOrder.loadLibrary)],
       builder: () => viewCourierOrder.CustCourierOrderView(),
     ),
-    QRoute(
-        path: kRequestCourierViewRoute,
-        name: kRequestCourierViewRoute,
-        builder: () => CustCourierRequestView(),
-        middleware: <QMiddleware>[
-          DefferedLoader(kRequestCourierView.loadLibrary)
-        ]),
   ];
 }

@@ -166,8 +166,7 @@ Future<List<DeliveryCompany>?> get_dv_companies() async {
       fetchPolicy: FetchPolicy.noCache,
     ),
   );
-  mezDbgPrint(
-      "Get nearby companies =========================>>>>>>>>>>${res.data}");
+
   if (res.parsedData?.delivery_company == null) {
     throwError(res.exception);
   }
