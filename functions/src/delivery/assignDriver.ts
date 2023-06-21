@@ -71,11 +71,13 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
     }
     deliveryOrder.deliveryCost = deliveryOrder.customerOffer;
     for (let driverId in deliveryOrder.counterOffers) {
-      if(parseInt(driverId) != assignDriverDetails.deliveryDriverId) {
-        deliveryOrder.counterOffers[parseInt(driverId)].status = CounterOfferStatus.Rejected;
-      } else {
-        deliveryOrder.counterOffers[parseInt(driverId)].status = CounterOfferStatus.Accepted;
-        deliveryOrder.deliveryCost = deliveryOrder.counterOffers[parseInt(driverId)].price;
+      if(deliveryOrder.counterOffers[parseInt(driverId)].status == CounterOfferStatus.Requested) {
+        if(parseInt(driverId) != assignDriverDetails.deliveryDriverId) {
+          deliveryOrder.counterOffers[parseInt(driverId)].status = CounterOfferStatus.Rejected;
+        } else {
+          deliveryOrder.counterOffers[parseInt(driverId)].status = CounterOfferStatus.Accepted;
+          deliveryOrder.deliveryCost = deliveryOrder.counterOffers[parseInt(driverId)].price;
+        }
       }
     }
     await assignDeliveryDriver(deliveryOrder, deliveryDriver);

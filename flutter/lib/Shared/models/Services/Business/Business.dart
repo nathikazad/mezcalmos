@@ -12,6 +12,8 @@ class BusinessCard {
   int? reviewCount;
   DateTime? lastActive;
   Location? location;
+  bool? onlineOrdering;
+  String? phoneNo;
 
   BusinessCard(
       {required this.id,
@@ -20,7 +22,9 @@ class BusinessCard {
       required this.image,
       required this.acceptedPayments,
       required this.currency,
+      required this.onlineOrdering,
       this.avgRating,
+      this.phoneNo,
       this.lastActive,
       this.reviewCount,
       this.location});

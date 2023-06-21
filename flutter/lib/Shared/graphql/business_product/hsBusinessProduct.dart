@@ -107,6 +107,8 @@ Future<ProductWithBusinessCard?> get_product_by_id(
                     [],
               )),
           business: BusinessCard(
+            onlineOrdering: data.business.details.online_ordering,
+            phoneNo: data.business.details.phone_number,
             lastActive: data.business.details.last_active_time != null
                 ? DateTime.parse(data.business.details.last_active_time!)
                 : null,

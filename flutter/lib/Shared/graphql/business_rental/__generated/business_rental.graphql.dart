@@ -1,4 +1,5 @@
 import '../../__generated/schema.graphql.dart';
+import '../../buisness_order/__generated/business_order.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -2821,6 +2822,20 @@ const documentNodeQueryget_rental_by_id = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'online_ordering'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'last_active_time'),
                     alias: null,
                     arguments: [],
@@ -3675,6 +3690,8 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     required this.name,
     required this.currency,
     required this.image,
+    required this.online_ordering,
+    this.phone_number,
     required this.last_active_time,
     required this.location,
     required this.accepted_payments,
@@ -3687,6 +3704,8 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$image = json['image'];
+    final l$online_ordering = json['online_ordering'];
+    final l$phone_number = json['phone_number'];
     final l$last_active_time = json['last_active_time'];
     final l$location = json['location'];
     final l$accepted_payments = json['accepted_payments'];
@@ -3696,6 +3715,8 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
       name: (l$name as String),
       currency: (l$currency as String),
       image: (l$image as String),
+      online_ordering: (l$online_ordering as bool),
+      phone_number: (l$phone_number as String?),
       last_active_time: (l$last_active_time as String),
       location:
           Query$get_rental_by_id$business_rental_by_pk$business$details$location
@@ -3712,6 +3733,10 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
   final String currency;
 
   final String image;
+
+  final bool online_ordering;
+
+  final String? phone_number;
 
   final String last_active_time;
 
@@ -3732,6 +3757,10 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     _resultData['currency'] = l$currency;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$last_active_time = last_active_time;
     _resultData['last_active_time'] = l$last_active_time;
     final l$location = location;
@@ -3749,6 +3778,8 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     final l$name = name;
     final l$currency = currency;
     final l$image = image;
+    final l$online_ordering = online_ordering;
+    final l$phone_number = phone_number;
     final l$last_active_time = last_active_time;
     final l$location = location;
     final l$accepted_payments = accepted_payments;
@@ -3758,6 +3789,8 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
       l$name,
       l$currency,
       l$image,
+      l$online_ordering,
+      l$phone_number,
       l$last_active_time,
       l$location,
       l$accepted_payments,
@@ -3793,6 +3826,16 @@ class Query$get_rental_by_id$business_rental_by_pk$business$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$last_active_time = last_active_time;
@@ -3847,6 +3890,8 @@ abstract class CopyWith$Query$get_rental_by_id$business_rental_by_pk$business$de
     String? name,
     String? currency,
     String? image,
+    bool? online_ordering,
+    String? phone_number,
     String? last_active_time,
     Query$get_rental_by_id$business_rental_by_pk$business$details$location?
         location,
@@ -3879,6 +3924,8 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$business$detail
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? image = _undefined,
+    Object? online_ordering = _undefined,
+    Object? phone_number = _undefined,
     Object? last_active_time = _undefined,
     Object? location = _undefined,
     Object? accepted_payments = _undefined,
@@ -3895,6 +3942,13 @@ class _CopyWithImpl$Query$get_rental_by_id$business_rental_by_pk$business$detail
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         last_active_time:
             last_active_time == _undefined || last_active_time == null
                 ? _instance.last_active_time
@@ -3934,6 +3988,8 @@ class _CopyWithStubImpl$Query$get_rental_by_id$business_rental_by_pk$business$de
     String? name,
     String? currency,
     String? image,
+    bool? online_ordering,
+    String? phone_number,
     String? last_active_time,
     Query$get_rental_by_id$business_rental_by_pk$business$details$location?
         location,
@@ -6156,6 +6212,20 @@ const documentNodeQueryget_home_by_id = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'online_ordering'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'currency'),
                     alias: null,
                     arguments: [],
@@ -7684,6 +7754,8 @@ class Query$get_home_by_id$business_home_by_pk$business$details {
     required this.last_active_time,
     required this.id,
     required this.name,
+    required this.online_ordering,
+    this.phone_number,
     required this.currency,
     required this.location,
     required this.image,
@@ -7697,6 +7769,8 @@ class Query$get_home_by_id$business_home_by_pk$business$details {
     final l$last_active_time = json['last_active_time'];
     final l$id = json['id'];
     final l$name = json['name'];
+    final l$online_ordering = json['online_ordering'];
+    final l$phone_number = json['phone_number'];
     final l$currency = json['currency'];
     final l$location = json['location'];
     final l$image = json['image'];
@@ -7707,6 +7781,8 @@ class Query$get_home_by_id$business_home_by_pk$business$details {
       last_active_time: (l$last_active_time as String),
       id: (l$id as int),
       name: (l$name as String),
+      online_ordering: (l$online_ordering as bool),
+      phone_number: (l$phone_number as String?),
       currency: (l$currency as String),
       location:
           Query$get_home_by_id$business_home_by_pk$business$details$location
@@ -7726,6 +7802,10 @@ class Query$get_home_by_id$business_home_by_pk$business$details {
   final int id;
 
   final String name;
+
+  final bool online_ordering;
+
+  final String? phone_number;
 
   final String currency;
 
@@ -7749,6 +7829,10 @@ class Query$get_home_by_id$business_home_by_pk$business$details {
     _resultData['id'] = l$id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
     final l$location = location;
@@ -7769,6 +7853,8 @@ class Query$get_home_by_id$business_home_by_pk$business$details {
     final l$last_active_time = last_active_time;
     final l$id = id;
     final l$name = name;
+    final l$online_ordering = online_ordering;
+    final l$phone_number = phone_number;
     final l$currency = currency;
     final l$location = location;
     final l$image = image;
@@ -7779,6 +7865,8 @@ class Query$get_home_by_id$business_home_by_pk$business$details {
       l$last_active_time,
       l$id,
       l$name,
+      l$online_ordering,
+      l$phone_number,
       l$currency,
       l$location,
       l$image,
@@ -7810,6 +7898,16 @@ class Query$get_home_by_id$business_home_by_pk$business$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$currency = currency;
@@ -7873,6 +7971,8 @@ abstract class CopyWith$Query$get_home_by_id$business_home_by_pk$business$detail
     String? last_active_time,
     int? id,
     String? name,
+    bool? online_ordering,
+    String? phone_number,
     String? currency,
     Query$get_home_by_id$business_home_by_pk$business$details$location?
         location,
@@ -7909,6 +8009,8 @@ class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details<
     Object? last_active_time = _undefined,
     Object? id = _undefined,
     Object? name = _undefined,
+    Object? online_ordering = _undefined,
+    Object? phone_number = _undefined,
     Object? currency = _undefined,
     Object? location = _undefined,
     Object? image = _undefined,
@@ -7925,6 +8027,13 @@ class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk$business$details<
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
@@ -7979,6 +8088,8 @@ class _CopyWithStubImpl$Query$get_home_by_id$business_home_by_pk$business$detail
     String? last_active_time,
     int? id,
     String? name,
+    bool? online_ordering,
+    String? phone_number,
     String? currency,
     Query$get_home_by_id$business_home_by_pk$business$details$location?
         location,

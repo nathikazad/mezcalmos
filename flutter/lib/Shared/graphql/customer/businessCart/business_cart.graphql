@@ -35,6 +35,7 @@ query getBusinessCart($customer_id: Int!) {
             id
             name
             currency
+            online_ordering
             accepted_payments
             image
             location {
@@ -78,6 +79,7 @@ query getBusinessCart($customer_id: Int!) {
           details {
             name
             currency
+            online_ordering
             id
             accepted_payments
             image
@@ -90,6 +92,7 @@ query getBusinessCart($customer_id: Int!) {
           details {
             name
             currency
+            online_ordering
             id
             accepted_payments
             image
@@ -128,6 +131,7 @@ query getBusinessCart($customer_id: Int!) {
             currency
             id
             accepted_payments
+            online_ordering
             image
           }
         }
@@ -162,6 +166,7 @@ query getBusinessCart($customer_id: Int!) {
           details {
             name
             currency
+            online_ordering
             id
             accepted_payments
             image
@@ -287,6 +292,7 @@ subscription listen_on_business_order_request($_id: Int!) {
             id
             name
             currency
+            online_ordering
             accepted_payments
             image
             location {
@@ -328,6 +334,7 @@ subscription listen_on_business_order_request($_id: Int!) {
         business {
           details {
             name
+            online_ordering
             currency
             id
             accepted_payments
@@ -341,6 +348,7 @@ subscription listen_on_business_order_request($_id: Int!) {
             name
             currency
             id
+            online_ordering
             accepted_payments
             image
           }
@@ -377,6 +385,7 @@ subscription listen_on_business_order_request($_id: Int!) {
             currency
             id
             accepted_payments
+            online_ordering
             image
           }
         }
@@ -412,6 +421,7 @@ subscription listen_on_business_order_request($_id: Int!) {
             currency
             id
             accepted_payments
+            online_ordering
             image
           }
         }

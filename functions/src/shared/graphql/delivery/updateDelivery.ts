@@ -157,7 +157,7 @@ export async function setNotifiedDrivers(deliveryOrder: DeliveryOrder) {
       delivery_cost: true
     }]
   }, {
-    "deliveryOrder": deliveryOrder.notifiedDrivers
+    "notified_drivers": deliveryOrder.notifiedDrivers
   })
   
 }

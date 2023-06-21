@@ -1,5 +1,5 @@
 import { Language, Location } from "../../Generic/Generic";
-import { Schedule } from "../../Generic/Schedule";
+import { Weekday, WorkingDay } from "../../Generic/Schedule";
 import { ForegroundNotification } from "../../Notification";
 import { ServiceProvider } from "../Service";
 
@@ -67,7 +67,7 @@ export interface Event {
   category1: EventCategory1;
   category2?: EventCategory2;
   scheduleType: ScheduleType;
-  schedule?: Schedule;
+  schedule?: Record<Weekday, WorkingDay>;
   details: BusinessItemDetails;
   gpsLocation?: Location;
   startsAt?: string;
@@ -77,7 +77,7 @@ export interface Event {
 export interface Service {
   id?: number;
   category1: ServiceCategory1;
-  schedule?: Schedule;
+  schedule?: Record<Weekday, WorkingDay>;
   details: BusinessItemDetails;
 }
 export interface Product {

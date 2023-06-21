@@ -8,6 +8,8 @@ query get_product_by_id($id: Int!) {
         id
         accepted_payments
         image
+        online_ordering
+        phone_number
         name
         currency
       }
@@ -114,21 +116,47 @@ query get_product_by_category(
 }
 
 query number_of_products($distance: Float!, $from: geography!) {
-  business_product_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}}) {
+  business_product_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+        }
+      }
+    }
+  ) {
     aggregate {
       count
     }
   }
 }
 
-query number_of_products_by_category($distance: Float!, $from: geography!, $category1: String) {
-  business_product_aggregate(where: {business: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, approved: {_eq: true}, open_status: {_neq: "closedIndefinitely"}}}, details: {category1: {_eq: $category1}}}) {
+query number_of_products_by_category(
+  $distance: Float!
+  $from: geography!
+  $category1: String
+) {
+  business_product_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+        }
+      }
+      details: { category1: { _eq: $category1 } }
+    }
+  ) {
     aggregate {
       count
     }
   }
 }
-
 
 mutation add_product($object: business_product_insert_input!) {
   insert_business_product_one(object: $object) {
@@ -137,49 +165,48 @@ mutation add_product($object: business_product_insert_input!) {
   }
 }
 
-
 query get_business_products($businessId: Int!, $limit: Int, $offset: Int) {
-  business_product(where:  {business_id: {_eq: $businessId}}, limit: $limit, offset: $offset) {
-    
+  business_product(
+    where: { business_id: { _eq: $businessId } }
+    limit: $limit
+    offset: $offset
+  ) {
+    id
 
-      
+    details {
+      name_id
+      description_id
       id
- 
-      details {
-         name_id
-        description_id
-        id
-        name {
-          translations {
-            language_id
-            value
-          }
+      name {
+        translations {
+          language_id
+          value
         }
-        description {
-          translations {
-            language_id
-            value
-          }
-        }
-        tags
-        additional_parameters
-        available
-        category1
-        category2
-        cost
-        image
-        position
       }
-      business {
-        id
-        details {
-          id
-          name
-          currency
+      description {
+        translations {
+          language_id
+          value
         }
+      }
+      tags
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+    }
+    business {
+      id
+      details {
+        id
+        name
+        currency
       }
     }
-  
+  }
 }
 
 mutation update_product_category1($id: Int!, $category1: String!) {
