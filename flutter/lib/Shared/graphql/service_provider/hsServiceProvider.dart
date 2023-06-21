@@ -107,6 +107,7 @@ Future<Service?> get_service_details_by_id(
       acceptedPayments: data.accepted_payments, stripeInfo: data.stripe_info);
 
   return MainService(
+      uniqueId: data.unique_id,
       onlineOrdering: data.online_ordering,
       isOpen: data.is_open ?? false,
       deliveryCost: null,

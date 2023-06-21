@@ -1005,6 +1005,13 @@ const documentNodeQuerygetServiceDetails = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'unique_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'accepted_payments'),
             alias: null,
             arguments: [],
@@ -1405,6 +1412,7 @@ extension ClientExtension$Query$getServiceDetails on graphql.GraphQLClient {
 
 class Query$getServiceDetails$service_provider_details_by_pk {
   Query$getServiceDetails$service_provider_details_by_pk({
+    required this.unique_id,
     required this.accepted_payments,
     required this.approved,
     this.is_open,
@@ -1429,6 +1437,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
 
   factory Query$getServiceDetails$service_provider_details_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$unique_id = json['unique_id'];
     final l$accepted_payments = json['accepted_payments'];
     final l$approved = json['approved'];
     final l$is_open = json['is_open'];
@@ -1450,6 +1459,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     final l$description = json['description'];
     final l$$__typename = json['__typename'];
     return Query$getServiceDetails$service_provider_details_by_pk(
+      unique_id: (l$unique_id as String),
       accepted_payments: mapFromJson(l$accepted_payments),
       approved: (l$approved as bool),
       is_open: (l$is_open as bool?),
@@ -1479,6 +1489,8 @@ class Query$getServiceDetails$service_provider_details_by_pk {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String unique_id;
 
   final dynamic accepted_payments;
 
@@ -1525,6 +1537,8 @@ class Query$getServiceDetails$service_provider_details_by_pk {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$unique_id = unique_id;
+    _resultData['unique_id'] = l$unique_id;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$approved = approved;
@@ -1570,6 +1584,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
 
   @override
   int get hashCode {
+    final l$unique_id = unique_id;
     final l$accepted_payments = accepted_payments;
     final l$approved = approved;
     final l$is_open = is_open;
@@ -1591,6 +1606,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     final l$description = description;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$unique_id,
       l$accepted_payments,
       l$approved,
       l$is_open,
@@ -1621,6 +1637,11 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     }
     if (!(other is Query$getServiceDetails$service_provider_details_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$unique_id = unique_id;
+    final lOther$unique_id = other.unique_id;
+    if (l$unique_id != lOther$unique_id) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -1750,6 +1771,7 @@ abstract class CopyWith$Query$getServiceDetails$service_provider_details_by_pk<
       _CopyWithStubImpl$Query$getServiceDetails$service_provider_details_by_pk;
 
   TRes call({
+    String? unique_id,
     dynamic? accepted_payments,
     bool? approved,
     bool? is_open,
@@ -1797,6 +1819,7 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? unique_id = _undefined,
     Object? accepted_payments = _undefined,
     Object? approved = _undefined,
     Object? is_open = _undefined,
@@ -1819,6 +1842,9 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getServiceDetails$service_provider_details_by_pk(
+        unique_id: unique_id == _undefined || unique_id == null
+            ? _instance.unique_id
+            : (unique_id as String),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
@@ -1920,6 +1946,7 @@ class _CopyWithStubImpl$Query$getServiceDetails$service_provider_details_by_pk<
   TRes _res;
 
   call({
+    String? unique_id,
     dynamic? accepted_payments,
     bool? approved,
     bool? is_open,
