@@ -13,6 +13,7 @@ query getServiceProviderLinks($serviceLinkId: Int!) {
 
 query getServiceDetails($id: Int!) {
   service_provider_details_by_pk(id: $id) {
+    unique_id
     accepted_payments
     approved
     is_open
@@ -25,7 +26,7 @@ query getServiceDetails($id: Int!) {
     name
     open_status
     phone_number
-    
+    online_ordering
     service_link_id
     stripe_info {
       charge_fees_on_customer
@@ -196,5 +197,17 @@ query getServiceIsOpen($serviceDetailsId: Int!) {
 mutation setLastActiveTime($id: Int!) {
   update_service_provider_details_by_pk(pk_columns: {id: $id}, _set: {last_active_time: "now()"}) {
     last_active_time
+  }
+}
+
+mutation update_business_online_ordering(
+  $online_ordering: Boolean!
+  $id: Int!
+) {
+  update_service_provider_details_by_pk(
+    pk_columns: { id: $id }
+    _set: { online_ordering: $online_ordering }
+  ) {
+    online_ordering
   }
 }

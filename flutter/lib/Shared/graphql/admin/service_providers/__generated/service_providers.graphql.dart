@@ -432,6 +432,13 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'image'),
                 alias: null,
                 arguments: [],
@@ -1197,6 +1204,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     required this.id,
     this.is_open,
     required this.approved,
+    required this.online_ordering,
     required this.image,
     required this.name,
     required this.language,
@@ -1213,6 +1221,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$id = json['id'];
     final l$is_open = json['is_open'];
     final l$approved = json['approved'];
+    final l$online_ordering = json['online_ordering'];
     final l$image = json['image'];
     final l$name = json['name'];
     final l$language = json['language'];
@@ -1226,6 +1235,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
       id: (l$id as int),
       is_open: (l$is_open as bool?),
       approved: (l$approved as bool),
+      online_ordering: (l$online_ordering as bool),
       image: (l$image as String),
       name: (l$name as String),
       language: mapFromJson(l$language),
@@ -1244,6 +1254,8 @@ class Query$admin_get_dv_companies$delivery_company$details {
   final bool? is_open;
 
   final bool approved;
+
+  final bool online_ordering;
 
   final String image;
 
@@ -1271,6 +1283,8 @@ class Query$admin_get_dv_companies$delivery_company$details {
     _resultData['is_open'] = l$is_open;
     final l$approved = approved;
     _resultData['approved'] = l$approved;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$name = name;
@@ -1297,6 +1311,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$id = id;
     final l$is_open = is_open;
     final l$approved = approved;
+    final l$online_ordering = online_ordering;
     final l$image = image;
     final l$name = name;
     final l$language = language;
@@ -1310,6 +1325,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
       l$id,
       l$is_open,
       l$approved,
+      l$online_ordering,
       l$image,
       l$name,
       l$language,
@@ -1344,6 +1360,11 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$approved = approved;
     final lOther$approved = other.approved;
     if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$image = image;
@@ -1421,6 +1442,7 @@ abstract class CopyWith$Query$admin_get_dv_companies$delivery_company$details<
     int? id,
     bool? is_open,
     bool? approved,
+    bool? online_ordering,
     String? image,
     String? name,
     dynamic? language,
@@ -1454,6 +1476,7 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details<TRes>
     Object? id = _undefined,
     Object? is_open = _undefined,
     Object? approved = _undefined,
+    Object? online_ordering = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
     Object? language = _undefined,
@@ -1470,6 +1493,10 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details<TRes>
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -1521,6 +1548,7 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details<
     int? id,
     bool? is_open,
     bool? approved,
+    bool? online_ordering,
     String? image,
     String? name,
     dynamic? language,
@@ -2071,6 +2099,13 @@ const documentNodeQueryadmin_get_laundries = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'open_status'),
                 alias: null,
                 arguments: [],
@@ -2455,6 +2490,7 @@ class Query$admin_get_laundries$laundry_store$details {
     required this.image,
     required this.name,
     required this.language,
+    required this.online_ordering,
     required this.open_status,
     required this.creation_time,
     required this.service_provider_type,
@@ -2470,6 +2506,7 @@ class Query$admin_get_laundries$laundry_store$details {
     final l$image = json['image'];
     final l$name = json['name'];
     final l$language = json['language'];
+    final l$online_ordering = json['online_ordering'];
     final l$open_status = json['open_status'];
     final l$creation_time = json['creation_time'];
     final l$service_provider_type = json['service_provider_type'];
@@ -2482,6 +2519,7 @@ class Query$admin_get_laundries$laundry_store$details {
       image: (l$image as String),
       name: (l$name as String),
       language: mapFromJson(l$language),
+      online_ordering: (l$online_ordering as bool),
       open_status: (l$open_status as String),
       creation_time: (l$creation_time as String),
       service_provider_type: (l$service_provider_type as String),
@@ -2503,6 +2541,8 @@ class Query$admin_get_laundries$laundry_store$details {
   final String name;
 
   final dynamic language;
+
+  final bool online_ordering;
 
   final String open_status;
 
@@ -2528,6 +2568,8 @@ class Query$admin_get_laundries$laundry_store$details {
     _resultData['name'] = l$name;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$creation_time = creation_time;
@@ -2549,6 +2591,7 @@ class Query$admin_get_laundries$laundry_store$details {
     final l$image = image;
     final l$name = name;
     final l$language = language;
+    final l$online_ordering = online_ordering;
     final l$open_status = open_status;
     final l$creation_time = creation_time;
     final l$service_provider_type = service_provider_type;
@@ -2561,6 +2604,7 @@ class Query$admin_get_laundries$laundry_store$details {
       l$image,
       l$name,
       l$language,
+      l$online_ordering,
       l$open_status,
       l$creation_time,
       l$service_provider_type,
@@ -2606,6 +2650,11 @@ class Query$admin_get_laundries$laundry_store$details {
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$open_status = open_status;
@@ -2664,6 +2713,7 @@ abstract class CopyWith$Query$admin_get_laundries$laundry_store$details<TRes> {
     String? image,
     String? name,
     dynamic? language,
+    bool? online_ordering,
     String? open_status,
     String? creation_time,
     String? service_provider_type,
@@ -2694,6 +2744,7 @@ class _CopyWithImpl$Query$admin_get_laundries$laundry_store$details<TRes>
     Object? image = _undefined,
     Object? name = _undefined,
     Object? language = _undefined,
+    Object? online_ordering = _undefined,
     Object? open_status = _undefined,
     Object? creation_time = _undefined,
     Object? service_provider_type = _undefined,
@@ -2715,6 +2766,10 @@ class _CopyWithImpl$Query$admin_get_laundries$laundry_store$details<TRes>
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -2754,6 +2809,7 @@ class _CopyWithStubImpl$Query$admin_get_laundries$laundry_store$details<TRes>
     String? image,
     String? name,
     dynamic? language,
+    bool? online_ordering,
     String? open_status,
     String? creation_time,
     String? service_provider_type,
@@ -4537,6 +4593,13 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'image'),
                 alias: null,
                 arguments: [],
@@ -4930,6 +4993,7 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
     this.is_open,
     required this.approved,
     this.firebase_id,
+    required this.online_ordering,
     required this.image,
     required this.language,
     required this.location,
@@ -4945,6 +5009,7 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
     final l$is_open = json['is_open'];
     final l$approved = json['approved'];
     final l$firebase_id = json['firebase_id'];
+    final l$online_ordering = json['online_ordering'];
     final l$image = json['image'];
     final l$language = json['language'];
     final l$location = json['location'];
@@ -4957,6 +5022,7 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
       is_open: (l$is_open as bool?),
       approved: (l$approved as bool),
       firebase_id: (l$firebase_id as String?),
+      online_ordering: (l$online_ordering as bool),
       image: (l$image as String),
       language: mapFromJson(l$language),
       location:
@@ -4976,6 +5042,8 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
   final bool approved;
 
   final String? firebase_id;
+
+  final bool online_ordering;
 
   final String image;
 
@@ -5002,6 +5070,8 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
     _resultData['approved'] = l$approved;
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$language = language;
@@ -5025,6 +5095,7 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
     final l$is_open = is_open;
     final l$approved = approved;
     final l$firebase_id = firebase_id;
+    final l$online_ordering = online_ordering;
     final l$image = image;
     final l$language = language;
     final l$location = location;
@@ -5037,6 +5108,7 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
       l$is_open,
       l$approved,
       l$firebase_id,
+      l$online_ordering,
       l$image,
       l$language,
       l$location,
@@ -5074,6 +5146,11 @@ class Query$admin_get_restaurants$restaurant_restaurant$details {
     final l$firebase_id = firebase_id;
     final lOther$firebase_id = other.firebase_id;
     if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$image = image;
@@ -5143,6 +5220,7 @@ abstract class CopyWith$Query$admin_get_restaurants$restaurant_restaurant$detail
     bool? is_open,
     bool? approved,
     String? firebase_id,
+    bool? online_ordering,
     String? image,
     dynamic? language,
     Query$admin_get_restaurants$restaurant_restaurant$details$location?
@@ -5178,6 +5256,7 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$details<
     Object? is_open = _undefined,
     Object? approved = _undefined,
     Object? firebase_id = _undefined,
+    Object? online_ordering = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
     Object? location = _undefined,
@@ -5195,6 +5274,10 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$details<
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -5242,6 +5325,7 @@ class _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$detail
     bool? is_open,
     bool? approved,
     String? firebase_id,
+    bool? online_ordering,
     String? image,
     dynamic? language,
     Query$admin_get_restaurants$restaurant_restaurant$details$location?

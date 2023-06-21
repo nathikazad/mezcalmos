@@ -28,6 +28,7 @@ class Laundry extends Service {
     required super.isOpen,
     required this.selfDelivery,
     required this.laundryCosts,
+    required super.onlineOrdering,
     required cModels.ServiceProviderLanguage languages,
   }) : super(
             info: userInfo,

@@ -531,6 +531,20 @@
       }
     },
     "pages": {
+      "CustCartView": {
+        "CustCartView": {
+          "myCart": "Mi carrito",
+          "request": "Pedido",
+          "notes": "Notas",
+          "writeNotesHere": "Escribe tus notas aquí.",
+          "summary": "Resumen",
+          "orderCost": "Costo de la orden",
+          "disclaimer": "Descargo de responsabilidad",
+          "disclaimerPartOneText": "Mezkala solo transmite su solicitud de pedido al negocio",
+          "disclaimerPartTwoText": " y no es responsable de la calidad o las acciones del negocio.",
+          "okay": "Bueno"
+        }
+      },
       "JoinUsView": {
         "joinUs": "Únete a nosotros",
         "restaurantBusiness": {
@@ -706,6 +720,7 @@
           "next": "Próxima",
           "orderNow": "Ordenar ahora",
           "deliveryCompany": "Compañía de entrega",
+          "topDescription": "Puede solicitar cualquier artículo desde cualquier lugar y un controlador de entrega lo recogerá para usted.",
           "CustRequestCourierItems": {
             "item": "Artículo",
             "remove": "Eliminar",
@@ -2242,6 +2257,8 @@
         "schedule": "Horarios",
         "payments": "Pagos",
         "delivery": "Entrega",
+        "onlineOrdering": "Pedidos en línea",
+        "onlineOrderTip": "Cuando se enciende la palanca, los clientes podrán hacer pedidos. De lo contrario, el cliente solo podrá ver los productos y servicios que ofrece.",
         "reviews": "Reseñas",
         "share": "Compartir",
         "privacyPolicies": "Políticas de privacidad",
@@ -2249,13 +2266,16 @@
         "openService": "Abrir servicio",
         "closeService": "Cerrar para siempre",
         "serviceClosed": "El servicio está cerrado indefinidamente",
-        "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación."
+        "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación.",
+        "businessId": "Identificación del negocio",
+        "onlySevenDays": "Puede cambiar su identificación solo una vez cada 7 días.",
+        "cancel": "Cancelar",
+        "save": "Ahorrar"
       },
       "CreateServiceView": {
-
         "pages": {
           "createServiceStartPage": {
-            "opNote" : "Si desea que lo agregue como operador a un negocio existente, solicite al propietario del negocio que le envíe código de invitación",
+            "opNote": "Si desea que lo agregue como operador a un negocio existente, solicite al propietario del negocio que le envíe código de invitación",
 
             "create": "Crear",
             "subtitle": {
@@ -2292,6 +2312,8 @@
             "businessTypeErrorText": "Por favor, seleccione un tipo de negocio",
             "save": "Guardar",
             "cancel": "Cancelar",
+            "businessId": "Identificación del negocio",
+            "enterYourBusiness": "Ingrese su identificación de negocios",
             "businessProfile": {
               "surfShop": "Tienda de Surf",
               "vehicleRental": "Alquiler de Vehículos",
@@ -4080,6 +4102,6 @@
     "slowInternet": "Internet lento",
     "noInternet": "Sin conexión a Internet",
     "min": "min",
-    "addingOp" : "Agregarlo como operador"
+    "addingOp": "Agregarlo como operador"
   }
 }

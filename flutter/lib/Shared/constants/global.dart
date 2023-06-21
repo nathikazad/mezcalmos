@@ -133,6 +133,8 @@ const String aUpdate = "assets/images/shared/update.png";
 const String aMoney = "assets/images/shared/money.png";
 const String aGpay = "assets/images/customer/gPay.png";
 
+const String aWhatsApp = "assets/images/shared/whatsApp.png";
+
 const String noOrdersAsset = "assets/images/shared/noOrderIllustration.png";
 const String closedServiceAsset = "assets/images/shared/closedService.png";
 const String aRequestWaiting = "assets/images/shared/requestPerson.png";

@@ -37,15 +37,21 @@ class BaseMessagingScreen extends StatefulWidget {
   BaseMessagingScreenState createState() => BaseMessagingScreenState();
 
   static Future<void> navigate(
-      {required int chatId, IncomingViewLink? incomingViewLink}) {
+      {required int chatId,
+      String? phoneNumber,
+      IncomingViewLink? incomingViewLink}) {
     return MezRouter.toPath(
         SharedRoutes.kMessagesRoute.replaceAll(":chatId", chatId.toString()),
-        arguments: {"incomingViewLink": incomingViewLink});
+        arguments: {
+          "incomingViewLink": incomingViewLink,
+          "phoneNumber": phoneNumber
+        });
   }
 }
 
 class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   late final int chatId;
+  late final String? phoneNumber;
 
   ParticipantType recipientType = ParticipantType.Customer;
   String? recipientId;
@@ -60,6 +66,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
 
   @override
   void initState() {
+    phoneNumber = MezRouter.bodyArguments?['phoneNumber'].toString();
     if (MezRouter.urlArguments['chatId'] == null) {
       customSnackBar(
         title: 'Error',
@@ -290,6 +297,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
           },
         ),
         actions: <Widget>[
+          if (phoneNumber != null || !kIsWeb) _whatsAppButton(),
           if (controller.chat.value?.chatInfo.phoneNumber != null || !kIsWeb)
             _callButton(context),
 
@@ -370,6 +378,22 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   }
 
   void callAgora() {}
+
+  Widget _whatsAppButton() {
+    return GestureDetector(
+      onTap: () {
+        //TO Add WhatsApp call
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 5),
+        child: CircleAvatar(
+          radius: 14,
+          backgroundColor: Color(0xFF60D669),
+          child: Image.asset(aWhatsApp),
+        ),
+      ),
+    );
+  }
 
   Container _callButton(BuildContext context) {
     return Container(

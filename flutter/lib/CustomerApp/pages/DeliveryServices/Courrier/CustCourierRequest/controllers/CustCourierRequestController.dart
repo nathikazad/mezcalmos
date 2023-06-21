@@ -59,10 +59,6 @@ class CustCourierRequestController {
 
   // methods //
   Future<void> init() async {
-    // company.value = await get_delivery_company();
-    unawaited(
-        get_delivery_cost(deliveryDetailsId: company.value!.deliveryDetailsId!)
-            .then((DeliveryCost? value) => deliveryCost = value));
     if (_authController.isUserSignedIn) {
       toLoc.value = Get.find<CustomerAuthController>()
           .customer

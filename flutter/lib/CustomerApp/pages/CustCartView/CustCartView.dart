@@ -11,10 +11,14 @@ import 'package:mezcalmos/CustomerApp/pages/CustCartView/controllers/CustCartVie
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["CustCartView"]["CustCartView"];
 
 class CustCartView extends StatefulWidget {
   const CustCartView({super.key});
@@ -45,13 +49,17 @@ class _CustCartViewState extends State<CustCartView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: "My Cart",
+        title: '${_i18n()['myCart']}',
       ),
       bottomNavigationBar: MezButton(
-        label: "Request",
+        label: '${_i18n()['request']}',
         withGradient: true,
         borderRadius: 0,
         onClick: () async {
+          if (custBusinessCartController.pastOrders == null ||
+              custBusinessCartController.pastOrders!.length <= 5) {
+            await _alertTermsAndServices();
+          }
           await custBusinessCartController.requestOrder();
         },
       ),
@@ -111,7 +119,7 @@ class _CustCartViewState extends State<CustCartView> {
                         ).toList(),
                       bigSeperator,
                       Text(
-                        "Notes",
+                        '${_i18n()['notes']}',
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
@@ -120,7 +128,7 @@ class _CustCartViewState extends State<CustCartView> {
                         minLines: 3,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
-                          hintText: "Write your notes here.",
+                          hintText: '${_i18n()['writeNotesHere']}',
                         ),
                       ),
                       bigSeperator,
@@ -129,7 +137,7 @@ class _CustCartViewState extends State<CustCartView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Summary",
+                              '${_i18n()['summary']}',
                               style: context.textTheme.bodyLarge,
                             ),
                             smallSepartor,
@@ -137,7 +145,7 @@ class _CustCartViewState extends State<CustCartView> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Order cost",
+                                  '${_i18n()['orderCost']}',
                                   style: context.textTheme.bodyMedium,
                                 ),
                                 Text(
@@ -155,5 +163,38 @@ class _CustCartViewState extends State<CustCartView> {
         ),
       ),
     );
+  }
+
+  Future<void> _alertTermsAndServices() async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            actionsPadding: EdgeInsets.only(bottom: 20, left: 25, right: 25),
+            insetPadding: EdgeInsets.all(15),
+            title: Text(
+              '${_i18n()['disclaimer']}',
+              textAlign: TextAlign.center,
+            ),
+            content: Text.rich(
+                textAlign: TextAlign.center,
+                TextSpan(
+                    text: '${_i18n()['disclaimerPartOneText']}',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                    children: [
+                      TextSpan(
+                          text: '${_i18n()['disclaimerPartTwoText']}',
+                          style: TextStyle(fontWeight: FontWeight.w400))
+                    ])),
+            actions: [
+              MezButton(
+                label: '${_i18n()['okay']}',
+                backgroundColor: primaryBlueColor,
+                onClick: () async => Navigator.pop(context),
+              )
+            ],
+          );
+        });
   }
 }

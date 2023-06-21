@@ -84,11 +84,13 @@ class _CustItemViewState extends State<CustItemView> {
     return Obx(
       () => Scaffold(
         resizeToAvoidBottomInset: false,
-        bottomSheet: (viewController.hasData)
-            ? ItemViewBottomBar(
-                viewController: viewController,
-              )
-            : null,
+        bottomSheet: !viewController.restaurant.value!.onlineOrdering
+            ? null
+            : (viewController.hasData)
+                ? ItemViewBottomBar(
+                    viewController: viewController,
+                  )
+                : null,
         body: (viewController.hasData)
             ? CustomScrollView(
                 slivers: [

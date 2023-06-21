@@ -38,6 +38,7 @@ query getLaundries($from: geography!, $distance: Float!, $limit: Int, $offset: I
       is_open
       image
       language
+      online_ordering
       name
       location {
         gps
@@ -78,18 +79,18 @@ query getLaundryStoreById($id: Int!) {
     delivery_details_id
     normal_delivery_time
     minimum_cost
- categories {
-        cost_by_kilo
-    id
-    name_id
-    position
-    
-    name {
-      translations {
-        value
-        language_id
+    categories {
+      cost_by_kilo
+      id
+      name_id
+      position
+
+      name {
+        translations {
+          value
+          language_id
+        }
       }
-    }
     }
     delivery_details_of_deliverer {
       cost_per_km
@@ -106,6 +107,7 @@ query getLaundryStoreById($id: Int!) {
       location_id
       currency
       image
+      online_ordering
       language
       description_id
       location {

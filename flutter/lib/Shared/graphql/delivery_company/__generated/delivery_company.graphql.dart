@@ -423,6 +423,13 @@ const documentNodeQuerygetDeliveryCompanyById = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'language'),
                 alias: null,
                 arguments: [],
@@ -1206,6 +1213,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     required this.image,
     required this.location_id,
     required this.name,
+    required this.online_ordering,
     required this.language,
     required this.open_status,
     required this.creation_time,
@@ -1226,6 +1234,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$image = json['image'];
     final l$location_id = json['location_id'];
     final l$name = json['name'];
+    final l$online_ordering = json['online_ordering'];
     final l$language = json['language'];
     final l$open_status = json['open_status'];
     final l$creation_time = json['creation_time'];
@@ -1243,6 +1252,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
       image: (l$image as String),
       location_id: (l$location_id as int),
       name: (l$name as String),
+      online_ordering: (l$online_ordering as bool),
       language: mapFromJson(l$language),
       open_status: (l$open_status as String),
       creation_time: (l$creation_time as String),
@@ -1274,6 +1284,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
   final int location_id;
 
   final String name;
+
+  final bool online_ordering;
 
   final dynamic language;
 
@@ -1311,6 +1323,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     _resultData['location_id'] = l$location_id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
     final l$open_status = open_status;
@@ -1340,6 +1354,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$image = image;
     final l$location_id = location_id;
     final l$name = name;
+    final l$online_ordering = online_ordering;
     final l$language = language;
     final l$open_status = open_status;
     final l$creation_time = creation_time;
@@ -1357,6 +1372,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
       l$image,
       l$location_id,
       l$name,
+      l$online_ordering,
       l$language,
       l$open_status,
       l$creation_time,
@@ -1416,6 +1432,11 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$language = language;
@@ -1494,6 +1515,7 @@ abstract class CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
     String? image,
     int? location_id,
     String? name,
+    bool? online_ordering,
     dynamic? language,
     String? open_status,
     String? creation_time,
@@ -1537,6 +1559,7 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
     Object? image = _undefined,
     Object? location_id = _undefined,
     Object? name = _undefined,
+    Object? online_ordering = _undefined,
     Object? language = _undefined,
     Object? open_status = _undefined,
     Object? creation_time = _undefined,
@@ -1567,6 +1590,10 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
@@ -1632,6 +1659,7 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
     String? image,
     int? location_id,
     String? name,
+    bool? online_ordering,
     dynamic? language,
     String? open_status,
     String? creation_time,
@@ -2563,6 +2591,13 @@ const documentNodeQuerygetDeliveryCompanies = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'language'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'online_ordering'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -3842,6 +3877,7 @@ class Query$getDeliveryCompanies$delivery_company$details {
     required this.location_id,
     required this.name,
     required this.language,
+    required this.online_ordering,
     required this.open_status,
     required this.creation_time,
     required this.service_provider_type,
@@ -3861,6 +3897,7 @@ class Query$getDeliveryCompanies$delivery_company$details {
     final l$location_id = json['location_id'];
     final l$name = json['name'];
     final l$language = json['language'];
+    final l$online_ordering = json['online_ordering'];
     final l$open_status = json['open_status'];
     final l$creation_time = json['creation_time'];
     final l$service_provider_type = json['service_provider_type'];
@@ -3877,6 +3914,7 @@ class Query$getDeliveryCompanies$delivery_company$details {
       location_id: (l$location_id as int),
       name: (l$name as String),
       language: mapFromJson(l$language),
+      online_ordering: (l$online_ordering as bool),
       open_status: (l$open_status as String),
       creation_time: (l$creation_time as String),
       service_provider_type: (l$service_provider_type as String),
@@ -3908,6 +3946,8 @@ class Query$getDeliveryCompanies$delivery_company$details {
   final String name;
 
   final dynamic language;
+
+  final bool online_ordering;
 
   final String open_status;
 
@@ -3942,6 +3982,8 @@ class Query$getDeliveryCompanies$delivery_company$details {
     _resultData['name'] = l$name;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$creation_time = creation_time;
@@ -3968,6 +4010,7 @@ class Query$getDeliveryCompanies$delivery_company$details {
     final l$location_id = location_id;
     final l$name = name;
     final l$language = language;
+    final l$online_ordering = online_ordering;
     final l$open_status = open_status;
     final l$creation_time = creation_time;
     final l$service_provider_type = service_provider_type;
@@ -3984,6 +4027,7 @@ class Query$getDeliveryCompanies$delivery_company$details {
       l$location_id,
       l$name,
       l$language,
+      l$online_ordering,
       l$open_status,
       l$creation_time,
       l$service_provider_type,
@@ -4045,6 +4089,11 @@ class Query$getDeliveryCompanies$delivery_company$details {
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$open_status = open_status;
@@ -4113,6 +4162,7 @@ abstract class CopyWith$Query$getDeliveryCompanies$delivery_company$details<
     int? location_id,
     String? name,
     dynamic? language,
+    bool? online_ordering,
     String? open_status,
     String? creation_time,
     String? service_provider_type,
@@ -4152,6 +4202,7 @@ class _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$details<TRes>
     Object? location_id = _undefined,
     Object? name = _undefined,
     Object? language = _undefined,
+    Object? online_ordering = _undefined,
     Object? open_status = _undefined,
     Object? creation_time = _undefined,
     Object? service_provider_type = _undefined,
@@ -4183,6 +4234,10 @@ class _CopyWithImpl$Query$getDeliveryCompanies$delivery_company$details<TRes>
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -4242,6 +4297,7 @@ class _CopyWithStubImpl$Query$getDeliveryCompanies$delivery_company$details<
     int? location_id,
     String? name,
     dynamic? language,
+    bool? online_ordering,
     String? open_status,
     String? creation_time,
     String? service_provider_type,
@@ -5229,6 +5285,13 @@ const documentNodeQuerygetNearByCompanies = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'schedule'),
                 alias: null,
                 arguments: [],
@@ -6008,6 +6071,7 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
     required this.location_id,
     required this.name,
     required this.language,
+    required this.online_ordering,
     this.schedule,
     required this.open_status,
     required this.creation_time,
@@ -6027,6 +6091,7 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
     final l$location_id = json['location_id'];
     final l$name = json['name'];
     final l$language = json['language'];
+    final l$online_ordering = json['online_ordering'];
     final l$schedule = json['schedule'];
     final l$open_status = json['open_status'];
     final l$creation_time = json['creation_time'];
@@ -6043,6 +6108,7 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
       location_id: (l$location_id as int),
       name: (l$name as String),
       language: mapFromJson(l$language),
+      online_ordering: (l$online_ordering as bool),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       open_status: (l$open_status as String),
       creation_time: (l$creation_time as String),
@@ -6073,6 +6139,8 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
   final String name;
 
   final dynamic language;
+
+  final bool online_ordering;
 
   final dynamic? schedule;
 
@@ -6108,6 +6176,8 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
     _resultData['name'] = l$name;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$open_status = open_status;
@@ -6135,6 +6205,7 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
     final l$location_id = location_id;
     final l$name = name;
     final l$language = language;
+    final l$online_ordering = online_ordering;
     final l$schedule = schedule;
     final l$open_status = open_status;
     final l$creation_time = creation_time;
@@ -6151,6 +6222,7 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
       l$location_id,
       l$name,
       l$language,
+      l$online_ordering,
       l$schedule,
       l$open_status,
       l$creation_time,
@@ -6209,6 +6281,11 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$details {
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$schedule = schedule;
@@ -6283,6 +6360,7 @@ abstract class CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies
     int? location_id,
     String? name,
     dynamic? language,
+    bool? online_ordering,
     dynamic? schedule,
     String? open_status,
     String? creation_time,
@@ -6326,6 +6404,7 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$det
     Object? location_id = _undefined,
     Object? name = _undefined,
     Object? language = _undefined,
+    Object? online_ordering = _undefined,
     Object? schedule = _undefined,
     Object? open_status = _undefined,
     Object? creation_time = _undefined,
@@ -6355,6 +6434,10 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$det
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
@@ -6417,6 +6500,7 @@ class _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies
     int? location_id,
     String? name,
     dynamic? language,
+    bool? online_ordering,
     dynamic? schedule,
     String? open_status,
     String? creation_time,

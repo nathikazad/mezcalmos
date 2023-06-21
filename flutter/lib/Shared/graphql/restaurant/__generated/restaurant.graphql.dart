@@ -1962,6 +1962,7 @@ class Query$getRestaurants$restaurant_restaurant$details {
     required this.image,
     required this.language,
     this.is_open,
+    required this.online_ordering,
     required this.name,
     required this.location,
     this.firebase_id,
@@ -1979,6 +1980,7 @@ class Query$getRestaurants$restaurant_restaurant$details {
     final l$image = json['image'];
     final l$language = json['language'];
     final l$is_open = json['is_open'];
+    final l$online_ordering = json['online_ordering'];
     final l$name = json['name'];
     final l$location = json['location'];
     final l$firebase_id = json['firebase_id'];
@@ -1993,6 +1995,7 @@ class Query$getRestaurants$restaurant_restaurant$details {
       image: (l$image as String),
       language: mapFromJson(l$language),
       is_open: (l$is_open as bool?),
+      online_ordering: (l$online_ordering as bool),
       name: (l$name as String),
       location:
           Query$getRestaurants$restaurant_restaurant$details$location.fromJson(
@@ -2017,6 +2020,8 @@ class Query$getRestaurants$restaurant_restaurant$details {
   final dynamic language;
 
   final bool? is_open;
+
+  final bool online_ordering;
 
   final String name;
 
@@ -2047,6 +2052,8 @@ class Query$getRestaurants$restaurant_restaurant$details {
     _resultData['language'] = mapToJson(l$language);
     final l$is_open = is_open;
     _resultData['is_open'] = l$is_open;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
@@ -2074,6 +2081,7 @@ class Query$getRestaurants$restaurant_restaurant$details {
     final l$image = image;
     final l$language = language;
     final l$is_open = is_open;
+    final l$online_ordering = online_ordering;
     final l$name = name;
     final l$location = location;
     final l$firebase_id = firebase_id;
@@ -2088,6 +2096,7 @@ class Query$getRestaurants$restaurant_restaurant$details {
       l$image,
       l$language,
       l$is_open,
+      l$online_ordering,
       l$name,
       l$location,
       l$firebase_id,
@@ -2127,6 +2136,11 @@ class Query$getRestaurants$restaurant_restaurant$details {
     final l$is_open = is_open;
     final lOther$is_open = other.is_open;
     if (l$is_open != lOther$is_open) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$name = name;
@@ -2205,6 +2219,7 @@ abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$details<
     String? image,
     dynamic? language,
     bool? is_open,
+    bool? online_ordering,
     String? name,
     Query$getRestaurants$restaurant_restaurant$details$location? location,
     String? firebase_id,
@@ -2240,6 +2255,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
     Object? image = _undefined,
     Object? language = _undefined,
     Object? is_open = _undefined,
+    Object? online_ordering = _undefined,
     Object? name = _undefined,
     Object? location = _undefined,
     Object? firebase_id = _undefined,
@@ -2259,6 +2275,10 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
             ? _instance.language
             : (language as dynamic),
         is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -2320,6 +2340,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
     String? image,
     dynamic? language,
     bool? is_open,
+    bool? online_ordering,
     String? name,
     Query$getRestaurants$restaurant_restaurant$details$location? location,
     String? firebase_id,
@@ -4031,6 +4052,13 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'description_id'),
                 alias: null,
                 arguments: [],
@@ -4894,6 +4922,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
     required this.location_id,
     required this.image,
     required this.language,
+    required this.online_ordering,
     this.description_id,
     required this.location,
     required this.accepted_payments,
@@ -4915,6 +4944,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
     final l$location_id = json['location_id'];
     final l$image = json['image'];
     final l$language = json['language'];
+    final l$online_ordering = json['online_ordering'];
     final l$description_id = json['description_id'];
     final l$location = json['location'];
     final l$accepted_payments = json['accepted_payments'];
@@ -4933,6 +4963,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
       location_id: (l$location_id as int),
       image: (l$image as String),
       language: mapFromJson(l$language),
+      online_ordering: (l$online_ordering as bool),
       description_id: (l$description_id as int?),
       location:
           Query$getOneRestaurant$restaurant_restaurant_by_pk$details$location
@@ -4967,6 +4998,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
   final String image;
 
   final dynamic language;
+
+  final bool online_ordering;
 
   final int? description_id;
 
@@ -5007,6 +5040,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
     _resultData['image'] = l$image;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
     final l$location = location;
@@ -5039,6 +5074,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
     final l$location_id = location_id;
     final l$image = image;
     final l$language = language;
+    final l$online_ordering = online_ordering;
     final l$description_id = description_id;
     final l$location = location;
     final l$accepted_payments = accepted_payments;
@@ -5057,6 +5093,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
       l$location_id,
       l$image,
       l$language,
+      l$online_ordering,
       l$description_id,
       l$location,
       l$accepted_payments,
@@ -5113,6 +5150,11 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$description_id = description_id;
@@ -5200,6 +5242,7 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$detai
     int? location_id,
     String? image,
     dynamic? language,
+    bool? online_ordering,
     int? description_id,
     Query$getOneRestaurant$restaurant_restaurant_by_pk$details$location?
         location,
@@ -5247,6 +5290,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$details<
     Object? location_id = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
+    Object? online_ordering = _undefined,
     Object? description_id = _undefined,
     Object? location = _undefined,
     Object? accepted_payments = _undefined,
@@ -5276,6 +5320,10 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$details<
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
@@ -5357,6 +5405,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$detai
     int? location_id,
     String? image,
     dynamic? language,
+    bool? online_ordering,
     int? description_id,
     Query$getOneRestaurant$restaurant_restaurant_by_pk$details$location?
         location,

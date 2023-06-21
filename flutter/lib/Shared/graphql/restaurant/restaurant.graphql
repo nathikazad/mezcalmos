@@ -78,6 +78,7 @@ query getOneRestaurant($id: Int!) {
       location_id
       image
       language
+      online_ordering
       description_id
       location {
         gps
