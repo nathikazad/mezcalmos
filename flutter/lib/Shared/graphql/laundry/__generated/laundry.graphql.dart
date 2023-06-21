@@ -6,36 +6,30 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class Variables$Query$getLaundries {
   factory Variables$Query$getLaundries({
-    bool? is_open,
-    Geography? from,
-    double? distance,
+    required Geography from,
+    required double distance,
     int? limit,
     int? offset,
+    Input$Boolean_comparison_exp? is_open,
+    Input$Boolean_comparison_exp? online_ordering,
   }) =>
       Variables$Query$getLaundries._({
-        if (is_open != null) r'is_open': is_open,
-        if (from != null) r'from': from,
-        if (distance != null) r'distance': distance,
+        r'from': from,
+        r'distance': distance,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
+        if (is_open != null) r'is_open': is_open,
+        if (online_ordering != null) r'online_ordering': online_ordering,
       });
 
   Variables$Query$getLaundries._(this._$data);
 
   factory Variables$Query$getLaundries.fromJson(Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    if (data.containsKey('is_open')) {
-      final l$is_open = data['is_open'];
-      result$data['is_open'] = (l$is_open as bool?);
-    }
-    if (data.containsKey('from')) {
-      final l$from = data['from'];
-      result$data['from'] = l$from == null ? null : geographyFromJson(l$from);
-    }
-    if (data.containsKey('distance')) {
-      final l$distance = data['distance'];
-      result$data['distance'] = (l$distance as num?)?.toDouble();
-    }
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
     if (data.containsKey('limit')) {
       final l$limit = data['limit'];
       result$data['limit'] = (l$limit as int?);
@@ -44,30 +38,39 @@ class Variables$Query$getLaundries {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
     }
+    if (data.containsKey('is_open')) {
+      final l$is_open = data['is_open'];
+      result$data['is_open'] = l$is_open == null
+          ? null
+          : Input$Boolean_comparison_exp.fromJson(
+              (l$is_open as Map<String, dynamic>));
+    }
+    if (data.containsKey('online_ordering')) {
+      final l$online_ordering = data['online_ordering'];
+      result$data['online_ordering'] = l$online_ordering == null
+          ? null
+          : Input$Boolean_comparison_exp.fromJson(
+              (l$online_ordering as Map<String, dynamic>));
+    }
     return Variables$Query$getLaundries._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  bool? get is_open => (_$data['is_open'] as bool?);
-  Geography? get from => (_$data['from'] as Geography?);
-  double? get distance => (_$data['distance'] as double?);
+  Geography get from => (_$data['from'] as Geography);
+  double get distance => (_$data['distance'] as double);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
+  Input$Boolean_comparison_exp? get is_open =>
+      (_$data['is_open'] as Input$Boolean_comparison_exp?);
+  Input$Boolean_comparison_exp? get online_ordering =>
+      (_$data['online_ordering'] as Input$Boolean_comparison_exp?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    if (_$data.containsKey('is_open')) {
-      final l$is_open = is_open;
-      result$data['is_open'] = l$is_open;
-    }
-    if (_$data.containsKey('from')) {
-      final l$from = from;
-      result$data['from'] = l$from == null ? null : geographyToJson(l$from);
-    }
-    if (_$data.containsKey('distance')) {
-      final l$distance = distance;
-      result$data['distance'] = l$distance;
-    }
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
     if (_$data.containsKey('limit')) {
       final l$limit = limit;
       result$data['limit'] = l$limit;
@@ -75,6 +78,14 @@ class Variables$Query$getLaundries {
     if (_$data.containsKey('offset')) {
       final l$offset = offset;
       result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('is_open')) {
+      final l$is_open = is_open;
+      result$data['is_open'] = l$is_open?.toJson();
+    }
+    if (_$data.containsKey('online_ordering')) {
+      final l$online_ordering = online_ordering;
+      result$data['online_ordering'] = l$online_ordering?.toJson();
     }
     return result$data;
   }
@@ -93,28 +104,13 @@ class Variables$Query$getLaundries {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$is_open = is_open;
-    final lOther$is_open = other.is_open;
-    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
-      return false;
-    }
-    if (l$is_open != lOther$is_open) {
-      return false;
-    }
     final l$from = from;
     final lOther$from = other.from;
-    if (_$data.containsKey('from') != other._$data.containsKey('from')) {
-      return false;
-    }
     if (l$from != lOther$from) {
       return false;
     }
     final l$distance = distance;
     final lOther$distance = other.distance;
-    if (_$data.containsKey('distance') !=
-        other._$data.containsKey('distance')) {
-      return false;
-    }
     if (l$distance != lOther$distance) {
       return false;
     }
@@ -134,22 +130,41 @@ class Variables$Query$getLaundries {
     if (l$offset != lOther$offset) {
       return false;
     }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
+      return false;
+    }
+    if (l$is_open != lOther$is_open) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (_$data.containsKey('online_ordering') !=
+        other._$data.containsKey('online_ordering')) {
+      return false;
+    }
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
-    final l$is_open = is_open;
     final l$from = from;
     final l$distance = distance;
     final l$limit = limit;
     final l$offset = offset;
+    final l$is_open = is_open;
+    final l$online_ordering = online_ordering;
     return Object.hashAll([
-      _$data.containsKey('is_open') ? l$is_open : const {},
-      _$data.containsKey('from') ? l$from : const {},
-      _$data.containsKey('distance') ? l$distance : const {},
+      l$from,
+      l$distance,
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('is_open') ? l$is_open : const {},
+      _$data.containsKey('online_ordering') ? l$online_ordering : const {},
     ]);
   }
 }
@@ -164,11 +179,12 @@ abstract class CopyWith$Variables$Query$getLaundries<TRes> {
       _CopyWithStubImpl$Variables$Query$getLaundries;
 
   TRes call({
-    bool? is_open,
     Geography? from,
     double? distance,
     int? limit,
     int? offset,
+    Input$Boolean_comparison_exp? is_open,
+    Input$Boolean_comparison_exp? online_ordering,
   });
 }
 
@@ -186,19 +202,24 @@ class _CopyWithImpl$Variables$Query$getLaundries<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? is_open = _undefined,
     Object? from = _undefined,
     Object? distance = _undefined,
     Object? limit = _undefined,
     Object? offset = _undefined,
+    Object? is_open = _undefined,
+    Object? online_ordering = _undefined,
   }) =>
       _then(Variables$Query$getLaundries._({
         ..._instance._$data,
-        if (is_open != _undefined) 'is_open': (is_open as bool?),
-        if (from != _undefined) 'from': (from as Geography?),
-        if (distance != _undefined) 'distance': (distance as double?),
+        if (from != _undefined && from != null) 'from': (from as Geography),
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
+        if (is_open != _undefined)
+          'is_open': (is_open as Input$Boolean_comparison_exp?),
+        if (online_ordering != _undefined)
+          'online_ordering': (online_ordering as Input$Boolean_comparison_exp?),
       }));
 }
 
@@ -209,11 +230,12 @@ class _CopyWithStubImpl$Variables$Query$getLaundries<TRes>
   TRes _res;
 
   call({
-    bool? is_open,
     Geography? from,
     double? distance,
     int? limit,
     int? offset,
+    Input$Boolean_comparison_exp? is_open,
+    Input$Boolean_comparison_exp? online_ordering,
   }) =>
       _res;
 }
@@ -377,19 +399,10 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
     name: NameNode(value: 'getLaundries'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'is_open')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Boolean'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'from')),
         type: NamedTypeNode(
           name: NameNode(value: 'geography'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -398,7 +411,7 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'distance')),
         type: NamedTypeNode(
           name: NameNode(value: 'Float'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -409,7 +422,7 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
           name: NameNode(value: 'Int'),
           isNonNull: false,
         ),
-        defaultValue: DefaultValueNode(value: IntValueNode(value: '10')),
+        defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
       VariableDefinitionNode(
@@ -418,7 +431,25 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
           name: NameNode(value: 'Int'),
           isNonNull: false,
         ),
-        defaultValue: DefaultValueNode(value: IntValueNode(value: '10')),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'is_open')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean_comparison_exp'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'online_ordering')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean_comparison_exp'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
         directives: [],
       ),
     ],
@@ -434,15 +465,6 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
               ObjectFieldNode(
                 name: NameNode(value: 'details'),
                 value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: 'is_open'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: '_eq'),
-                        value: VariableNode(name: NameNode(value: 'is_open')),
-                      )
-                    ]),
-                  ),
                   ObjectFieldNode(
                     name: NameNode(value: 'location'),
                     value: ObjectValueNode(fields: [
@@ -467,6 +489,15 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
                         ]),
                       )
                     ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'is_open'),
+                    value: VariableNode(name: NameNode(value: 'is_open')),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'online_ordering'),
+                    value:
+                        VariableNode(name: NameNode(value: 'online_ordering')),
                   ),
                 ]),
               )
@@ -998,7 +1029,7 @@ class Options$Query$getLaundries
     extends graphql.QueryOptions<Query$getLaundries> {
   Options$Query$getLaundries({
     String? operationName,
-    Variables$Query$getLaundries? variables,
+    required Variables$Query$getLaundries variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1006,7 +1037,7 @@ class Options$Query$getLaundries
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -1023,7 +1054,7 @@ class WatchOptions$Query$getLaundries
     extends graphql.WatchQueryOptions<Query$getLaundries> {
   WatchOptions$Query$getLaundries({
     String? operationName,
-    Variables$Query$getLaundries? variables,
+    required Variables$Query$getLaundries variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1034,7 +1065,7 @@ class WatchOptions$Query$getLaundries
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -1053,42 +1084,42 @@ class WatchOptions$Query$getLaundries
 class FetchMoreOptions$Query$getLaundries extends graphql.FetchMoreOptions {
   FetchMoreOptions$Query$getLaundries({
     required graphql.UpdateQuery updateQuery,
-    Variables$Query$getLaundries? variables,
+    required Variables$Query$getLaundries variables,
   }) : super(
           updateQuery: updateQuery,
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           document: documentNodeQuerygetLaundries,
         );
 }
 
 extension ClientExtension$Query$getLaundries on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$getLaundries>> query$getLaundries(
-          [Options$Query$getLaundries? options]) async =>
-      await this.query(options ?? Options$Query$getLaundries());
+          Options$Query$getLaundries options) async =>
+      await this.query(options);
   graphql.ObservableQuery<Query$getLaundries> watchQuery$getLaundries(
-          [WatchOptions$Query$getLaundries? options]) =>
-      this.watchQuery(options ?? WatchOptions$Query$getLaundries());
+          WatchOptions$Query$getLaundries options) =>
+      this.watchQuery(options);
   void writeQuery$getLaundries({
     required Query$getLaundries data,
-    Variables$Query$getLaundries? variables,
+    required Variables$Query$getLaundries variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
           operation: graphql.Operation(document: documentNodeQuerygetLaundries),
-          variables: variables?.toJson() ?? const {},
+          variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
   Query$getLaundries? readQuery$getLaundries({
-    Variables$Query$getLaundries? variables,
+    required Variables$Query$getLaundries variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
         operation: graphql.Operation(document: documentNodeQuerygetLaundries),
-        variables: variables?.toJson() ?? const {},
+        variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );

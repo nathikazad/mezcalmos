@@ -4,8 +4,943 @@ import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
-class Fragment$RestaurantFields {
-  Fragment$RestaurantFields({
+class Variables$Query$getRestaurants {
+  factory Variables$Query$getRestaurants({
+    int? limit,
+    int? offset,
+    required double distance,
+    required Geography from,
+    Input$Boolean_comparison_exp? is_open,
+    Input$Boolean_comparison_exp? online_ordering,
+  }) =>
+      Variables$Query$getRestaurants._({
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
+        r'distance': distance,
+        r'from': from,
+        if (is_open != null) r'is_open': is_open,
+        if (online_ordering != null) r'online_ordering': online_ordering,
+      });
+
+  Variables$Query$getRestaurants._(this._$data);
+
+  factory Variables$Query$getRestaurants.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    final l$distance = data['distance'];
+    result$data['distance'] = (l$distance as num).toDouble();
+    final l$from = data['from'];
+    result$data['from'] = geographyFromJson(l$from);
+    if (data.containsKey('is_open')) {
+      final l$is_open = data['is_open'];
+      result$data['is_open'] = l$is_open == null
+          ? null
+          : Input$Boolean_comparison_exp.fromJson(
+              (l$is_open as Map<String, dynamic>));
+    }
+    if (data.containsKey('online_ordering')) {
+      final l$online_ordering = data['online_ordering'];
+      result$data['online_ordering'] = l$online_ordering == null
+          ? null
+          : Input$Boolean_comparison_exp.fromJson(
+              (l$online_ordering as Map<String, dynamic>));
+    }
+    return Variables$Query$getRestaurants._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
+  double get distance => (_$data['distance'] as double);
+  Geography get from => (_$data['from'] as Geography);
+  Input$Boolean_comparison_exp? get is_open =>
+      (_$data['is_open'] as Input$Boolean_comparison_exp?);
+  Input$Boolean_comparison_exp? get online_ordering =>
+      (_$data['online_ordering'] as Input$Boolean_comparison_exp?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    final l$distance = distance;
+    result$data['distance'] = l$distance;
+    final l$from = from;
+    result$data['from'] = geographyToJson(l$from);
+    if (_$data.containsKey('is_open')) {
+      final l$is_open = is_open;
+      result$data['is_open'] = l$is_open?.toJson();
+    }
+    if (_$data.containsKey('online_ordering')) {
+      final l$online_ordering = online_ordering;
+      result$data['online_ordering'] = l$online_ordering?.toJson();
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getRestaurants<Variables$Query$getRestaurants>
+      get copyWith => CopyWith$Variables$Query$getRestaurants(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getRestaurants) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    final l$distance = distance;
+    final lOther$distance = other.distance;
+    if (l$distance != lOther$distance) {
+      return false;
+    }
+    final l$from = from;
+    final lOther$from = other.from;
+    if (l$from != lOther$from) {
+      return false;
+    }
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
+      return false;
+    }
+    if (l$is_open != lOther$is_open) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (_$data.containsKey('online_ordering') !=
+        other._$data.containsKey('online_ordering')) {
+      return false;
+    }
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$limit = limit;
+    final l$offset = offset;
+    final l$distance = distance;
+    final l$from = from;
+    final l$is_open = is_open;
+    final l$online_ordering = online_ordering;
+    return Object.hashAll([
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
+      l$distance,
+      l$from,
+      _$data.containsKey('is_open') ? l$is_open : const {},
+      _$data.containsKey('online_ordering') ? l$online_ordering : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getRestaurants<TRes> {
+  factory CopyWith$Variables$Query$getRestaurants(
+    Variables$Query$getRestaurants instance,
+    TRes Function(Variables$Query$getRestaurants) then,
+  ) = _CopyWithImpl$Variables$Query$getRestaurants;
+
+  factory CopyWith$Variables$Query$getRestaurants.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getRestaurants;
+
+  TRes call({
+    int? limit,
+    int? offset,
+    double? distance,
+    Geography? from,
+    Input$Boolean_comparison_exp? is_open,
+    Input$Boolean_comparison_exp? online_ordering,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$getRestaurants<TRes>
+    implements CopyWith$Variables$Query$getRestaurants<TRes> {
+  _CopyWithImpl$Variables$Query$getRestaurants(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getRestaurants _instance;
+
+  final TRes Function(Variables$Query$getRestaurants) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+    Object? distance = _undefined,
+    Object? from = _undefined,
+    Object? is_open = _undefined,
+    Object? online_ordering = _undefined,
+  }) =>
+      _then(Variables$Query$getRestaurants._({
+        ..._instance._$data,
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
+        if (distance != _undefined && distance != null)
+          'distance': (distance as double),
+        if (from != _undefined && from != null) 'from': (from as Geography),
+        if (is_open != _undefined)
+          'is_open': (is_open as Input$Boolean_comparison_exp?),
+        if (online_ordering != _undefined)
+          'online_ordering': (online_ordering as Input$Boolean_comparison_exp?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getRestaurants<TRes>
+    implements CopyWith$Variables$Query$getRestaurants<TRes> {
+  _CopyWithStubImpl$Variables$Query$getRestaurants(this._res);
+
+  TRes _res;
+
+  call({
+    int? limit,
+    int? offset,
+    double? distance,
+    Geography? from,
+    Input$Boolean_comparison_exp? is_open,
+    Input$Boolean_comparison_exp? online_ordering,
+  }) =>
+      _res;
+}
+
+class Query$getRestaurants {
+  Query$getRestaurants({
+    required this.restaurant_restaurant,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurants.fromJson(Map<String, dynamic> json) {
+    final l$restaurant_restaurant = json['restaurant_restaurant'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurants(
+      restaurant_restaurant: (l$restaurant_restaurant as List<dynamic>)
+          .map((e) => Query$getRestaurants$restaurant_restaurant.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getRestaurants$restaurant_restaurant> restaurant_restaurant;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant_restaurant = restaurant_restaurant;
+    _resultData['restaurant_restaurant'] =
+        l$restaurant_restaurant.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant_restaurant = restaurant_restaurant;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$restaurant_restaurant.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurants) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant_restaurant = restaurant_restaurant;
+    final lOther$restaurant_restaurant = other.restaurant_restaurant;
+    if (l$restaurant_restaurant.length != lOther$restaurant_restaurant.length) {
+      return false;
+    }
+    for (int i = 0; i < l$restaurant_restaurant.length; i++) {
+      final l$restaurant_restaurant$entry = l$restaurant_restaurant[i];
+      final lOther$restaurant_restaurant$entry =
+          lOther$restaurant_restaurant[i];
+      if (l$restaurant_restaurant$entry != lOther$restaurant_restaurant$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurants on Query$getRestaurants {
+  CopyWith$Query$getRestaurants<Query$getRestaurants> get copyWith =>
+      CopyWith$Query$getRestaurants(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getRestaurants<TRes> {
+  factory CopyWith$Query$getRestaurants(
+    Query$getRestaurants instance,
+    TRes Function(Query$getRestaurants) then,
+  ) = _CopyWithImpl$Query$getRestaurants;
+
+  factory CopyWith$Query$getRestaurants.stub(TRes res) =
+      _CopyWithStubImpl$Query$getRestaurants;
+
+  TRes call({
+    List<Query$getRestaurants$restaurant_restaurant>? restaurant_restaurant,
+    String? $__typename,
+  });
+  TRes restaurant_restaurant(
+      Iterable<Query$getRestaurants$restaurant_restaurant> Function(
+              Iterable<
+                  CopyWith$Query$getRestaurants$restaurant_restaurant<
+                      Query$getRestaurants$restaurant_restaurant>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getRestaurants<TRes>
+    implements CopyWith$Query$getRestaurants<TRes> {
+  _CopyWithImpl$Query$getRestaurants(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurants _instance;
+
+  final TRes Function(Query$getRestaurants) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant_restaurant = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurants(
+        restaurant_restaurant:
+            restaurant_restaurant == _undefined || restaurant_restaurant == null
+                ? _instance.restaurant_restaurant
+                : (restaurant_restaurant
+                    as List<Query$getRestaurants$restaurant_restaurant>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes restaurant_restaurant(
+          Iterable<Query$getRestaurants$restaurant_restaurant> Function(
+                  Iterable<
+                      CopyWith$Query$getRestaurants$restaurant_restaurant<
+                          Query$getRestaurants$restaurant_restaurant>>)
+              _fn) =>
+      call(
+          restaurant_restaurant: _fn(_instance.restaurant_restaurant
+              .map((e) => CopyWith$Query$getRestaurants$restaurant_restaurant(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getRestaurants<TRes>
+    implements CopyWith$Query$getRestaurants<TRes> {
+  _CopyWithStubImpl$Query$getRestaurants(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getRestaurants$restaurant_restaurant>? restaurant_restaurant,
+    String? $__typename,
+  }) =>
+      _res;
+  restaurant_restaurant(_fn) => _res;
+}
+
+const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getRestaurants'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'distance')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Float'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'from')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'geography'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'is_open')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean_comparison_exp'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'online_ordering')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean_comparison_exp'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'restaurant_restaurant'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'is_open'),
+                    value: VariableNode(name: NameNode(value: 'is_open')),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'location'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'gps'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_st_d_within'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'distance'),
+                                value: VariableNode(
+                                    name: NameNode(value: 'distance')),
+                              ),
+                              ObjectFieldNode(
+                                name: NameNode(value: 'from'),
+                                value:
+                                    VariableNode(name: NameNode(value: 'from')),
+                              ),
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'online_ordering'),
+                    value:
+                        VariableNode(name: NameNode(value: 'online_ordering')),
+                  ),
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'reviews_aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'aggregate'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'avg'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'rating'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_details_of_deliverer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'cost_per_km'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'free_delivery_km_range'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'free_delivery_minimum_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'minimum_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'radius'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'self_delivery'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'language'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'is_open'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'location'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'firebase_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'approved'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'schedule'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'description'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'open_status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'schedule'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getRestaurants _parserFn$Query$getRestaurants(
+        Map<String, dynamic> data) =>
+    Query$getRestaurants.fromJson(data);
+
+class Options$Query$getRestaurants
+    extends graphql.QueryOptions<Query$getRestaurants> {
+  Options$Query$getRestaurants({
+    String? operationName,
+    required Variables$Query$getRestaurants variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetRestaurants,
+          parserFn: _parserFn$Query$getRestaurants,
+        );
+}
+
+class WatchOptions$Query$getRestaurants
+    extends graphql.WatchQueryOptions<Query$getRestaurants> {
+  WatchOptions$Query$getRestaurants({
+    String? operationName,
+    required Variables$Query$getRestaurants variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetRestaurants,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getRestaurants,
+        );
+}
+
+class FetchMoreOptions$Query$getRestaurants extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getRestaurants({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getRestaurants variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetRestaurants,
+        );
+}
+
+extension ClientExtension$Query$getRestaurants on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getRestaurants>> query$getRestaurants(
+          Options$Query$getRestaurants options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$getRestaurants> watchQuery$getRestaurants(
+          WatchOptions$Query$getRestaurants options) =>
+      this.watchQuery(options);
+  void writeQuery$getRestaurants({
+    required Query$getRestaurants data,
+    required Variables$Query$getRestaurants variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetRestaurants),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getRestaurants? readQuery$getRestaurants({
+    required Variables$Query$getRestaurants variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(document: documentNodeQuerygetRestaurants),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getRestaurants.fromJson(result);
+  }
+}
+
+class Query$getRestaurants$restaurant_restaurant {
+  Query$getRestaurants$restaurant_restaurant({
     required this.id,
     required this.reviews_aggregate,
     this.delivery_details_of_deliverer,
@@ -13,26 +948,28 @@ class Fragment$RestaurantFields {
     required this.$__typename,
   });
 
-  factory Fragment$RestaurantFields.fromJson(Map<String, dynamic> json) {
+  factory Query$getRestaurants$restaurant_restaurant.fromJson(
+      Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$reviews_aggregate = json['reviews_aggregate'];
     final l$delivery_details_of_deliverer =
         json['delivery_details_of_deliverer'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
-    return Fragment$RestaurantFields(
+    return Query$getRestaurants$restaurant_restaurant(
       id: (l$id as int),
-      reviews_aggregate: Fragment$RestaurantFields$reviews_aggregate.fromJson(
-          (l$reviews_aggregate as Map<String, dynamic>)),
+      reviews_aggregate:
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate.fromJson(
+              (l$reviews_aggregate as Map<String, dynamic>)),
       delivery_details_of_deliverer: (l$delivery_details_of_deliverer
               as List<dynamic>?)
           ?.map((e) =>
-              Fragment$RestaurantFields$delivery_details_of_deliverer.fromJson(
-                  (e as Map<String, dynamic>)))
+              Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer
+                  .fromJson((e as Map<String, dynamic>)))
           .toList(),
       details: l$details == null
           ? null
-          : Fragment$RestaurantFields$details.fromJson(
+          : Query$getRestaurants$restaurant_restaurant$details.fromJson(
               (l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -40,12 +977,14 @@ class Fragment$RestaurantFields {
 
   final int id;
 
-  final Fragment$RestaurantFields$reviews_aggregate reviews_aggregate;
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate
+      reviews_aggregate;
 
-  final List<Fragment$RestaurantFields$delivery_details_of_deliverer>?
+  final List<
+          Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?
       delivery_details_of_deliverer;
 
-  final Fragment$RestaurantFields$details? details;
+  final Query$getRestaurants$restaurant_restaurant$details? details;
 
   final String $__typename;
 
@@ -88,7 +1027,7 @@ class Fragment$RestaurantFields {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Fragment$RestaurantFields) ||
+    if (!(other is Query$getRestaurants$restaurant_restaurant) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -139,53 +1078,55 @@ class Fragment$RestaurantFields {
   }
 }
 
-extension UtilityExtension$Fragment$RestaurantFields
-    on Fragment$RestaurantFields {
-  CopyWith$Fragment$RestaurantFields<Fragment$RestaurantFields> get copyWith =>
-      CopyWith$Fragment$RestaurantFields(
-        this,
-        (i) => i,
-      );
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant
+    on Query$getRestaurants$restaurant_restaurant {
+  CopyWith$Query$getRestaurants$restaurant_restaurant<
+          Query$getRestaurants$restaurant_restaurant>
+      get copyWith => CopyWith$Query$getRestaurants$restaurant_restaurant(
+            this,
+            (i) => i,
+          );
 }
 
-abstract class CopyWith$Fragment$RestaurantFields<TRes> {
-  factory CopyWith$Fragment$RestaurantFields(
-    Fragment$RestaurantFields instance,
-    TRes Function(Fragment$RestaurantFields) then,
-  ) = _CopyWithImpl$Fragment$RestaurantFields;
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant<TRes> {
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant(
+    Query$getRestaurants$restaurant_restaurant instance,
+    TRes Function(Query$getRestaurants$restaurant_restaurant) then,
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant;
 
-  factory CopyWith$Fragment$RestaurantFields.stub(TRes res) =
-      _CopyWithStubImpl$Fragment$RestaurantFields;
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant.stub(TRes res) =
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant;
 
   TRes call({
     int? id,
-    Fragment$RestaurantFields$reviews_aggregate? reviews_aggregate,
-    List<Fragment$RestaurantFields$delivery_details_of_deliverer>?
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate?
+        reviews_aggregate,
+    List<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
-    Fragment$RestaurantFields$details? details,
+    Query$getRestaurants$restaurant_restaurant$details? details,
     String? $__typename,
   });
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate<TRes>
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<TRes>
       get reviews_aggregate;
   TRes delivery_details_of_deliverer(
-      Iterable<Fragment$RestaurantFields$delivery_details_of_deliverer>? Function(
+      Iterable<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>? Function(
               Iterable<
-                  CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer<
-                      Fragment$RestaurantFields$delivery_details_of_deliverer>>?)
+                  CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
+                      Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>>?)
           _fn);
-  CopyWith$Fragment$RestaurantFields$details<TRes> get details;
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details<TRes> get details;
 }
 
-class _CopyWithImpl$Fragment$RestaurantFields<TRes>
-    implements CopyWith$Fragment$RestaurantFields<TRes> {
-  _CopyWithImpl$Fragment$RestaurantFields(
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant<TRes>
+    implements CopyWith$Query$getRestaurants$restaurant_restaurant<TRes> {
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant(
     this._instance,
     this._then,
   );
 
-  final Fragment$RestaurantFields _instance;
+  final Query$getRestaurants$restaurant_restaurant _instance;
 
-  final TRes Function(Fragment$RestaurantFields) _then;
+  final TRes Function(Query$getRestaurants$restaurant_restaurant) _then;
 
   static const _undefined = {};
 
@@ -196,442 +1137,104 @@ class _CopyWithImpl$Fragment$RestaurantFields<TRes>
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Fragment$RestaurantFields(
+      _then(Query$getRestaurants$restaurant_restaurant(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        reviews_aggregate:
-            reviews_aggregate == _undefined || reviews_aggregate == null
-                ? _instance.reviews_aggregate
-                : (reviews_aggregate
-                    as Fragment$RestaurantFields$reviews_aggregate),
-        delivery_details_of_deliverer:
-            delivery_details_of_deliverer == _undefined
-                ? _instance.delivery_details_of_deliverer
-                : (delivery_details_of_deliverer as List<
-                    Fragment$RestaurantFields$delivery_details_of_deliverer>?),
+        reviews_aggregate: reviews_aggregate == _undefined ||
+                reviews_aggregate == null
+            ? _instance.reviews_aggregate
+            : (reviews_aggregate
+                as Query$getRestaurants$restaurant_restaurant$reviews_aggregate),
+        delivery_details_of_deliverer: delivery_details_of_deliverer ==
+                _undefined
+            ? _instance.delivery_details_of_deliverer
+            : (delivery_details_of_deliverer as List<
+                Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?),
         details: details == _undefined
             ? _instance.details
-            : (details as Fragment$RestaurantFields$details?),
+            : (details as Query$getRestaurants$restaurant_restaurant$details?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate<TRes>
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<TRes>
       get reviews_aggregate {
     final local$reviews_aggregate = _instance.reviews_aggregate;
-    return CopyWith$Fragment$RestaurantFields$reviews_aggregate(
+    return CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
         local$reviews_aggregate, (e) => call(reviews_aggregate: e));
   }
 
   TRes delivery_details_of_deliverer(
-          Iterable<Fragment$RestaurantFields$delivery_details_of_deliverer>? Function(
+          Iterable<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>? Function(
                   Iterable<
-                      CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer<
-                          Fragment$RestaurantFields$delivery_details_of_deliverer>>?)
+                      CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
+                          Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>>?)
               _fn) =>
       call(
           delivery_details_of_deliverer: _fn(
               _instance.delivery_details_of_deliverer?.map((e) =>
-                  CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer(
+                  CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
                     e,
                     (i) => i,
                   )))?.toList());
-  CopyWith$Fragment$RestaurantFields$details<TRes> get details {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details<TRes>
+      get details {
     final local$details = _instance.details;
     return local$details == null
-        ? CopyWith$Fragment$RestaurantFields$details.stub(_then(_instance))
-        : CopyWith$Fragment$RestaurantFields$details(
+        ? CopyWith$Query$getRestaurants$restaurant_restaurant$details.stub(
+            _then(_instance))
+        : CopyWith$Query$getRestaurants$restaurant_restaurant$details(
             local$details, (e) => call(details: e));
   }
 }
 
-class _CopyWithStubImpl$Fragment$RestaurantFields<TRes>
-    implements CopyWith$Fragment$RestaurantFields<TRes> {
-  _CopyWithStubImpl$Fragment$RestaurantFields(this._res);
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant<TRes>
+    implements CopyWith$Query$getRestaurants$restaurant_restaurant<TRes> {
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant(this._res);
 
   TRes _res;
 
   call({
     int? id,
-    Fragment$RestaurantFields$reviews_aggregate? reviews_aggregate,
-    List<Fragment$RestaurantFields$delivery_details_of_deliverer>?
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate?
+        reviews_aggregate,
+    List<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
-    Fragment$RestaurantFields$details? details,
+    Query$getRestaurants$restaurant_restaurant$details? details,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate<TRes>
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<TRes>
       get reviews_aggregate =>
-          CopyWith$Fragment$RestaurantFields$reviews_aggregate.stub(_res);
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate
+              .stub(_res);
   delivery_details_of_deliverer(_fn) => _res;
-  CopyWith$Fragment$RestaurantFields$details<TRes> get details =>
-      CopyWith$Fragment$RestaurantFields$details.stub(_res);
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details<TRes>
+      get details =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$details.stub(
+              _res);
 }
 
-const fragmentDefinitionRestaurantFields = FragmentDefinitionNode(
-  name: NameNode(value: 'RestaurantFields'),
-  typeCondition: TypeConditionNode(
-      on: NamedTypeNode(
-    name: NameNode(value: 'restaurant_restaurant'),
-    isNonNull: false,
-  )),
-  directives: [],
-  selectionSet: SelectionSetNode(selections: [
-    FieldNode(
-      name: NameNode(value: 'id'),
-      alias: null,
-      arguments: [],
-      directives: [],
-      selectionSet: null,
-    ),
-    FieldNode(
-      name: NameNode(value: 'reviews_aggregate'),
-      alias: null,
-      arguments: [],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-          name: NameNode(value: 'aggregate'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: SelectionSetNode(selections: [
-            FieldNode(
-              name: NameNode(value: 'avg'),
-              alias: null,
-              arguments: [],
-              directives: [],
-              selectionSet: SelectionSetNode(selections: [
-                FieldNode(
-                  name: NameNode(value: 'rating'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null,
-                ),
-                FieldNode(
-                  name: NameNode(value: '__typename'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null,
-                ),
-              ]),
-            ),
-            FieldNode(
-              name: NameNode(value: '__typename'),
-              alias: null,
-              arguments: [],
-              directives: [],
-              selectionSet: null,
-            ),
-          ]),
-        ),
-        FieldNode(
-          name: NameNode(value: '__typename'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-      ]),
-    ),
-    FieldNode(
-      name: NameNode(value: 'delivery_details_of_deliverer'),
-      alias: null,
-      arguments: [],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-          name: NameNode(value: 'cost_per_km'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'free_delivery_km_range'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'free_delivery_minimum_cost'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'id'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'minimum_cost'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'radius'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'self_delivery'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: '__typename'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-      ]),
-    ),
-    FieldNode(
-      name: NameNode(value: 'details'),
-      alias: null,
-      arguments: [],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-          name: NameNode(value: 'id'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'image'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'language'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'is_open'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'name'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'location'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: SelectionSetNode(selections: [
-            FieldNode(
-              name: NameNode(value: 'gps'),
-              alias: null,
-              arguments: [],
-              directives: [],
-              selectionSet: null,
-            ),
-            FieldNode(
-              name: NameNode(value: 'address'),
-              alias: null,
-              arguments: [],
-              directives: [],
-              selectionSet: null,
-            ),
-            FieldNode(
-              name: NameNode(value: '__typename'),
-              alias: null,
-              arguments: [],
-              directives: [],
-              selectionSet: null,
-            ),
-          ]),
-        ),
-        FieldNode(
-          name: NameNode(value: 'firebase_id'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'approved'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'description_id'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'schedule'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'description'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: SelectionSetNode(selections: [
-            FieldNode(
-              name: NameNode(value: 'translations'),
-              alias: null,
-              arguments: [],
-              directives: [],
-              selectionSet: SelectionSetNode(selections: [
-                FieldNode(
-                  name: NameNode(value: 'language_id'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null,
-                ),
-                FieldNode(
-                  name: NameNode(value: 'value'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null,
-                ),
-                FieldNode(
-                  name: NameNode(value: '__typename'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null,
-                ),
-              ]),
-            ),
-            FieldNode(
-              name: NameNode(value: '__typename'),
-              alias: null,
-              arguments: [],
-              directives: [],
-              selectionSet: null,
-            ),
-          ]),
-        ),
-        FieldNode(
-          name: NameNode(value: 'open_status'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: 'schedule'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-        FieldNode(
-          name: NameNode(value: '__typename'),
-          alias: null,
-          arguments: [],
-          directives: [],
-          selectionSet: null,
-        ),
-      ]),
-    ),
-    FieldNode(
-      name: NameNode(value: '__typename'),
-      alias: null,
-      arguments: [],
-      directives: [],
-      selectionSet: null,
-    ),
-  ]),
-);
-const documentNodeFragmentRestaurantFields = DocumentNode(definitions: [
-  fragmentDefinitionRestaurantFields,
-]);
-
-extension ClientExtension$Fragment$RestaurantFields on graphql.GraphQLClient {
-  void writeFragment$RestaurantFields({
-    required Fragment$RestaurantFields data,
-    required Map<String, dynamic> idFields,
-    bool broadcast = true,
-  }) =>
-      this.writeFragment(
-        graphql.FragmentRequest(
-          idFields: idFields,
-          fragment: const graphql.Fragment(
-            fragmentName: 'RestaurantFields',
-            document: documentNodeFragmentRestaurantFields,
-          ),
-        ),
-        data: data.toJson(),
-        broadcast: broadcast,
-      );
-  Fragment$RestaurantFields? readFragment$RestaurantFields({
-    required Map<String, dynamic> idFields,
-    bool optimistic = true,
-  }) {
-    final result = this.readFragment(
-      graphql.FragmentRequest(
-        idFields: idFields,
-        fragment: const graphql.Fragment(
-          fragmentName: 'RestaurantFields',
-          document: documentNodeFragmentRestaurantFields,
-        ),
-      ),
-      optimistic: optimistic,
-    );
-    return result == null ? null : Fragment$RestaurantFields.fromJson(result);
-  }
-}
-
-class Fragment$RestaurantFields$reviews_aggregate {
-  Fragment$RestaurantFields$reviews_aggregate({
+class Query$getRestaurants$restaurant_restaurant$reviews_aggregate {
+  Query$getRestaurants$restaurant_restaurant$reviews_aggregate({
     this.aggregate,
     required this.$__typename,
   });
 
-  factory Fragment$RestaurantFields$reviews_aggregate.fromJson(
+  factory Query$getRestaurants$restaurant_restaurant$reviews_aggregate.fromJson(
       Map<String, dynamic> json) {
     final l$aggregate = json['aggregate'];
     final l$$__typename = json['__typename'];
-    return Fragment$RestaurantFields$reviews_aggregate(
+    return Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
       aggregate: l$aggregate == null
           ? null
-          : Fragment$RestaurantFields$reviews_aggregate$aggregate.fromJson(
-              (l$aggregate as Map<String, dynamic>)),
+          : Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Fragment$RestaurantFields$reviews_aggregate$aggregate? aggregate;
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate?
+      aggregate;
 
   final String $__typename;
 
@@ -659,7 +1262,8 @@ class Fragment$RestaurantFields$reviews_aggregate {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Fragment$RestaurantFields$reviews_aggregate) ||
+    if (!(other
+            is Query$getRestaurants$restaurant_restaurant$reviews_aggregate) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -677,43 +1281,52 @@ class Fragment$RestaurantFields$reviews_aggregate {
   }
 }
 
-extension UtilityExtension$Fragment$RestaurantFields$reviews_aggregate
-    on Fragment$RestaurantFields$reviews_aggregate {
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate<
-          Fragment$RestaurantFields$reviews_aggregate>
-      get copyWith => CopyWith$Fragment$RestaurantFields$reviews_aggregate(
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$reviews_aggregate
+    on Query$getRestaurants$restaurant_restaurant$reviews_aggregate {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate>
+      get copyWith =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Fragment$RestaurantFields$reviews_aggregate<TRes> {
-  factory CopyWith$Fragment$RestaurantFields$reviews_aggregate(
-    Fragment$RestaurantFields$reviews_aggregate instance,
-    TRes Function(Fragment$RestaurantFields$reviews_aggregate) then,
-  ) = _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate;
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+    TRes> {
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate instance,
+    TRes Function(Query$getRestaurants$restaurant_restaurant$reviews_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate;
 
-  factory CopyWith$Fragment$RestaurantFields$reviews_aggregate.stub(TRes res) =
-      _CopyWithStubImpl$Fragment$RestaurantFields$reviews_aggregate;
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate;
 
   TRes call({
-    Fragment$RestaurantFields$reviews_aggregate$aggregate? aggregate,
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate?
+        aggregate,
     String? $__typename,
   });
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate<TRes>
-      get aggregate;
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+      TRes> get aggregate;
 }
 
-class _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate<TRes>
-    implements CopyWith$Fragment$RestaurantFields$reviews_aggregate<TRes> {
-  _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate(
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
     this._instance,
     this._then,
   );
 
-  final Fragment$RestaurantFields$reviews_aggregate _instance;
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate _instance;
 
-  final TRes Function(Fragment$RestaurantFields$reviews_aggregate) _then;
+  final TRes Function(
+      Query$getRestaurants$restaurant_restaurant$reviews_aggregate) _then;
 
   static const _undefined = {};
 
@@ -721,63 +1334,70 @@ class _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate<TRes>
     Object? aggregate = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Fragment$RestaurantFields$reviews_aggregate(
+      _then(Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
         aggregate: aggregate == _undefined
             ? _instance.aggregate
             : (aggregate
-                as Fragment$RestaurantFields$reviews_aggregate$aggregate?),
+                as Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate<TRes>
-      get aggregate {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+      TRes> get aggregate {
     final local$aggregate = _instance.aggregate;
     return local$aggregate == null
-        ? CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate.stub(
-            _then(_instance))
-        : CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate(
+        ? CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
             local$aggregate, (e) => call(aggregate: e));
   }
 }
 
-class _CopyWithStubImpl$Fragment$RestaurantFields$reviews_aggregate<TRes>
-    implements CopyWith$Fragment$RestaurantFields$reviews_aggregate<TRes> {
-  _CopyWithStubImpl$Fragment$RestaurantFields$reviews_aggregate(this._res);
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
+      this._res);
 
   TRes _res;
 
   call({
-    Fragment$RestaurantFields$reviews_aggregate$aggregate? aggregate,
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate?
+        aggregate,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate<TRes>
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+          TRes>
       get aggregate =>
-          CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate.stub(
-              _res);
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+              .stub(_res);
 }
 
-class Fragment$RestaurantFields$reviews_aggregate$aggregate {
-  Fragment$RestaurantFields$reviews_aggregate$aggregate({
+class Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate {
+  Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate({
     this.avg,
     required this.$__typename,
   });
 
-  factory Fragment$RestaurantFields$reviews_aggregate$aggregate.fromJson(
+  factory Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate.fromJson(
       Map<String, dynamic> json) {
     final l$avg = json['avg'];
     final l$$__typename = json['__typename'];
-    return Fragment$RestaurantFields$reviews_aggregate$aggregate(
+    return Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
       avg: l$avg == null
           ? null
-          : Fragment$RestaurantFields$reviews_aggregate$aggregate$avg.fromJson(
-              (l$avg as Map<String, dynamic>)),
+          : Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
+              .fromJson((l$avg as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Fragment$RestaurantFields$reviews_aggregate$aggregate$avg? avg;
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?
+      avg;
 
   final String $__typename;
 
@@ -805,7 +1425,8 @@ class Fragment$RestaurantFields$reviews_aggregate$aggregate {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Fragment$RestaurantFields$reviews_aggregate$aggregate) ||
+    if (!(other
+            is Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -823,47 +1444,55 @@ class Fragment$RestaurantFields$reviews_aggregate$aggregate {
   }
 }
 
-extension UtilityExtension$Fragment$RestaurantFields$reviews_aggregate$aggregate
-    on Fragment$RestaurantFields$reviews_aggregate$aggregate {
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate<
-          Fragment$RestaurantFields$reviews_aggregate$aggregate>
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+    on Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate>
       get copyWith =>
-          CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate(
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate<
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
     TRes> {
-  factory CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate(
-    Fragment$RestaurantFields$reviews_aggregate$aggregate instance,
-    TRes Function(Fragment$RestaurantFields$reviews_aggregate$aggregate) then,
-  ) = _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate;
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate;
 
-  factory CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate.stub(
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate.stub(
           TRes res) =
-      _CopyWithStubImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate;
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate;
 
   TRes call({
-    Fragment$RestaurantFields$reviews_aggregate$aggregate$avg? avg,
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?
+        avg,
     String? $__typename,
   });
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<TRes>
-      get avg;
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+      TRes> get avg;
 }
 
-class _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate<TRes>
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+        TRes>
     implements
-        CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate<TRes> {
-  _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate(
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
     this._instance,
     this._then,
   );
 
-  final Fragment$RestaurantFields$reviews_aggregate$aggregate _instance;
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+      _instance;
 
-  final TRes Function(Fragment$RestaurantFields$reviews_aggregate$aggregate)
+  final TRes Function(
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate)
       _then;
 
   static const _undefined = {};
@@ -872,57 +1501,61 @@ class _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate<TRes>
     Object? avg = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Fragment$RestaurantFields$reviews_aggregate$aggregate(
+      _then(
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
         avg: avg == _undefined
             ? _instance.avg
             : (avg
-                as Fragment$RestaurantFields$reviews_aggregate$aggregate$avg?),
+                as Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<TRes>
-      get avg {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+      TRes> get avg {
     final local$avg = _instance.avg;
     return local$avg == null
-        ? CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg
+        ? CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
             .stub(_then(_instance))
-        : CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg(
+        : CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
             local$avg, (e) => call(avg: e));
   }
 }
 
-class _CopyWithStubImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate<
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
         TRes>
     implements
-        CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate<TRes> {
-  _CopyWithStubImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate(
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
       this._res);
 
   TRes _res;
 
   call({
-    Fragment$RestaurantFields$reviews_aggregate$aggregate$avg? avg,
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?
+        avg,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<TRes>
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+          TRes>
       get avg =>
-          CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
               .stub(_res);
 }
 
-class Fragment$RestaurantFields$reviews_aggregate$aggregate$avg {
-  Fragment$RestaurantFields$reviews_aggregate$aggregate$avg({
+class Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg {
+  Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg({
     this.rating,
     required this.$__typename,
   });
 
-  factory Fragment$RestaurantFields$reviews_aggregate$aggregate$avg.fromJson(
+  factory Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg.fromJson(
       Map<String, dynamic> json) {
     final l$rating = json['rating'];
     final l$$__typename = json['__typename'];
-    return Fragment$RestaurantFields$reviews_aggregate$aggregate$avg(
+    return Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
       rating: (l$rating as num?)?.toDouble(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -956,7 +1589,8 @@ class Fragment$RestaurantFields$reviews_aggregate$aggregate$avg {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Fragment$RestaurantFields$reviews_aggregate$aggregate$avg) ||
+    if (!(other
+            is Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -974,28 +1608,30 @@ class Fragment$RestaurantFields$reviews_aggregate$aggregate$avg {
   }
 }
 
-extension UtilityExtension$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg
-    on Fragment$RestaurantFields$reviews_aggregate$aggregate$avg {
-  CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<
-          Fragment$RestaurantFields$reviews_aggregate$aggregate$avg>
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
+    on Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg>
       get copyWith =>
-          CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg(
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
     TRes> {
-  factory CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg(
-    Fragment$RestaurantFields$reviews_aggregate$aggregate$avg instance,
-    TRes Function(Fragment$RestaurantFields$reviews_aggregate$aggregate$avg)
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
+        instance,
+    TRes Function(
+            Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg)
         then,
-  ) = _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg;
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg;
 
-  factory CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg.stub(
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg.stub(
           TRes res) =
-      _CopyWithStubImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg;
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg;
 
   TRes call({
     double? rating,
@@ -1003,19 +1639,21 @@ abstract class CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$av
   });
 }
 
-class _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
         TRes>
     implements
-        CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
             TRes> {
-  _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg(
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
     this._instance,
     this._then,
   );
 
-  final Fragment$RestaurantFields$reviews_aggregate$aggregate$avg _instance;
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
+      _instance;
 
-  final TRes Function(Fragment$RestaurantFields$reviews_aggregate$aggregate$avg)
+  final TRes Function(
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg)
       _then;
 
   static const _undefined = {};
@@ -1024,7 +1662,8 @@ class _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<
     Object? rating = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Fragment$RestaurantFields$reviews_aggregate$aggregate$avg(
+      _then(
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
         rating: rating == _undefined ? _instance.rating : (rating as double?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
@@ -1032,12 +1671,12 @@ class _CopyWithImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<
       ));
 }
 
-class _CopyWithStubImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
         TRes>
     implements
-        CopyWith$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg<
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
             TRes> {
-  _CopyWithStubImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate$avg(
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
       this._res);
 
   TRes _res;
@@ -1049,8 +1688,8 @@ class _CopyWithStubImpl$Fragment$RestaurantFields$reviews_aggregate$aggregate$av
       _res;
 }
 
-class Fragment$RestaurantFields$delivery_details_of_deliverer {
-  Fragment$RestaurantFields$delivery_details_of_deliverer({
+class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
+  Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer({
     required this.cost_per_km,
     this.free_delivery_km_range,
     this.free_delivery_minimum_cost,
@@ -1061,7 +1700,7 @@ class Fragment$RestaurantFields$delivery_details_of_deliverer {
     required this.$__typename,
   });
 
-  factory Fragment$RestaurantFields$delivery_details_of_deliverer.fromJson(
+  factory Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
@@ -1071,7 +1710,7 @@ class Fragment$RestaurantFields$delivery_details_of_deliverer {
     final l$radius = json['radius'];
     final l$self_delivery = json['self_delivery'];
     final l$$__typename = json['__typename'];
-    return Fragment$RestaurantFields$delivery_details_of_deliverer(
+    return Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
       cost_per_km: moneyFromJson(l$cost_per_km),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
@@ -1152,7 +1791,8 @@ class Fragment$RestaurantFields$delivery_details_of_deliverer {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Fragment$RestaurantFields$delivery_details_of_deliverer) ||
+    if (!(other
+            is Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1200,27 +1840,30 @@ class Fragment$RestaurantFields$delivery_details_of_deliverer {
   }
 }
 
-extension UtilityExtension$Fragment$RestaurantFields$delivery_details_of_deliverer
-    on Fragment$RestaurantFields$delivery_details_of_deliverer {
-  CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer<
-          Fragment$RestaurantFields$delivery_details_of_deliverer>
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer
+    on Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
+          Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>
       get copyWith =>
-          CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer(
+          CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer<
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
     TRes> {
-  factory CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer(
-    Fragment$RestaurantFields$delivery_details_of_deliverer instance,
-    TRes Function(Fragment$RestaurantFields$delivery_details_of_deliverer) then,
-  ) = _CopyWithImpl$Fragment$RestaurantFields$delivery_details_of_deliverer;
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
+    Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer
+        instance,
+    TRes Function(
+            Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer;
 
-  factory CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer.stub(
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer.stub(
           TRes res) =
-      _CopyWithStubImpl$Fragment$RestaurantFields$delivery_details_of_deliverer;
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer;
 
   TRes call({
     double? cost_per_km,
@@ -1234,18 +1877,21 @@ abstract class CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer<
   });
 }
 
-class _CopyWithImpl$Fragment$RestaurantFields$delivery_details_of_deliverer<
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
         TRes>
     implements
-        CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer<TRes> {
-  _CopyWithImpl$Fragment$RestaurantFields$delivery_details_of_deliverer(
+        CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
     this._instance,
     this._then,
   );
 
-  final Fragment$RestaurantFields$delivery_details_of_deliverer _instance;
+  final Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer
+      _instance;
 
-  final TRes Function(Fragment$RestaurantFields$delivery_details_of_deliverer)
+  final TRes Function(
+          Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer)
       _then;
 
   static const _undefined = {};
@@ -1260,7 +1906,8 @@ class _CopyWithImpl$Fragment$RestaurantFields$delivery_details_of_deliverer<
     Object? self_delivery = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Fragment$RestaurantFields$delivery_details_of_deliverer(
+      _then(
+          Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
@@ -1286,11 +1933,12 @@ class _CopyWithImpl$Fragment$RestaurantFields$delivery_details_of_deliverer<
       ));
 }
 
-class _CopyWithStubImpl$Fragment$RestaurantFields$delivery_details_of_deliverer<
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
         TRes>
     implements
-        CopyWith$Fragment$RestaurantFields$delivery_details_of_deliverer<TRes> {
-  _CopyWithStubImpl$Fragment$RestaurantFields$delivery_details_of_deliverer(
+        CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
       this._res);
 
   TRes _res;
@@ -1308,8 +1956,8 @@ class _CopyWithStubImpl$Fragment$RestaurantFields$delivery_details_of_deliverer<
       _res;
 }
 
-class Fragment$RestaurantFields$details {
-  Fragment$RestaurantFields$details({
+class Query$getRestaurants$restaurant_restaurant$details {
+  Query$getRestaurants$restaurant_restaurant$details({
     required this.id,
     required this.image,
     required this.language,
@@ -1325,7 +1973,7 @@ class Fragment$RestaurantFields$details {
     required this.$__typename,
   });
 
-  factory Fragment$RestaurantFields$details.fromJson(
+  factory Query$getRestaurants$restaurant_restaurant$details.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$image = json['image'];
@@ -1340,22 +1988,23 @@ class Fragment$RestaurantFields$details {
     final l$description = json['description'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
-    return Fragment$RestaurantFields$details(
+    return Query$getRestaurants$restaurant_restaurant$details(
       id: (l$id as int),
       image: (l$image as String),
       language: mapFromJson(l$language),
       is_open: (l$is_open as bool?),
       name: (l$name as String),
-      location: Fragment$RestaurantFields$details$location.fromJson(
-          (l$location as Map<String, dynamic>)),
+      location:
+          Query$getRestaurants$restaurant_restaurant$details$location.fromJson(
+              (l$location as Map<String, dynamic>)),
       firebase_id: (l$firebase_id as String?),
       approved: (l$approved as bool),
       description_id: (l$description_id as int?),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
           ? null
-          : Fragment$RestaurantFields$details$description.fromJson(
-              (l$description as Map<String, dynamic>)),
+          : Query$getRestaurants$restaurant_restaurant$details$description
+              .fromJson((l$description as Map<String, dynamic>)),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -1371,7 +2020,7 @@ class Fragment$RestaurantFields$details {
 
   final String name;
 
-  final Fragment$RestaurantFields$details$location location;
+  final Query$getRestaurants$restaurant_restaurant$details$location location;
 
   final String? firebase_id;
 
@@ -1381,7 +2030,8 @@ class Fragment$RestaurantFields$details {
 
   final dynamic? schedule;
 
-  final Fragment$RestaurantFields$details$description? description;
+  final Query$getRestaurants$restaurant_restaurant$details$description?
+      description;
 
   final String open_status;
 
@@ -1455,7 +2105,7 @@ class Fragment$RestaurantFields$details {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Fragment$RestaurantFields$details) ||
+    if (!(other is Query$getRestaurants$restaurant_restaurant$details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1528,23 +2178,27 @@ class Fragment$RestaurantFields$details {
   }
 }
 
-extension UtilityExtension$Fragment$RestaurantFields$details
-    on Fragment$RestaurantFields$details {
-  CopyWith$Fragment$RestaurantFields$details<Fragment$RestaurantFields$details>
-      get copyWith => CopyWith$Fragment$RestaurantFields$details(
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$details
+    on Query$getRestaurants$restaurant_restaurant$details {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details<
+          Query$getRestaurants$restaurant_restaurant$details>
+      get copyWith =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Fragment$RestaurantFields$details<TRes> {
-  factory CopyWith$Fragment$RestaurantFields$details(
-    Fragment$RestaurantFields$details instance,
-    TRes Function(Fragment$RestaurantFields$details) then,
-  ) = _CopyWithImpl$Fragment$RestaurantFields$details;
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$details<
+    TRes> {
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$details(
+    Query$getRestaurants$restaurant_restaurant$details instance,
+    TRes Function(Query$getRestaurants$restaurant_restaurant$details) then,
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details;
 
-  factory CopyWith$Fragment$RestaurantFields$details.stub(TRes res) =
-      _CopyWithStubImpl$Fragment$RestaurantFields$details;
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details;
 
   TRes call({
     int? id,
@@ -1552,29 +2206,32 @@ abstract class CopyWith$Fragment$RestaurantFields$details<TRes> {
     dynamic? language,
     bool? is_open,
     String? name,
-    Fragment$RestaurantFields$details$location? location,
+    Query$getRestaurants$restaurant_restaurant$details$location? location,
     String? firebase_id,
     bool? approved,
     int? description_id,
     dynamic? schedule,
-    Fragment$RestaurantFields$details$description? description,
+    Query$getRestaurants$restaurant_restaurant$details$description? description,
     String? open_status,
     String? $__typename,
   });
-  CopyWith$Fragment$RestaurantFields$details$location<TRes> get location;
-  CopyWith$Fragment$RestaurantFields$details$description<TRes> get description;
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details$location<TRes>
+      get location;
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details$description<TRes>
+      get description;
 }
 
-class _CopyWithImpl$Fragment$RestaurantFields$details<TRes>
-    implements CopyWith$Fragment$RestaurantFields$details<TRes> {
-  _CopyWithImpl$Fragment$RestaurantFields$details(
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$details<TRes> {
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details(
     this._instance,
     this._then,
   );
 
-  final Fragment$RestaurantFields$details _instance;
+  final Query$getRestaurants$restaurant_restaurant$details _instance;
 
-  final TRes Function(Fragment$RestaurantFields$details) _then;
+  final TRes Function(Query$getRestaurants$restaurant_restaurant$details) _then;
 
   static const _undefined = {};
 
@@ -1593,7 +2250,7 @@ class _CopyWithImpl$Fragment$RestaurantFields$details<TRes>
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Fragment$RestaurantFields$details(
+      _then(Query$getRestaurants$restaurant_restaurant$details(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined || image == null
             ? _instance.image
@@ -1607,7 +2264,8 @@ class _CopyWithImpl$Fragment$RestaurantFields$details<TRes>
             : (name as String),
         location: location == _undefined || location == null
             ? _instance.location
-            : (location as Fragment$RestaurantFields$details$location),
+            : (location
+                as Query$getRestaurants$restaurant_restaurant$details$location),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
@@ -1622,7 +2280,8 @@ class _CopyWithImpl$Fragment$RestaurantFields$details<TRes>
             : (schedule as dynamic?),
         description: description == _undefined
             ? _instance.description
-            : (description as Fragment$RestaurantFields$details$description?),
+            : (description
+                as Query$getRestaurants$restaurant_restaurant$details$description?),
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -1630,25 +2289,29 @@ class _CopyWithImpl$Fragment$RestaurantFields$details<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Fragment$RestaurantFields$details$location<TRes> get location {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details$location<TRes>
+      get location {
     final local$location = _instance.location;
-    return CopyWith$Fragment$RestaurantFields$details$location(
+    return CopyWith$Query$getRestaurants$restaurant_restaurant$details$location(
         local$location, (e) => call(location: e));
   }
 
-  CopyWith$Fragment$RestaurantFields$details$description<TRes> get description {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details$description<TRes>
+      get description {
     final local$description = _instance.description;
     return local$description == null
-        ? CopyWith$Fragment$RestaurantFields$details$description.stub(
-            _then(_instance))
-        : CopyWith$Fragment$RestaurantFields$details$description(
+        ? CopyWith$Query$getRestaurants$restaurant_restaurant$details$description
+            .stub(_then(_instance))
+        : CopyWith$Query$getRestaurants$restaurant_restaurant$details$description(
             local$description, (e) => call(description: e));
   }
 }
 
-class _CopyWithStubImpl$Fragment$RestaurantFields$details<TRes>
-    implements CopyWith$Fragment$RestaurantFields$details<TRes> {
-  _CopyWithStubImpl$Fragment$RestaurantFields$details(this._res);
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$details<TRes> {
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details(
+      this._res);
 
   TRes _res;
 
@@ -1658,36 +2321,39 @@ class _CopyWithStubImpl$Fragment$RestaurantFields$details<TRes>
     dynamic? language,
     bool? is_open,
     String? name,
-    Fragment$RestaurantFields$details$location? location,
+    Query$getRestaurants$restaurant_restaurant$details$location? location,
     String? firebase_id,
     bool? approved,
     int? description_id,
     dynamic? schedule,
-    Fragment$RestaurantFields$details$description? description,
+    Query$getRestaurants$restaurant_restaurant$details$description? description,
     String? open_status,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Fragment$RestaurantFields$details$location<TRes> get location =>
-      CopyWith$Fragment$RestaurantFields$details$location.stub(_res);
-  CopyWith$Fragment$RestaurantFields$details$description<TRes>
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details$location<TRes>
+      get location =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$details$location
+              .stub(_res);
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details$description<TRes>
       get description =>
-          CopyWith$Fragment$RestaurantFields$details$description.stub(_res);
+          CopyWith$Query$getRestaurants$restaurant_restaurant$details$description
+              .stub(_res);
 }
 
-class Fragment$RestaurantFields$details$location {
-  Fragment$RestaurantFields$details$location({
+class Query$getRestaurants$restaurant_restaurant$details$location {
+  Query$getRestaurants$restaurant_restaurant$details$location({
     required this.gps,
     required this.address,
     required this.$__typename,
   });
 
-  factory Fragment$RestaurantFields$details$location.fromJson(
+  factory Query$getRestaurants$restaurant_restaurant$details$location.fromJson(
       Map<String, dynamic> json) {
     final l$gps = json['gps'];
     final l$address = json['address'];
     final l$$__typename = json['__typename'];
-    return Fragment$RestaurantFields$details$location(
+    return Query$getRestaurants$restaurant_restaurant$details$location(
       gps: geographyFromJson(l$gps),
       address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1728,7 +2394,8 @@ class Fragment$RestaurantFields$details$location {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Fragment$RestaurantFields$details$location) ||
+    if (!(other
+            is Query$getRestaurants$restaurant_restaurant$details$location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1751,24 +2418,28 @@ class Fragment$RestaurantFields$details$location {
   }
 }
 
-extension UtilityExtension$Fragment$RestaurantFields$details$location
-    on Fragment$RestaurantFields$details$location {
-  CopyWith$Fragment$RestaurantFields$details$location<
-          Fragment$RestaurantFields$details$location>
-      get copyWith => CopyWith$Fragment$RestaurantFields$details$location(
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$details$location
+    on Query$getRestaurants$restaurant_restaurant$details$location {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details$location<
+          Query$getRestaurants$restaurant_restaurant$details$location>
+      get copyWith =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$details$location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Fragment$RestaurantFields$details$location<TRes> {
-  factory CopyWith$Fragment$RestaurantFields$details$location(
-    Fragment$RestaurantFields$details$location instance,
-    TRes Function(Fragment$RestaurantFields$details$location) then,
-  ) = _CopyWithImpl$Fragment$RestaurantFields$details$location;
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$details$location<
+    TRes> {
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$details$location(
+    Query$getRestaurants$restaurant_restaurant$details$location instance,
+    TRes Function(Query$getRestaurants$restaurant_restaurant$details$location)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details$location;
 
-  factory CopyWith$Fragment$RestaurantFields$details$location.stub(TRes res) =
-      _CopyWithStubImpl$Fragment$RestaurantFields$details$location;
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details$location;
 
   TRes call({
     Geography? gps,
@@ -1777,16 +2448,20 @@ abstract class CopyWith$Fragment$RestaurantFields$details$location<TRes> {
   });
 }
 
-class _CopyWithImpl$Fragment$RestaurantFields$details$location<TRes>
-    implements CopyWith$Fragment$RestaurantFields$details$location<TRes> {
-  _CopyWithImpl$Fragment$RestaurantFields$details$location(
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details$location<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$details$location<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details$location(
     this._instance,
     this._then,
   );
 
-  final Fragment$RestaurantFields$details$location _instance;
+  final Query$getRestaurants$restaurant_restaurant$details$location _instance;
 
-  final TRes Function(Fragment$RestaurantFields$details$location) _then;
+  final TRes Function(
+      Query$getRestaurants$restaurant_restaurant$details$location) _then;
 
   static const _undefined = {};
 
@@ -1795,7 +2470,7 @@ class _CopyWithImpl$Fragment$RestaurantFields$details$location<TRes>
     Object? address = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Fragment$RestaurantFields$details$location(
+      _then(Query$getRestaurants$restaurant_restaurant$details$location(
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
@@ -1808,9 +2483,13 @@ class _CopyWithImpl$Fragment$RestaurantFields$details$location<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Fragment$RestaurantFields$details$location<TRes>
-    implements CopyWith$Fragment$RestaurantFields$details$location<TRes> {
-  _CopyWithStubImpl$Fragment$RestaurantFields$details$location(this._res);
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details$location<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details$location(
+      this._res);
 
   TRes _res;
 
@@ -1822,26 +2501,28 @@ class _CopyWithStubImpl$Fragment$RestaurantFields$details$location<TRes>
       _res;
 }
 
-class Fragment$RestaurantFields$details$description {
-  Fragment$RestaurantFields$details$description({
+class Query$getRestaurants$restaurant_restaurant$details$description {
+  Query$getRestaurants$restaurant_restaurant$details$description({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Fragment$RestaurantFields$details$description.fromJson(
+  factory Query$getRestaurants$restaurant_restaurant$details$description.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Fragment$RestaurantFields$details$description(
+    return Query$getRestaurants$restaurant_restaurant$details$description(
       translations: (l$translations as List<dynamic>)
-          .map((e) => Fragment$RestaurantFields$details$description$translations
-              .fromJson((e as Map<String, dynamic>)))
+          .map((e) =>
+              Query$getRestaurants$restaurant_restaurant$details$description$translations
+                  .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Fragment$RestaurantFields$details$description$translations>
+  final List<
+          Query$getRestaurants$restaurant_restaurant$details$description$translations>
       translations;
 
   final String $__typename;
@@ -1871,7 +2552,8 @@ class Fragment$RestaurantFields$details$description {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Fragment$RestaurantFields$details$description) ||
+    if (!(other
+            is Query$getRestaurants$restaurant_restaurant$details$description) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1896,49 +2578,58 @@ class Fragment$RestaurantFields$details$description {
   }
 }
 
-extension UtilityExtension$Fragment$RestaurantFields$details$description
-    on Fragment$RestaurantFields$details$description {
-  CopyWith$Fragment$RestaurantFields$details$description<
-          Fragment$RestaurantFields$details$description>
-      get copyWith => CopyWith$Fragment$RestaurantFields$details$description(
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$details$description
+    on Query$getRestaurants$restaurant_restaurant$details$description {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details$description<
+          Query$getRestaurants$restaurant_restaurant$details$description>
+      get copyWith =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$details$description(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Fragment$RestaurantFields$details$description<TRes> {
-  factory CopyWith$Fragment$RestaurantFields$details$description(
-    Fragment$RestaurantFields$details$description instance,
-    TRes Function(Fragment$RestaurantFields$details$description) then,
-  ) = _CopyWithImpl$Fragment$RestaurantFields$details$description;
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$details$description<
+    TRes> {
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$details$description(
+    Query$getRestaurants$restaurant_restaurant$details$description instance,
+    TRes Function(
+            Query$getRestaurants$restaurant_restaurant$details$description)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details$description;
 
-  factory CopyWith$Fragment$RestaurantFields$details$description.stub(
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$details$description.stub(
           TRes res) =
-      _CopyWithStubImpl$Fragment$RestaurantFields$details$description;
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details$description;
 
   TRes call({
-    List<Fragment$RestaurantFields$details$description$translations>?
+    List<Query$getRestaurants$restaurant_restaurant$details$description$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Fragment$RestaurantFields$details$description$translations> Function(
+      Iterable<Query$getRestaurants$restaurant_restaurant$details$description$translations> Function(
               Iterable<
-                  CopyWith$Fragment$RestaurantFields$details$description$translations<
-                      Fragment$RestaurantFields$details$description$translations>>)
+                  CopyWith$Query$getRestaurants$restaurant_restaurant$details$description$translations<
+                      Query$getRestaurants$restaurant_restaurant$details$description$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Fragment$RestaurantFields$details$description<TRes>
-    implements CopyWith$Fragment$RestaurantFields$details$description<TRes> {
-  _CopyWithImpl$Fragment$RestaurantFields$details$description(
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details$description<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$details$description<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details$description(
     this._instance,
     this._then,
   );
 
-  final Fragment$RestaurantFields$details$description _instance;
+  final Query$getRestaurants$restaurant_restaurant$details$description
+      _instance;
 
-  final TRes Function(Fragment$RestaurantFields$details$description) _then;
+  final TRes Function(
+      Query$getRestaurants$restaurant_restaurant$details$description) _then;
 
   static const _undefined = {};
 
@@ -1946,37 +2637,41 @@ class _CopyWithImpl$Fragment$RestaurantFields$details$description<TRes>
     Object? translations = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Fragment$RestaurantFields$details$description(
+      _then(Query$getRestaurants$restaurant_restaurant$details$description(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Fragment$RestaurantFields$details$description$translations>),
+                Query$getRestaurants$restaurant_restaurant$details$description$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Fragment$RestaurantFields$details$description$translations> Function(
+          Iterable<Query$getRestaurants$restaurant_restaurant$details$description$translations> Function(
                   Iterable<
-                      CopyWith$Fragment$RestaurantFields$details$description$translations<
-                          Fragment$RestaurantFields$details$description$translations>>)
+                      CopyWith$Query$getRestaurants$restaurant_restaurant$details$description$translations<
+                          Query$getRestaurants$restaurant_restaurant$details$description$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Fragment$RestaurantFields$details$description$translations(
+              CopyWith$Query$getRestaurants$restaurant_restaurant$details$description$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Fragment$RestaurantFields$details$description<TRes>
-    implements CopyWith$Fragment$RestaurantFields$details$description<TRes> {
-  _CopyWithStubImpl$Fragment$RestaurantFields$details$description(this._res);
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details$description<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$details$description<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details$description(
+      this._res);
 
   TRes _res;
 
   call({
-    List<Fragment$RestaurantFields$details$description$translations>?
+    List<Query$getRestaurants$restaurant_restaurant$details$description$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -1984,19 +2679,19 @@ class _CopyWithStubImpl$Fragment$RestaurantFields$details$description<TRes>
   translations(_fn) => _res;
 }
 
-class Fragment$RestaurantFields$details$description$translations {
-  Fragment$RestaurantFields$details$description$translations({
+class Query$getRestaurants$restaurant_restaurant$details$description$translations {
+  Query$getRestaurants$restaurant_restaurant$details$description$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Fragment$RestaurantFields$details$description$translations.fromJson(
+  factory Query$getRestaurants$restaurant_restaurant$details$description$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Fragment$RestaurantFields$details$description$translations(
+    return Query$getRestaurants$restaurant_restaurant$details$description$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -2038,7 +2733,7 @@ class Fragment$RestaurantFields$details$description$translations {
       return true;
     }
     if (!(other
-            is Fragment$RestaurantFields$details$description$translations) ||
+            is Query$getRestaurants$restaurant_restaurant$details$description$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2061,28 +2756,30 @@ class Fragment$RestaurantFields$details$description$translations {
   }
 }
 
-extension UtilityExtension$Fragment$RestaurantFields$details$description$translations
-    on Fragment$RestaurantFields$details$description$translations {
-  CopyWith$Fragment$RestaurantFields$details$description$translations<
-          Fragment$RestaurantFields$details$description$translations>
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$details$description$translations
+    on Query$getRestaurants$restaurant_restaurant$details$description$translations {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$details$description$translations<
+          Query$getRestaurants$restaurant_restaurant$details$description$translations>
       get copyWith =>
-          CopyWith$Fragment$RestaurantFields$details$description$translations(
+          CopyWith$Query$getRestaurants$restaurant_restaurant$details$description$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Fragment$RestaurantFields$details$description$translations<
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$details$description$translations<
     TRes> {
-  factory CopyWith$Fragment$RestaurantFields$details$description$translations(
-    Fragment$RestaurantFields$details$description$translations instance,
-    TRes Function(Fragment$RestaurantFields$details$description$translations)
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$details$description$translations(
+    Query$getRestaurants$restaurant_restaurant$details$description$translations
+        instance,
+    TRes Function(
+            Query$getRestaurants$restaurant_restaurant$details$description$translations)
         then,
-  ) = _CopyWithImpl$Fragment$RestaurantFields$details$description$translations;
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details$description$translations;
 
-  factory CopyWith$Fragment$RestaurantFields$details$description$translations.stub(
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$details$description$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Fragment$RestaurantFields$details$description$translations;
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details$description$translations;
 
   TRes call({
     String? language_id,
@@ -2091,20 +2788,22 @@ abstract class CopyWith$Fragment$RestaurantFields$details$description$translatio
   });
 }
 
-class _CopyWithImpl$Fragment$RestaurantFields$details$description$translations<
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details$description$translations<
         TRes>
     implements
-        CopyWith$Fragment$RestaurantFields$details$description$translations<
+        CopyWith$Query$getRestaurants$restaurant_restaurant$details$description$translations<
             TRes> {
-  _CopyWithImpl$Fragment$RestaurantFields$details$description$translations(
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details$description$translations(
     this._instance,
     this._then,
   );
 
-  final Fragment$RestaurantFields$details$description$translations _instance;
+  final Query$getRestaurants$restaurant_restaurant$details$description$translations
+      _instance;
 
   final TRes Function(
-      Fragment$RestaurantFields$details$description$translations) _then;
+          Query$getRestaurants$restaurant_restaurant$details$description$translations)
+      _then;
 
   static const _undefined = {};
 
@@ -2113,7 +2812,8 @@ class _CopyWithImpl$Fragment$RestaurantFields$details$description$translations<
     Object? value = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Fragment$RestaurantFields$details$description$translations(
+      _then(
+          Query$getRestaurants$restaurant_restaurant$details$description$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -2126,12 +2826,12 @@ class _CopyWithImpl$Fragment$RestaurantFields$details$description$translations<
       ));
 }
 
-class _CopyWithStubImpl$Fragment$RestaurantFields$details$description$translations<
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details$description$translations<
         TRes>
     implements
-        CopyWith$Fragment$RestaurantFields$details$description$translations<
+        CopyWith$Query$getRestaurants$restaurant_restaurant$details$description$translations<
             TRes> {
-  _CopyWithStubImpl$Fragment$RestaurantFields$details$description$translations(
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details$description$translations(
       this._res);
 
   TRes _res;
@@ -2142,1153 +2842,6 @@ class _CopyWithStubImpl$Fragment$RestaurantFields$details$description$translatio
     String? $__typename,
   }) =>
       _res;
-}
-
-class Variables$Query$getOpenRestaurants {
-  factory Variables$Query$getOpenRestaurants({
-    int? limit,
-    int? offset,
-    required double distance,
-    required Geography from,
-  }) =>
-      Variables$Query$getOpenRestaurants._({
-        if (limit != null) r'limit': limit,
-        if (offset != null) r'offset': offset,
-        r'distance': distance,
-        r'from': from,
-      });
-
-  Variables$Query$getOpenRestaurants._(this._$data);
-
-  factory Variables$Query$getOpenRestaurants.fromJson(
-      Map<String, dynamic> data) {
-    final result$data = <String, dynamic>{};
-    if (data.containsKey('limit')) {
-      final l$limit = data['limit'];
-      result$data['limit'] = (l$limit as int?);
-    }
-    if (data.containsKey('offset')) {
-      final l$offset = data['offset'];
-      result$data['offset'] = (l$offset as int?);
-    }
-    final l$distance = data['distance'];
-    result$data['distance'] = (l$distance as num).toDouble();
-    final l$from = data['from'];
-    result$data['from'] = geographyFromJson(l$from);
-    return Variables$Query$getOpenRestaurants._(result$data);
-  }
-
-  Map<String, dynamic> _$data;
-
-  int? get limit => (_$data['limit'] as int?);
-  int? get offset => (_$data['offset'] as int?);
-  double get distance => (_$data['distance'] as double);
-  Geography get from => (_$data['from'] as Geography);
-  Map<String, dynamic> toJson() {
-    final result$data = <String, dynamic>{};
-    if (_$data.containsKey('limit')) {
-      final l$limit = limit;
-      result$data['limit'] = l$limit;
-    }
-    if (_$data.containsKey('offset')) {
-      final l$offset = offset;
-      result$data['offset'] = l$offset;
-    }
-    final l$distance = distance;
-    result$data['distance'] = l$distance;
-    final l$from = from;
-    result$data['from'] = geographyToJson(l$from);
-    return result$data;
-  }
-
-  CopyWith$Variables$Query$getOpenRestaurants<
-          Variables$Query$getOpenRestaurants>
-      get copyWith => CopyWith$Variables$Query$getOpenRestaurants(
-            this,
-            (i) => i,
-          );
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Variables$Query$getOpenRestaurants) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$limit = limit;
-    final lOther$limit = other.limit;
-    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
-      return false;
-    }
-    if (l$limit != lOther$limit) {
-      return false;
-    }
-    final l$offset = offset;
-    final lOther$offset = other.offset;
-    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
-      return false;
-    }
-    if (l$offset != lOther$offset) {
-      return false;
-    }
-    final l$distance = distance;
-    final lOther$distance = other.distance;
-    if (l$distance != lOther$distance) {
-      return false;
-    }
-    final l$from = from;
-    final lOther$from = other.from;
-    if (l$from != lOther$from) {
-      return false;
-    }
-    return true;
-  }
-
-  @override
-  int get hashCode {
-    final l$limit = limit;
-    final l$offset = offset;
-    final l$distance = distance;
-    final l$from = from;
-    return Object.hashAll([
-      _$data.containsKey('limit') ? l$limit : const {},
-      _$data.containsKey('offset') ? l$offset : const {},
-      l$distance,
-      l$from,
-    ]);
-  }
-}
-
-abstract class CopyWith$Variables$Query$getOpenRestaurants<TRes> {
-  factory CopyWith$Variables$Query$getOpenRestaurants(
-    Variables$Query$getOpenRestaurants instance,
-    TRes Function(Variables$Query$getOpenRestaurants) then,
-  ) = _CopyWithImpl$Variables$Query$getOpenRestaurants;
-
-  factory CopyWith$Variables$Query$getOpenRestaurants.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Query$getOpenRestaurants;
-
-  TRes call({
-    int? limit,
-    int? offset,
-    double? distance,
-    Geography? from,
-  });
-}
-
-class _CopyWithImpl$Variables$Query$getOpenRestaurants<TRes>
-    implements CopyWith$Variables$Query$getOpenRestaurants<TRes> {
-  _CopyWithImpl$Variables$Query$getOpenRestaurants(
-    this._instance,
-    this._then,
-  );
-
-  final Variables$Query$getOpenRestaurants _instance;
-
-  final TRes Function(Variables$Query$getOpenRestaurants) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? limit = _undefined,
-    Object? offset = _undefined,
-    Object? distance = _undefined,
-    Object? from = _undefined,
-  }) =>
-      _then(Variables$Query$getOpenRestaurants._({
-        ..._instance._$data,
-        if (limit != _undefined) 'limit': (limit as int?),
-        if (offset != _undefined) 'offset': (offset as int?),
-        if (distance != _undefined && distance != null)
-          'distance': (distance as double),
-        if (from != _undefined && from != null) 'from': (from as Geography),
-      }));
-}
-
-class _CopyWithStubImpl$Variables$Query$getOpenRestaurants<TRes>
-    implements CopyWith$Variables$Query$getOpenRestaurants<TRes> {
-  _CopyWithStubImpl$Variables$Query$getOpenRestaurants(this._res);
-
-  TRes _res;
-
-  call({
-    int? limit,
-    int? offset,
-    double? distance,
-    Geography? from,
-  }) =>
-      _res;
-}
-
-class Query$getOpenRestaurants {
-  Query$getOpenRestaurants({
-    required this.restaurant_restaurant,
-    required this.$__typename,
-  });
-
-  factory Query$getOpenRestaurants.fromJson(Map<String, dynamic> json) {
-    final l$restaurant_restaurant = json['restaurant_restaurant'];
-    final l$$__typename = json['__typename'];
-    return Query$getOpenRestaurants(
-      restaurant_restaurant: (l$restaurant_restaurant as List<dynamic>)
-          .map((e) =>
-              Fragment$RestaurantFields.fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<Fragment$RestaurantFields> restaurant_restaurant;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$restaurant_restaurant = restaurant_restaurant;
-    _resultData['restaurant_restaurant'] =
-        l$restaurant_restaurant.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$restaurant_restaurant = restaurant_restaurant;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$restaurant_restaurant.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$getOpenRestaurants) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$restaurant_restaurant = restaurant_restaurant;
-    final lOther$restaurant_restaurant = other.restaurant_restaurant;
-    if (l$restaurant_restaurant.length != lOther$restaurant_restaurant.length) {
-      return false;
-    }
-    for (int i = 0; i < l$restaurant_restaurant.length; i++) {
-      final l$restaurant_restaurant$entry = l$restaurant_restaurant[i];
-      final lOther$restaurant_restaurant$entry =
-          lOther$restaurant_restaurant[i];
-      if (l$restaurant_restaurant$entry != lOther$restaurant_restaurant$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$getOpenRestaurants
-    on Query$getOpenRestaurants {
-  CopyWith$Query$getOpenRestaurants<Query$getOpenRestaurants> get copyWith =>
-      CopyWith$Query$getOpenRestaurants(
-        this,
-        (i) => i,
-      );
-}
-
-abstract class CopyWith$Query$getOpenRestaurants<TRes> {
-  factory CopyWith$Query$getOpenRestaurants(
-    Query$getOpenRestaurants instance,
-    TRes Function(Query$getOpenRestaurants) then,
-  ) = _CopyWithImpl$Query$getOpenRestaurants;
-
-  factory CopyWith$Query$getOpenRestaurants.stub(TRes res) =
-      _CopyWithStubImpl$Query$getOpenRestaurants;
-
-  TRes call({
-    List<Fragment$RestaurantFields>? restaurant_restaurant,
-    String? $__typename,
-  });
-  TRes restaurant_restaurant(
-      Iterable<Fragment$RestaurantFields> Function(
-              Iterable<
-                  CopyWith$Fragment$RestaurantFields<
-                      Fragment$RestaurantFields>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$getOpenRestaurants<TRes>
-    implements CopyWith$Query$getOpenRestaurants<TRes> {
-  _CopyWithImpl$Query$getOpenRestaurants(
-    this._instance,
-    this._then,
-  );
-
-  final Query$getOpenRestaurants _instance;
-
-  final TRes Function(Query$getOpenRestaurants) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? restaurant_restaurant = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$getOpenRestaurants(
-        restaurant_restaurant:
-            restaurant_restaurant == _undefined || restaurant_restaurant == null
-                ? _instance.restaurant_restaurant
-                : (restaurant_restaurant as List<Fragment$RestaurantFields>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes restaurant_restaurant(
-          Iterable<Fragment$RestaurantFields> Function(
-                  Iterable<
-                      CopyWith$Fragment$RestaurantFields<
-                          Fragment$RestaurantFields>>)
-              _fn) =>
-      call(
-          restaurant_restaurant: _fn(_instance.restaurant_restaurant
-              .map((e) => CopyWith$Fragment$RestaurantFields(
-                    e,
-                    (i) => i,
-                  ))).toList());
-}
-
-class _CopyWithStubImpl$Query$getOpenRestaurants<TRes>
-    implements CopyWith$Query$getOpenRestaurants<TRes> {
-  _CopyWithStubImpl$Query$getOpenRestaurants(this._res);
-
-  TRes _res;
-
-  call({
-    List<Fragment$RestaurantFields>? restaurant_restaurant,
-    String? $__typename,
-  }) =>
-      _res;
-  restaurant_restaurant(_fn) => _res;
-}
-
-const documentNodeQuerygetOpenRestaurants = DocumentNode(definitions: [
-  OperationDefinitionNode(
-    type: OperationType.query,
-    name: NameNode(value: 'getOpenRestaurants'),
-    variableDefinitions: [
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'limit')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Int'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'offset')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Int'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'distance')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Float'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'from')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'geography'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-    ],
-    directives: [],
-    selectionSet: SelectionSetNode(selections: [
-      FieldNode(
-        name: NameNode(value: 'restaurant_restaurant'),
-        alias: null,
-        arguments: [
-          ArgumentNode(
-            name: NameNode(value: 'where'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'details'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: 'is_open'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: '_eq'),
-                        value: BooleanValueNode(value: true),
-                      )
-                    ]),
-                  ),
-                  ObjectFieldNode(
-                    name: NameNode(value: 'location'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: 'gps'),
-                        value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: '_st_d_within'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'distance'),
-                                value: VariableNode(
-                                    name: NameNode(value: 'distance')),
-                              ),
-                              ObjectFieldNode(
-                                name: NameNode(value: 'from'),
-                                value:
-                                    VariableNode(name: NameNode(value: 'from')),
-                              ),
-                            ]),
-                          )
-                        ]),
-                      )
-                    ]),
-                  ),
-                ]),
-              )
-            ]),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'limit'),
-            value: VariableNode(name: NameNode(value: 'limit')),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'offset'),
-            value: VariableNode(name: NameNode(value: 'offset')),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'order_by'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'details'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: 'referral_points'),
-                    value: EnumValueNode(name: NameNode(value: 'desc')),
-                  )
-                ]),
-              )
-            ]),
-          ),
-        ],
-        directives: [],
-        selectionSet: SelectionSetNode(selections: [
-          FragmentSpreadNode(
-            name: NameNode(value: 'RestaurantFields'),
-            directives: [],
-          ),
-          FieldNode(
-            name: NameNode(value: '__typename'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-        ]),
-      ),
-      
-    ]),
-  ),
-  fragmentDefinitionRestaurantFields,
-]);
-Query$getOpenRestaurants _parserFn$Query$getOpenRestaurants(
-        Map<String, dynamic> data) =>
-    Query$getOpenRestaurants.fromJson(data);
-
-class Options$Query$getOpenRestaurants
-    extends graphql.QueryOptions<Query$getOpenRestaurants> {
-  Options$Query$getOpenRestaurants({
-    String? operationName,
-    required Variables$Query$getOpenRestaurants variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    Duration? pollInterval,
-    graphql.Context? context,
-  }) : super(
-          variables: variables.toJson(),
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          pollInterval: pollInterval,
-          context: context,
-          document: documentNodeQuerygetOpenRestaurants,
-          parserFn: _parserFn$Query$getOpenRestaurants,
-        );
-}
-
-class WatchOptions$Query$getOpenRestaurants
-    extends graphql.WatchQueryOptions<Query$getOpenRestaurants> {
-  WatchOptions$Query$getOpenRestaurants({
-    String? operationName,
-    required Variables$Query$getOpenRestaurants variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    graphql.Context? context,
-    Duration? pollInterval,
-    bool? eagerlyFetchResults,
-    bool carryForwardDataOnException = true,
-    bool fetchResults = false,
-  }) : super(
-          variables: variables.toJson(),
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          context: context,
-          document: documentNodeQuerygetOpenRestaurants,
-          pollInterval: pollInterval,
-          eagerlyFetchResults: eagerlyFetchResults,
-          carryForwardDataOnException: carryForwardDataOnException,
-          fetchResults: fetchResults,
-          parserFn: _parserFn$Query$getOpenRestaurants,
-        );
-}
-
-class FetchMoreOptions$Query$getOpenRestaurants
-    extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$getOpenRestaurants({
-    required graphql.UpdateQuery updateQuery,
-    required Variables$Query$getOpenRestaurants variables,
-  }) : super(
-          updateQuery: updateQuery,
-          variables: variables.toJson(),
-          document: documentNodeQuerygetOpenRestaurants,
-        );
-}
-
-extension ClientExtension$Query$getOpenRestaurants on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$getOpenRestaurants>>
-      query$getOpenRestaurants(
-              Options$Query$getOpenRestaurants options) async =>
-          await this.query(options);
-  graphql.ObservableQuery<Query$getOpenRestaurants>
-      watchQuery$getOpenRestaurants(
-              WatchOptions$Query$getOpenRestaurants options) =>
-          this.watchQuery(options);
-  void writeQuery$getOpenRestaurants({
-    required Query$getOpenRestaurants data,
-    required Variables$Query$getOpenRestaurants variables,
-    bool broadcast = true,
-  }) =>
-      this.writeQuery(
-        graphql.Request(
-          operation:
-              graphql.Operation(document: documentNodeQuerygetOpenRestaurants),
-          variables: variables.toJson(),
-        ),
-        data: data.toJson(),
-        broadcast: broadcast,
-      );
-  Query$getOpenRestaurants? readQuery$getOpenRestaurants({
-    required Variables$Query$getOpenRestaurants variables,
-    bool optimistic = true,
-  }) {
-    final result = this.readQuery(
-      graphql.Request(
-        operation:
-            graphql.Operation(document: documentNodeQuerygetOpenRestaurants),
-        variables: variables.toJson(),
-      ),
-      optimistic: optimistic,
-    );
-    return result == null ? null : Query$getOpenRestaurants.fromJson(result);
-  }
-}
-
-class Variables$Query$getAllRestaurants {
-  factory Variables$Query$getAllRestaurants({
-    int? limit,
-    int? offset,
-    required double distance,
-    required Geography from,
-  }) =>
-      Variables$Query$getAllRestaurants._({
-        if (limit != null) r'limit': limit,
-        if (offset != null) r'offset': offset,
-        r'distance': distance,
-        r'from': from,
-      });
-
-  Variables$Query$getAllRestaurants._(this._$data);
-
-  factory Variables$Query$getAllRestaurants.fromJson(
-      Map<String, dynamic> data) {
-    final result$data = <String, dynamic>{};
-    if (data.containsKey('limit')) {
-      final l$limit = data['limit'];
-      result$data['limit'] = (l$limit as int?);
-    }
-    if (data.containsKey('offset')) {
-      final l$offset = data['offset'];
-      result$data['offset'] = (l$offset as int?);
-    }
-    final l$distance = data['distance'];
-    result$data['distance'] = (l$distance as num).toDouble();
-    final l$from = data['from'];
-    result$data['from'] = geographyFromJson(l$from);
-    return Variables$Query$getAllRestaurants._(result$data);
-  }
-
-  Map<String, dynamic> _$data;
-
-  int? get limit => (_$data['limit'] as int?);
-  int? get offset => (_$data['offset'] as int?);
-  double get distance => (_$data['distance'] as double);
-  Geography get from => (_$data['from'] as Geography);
-  Map<String, dynamic> toJson() {
-    final result$data = <String, dynamic>{};
-    if (_$data.containsKey('limit')) {
-      final l$limit = limit;
-      result$data['limit'] = l$limit;
-    }
-    if (_$data.containsKey('offset')) {
-      final l$offset = offset;
-      result$data['offset'] = l$offset;
-    }
-    final l$distance = distance;
-    result$data['distance'] = l$distance;
-    final l$from = from;
-    result$data['from'] = geographyToJson(l$from);
-    return result$data;
-  }
-
-  CopyWith$Variables$Query$getAllRestaurants<Variables$Query$getAllRestaurants>
-      get copyWith => CopyWith$Variables$Query$getAllRestaurants(
-            this,
-            (i) => i,
-          );
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Variables$Query$getAllRestaurants) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$limit = limit;
-    final lOther$limit = other.limit;
-    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
-      return false;
-    }
-    if (l$limit != lOther$limit) {
-      return false;
-    }
-    final l$offset = offset;
-    final lOther$offset = other.offset;
-    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
-      return false;
-    }
-    if (l$offset != lOther$offset) {
-      return false;
-    }
-    final l$distance = distance;
-    final lOther$distance = other.distance;
-    if (l$distance != lOther$distance) {
-      return false;
-    }
-    final l$from = from;
-    final lOther$from = other.from;
-    if (l$from != lOther$from) {
-      return false;
-    }
-    return true;
-  }
-
-  @override
-  int get hashCode {
-    final l$limit = limit;
-    final l$offset = offset;
-    final l$distance = distance;
-    final l$from = from;
-    return Object.hashAll([
-      _$data.containsKey('limit') ? l$limit : const {},
-      _$data.containsKey('offset') ? l$offset : const {},
-      l$distance,
-      l$from,
-    ]);
-  }
-}
-
-abstract class CopyWith$Variables$Query$getAllRestaurants<TRes> {
-  factory CopyWith$Variables$Query$getAllRestaurants(
-    Variables$Query$getAllRestaurants instance,
-    TRes Function(Variables$Query$getAllRestaurants) then,
-  ) = _CopyWithImpl$Variables$Query$getAllRestaurants;
-
-  factory CopyWith$Variables$Query$getAllRestaurants.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Query$getAllRestaurants;
-
-  TRes call({
-    int? limit,
-    int? offset,
-    double? distance,
-    Geography? from,
-  });
-}
-
-class _CopyWithImpl$Variables$Query$getAllRestaurants<TRes>
-    implements CopyWith$Variables$Query$getAllRestaurants<TRes> {
-  _CopyWithImpl$Variables$Query$getAllRestaurants(
-    this._instance,
-    this._then,
-  );
-
-  final Variables$Query$getAllRestaurants _instance;
-
-  final TRes Function(Variables$Query$getAllRestaurants) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? limit = _undefined,
-    Object? offset = _undefined,
-    Object? distance = _undefined,
-    Object? from = _undefined,
-  }) =>
-      _then(Variables$Query$getAllRestaurants._({
-        ..._instance._$data,
-        if (limit != _undefined) 'limit': (limit as int?),
-        if (offset != _undefined) 'offset': (offset as int?),
-        if (distance != _undefined && distance != null)
-          'distance': (distance as double),
-        if (from != _undefined && from != null) 'from': (from as Geography),
-      }));
-}
-
-class _CopyWithStubImpl$Variables$Query$getAllRestaurants<TRes>
-    implements CopyWith$Variables$Query$getAllRestaurants<TRes> {
-  _CopyWithStubImpl$Variables$Query$getAllRestaurants(this._res);
-
-  TRes _res;
-
-  call({
-    int? limit,
-    int? offset,
-    double? distance,
-    Geography? from,
-  }) =>
-      _res;
-}
-
-class Query$getAllRestaurants {
-  Query$getAllRestaurants({
-    required this.restaurant_restaurant,
-    required this.$__typename,
-  });
-
-  factory Query$getAllRestaurants.fromJson(Map<String, dynamic> json) {
-    final l$restaurant_restaurant = json['restaurant_restaurant'];
-    final l$$__typename = json['__typename'];
-    return Query$getAllRestaurants(
-      restaurant_restaurant: (l$restaurant_restaurant as List<dynamic>)
-          .map((e) =>
-              Fragment$RestaurantFields.fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<Fragment$RestaurantFields> restaurant_restaurant;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$restaurant_restaurant = restaurant_restaurant;
-    _resultData['restaurant_restaurant'] =
-        l$restaurant_restaurant.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$restaurant_restaurant = restaurant_restaurant;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$restaurant_restaurant.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$getAllRestaurants) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$restaurant_restaurant = restaurant_restaurant;
-    final lOther$restaurant_restaurant = other.restaurant_restaurant;
-    if (l$restaurant_restaurant.length != lOther$restaurant_restaurant.length) {
-      return false;
-    }
-    for (int i = 0; i < l$restaurant_restaurant.length; i++) {
-      final l$restaurant_restaurant$entry = l$restaurant_restaurant[i];
-      final lOther$restaurant_restaurant$entry =
-          lOther$restaurant_restaurant[i];
-      if (l$restaurant_restaurant$entry != lOther$restaurant_restaurant$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$getAllRestaurants on Query$getAllRestaurants {
-  CopyWith$Query$getAllRestaurants<Query$getAllRestaurants> get copyWith =>
-      CopyWith$Query$getAllRestaurants(
-        this,
-        (i) => i,
-      );
-}
-
-abstract class CopyWith$Query$getAllRestaurants<TRes> {
-  factory CopyWith$Query$getAllRestaurants(
-    Query$getAllRestaurants instance,
-    TRes Function(Query$getAllRestaurants) then,
-  ) = _CopyWithImpl$Query$getAllRestaurants;
-
-  factory CopyWith$Query$getAllRestaurants.stub(TRes res) =
-      _CopyWithStubImpl$Query$getAllRestaurants;
-
-  TRes call({
-    List<Fragment$RestaurantFields>? restaurant_restaurant,
-    String? $__typename,
-  });
-  TRes restaurant_restaurant(
-      Iterable<Fragment$RestaurantFields> Function(
-              Iterable<
-                  CopyWith$Fragment$RestaurantFields<
-                      Fragment$RestaurantFields>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$getAllRestaurants<TRes>
-    implements CopyWith$Query$getAllRestaurants<TRes> {
-  _CopyWithImpl$Query$getAllRestaurants(
-    this._instance,
-    this._then,
-  );
-
-  final Query$getAllRestaurants _instance;
-
-  final TRes Function(Query$getAllRestaurants) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? restaurant_restaurant = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$getAllRestaurants(
-        restaurant_restaurant:
-            restaurant_restaurant == _undefined || restaurant_restaurant == null
-                ? _instance.restaurant_restaurant
-                : (restaurant_restaurant as List<Fragment$RestaurantFields>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes restaurant_restaurant(
-          Iterable<Fragment$RestaurantFields> Function(
-                  Iterable<
-                      CopyWith$Fragment$RestaurantFields<
-                          Fragment$RestaurantFields>>)
-              _fn) =>
-      call(
-          restaurant_restaurant: _fn(_instance.restaurant_restaurant
-              .map((e) => CopyWith$Fragment$RestaurantFields(
-                    e,
-                    (i) => i,
-                  ))).toList());
-}
-
-class _CopyWithStubImpl$Query$getAllRestaurants<TRes>
-    implements CopyWith$Query$getAllRestaurants<TRes> {
-  _CopyWithStubImpl$Query$getAllRestaurants(this._res);
-
-  TRes _res;
-
-  call({
-    List<Fragment$RestaurantFields>? restaurant_restaurant,
-    String? $__typename,
-  }) =>
-      _res;
-  restaurant_restaurant(_fn) => _res;
-}
-
-const documentNodeQuerygetAllRestaurants = DocumentNode(definitions: [
-  OperationDefinitionNode(
-    type: OperationType.query,
-    name: NameNode(value: 'getAllRestaurants'),
-    variableDefinitions: [
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'limit')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Int'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'offset')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Int'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'distance')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Float'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'from')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'geography'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-    ],
-    directives: [],
-    selectionSet: SelectionSetNode(selections: [
-      FieldNode(
-        name: NameNode(value: 'restaurant_restaurant'),
-        alias: null,
-        arguments: [
-          ArgumentNode(
-            name: NameNode(value: 'where'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'details'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: 'location'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: 'gps'),
-                        value: ObjectValueNode(fields: [
-                          ObjectFieldNode(
-                            name: NameNode(value: '_st_d_within'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'distance'),
-                                value: VariableNode(
-                                    name: NameNode(value: 'distance')),
-                              ),
-                              ObjectFieldNode(
-                                name: NameNode(value: 'from'),
-                                value:
-                                    VariableNode(name: NameNode(value: 'from')),
-                              ),
-                            ]),
-                          )
-                        ]),
-                      )
-                    ]),
-                  )
-                ]),
-              )
-            ]),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'limit'),
-            value: VariableNode(name: NameNode(value: 'limit')),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'offset'),
-            value: VariableNode(name: NameNode(value: 'offset')),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'order_by'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'details'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: 'referral_points'),
-                    value: EnumValueNode(name: NameNode(value: 'desc')),
-                  )
-                ]),
-              )
-            ]),
-          ),
-        ],
-        directives: [],
-        selectionSet: SelectionSetNode(selections: [
-          FragmentSpreadNode(
-            name: NameNode(value: 'RestaurantFields'),
-            directives: [],
-          ),
-          FieldNode(
-            name: NameNode(value: '__typename'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-        ]),
-      ),
-      
-    ]),
-  ),
-  fragmentDefinitionRestaurantFields,
-]);
-Query$getAllRestaurants _parserFn$Query$getAllRestaurants(
-        Map<String, dynamic> data) =>
-    Query$getAllRestaurants.fromJson(data);
-
-class Options$Query$getAllRestaurants
-    extends graphql.QueryOptions<Query$getAllRestaurants> {
-  Options$Query$getAllRestaurants({
-    String? operationName,
-    required Variables$Query$getAllRestaurants variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    Duration? pollInterval,
-    graphql.Context? context,
-  }) : super(
-          variables: variables.toJson(),
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          pollInterval: pollInterval,
-          context: context,
-          document: documentNodeQuerygetAllRestaurants,
-          parserFn: _parserFn$Query$getAllRestaurants,
-        );
-}
-
-class WatchOptions$Query$getAllRestaurants
-    extends graphql.WatchQueryOptions<Query$getAllRestaurants> {
-  WatchOptions$Query$getAllRestaurants({
-    String? operationName,
-    required Variables$Query$getAllRestaurants variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    graphql.Context? context,
-    Duration? pollInterval,
-    bool? eagerlyFetchResults,
-    bool carryForwardDataOnException = true,
-    bool fetchResults = false,
-  }) : super(
-          variables: variables.toJson(),
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          context: context,
-          document: documentNodeQuerygetAllRestaurants,
-          pollInterval: pollInterval,
-          eagerlyFetchResults: eagerlyFetchResults,
-          carryForwardDataOnException: carryForwardDataOnException,
-          fetchResults: fetchResults,
-          parserFn: _parserFn$Query$getAllRestaurants,
-        );
-}
-
-class FetchMoreOptions$Query$getAllRestaurants
-    extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$getAllRestaurants({
-    required graphql.UpdateQuery updateQuery,
-    required Variables$Query$getAllRestaurants variables,
-  }) : super(
-          updateQuery: updateQuery,
-          variables: variables.toJson(),
-          document: documentNodeQuerygetAllRestaurants,
-        );
-}
-
-extension ClientExtension$Query$getAllRestaurants on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$getAllRestaurants>> query$getAllRestaurants(
-          Options$Query$getAllRestaurants options) async =>
-      await this.query(options);
-  graphql.ObservableQuery<Query$getAllRestaurants> watchQuery$getAllRestaurants(
-          WatchOptions$Query$getAllRestaurants options) =>
-      this.watchQuery(options);
-  void writeQuery$getAllRestaurants({
-    required Query$getAllRestaurants data,
-    required Variables$Query$getAllRestaurants variables,
-    bool broadcast = true,
-  }) =>
-      this.writeQuery(
-        graphql.Request(
-          operation:
-              graphql.Operation(document: documentNodeQuerygetAllRestaurants),
-          variables: variables.toJson(),
-        ),
-        data: data.toJson(),
-        broadcast: broadcast,
-      );
-  Query$getAllRestaurants? readQuery$getAllRestaurants({
-    required Variables$Query$getAllRestaurants variables,
-    bool optimistic = true,
-  }) {
-    final result = this.readQuery(
-      graphql.Request(
-        operation:
-            graphql.Operation(document: documentNodeQuerygetAllRestaurants),
-        variables: variables.toJson(),
-      ),
-      optimistic: optimistic,
-    );
-    return result == null ? null : Query$getAllRestaurants.fromJson(result);
-  }
 }
 
 class Variables$Query$get_restaurant_desc_by_pk {
