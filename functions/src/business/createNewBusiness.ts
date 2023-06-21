@@ -3,7 +3,7 @@ import { getUser } from "../shared/graphql/user/getUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { Language, Location, MezError } from "../shared/models/Generic/Generic";
-import { Schedule } from "../shared/models/Generic/Schedule";
+import { Weekday, WorkingDay } from "../shared/models/Generic/Schedule";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { Business, BusinessProfile, NewBusinessNotification } from "../shared/models/Services/Business/Business";
@@ -21,7 +21,7 @@ export interface BusinessDetails {
     language: ServiceProviderLanguage,
     uniqueId?: string,
     firebaseId?: string,
-    schedule: Schedule
+    schedule: Record<Weekday, WorkingDay>,
 }
 export interface BusinessResponse {
   success: boolean,

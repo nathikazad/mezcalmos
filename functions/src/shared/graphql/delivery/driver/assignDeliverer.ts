@@ -1,3 +1,4 @@
+import { $ } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDriver, DeliveryOrder } from "../../../models/Generic/Delivery";
 import { AppType, MezError } from "../../../models/Generic/Generic";
@@ -14,7 +15,7 @@ export async function assignDeliveryDriver(deliveryOrder: DeliveryOrder, driver:
       _set: {
         delivery_driver_id: driver.id,
         service_provider_id: driver.deliveryCompanyId,
-        counter_offers: deliveryOrder.counterOffers,
+        counter_offers: $`counter_offers`,
         delivery_cost: deliveryOrder.deliveryCost,
       }
     }, {
@@ -22,6 +23,8 @@ export async function assignDeliveryDriver(deliveryOrder: DeliveryOrder, driver:
       chat_with_customer_id: true,
       chat_with_service_provider_id: true,
     }]
+  }, {
+    "counter_offers": deliveryOrder.counterOffers
   });
   switch (deliveryOrder.orderType) {
     case OrderType.Restaurant:
