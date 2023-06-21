@@ -72,6 +72,7 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
                     await custChatController.initiateChat(
                         businessId: widget.business.id,
                         offeringName: widget.offering.name,
+                        phoneNumber: widget.business.phoneNo,
                         offeringImage:
                             widget.offering.firstImage ?? defaultUserImgUrl);
                   }

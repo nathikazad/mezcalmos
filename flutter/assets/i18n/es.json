@@ -531,6 +531,20 @@
       }
     },
     "pages": {
+      "CustCartView": {
+        "CustCartView": {
+          "myCart": "Mi carrito",
+          "request": "Pedido",
+          "notes": "Notas",
+          "writeNotesHere": "Escribe tus notas aquí.",
+          "summary": "Resumen",
+          "orderCost": "Costo de la orden",
+          "disclaimer": "Descargo de responsabilidad",
+          "disclaimerPartOneText": "Mezkala solo transmite su solicitud de pedido al negocio",
+          "disclaimerPartTwoText": " y no es responsable de la calidad o las acciones del negocio.",
+          "okay": "Bueno"
+        }
+      },
       "JoinUsView": {
         "joinUs": "Únete a nosotros",
         "restaurantBusiness": {
@@ -706,6 +720,7 @@
           "next": "Próxima",
           "orderNow": "Ordenar ahora",
           "deliveryCompany": "Compañía de entrega",
+          "topDescription": "Puede solicitar cualquier artículo desde cualquier lugar y un controlador de entrega lo recogerá para usted.",
           "CustRequestCourierItems": {
             "item": "Artículo",
             "remove": "Eliminar",
@@ -2256,10 +2271,9 @@
         "save": "Ahorrar"
       },
       "CreateServiceView": {
-
         "pages": {
           "createServiceStartPage": {
-            "opNote" : "Si desea que lo agregue como operador a un negocio existente, solicite al propietario del negocio que le envíe código de invitación",
+            "opNote": "Si desea que lo agregue como operador a un negocio existente, solicite al propietario del negocio que le envíe código de invitación",
 
             "create": "Crear",
             "subtitle": {
@@ -4086,6 +4100,6 @@
     "slowInternet": "Internet lento",
     "noInternet": "Sin conexión a Internet",
     "min": "min",
-    "addingOp" : "Agregarlo como operador"
+    "addingOp": "Agregarlo como operador"
   }
 }
