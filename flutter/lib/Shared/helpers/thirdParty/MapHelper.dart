@@ -8,13 +8,17 @@ import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/env.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["General"];
 
 typedef LocationChangesNotifier = void Function(LocModel.MezLocation? location);
+double get getFetchDistance =>
+    MezEnv.appLaunchMode == AppLaunchMode.prod ? 25000 : 10000000000000;
 
 class RouteInformation {
   String polyline;

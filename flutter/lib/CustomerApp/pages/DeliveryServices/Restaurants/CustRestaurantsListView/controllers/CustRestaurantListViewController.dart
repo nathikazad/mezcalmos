@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRestaurantCard.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRestaurantCard.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -72,10 +73,10 @@ class CustRestaurantListViewController {
   final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
-  void init({required BuildContext context}) async {
+  Future<void> init({required BuildContext context}) async {
     ctx = context;
 
-    await locPkg.Location().getLocation().then((location) {
+    await locPkg.Location().getLocation().then((LocationData location) {
       if (location.latitude != null && location.longitude != null)
         _currentLocation = LatLng(location.latitude!, location.longitude!);
     });
@@ -95,7 +96,7 @@ class CustRestaurantListViewController {
                 address: ''),
             is_open: showOnlyOpen.value,
             withCache: false,
-            distance: 25000)
+            distance: getFetchDistance)
         .then((List<Restaurant> list) {
       _restaurants = list;
 
