@@ -102,54 +102,25 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Get.find<AuthController>().isUserSignedIn
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Obx(
-                  () => Get.find<CustBusinessCartController>().cart.value !=
-                              null &&
-                          Get.find<CustBusinessCartController>()
-                              .cart
-                              .value!
-                              .items
-                              .isNotEmpty
-                      ? FloatingActionButton(
-                          heroTag: "cart",
-                          child: Icon(
-                            Icons.shopping_cart,
-                            color: Colors.white,
-                          ),
-                          backgroundColor: primaryBlueColor,
-                          onPressed: () async {
-                            await CustCartView.navigate();
-                          },
-                        )
-                      : SizedBox(),
-                ),
-                SizedBox(width: 12),
-                Obx(
-                  () => Get.find<CustBusinessCartController>()
-                                  .previousOrders
-                                  .value !=
-                              null &&
-                          Get.find<CustBusinessCartController>()
-                              .previousOrders
-                              .value!
-                              .isNotEmpty
-                      ? FloatingActionButton(
-                          heroTag: "orders",
-                          child: Icon(
-                            Icons.access_time_outlined,
-                            color: Colors.white,
-                          ),
-                          backgroundColor: primaryBlueColor,
-                          onPressed: () async {
-                            await CustOrderListView.navigate();
-                          },
-                        )
-                      : SizedBox(),
-                ),
-              ],
+          ? Obx(
+              () => Get.find<CustBusinessCartController>().cart.value != null &&
+                      Get.find<CustBusinessCartController>()
+                          .cart
+                          .value!
+                          .items
+                          .isNotEmpty
+                  ? FloatingActionButton(
+                      heroTag: "cart",
+                      child: Icon(
+                        Icons.shopping_cart,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: primaryBlueColor,
+                      onPressed: () async {
+                        await CustCartView.navigate();
+                      },
+                    )
+                  : SizedBox(),
             )
           : null,
       bottomNavigationBar: _navBar(),
