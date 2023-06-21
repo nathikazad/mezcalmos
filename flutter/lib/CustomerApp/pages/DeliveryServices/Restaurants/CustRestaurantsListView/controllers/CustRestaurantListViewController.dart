@@ -177,7 +177,7 @@ class CustRestaurantListViewController {
                 address: ''),
             is_open: showOnlyOpen.value,
             withCache: false,
-            distance: 25000);
+            distance: getFetchDistance);
       } else {
         _mapViewRestaurants.value = await fetch_restaurants(
             distance: _calculateDistance(
