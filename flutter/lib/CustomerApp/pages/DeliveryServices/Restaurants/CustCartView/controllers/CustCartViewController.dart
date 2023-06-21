@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
@@ -69,6 +70,9 @@ class CustCartViewController {
 
   // init //
   Future<void> init() async {
+    final loc.MezLocation? baseLoc =
+        await get_service_location(serviceDetailsId: 63);
+    mezDbgPrint("base looooooooc ====>${baseLoc?.toFirebaseFormattedJson()}");
     if (customerAuthController.customer?.stripeInfo?.cards.isNotEmpty == true)
       savedCardChoice =
           customerAuthController.customer?.stripeInfo?.cards.first;
@@ -209,6 +213,21 @@ class CustCartViewController {
   //       pickerChoice.value = newValue;
   //   }
   // }
+  double getShippingCostFromBase() {
+    mezDbgPrint(
+        "Gett shipping cost from base =====>${deliveryCost?.costPerKmFromBase}");
+    double result = 0;
+    if (cart.restaurant != null && deliveryCost?.costPerKmFromBase != null) {
+      final double dist = MapHelper.calculateDistance(
+          MapHelper.alitasLoc.toLocationData(),
+          cart.restaurant!.info.location.toLocationData());
+      mezDbgPrint("distance from base ========>$dist");
+      final double cost = dist * deliveryCost!.costPerKmFromBase!;
+      result = cost;
+    }
+    mezDbgPrint("shipping cost from base ==========>$result");
+    return result;
+  }
 
   Future<void> checkoutActionButton() async {
     cart.notes = noteText.text;
@@ -346,11 +365,15 @@ class CustCartViewController {
         _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
         if (_orderDistanceInKm <= 10) {
           final num shippingCost =
-              deliveryCost!.costPerKm * (_orderDistanceInKm);
+              (deliveryCost!.costPerKm * (_orderDistanceInKm)) +
+                  getShippingCostFromBase();
           if (shippingCost < deliveryCost!.minimumCost) {
+            mezDbgPrint(
+                " shipping cost is less than ${deliveryCost!.minimumCost} : $shippingCost ");
             cart.shippingCost = deliveryCost!.minimumCost.ceil();
             _cartRxn.refresh();
           } else {
+            mezDbgPrint("Shipping cost ============>$shippingCost");
             cart.shippingCost = shippingCost.ceil();
             _cartRxn.refresh();
           }

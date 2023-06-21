@@ -269,6 +269,13 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'cost_per_km_from_base'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'free_delivery_km_range'),
                 alias: null,
                 arguments: [],
@@ -1343,6 +1350,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggre
 class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
   Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer({
     required this.cost_per_km,
+    required this.cost_per_km_from_base,
     this.free_delivery_km_range,
     this.free_delivery_minimum_cost,
     required this.id,
@@ -1355,6 +1363,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
   factory Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
+    final l$cost_per_km_from_base = json['cost_per_km_from_base'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
@@ -1364,6 +1373,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
       cost_per_km: moneyFromJson(l$cost_per_km),
+      cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
           ? null
@@ -1377,6 +1387,8 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
   }
 
   final double cost_per_km;
+
+  final double cost_per_km_from_base;
 
   final double? free_delivery_km_range;
 
@@ -1396,6 +1408,8 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
     final _resultData = <String, dynamic>{};
     final l$cost_per_km = cost_per_km;
     _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    _resultData['cost_per_km_from_base'] = moneyToJson(l$cost_per_km_from_base);
     final l$free_delivery_km_range = free_delivery_km_range;
     _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
@@ -1419,6 +1433,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
   @override
   int get hashCode {
     final l$cost_per_km = cost_per_km;
+    final l$cost_per_km_from_base = cost_per_km_from_base;
     final l$free_delivery_km_range = free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
@@ -1428,6 +1443,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
+      l$cost_per_km_from_base,
       l$free_delivery_km_range,
       l$free_delivery_minimum_cost,
       l$id,
@@ -1451,6 +1467,11 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
     final l$cost_per_km = cost_per_km;
     final lOther$cost_per_km = other.cost_per_km;
     if (l$cost_per_km != lOther$cost_per_km) {
+      return false;
+    }
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    final lOther$cost_per_km_from_base = other.cost_per_km_from_base;
+    if (l$cost_per_km_from_base != lOther$cost_per_km_from_base) {
       return false;
     }
     final l$free_delivery_km_range = free_delivery_km_range;
@@ -1519,6 +1540,7 @@ abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_deta
 
   TRes call({
     double? cost_per_km,
+    double? cost_per_km_from_base,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
     int? id,
@@ -1550,6 +1572,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_
 
   TRes call({
     Object? cost_per_km = _undefined,
+    Object? cost_per_km_from_base = _undefined,
     Object? free_delivery_km_range = _undefined,
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
@@ -1563,6 +1586,10 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
+        cost_per_km_from_base:
+            cost_per_km_from_base == _undefined || cost_per_km_from_base == null
+                ? _instance.cost_per_km_from_base
+                : (cost_per_km_from_base as double),
         free_delivery_km_range: free_delivery_km_range == _undefined
             ? _instance.free_delivery_km_range
             : (free_delivery_km_range as double?),
@@ -1597,6 +1624,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_deta
 
   call({
     double? cost_per_km,
+    double? cost_per_km_from_base,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
     int? id,
@@ -3563,6 +3591,13 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'cost_per_km_from_base'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'cost_per_km'),
                 alias: null,
                 arguments: [],
@@ -4271,6 +4306,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk<TRes>
 
 class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer {
   Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer({
+    required this.cost_per_km_from_base,
     required this.cost_per_km,
     this.free_delivery_km_range,
     this.free_delivery_minimum_cost,
@@ -4283,6 +4319,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
 
   factory Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer.fromJson(
       Map<String, dynamic> json) {
+    final l$cost_per_km_from_base = json['cost_per_km_from_base'];
     final l$cost_per_km = json['cost_per_km'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
@@ -4292,6 +4329,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
     final l$self_delivery = json['self_delivery'];
     final l$$__typename = json['__typename'];
     return Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+      cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       cost_per_km: moneyFromJson(l$cost_per_km),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
@@ -4304,6 +4342,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final double cost_per_km_from_base;
 
   final double cost_per_km;
 
@@ -4323,6 +4363,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    _resultData['cost_per_km_from_base'] = moneyToJson(l$cost_per_km_from_base);
     final l$cost_per_km = cost_per_km;
     _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
     final l$free_delivery_km_range = free_delivery_km_range;
@@ -4347,6 +4389,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
 
   @override
   int get hashCode {
+    final l$cost_per_km_from_base = cost_per_km_from_base;
     final l$cost_per_km = cost_per_km;
     final l$free_delivery_km_range = free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
@@ -4356,6 +4399,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
     final l$self_delivery = self_delivery;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$cost_per_km_from_base,
       l$cost_per_km,
       l$free_delivery_km_range,
       l$free_delivery_minimum_cost,
@@ -4375,6 +4419,11 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
     if (!(other
             is Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    final lOther$cost_per_km_from_base = other.cost_per_km_from_base;
+    if (l$cost_per_km_from_base != lOther$cost_per_km_from_base) {
       return false;
     }
     final l$cost_per_km = cost_per_km;
@@ -4447,6 +4496,7 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$deliv
       _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer;
 
   TRes call({
+    double? cost_per_km_from_base,
     double? cost_per_km,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
@@ -4478,6 +4528,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_
   static const _undefined = {};
 
   TRes call({
+    Object? cost_per_km_from_base = _undefined,
     Object? cost_per_km = _undefined,
     Object? free_delivery_km_range = _undefined,
     Object? free_delivery_minimum_cost = _undefined,
@@ -4489,6 +4540,10 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_
   }) =>
       _then(
           Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+        cost_per_km_from_base:
+            cost_per_km_from_base == _undefined || cost_per_km_from_base == null
+                ? _instance.cost_per_km_from_base
+                : (cost_per_km_from_base as double),
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
@@ -4525,6 +4580,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$deliv
   TRes _res;
 
   call({
+    double? cost_per_km_from_base,
     double? cost_per_km,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
@@ -10258,6 +10314,13 @@ const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'cost_per_km_from_base'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'cost_per_km'),
                 alias: null,
                 arguments: [],
@@ -10929,6 +10992,7 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
 
 class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer {
   Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer({
+    required this.cost_per_km_from_base,
     required this.cost_per_km,
     this.free_delivery_km_range,
     this.free_delivery_minimum_cost,
@@ -10940,6 +11004,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
 
   factory Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer.fromJson(
       Map<String, dynamic> json) {
+    final l$cost_per_km_from_base = json['cost_per_km_from_base'];
     final l$cost_per_km = json['cost_per_km'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
@@ -10948,6 +11013,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     final l$radius = json['radius'];
     final l$$__typename = json['__typename'];
     return Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+      cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       cost_per_km: moneyFromJson(l$cost_per_km),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
@@ -10959,6 +11025,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final double cost_per_km_from_base;
 
   final double cost_per_km;
 
@@ -10976,6 +11044,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    _resultData['cost_per_km_from_base'] = moneyToJson(l$cost_per_km_from_base);
     final l$cost_per_km = cost_per_km;
     _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
     final l$free_delivery_km_range = free_delivery_km_range;
@@ -10998,6 +11068,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
 
   @override
   int get hashCode {
+    final l$cost_per_km_from_base = cost_per_km_from_base;
     final l$cost_per_km = cost_per_km;
     final l$free_delivery_km_range = free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
@@ -11006,6 +11077,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     final l$radius = radius;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$cost_per_km_from_base,
       l$cost_per_km,
       l$free_delivery_km_range,
       l$free_delivery_minimum_cost,
@@ -11024,6 +11096,11 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     if (!(other
             is Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    final lOther$cost_per_km_from_base = other.cost_per_km_from_base;
+    if (l$cost_per_km_from_base != lOther$cost_per_km_from_base) {
       return false;
     }
     final l$cost_per_km = cost_per_km;
@@ -11091,6 +11168,7 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaura
       _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer;
 
   TRes call({
+    double? cost_per_km_from_base,
     double? cost_per_km,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
@@ -11121,6 +11199,7 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
   static const _undefined = {};
 
   TRes call({
+    Object? cost_per_km_from_base = _undefined,
     Object? cost_per_km = _undefined,
     Object? free_delivery_km_range = _undefined,
     Object? free_delivery_minimum_cost = _undefined,
@@ -11131,6 +11210,10 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
   }) =>
       _then(
           Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+        cost_per_km_from_base:
+            cost_per_km_from_base == _undefined || cost_per_km_from_base == null
+                ? _instance.cost_per_km_from_base
+                : (cost_per_km_from_base as double),
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
@@ -11164,6 +11247,7 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
   TRes _res;
 
   call({
+    double? cost_per_km_from_base,
     double? cost_per_km,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,

@@ -73,6 +73,11 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                                 .delivery_details_of_deliverer!
                                 .first
                                 .free_delivery_minimum_cost,
+                            costPerKmFromBase: cartData
+                                .restaurant!
+                                .delivery_details_of_deliverer!
+                                .first
+                                .cost_per_km_from_base,
                             costPerKm: cartData
                                 .restaurant!
                                 .delivery_details_of_deliverer!
@@ -284,6 +289,8 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
               ? null
               : DeliveryCost(
                   id: _res.delivery_details_of_deliverer!.first.id,
+                  costPerKmFromBase: _res.delivery_details_of_deliverer!.first
+                      .cost_per_km_from_base,
                   selfDelivery:
                       _res.delivery_details_of_deliverer!.first.self_delivery,
                   freeDeliveryMinimumCost: _res.delivery_details_of_deliverer!
