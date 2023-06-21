@@ -1958,7 +1958,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     this.trip_polyline,
     required this.package_ready,
     required this.direction,
-    required this.service_provider_id,
+    this.service_provider_id,
     this.delivery_driver,
     required this.$__typename,
   });
@@ -2028,7 +2028,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       trip_polyline: (l$trip_polyline as String?),
       package_ready: (l$package_ready as bool),
       direction: (l$direction as String),
-      service_provider_id: (l$service_provider_id as int),
+      service_provider_id: (l$service_provider_id as int?),
       delivery_driver: l$delivery_driver == null
           ? null
           : Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver
@@ -2086,7 +2086,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
 
   final String direction;
 
-  final int service_provider_id;
+  final int? service_provider_id;
 
   final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver?
       delivery_driver;
@@ -2560,10 +2560,9 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
         direction: direction == _undefined || direction == null
             ? _instance.direction
             : (direction as String),
-        service_provider_id:
-            service_provider_id == _undefined || service_provider_id == null
-                ? _instance.service_provider_id
-                : (service_provider_id as int),
+        service_provider_id: service_provider_id == _undefined
+            ? _instance.service_provider_id
+            : (service_provider_id as int?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -8530,13 +8529,6 @@ const documentNodeSubscriptionlisten_on_courier_order_by_id =
                 ]),
               ),
               FieldNode(
-                name: NameNode(value: 'change_price_request'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'schedule_time'),
                 alias: null,
                 arguments: [],
@@ -9810,7 +9802,6 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
 class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order {
   Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order({
     this.driver_review_by_customer,
-    this.change_price_request,
     this.schedule_time,
     required this.customer,
     required this.chat_with_customer_id,
@@ -9833,7 +9824,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     this.trip_polyline,
     required this.package_ready,
     required this.direction,
-    required this.service_provider_id,
+    this.service_provider_id,
     this.delivery_driver,
     required this.$__typename,
   });
@@ -9841,7 +9832,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
   factory Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order.fromJson(
       Map<String, dynamic> json) {
     final l$driver_review_by_customer = json['driver_review_by_customer'];
-    final l$change_price_request = json['change_price_request'];
     final l$schedule_time = json['schedule_time'];
     final l$customer = json['customer'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
@@ -9875,9 +9865,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
           ? null
           : Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
               .fromJson((l$driver_review_by_customer as Map<String, dynamic>)),
-      change_price_request: l$change_price_request == null
-          ? null
-          : mapFromJson(l$change_price_request),
       schedule_time: (l$schedule_time as String?),
       customer:
           Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
@@ -9907,7 +9894,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       trip_polyline: (l$trip_polyline as String?),
       package_ready: (l$package_ready as bool),
       direction: (l$direction as String),
-      service_provider_id: (l$service_provider_id as int),
+      service_provider_id: (l$service_provider_id as int?),
       delivery_driver: l$delivery_driver == null
           ? null
           : Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver
@@ -9918,8 +9905,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
       driver_review_by_customer;
-
-  final dynamic? change_price_request;
 
   final String? schedule_time;
 
@@ -9967,7 +9952,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   final String direction;
 
-  final int service_provider_id;
+  final int? service_provider_id;
 
   final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver?
       delivery_driver;
@@ -9979,10 +9964,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$driver_review_by_customer = driver_review_by_customer;
     _resultData['driver_review_by_customer'] =
         l$driver_review_by_customer?.toJson();
-    final l$change_price_request = change_price_request;
-    _resultData['change_price_request'] = l$change_price_request == null
-        ? null
-        : mapToJson(l$change_price_request);
     final l$schedule_time = schedule_time;
     _resultData['schedule_time'] = l$schedule_time;
     final l$customer = customer;
@@ -10045,7 +10026,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
   @override
   int get hashCode {
     final l$driver_review_by_customer = driver_review_by_customer;
-    final l$change_price_request = change_price_request;
     final l$schedule_time = schedule_time;
     final l$customer = customer;
     final l$chat_with_customer_id = chat_with_customer_id;
@@ -10074,7 +10054,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$driver_review_by_customer,
-      l$change_price_request,
       l$schedule_time,
       l$customer,
       l$chat_with_customer_id,
@@ -10116,11 +10095,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$driver_review_by_customer = driver_review_by_customer;
     final lOther$driver_review_by_customer = other.driver_review_by_customer;
     if (l$driver_review_by_customer != lOther$driver_review_by_customer) {
-      return false;
-    }
-    final l$change_price_request = change_price_request;
-    final lOther$change_price_request = other.change_price_request;
-    if (l$change_price_request != lOther$change_price_request) {
       return false;
     }
     final l$schedule_time = schedule_time;
@@ -10288,7 +10262,6 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
   TRes call({
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
         driver_review_by_customer,
-    dynamic? change_price_request,
     String? schedule_time,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,
@@ -10349,7 +10322,6 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
 
   TRes call({
     Object? driver_review_by_customer = _undefined,
-    Object? change_price_request = _undefined,
     Object? schedule_time = _undefined,
     Object? customer = _undefined,
     Object? chat_with_customer_id = _undefined,
@@ -10382,9 +10354,6 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
             ? _instance.driver_review_by_customer
             : (driver_review_by_customer
                 as Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?),
-        change_price_request: change_price_request == _undefined
-            ? _instance.change_price_request
-            : (change_price_request as dynamic?),
         schedule_time: schedule_time == _undefined
             ? _instance.schedule_time
             : (schedule_time as String?),
@@ -10457,10 +10426,9 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
         direction: direction == _undefined || direction == null
             ? _instance.direction
             : (direction as String),
-        service_provider_id:
-            service_provider_id == _undefined || service_provider_id == null
-                ? _instance.service_provider_id
-                : (service_provider_id as int),
+        service_provider_id: service_provider_id == _undefined
+            ? _instance.service_provider_id
+            : (service_provider_id as int?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -10521,7 +10489,6 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
   call({
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
         driver_review_by_customer,
-    dynamic? change_price_request,
     String? schedule_time,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,

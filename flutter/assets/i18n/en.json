@@ -809,7 +809,8 @@
           "orders": {
             "noOrders": "No orders yet",
             "noOrdersBody": "You have currently no orders.",
-            "onGoingOrders": "Ongoing orders"
+            "onGoingOrders": "Ongoing orders",
+            "onGoingOfferingOrders": "Ongoing offering orders"
           }
         }
       },
@@ -2193,6 +2194,8 @@
         "pages": {
           "createServiceStartPage": {
             "create": "Create",
+            "opNote" : "If you want to be added as an operator to an existing business, ask the owner of the business to send you invite code",
+
             "subtitle": {
               "restaurant": "Create a new restaurant and receive orders from your local customers.",
               "business": "Create an account to expand your business & attract more online customers.",
@@ -4027,6 +4030,7 @@
     "minutes": "minutes",
     "min": "min",
     "slowInternet": "Slow internet",
-    "noInternet": "No internet connection"
+    "noInternet": "No internet connection",
+    "addingOp" : "Adding you as an operator"
   }
 }

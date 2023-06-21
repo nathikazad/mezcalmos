@@ -55,12 +55,14 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
               numberOfUnits: data.parameters?["numberOfUnits"],
               previousCost: data.parameters?["previousCost"],
               previoustime: data.parameters?["previoustime"],
+              roomType: data.parameters?["roomType"],
               timeUnit:
                   data.parameters?["timeUnit"]?.toString().toTimeUnit() ?? null,
             ),
             home: data.home != null
                 ? HomeWithBusinessCard(
                     business: BusinessCard(
+                      onlineOrdering: data.home!.business!.details.online_ordering,
                       id: data.home!.business!.details.id,
                       name: data.home!.business!.details.name,
                       currency:
@@ -121,6 +123,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
             rental: data.rental != null
                 ? RentalWithBusinessCard(
                     business: BusinessCard(
+                      onlineOrdering: data.rental!.business.details.online_ordering,
                       id: data.rental!.business.details.id,
                       name: data.rental!.business.details.name,
                       currency:
@@ -161,6 +164,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
             event: data.event != null
                 ? EventWithBusinessCard(
                     business: BusinessCard(
+                      onlineOrdering: data.event!.business.details.online_ordering,
                       id: data.event!.business.details.id,
                       name: data.event!.business.details.name,
                       currency:
@@ -208,6 +212,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
             service: data.service != null
                 ? ServiceWithBusinessCard(
                     business: BusinessCard(
+                      onlineOrdering: data.service!.business.details.online_ordering,
                       id: data.service!.business.details.id,
                       name: data.service!.business.details.name,
                       currency:
@@ -248,6 +253,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
             product: data.product != null
                 ? ProductWithBusinessCard(
                     business: BusinessCard(
+                      onlineOrdering: data.product!.business.details.online_ordering,
                       id: data.product!.business.details.id,
                       name: data.product!.business.details.name,
                       currency:
@@ -327,6 +333,9 @@ extension HasuraBusinessOrderItem on BusinessCartItem {
         guests: parameters.guests,
         timeUnit: parameters.timeUnit,
         numberOfUnits: parameters.numberOfUnits,
+        roomType: parameters.roomType,
+        previousCost: parameters.previousCost,
+        previoustime: parameters.previoustime,
       ).toFirebaseFormattedJson(),
     );
   }
@@ -509,6 +518,7 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                               guests: data.parameters?["guests"],
                               numberOfUnits: data.parameters?["numberOfUnits"],
                               previousCost: data.parameters?["previousCost"],
+                              roomType: data.parameters?["roomType"],
                               previoustime: data.parameters?["previoustime"],
                               timeUnit: data.parameters?["timeUnit"]
                                       ?.toString()
@@ -518,6 +528,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                             home: data.home != null
                                 ? HomeWithBusinessCard(
                                     business: BusinessCard(
+                                      onlineOrdering: data.home!.business!
+                                          .details.online_ordering,
                                       id: data.home!.business!.details.id,
                                       name: data.home!.business!.details.name,
                                       currency: data
@@ -567,7 +579,11 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                             data.home!.business!.details.id,
                                         available:
                                             data.home!.details!.available,
-                                        image: data.home!.details!.image,
+                                        image: data.home!.details!.image
+                                                ?.map<String>(
+                                                    (e) => e.toString())
+                                                .toList() ??
+                                            [],
                                       ),
                                     ),
                                   )
@@ -575,6 +591,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                             rental: data.rental != null
                                 ? RentalWithBusinessCard(
                                     business: BusinessCard(
+                                      onlineOrdering: data.rental!.business
+                                          .details.online_ordering,
                                       id: data.rental!.business.details.id,
                                       name: data.rental!.business.details.name,
                                       currency: data
@@ -624,6 +642,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                             event: data.event != null
                                 ? EventWithBusinessCard(
                                     business: BusinessCard(
+                                      onlineOrdering: data.event!.business!
+                                          .details.online_ordering,
                                       id: data.event!.business.details.id,
                                       name: data.event!.business.details.name,
                                       currency: data
@@ -681,6 +701,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                             service: data.service != null
                                 ? ServiceWithBusinessCard(
                                     business: BusinessCard(
+                                      onlineOrdering: data.service!.business
+                                          .details.online_ordering,
                                       id: data.service!.business.details.id,
                                       name: data.service!.business.details.name,
                                       currency: data
@@ -730,6 +752,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                             product: data.product != null
                                 ? ProductWithBusinessCard(
                                     business: BusinessCard(
+                                      onlineOrdering: data.product!.business!
+                                          .details.online_ordering,
                                       id: data.product!.business.details.id,
                                       name: data.product!.business.details.name,
                                       currency: data

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotifications/nativeBackgroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -10,7 +12,13 @@ class DeliveryDeepLinkHandler {
   static Future<void> handleDeeplink(Uri deepLink) async {
     mezDbgPrint("here");
     final List<String> frags = deepLink.path.split("/");
-    if (frags.length == 4 && frags[1] == "dr") await _addDriver(frags[2]);
+    if (frags.length == 4 && frags[1] == "dr") {
+      showLoadingOverlay(
+          text:
+              "${Get.find<LanguageController>().strings["General"]["addingOp"]}");
+      await _addDriver(frags[2]);
+      closeAllLoadings();
+    }
   }
 
   static Future<void> _addDriver(String uniqueId) async {

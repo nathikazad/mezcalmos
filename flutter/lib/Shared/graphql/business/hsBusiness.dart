@@ -44,6 +44,7 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
       final PaymentInfo _paymentInfo = PaymentInfo.fromData(
           stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
       _businesses.add(BusinessCard(
+        onlineOrdering: data.details.online_ordering,
         id: data.id,
         detailsId: data.details.id,
         name: data.details.name,
@@ -90,6 +91,7 @@ Future<List<BusinessCard>> get_business_by_home(
       final PaymentInfo _paymentInfo = PaymentInfo.fromData(
           stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
       _businesses.add(BusinessCard(
+        onlineOrdering: data.details.online_ordering,
         id: data.id,
         detailsId: data.details.id,
         name: data.details.name,
@@ -323,6 +325,7 @@ Future<List<BusinessCard>> get_business_by_event_category1(
       final PaymentInfo _paymentInfo = PaymentInfo.fromData(
           stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
       _businesses.add(BusinessCard(
+        onlineOrdering: data.details.online_ordering,
         id: data.id,
         detailsId: data.details.id,
         name: data.details.name,
@@ -371,6 +374,7 @@ Future<List<BusinessCard>> get_business_by_service_category1(
       final PaymentInfo _paymentInfo = PaymentInfo.fromData(
           stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
       _businesses.add(BusinessCard(
+        onlineOrdering: data.details.online_ordering,
         id: data.id,
         detailsId: data.details.id,
         name: data.details.name,
@@ -418,6 +422,7 @@ Future<List<BusinessCard>> get_business_by_product_category1(
       final PaymentInfo _paymentInfo = PaymentInfo.fromData(
           stripeInfo: {}, acceptedPayments: data.details.accepted_payments);
       _businesses.add(BusinessCard(
+        onlineOrdering: data.details.online_ordering,
         id: data.id,
         detailsId: data.details.id,
         name: data.details.name,

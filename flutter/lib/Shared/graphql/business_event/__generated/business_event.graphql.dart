@@ -316,6 +316,20 @@ const documentNodeQueryget_event_by_id = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'online_ordering'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'name'),
                     alias: null,
                     arguments: [],
@@ -1282,6 +1296,8 @@ class Query$get_event_by_id$business_event_by_pk$business$details {
     required this.id,
     required this.accepted_payments,
     required this.image,
+    required this.online_ordering,
+    this.phone_number,
     required this.name,
     required this.currency,
     required this.$__typename,
@@ -1293,6 +1309,8 @@ class Query$get_event_by_id$business_event_by_pk$business$details {
     final l$id = json['id'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
+    final l$online_ordering = json['online_ordering'];
+    final l$phone_number = json['phone_number'];
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$$__typename = json['__typename'];
@@ -1301,6 +1319,8 @@ class Query$get_event_by_id$business_event_by_pk$business$details {
       id: (l$id as int),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
+      online_ordering: (l$online_ordering as bool),
+      phone_number: (l$phone_number as String?),
       name: (l$name as String),
       currency: (l$currency as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1314,6 +1334,10 @@ class Query$get_event_by_id$business_event_by_pk$business$details {
   final dynamic accepted_payments;
 
   final String image;
+
+  final bool online_ordering;
+
+  final String? phone_number;
 
   final String name;
 
@@ -1331,6 +1355,10 @@ class Query$get_event_by_id$business_event_by_pk$business$details {
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$currency = currency;
@@ -1346,6 +1374,8 @@ class Query$get_event_by_id$business_event_by_pk$business$details {
     final l$id = id;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
+    final l$online_ordering = online_ordering;
+    final l$phone_number = phone_number;
     final l$name = name;
     final l$currency = currency;
     final l$$__typename = $__typename;
@@ -1354,6 +1384,8 @@ class Query$get_event_by_id$business_event_by_pk$business$details {
       l$id,
       l$accepted_payments,
       l$image,
+      l$online_ordering,
+      l$phone_number,
       l$name,
       l$currency,
       l$$__typename,
@@ -1388,6 +1420,16 @@ class Query$get_event_by_id$business_event_by_pk$business$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$name = name;
@@ -1437,6 +1479,8 @@ abstract class CopyWith$Query$get_event_by_id$business_event_by_pk$business$deta
     int? id,
     dynamic? accepted_payments,
     String? image,
+    bool? online_ordering,
+    String? phone_number,
     String? name,
     String? currency,
     String? $__typename,
@@ -1465,6 +1509,8 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$business$details<
     Object? id = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
+    Object? online_ordering = _undefined,
+    Object? phone_number = _undefined,
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? $__typename = _undefined,
@@ -1482,6 +1528,13 @@ class _CopyWithImpl$Query$get_event_by_id$business_event_by_pk$business$details<
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -1509,6 +1562,8 @@ class _CopyWithStubImpl$Query$get_event_by_id$business_event_by_pk$business$deta
     int? id,
     dynamic? accepted_payments,
     String? image,
+    bool? online_ordering,
+    String? phone_number,
     String? name,
     String? currency,
     String? $__typename,
@@ -3720,72 +3775,51 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: '_and'),
+                name: NameNode(value: 'details'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: 'details'),
+                    name: NameNode(value: 'category1'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: '_and'),
+                        name: NameNode(value: '_in'),
+                        value:
+                            VariableNode(name: NameNode(value: 'categories1')),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'category2'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_in'),
+                        value:
+                            VariableNode(name: NameNode(value: 'categories2')),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: '_not'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'tags'),
                         value: ObjectValueNode(fields: [
                           ObjectFieldNode(
-                            name: NameNode(value: 'category1'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: '_in'),
-                                value: VariableNode(
-                                    name: NameNode(value: 'categories1')),
-                              )
-                            ]),
-                          ),
-                          ObjectFieldNode(
-                            name: NameNode(value: 'category2'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: '_in'),
-                                value: VariableNode(
-                                    name: NameNode(value: 'categories2')),
-                              )
-                            ]),
-                          ),
-                          ObjectFieldNode(
-                            name: NameNode(value: '_not'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: 'tags'),
-                                value: ObjectValueNode(fields: [
-                                  ObjectFieldNode(
-                                    name: NameNode(value: '_has_key'),
-                                    value: StringValueNode(
-                                      value: 'class',
-                                      isBlock: false,
-                                    ),
-                                  )
-                                ]),
-                              )
-                            ]),
-                          ),
-                          ObjectFieldNode(
-                            name: NameNode(value: 'tags'),
-                            value: ObjectValueNode(fields: [
-                              ObjectFieldNode(
-                                name: NameNode(value: '_has_keys_all'),
-                                value:
-                                    VariableNode(name: NameNode(value: 'tags')),
-                              )
-                            ]),
-                          ),
+                            name: NameNode(value: '_has_key'),
+                            value: StringValueNode(
+                              value: 'class',
+                              isBlock: false,
+                            ),
+                          )
                         ]),
                       )
                     ]),
                   ),
                   ObjectFieldNode(
-                    name: NameNode(value: 'schedule_type'),
+                    name: NameNode(value: 'tags'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: '_in'),
-                        value: VariableNode(
-                            name: NameNode(value: 'schedule_type')),
+                        name: NameNode(value: '_has_keys_all'),
+                        value: VariableNode(name: NameNode(value: 'tags')),
                       )
                     ]),
                   ),
@@ -3821,7 +3855,46 @@ const documentNodeQueryget_event_by_category = DocumentNode(definitions: [
                     ]),
                   ),
                 ]),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'schedule_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_in'),
+                    value: VariableNode(name: NameNode(value: 'schedule_type')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: '_or'),
+                value: ListValueNode(values: [
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'ends_at'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: '_is_null'),
+                          value: BooleanValueNode(value: true),
+                        )
+                      ]),
+                    )
+                  ]),
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'ends_at'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: '_gte'),
+                          value: StringValueNode(
+                            value: 'now()',
+                            isBlock: false,
+                          ),
+                        )
+                      ]),
+                    )
+                  ]),
+                ]),
+              ),
             ]),
           ),
           ArgumentNode(
@@ -15876,6 +15949,13 @@ const documentNodeMutationupdate_event_by_id = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'online_ordering'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'name'),
                     alias: null,
                     arguments: [],
@@ -16856,6 +16936,7 @@ class Mutation$update_event_by_id$update_business_event_by_pk$business$details {
     required this.id,
     required this.accepted_payments,
     required this.image,
+    required this.online_ordering,
     required this.name,
     required this.currency,
     required this.$__typename,
@@ -16866,6 +16947,7 @@ class Mutation$update_event_by_id$update_business_event_by_pk$business$details {
     final l$id = json['id'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
+    final l$online_ordering = json['online_ordering'];
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$$__typename = json['__typename'];
@@ -16873,6 +16955,7 @@ class Mutation$update_event_by_id$update_business_event_by_pk$business$details {
       id: (l$id as int),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
+      online_ordering: (l$online_ordering as bool),
       name: (l$name as String),
       currency: (l$currency as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -16884,6 +16967,8 @@ class Mutation$update_event_by_id$update_business_event_by_pk$business$details {
   final dynamic accepted_payments;
 
   final String image;
+
+  final bool online_ordering;
 
   final String name;
 
@@ -16899,6 +16984,8 @@ class Mutation$update_event_by_id$update_business_event_by_pk$business$details {
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$currency = currency;
@@ -16913,6 +17000,7 @@ class Mutation$update_event_by_id$update_business_event_by_pk$business$details {
     final l$id = id;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
+    final l$online_ordering = online_ordering;
     final l$name = name;
     final l$currency = currency;
     final l$$__typename = $__typename;
@@ -16920,6 +17008,7 @@ class Mutation$update_event_by_id$update_business_event_by_pk$business$details {
       l$id,
       l$accepted_payments,
       l$image,
+      l$online_ordering,
       l$name,
       l$currency,
       l$$__typename,
@@ -16949,6 +17038,11 @@ class Mutation$update_event_by_id$update_business_event_by_pk$business$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$name = name;
@@ -16999,6 +17093,7 @@ abstract class CopyWith$Mutation$update_event_by_id$update_business_event_by_pk$
     int? id,
     dynamic? accepted_payments,
     String? image,
+    bool? online_ordering,
     String? name,
     String? currency,
     String? $__typename,
@@ -17028,6 +17123,7 @@ class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$busi
     Object? id = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
+    Object? online_ordering = _undefined,
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? $__typename = _undefined,
@@ -17042,6 +17138,10 @@ class _CopyWithImpl$Mutation$update_event_by_id$update_business_event_by_pk$busi
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -17068,6 +17168,7 @@ class _CopyWithStubImpl$Mutation$update_event_by_id$update_business_event_by_pk$
     int? id,
     dynamic? accepted_payments,
     String? image,
+    bool? online_ordering,
     String? name,
     String? currency,
     String? $__typename,

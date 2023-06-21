@@ -126,6 +126,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                         )
                       : SizedBox(),
                 ),
+                SizedBox(width: 12),
                 Obx(
                   () => Get.find<CustBusinessCartController>()
                                   .previousOrders

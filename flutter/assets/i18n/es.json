@@ -807,7 +807,8 @@
           "orders": {
             "noOrders": "Sin pedidos todavía",
             "noOrdersBody": "Actualmente no tienes pedidos.",
-            "onGoingOrders": "Órdenes actuales"
+            "onGoingOrders": "Órdenes actuales",
+            "onGoingOfferingOrders": "Órdenes de oferta continuas"
           }
         }
       },
@@ -2255,8 +2256,11 @@
         "save": "Ahorrar"
       },
       "CreateServiceView": {
+
         "pages": {
           "createServiceStartPage": {
+            "opNote" : "Si desea que lo agregue como operador a un negocio existente, solicite al propietario del negocio que le envíe código de invitación",
+
             "create": "Crear",
             "subtitle": {
               "restaurant": "Cree un nuevo restaurante y reciba pedidos de sus clientes locales..",
@@ -4081,6 +4085,7 @@
     "minutes": "minutos",
     "slowInternet": "Internet lento",
     "noInternet": "Sin conexión a Internet",
-    "min": "min"
+    "min": "min",
+    "addingOp" : "Agregarlo como operador"
   }
 }

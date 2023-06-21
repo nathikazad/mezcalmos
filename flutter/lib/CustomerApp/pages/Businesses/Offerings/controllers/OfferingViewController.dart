@@ -22,6 +22,7 @@ class CustServiceViewController {
   Rx<String> orderString = Rx("-");
   Rx<bool> isEditingMode = Rx<bool>(false);
   Rxn<int> _cartId = Rxn<int>();
+  Rxn<bool> isOnlineOrdering = Rxn<bool>(false);
 
   // getters //
   ServiceWithBusinessCard? get service => _service.value;
@@ -37,6 +38,7 @@ class CustServiceViewController {
     int? duration,
   }) async {
     await fetchData(serviceId: serviceId);
+    isOnlineOrdering.value = service!.business.onlineOrdering;
     if (startDate != null && duration != null) {
       _startDate.value = startDate;
       _timeCost.value = timeCost;
@@ -136,6 +138,7 @@ class CustProductViewController {
   Rx<double> totalOrderCost = Rx(0);
   Rx<int> _totalUnits = Rx(1);
   Rxn<Map<TimeUnit, num>> _timeCost = Rxn();
+  Rxn<bool> isOnlineOrdering = Rxn<bool>(false);
 
   // getters //
   ProductWithBusinessCard? get product => _product.value;
@@ -144,6 +147,7 @@ class CustProductViewController {
   // methods //
   Future<void> fetchData({required int productId}) async {
     _product.value = await get_product_by_id(id: productId, withCache: false);
+    isOnlineOrdering.value = product!.business.onlineOrdering;
     _setInitialTimeCost();
     _calcTotalOrderCost();
   }
@@ -191,6 +195,17 @@ class CustEventViewController {
   Rx<int> _totalHours = Rx(1);
   Rx<bool> isEditingMode = Rx<bool>(false);
   Rxn<int> _cartId = Rxn<int>();
+  Rxn<bool> isOnlineOrdering = Rxn<bool>(false);
+  Rx<bool> get isValidated {
+    switch (_event.value!.scheduleType) {
+      case ScheduleType.Scheduled:
+        return _startDate.value != null ? Rx(true) : Rx(false);
+      case ScheduleType.OneTime:
+        return Rx(true);
+      case ScheduleType.OnDemand:
+        return _startDate.value != null ? Rx(true) : Rx(false);
+    }
+  }
 
   // getters //
   EventWithBusinessCard? get event => _event.value;
@@ -206,6 +221,7 @@ class CustEventViewController {
     int? duration,
   }) async {
     await fetchData(eventId: eventId);
+    isOnlineOrdering.value = event!.business.onlineOrdering;
     if (startDate != null && duration != null) {
       _startDate.value = startDate;
       _timeCost.value = timeCost;
@@ -311,8 +327,9 @@ class CustHomeRentalViewController {
   Rxn<int> _cartId = Rxn<int>();
   Rx<bool> isMultipleRooms = Rx<bool>(false);
   RxList<Map<String, dynamic>> additionalRooms = RxList();
-  Rxn<int> selectedRoom = Rxn<int>();
+  Rxn<String> selectedRoom = Rxn<String>();
   Rxn<Map<TimeUnit, num>> selectedRoomCostUnits = Rxn();
+  Rxn<bool> isOnlineOrdering = Rxn<bool>(false);
 
   // getters //
   HomeWithBusinessCard? get homeRental => _homeRental.value;
@@ -329,15 +346,22 @@ class CustHomeRentalViewController {
     Map<TimeUnit, num>? timeCost,
     int? duration,
     int? guestCount,
+    String? roomType,
   }) async {
     await fetchData(rentalId: rentalId);
-    if (startDate != null && duration != null && guestCount != null) {
+    isOnlineOrdering.value = homeRental!.business.onlineOrdering;
+    if (cartId != null &&
+        startDate != null &&
+        duration != null &&
+        guestCount != null &&
+        roomType != null) {
       _startDate.value = startDate;
       _timeCost.value = timeCost;
       _duration.value = duration;
       _totalGuests.value = guestCount;
       isEditingMode.value = true;
       _cartId.value = cartId;
+      changeSelectedRoom(roomType);
     }
     _calcTotalOrderCost();
   }
@@ -351,7 +375,10 @@ class CustHomeRentalViewController {
             .value!.details.additionalParameters?["additionalRooms"] as List?)
         ?.isNotEmpty;
     if (multiRooms != null) {
-      selectedRoom.value = 0;
+      selectedRoom.value =
+          _homeRental.value!.details.additionalParameters?["additionalRooms"]
+                  ?[0]["roomType"] as String? ??
+              "";
       isMultipleRooms.value = multiRooms;
       additionalRooms.value = _homeRental
               .value!.details.additionalParameters?["additionalRooms"]
@@ -370,10 +397,13 @@ class CustHomeRentalViewController {
     _calcTotalOrderCost();
   }
 
-  void changeSelectedRoom(int value) {
+  void changeSelectedRoom(String value) {
     selectedRoom.value = value;
-    _timeCost.value = additionalRooms[value]["cost"];
-    selectedRoomCostUnits.value = additionalRooms[value]["cost"];
+    final int index = _homeRental
+        .value!.details.additionalParameters!["additionalRooms"]!
+        .indexWhere((dynamic e) => e["roomType"] == value);
+    _timeCost.value = additionalRooms[index]["cost"];
+    selectedRoomCostUnits.value = additionalRooms[index]["cost"];
     _calcTotalOrderCost();
   }
 
@@ -420,6 +450,7 @@ class CustHomeRentalViewController {
             guests: _totalGuests.value,
             numberOfUnits: _duration.value,
             timeUnit: timeCost.value!.keys.first,
+            roomType: selectedRoom.value,
           ),
           cost: totalOrderCost.value,
           home: _homeRental.value,
@@ -436,6 +467,7 @@ class CustHomeRentalViewController {
             guests: _totalGuests.value,
             numberOfUnits: _duration.value,
             timeUnit: timeCost.value!.keys.first,
+            roomType: selectedRoom.value,
           ),
           cost: totalOrderCost.value,
           home: _homeRental.value,
@@ -462,6 +494,7 @@ class CustRentalViewController {
   Rx<double> totalOrderCost = Rx(0);
   Rx<bool> isEditingMode = Rx<bool>(false);
   Rxn<int> _cartId = Rxn<int>();
+  Rxn<bool> isOnlineOrdering = Rxn<bool>(false);
 
   // getters //
   RentalWithBusinessCard? get rental => _rental.value;
@@ -477,6 +510,7 @@ class CustRentalViewController {
     int? duration,
   }) async {
     await fetchData(rentalId: rentalId);
+    isOnlineOrdering.value = rental!.business.onlineOrdering;
     if (startDate != null && duration != null) {
       _startDate.value = startDate;
       _timeCost.value = timeCost;

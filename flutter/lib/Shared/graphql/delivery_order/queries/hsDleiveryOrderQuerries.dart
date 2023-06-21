@@ -120,9 +120,9 @@ Future<DeliveryOrder?> get_driver_order_by_id(
       deliveryCost: orderData.delivery_cost,
       refundAmmount: null,
       tax: orderData.tax,
-      changePriceRequest: (orderData.change_price_request != null)
-          ? ChangePriceRequest.fromMap(orderData.change_price_request)
-          : null,
+      // changePriceRequest: (orderData.change_price_request != null)
+      //     ? ChangePriceRequest.fromMap(orderData.change_price_request)
+      //     : null,
       orderItemsCost: orderData.package_cost_comp,
       totalCost: orderData.total_cost,
     ),
@@ -362,7 +362,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
       stripePaymentInfo: null,
       serviceOrderId: null,
       deliveryCompany: UserInfo(
-          hasuraId: orderData.service_provider_id, name: "", image: ""),
+          hasuraId: orderData.service_provider_id!, name: "", image: ""),
       serviceProvider: ServiceInfo(
           location: MezLocation.fromLocationData(
               MezLocation.buildLocationData(55, 55)),
