@@ -2248,7 +2248,11 @@
         "openService": "Abrir servicio",
         "closeService": "Cerrar para siempre",
         "serviceClosed": "El servicio está cerrado indefinidamente",
-        "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación."
+        "serviceUnderReview": "Su servicio está bajo revisión, se le notificará, su aprobación.",
+        "businessId": "Identificación del negocio",
+        "onlySevenDays": "Puede cambiar su identificación solo una vez cada 7 días.",
+        "cancel": "Cancelar",
+        "save": "Ahorrar"
       },
       "CreateServiceView": {
         "pages": {
@@ -2288,6 +2292,8 @@
             "businessTypeErrorText": "Por favor, seleccione un tipo de negocio",
             "save": "Guardar",
             "cancel": "Cancelar",
+            "businessId": "Identificación del negocio",
+            "enterYourBusiness": "Ingrese su identificación de negocios",
             "businessProfile": {
               "surfShop": "Tienda de Surf",
               "vehicleRental": "Alquiler de Vehículos",

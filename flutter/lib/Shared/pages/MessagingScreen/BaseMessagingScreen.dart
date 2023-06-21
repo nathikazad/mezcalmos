@@ -291,6 +291,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
         ),
         actions: <Widget>[
           if (controller.chat.value?.chatInfo.phoneNumber != null || !kIsWeb)
+            _whatsAppButton(),
+          if (controller.chat.value?.chatInfo.phoneNumber != null || !kIsWeb)
             _callButton(context),
 
           // )
@@ -370,6 +372,20 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   }
 
   void callAgora() {}
+
+  Widget _whatsAppButton() {
+    return GestureDetector(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.only(right: 5),
+        child: CircleAvatar(
+          radius: 14,
+          backgroundColor: Color(0xFF60D669),
+          child: Image.asset(aWhatsApp),
+        ),
+      ),
+    );
+  }
 
   Container _callButton(BuildContext context) {
     return Container(

@@ -897,151 +897,150 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
     return MezButton(
       label: _i18n()["addService"],
       onClick: () async {
-        if (viewController.noData) return;
+        // if (viewController.noData) return;
 
-        if (!viewController.canAddService()) {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  contentPadding: EdgeInsets.all(8.0),
-                  actionsPadding:
-                      EdgeInsets.only(bottom: 20, left: 25, right: 25),
-                  insetPadding: EdgeInsets.all(15),
-                  icon: CircleAvatar(
-                      radius: 35,
-                      backgroundColor: offRedColor,
-                      child: Icon(
-                        Icons.info_outline_rounded,
-                        color: redAccentColor,
-                        size: 30,
-                      )),
-                  title: Text('${_i18n()['noMoreThanFiveServices']}'),
-                  content:
-                      Column(mainAxisSize: MainAxisSize.min, children: <Text>[
-                    Text('${_i18n()['cantHaveMoreThanFive']}',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.w400)),
-                    Text('${_i18n()['toAddNewRemoveOld']}',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.w600))
-                  ]),
-                  actions: [
-                    MezButton(
-                      label: '${_i18n()['okay']}',
-                      backgroundColor: Colors.redAccent,
-                      onClick: () async => Navigator.pop(context),
-                    )
-                  ],
+        // if (!viewController.canAddService()) {
+        //   showDialog(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return AlertDialog(
+        //           contentPadding: EdgeInsets.all(8.0),
+        //           actionsPadding:
+        //               EdgeInsets.only(bottom: 20, left: 25, right: 25),
+        //           insetPadding: EdgeInsets.all(15),
+        //           icon: CircleAvatar(
+        //               radius: 35,
+        //               backgroundColor: offRedColor,
+        //               child: Icon(
+        //                 Icons.info_outline_rounded,
+        //                 color: redAccentColor,
+        //                 size: 30,
+        //               )),
+        //           title: Text('${_i18n()['noMoreThanFiveServices']}'),
+        //           content:
+        //               Column(mainAxisSize: MainAxisSize.min, children: <Text>[
+        //             Text('${_i18n()['cantHaveMoreThanFive']}',
+        //                 textAlign: TextAlign.center,
+        //                 style: TextStyle(fontWeight: FontWeight.w400)),
+        //             Text('${_i18n()['toAddNewRemoveOld']}',
+        //                 textAlign: TextAlign.center,
+        //                 style: TextStyle(fontWeight: FontWeight.w600))
+        //           ]),
+        //           actions: [
+        //             MezButton(
+        //               label: '${_i18n()['okay']}',
+        //               backgroundColor: Colors.redAccent,
+        //               onClick: () async => Navigator.pop(context),
+        //             )
+        //           ],
+        //         );
+        //       });
+        // } else {
+        showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              BusinessProfileItem currentSelectedService =
+                  viewController.currentBottomSheetData.first;
+
+              void navigateToOfferingView() {
+                currentSelectedService.route();
+              }
+
+              return StatefulBuilder(builder: (BuildContext context, setState) {
+                return Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '${_i18n()['serviceType']}',
+                            style: context.textTheme.bodyLarge,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        ...viewController.currentBottomSheetData.map(
+                          (BusinessProfileItem item) => Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  fit: FlexFit.tight,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${_i18n()[viewController.businessProfileFirebaseString][item.title]}",
+                                        style: context.textTheme.bodyLarge,
+                                      ),
+                                      Text(
+                                        "${_i18n()[viewController.businessProfileFirebaseString][item.subtitle]}",
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                radioCircleButton(
+                                  onTap: (bool v) {
+                                    setState(() {
+                                      currentSelectedService = item;
+                                    });
+                                  },
+                                  value: item == currentSelectedService,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Flexible(
+                                child: MezButton(
+                              label: '${_i18n()["cancel"]}',
+                              backgroundColor: offRedColor,
+                              textColor: redAccentColor,
+                              onClick: () async {
+                                Navigator.pop(context);
+                              },
+                            )),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Flexible(
+                                child: MezButton(
+                              label: '${_i18n()["add"]}',
+                              onClick: () async {
+                                mezDbgPrint(
+                                    "added service: $currentSelectedService");
+                                Navigator.pop(context);
+                                navigateToOfferingView();
+                                // bool? hasChanged =
+                                //     await BsOpHomeRentalView.navigate(id: null);
+                                // if (hasChanged == true) {
+                                //   viewController.init();
+                                // }
+                              },
+                            ))
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 );
               });
-        } else {
-          showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              builder: (BuildContext context) {
-                BusinessProfileItem currentSelectedService =
-                    viewController.currentBottomSheetData.first;
-
-                void navigateToOfferingView() {
-                  currentSelectedService.route();
-                }
-
-                return StatefulBuilder(
-                    builder: (BuildContext context, setState) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 20),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              '${_i18n()['serviceType']}',
-                              style: context.textTheme.bodyLarge,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          ...viewController.currentBottomSheetData.map(
-                            (BusinessProfileItem item) => Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                    fit: FlexFit.tight,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${_i18n()[viewController.businessProfileFirebaseString][item.title]}",
-                                          style: context.textTheme.bodyLarge,
-                                        ),
-                                        Text(
-                                          "${_i18n()[viewController.businessProfileFirebaseString][item.subtitle]}",
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  radioCircleButton(
-                                    onTap: (bool v) {
-                                      setState(() {
-                                        currentSelectedService = item;
-                                      });
-                                    },
-                                    value: item == currentSelectedService,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Flexible(
-                                  child: MezButton(
-                                label: '${_i18n()["cancel"]}',
-                                backgroundColor: offRedColor,
-                                textColor: redAccentColor,
-                                onClick: () async {
-                                  Navigator.pop(context);
-                                },
-                              )),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Flexible(
-                                  child: MezButton(
-                                label: '${_i18n()["add"]}',
-                                onClick: () async {
-                                  mezDbgPrint(
-                                      "added service: $currentSelectedService");
-                                  Navigator.pop(context);
-                                  navigateToOfferingView();
-                                  // bool? hasChanged =
-                                  //     await BsOpHomeRentalView.navigate(id: null);
-                                  // if (hasChanged == true) {
-                                  //   viewController.init();
-                                  // }
-                                },
-                              ))
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                });
-              });
-        }
+            });
+        // }
       },
     );
   }

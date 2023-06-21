@@ -126,6 +126,12 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   label: "${_i18n()['delivery']}",
                                   icon: Icons.delivery_dining,
                                 ),
+                              _navigationLink(
+                                onClick: () async => _accountIdModal(),
+                                label: '${_i18n()['businessId']}',
+                                subtitle: 'mezkala.app/puerto_fitness',
+                                icon: Icons.fingerprint,
+                              ),
                               if (_viewController.selfDelivery &&
                                   !_viewController.isBusiness)
                                 _navigationLink(
@@ -314,12 +320,14 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
   Widget _navigationLink(
       {required IconData icon,
       required String label,
+      String? subtitle,
       Widget? labelWidget,
       Widget? trailingWidget,
       Color? iconColor,
       bool showDivider = true,
       Future<void> Function()? onClick}) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         InkWell(
@@ -327,7 +335,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
                   child: Icon(
@@ -339,13 +347,22 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                 SizedBox(
                   width: 15,
                 ),
-                Flexible(
-                    fit: FlexFit.tight,
-                    child: labelWidget ??
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    labelWidget ??
                         Text(
                           label,
                           style: context.txt.bodyLarge,
-                        )),
+                        ),
+                    if (subtitle != null)
+                      Text(
+                        subtitle,
+                        style: context.txt.bodyMedium
+                            ?.copyWith(color: Colors.grey),
+                      ),
+                  ],
+                ),
                 SizedBox(
                   width: 5,
                 ),
@@ -357,5 +374,98 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
         if (showDivider) Divider()
       ],
     );
+  }
+
+  void _accountIdModal() {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext context) {
+          return Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      topRight: Radius.circular(25))),
+              padding: const EdgeInsets.all(17.5),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Text(
+                  '${_i18n()['businessId']}',
+                  style: context.txt.displaySmall,
+                ),
+                SizedBox(height: 27.5),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                  left: 17.5, top: 7.5, bottom: 10),
+                              hintText: 'mezkala.app/',
+                              hintStyle: context.textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.black54)),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: TextFormField(
+                          style: context.textTheme.bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                  left: 0, top: 7.5, bottom: 10),
+                              hintText: 'puerto_fitness',
+                              hintStyle: context.textTheme.bodyMedium),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.info_outline,
+                            color: primaryBlueColor,
+                            size: 16,
+                          ),
+                          SizedBox(width: 5),
+                          Expanded(
+                              child: Text('${_i18n()['onlySevenDays']}',
+                                  style: context.txt.bodyMedium?.copyWith(
+                                      fontSize: 12.5, color: primaryBlueColor)))
+                        ])),
+                Row(children: [
+                  Expanded(
+                    child: MezButton(
+                      height: 45,
+                      onClick: () async => Navigator.pop(context),
+                      label: '${_i18n()['cancel']}',
+                      textColor: redAccentColor,
+                      borderColor: redAccentColor,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                      child: MezButton(
+                    height: 45,
+                    onClick: () async => Navigator.pop(context),
+                    label: '${_i18n()['save']}',
+                    backgroundColor: primaryBlueColor,
+                  ))
+                ])
+              ]));
+        });
   }
 }
