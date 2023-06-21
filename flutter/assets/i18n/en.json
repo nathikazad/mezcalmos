@@ -75,7 +75,7 @@
           "total": "total",
           "unit": "unit",
           "none": "none",
-          "free": "Free"
+          "free": "FREE"
         }
       },
       "services": {
@@ -2186,7 +2186,11 @@
         "openService": "Open service",
         "closeService": "Close forever",
         "serviceClosed": "Service is closed indefinitely",
-        "serviceUnderReview": "Your service is under review, you’ll be notified, once it’s approved."
+        "serviceUnderReview": "Your service is under review, you’ll be notified, once it’s approved.",
+        "businessId": "Business ID",
+        "onlySevenDays": "You can change your ID only once every 7 days.",
+        "cancel": "Cancel",
+        "save": "Save"
       },
       "CreateServiceView": {
         "pages": {
@@ -2228,6 +2232,8 @@
             "businessTypeErrorText": "Please select a business type",
             "save": "Save",
             "cancel": "Cancel",
+            "businessId": "Business ID",
+            "enterYourBusiness": "Enter your business ID",
             "businessProfile": {
               "surfShop": "Surf Shop",
               "vehicleRental": "Vehicle Rental",

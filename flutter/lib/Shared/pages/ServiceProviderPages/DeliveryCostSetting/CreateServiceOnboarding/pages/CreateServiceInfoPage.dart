@@ -187,6 +187,48 @@ class CreateServiceInfoPage extends StatelessWidget {
                         viewController.languages.value.secondary =
                             v?.toLanguage() ?? null;
                       }),
+                  meduimSeperator,
+                  Text(
+                    "${_i18n()['businessId']}",
+                    style: context.textTheme.bodyLarge,
+                  ),
+                  smallSepartor,
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    left: 10, top: 12.5, bottom: 12.5),
+                                hintText: 'mezkala.app/',
+                                hintStyle: context.textTheme.bodyMedium
+                                    ?.copyWith(color: Colors.black54)),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: TextFormField(
+                            controller: viewController.businessId,
+                            style: context.textTheme.bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.w600),
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    left: 0, top: 12.5, bottom: 12.5),
+                                hintText: '${_i18n()['enterYourBusiness']}',
+                                hintStyle: context.textTheme.bodyMedium
+                                    ?.copyWith(color: Colors.black54)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

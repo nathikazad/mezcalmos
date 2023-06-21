@@ -289,10 +289,14 @@ class _CustBusinessAdditionalData extends StatelessWidget {
 
       final StringBuffer wholeString = StringBuffer();
 
-      wholeString.write(
-          '${additionalValues['minLength']} ${_i18n()['to']} ${additionalValues['maxLength']} inch');
-      additionalValues.remove('minLength');
-      additionalValues.remove('maxLength');
+      if (additionalValues['minLength'] != null &&
+          additionalValues['maxLength'] != null) {
+        wholeString.write(
+            '${additionalValues['minLength']} ${_i18n()['to']} ${additionalValues['maxLength']} inch');
+        additionalValues.remove('minLength');
+        additionalValues.remove('maxLength');
+      }
+
       additionalValues.map(
         (key, value) {
           // if (additionalValues.keys.toList().indexOf(key) == 0) {

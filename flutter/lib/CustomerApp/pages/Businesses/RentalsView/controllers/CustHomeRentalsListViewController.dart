@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -139,7 +140,7 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(
           "👋 _fetchRentals called  \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
       List<HomeCard> newList = await get_home_rentals(
-        distance: 25000,
+        distance: getFetchDistance,
         fromLocation: _fromLocation!,
         withCache: false,
         offset: _rentalCurrentOffset,
@@ -167,7 +168,7 @@ class CustHomeRentalsListViewController {
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_home(
           homeType: HomeAvailabilityOption.Rent,
-          distance: 25000,
+          distance: getFetchDistance,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,
@@ -192,7 +193,7 @@ class CustHomeRentalsListViewController {
     try {
       if (currentPostitionBased) {
         _mapViewRentals.value = await get_home_rentals(
-          distance: 25000,
+          distance: getFetchDistance,
           fromLocation: _fromLocation!,
           offset: 0,
           limit: 25,
