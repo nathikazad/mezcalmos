@@ -22,6 +22,7 @@ fragment RestaurantFields on restaurant_restaurant {
     image
     language
     is_open
+    online_ordering
     name
     location {
       gps
@@ -98,6 +99,7 @@ query getOneRestaurant($id: Int!) {
       location_id
       image
       language
+      online_ordering
       description_id
       location {
         gps

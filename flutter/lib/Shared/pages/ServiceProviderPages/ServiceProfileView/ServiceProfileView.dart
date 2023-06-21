@@ -129,7 +129,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                               _navigationLink(
                                 onClick: () async => _accountIdModal(),
                                 label: '${_i18n()['businessId']}',
-                                subtitle: 'mezkala.app/puerto_fitness',
+                                subtitle: 'mezkala.app/${_viewController.service.uniqueId}',
                                 icon: Icons.fingerprint,
                               ),
                               if (_viewController.selfDelivery &&
@@ -184,6 +184,50 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                                 subtitle: text));
                                       },
                                     )),
+                              _navigationLink(
+                                icon: Icons.grading,
+                                label: "",
+                                labelWidget: Row(
+                                  children: [
+                                    Text(
+                                      "${_i18n()['onlineOrdering']}",
+                                      style: context.txt.bodyLarge,
+                                    ),
+                                    SizedBox(width: 4),
+                                    Tooltip(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 4),
+                                      message: "${_i18n()["onlineOrderTip"]}",
+                                      triggerMode: TooltipTriggerMode.tap,
+                                      showDuration: Duration(seconds: 5),
+                                      child: Icon(
+                                        Icons.info_outline,
+                                        color: primaryBlueColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                trailingWidget: Builder(builder: (context) {
+                                  bool toggle =
+                                      _viewController.service.onlineOrdering;
+                                  return StatefulBuilder(
+                                      builder: (context, setState) {
+                                    return Switch(
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      activeColor: primaryBlueColor,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          toggle = value;
+                                        });
+                                        _viewController
+                                            .toggleOnlineOrdering(value);
+                                      },
+                                      value: toggle,
+                                    );
+                                  });
+                                }),
+                              ),
                               _navigationLink(
                                   showDivider: false,
                                   onClick: () async {
@@ -335,36 +379,40 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Center(
-                  child: Icon(
-                    icon,
-                    color: iconColor ?? Color(0xFFC4C4C4),
-                    size: 22,
-                  ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
                   children: [
-                    labelWidget ??
-                        Text(
-                          label,
-                          style: context.txt.bodyLarge,
-                        ),
-                    if (subtitle != null)
-                      Text(
-                        subtitle,
-                        style: context.txt.bodyMedium
-                            ?.copyWith(color: Colors.grey),
+                    Center(
+                      child: Icon(
+                        icon,
+                        color: iconColor ?? Color(0xFFC4C4C4),
+                        size: 22,
                       ),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        labelWidget ??
+                            Text(
+                              label,
+                              style: context.txt.bodyLarge,
+                            ),
+                        if (subtitle != null)
+                          Text(
+                            subtitle,
+                            style: context.txt.bodyMedium
+                                ?.copyWith(color: Colors.grey),
+                          ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 0,
+                    ),
                   ],
-                ),
-                SizedBox(
-                  width: 5,
                 ),
                 if (trailingWidget != null) trailingWidget
               ],

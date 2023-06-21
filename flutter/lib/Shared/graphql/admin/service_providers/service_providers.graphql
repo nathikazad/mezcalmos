@@ -1,6 +1,6 @@
 query admin_get_dv_companies($limit: Int!, $offset: Int!) {
   delivery_company(limit: $limit, offset: $offset) {
-     delivery_details {
+    delivery_details {
       cost_per_km
       customer_pickup
       delivery_available
@@ -15,6 +15,7 @@ query admin_get_dv_companies($limit: Int!, $offset: Int!) {
       id
       is_open
       approved
+      online_ordering
       image
       name
       language
@@ -40,6 +41,7 @@ query admin_get_laundries($limit: Int!, $offset: Int!) {
       image
       name
       language
+      online_ordering
       open_status
       creation_time
       service_provider_type
@@ -81,7 +83,7 @@ query admin_get_restaurants($limit: Int!, $offset: Int!) {
       is_open
       approved
       firebase_id
-
+      online_ordering
       image
 
       language

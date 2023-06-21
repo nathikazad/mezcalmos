@@ -18,7 +18,7 @@ class DeliveryCompany extends Service {
       required super.languages,
       required super.schedule,
       required super.deliveryCost,
-
+      required super.onlineOrdering,
       // required this.deliveryRaidus,
       required this.creationTime});
   // int deliveryRaidus;
@@ -32,6 +32,7 @@ class DeliveryCompany extends Service {
     return DeliveryCompany(
       info: userInfo ?? info,
       isOpen: isOpen,
+      onlineOrdering: onlineOrdering,
       schedule: schedule,
       deliveryCost: deliveryCost,
       state: state ?? this.state,

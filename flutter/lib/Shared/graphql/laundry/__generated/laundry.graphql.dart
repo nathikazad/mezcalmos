@@ -770,6 +770,13 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'name'),
                 alias: null,
                 arguments: [],
@@ -2734,6 +2741,7 @@ class Query$getLaundries$laundry_store$details {
     this.is_open,
     required this.image,
     required this.language,
+    required this.online_ordering,
     required this.name,
     required this.location,
     required this.approved,
@@ -2753,6 +2761,7 @@ class Query$getLaundries$laundry_store$details {
     final l$is_open = json['is_open'];
     final l$image = json['image'];
     final l$language = json['language'];
+    final l$online_ordering = json['online_ordering'];
     final l$name = json['name'];
     final l$location = json['location'];
     final l$approved = json['approved'];
@@ -2769,6 +2778,7 @@ class Query$getLaundries$laundry_store$details {
       is_open: (l$is_open as bool?),
       image: (l$image as String),
       language: mapFromJson(l$language),
+      online_ordering: (l$online_ordering as bool),
       name: (l$name as String),
       location: Query$getLaundries$laundry_store$details$location.fromJson(
           (l$location as Map<String, dynamic>)),
@@ -2798,6 +2808,8 @@ class Query$getLaundries$laundry_store$details {
   final String image;
 
   final dynamic language;
+
+  final bool online_ordering;
 
   final String name;
 
@@ -2831,6 +2843,8 @@ class Query$getLaundries$laundry_store$details {
     _resultData['image'] = l$image;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
@@ -2861,6 +2875,7 @@ class Query$getLaundries$laundry_store$details {
     final l$is_open = is_open;
     final l$image = image;
     final l$language = language;
+    final l$online_ordering = online_ordering;
     final l$name = name;
     final l$location = location;
     final l$approved = approved;
@@ -2877,6 +2892,7 @@ class Query$getLaundries$laundry_store$details {
       l$is_open,
       l$image,
       l$language,
+      l$online_ordering,
       l$name,
       l$location,
       l$approved,
@@ -2922,6 +2938,11 @@ class Query$getLaundries$laundry_store$details {
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$name = name;
@@ -3003,6 +3024,7 @@ abstract class CopyWith$Query$getLaundries$laundry_store$details<TRes> {
     bool? is_open,
     String? image,
     dynamic? language,
+    bool? online_ordering,
     String? name,
     Query$getLaundries$laundry_store$details$location? location,
     bool? approved,
@@ -3040,6 +3062,7 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$details<TRes>
     Object? is_open = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
+    Object? online_ordering = _undefined,
     Object? name = _undefined,
     Object? location = _undefined,
     Object? approved = _undefined,
@@ -3063,6 +3086,10 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$details<TRes>
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -3137,6 +3164,7 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store$details<TRes>
     bool? is_open,
     String? image,
     dynamic? language,
+    bool? online_ordering,
     String? name,
     Query$getLaundries$laundry_store$details$location? location,
     bool? approved,
@@ -4425,6 +4453,13 @@ const documentNodeQuerygetLaundryStoreById = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'online_ordering'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -5962,6 +5997,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     required this.location_id,
     required this.currency,
     required this.image,
+    required this.online_ordering,
     required this.language,
     this.description_id,
     required this.location,
@@ -5982,6 +6018,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$location_id = json['location_id'];
     final l$currency = json['currency'];
     final l$image = json['image'];
+    final l$online_ordering = json['online_ordering'];
     final l$language = json['language'];
     final l$description_id = json['description_id'];
     final l$location = json['location'];
@@ -5999,6 +6036,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
       location_id: (l$location_id as int),
       currency: (l$currency as String),
       image: (l$image as String),
+      online_ordering: (l$online_ordering as bool),
       language: mapFromJson(l$language),
       description_id: (l$description_id as int?),
       location: Query$getLaundryStoreById$laundry_store_by_pk$details$location
@@ -6029,6 +6067,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
   final String currency;
 
   final String image;
+
+  final bool online_ordering;
 
   final dynamic language;
 
@@ -6066,6 +6106,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     _resultData['currency'] = l$currency;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
     final l$description_id = description_id;
@@ -6098,6 +6140,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$location_id = location_id;
     final l$currency = currency;
     final l$image = image;
+    final l$online_ordering = online_ordering;
     final l$language = language;
     final l$description_id = description_id;
     final l$location = location;
@@ -6115,6 +6158,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
       l$location_id,
       l$currency,
       l$image,
+      l$online_ordering,
       l$language,
       l$description_id,
       l$location,
@@ -6161,6 +6205,11 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$language = language;
@@ -6250,6 +6299,7 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details<
     int? location_id,
     String? currency,
     String? image,
+    bool? online_ordering,
     dynamic? language,
     int? description_id,
     Query$getLaundryStoreById$laundry_store_by_pk$details$location? location,
@@ -6293,6 +6343,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
     Object? location_id = _undefined,
     Object? currency = _undefined,
     Object? image = _undefined,
+    Object? online_ordering = _undefined,
     Object? language = _undefined,
     Object? description_id = _undefined,
     Object? location = _undefined,
@@ -6317,6 +6368,10 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
@@ -6398,6 +6453,7 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<
     int? location_id,
     String? currency,
     String? image,
+    bool? online_ordering,
     dynamic? language,
     int? description_id,
     Query$getLaundryStoreById$laundry_store_by_pk$details$location? location,

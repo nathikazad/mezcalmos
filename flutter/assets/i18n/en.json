@@ -2194,6 +2194,8 @@
         "delivery": "Delivery",
         "reviews": "Reviews",
         "share": "Share",
+        "onlineOrdering": "Online Ordering",
+        "onlineOrderTip": "When the toggle is turned on, customers will be able to make orders. Otherwise, customer will only be able to see the products and services you offer.",
         "privacyPolicies": "Privacy Policies",
         "logout": "Logout",
         "openService": "Open service",
