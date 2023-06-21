@@ -179,6 +179,50 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                       },
                                     )),
                               _navigationLink(
+                                icon: Icons.grading,
+                                label: "",
+                                labelWidget: Row(
+                                  children: [
+                                    Text(
+                                      "${_i18n()['onlineOrdering']}",
+                                      style: context.txt.bodyLarge,
+                                    ),
+                                    SizedBox(width: 4),
+                                    Tooltip(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 4),
+                                      message: "${_i18n()["onlineOrderTip"]}",
+                                      triggerMode: TooltipTriggerMode.tap,
+                                      showDuration: Duration(seconds: 5),
+                                      child: Icon(
+                                        Icons.info_outline,
+                                        color: primaryBlueColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                trailingWidget: Builder(builder: (context) {
+                                  bool toggle =
+                                      _viewController.service.onlineOrdering;
+                                  return StatefulBuilder(
+                                      builder: (context, setState) {
+                                    return Switch(
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      activeColor: primaryBlueColor,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          toggle = value;
+                                        });
+                                        _viewController
+                                            .toggleOnlineOrdering(value);
+                                      },
+                                      value: toggle,
+                                    );
+                                  });
+                                }),
+                              ),
+                              _navigationLink(
                                   showDivider: false,
                                   onClick: () async {
                                     await launchUrlString(
@@ -347,7 +391,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                           style: context.txt.bodyLarge,
                         )),
                 SizedBox(
-                  width: 5,
+                  width: 0,
                 ),
                 if (trailingWidget != null) trailingWidget
               ],

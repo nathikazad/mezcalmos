@@ -58,6 +58,7 @@ Future<Laundry?> get_laundry_store_by_id(
     mezDbgPrint(
         "response data ====> ${response.data} 🧺🧺🧺 laundry data ${data.details?.schedule}");
     return Laundry(
+        onlineOrdering: data.details!.online_ordering,
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
@@ -365,6 +366,7 @@ Future<List<Laundry>> get_laundries(
     // }
 
     return Laundry(
+        onlineOrdering: data.details!.online_ordering ?? false,
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         rate: data.reviews_aggregate.aggregate?.avg?.rating,

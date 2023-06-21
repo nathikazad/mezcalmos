@@ -20,6 +20,7 @@ abstract class Service {
   num? numberOfReviews;
   DeliveryCost? deliveryCost;
   bool isOpen;
+  bool onlineOrdering;
 
   PaymentInfo? paymentInfo;
 
@@ -37,6 +38,7 @@ abstract class Service {
       this.rate,
       required this.isOpen,
       required this.deliveryCost,
+      required this.onlineOrdering,
       this.paymentInfo,
       this.currency});
 
@@ -103,5 +105,6 @@ class MainService extends Service {
     required super.serviceLinkId,
     required super.serviceProviderType,
     required super.deliveryCost,
+    required super.onlineOrdering,
   });
 }

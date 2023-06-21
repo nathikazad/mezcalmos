@@ -34,6 +34,7 @@ Future<List<Restaurant>> admin_get_restaurants(
   final List<Restaurant> returnedList = data
       .map((Query$admin_get_restaurants$restaurant_restaurant data) =>
           Restaurant(
+              onlineOrdering: data.details!.online_ordering ?? false,
               isOpen: data.details!.is_open ?? false,
               languages: convertToLanguages(data.details!.language),
               serviceDetailsId: data.details!.id,
@@ -72,6 +73,7 @@ Future<List<DeliveryCompany>> admin_get_dv_companies(
   final List<DeliveryCompany> returnedList = data
       .map((Query$admin_get_dv_companies$delivery_company data) =>
           DeliveryCompany(
+              onlineOrdering: data.details!.online_ordering ?? false,
               isOpen: data.details!.is_open ?? false,
               deliveryCost: null,
               schedule: null,
@@ -157,6 +159,7 @@ Future<List<Laundry>> admin_get_laundries(
       result.parsedData!.laundry_store;
   final List<Laundry> returnedList = data
       .map((Query$admin_get_laundries$laundry_store data) => Laundry(
+          onlineOrdering: data.details!.online_ordering ?? false,
           isOpen: data.details!.is_open ?? false,
           languages: convertToLanguages(data.details!.language),
           serviceDetailsId: data.details!.id,

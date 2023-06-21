@@ -2242,6 +2242,8 @@
         "schedule": "Horarios",
         "payments": "Pagos",
         "delivery": "Entrega",
+        "onlineOrdering": "Pedidos en línea",
+        "onlineOrderTip": "Cuando se enciende la palanca, los clientes podrán hacer pedidos. De lo contrario, el cliente solo podrá ver los productos y servicios que ofrece.",
         "reviews": "Reseñas",
         "share": "Compartir",
         "privacyPolicies": "Políticas de privacidad",

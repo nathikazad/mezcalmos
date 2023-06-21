@@ -86,6 +86,18 @@ class ServiceProfileController extends GetxController {
         serviceLinkId: _service.value!.serviceLinkId!);
   }
 
+  Future<void> toggleOnlineOrdering(bool value) async {
+    try {
+      final bool res = await update_business_online_ordering(
+        detailsId: detailsId,
+        onlineOrdering: value,
+      );
+      _service.value!.onlineOrdering = res;
+    } catch (e) {
+      print(e);
+    }
+  }
+
   double get getAppbarHeight {
     double height = 0;
     if (!isApproved) {

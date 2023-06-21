@@ -107,6 +107,7 @@ Future<Service?> get_service_details_by_id(
       acceptedPayments: data.accepted_payments, stripeInfo: data.stripe_info);
 
   return MainService(
+      onlineOrdering: data.online_ordering,
       isOpen: data.is_open ?? false,
       deliveryCost: null,
       info: ServiceInfo(
@@ -448,4 +449,24 @@ Future<bool?> get_service_is_open({required int detailsId}) async {
     throw res.exception!;
   }
   return res.parsedData?.service_provider_details_by_pk?.is_open;
+}
+
+Future<bool> update_business_online_ordering({
+  required int detailsId,
+  required bool onlineOrdering,
+}) async {
+  QueryResult<Mutation$update_business_online_ordering> res =
+      await _db.graphQLClient.mutate$update_business_online_ordering(
+    Options$Mutation$update_business_online_ordering(
+      variables: Variables$Mutation$update_business_online_ordering(
+        id: detailsId,
+        online_ordering: onlineOrdering,
+      ),
+    ),
+  );
+  mezDbgPrint("update_business_online_ordering: ${res.data}");
+  if (res.parsedData?.update_service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  return res.parsedData!.update_service_provider_details_by_pk!.online_ordering;
 }

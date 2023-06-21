@@ -54,6 +54,7 @@ class Restaurant extends Service {
     super.deliveryCost,
     super.reviews,
     super.rate,
+    required super.onlineOrdering,
     super.currency,
     this.serviceLink,
     this.deliveryDetailsId,
@@ -333,6 +334,7 @@ class Restaurant extends Service {
     return Restaurant(
       serviceDetailsId: 1,
       isOpen: isOpen,
+      onlineOrdering: onlineOrdering,
       userInfo: userInfo ?? info,
       languages: languages ?? this.languages,
       deliveryDetailsId: deliveryDetailsId ?? this.deliveryDetailsId,
