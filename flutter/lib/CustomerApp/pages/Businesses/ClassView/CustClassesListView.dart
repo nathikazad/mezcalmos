@@ -236,16 +236,31 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                             SizedBox(
                               width: 2,
                             ),
-                            Text(
-                                '${viewController.businesses[index].avgRating}',
-                                style: context.textTheme.bodySmall),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 2),
-                              child: Text(
-                                '(${viewController.businesses[index].reviewCount})',
-                                style: context.textTheme.bodyMedium,
+                            Container(
+                              alignment: Alignment.center,
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: Text(
+                                            '${viewController.businesses[index].avgRating}',
+                                            style:
+                                                context.textTheme.bodySmall)),
+                                    WidgetSpan(
+                                      alignment: PlaceholderAlignment.middle,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 1),
+                                        child: Text(
+                                            '(${viewController.businesses[index].reviewCount})',
+                                            style: context.textTheme.bodySmall
+                                                ?.copyWith(fontSize: 7.mezSp)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -334,6 +349,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 if (viewController.classes[index].scheduleType ==
                     ScheduleType.OneTime)
                   oneTimeBuilder(viewController.classes[index]),
+                SizedBox(height: 3),
                 Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

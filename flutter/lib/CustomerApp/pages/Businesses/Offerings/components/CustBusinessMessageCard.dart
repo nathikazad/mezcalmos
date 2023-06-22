@@ -92,6 +92,7 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
             SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 businessLastActiveTimeAgo(),
                 // _getAcceptedPaymentIcons(widget.business.acceptedPayments),
@@ -107,15 +108,39 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
                       SizedBox(
                         width: 2,
                       ),
-                      Text('${widget.business.avgRating ?? '0'}',
-                          style: context.textTheme.bodySmall),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 2),
-                        child: Text(
-                          '(${widget.business.reviewCount})',
-                          style: context.textTheme.bodyMedium,
+                      // Text('${widget.business.avgRating ?? '0'}',
+                      //     style: context.textTheme.bodySmall),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 2),
+                      //   child: Text(
+                      //     '(${widget.business.reviewCount})',
+                      //     style: context.textTheme.bodyMedium,
+                      //   ),
+                      // )
+                      Container(
+                        alignment: Alignment.center,
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              WidgetSpan(
+                                  alignment: PlaceholderAlignment.middle,
+                                  child: Text(
+                                      '${widget.business.avgRating ?? '0'}',
+                                      style: context.textTheme.bodySmall)),
+                              WidgetSpan(
+                                alignment: PlaceholderAlignment.middle,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 1),
+                                  child: Text(
+                                      '(${widget.business.reviewCount ?? '0'})',
+                                      style: context.textTheme.bodySmall
+                                          ?.copyWith(fontSize: 7.mezSp)),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 )
@@ -149,6 +174,7 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
       child: Text(
         'Active ${createTimeAgoString()} ago',
         style: Theme.of(context).textTheme.bodyMedium,
+        textAlign: TextAlign.center,
       ),
     );
   }

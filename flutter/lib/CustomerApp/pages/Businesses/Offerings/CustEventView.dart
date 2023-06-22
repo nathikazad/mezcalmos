@@ -120,8 +120,8 @@ class _CustEventViewState extends State<CustEventView> {
         () => viewController.isOnlineOrdering.value!
             ? MezButton(
                 label: viewController.isEditingMode.value
-                    ? "Update Item"
-                    : "Add to cart",
+                    ? '${_i18n()['updateItme']}'
+                    : '${_i18n()['addToCart']}',
                 withGradient: true,
                 borderRadius: 0,
                 onClick: viewController.isValidated.value
@@ -184,7 +184,7 @@ class _CustEventViewState extends State<CustEventView> {
                           ),
                         ),
                       CustBusinessMessageCard(
-                        margin: EdgeInsets.only(top: 15),
+                        margin: EdgeInsets.only(top: 15, bottom: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.event!.business,
                         offering: viewController.event!.details,
@@ -204,9 +204,10 @@ class _CustEventViewState extends State<CustEventView> {
                                 onNewPeriodSelected: (DateTime v) {
                                   viewController.startDate.value = v;
                                 },
-                                label: "Start Date",
+                                label: '${_i18n()['startDate']}',
                                 validator: (DateTime? p0) {
-                                  if (p0 == null) return "Please select a time";
+                                  if (p0 == null)
+                                    return '${_i18n()['selectATime']}';
 
                                   return null;
                                 },
@@ -216,8 +217,11 @@ class _CustEventViewState extends State<CustEventView> {
                                 ScheduleType.OnDemand)
                               Column(
                                 children: [
+                                  SizedBox(
+                                    height: 15,
+                                  ),
                                   CustGuestPicker(
-                                    label: "Hours",
+                                    label: '${_i18n()['hours']}',
                                     icon: Icons.hourglass_bottom,
                                     onNewGuestSelected: (int v) {
                                       viewController.setTotalHours(v);
@@ -234,7 +238,7 @@ class _CustEventViewState extends State<CustEventView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Notes",
+                                    '${_i18n()['notes']}',
                                     style: context.textTheme.bodyLarge,
                                   ),
                                   smallSepartor,
@@ -243,7 +247,7 @@ class _CustEventViewState extends State<CustEventView> {
                                     minLines: 3,
                                     decoration: InputDecoration(
                                       fillColor: Colors.white,
-                                      hintText: "Write your notes here.",
+                                      hintText: '${_i18n()['writeNotesHere']}',
                                     ),
                                   ),
                                 ],

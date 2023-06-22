@@ -495,6 +495,9 @@
       "savedCards": "My cards"
     },
     "components": {
+      "CustOrderCostCard": {
+        "orderCost": "Order Cost"
+      },
       "NoOpenServiceComponent": {
         "title": "No open services",
         "desc": "There are no open services in your area. Please try again later.",
@@ -633,6 +636,7 @@
       },
       "Offerings": {
         "hour": "hour",
+        "hours": "Hours",
         "day": "day",
         "week": "week",
         "month": "month",
@@ -659,6 +663,12 @@
         "doubleBed": "Double Bed",
         "dormRoom": "Dorm Room",
         "suite": "Suite",
+        "startDate": "Start date",
+        "selectATime": "Please select a time",
+        "updateItem": "Update item",
+        "addToCart": "Add item",
+        "notes": "Notes",
+        "writeNotesHere": "Write your notes here.",
         "components": {
           "loading": "Loading",
           "schedule": "Schedule",
@@ -1300,7 +1310,7 @@
         "AllServiceView": {
           "AllServiceView": {
             "welcomeText": "Welcome to MEZKALA 👋",
-            "appDescription": "Your one stop place to find all your local businesses. If you have a business and want to advertise it, you can ",
+            "appDescription": "Your one stop place to find all your local businesses.\nIf you have a business and want to advertise it, you can ",
             "clickHere": "click here",
             "services": "Services"
           }

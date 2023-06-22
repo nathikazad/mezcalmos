@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['components']['CustOrderCostCard'];
 
 class CustOrderCostCard extends StatelessWidget {
   const CustOrderCostCard({
@@ -21,7 +25,7 @@ class CustOrderCostCard extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              "Order Cost",
+              '${_i18n()['orderCost']}',
               style: context.textTheme.bodyLarge,
             ),
             Expanded(

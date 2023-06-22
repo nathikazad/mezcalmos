@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/chat/hsChat.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
@@ -63,7 +64,16 @@ class SideMenuDrawerController extends GetxController {
         }
       },
       icon: Icons.contact_support_sharp,
-      title: "${_i18n()['contactAdmin']}",
+      titleWidget: Obx(() => Expanded(
+            child: Text('${_i18n()['contactAdmin']}',
+                maxLines: 2,
+                style: TextStyle(
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13.mezSp,
+                  color: Colors.black,
+                )),
+          )),
     );
     if (!sideMenuItems.contains(item)) {
       sideMenuItems.add(item);

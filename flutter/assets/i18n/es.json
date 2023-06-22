@@ -492,6 +492,9 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
+      "CustOrderCostCard": {
+        "orderCost": "Costo de la orden"
+      },
       "NoOpenServiceComponent": {
         "title": "Sin servicios abiertos",
         "desc": "No hay servicios abiertos en su área. Vuelva a intentarlo más tarde.",
@@ -630,6 +633,7 @@
       },
       "Offerings": {
         "hour": "hora",
+        "hours": "Horas",
         "day": "día",
         "week": "semana",
         "month": "mes",
@@ -656,6 +660,12 @@
         "doubleBed": "Cama matrimonial",
         "dormRoom": "Dormitorio",
         "suite": "Suite",
+        "startDate": "Fecha de inicio",
+        "selectATime": "Seleccione una hora",
+        "updateItem": "Artículo de actualización",
+        "addToCart": "Añadir artículo",
+        "notes": "Notas",
+        "writeNotesHere": "Escribe tus notas aquí.",
         "components": {
           "loading": "Cargando",
           "schedule": "Horario",
@@ -1372,7 +1382,7 @@
         "AllServiceView": {
           "AllServiceView": {
             "welcomeText": "Bienvenido a MEZKALA 👋",
-            "appDescription": "Su único lugar de parada para encontrar todos sus negocios locales.Si tiene un negocio y desea anunciarlo, puede ",
+            "appDescription": "Su único lugar de parada para encontrar todos sus negocios locales.\nSi tiene un negocio y desea anunciarlo, puede ",
             "clickHere": "haga clic aquí",
             "services": "Servicios"
           }
