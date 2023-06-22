@@ -21,7 +21,7 @@ export interface BusinessDetails {
     language: ServiceProviderLanguage,
     uniqueId?: string,
     firebaseId?: string,
-    schedule: Record<Weekday, WorkingDay>,
+    schedule: Schedule,
 }
 export interface BusinessResponse {
   success: boolean,

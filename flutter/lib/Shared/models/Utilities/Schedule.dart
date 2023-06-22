@@ -27,6 +27,22 @@ class Schedule {
     required this.openHours,
   });
 }
+  // WorkingDay workingDayFrom(Map<String, dynamic> json) {
+  //   final bool isOpen = json['isOpen'] ?? false;
+  //   final dynamic openHoursData = json['openHours'];
+
+  //   List<OpenHours> openHours;
+  //   if (openHoursData is List) {
+  //     openHours = openHoursData.map((data) => OpenHours.fromFirebaseFormattedJson(data)).toList();
+  //   } else if (openHoursData is Map<String, dynamic>) {
+  //     openHours = [OpenHours.fromFirebaseFormattedJson(openHoursData)];
+  //   } else {
+  //     openHours = [];
+  //   }
+    
+  //   return WorkingDay(isOpen: isOpen, openHours: openHours);
+  // }
+
 
 Schedule scheduleFromData(json) {
   Map<Weekday, WorkingDay> openHours = {};

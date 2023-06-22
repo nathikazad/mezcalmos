@@ -16,7 +16,7 @@ export interface LaundryDetails {
   name: string,
   image: string,
   location: Location,
-  schedule: Record<Weekday, WorkingDay>,
+  schedule: Schedule,
   laundryOperatorNotificationToken?: string,
   firebaseId?: string,
   deliveryDetails: DeliveryDetails,
