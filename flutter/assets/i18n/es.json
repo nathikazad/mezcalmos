@@ -1437,6 +1437,7 @@
             "unit": "unidad"
           },
           "cusShowBusinessFilerSheet": {
+            "canBookOnline": "Muestre solo artículos que se pueden reservar en línea.",
             "confirm": "Confirmar",
             "cancel": "Cancelar",
             "filter": "Filtrar",
@@ -1481,6 +1482,8 @@
             "homes": "Casas",
             "home": "Hogar",
             "map": "Mapa",
+            "filter": "Filtrar",
+            "offerOnly": "Solo ofertas",
             "viewOnMap": "Ver en el mapa",
             "viewAsList": "Ver como lista",
             "showCost": "Costo de exhibición",
@@ -1518,6 +1521,7 @@
           },
           "CustRentalsListView": {
             "home": "Hogar",
+            "offerOnly": "Solo ofertas",
             "map": "Mapa",
             "viewOnMap": "Ver en el mapa",
             "viewAsList": "Ver como lista",
@@ -1553,6 +1557,7 @@
         "CustRealEstateListView": {
           "home": "Hogar",
           "map": "Mapa",
+          "offerOnly": "Solo ofertas",
           "realEstate": "Realestate",
           "properties": "Propiedades",
           "store": "Agency",
@@ -1664,6 +1669,7 @@
             "confirm": "Confirmar",
             "hour": "hora",
             "day": "día",
+            "offerOnly": "Solo ofertas",
             "week": "week",
             "month": "mes",
             "person": "persona",
@@ -1709,6 +1715,8 @@
             "mealPlanning": "Planificación de comidas",
             "service": "Servicio",
             "meal": "Comida",
+            "offerOnly": "Solo ofertas",
+            "filter": "Filtrar",
             "petSitting": "Cuidado de mascotas",
             "uncategorized": "Sin categoría",
             "cleaning": "Servicio",
@@ -1768,6 +1776,8 @@
             "product": "Productos",
             "noPetServiceFound": "No se encontraron servicios",
             "art": "Arte",
+            "offerOnly": "Solo ofertas",
+            "filter": "Filtrar",
             "noBusinessesFound": "No se encontraron negocios",
             "store": "Almacenar",
             "services": "Servicios",

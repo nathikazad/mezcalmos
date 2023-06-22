@@ -137,6 +137,7 @@ class CustEventsListViewController {
         ScheduleType.Scheduled,
         ScheduleType.OneTime,
       ].map((ScheduleType e) => e.toFirebaseFormatString()).toList(),
+      "onlineOrder": ["true"],
     };
   }
 
@@ -162,6 +163,7 @@ class CustEventsListViewController {
         withCache: false,
         offset: _eventCurrentOffset,
         limit: eventFetchSize,
+        online_ordering: filterInput["onlineOrder"]!.contains("true"),
       );
       _events.value += newList;
       if (newList.length == 0) {

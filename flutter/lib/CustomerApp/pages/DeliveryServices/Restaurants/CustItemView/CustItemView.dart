@@ -88,7 +88,8 @@ class _CustItemViewState extends State<CustItemView> {
     return Obx(
       () => Scaffold(
         resizeToAvoidBottomInset: false,
-        bottomSheet: !viewController.restaurant.value!.onlineOrdering
+        bottomSheet: viewController.hasData &&
+                !viewController.restaurant.value!.onlineOrdering
             ? null
             : (viewController.hasData)
                 ? ItemViewBottomBar(

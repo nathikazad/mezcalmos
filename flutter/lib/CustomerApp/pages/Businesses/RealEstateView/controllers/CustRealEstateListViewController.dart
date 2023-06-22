@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as locPkg;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
@@ -75,8 +76,21 @@ class CustRealEstateListViewController {
   BuildContext? ctx;
   // Map view //
 
+  late FilterInput _filterInput;
+
+  FilterInput get filterInput => _filterInput;
+
+  FilterInput defaultFilters() {
+    return {
+      "categories": [],
+      "schedule": [],
+      "onlineOrder": ["true"],
+    };
+  }
+
 // methods //
   Future<void> init() async {
+    _filterInput = defaultFilters();
     try {
       _isLoading.value = true;
       // todo @ChiragKr04 fix the location thing
@@ -116,6 +130,7 @@ class CustRealEstateListViewController {
         withCache: false,
         offset: _realEstateCurrentOffset,
         limit: realEstateFetchSize,
+        onlineOrdering: filterInput["onlineOrder"]!.contains("true"),
       );
       _realEstates.value += newList;
       if (newList.length == 0) {
@@ -159,11 +174,15 @@ class CustRealEstateListViewController {
     }
   }
 
-  void filter() {
+  void filter(FilterInput newData) {
+    _filterInput.clear();
+    newData.forEach((String key, List<String> value) {
+      _filterInput[key] = List.from(value);
+    });
     // selectedCategories.value = List.from(previewCategories);
 
-    // _resetRentals();
-    // _fetchRentals();
+    _resetRentals();
+    _fetchRealEstate();
   }
 
   void resetFilter() {

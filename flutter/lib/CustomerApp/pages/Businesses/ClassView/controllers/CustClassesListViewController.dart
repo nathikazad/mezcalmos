@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
-import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 
 class CustClassesListViewController {
   // variables //
@@ -123,6 +122,7 @@ class CustClassesListViewController {
         ScheduleType.OneTime,
         ScheduleType.OnDemand
       ].map((ScheduleType e) => e.toFirebaseFormatString()).toList(),
+      "onlineOrder": ["true"],
     };
   }
 
@@ -148,6 +148,7 @@ class CustClassesListViewController {
         withCache: false,
         offset: _classesCurrentOffset,
         limit: eventFetchSize,
+        online_ordering: filterInput["onlineOrder"]!.contains("true"),
       );
       _classes.value += newList;
       if (newList.length == 0) {
