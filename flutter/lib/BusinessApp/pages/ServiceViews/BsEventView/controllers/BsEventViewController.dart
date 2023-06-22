@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['BusinessApp']['pages']['services'];
@@ -129,7 +130,7 @@ class BsEventViewController {
       location.value = event!.gpsLocation;
       scheduleTypeInput.value.type = event!.scheduleType;
 
-      avalaibilty.value = event!.schedule;
+      avalaibilty.value = event!.schedule?.toSchedule();
       startDate.value = event!.startsAt != null
           ? DateTime.parse(event!.startsAt!).toLocal()
           : null;
@@ -200,7 +201,7 @@ class BsEventViewController {
         scheduleType: scheduleTypeInput.value.type,
         startsAt: startDate.value?.toUtc().toString(),
         endsAt: endDate.value?.toUtc().toString(),
-        schedule: avalaibilty.value,
+        schedule: avalaibilty.value?.openHours,
         gpsLocation: location.value,
         tags: scheduleTypeInput.value.tags,
         details: details);
@@ -214,7 +215,7 @@ class BsEventViewController {
         scheduleType: scheduleTypeInput.value.type,
         startsAt: startDate.value?.toUtc().toString(),
         endsAt: endDate.value?.toUtc().toString(),
-        schedule: avalaibilty.value,
+        schedule: avalaibilty.value?.openHours,
         gpsLocation: location.value,
         tags: scheduleTypeInput.value.tags,
         // time: oneTimePeriod.value.,

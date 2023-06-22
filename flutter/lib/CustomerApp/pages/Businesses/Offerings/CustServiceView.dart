@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
@@ -128,12 +129,14 @@ class _CustServiceViewState extends State<CustServiceView> {
                               cost: viewController.service!.details.cost,
                             ),
                       _description(context),
-                      CustBusinessScheduleBuilder(
-                        period: null,
-                        isService: true,
-                        schedule: viewController.service!.schedule,
-                        scheduleType: ScheduleType.Scheduled,
-                      ),
+                      if (viewController.service!.schedule != null)
+                        CustBusinessScheduleBuilder(
+                          period: null,
+                          isService: true,
+                          schedule: Schedule(
+                              openHours: viewController.service!.schedule!),
+                          scheduleType: ScheduleType.Scheduled,
+                        ),
                       CustBusinessMessageCard(
                         margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),

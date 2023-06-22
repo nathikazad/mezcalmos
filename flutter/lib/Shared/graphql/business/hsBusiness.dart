@@ -134,6 +134,8 @@ Future<Business?> get_business_by_id(
       data.home.forEach(
           (Query$get_business_by_id$business_business_by_pk$home home) async {
         _home.add(Home(
+          // TODO FIX THIS @m66are
+          locationId: 0,
           availableFor: home.available_for.toHomeAvailabilityOption(),
           location: HomeLocation(
             name: home.location!.name,
@@ -189,7 +191,7 @@ Future<Business?> get_business_by_id(
             category1: event.details.category1.toEventCategory1(),
             scheduleType: event.schedule_type.toScheduleType(),
             schedule: event.schedule != null
-                ? scheduleFromData(event.schedule)
+                ? scheduleFromData(event.schedule).openHours
                 : null,
             startsAt: event.starts_at,
             endsAt: event.ends_at,
@@ -478,7 +480,7 @@ Future<BusinessItemDetails?> get_business_item_details_by_id(
   if (res.hasException) {
     throw Exception("🛑 Error getting business item details ${res.exception}");
   } else if (res.parsedData?.business_item_details_by_pk != null) {
-    Query$getBusinessItemDetailsById$business_item_details_by_pk data =
+    final Query$getBusinessItemDetailsById$business_item_details_by_pk data =
         res.parsedData!.business_item_details_by_pk!;
     return BusinessItemDetails(
       nameId: data.name_id,
@@ -530,7 +532,7 @@ Future<ServiceProviderLanguage?> get_business_lang(
   if (res.hasException) {
     throw Exception("🛑 Error getting business lang ${res.exception}");
   } else if (res.parsedData?.business_business_by_pk != null) {
-    Query$get_business_lang$business_business_by_pk data =
+    final Query$get_business_lang$business_business_by_pk data =
         res.parsedData!.business_business_by_pk!;
     return ServiceProviderLanguage(
         primary: data.details.language["primary"].toString().toLanguage(),

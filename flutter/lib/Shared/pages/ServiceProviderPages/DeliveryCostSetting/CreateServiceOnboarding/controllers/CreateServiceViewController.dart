@@ -321,7 +321,9 @@ class CreateServiceViewController {
             lat: serviceInput.value.serviceInfo!.location.latitude,
             lng: serviceInput.value.serviceInfo!.location.longitude,
             address: serviceInput.value.serviceInfo!.location.address),
-        schedule: serviceInput.value.schedule!,
+        schedule: serviceInput.value.schedule!.openHours.map(
+            (cModels.Weekday key, cModels.WorkingDay value) =>
+                MapEntry(key.toFirebaseFormatString(), value)),
         deliveryPartnerId: serviceInput.value.deliveryPartnerId,
         deliveryDetails: cModels.DeliveryDetails(
           minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,
@@ -366,7 +368,9 @@ class CreateServiceViewController {
             address: serviceInput.value.serviceInfo!.location.address),
         language: languages.value,
         profile: businessProfile!,
-        schedule: oldSchedule.value,
+        schedule: oldSchedule.value.openHours.map(
+            (cModels.Weekday key, cModels.WorkingDay value) =>
+                MapEntry(key.toFirebaseFormatString(), value)),
       );
       if (res.success == false) {
         mezDbgPrint(res.error);

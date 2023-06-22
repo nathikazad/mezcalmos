@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
@@ -89,7 +90,7 @@ class BsEventCard extends StatelessWidget {
                   Divider(),
                   CustBusinessScheduleBuilder(
                     period: event.period,
-                    schedule: event.schedule,
+                    schedule: Schedule(openHours: event.schedule!),
                     scheduleType: event.scheduleType,
                     showIcons: false,
                     showTitle: false,

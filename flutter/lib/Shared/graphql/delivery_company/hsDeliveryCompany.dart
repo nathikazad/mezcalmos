@@ -159,11 +159,12 @@ Future<List<DeliveryCompany>> get_nearby_companies(
   return returnedList;
 }
 
-Future<List<DeliveryCompany>?> get_dv_companies() async {
+Future<List<DeliveryCompany>?> get_dv_companies({required bool isOpen}) async {
   final QueryResult<Query$getDeliveryCompanies> res =
       await _hasuraDb.graphQLClient.query$getDeliveryCompanies(
     Options$Query$getDeliveryCompanies(
       fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Query$getDeliveryCompanies(is_open: isOpen),
     ),
   );
 

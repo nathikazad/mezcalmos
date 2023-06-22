@@ -60,7 +60,7 @@ class CustRequestCourierViewController {
   // methods //
   Future<void> init() async {
     _fetchCompanies();
-    
+
     if (_authController.isUserSignedIn) {
       toLoc.value = Get.find<CustomerAuthController>()
           .customer
@@ -74,7 +74,7 @@ class CustRequestCourierViewController {
   }
 
   void _fetchCompanies() {
-    get_dv_companies().then((List<DeliveryCompany>? value) {
+    get_dv_companies(isOpen: true).then((List<DeliveryCompany>? value) {
       if (value != null) {
         deliveryCompanies.value = value;
         selectedCompanies.value = deliveryCompanies
@@ -181,8 +181,9 @@ class CustRequestCourierViewController {
                 address: fromLoc.value!.address)
             : null,
         // todo @m66are
-        deliveryCompanyId: 0,
-        deliveryCost: shippingCost.value,
+        // deliveryCompanyId: 0,
+        // deliveryCost: shippingCost.value,
+        deliveryCompanyIds: selectedCompanies,
         scheduledTime: deliveryTime.value?.toUtc().toString(),
         customerAppType: cModels.CustomerAppType.Native,
         tripDistance: routeInfo?.distance.distanceInMeters,

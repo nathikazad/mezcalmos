@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["MezServiceOpenHours"];
@@ -76,8 +77,9 @@ class MezServiceOpenHours extends StatelessWidget {
                           fit: FlexFit.tight,
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(entry.value.openHours.length,
-                                  (int hourIndex) {
+                              children:
+                                  List.generate(entry.value.openHours.length,
+                                      (int hourIndex) {
                                 return Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -90,9 +92,11 @@ class MezServiceOpenHours extends StatelessWidget {
                                       ),
                                       Text(
                                         convertToAmPm(
-                                           entry.value.openHours[hourIndex].from[0]
+                                            entry.value.openHours[hourIndex]
+                                                .fromOld[0]
                                                 .toInt(),
-                                          entry.value.openHours[hourIndex].from[1]
+                                            entry.value.openHours[hourIndex]
+                                                .fromOld[1]
                                                 .toInt()),
                                         textAlign: TextAlign.center,
                                       ),
@@ -101,9 +105,11 @@ class MezServiceOpenHours extends StatelessWidget {
                                       ),
                                       Text(
                                         convertToAmPm(
-                                           entry.value.openHours[hourIndex].to[0]
+                                            entry.value.openHours[hourIndex]
+                                                .toOld[0]
                                                 .toInt(),
-                                            entry.value.openHours[hourIndex].to[1]
+                                            entry.value.openHours[hourIndex]
+                                                .toOld[1]
                                                 .toInt()),
                                         textAlign: TextAlign.center,
                                       ),

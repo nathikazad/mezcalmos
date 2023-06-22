@@ -162,7 +162,7 @@ class DvOrderDetailsViewController {
         if (_res != null) {
           newBillFile.value = _res;
           if (newBillFile.value != null) {
-            String imageUrl = await uploadImgToFbStorage(
+            final String imageUrl = await uploadImgToFbStorage(
                 compressLevel: 50,
                 imageFile: newBillFile.value!,
                 storageFolder:
@@ -185,21 +185,21 @@ class DvOrderDetailsViewController {
   Future<void> requestPriceChange(BuildContext context) async {
     if (updatePriceFormKey.currentState?.validate() == true) {
       try {
-        cModels.ChangePriceReqResponse res =
-            await CloudFunctions.delivery3_changeDeliveryPrice(
-                deliveryOrderId: order.value!.orderId,
-                newPrice: double.parse(openOrderPriceText.text),
-                reason: openOrderReasonText.text);
+        // cModels.ChangePriceReqResponse res =
+        //     await CloudFunctions.delivery3_changeDeliveryPrice(
+        //         deliveryOrderId: order.value!.orderId,
+        //         newPrice: double.parse(openOrderPriceText.text),
+        //         reason: openOrderReasonText.text);
 
-        if (res.success == false) {
-          mezDbgPrint(res.error);
-          mezDbgPrint("ERRORRRR ========>${res.unhandledError}");
-          showErrorSnackBar(errorText: res.error.toString());
-        } else {
-          showSavedSnackBar(
-              title: "Sended", subtitle: "Price change request sended");
-          Navigator.pop(context);
-        }
+        // if (res.success == false) {
+        //   mezDbgPrint(res.error);
+        //   mezDbgPrint("ERRORRRR ========>${res.unhandledError}");
+        //   showErrorSnackBar(errorText: res.error.toString());
+        // } else {
+        //   showSavedSnackBar(
+        //       title: "Sended", subtitle: "Price change request sended");
+        //   Navigator.pop(context);
+        // }
       } on FirebaseFunctionsException catch (e, stk) {
         showErrorSnackBar(errorText: e.message.toString());
         mezDbgPrint(e);
@@ -213,7 +213,7 @@ class DvOrderDetailsViewController {
 
   Future<bool> cancelOrder() async {
     try {
-      cModels.ChangeDeliveryStatusResponse res =
+      final cModels.ChangeDeliveryStatusResponse res =
           await CloudFunctions.delivery3_changeStatus(
         deliveryId: order.value!.orderId,
         newStatus: cModels.DeliveryOrderStatus.CancelledByDeliverer,

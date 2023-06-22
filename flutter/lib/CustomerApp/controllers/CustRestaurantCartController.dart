@@ -175,7 +175,7 @@ class CustRestaurantCartController extends GetxController {
                     lat: cart.value!.toLocation!.latitude,
                     lng: cart.value!.toLocation!.longitude,
                     address: cart.value!.toLocation!.address),
-                deliveryCost: cart.value!.shippingCost!,
+                // deliveryCost: cart.value!.shippingCost!,
                 paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
                 notes: cart.value?.notes,
                 restaurantId: cart.value!.restaurant!.info.hasuraId,

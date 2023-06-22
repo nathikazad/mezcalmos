@@ -21,6 +21,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/env.dart';
 
@@ -70,7 +71,7 @@ class ROpItemViewController {
 
   RxBool needToRefetch = RxBool(false);
   RxBool isInitalized = RxBool(false);
-  Rxn<cModels.Schedule> schedule = Rxn();
+  Rxn<Schedule> schedule = Rxn();
   cModels.ServiceProviderLanguage? get languages =>
       _languageTabsController.language;
   GlobalKey<FormState> get primaryFormKey =>

@@ -83,7 +83,7 @@ Future<List<EventCard>> get_event_by_category(
             ),
             scheduleType: data.schedule_type.toScheduleType(),
             schedule: (data.schedule != null)
-                ? scheduleFromData(data.schedule)
+                ? scheduleFromData(data.schedule).openHours
                 : null,
           )));
     });
@@ -163,7 +163,7 @@ Future<List<EventCard>> get_class_by_category(
             ),
             scheduleType: data.schedule_type.toScheduleType(),
             schedule: (data.schedule != null)
-                ? scheduleFromData(data.schedule)
+                ? scheduleFromData(data.schedule).openHours
                 : null,
           )));
     });
@@ -229,13 +229,13 @@ Future<EventWithBusinessCard?> get_event_by_id(
               ),
               scheduleType: data.schedule_type.toScheduleType(),
               schedule: (data.schedule != null)
-                  ? scheduleFromData(data.schedule)
+                  ? scheduleFromData(data.schedule).openHours
                   : null),
           business: BusinessCard(
             phoneNo: data.business.details.phone_number,
             onlineOrdering: data.business.details.online_ordering,
             lastActive: data.business.details.last_active_time != null
-                ? DateTime.parse(data.business.details.last_active_time!)
+                ? DateTime.parse(data.business.details.last_active_time)
                 : null,
             id: data.business.id,
             detailsId: data.business.details.id,
@@ -581,7 +581,7 @@ Future<List<EventCard>> get_business_events(
             ),
             scheduleType: data.schedule_type.toScheduleType(),
             schedule: (data.schedule != null)
-                ? scheduleFromData(data.schedule)
+                ? scheduleFromData(data.schedule).openHours
                 : null,
           )));
     });
@@ -660,7 +660,7 @@ Future<EventWithBusinessCard?> update_event_by_id(
               ),
               scheduleType: data.schedule_type.toScheduleType(),
               schedule: (data.schedule != null)
-                  ? scheduleFromData(data.schedule)
+                  ? scheduleFromData(data.schedule).openHours
                   : null),
           business: BusinessCard(
             id: data.business.id,

@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 
 enum RestaurantsView { Rows, Grid }
@@ -41,11 +42,10 @@ class Restaurant extends Service {
   List<Item> itemsWithoutCategory = <Item>[];
   RestaurantsView restaurantsView;
   PaymentInfo? paymentInfo;
-  cModels.Schedule? schedule;
   Restaurant({
     required ServiceInfo userInfo,
     this.restaurantsView = RestaurantsView.Rows,
-    required this.schedule,
+    required super.schedule,
     required this.paymentInfo,
     required ServiceState restaurantState,
     required cModels.ServiceProviderLanguage languages,
@@ -60,7 +60,6 @@ class Restaurant extends Service {
     this.selfDelivery = false,
   }) : super(
             info: userInfo,
-            schedule: schedule,
             languages: languages,
             state: restaurantState,
             paymentInfo: paymentInfo);
@@ -326,7 +325,7 @@ class Restaurant extends Service {
     ServiceState? state,
     bool? selfDelivery,
     PaymentInfo? paymentInfo,
-    cModels.Schedule? schedule,
+    Schedule? schedule,
     int? deliveryDetailsId,
     cModels.ServiceProviderLanguage? languages,
   }) {
