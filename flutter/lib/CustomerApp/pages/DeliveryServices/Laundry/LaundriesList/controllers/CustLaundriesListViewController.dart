@@ -4,19 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapLaundryCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/components/CustomerLaundrySelectCard.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
-import 'package:location/location.dart' as locPkg;
 
 class CustLaundriesListViewController {
   RxList<Laundry> filteredServices = RxList<Laundry>.empty();
@@ -60,10 +59,10 @@ class CustLaundriesListViewController {
   BuildContext? ctx;
   // Map view //
 
-  void init(BuildContext context) async {
+  Future<void> init(BuildContext context) async {
     ctx = context;
 
-    await locPkg.Location().getLocation().then((location) {
+    await locPkg.Location().getLocation().then((LocationData location) {
       if (location.latitude != null && location.longitude != null)
         _currentLocation = LatLng(location.latitude!, location.longitude!);
     });
@@ -76,13 +75,11 @@ class CustLaundriesListViewController {
                 lng: _currentLocation.longitude,
                 address: ''),
             withCache: false,
-            distance: 25000)
+            distance: getFetchDistance)
         .then((List<Laundry> list) {
-      if (list != null) {
-        _services = list;
+      _services = list;
 
-        filter();
-      }
+      filter();
       _getCustomerCurrentLocation();
     }).whenComplete(() {
       isLoading.value = false;
@@ -122,7 +119,7 @@ class CustLaundriesListViewController {
                 lng: _currentLocation.longitude,
                 address: ''),
             withCache: false,
-            distance: 25000);
+            distance: getFetchDistance);
       } else {
         _mapViewLaundries.value = await get_laundries(
             distance: _calculateDistance(

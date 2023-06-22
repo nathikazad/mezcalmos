@@ -58,6 +58,7 @@ query get_service_by_category(
   $offset: Int
   $categories2: [String!]
   $tags: [String!]
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_service(
     where: {
@@ -76,6 +77,7 @@ query get_service_by_category(
             }
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering
           }
         }
       }

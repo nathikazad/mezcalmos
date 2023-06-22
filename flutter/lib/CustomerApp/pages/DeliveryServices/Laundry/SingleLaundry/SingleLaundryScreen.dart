@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/components/CustDeliveryMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -130,10 +133,28 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   ServiceLocationCard(
                       textStyle: context.txt.titleSmall,
                       location: laundry.value!.info.location),
+
+                  if (!laundry.value!.onlineOrdering)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustDeliveryMessageCard(
+                          serviceProviderType: ServiceProviderType.Laundry,
+                          info: laundry.value!.info,
+                          lastActive: laundry.value!.lastActive,
+                          rating:
+                              laundry.value!.averageRating?.toDouble() ?? 0.0,
+                          reviewCount: laundry.value!.reviewCount ?? 0,
+                          serviceId: laundryId!,
+                        ),
+                        CustBusinessNoOrderBanner(),
+                      ],
+                    ),
                 ],
               ),
             ),
-            bottomNavigationBar: _sendMyLaundryButton(),
+            bottomNavigationBar:
+                laundry.value!.onlineOrdering ? _sendMyLaundryButton() : null,
           );
         } else
           return Container();

@@ -16,6 +16,7 @@ class CustCourierServiceViewController {
   // getters //
   bool get hasData => _deliveryCompany.value != null;
   DeliveryCompany get company => _deliveryCompany.value!;
+  Rx<bool> get isOnlineOrdering => _deliveryCompany.value!.onlineOrdering.obs;
 
   // methods //
 

@@ -60,3 +60,20 @@ extension ParseLaundryOrderStatusToMinimalOrderStatus on LaundryOrderStatus {
     }
   }
 }
+
+extension ParseBusinessOrderStatusToMinimalOrderStatus
+    on BusinessOrderRequestStatus {
+  MinimalOrderStatus toMinimalOrderStatus() {
+    switch (this) {
+      case BusinessOrderRequestStatus.CancelledByCustomer:
+      case BusinessOrderRequestStatus.CancelledByBusiness:
+        return MinimalOrderStatus.Cancelled;
+      case BusinessOrderRequestStatus.Confirmed:
+      case BusinessOrderRequestStatus.Completed:
+        return MinimalOrderStatus.Delivered;
+
+      default:
+        return MinimalOrderStatus.InProcess;
+    }
+  }
+}

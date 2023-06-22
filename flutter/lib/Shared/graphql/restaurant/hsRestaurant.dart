@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -21,47 +22,41 @@ Future<List<Restaurant>> fetch_restaurants(
     {required bool withCache,
     required cModels.Location fromLocation,
     required double distance,
-    required bool is_open,
+    bool? is_open,
+    bool? online_ordering,
     int? limit,
     int? offset}) async {
   final List<Restaurant> _restaurants = <Restaurant>[];
   dynamic parsedData;
   dynamic exception;
-  if (is_open) {
-    final QueryResult<Query$getOpenRestaurants> response = await _db
-        .graphQLClient
-        .query$getOpenRestaurants(Options$Query$getOpenRestaurants(
-            variables: Variables$Query$getOpenRestaurants(
-                from: Geography(
-                    fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-                distance: distance,
-                limit: limit,
-                offset: offset),
-            fetchPolicy: withCache
-                ? FetchPolicy.cacheAndNetwork
-                : FetchPolicy.networkOnly));
-    parsedData = response.parsedData;
-    exception = response.exception;
-  } else {
-    final QueryResult<Query$getAllRestaurants> response = await _db
-        .graphQLClient
-        .query$getAllRestaurants(Options$Query$getAllRestaurants(
-            variables: Variables$Query$getAllRestaurants(
-                from: Geography(
-                    fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-                distance: distance,
-                limit: limit,
-                offset: offset),
-            fetchPolicy: withCache
-                ? FetchPolicy.cacheAndNetwork
-                : FetchPolicy.networkOnly));
-    parsedData = response.parsedData;
-    exception = response.exception;
+  Input$Boolean_comparison_exp? is_open_exp;
+  if (is_open == true) {
+    is_open_exp = Input$Boolean_comparison_exp($_eq: true);
   }
+  Input$Boolean_comparison_exp? online_ordering_exp;
+  if (online_ordering != null) {
+    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+  }
+  final QueryResult<Query$getRestaurants> response = await _db.graphQLClient
+      .query$getRestaurants(Options$Query$getRestaurants(
+          variables: Variables$Query$getRestaurants(
+              from: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+              distance: distance,
+              is_open: is_open_exp,
+              online_ordering: online_ordering_exp,
+              limit: limit,
+              offset: offset),
+          fetchPolicy: withCache
+              ? FetchPolicy.cacheAndNetwork
+              : FetchPolicy.networkOnly));
+  parsedData = response.parsedData;
+  exception = response.exception;
   if (parsedData?.restaurant_restaurant != null) {
     parsedData?.restaurant_restaurant
-        .forEach((Fragment$RestaurantFields data) async {
+        .forEach((Query$getRestaurants$restaurant_restaurant data) async {
       _restaurants.add(Restaurant(
+        onlineOrdering: data.details!.online_ordering,
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
@@ -170,6 +165,10 @@ Future<Restaurant?> get_restaurant_by_id(
 
     if (data != null) {
       return Restaurant(
+        averageRating: data.reviews_aggregate.aggregate?.avg?.rating??0.0,
+        reviewCount: data.reviews_aggregate.aggregate?.count??0,
+        lastActive: DateTime.parse(data.details!.last_active_time),
+        onlineOrdering: data.details!.online_ordering,
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,

@@ -58,6 +58,10 @@ Future<Laundry?> get_laundry_store_by_id(
     mezDbgPrint(
         "response data ====> ${response.data} 🧺🧺🧺 laundry data ${data.details?.schedule}");
     return Laundry(
+        averageRating: data.reviews_aggregate.aggregate?.avg?.rating ?? 0.0,
+        reviewCount: data.reviews_aggregate.aggregate?.count ?? 0,
+        lastActive: DateTime.parse(data.details!.last_active_time),
+        onlineOrdering: data.details!.online_ordering,
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
@@ -322,17 +326,21 @@ Future<LaundryCostLineItem?> update_laundry_category(
 Future<List<Laundry>> get_laundries(
     {required Location fromLocation,
     required double distance,
-    bool? is_open,
+    bool? online_ordering,
     int? limit,
     int? offset,
     bool withCache = true}) async {
+  Input$Boolean_comparison_exp? online_ordering_exp;
+  if (online_ordering != null) {
+    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+  }
   QueryResult<Query$getLaundries> res = await _db.graphQLClient
       .query$getLaundries(Options$Query$getLaundries(
           variables: Variables$Query$getLaundries(
             distance: distance,
             from: Geography(
                 fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-            is_open: is_open,
+            online_ordering: online_ordering_exp,
             limit: limit,
             offset: offset,
           ),
@@ -365,6 +373,7 @@ Future<List<Laundry>> get_laundries(
     // }
 
     return Laundry(
+        onlineOrdering: data.details!.online_ordering,
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         rate: data.reviews_aggregate.aggregate?.avg?.rating,

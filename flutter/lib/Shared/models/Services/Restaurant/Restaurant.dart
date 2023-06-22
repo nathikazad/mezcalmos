@@ -42,6 +42,10 @@ class Restaurant extends Service {
   List<Item> itemsWithoutCategory = <Item>[];
   RestaurantsView restaurantsView;
   PaymentInfo? paymentInfo;
+ 
+  num? averageRating;
+  int? reviewCount;
+  DateTime? lastActive;
   Restaurant({
     required ServiceInfo userInfo,
     this.restaurantsView = RestaurantsView.Rows,
@@ -54,6 +58,10 @@ class Restaurant extends Service {
     super.deliveryCost,
     super.reviews,
     super.rate,
+    this.lastActive,
+    this.averageRating,
+    this.reviewCount,
+    required super.onlineOrdering,
     super.currency,
     this.serviceLink,
     this.deliveryDetailsId,
@@ -332,6 +340,7 @@ class Restaurant extends Service {
     return Restaurant(
       serviceDetailsId: 1,
       isOpen: isOpen,
+      onlineOrdering: onlineOrdering,
       userInfo: userInfo ?? info,
       languages: languages ?? this.languages,
       deliveryDetailsId: deliveryDetailsId ?? this.deliveryDetailsId,

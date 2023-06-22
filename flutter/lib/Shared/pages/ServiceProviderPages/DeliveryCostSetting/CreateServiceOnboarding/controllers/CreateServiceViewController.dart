@@ -51,6 +51,7 @@ class CreateServiceViewController {
   TextEditingController radius = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController phone = TextEditingController();
+  TextEditingController businessId = TextEditingController();
 
   // obs //
   Rxn<BusinessProfile> _businessProfile = Rxn<BusinessProfile>();

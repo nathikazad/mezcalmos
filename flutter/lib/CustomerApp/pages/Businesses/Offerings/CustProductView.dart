@@ -49,13 +49,17 @@ class _CustProductViewState extends State<CustProductView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MezButton(
-        label: "Add to cart",
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          await viewController.bookOffering();
-        },
+      bottomNavigationBar: Obx(
+        () => viewController.isOnlineOrdering.value!
+            ? MezButton(
+                label: "Add to cart",
+                withGradient: true,
+                borderRadius: 0,
+                onClick: () async {
+                  await viewController.bookOffering();
+                },
+              )
+            : SizedBox.shrink(),
       ),
       body: Obx(() {
         if (viewController.product != null) {
@@ -92,7 +96,8 @@ class _CustProductViewState extends State<CustProductView> {
                         business: viewController.product!.business,
                         offering: viewController.product!.details,
                       ),
-                      CustBusinessNoOrderBanner(),
+                      if (!viewController.isOnlineOrdering.value!)
+                        CustBusinessNoOrderBanner(),
                     ],
                   ),
                 ),

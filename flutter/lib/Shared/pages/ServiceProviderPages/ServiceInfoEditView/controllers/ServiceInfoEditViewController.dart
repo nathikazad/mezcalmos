@@ -73,10 +73,19 @@ class ServiceInfoEditViewController {
       mezDbgPrint("Description id ========>>>${service.value?.descriptionId}");
       mezDbgPrint("Description id ========>>>${service.value?.description}");
       serviceNameTxt.text = service.value?.name ?? '';
-      phoneNumber.text = service.value?.phoneNumber ?? '';
-
       // phoneNumber.text = service.value?.phoneNumber ?? '';
-      // prefixTextFieldController.text = service.value?.countryCode ?? '';
+
+      if (service.value!.phoneNumber == null) {
+        prefixTextFieldController.text = '';
+        phoneNumber.text = '+52';
+      } else if (service.value!.phoneNumber!.contains(' ')) {
+        prefixTextFieldController.text =
+            service.value?.phoneNumber?.split(' ')[0] ?? '';
+        phoneNumber.text = service.value?.phoneNumber?.split(' ')[1] ?? '';
+      } else {
+        phoneNumber.text = service.value?.phoneNumber ?? '';
+        prefixTextFieldController.text = '+52';
+      }
 
       newLocation.value = service.value!.location;
       newImageUrl.value = service.value?.image;
@@ -161,7 +170,7 @@ class ServiceInfoEditViewController {
         location: newLocation.value!,
         hasuraId: 1,
         languages: languages.value!,
-        phoneNumber: phoneNumber.text,
+        phoneNumber: '${prefixTextFieldController.text} ${phoneNumber.text}',
         descriptionId: newDescId,
         image: newImageUrl.value,
         name: serviceNameTxt.text);

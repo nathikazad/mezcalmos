@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -279,7 +280,7 @@ class CustRentalsListViewController {
       if (currentPostitionBased) {
         _mapViewBusinesses.value = await get_business_by_rental_category1(
             categories1: [_currentRentalCategory],
-            distance: 25000,
+            distance: getFetchDistance,
             fromLocation: _fromLocation!,
             offset: 0,
             limit: 25,

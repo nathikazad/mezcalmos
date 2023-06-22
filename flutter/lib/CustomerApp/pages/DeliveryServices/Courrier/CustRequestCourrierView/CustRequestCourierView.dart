@@ -141,58 +141,76 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   }
 
   Widget _itemsPage() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '${_i18n()["from"]}',
-            style: context.txt.bodyLarge,
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(10),
+          width: double.infinity,
+          color: Color(0xFFE1E4FF),
+          child: Center(
+            child: Text(
+              '${_i18n()['topDescription']}',
+              style: TextStyle(color: primaryBlueColor),
+              textAlign: TextAlign.center,
+            ),
           ),
-          SizedBox(
-            height: 5,
-          ),
-          _fromFeild(),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            '${_i18n()["to"]}',
-            style: context.txt.bodyLarge,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Form(
-            key: viewController.fromKey,
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                DropDownLocationList(
-                  elevation: 0,
-                  onValueChangeCallback: (MezLocation location) {
-                    viewController.setToLocation(location);
-                  },
-                  bgColor: Colors.white,
-                  checkDistance: false,
-                  passedInLocation: viewController.toLoc.value,
-                  serviceProviderLocation: null,
+                Text(
+                  '${_i18n()["from"]}',
+                  style: context.txt.bodyLarge,
                 ),
+                SizedBox(
+                  height: 5,
+                ),
+                _fromFeild(),
                 SizedBox(
                   height: 15,
                 ),
-                CustRequestCourierItems(
-                  viewController: viewController,
+                Text(
+                  '${_i18n()["to"]}',
+                  style: context.txt.bodyLarge,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Form(
+                  key: viewController.fromKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DropDownLocationList(
+                        elevation: 0,
+                        onValueChangeCallback: (MezLocation location) {
+                          viewController.setToLocation(location);
+                        },
+                        bgColor: Colors.white,
+                        checkDistance: false,
+                        passedInLocation: viewController.toLoc.value,
+                        serviceProviderLocation: null,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      CustRequestCourierItems(
+                        viewController: viewController,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 75,
                 ),
               ],
             ),
           ),
-          SizedBox(
-            height: 75,
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

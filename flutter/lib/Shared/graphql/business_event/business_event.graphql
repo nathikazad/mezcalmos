@@ -65,26 +65,25 @@ query get_event_by_category(
   $categories2: [String!]
   $schedule_type: [String!]
   $tags: [String!]
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_event(
     where: {
-      _and: {
-        details: {
-          _and: {
-            category1: { _in: $categories1 }
-            category2: { _in: $categories2 }
-            _not: { tags: { _has_key: "class" } }
-            tags: { _has_keys_all: $tags }
-          }
-        }
-        schedule_type: { _in: $schedule_type }
+      details: {
+        category1: { _in: $categories1 }
+        category2: { _in: $categories2 }
+        _not: { tags: { _has_key: "class" } }
+        tags: { _has_keys_all: $tags }
         business: {
           details: {
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering
           }
         }
       }
+      schedule_type: { _in: $schedule_type }
+      _or: [{ ends_at: { _is_null: true } }, { ends_at: { _gte: "now()" } }]
     }
     limit: $limit
     offset: $offset
@@ -137,6 +136,7 @@ query get_class_by_category(
   $categories2: [String!]
   $schedule_type: [String!]
   $tags: [String!]
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_event(
     where: {
@@ -157,6 +157,7 @@ query get_class_by_category(
             }
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering
           }
         }
       }
