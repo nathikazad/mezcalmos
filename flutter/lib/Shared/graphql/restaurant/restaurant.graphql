@@ -1,5 +1,25 @@
-query getRestaurants($limit: Int, $offset: Int, $distance: Float!, $from: geography!, $is_open: Boolean_comparison_exp = {}, $online_ordering: Boolean_comparison_exp = {}) {
-  restaurant_restaurant(where: {details: {is_open: $is_open, location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, online_ordering: $online_ordering}}, limit: $limit, offset: $offset, order_by: {details: {referral_points: desc}}) {
+query getRestaurants(
+  $limit: Int
+  $offset: Int
+  $distance: Float!
+  $from: geography!
+  $is_open: Boolean_comparison_exp = {}
+  $online_ordering: Boolean_comparison_exp = {}
+) {
+  restaurant_restaurant(
+    where: {
+      details: {
+        is_open: $is_open
+        location: {
+          gps: { _st_d_within: { distance: $distance, from: $from } }
+        }
+        online_ordering: $online_ordering
+      }
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { details: { referral_points: desc } }
+  ) {
     id
     reviews_aggregate {
       aggregate {
@@ -23,6 +43,7 @@ query getRestaurants($limit: Int, $offset: Int, $distance: Float!, $from: geogra
       language
       is_open
       name
+      online_ordering
       location {
         gps
         address

@@ -56,7 +56,7 @@ Future<List<Restaurant>> fetch_restaurants(
     parsedData?.restaurant_restaurant
         .forEach((Query$getRestaurants$restaurant_restaurant data) async {
       _restaurants.add(Restaurant(
-        onlineOrdering: data.details!.online_ordering ?? false,
+        onlineOrdering: data.details!.online_ordering,
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
