@@ -703,6 +703,13 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'online_ordering'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'location'),
                 alias: null,
                 arguments: [],
@@ -1969,8 +1976,8 @@ class Query$getRestaurants$restaurant_restaurant$details {
     required this.image,
     required this.language,
     this.is_open,
-    required this.online_ordering,
     required this.name,
+    required this.online_ordering,
     required this.location,
     this.firebase_id,
     required this.approved,
@@ -1987,8 +1994,8 @@ class Query$getRestaurants$restaurant_restaurant$details {
     final l$image = json['image'];
     final l$language = json['language'];
     final l$is_open = json['is_open'];
-    final l$online_ordering = json['online_ordering'];
     final l$name = json['name'];
+    final l$online_ordering = json['online_ordering'];
     final l$location = json['location'];
     final l$firebase_id = json['firebase_id'];
     final l$approved = json['approved'];
@@ -2002,8 +2009,8 @@ class Query$getRestaurants$restaurant_restaurant$details {
       image: (l$image as String),
       language: mapFromJson(l$language),
       is_open: (l$is_open as bool?),
-      online_ordering: (l$online_ordering as bool),
       name: (l$name as String),
+      online_ordering: (l$online_ordering as bool),
       location:
           Query$getRestaurants$restaurant_restaurant$details$location.fromJson(
               (l$location as Map<String, dynamic>)),
@@ -2028,9 +2035,9 @@ class Query$getRestaurants$restaurant_restaurant$details {
 
   final bool? is_open;
 
-  final bool online_ordering;
-
   final String name;
+
+  final bool online_ordering;
 
   final Query$getRestaurants$restaurant_restaurant$details$location location;
 
@@ -2059,10 +2066,10 @@ class Query$getRestaurants$restaurant_restaurant$details {
     _resultData['language'] = mapToJson(l$language);
     final l$is_open = is_open;
     _resultData['is_open'] = l$is_open;
-    final l$online_ordering = online_ordering;
-    _resultData['online_ordering'] = l$online_ordering;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$firebase_id = firebase_id;
@@ -2088,8 +2095,8 @@ class Query$getRestaurants$restaurant_restaurant$details {
     final l$image = image;
     final l$language = language;
     final l$is_open = is_open;
-    final l$online_ordering = online_ordering;
     final l$name = name;
+    final l$online_ordering = online_ordering;
     final l$location = location;
     final l$firebase_id = firebase_id;
     final l$approved = approved;
@@ -2103,8 +2110,8 @@ class Query$getRestaurants$restaurant_restaurant$details {
       l$image,
       l$language,
       l$is_open,
-      l$online_ordering,
       l$name,
+      l$online_ordering,
       l$location,
       l$firebase_id,
       l$approved,
@@ -2145,14 +2152,14 @@ class Query$getRestaurants$restaurant_restaurant$details {
     if (l$is_open != lOther$is_open) {
       return false;
     }
-    final l$online_ordering = online_ordering;
-    final lOther$online_ordering = other.online_ordering;
-    if (l$online_ordering != lOther$online_ordering) {
-      return false;
-    }
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$location = location;
@@ -2226,8 +2233,8 @@ abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$details<
     String? image,
     dynamic? language,
     bool? is_open,
-    bool? online_ordering,
     String? name,
+    bool? online_ordering,
     Query$getRestaurants$restaurant_restaurant$details$location? location,
     String? firebase_id,
     bool? approved,
@@ -2262,8 +2269,8 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
     Object? image = _undefined,
     Object? language = _undefined,
     Object? is_open = _undefined,
-    Object? online_ordering = _undefined,
     Object? name = _undefined,
+    Object? online_ordering = _undefined,
     Object? location = _undefined,
     Object? firebase_id = _undefined,
     Object? approved = _undefined,
@@ -2282,13 +2289,13 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
             ? _instance.language
             : (language as dynamic),
         is_open: is_open == _undefined ? _instance.is_open : (is_open as bool?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
         online_ordering:
             online_ordering == _undefined || online_ordering == null
                 ? _instance.online_ordering
                 : (online_ordering as bool),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -2347,8 +2354,8 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$details<TRes>
     String? image,
     dynamic? language,
     bool? is_open,
-    bool? online_ordering,
     String? name,
+    bool? online_ordering,
     Query$getRestaurants$restaurant_restaurant$details$location? location,
     String? firebase_id,
     bool? approved,
