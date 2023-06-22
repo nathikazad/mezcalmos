@@ -21,7 +21,6 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -328,9 +327,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                           period: viewController.classes[index].period,
                           showTitle: false,
                           showIcons: false,
-                          schedule: Schedule(
-                              openHours:
-                                  viewController.classes[index].schedule!),
+                          schedule: viewController.classes[index].schedule!,
                           scheduleType:
                               viewController.classes[index].scheduleType)
                     ],

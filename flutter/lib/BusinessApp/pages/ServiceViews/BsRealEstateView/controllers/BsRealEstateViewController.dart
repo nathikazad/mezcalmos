@@ -121,7 +121,7 @@ class BsRealEstateViewController {
 
   Home _constructRental() {
     final Home rental = Home(
-      locationId: this.rental!.locationId,
+      
       location: HomeLocation(
         name: homeLocation.value!.address,
         location: homeLocation.value!,

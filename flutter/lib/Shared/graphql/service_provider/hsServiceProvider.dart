@@ -209,7 +209,7 @@ Future<MezLocation?> get_service_location(
   return mezLocation;
 }
 
-Future<Schedule?> get_service_schedule(
+Future<cModels.Schedule?> get_service_schedule(
     {required int serviceDetailsId, bool withCache = true}) async {
   QueryResult<Query$getServiceSchedule> res =
       await _db.graphQLClient.query$getServiceSchedule(
@@ -321,8 +321,8 @@ Future<ServiceInfo> update_service_info(
       name: data.name);
 }
 
-Future<Schedule?> update_service_schedule(
-    {required Schedule schedule, required int detailsId}) async {
+Future<cModels.Schedule?> update_service_schedule(
+    {required cModels.Schedule schedule, required int detailsId}) async {
   QueryResult<Mutation$updateServiceDetails> res =
       await _db.graphQLClient.mutate$updateServiceDetails(
     Options$Mutation$updateServiceDetails(

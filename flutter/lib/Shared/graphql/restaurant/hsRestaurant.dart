@@ -233,7 +233,7 @@ Future<cModels.ServiceProviderLanguage?> get_restaurant_lang(
   return null;
 }
 
-Future<Schedule?> get_restaurant_schedule(
+Future<cModels.Schedule?> get_restaurant_schedule(
     {required int restaurantId, bool withCache = true}) async {
   final QueryResult<Query$getRestaurantSchedule> response = await _db
       .graphQLClient

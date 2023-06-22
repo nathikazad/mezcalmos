@@ -130,7 +130,7 @@ class BsEventViewController {
       location.value = event!.gpsLocation;
       scheduleTypeInput.value.type = event!.scheduleType;
 
-      avalaibilty.value = event!.schedule?.toSchedule();
+      avalaibilty.value = event!.schedule;
       startDate.value = event!.startsAt != null
           ? DateTime.parse(event!.startsAt!).toLocal()
           : null;
@@ -201,7 +201,7 @@ class BsEventViewController {
         scheduleType: scheduleTypeInput.value.type,
         startsAt: startDate.value?.toUtc().toString(),
         endsAt: endDate.value?.toUtc().toString(),
-        schedule: avalaibilty.value?.openHours,
+        schedule: avalaibilty.value!,
         gpsLocation: location.value,
         tags: scheduleTypeInput.value.tags,
         details: details);
@@ -215,7 +215,7 @@ class BsEventViewController {
         scheduleType: scheduleTypeInput.value.type,
         startsAt: startDate.value?.toUtc().toString(),
         endsAt: endDate.value?.toUtc().toString(),
-        schedule: avalaibilty.value?.openHours,
+        schedule: avalaibilty.value,
         gpsLocation: location.value,
         tags: scheduleTypeInput.value.tags,
         // time: oneTimePeriod.value.,

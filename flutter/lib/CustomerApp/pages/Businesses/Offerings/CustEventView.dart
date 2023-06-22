@@ -266,7 +266,7 @@ class _CustEventViewState extends State<CustEventView> {
           CustBusinessScheduleBuilder(
             period: viewController.event!.period,
             icon: Icons.calendar_today,
-            schedule: Schedule(openHours: viewController.event!.schedule!),
+            schedule: viewController.event!.schedule!,
             scheduleType: viewController.event!.scheduleType,
           )
       ],

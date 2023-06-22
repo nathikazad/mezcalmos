@@ -1,8 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'dart:convert';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CloudFunctions {
   static Future<dynamic> callCloudFunction(
@@ -247,7 +245,7 @@ class CloudFunctions {
       required String image,
       required String phoneNumber,
       required Location location,
-      required Map<String, WorkingDay> schedule,
+      required Schedule schedule,
       String? restaurantOperatorNotificationToken,
       String? firebaseId,
       num? deliveryPartnerId,
@@ -261,7 +259,7 @@ class CloudFunctions {
           "image": image,
           "phoneNumber": phoneNumber,
           "location": location.toFirebaseFormattedJson(),
-          "schedule": schedule,
+          "schedule": schedule.toFirebaseFormattedJson(),
           "restaurantOperatorNotificationToken":
               restaurantOperatorNotificationToken,
           "firebaseId": firebaseId,
@@ -373,7 +371,7 @@ class CloudFunctions {
       required ServiceProviderLanguage language,
       String? uniqueId,
       String? firebaseId,
-      required Map<String, WorkingDay> schedule}) async {
+      required Schedule schedule}) async {
     return BusinessResponse.fromFirebaseFormattedJson(await callCloudFunction(
         functionName: "business-createBusiness",
         parameters: <String, dynamic>{
@@ -387,7 +385,7 @@ class CloudFunctions {
           "language": language.toFirebaseFormattedJson(),
           "uniqueId": uniqueId,
           "firebaseId": firebaseId,
-          "schedule": schedule,
+          "schedule": schedule.toFirebaseFormattedJson(),
         }));
   }
 
@@ -433,7 +431,7 @@ class CloudFunctions {
       {required String name,
       required String image,
       required Location location,
-      required Map<String, WorkingDay> schedule,
+      required Schedule schedule,
       String? laundryOperatorNotificationToken,
       String? firebaseId,
       required DeliveryDetails deliveryDetails,
@@ -445,7 +443,7 @@ class CloudFunctions {
           "name": name,
           "image": image,
           "location": location.toFirebaseFormattedJson(),
-          "schedule": schedule,
+          "schedule": schedule.toFirebaseFormattedJson(),
           "laundryOperatorNotificationToken": laundryOperatorNotificationToken,
           "firebaseId": firebaseId,
           "deliveryDetails": deliveryDetails.toFirebaseFormattedJson(),

@@ -325,7 +325,7 @@ class Restaurant extends Service {
     ServiceState? state,
     bool? selfDelivery,
     PaymentInfo? paymentInfo,
-    Schedule? schedule,
+    cModels.Schedule? schedule,
     int? deliveryDetailsId,
     cModels.ServiceProviderLanguage? languages,
   }) {

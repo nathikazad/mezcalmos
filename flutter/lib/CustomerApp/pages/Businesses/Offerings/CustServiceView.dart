@@ -133,8 +133,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                         CustBusinessScheduleBuilder(
                           period: null,
                           isService: true,
-                          schedule: Schedule(
-                              openHours: viewController.service!.schedule!),
+                          schedule: viewController.service!.schedule!,
                           scheduleType: ScheduleType.Scheduled,
                         ),
                       CustBusinessMessageCard(

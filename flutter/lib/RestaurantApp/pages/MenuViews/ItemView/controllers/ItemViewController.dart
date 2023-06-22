@@ -71,7 +71,7 @@ class ROpItemViewController {
 
   RxBool needToRefetch = RxBool(false);
   RxBool isInitalized = RxBool(false);
-  Rxn<Schedule> schedule = Rxn();
+  Rxn<cModels.Schedule> schedule = Rxn();
   cModels.ServiceProviderLanguage? get languages =>
       _languageTabsController.language;
   GlobalKey<FormState> get primaryFormKey =>

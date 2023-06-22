@@ -22,7 +22,6 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/env.dart';
 
@@ -897,8 +896,6 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
     return MezButton(
       label: _i18n()["addService"],
       onClick: () async {
-        if (viewController.noData) return;
-
         if (!viewController.canAddService()) {
           showDialog(
               context: context,

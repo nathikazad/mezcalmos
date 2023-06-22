@@ -86,7 +86,7 @@ class BsServiceViewController {
     if (service != null) {
       await detailsController.initEditMode(
           itemDetailsId: service!.details.id.toInt());
-      serviceSchedule.value = service?.schedule?.toSchedule();
+      serviceSchedule.value = service?.schedule;
     }
   }
 
@@ -109,7 +109,7 @@ class BsServiceViewController {
     final Service service = Service(
       category1: serviceCategory,
       details: details,
-      schedule: serviceSchedule.value?.openHours,
+      schedule: serviceSchedule.value,
     );
     return service;
   }

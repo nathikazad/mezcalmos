@@ -186,7 +186,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       startsAt: data.event!.starts_at,
                       endsAt: data.event!.ends_at,
                       schedule: (data.event!.schedule != null)
-                          ? scheduleFromData(data.event!.schedule).openHours
+                          ? scheduleFromData(data.event!.schedule)
                           : null,
                       category1:
                           data.event!.details.category1.toEventCategory1(),
@@ -702,7 +702,7 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                               (data.event!.schedule != null)
                                                   ? scheduleFromData(
                                                           data.event!.schedule)
-                                                      .openHours
+                                                      
                                                   : null,
                                           category1: data
                                               .event!.details.category1

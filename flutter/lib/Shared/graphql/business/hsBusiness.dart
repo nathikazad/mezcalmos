@@ -134,8 +134,8 @@ Future<Business?> get_business_by_id(
       data.home.forEach(
           (Query$get_business_by_id$business_business_by_pk$home home) async {
         _home.add(Home(
-          // TODO FIX THIS @m66are
-          locationId: 0,
+          
+       
           availableFor: home.available_for.toHomeAvailabilityOption(),
           location: HomeLocation(
             name: home.location!.name,
@@ -191,7 +191,7 @@ Future<Business?> get_business_by_id(
             category1: event.details.category1.toEventCategory1(),
             scheduleType: event.schedule_type.toScheduleType(),
             schedule: event.schedule != null
-                ? scheduleFromData(event.schedule).openHours
+                ? scheduleFromData(event.schedule)
                 : null,
             startsAt: event.starts_at,
             endsAt: event.ends_at,

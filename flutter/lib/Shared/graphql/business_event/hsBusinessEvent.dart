@@ -83,7 +83,7 @@ Future<List<EventCard>> get_event_by_category(
             ),
             scheduleType: data.schedule_type.toScheduleType(),
             schedule: (data.schedule != null)
-                ? scheduleFromData(data.schedule).openHours
+                ? scheduleFromData(data.schedule)
                 : null,
           )));
     });
@@ -163,7 +163,7 @@ Future<List<EventCard>> get_class_by_category(
             ),
             scheduleType: data.schedule_type.toScheduleType(),
             schedule: (data.schedule != null)
-                ? scheduleFromData(data.schedule).openHours
+                ? scheduleFromData(data.schedule)
                 : null,
           )));
     });
@@ -229,7 +229,7 @@ Future<EventWithBusinessCard?> get_event_by_id(
               ),
               scheduleType: data.schedule_type.toScheduleType(),
               schedule: (data.schedule != null)
-                  ? scheduleFromData(data.schedule).openHours
+                  ? scheduleFromData(data.schedule)
                   : null),
           business: BusinessCard(
             phoneNo: data.business.details.phone_number,
@@ -581,7 +581,7 @@ Future<List<EventCard>> get_business_events(
             ),
             scheduleType: data.schedule_type.toScheduleType(),
             schedule: (data.schedule != null)
-                ? scheduleFromData(data.schedule).openHours
+                ? scheduleFromData(data.schedule)
                 : null,
           )));
     });
@@ -660,7 +660,7 @@ Future<EventWithBusinessCard?> update_event_by_id(
               ),
               scheduleType: data.schedule_type.toScheduleType(),
               schedule: (data.schedule != null)
-                  ? scheduleFromData(data.schedule).openHours
+                  ? scheduleFromData(data.schedule)
                   : null),
           business: BusinessCard(
             id: data.business.id,

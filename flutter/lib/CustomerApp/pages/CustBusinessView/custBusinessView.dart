@@ -124,7 +124,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     if (_viewController.business!.details.schedule != null)
                       MezServiceOpenHours(
                           schedule: _viewController.business!.details.schedule!
-                              .toSchedule()),
+                              ),
                     ServiceLocationCard(
                         location: MezLocation(
                             _viewController.business!.details.location.address,
@@ -149,7 +149,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     if (_viewController.business!.details.schedule != null)
                       MezServiceOpenHours(
                           schedule: _viewController.business!.details.schedule!
-                              .toSchedule()),
+                              ),
                     _reviewsList(context),
                   ],
                 ),

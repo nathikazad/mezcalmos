@@ -96,7 +96,7 @@ Future<ServiceWithBusinessCard?> get_service_by_id(
             id: data.id,
             category1: data.details.category1.toServiceCategory1(),
             schedule: (data.schedule != null)
-                ? scheduleFromData(data.schedule).openHours
+                ? scheduleFromData(data.schedule)
                 : null,
             details: BusinessItemDetails(
               id: data.details.id,
