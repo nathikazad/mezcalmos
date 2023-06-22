@@ -42,6 +42,9 @@ class Restaurant extends Service {
   RestaurantsView restaurantsView;
   PaymentInfo? paymentInfo;
   cModels.Schedule? schedule;
+  num? averageRating;
+  int? reviewCount;
+  DateTime? lastActive;
   Restaurant({
     required ServiceInfo userInfo,
     this.restaurantsView = RestaurantsView.Rows,
@@ -54,6 +57,9 @@ class Restaurant extends Service {
     super.deliveryCost,
     super.reviews,
     super.rate,
+    this.lastActive,
+    this.averageRating,
+    this.reviewCount,
     required super.onlineOrdering,
     super.currency,
     this.serviceLink,

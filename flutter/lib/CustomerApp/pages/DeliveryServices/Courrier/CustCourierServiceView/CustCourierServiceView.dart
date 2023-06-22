@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierServiceView/controllers/CustCourierViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/components/CustDeliveryMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -58,19 +60,23 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: MezButton(
-        withGradient: true,
-        borderRadius: 0,
-        height: 75,
-        label: '${_i18n()["orderNow"]}',
-        onClick: () async {
-          if (Get.find<AuthController>().isUserSignedIn) {
-            await CustRequestCourierView.navigate(
-                _viewController.company.info.hasuraId);
-          } else {
-            dialogRequiredSignIn();
-          }
-        },
+      bottomSheet: Obx(
+        () => _viewController.hasData && _viewController.isOnlineOrdering.value
+            ? MezButton(
+                withGradient: true,
+                borderRadius: 0,
+                height: 75,
+                label: '${_i18n()["orderNow"]}',
+                onClick: () async {
+                  if (Get.find<AuthController>().isUserSignedIn) {
+                    await CustRequestCourierView.navigate(
+                        _viewController.company.info.hasuraId);
+                  } else {
+                    dialogRequiredSignIn();
+                  }
+                },
+              )
+            : SizedBox.shrink(),
       ),
       body: Obx(() {
         if (_viewController.hasData) {
@@ -130,11 +136,27 @@ class _CustCourierServiceViewState extends State<CustCourierServiceView> {
                         ),
                       ServiceLocationCard(
                           location: _viewController.company.info.location),
-                      /*OrderPaymentMethod(
-                    stripeOrderPaymentInfo:
-                        null,
-                    paymentType: ,
-                  ),*/
+
+                      if (!_viewController.company.onlineOrdering)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustDeliveryMessageCard(
+                              serviceProviderType:
+                                  cModels.ServiceProviderType.DeliveryCompany,
+                              info: _viewController.company.info,
+                              lastActive: _viewController.company.lastActive,
+                              rating: _viewController.company.averageRating
+                                      ?.toDouble() ??
+                                  0.0,
+                              reviewCount:
+                                  _viewController.company.reviewCount ?? 0,
+                              serviceId: companyId!,
+                            ),
+                            CustBusinessNoOrderBanner(),
+                          ],
+                        ),
+
                       if (_viewController.company.showReviews)
                         _reviewsList(context)
                     ],

@@ -4277,6 +4277,65 @@ const documentNodeQuerygetLaundryStoreById = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'reviews_aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'aggregate'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'count'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'avg'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'rating'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'delivery_details_id'),
             alias: null,
             arguments: [],
@@ -4477,6 +4536,13 @@ const documentNodeQuerygetLaundryStoreById = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'currency'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'last_active_time'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -4832,6 +4898,7 @@ extension ClientExtension$Query$getLaundryStoreById on graphql.GraphQLClient {
 class Query$getLaundryStoreById$laundry_store_by_pk {
   Query$getLaundryStoreById$laundry_store_by_pk({
     required this.id,
+    required this.reviews_aggregate,
     required this.delivery_details_id,
     required this.normal_delivery_time,
     required this.minimum_cost,
@@ -4844,6 +4911,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
   factory Query$getLaundryStoreById$laundry_store_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$reviews_aggregate = json['reviews_aggregate'];
     final l$delivery_details_id = json['delivery_details_id'];
     final l$normal_delivery_time = json['normal_delivery_time'];
     final l$minimum_cost = json['minimum_cost'];
@@ -4854,6 +4922,9 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     final l$$__typename = json['__typename'];
     return Query$getLaundryStoreById$laundry_store_by_pk(
       id: (l$id as int),
+      reviews_aggregate:
+          Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate
+              .fromJson((l$reviews_aggregate as Map<String, dynamic>)),
       delivery_details_id: (l$delivery_details_id as int),
       normal_delivery_time: (l$normal_delivery_time as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
@@ -4878,6 +4949,9 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
 
   final int id;
 
+  final Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate
+      reviews_aggregate;
+
   final int delivery_details_id;
 
   final int normal_delivery_time;
@@ -4899,6 +4973,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$reviews_aggregate = reviews_aggregate;
+    _resultData['reviews_aggregate'] = l$reviews_aggregate.toJson();
     final l$delivery_details_id = delivery_details_id;
     _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$normal_delivery_time = normal_delivery_time;
@@ -4920,6 +4996,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
   @override
   int get hashCode {
     final l$id = id;
+    final l$reviews_aggregate = reviews_aggregate;
     final l$delivery_details_id = delivery_details_id;
     final l$normal_delivery_time = normal_delivery_time;
     final l$minimum_cost = minimum_cost;
@@ -4929,6 +5006,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$reviews_aggregate,
       l$delivery_details_id,
       l$normal_delivery_time,
       l$minimum_cost,
@@ -4953,6 +5031,11 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$reviews_aggregate = reviews_aggregate;
+    final lOther$reviews_aggregate = other.reviews_aggregate;
+    if (l$reviews_aggregate != lOther$reviews_aggregate) {
       return false;
     }
     final l$delivery_details_id = delivery_details_id;
@@ -5041,6 +5124,8 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk<TRes> {
 
   TRes call({
     int? id,
+    Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate?
+        reviews_aggregate,
     int? delivery_details_id,
     int? normal_delivery_time,
     double? minimum_cost,
@@ -5050,6 +5135,8 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk<TRes> {
     Query$getLaundryStoreById$laundry_store_by_pk$details? details,
     String? $__typename,
   });
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate<TRes>
+      get reviews_aggregate;
   TRes categories(
       Iterable<Query$getLaundryStoreById$laundry_store_by_pk$categories> Function(
               Iterable<
@@ -5081,6 +5168,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? reviews_aggregate = _undefined,
     Object? delivery_details_id = _undefined,
     Object? normal_delivery_time = _undefined,
     Object? minimum_cost = _undefined,
@@ -5091,6 +5179,11 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
   }) =>
       _then(Query$getLaundryStoreById$laundry_store_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        reviews_aggregate: reviews_aggregate == _undefined ||
+                reviews_aggregate == null
+            ? _instance.reviews_aggregate
+            : (reviews_aggregate
+                as Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate),
         delivery_details_id:
             delivery_details_id == _undefined || delivery_details_id == null
                 ? _instance.delivery_details_id
@@ -5119,6 +5212,13 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate<TRes>
+      get reviews_aggregate {
+    final local$reviews_aggregate = _instance.reviews_aggregate;
+    return CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate(
+        local$reviews_aggregate, (e) => call(reviews_aggregate: e));
+  }
+
   TRes categories(
           Iterable<Query$getLaundryStoreById$laundry_store_by_pk$categories> Function(
                   Iterable<
@@ -5163,6 +5263,8 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
 
   call({
     int? id,
+    Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate?
+        reviews_aggregate,
     int? delivery_details_id,
     int? normal_delivery_time,
     double? minimum_cost,
@@ -5173,12 +5275,512 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate<TRes>
+      get reviews_aggregate =>
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate
+              .stub(_res);
   categories(_fn) => _res;
   delivery_details_of_deliverer(_fn) => _res;
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
       get details =>
           CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details.stub(
               _res);
+}
+
+class Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate {
+  Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate
+    on Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate {
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate<
+          Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate>
+      get copyWith =>
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate<
+    TRes> {
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate(
+    Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate instance,
+    TRes Function(
+            Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate;
+
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate;
+
+  TRes call({
+    Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate
+      _instance;
+
+  final TRes Function(
+      Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate {
+  Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate({
+    required this.count,
+    this.avg,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$avg = json['avg'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate(
+      count: (l$count as int),
+      avg: l$avg == null
+          ? null
+          : Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg
+              .fromJson((l$avg as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg?
+      avg;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$avg = avg;
+    _resultData['avg'] = l$avg?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$avg = avg;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$avg,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$avg = avg;
+    final lOther$avg = other.avg;
+    if (l$avg != lOther$avg) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate
+    on Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate {
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate<
+          Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate(
+    Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate;
+
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg?
+        avg,
+    String? $__typename,
+  });
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg<
+      TRes> get avg;
+}
+
+class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? avg = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        avg: avg == _undefined
+            ? _instance.avg
+            : (avg
+                as Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg<
+      TRes> get avg {
+    final local$avg = _instance.avg;
+    return local$avg == null
+        ? CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg
+            .stub(_then(_instance))
+        : CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg(
+            local$avg, (e) => call(avg: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg?
+        avg,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg<
+          TRes>
+      get avg =>
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg
+              .stub(_res);
+}
+
+class Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg {
+  Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg({
+    this.rating,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg.fromJson(
+      Map<String, dynamic> json) {
+    final l$rating = json['rating'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg(
+      rating: (l$rating as num?)?.toDouble(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double? rating;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$rating = rating;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$rating,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg
+    on Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg {
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg<
+          Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg>
+      get copyWith =>
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg<
+    TRes> {
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg(
+    Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg
+        instance,
+    TRes Function(
+            Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg)
+        then,
+  ) = _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg;
+
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg;
+
+  TRes call({
+    double? rating,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg
+      _instance;
+
+  final TRes Function(
+          Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? rating = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg(
+        rating: rating == _undefined ? _instance.rating : (rating as double?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate$aggregate$avg(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? rating,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getLaundryStoreById$laundry_store_by_pk$categories {
@@ -6027,6 +6629,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     this.is_open,
     required this.location_id,
     required this.currency,
+    required this.last_active_time,
     required this.image,
     required this.online_ordering,
     required this.language,
@@ -6048,6 +6651,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$is_open = json['is_open'];
     final l$location_id = json['location_id'];
     final l$currency = json['currency'];
+    final l$last_active_time = json['last_active_time'];
     final l$image = json['image'];
     final l$online_ordering = json['online_ordering'];
     final l$language = json['language'];
@@ -6066,6 +6670,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
       is_open: (l$is_open as bool?),
       location_id: (l$location_id as int),
       currency: (l$currency as String),
+      last_active_time: (l$last_active_time as String),
       image: (l$image as String),
       online_ordering: (l$online_ordering as bool),
       language: mapFromJson(l$language),
@@ -6096,6 +6701,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
   final int location_id;
 
   final String currency;
+
+  final String last_active_time;
 
   final String image;
 
@@ -6135,6 +6742,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     _resultData['location_id'] = l$location_id;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
+    final l$last_active_time = last_active_time;
+    _resultData['last_active_time'] = l$last_active_time;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$online_ordering = online_ordering;
@@ -6170,6 +6779,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$is_open = is_open;
     final l$location_id = location_id;
     final l$currency = currency;
+    final l$last_active_time = last_active_time;
     final l$image = image;
     final l$online_ordering = online_ordering;
     final l$language = language;
@@ -6188,6 +6798,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
       l$is_open,
       l$location_id,
       l$currency,
+      l$last_active_time,
       l$image,
       l$online_ordering,
       l$language,
@@ -6231,6 +6842,11 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$currency = currency;
     final lOther$currency = other.currency;
     if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$last_active_time = last_active_time;
+    final lOther$last_active_time = other.last_active_time;
+    if (l$last_active_time != lOther$last_active_time) {
       return false;
     }
     final l$image = image;
@@ -6329,6 +6945,7 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details<
     bool? is_open,
     int? location_id,
     String? currency,
+    String? last_active_time,
     String? image,
     bool? online_ordering,
     dynamic? language,
@@ -6373,6 +6990,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
     Object? is_open = _undefined,
     Object? location_id = _undefined,
     Object? currency = _undefined,
+    Object? last_active_time = _undefined,
     Object? image = _undefined,
     Object? online_ordering = _undefined,
     Object? language = _undefined,
@@ -6396,6 +7014,10 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
+        last_active_time:
+            last_active_time == _undefined || last_active_time == null
+                ? _instance.last_active_time
+                : (last_active_time as String),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -6483,6 +7105,7 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<
     bool? is_open,
     int? location_id,
     String? currency,
+    String? last_active_time,
     String? image,
     bool? online_ordering,
     dynamic? language,

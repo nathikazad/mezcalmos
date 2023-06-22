@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustItemView/components/ItemOptionCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustItemView/components/ItemViewBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/components/CustDeliveryMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -53,6 +56,7 @@ class CustItemView extends StatefulWidget {
 class _CustItemViewState extends State<CustItemView> {
   CustItemViewController viewController = CustItemViewController();
   late bool fromMealPage;
+  late int? restaurantId;
 
   @override
   void dispose() {
@@ -63,7 +67,7 @@ class _CustItemViewState extends State<CustItemView> {
   @override
   void initState() {
     mezDbgPrint("Arguments ====> ${MezRouter.bodyArguments}");
-    final int? restaurantId =
+    restaurantId =
         int.tryParse(MezRouter.urlArguments['restaurantId'].toString());
     final int? itemId =
         int.tryParse(MezRouter.urlArguments['itemId'].toString());
@@ -119,6 +123,8 @@ class _CustItemViewState extends State<CustItemView> {
                                 (int index) => Column(
                                   children: [
                                     ItemOptionCard(
+                                      isOnlineOrdering: viewController
+                                          .restaurant.value!.onlineOrdering,
                                       margin: EdgeInsets.only(bottom: 15),
                                       cartItem: viewController.cartItem,
                                       editMode: viewController.currentMode ==
@@ -130,7 +136,30 @@ class _CustItemViewState extends State<CustItemView> {
                                 ),
                               ),
                             ),
-                          _itemNotesComponent(),
+                          if (viewController.restaurant.value!.onlineOrdering)
+                            _itemNotesComponent(),
+                          if (!viewController.restaurant.value!.onlineOrdering)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustDeliveryMessageCard(
+                                  serviceProviderType:
+                                      cModels.ServiceProviderType.Restaurant,
+                                  info: viewController.restaurant.value!.info,
+                                  lastActive: viewController
+                                      .restaurant.value!.lastActive,
+                                  rating: viewController
+                                          .restaurant.value!.averageRating
+                                          ?.toDouble() ??
+                                      0.0,
+                                  reviewCount: viewController
+                                          .restaurant.value!.reviewCount ??
+                                      0,
+                                  serviceId: restaurantId!,
+                                ),
+                                CustBusinessNoOrderBanner(),
+                              ],
+                            ),
                           SizedBox(
                             height: 15.h,
                           ),

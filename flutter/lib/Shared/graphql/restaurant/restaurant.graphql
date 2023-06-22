@@ -80,7 +80,14 @@ query get_restaurant_desc_by_pk($desc_id: Int!) {
 query getOneRestaurant($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
     id
-
+    reviews_aggregate {
+      aggregate {
+        count
+        avg {
+          rating
+        }
+      }
+    }
     delivery_details_of_deliverer {
       cost_per_km
       free_delivery_km_range
@@ -97,6 +104,7 @@ query getOneRestaurant($id: Int!) {
       firebase_id
       currency
       location_id
+      last_active_time
       image
       language
       online_ordering

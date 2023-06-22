@@ -29,6 +29,9 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
   final Query$getDeliveryCompanyById$delivery_company_by_pk data =
       res.parsedData!.delivery_company_by_pk!;
   return DeliveryCompany(
+      averageRating: data.reviews_aggregate.aggregate?.avg?.rating ?? 0,
+      reviewCount: data.reviews_aggregate.aggregate?.count ?? 0,
+      lastActive: DateTime.parse(data.details!.last_active_time),
       onlineOrdering: data.details!.online_ordering,
       isOpen: data.details!.is_open ?? false,
       deliveryCost: DeliveryCost(
