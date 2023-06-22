@@ -65,6 +65,7 @@ query get_event_by_category(
   $categories2: [String!]
   $schedule_type: [String!]
   $tags: [String!]
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_event(
     where: {
@@ -77,6 +78,7 @@ query get_event_by_category(
           details: {
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering
           }
         }
       }
@@ -134,6 +136,7 @@ query get_class_by_category(
   $categories2: [String!]
   $schedule_type: [String!]
   $tags: [String!]
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_event(
     where: {
@@ -154,6 +157,7 @@ query get_class_by_category(
             }
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering
           }
         }
       }

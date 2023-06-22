@@ -6,6 +6,7 @@ query get_rental_by_category(
   $category1: String
   $categories2: [String!]
   $tags: [String!]
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_rental(
     where: {
@@ -24,6 +25,7 @@ query get_rental_by_category(
             }
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering,
           }
         }
       }
@@ -192,6 +194,7 @@ query get_home(
   $limit: Int
   $offset: Int
   $distance: Float!
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_home(
     where: {
@@ -203,6 +206,7 @@ query get_home(
           details: {
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering,
           }
         }
         available_for: { _eq: "rent" }
@@ -262,6 +266,7 @@ query get_real_estates(
   $limit: Int
   $offset: Int
   $distance: Float!
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_home(
     where: {
@@ -273,6 +278,7 @@ query get_real_estates(
           details: {
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering,
           }
         }
         available_for: { _eq: "sale" }

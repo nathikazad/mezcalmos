@@ -17,16 +17,11 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
     {required List<RentalCategory1> categories1,
     required double distance,
     required Location fromLocation,
-    bool? is_open,
     bool? online_ordering,
     int? offset,
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? is_open_exp;
-  if (is_open == true) {
-    is_open_exp = Input$Boolean_comparison_exp($_eq: true);
-  }
   Input$Boolean_comparison_exp? online_ordering_exp;
   if (online_ordering != null) {
     online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
@@ -42,7 +37,6 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
                       .map((RentalCategory1 e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  is_open: is_open_exp,
                   online_ordering: online_ordering_exp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
@@ -77,17 +71,12 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
 Future<List<BusinessCard>> get_business_by_home(
     {required double distance,
     required Location fromLocation,
-    bool? is_open,
     bool? online_ordering,
     int? offset,
     int? limit,
     required HomeAvailabilityOption? homeType,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? is_open_exp;
-  if (is_open == true) {
-    is_open_exp = Input$Boolean_comparison_exp($_eq: true);
-  }
   Input$Boolean_comparison_exp? online_ordering_exp;
   if (online_ordering != null) {
     online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
@@ -101,7 +90,6 @@ Future<List<BusinessCard>> get_business_by_home(
           variables: Variables$Query$get_business_by_home(
               distance: distance,
               homeType: homeType!.toFirebaseFormatString(),
-              is_open: is_open_exp,
               online_ordering: online_ordering_exp,
               from: Geography(
                   fromLocation.lat as double, fromLocation.lng as double),
@@ -318,16 +306,11 @@ Future<List<BusinessCard>> get_business_by_event_category1(
     required double distance,
     required Location fromLocation,
     required List<ScheduleType> scheduleType,
-    bool? is_open,
     bool? online_ordering,
     int? offset,
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? is_open_exp;
-  if (is_open == true) {
-    is_open_exp = Input$Boolean_comparison_exp($_eq: true);
-  }
   Input$Boolean_comparison_exp? online_ordering_exp;
   if (online_ordering != null) {
     online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
@@ -347,7 +330,6 @@ Future<List<BusinessCard>> get_business_by_event_category1(
                       .map((ScheduleType e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  is_open: is_open_exp,
                   online_ordering: online_ordering_exp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
@@ -381,16 +363,11 @@ Future<List<BusinessCard>> get_business_by_service_category1(
     {required List<ServiceCategory1> categories1,
     required double distance,
     required Location fromLocation,
-    bool? is_open,
     bool? online_ordering,
     int? offset,
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? is_open_exp;
-  if (is_open == true) {
-    is_open_exp = Input$Boolean_comparison_exp($_eq: true);
-  }
   Input$Boolean_comparison_exp? online_ordering_exp;
   if (online_ordering != null) {
     online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
@@ -408,7 +385,6 @@ Future<List<BusinessCard>> get_business_by_service_category1(
                           (ServiceCategory1 e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  is_open: is_open_exp,
                   online_ordering: online_ordering_exp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
@@ -442,16 +418,11 @@ Future<List<BusinessCard>> get_business_by_product_category1(
     {required List<ProductCategory1> categories1,
     required double distance,
     required Location fromLocation,
-    bool? is_open,
     bool? online_ordering,
     int? offset,
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? is_open_exp;
-  if (is_open == true) {
-    is_open_exp = Input$Boolean_comparison_exp($_eq: true);
-  }
   Input$Boolean_comparison_exp? online_ordering_exp;
   if (online_ordering != null) {
     online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
@@ -468,7 +439,6 @@ Future<List<BusinessCard>> get_business_by_product_category1(
                       .map((ProductCategory1 e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  is_open: is_open_exp,
                   online_ordering: online_ordering_exp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),

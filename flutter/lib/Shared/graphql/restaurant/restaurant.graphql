@@ -22,6 +22,7 @@ query getRestaurants($limit: Int, $offset: Int, $distance: Float!, $from: geogra
       image
       language
       is_open
+      online_ordering
       name
       location {
         gps

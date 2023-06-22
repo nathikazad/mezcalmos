@@ -8374,7 +8374,6 @@ class Variables$Query$get_business_by_rental_category1 {
     int? offset,
     int? limit,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   }) =>
       Variables$Query$get_business_by_rental_category1._({
         r'distance': distance,
@@ -8383,7 +8382,6 @@ class Variables$Query$get_business_by_rental_category1 {
         if (offset != null) r'offset': offset,
         if (limit != null) r'limit': limit,
         if (online_ordering != null) r'online_ordering': online_ordering,
-        if (is_open != null) r'is_open': is_open,
       });
 
   Variables$Query$get_business_by_rental_category1._(this._$data);
@@ -8415,13 +8413,6 @@ class Variables$Query$get_business_by_rental_category1 {
           : Input$Boolean_comparison_exp.fromJson(
               (l$online_ordering as Map<String, dynamic>));
     }
-    if (data.containsKey('is_open')) {
-      final l$is_open = data['is_open'];
-      result$data['is_open'] = l$is_open == null
-          ? null
-          : Input$Boolean_comparison_exp.fromJson(
-              (l$is_open as Map<String, dynamic>));
-    }
     return Variables$Query$get_business_by_rental_category1._(result$data);
   }
 
@@ -8434,8 +8425,6 @@ class Variables$Query$get_business_by_rental_category1 {
   int? get limit => (_$data['limit'] as int?);
   Input$Boolean_comparison_exp? get online_ordering =>
       (_$data['online_ordering'] as Input$Boolean_comparison_exp?);
-  Input$Boolean_comparison_exp? get is_open =>
-      (_$data['is_open'] as Input$Boolean_comparison_exp?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$distance = distance;
@@ -8457,10 +8446,6 @@ class Variables$Query$get_business_by_rental_category1 {
     if (_$data.containsKey('online_ordering')) {
       final l$online_ordering = online_ordering;
       result$data['online_ordering'] = l$online_ordering?.toJson();
-    }
-    if (_$data.containsKey('is_open')) {
-      final l$is_open = is_open;
-      result$data['is_open'] = l$is_open?.toJson();
     }
     return result$data;
   }
@@ -8535,14 +8520,6 @@ class Variables$Query$get_business_by_rental_category1 {
     if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
-    final l$is_open = is_open;
-    final lOther$is_open = other.is_open;
-    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
-      return false;
-    }
-    if (l$is_open != lOther$is_open) {
-      return false;
-    }
     return true;
   }
 
@@ -8554,7 +8531,6 @@ class Variables$Query$get_business_by_rental_category1 {
     final l$offset = offset;
     final l$limit = limit;
     final l$online_ordering = online_ordering;
-    final l$is_open = is_open;
     return Object.hashAll([
       l$distance,
       l$from,
@@ -8566,7 +8542,6 @@ class Variables$Query$get_business_by_rental_category1 {
       _$data.containsKey('offset') ? l$offset : const {},
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('online_ordering') ? l$online_ordering : const {},
-      _$data.containsKey('is_open') ? l$is_open : const {},
     ]);
   }
 }
@@ -8588,7 +8563,6 @@ abstract class CopyWith$Variables$Query$get_business_by_rental_category1<TRes> {
     int? offset,
     int? limit,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   });
 }
 
@@ -8612,7 +8586,6 @@ class _CopyWithImpl$Variables$Query$get_business_by_rental_category1<TRes>
     Object? offset = _undefined,
     Object? limit = _undefined,
     Object? online_ordering = _undefined,
-    Object? is_open = _undefined,
   }) =>
       _then(Variables$Query$get_business_by_rental_category1._({
         ..._instance._$data,
@@ -8625,8 +8598,6 @@ class _CopyWithImpl$Variables$Query$get_business_by_rental_category1<TRes>
         if (limit != _undefined) 'limit': (limit as int?),
         if (online_ordering != _undefined)
           'online_ordering': (online_ordering as Input$Boolean_comparison_exp?),
-        if (is_open != _undefined)
-          'is_open': (is_open as Input$Boolean_comparison_exp?),
       }));
 }
 
@@ -8643,7 +8614,6 @@ class _CopyWithStubImpl$Variables$Query$get_business_by_rental_category1<TRes>
     int? offset,
     int? limit,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   }) =>
       _res;
 }
@@ -8874,15 +8844,6 @@ const documentNodeQueryget_business_by_rental_category1 =
         defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
         directives: [],
       ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'is_open')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Boolean_comparison_exp'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
-        directives: [],
-      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -8928,10 +8889,6 @@ const documentNodeQueryget_business_by_rental_category1 =
                         name: NameNode(value: 'online_ordering'),
                         value: VariableNode(
                             name: NameNode(value: 'online_ordering')),
-                      ),
-                      ObjectFieldNode(
-                        name: NameNode(value: 'is_open'),
-                        value: VariableNode(name: NameNode(value: 'is_open')),
                       ),
                       ObjectFieldNode(
                         name: NameNode(value: 'approved'),
@@ -10454,7 +10411,6 @@ class Variables$Query$get_business_by_home {
     int? limit,
     required String homeType,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   }) =>
       Variables$Query$get_business_by_home._({
         r'distance': distance,
@@ -10463,7 +10419,6 @@ class Variables$Query$get_business_by_home {
         if (limit != null) r'limit': limit,
         r'homeType': homeType,
         if (online_ordering != null) r'online_ordering': online_ordering,
-        if (is_open != null) r'is_open': is_open,
       });
 
   Variables$Query$get_business_by_home._(this._$data);
@@ -10492,13 +10447,6 @@ class Variables$Query$get_business_by_home {
           : Input$Boolean_comparison_exp.fromJson(
               (l$online_ordering as Map<String, dynamic>));
     }
-    if (data.containsKey('is_open')) {
-      final l$is_open = data['is_open'];
-      result$data['is_open'] = l$is_open == null
-          ? null
-          : Input$Boolean_comparison_exp.fromJson(
-              (l$is_open as Map<String, dynamic>));
-    }
     return Variables$Query$get_business_by_home._(result$data);
   }
 
@@ -10511,8 +10459,6 @@ class Variables$Query$get_business_by_home {
   String get homeType => (_$data['homeType'] as String);
   Input$Boolean_comparison_exp? get online_ordering =>
       (_$data['online_ordering'] as Input$Boolean_comparison_exp?);
-  Input$Boolean_comparison_exp? get is_open =>
-      (_$data['is_open'] as Input$Boolean_comparison_exp?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$distance = distance;
@@ -10532,10 +10478,6 @@ class Variables$Query$get_business_by_home {
     if (_$data.containsKey('online_ordering')) {
       final l$online_ordering = online_ordering;
       result$data['online_ordering'] = l$online_ordering?.toJson();
-    }
-    if (_$data.containsKey('is_open')) {
-      final l$is_open = is_open;
-      result$data['is_open'] = l$is_open?.toJson();
     }
     return result$data;
   }
@@ -10595,14 +10537,6 @@ class Variables$Query$get_business_by_home {
     if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
-    final l$is_open = is_open;
-    final lOther$is_open = other.is_open;
-    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
-      return false;
-    }
-    if (l$is_open != lOther$is_open) {
-      return false;
-    }
     return true;
   }
 
@@ -10614,7 +10548,6 @@ class Variables$Query$get_business_by_home {
     final l$limit = limit;
     final l$homeType = homeType;
     final l$online_ordering = online_ordering;
-    final l$is_open = is_open;
     return Object.hashAll([
       l$distance,
       l$from,
@@ -10622,7 +10555,6 @@ class Variables$Query$get_business_by_home {
       _$data.containsKey('limit') ? l$limit : const {},
       l$homeType,
       _$data.containsKey('online_ordering') ? l$online_ordering : const {},
-      _$data.containsKey('is_open') ? l$is_open : const {},
     ]);
   }
 }
@@ -10643,7 +10575,6 @@ abstract class CopyWith$Variables$Query$get_business_by_home<TRes> {
     int? limit,
     String? homeType,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   });
 }
 
@@ -10667,7 +10598,6 @@ class _CopyWithImpl$Variables$Query$get_business_by_home<TRes>
     Object? limit = _undefined,
     Object? homeType = _undefined,
     Object? online_ordering = _undefined,
-    Object? is_open = _undefined,
   }) =>
       _then(Variables$Query$get_business_by_home._({
         ..._instance._$data,
@@ -10680,8 +10610,6 @@ class _CopyWithImpl$Variables$Query$get_business_by_home<TRes>
           'homeType': (homeType as String),
         if (online_ordering != _undefined)
           'online_ordering': (online_ordering as Input$Boolean_comparison_exp?),
-        if (is_open != _undefined)
-          'is_open': (is_open as Input$Boolean_comparison_exp?),
       }));
 }
 
@@ -10698,7 +10626,6 @@ class _CopyWithStubImpl$Variables$Query$get_business_by_home<TRes>
     int? limit,
     String? homeType,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   }) =>
       _res;
 }
@@ -10919,15 +10846,6 @@ const documentNodeQueryget_business_by_home = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
         directives: [],
       ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'is_open')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Boolean_comparison_exp'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
-        directives: [],
-      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -10969,10 +10887,6 @@ const documentNodeQueryget_business_by_home = DocumentNode(definitions: [
                         name: NameNode(value: 'online_ordering'),
                         value: VariableNode(
                             name: NameNode(value: 'online_ordering')),
-                      ),
-                      ObjectFieldNode(
-                        name: NameNode(value: 'is_open'),
-                        value: VariableNode(name: NameNode(value: 'is_open')),
                       ),
                     ]),
                   ),
@@ -12468,7 +12382,6 @@ class Variables$Query$get_business_by_event_category1 {
     List<String>? categories1,
     List<String>? schedule_type,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   }) =>
       Variables$Query$get_business_by_event_category1._({
         r'distance': distance,
@@ -12478,7 +12391,6 @@ class Variables$Query$get_business_by_event_category1 {
         if (categories1 != null) r'categories1': categories1,
         if (schedule_type != null) r'schedule_type': schedule_type,
         if (online_ordering != null) r'online_ordering': online_ordering,
-        if (is_open != null) r'is_open': is_open,
       });
 
   Variables$Query$get_business_by_event_category1._(this._$data);
@@ -12516,13 +12428,6 @@ class Variables$Query$get_business_by_event_category1 {
           : Input$Boolean_comparison_exp.fromJson(
               (l$online_ordering as Map<String, dynamic>));
     }
-    if (data.containsKey('is_open')) {
-      final l$is_open = data['is_open'];
-      result$data['is_open'] = l$is_open == null
-          ? null
-          : Input$Boolean_comparison_exp.fromJson(
-              (l$is_open as Map<String, dynamic>));
-    }
     return Variables$Query$get_business_by_event_category1._(result$data);
   }
 
@@ -12536,8 +12441,6 @@ class Variables$Query$get_business_by_event_category1 {
   List<String>? get schedule_type => (_$data['schedule_type'] as List<String>?);
   Input$Boolean_comparison_exp? get online_ordering =>
       (_$data['online_ordering'] as Input$Boolean_comparison_exp?);
-  Input$Boolean_comparison_exp? get is_open =>
-      (_$data['is_open'] as Input$Boolean_comparison_exp?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$distance = distance;
@@ -12563,10 +12466,6 @@ class Variables$Query$get_business_by_event_category1 {
     if (_$data.containsKey('online_ordering')) {
       final l$online_ordering = online_ordering;
       result$data['online_ordering'] = l$online_ordering?.toJson();
-    }
-    if (_$data.containsKey('is_open')) {
-      final l$is_open = is_open;
-      result$data['is_open'] = l$is_open?.toJson();
     }
     return result$data;
   }
@@ -12661,14 +12560,6 @@ class Variables$Query$get_business_by_event_category1 {
     if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
-    final l$is_open = is_open;
-    final lOther$is_open = other.is_open;
-    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
-      return false;
-    }
-    if (l$is_open != lOther$is_open) {
-      return false;
-    }
     return true;
   }
 
@@ -12681,7 +12572,6 @@ class Variables$Query$get_business_by_event_category1 {
     final l$categories1 = categories1;
     final l$schedule_type = schedule_type;
     final l$online_ordering = online_ordering;
-    final l$is_open = is_open;
     return Object.hashAll([
       l$distance,
       l$from,
@@ -12698,7 +12588,6 @@ class Variables$Query$get_business_by_event_category1 {
               : Object.hashAll(l$schedule_type.map((v) => v))
           : const {},
       _$data.containsKey('online_ordering') ? l$online_ordering : const {},
-      _$data.containsKey('is_open') ? l$is_open : const {},
     ]);
   }
 }
@@ -12721,7 +12610,6 @@ abstract class CopyWith$Variables$Query$get_business_by_event_category1<TRes> {
     List<String>? categories1,
     List<String>? schedule_type,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   });
 }
 
@@ -12746,7 +12634,6 @@ class _CopyWithImpl$Variables$Query$get_business_by_event_category1<TRes>
     Object? categories1 = _undefined,
     Object? schedule_type = _undefined,
     Object? online_ordering = _undefined,
-    Object? is_open = _undefined,
   }) =>
       _then(Variables$Query$get_business_by_event_category1._({
         ..._instance._$data,
@@ -12761,8 +12648,6 @@ class _CopyWithImpl$Variables$Query$get_business_by_event_category1<TRes>
           'schedule_type': (schedule_type as List<String>?),
         if (online_ordering != _undefined)
           'online_ordering': (online_ordering as Input$Boolean_comparison_exp?),
-        if (is_open != _undefined)
-          'is_open': (is_open as Input$Boolean_comparison_exp?),
       }));
 }
 
@@ -12780,7 +12665,6 @@ class _CopyWithStubImpl$Variables$Query$get_business_by_event_category1<TRes>
     List<String>? categories1,
     List<String>? schedule_type,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   }) =>
       _res;
 }
@@ -13023,15 +12907,6 @@ const documentNodeQueryget_business_by_event_category1 =
         defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
         directives: [],
       ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'is_open')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Boolean_comparison_exp'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
-        directives: [],
-      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -13098,10 +12973,6 @@ const documentNodeQueryget_business_by_event_category1 =
                         name: NameNode(value: 'online_ordering'),
                         value: VariableNode(
                             name: NameNode(value: 'online_ordering')),
-                      ),
-                      ObjectFieldNode(
-                        name: NameNode(value: 'is_open'),
-                        value: VariableNode(name: NameNode(value: 'is_open')),
                       ),
                     ]),
                   ),
@@ -14375,7 +14246,6 @@ class Variables$Query$get_business_by_service_category1 {
     int? offset,
     int? limit,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   }) =>
       Variables$Query$get_business_by_service_category1._({
         r'distance': distance,
@@ -14384,7 +14254,6 @@ class Variables$Query$get_business_by_service_category1 {
         if (offset != null) r'offset': offset,
         if (limit != null) r'limit': limit,
         if (online_ordering != null) r'online_ordering': online_ordering,
-        if (is_open != null) r'is_open': is_open,
       });
 
   Variables$Query$get_business_by_service_category1._(this._$data);
@@ -14416,13 +14285,6 @@ class Variables$Query$get_business_by_service_category1 {
           : Input$Boolean_comparison_exp.fromJson(
               (l$online_ordering as Map<String, dynamic>));
     }
-    if (data.containsKey('is_open')) {
-      final l$is_open = data['is_open'];
-      result$data['is_open'] = l$is_open == null
-          ? null
-          : Input$Boolean_comparison_exp.fromJson(
-              (l$is_open as Map<String, dynamic>));
-    }
     return Variables$Query$get_business_by_service_category1._(result$data);
   }
 
@@ -14435,8 +14297,6 @@ class Variables$Query$get_business_by_service_category1 {
   int? get limit => (_$data['limit'] as int?);
   Input$Boolean_comparison_exp? get online_ordering =>
       (_$data['online_ordering'] as Input$Boolean_comparison_exp?);
-  Input$Boolean_comparison_exp? get is_open =>
-      (_$data['is_open'] as Input$Boolean_comparison_exp?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$distance = distance;
@@ -14458,10 +14318,6 @@ class Variables$Query$get_business_by_service_category1 {
     if (_$data.containsKey('online_ordering')) {
       final l$online_ordering = online_ordering;
       result$data['online_ordering'] = l$online_ordering?.toJson();
-    }
-    if (_$data.containsKey('is_open')) {
-      final l$is_open = is_open;
-      result$data['is_open'] = l$is_open?.toJson();
     }
     return result$data;
   }
@@ -14537,14 +14393,6 @@ class Variables$Query$get_business_by_service_category1 {
     if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
-    final l$is_open = is_open;
-    final lOther$is_open = other.is_open;
-    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
-      return false;
-    }
-    if (l$is_open != lOther$is_open) {
-      return false;
-    }
     return true;
   }
 
@@ -14556,7 +14404,6 @@ class Variables$Query$get_business_by_service_category1 {
     final l$offset = offset;
     final l$limit = limit;
     final l$online_ordering = online_ordering;
-    final l$is_open = is_open;
     return Object.hashAll([
       l$distance,
       l$from,
@@ -14568,7 +14415,6 @@ class Variables$Query$get_business_by_service_category1 {
       _$data.containsKey('offset') ? l$offset : const {},
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('online_ordering') ? l$online_ordering : const {},
-      _$data.containsKey('is_open') ? l$is_open : const {},
     ]);
   }
 }
@@ -14591,7 +14437,6 @@ abstract class CopyWith$Variables$Query$get_business_by_service_category1<
     int? offset,
     int? limit,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   });
 }
 
@@ -14616,7 +14461,6 @@ class _CopyWithImpl$Variables$Query$get_business_by_service_category1<TRes>
     Object? offset = _undefined,
     Object? limit = _undefined,
     Object? online_ordering = _undefined,
-    Object? is_open = _undefined,
   }) =>
       _then(Variables$Query$get_business_by_service_category1._({
         ..._instance._$data,
@@ -14629,8 +14473,6 @@ class _CopyWithImpl$Variables$Query$get_business_by_service_category1<TRes>
         if (limit != _undefined) 'limit': (limit as int?),
         if (online_ordering != _undefined)
           'online_ordering': (online_ordering as Input$Boolean_comparison_exp?),
-        if (is_open != _undefined)
-          'is_open': (is_open as Input$Boolean_comparison_exp?),
       }));
 }
 
@@ -14649,7 +14491,6 @@ class _CopyWithStubImpl$Variables$Query$get_business_by_service_category1<TRes>
     int? offset,
     int? limit,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   }) =>
       _res;
 }
@@ -14879,15 +14720,6 @@ const documentNodeQueryget_business_by_service_category1 =
         defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
         directives: [],
       ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'is_open')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Boolean_comparison_exp'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
-        directives: [],
-      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -14954,10 +14786,6 @@ const documentNodeQueryget_business_by_service_category1 =
                         name: NameNode(value: 'online_ordering'),
                         value: VariableNode(
                             name: NameNode(value: 'online_ordering')),
-                      ),
-                      ObjectFieldNode(
-                        name: NameNode(value: 'is_open'),
-                        value: VariableNode(name: NameNode(value: 'is_open')),
                       ),
                     ]),
                   ),
@@ -16226,7 +16054,6 @@ class Variables$Query$get_business_by_product_category1 {
     int? offset,
     int? limit,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   }) =>
       Variables$Query$get_business_by_product_category1._({
         r'distance': distance,
@@ -16235,7 +16062,6 @@ class Variables$Query$get_business_by_product_category1 {
         if (offset != null) r'offset': offset,
         if (limit != null) r'limit': limit,
         if (online_ordering != null) r'online_ordering': online_ordering,
-        if (is_open != null) r'is_open': is_open,
       });
 
   Variables$Query$get_business_by_product_category1._(this._$data);
@@ -16267,13 +16093,6 @@ class Variables$Query$get_business_by_product_category1 {
           : Input$Boolean_comparison_exp.fromJson(
               (l$online_ordering as Map<String, dynamic>));
     }
-    if (data.containsKey('is_open')) {
-      final l$is_open = data['is_open'];
-      result$data['is_open'] = l$is_open == null
-          ? null
-          : Input$Boolean_comparison_exp.fromJson(
-              (l$is_open as Map<String, dynamic>));
-    }
     return Variables$Query$get_business_by_product_category1._(result$data);
   }
 
@@ -16286,8 +16105,6 @@ class Variables$Query$get_business_by_product_category1 {
   int? get limit => (_$data['limit'] as int?);
   Input$Boolean_comparison_exp? get online_ordering =>
       (_$data['online_ordering'] as Input$Boolean_comparison_exp?);
-  Input$Boolean_comparison_exp? get is_open =>
-      (_$data['is_open'] as Input$Boolean_comparison_exp?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$distance = distance;
@@ -16309,10 +16126,6 @@ class Variables$Query$get_business_by_product_category1 {
     if (_$data.containsKey('online_ordering')) {
       final l$online_ordering = online_ordering;
       result$data['online_ordering'] = l$online_ordering?.toJson();
-    }
-    if (_$data.containsKey('is_open')) {
-      final l$is_open = is_open;
-      result$data['is_open'] = l$is_open?.toJson();
     }
     return result$data;
   }
@@ -16388,14 +16201,6 @@ class Variables$Query$get_business_by_product_category1 {
     if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
-    final l$is_open = is_open;
-    final lOther$is_open = other.is_open;
-    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
-      return false;
-    }
-    if (l$is_open != lOther$is_open) {
-      return false;
-    }
     return true;
   }
 
@@ -16407,7 +16212,6 @@ class Variables$Query$get_business_by_product_category1 {
     final l$offset = offset;
     final l$limit = limit;
     final l$online_ordering = online_ordering;
-    final l$is_open = is_open;
     return Object.hashAll([
       l$distance,
       l$from,
@@ -16419,7 +16223,6 @@ class Variables$Query$get_business_by_product_category1 {
       _$data.containsKey('offset') ? l$offset : const {},
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('online_ordering') ? l$online_ordering : const {},
-      _$data.containsKey('is_open') ? l$is_open : const {},
     ]);
   }
 }
@@ -16442,7 +16245,6 @@ abstract class CopyWith$Variables$Query$get_business_by_product_category1<
     int? offset,
     int? limit,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   });
 }
 
@@ -16467,7 +16269,6 @@ class _CopyWithImpl$Variables$Query$get_business_by_product_category1<TRes>
     Object? offset = _undefined,
     Object? limit = _undefined,
     Object? online_ordering = _undefined,
-    Object? is_open = _undefined,
   }) =>
       _then(Variables$Query$get_business_by_product_category1._({
         ..._instance._$data,
@@ -16480,8 +16281,6 @@ class _CopyWithImpl$Variables$Query$get_business_by_product_category1<TRes>
         if (limit != _undefined) 'limit': (limit as int?),
         if (online_ordering != _undefined)
           'online_ordering': (online_ordering as Input$Boolean_comparison_exp?),
-        if (is_open != _undefined)
-          'is_open': (is_open as Input$Boolean_comparison_exp?),
       }));
 }
 
@@ -16500,7 +16299,6 @@ class _CopyWithStubImpl$Variables$Query$get_business_by_product_category1<TRes>
     int? offset,
     int? limit,
     Input$Boolean_comparison_exp? online_ordering,
-    Input$Boolean_comparison_exp? is_open,
   }) =>
       _res;
 }
@@ -16730,15 +16528,6 @@ const documentNodeQueryget_business_by_product_category1 =
         defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
         directives: [],
       ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'is_open')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Boolean_comparison_exp'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
-        directives: [],
-      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -16805,10 +16594,6 @@ const documentNodeQueryget_business_by_product_category1 =
                         name: NameNode(value: 'online_ordering'),
                         value: VariableNode(
                             name: NameNode(value: 'online_ordering')),
-                      ),
-                      ObjectFieldNode(
-                        name: NameNode(value: 'is_open'),
-                        value: VariableNode(name: NameNode(value: 'is_open')),
                       ),
                     ]),
                   ),
