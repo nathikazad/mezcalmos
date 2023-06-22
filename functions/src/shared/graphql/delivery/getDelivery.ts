@@ -122,7 +122,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
   return delivery;
 }
 
-export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
+export async function getDeliveryOrdersForSupervisor(): Promise<DeliveryOrder[]> {
   let chain = getHasura();
 
   let response = await chain.query({
@@ -130,6 +130,18 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       where: {
         service_provider_type: {
           _eq: DeliveryServiceProviderType.DeliveryCompany,
+        },
+        delivery_driver_id: {
+          _is_null: true,
+        },
+        status: {
+          _eq: DeliveryOrderStatus.OrderReceived
+        },
+        notified_drivers: {
+          _is_null: false
+        },
+        order_time: {
+          _gte: new Date(new Date().getTime() - 1000 * 60).toISOString()
         }
       }
     }, {
