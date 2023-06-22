@@ -2999,6 +2999,7 @@ class Variables$Query$get_product_by_category {
     int? offset,
     List<String>? categories2,
     List<String>? tags,
+    Input$Boolean_comparison_exp? online_ordering,
   }) =>
       Variables$Query$get_product_by_category._({
         if (categories1 != null) r'categories1': categories1,
@@ -3008,6 +3009,7 @@ class Variables$Query$get_product_by_category {
         if (offset != null) r'offset': offset,
         if (categories2 != null) r'categories2': categories2,
         if (tags != null) r'tags': tags,
+        if (online_ordering != null) r'online_ordering': online_ordering,
       });
 
   Variables$Query$get_product_by_category._(this._$data);
@@ -3042,6 +3044,13 @@ class Variables$Query$get_product_by_category {
       result$data['tags'] =
           (l$tags as List<dynamic>?)?.map((e) => (e as String)).toList();
     }
+    if (data.containsKey('online_ordering')) {
+      final l$online_ordering = data['online_ordering'];
+      result$data['online_ordering'] = l$online_ordering == null
+          ? null
+          : Input$Boolean_comparison_exp.fromJson(
+              (l$online_ordering as Map<String, dynamic>));
+    }
     return Variables$Query$get_product_by_category._(result$data);
   }
 
@@ -3054,6 +3063,8 @@ class Variables$Query$get_product_by_category {
   int? get offset => (_$data['offset'] as int?);
   List<String>? get categories2 => (_$data['categories2'] as List<String>?);
   List<String>? get tags => (_$data['tags'] as List<String>?);
+  Input$Boolean_comparison_exp? get online_ordering =>
+      (_$data['online_ordering'] as Input$Boolean_comparison_exp?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('categories1')) {
@@ -3079,6 +3090,10 @@ class Variables$Query$get_product_by_category {
     if (_$data.containsKey('tags')) {
       final l$tags = tags;
       result$data['tags'] = l$tags?.map((e) => e).toList();
+    }
+    if (_$data.containsKey('online_ordering')) {
+      final l$online_ordering = online_ordering;
+      result$data['online_ordering'] = l$online_ordering?.toJson();
     }
     return result$data;
   }
@@ -3183,6 +3198,15 @@ class Variables$Query$get_product_by_category {
     } else if (l$tags != lOther$tags) {
       return false;
     }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (_$data.containsKey('online_ordering') !=
+        other._$data.containsKey('online_ordering')) {
+      return false;
+    }
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
     return true;
   }
 
@@ -3195,6 +3219,7 @@ class Variables$Query$get_product_by_category {
     final l$offset = offset;
     final l$categories2 = categories2;
     final l$tags = tags;
+    final l$online_ordering = online_ordering;
     return Object.hashAll([
       _$data.containsKey('categories1')
           ? l$categories1 == null
@@ -3215,6 +3240,7 @@ class Variables$Query$get_product_by_category {
               ? null
               : Object.hashAll(l$tags.map((v) => v))
           : const {},
+      _$data.containsKey('online_ordering') ? l$online_ordering : const {},
     ]);
   }
 }
@@ -3236,6 +3262,7 @@ abstract class CopyWith$Variables$Query$get_product_by_category<TRes> {
     int? offset,
     List<String>? categories2,
     List<String>? tags,
+    Input$Boolean_comparison_exp? online_ordering,
   });
 }
 
@@ -3260,6 +3287,7 @@ class _CopyWithImpl$Variables$Query$get_product_by_category<TRes>
     Object? offset = _undefined,
     Object? categories2 = _undefined,
     Object? tags = _undefined,
+    Object? online_ordering = _undefined,
   }) =>
       _then(Variables$Query$get_product_by_category._({
         ..._instance._$data,
@@ -3273,6 +3301,8 @@ class _CopyWithImpl$Variables$Query$get_product_by_category<TRes>
         if (categories2 != _undefined)
           'categories2': (categories2 as List<String>?),
         if (tags != _undefined) 'tags': (tags as List<String>?),
+        if (online_ordering != _undefined)
+          'online_ordering': (online_ordering as Input$Boolean_comparison_exp?),
       }));
 }
 
@@ -3290,6 +3320,7 @@ class _CopyWithStubImpl$Variables$Query$get_product_by_category<TRes>
     int? offset,
     List<String>? categories2,
     List<String>? tags,
+    Input$Boolean_comparison_exp? online_ordering,
   }) =>
       _res;
 }
@@ -3528,6 +3559,15 @@ const documentNodeQueryget_product_by_category = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'online_ordering')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean_comparison_exp'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -3632,6 +3672,11 @@ const documentNodeQueryget_product_by_category = DocumentNode(definitions: [
                                 ),
                               )
                             ]),
+                          ),
+                          ObjectFieldNode(
+                            name: NameNode(value: 'online_ordering'),
+                            value: VariableNode(
+                                name: NameNode(value: 'online_ordering')),
                           ),
                         ]),
                       )

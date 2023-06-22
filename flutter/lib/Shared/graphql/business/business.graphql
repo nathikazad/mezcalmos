@@ -163,7 +163,6 @@ query get_business_by_rental_category1(
   $offset: Int
   $limit: Int,
   $online_ordering: Boolean_comparison_exp = {},
-  $is_open: Boolean_comparison_exp = {}
 ) {
   business_business(
     where: {
@@ -173,7 +172,6 @@ query get_business_by_rental_category1(
             gps: { _st_d_within: { distance: $distance, from: $from } }
           },
           online_ordering: $online_ordering,
-          is_open: $is_open,
           approved: { _eq: true },
           open_status: { _neq: "closedIndefinitely" },
         }
@@ -215,7 +213,6 @@ query get_business_by_home(
   $limit: Int
   $homeType: String!
   $online_ordering: Boolean_comparison_exp = {},
-  $is_open: Boolean_comparison_exp = {}
 ) {
   business_business(
     where: {
@@ -224,7 +221,6 @@ query get_business_by_home(
           approved: { _eq: true }
           open_status: { _neq: "closedIndefinitely" }
           online_ordering: $online_ordering,
-          is_open: $is_open,
         }
         home: {
           _and: {
@@ -273,7 +269,6 @@ query get_business_by_event_category1(
   $categories1: [String!]
   $schedule_type: [String!]
   $online_ordering: Boolean_comparison_exp = {},
-  $is_open: Boolean_comparison_exp = {}
 ) {
   business_business(
     where: {
@@ -285,7 +280,6 @@ query get_business_by_event_category1(
           approved: { _eq: true }
           open_status: { _neq: "closedIndefinitely" }
           online_ordering: $online_ordering,
-          is_open: $is_open,
         }
         events: {
           details: { category1: { _in: $categories1 } }
@@ -324,7 +318,6 @@ query get_business_by_service_category1(
   $offset: Int
   $limit: Int
   $online_ordering: Boolean_comparison_exp = {},
-  $is_open: Boolean_comparison_exp = {}
 ) {
   business_business(
     where: {
@@ -336,7 +329,6 @@ query get_business_by_service_category1(
           approved: { _eq: true }
           open_status: { _neq: "closedIndefinitely" }
           online_ordering: $online_ordering,
-          is_open: $is_open,
         }
         services: { details: { category1: { _in: $categories1 } } }
       }
@@ -372,7 +364,6 @@ query get_business_by_product_category1(
   $offset: Int
   $limit: Int
   $online_ordering: Boolean_comparison_exp = {},
-  $is_open: Boolean_comparison_exp = {}
 ) {
   business_business(
     where: {
@@ -384,7 +375,6 @@ query get_business_by_product_category1(
           approved: { _eq: true }
           open_status: { _neq: "closedIndefinitely" }
           online_ordering: $online_ordering,
-          is_open: $is_open,
         }
         products: { details: { category1: { _in: $categories1 } } }
       }

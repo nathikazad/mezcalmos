@@ -18,10 +18,15 @@ Future<List<ServiceCard>> get_service_by_category(
     required Location fromLocation,
     List<String>? categories2,
     List<String>? tags,
+    bool? onlineOrdering,
     int? offset,
     int? limit,
     required bool withCache}) async {
   final List<ServiceCard> _services = <ServiceCard>[];
+  Input$Boolean_comparison_exp? onlineOrderingExp;
+  if (onlineOrdering != null) {
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: onlineOrdering);
+  }
 
   final QueryResult<Query$get_service_by_category> response = await _db
       .graphQLClient
@@ -37,6 +42,7 @@ Future<List<ServiceCard>> get_service_by_category(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               categories2: categories2 ?? ["uncategorized"],
               tags: tags ?? [],
+              online_ordering: onlineOrderingExp,
               offset: offset,
               limit: limit)));
 

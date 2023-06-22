@@ -326,15 +326,10 @@ Future<LaundryCostLineItem?> update_laundry_category(
 Future<List<Laundry>> get_laundries(
     {required Location fromLocation,
     required double distance,
-    bool? is_open,
     bool? online_ordering,
     int? limit,
     int? offset,
     bool withCache = true}) async {
-  Input$Boolean_comparison_exp? is_open_exp;
-  if (is_open == true) {
-    is_open_exp = Input$Boolean_comparison_exp($_eq: true);
-  }
   Input$Boolean_comparison_exp? online_ordering_exp;
   if (online_ordering != null) {
     online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
@@ -345,7 +340,6 @@ Future<List<Laundry>> get_laundries(
             distance: distance,
             from: Geography(
                 fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-            is_open: is_open_exp,
             online_ordering: online_ordering_exp,
             limit: limit,
             offset: offset,
@@ -379,7 +373,7 @@ Future<List<Laundry>> get_laundries(
     // }
 
     return Laundry(
-        onlineOrdering: data.details!.online_ordering ?? false,
+        onlineOrdering: data.details!.online_ordering,
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         rate: data.reviews_aggregate.aggregate?.avg?.rating,

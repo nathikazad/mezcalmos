@@ -1,5 +1,5 @@
-query getLaundries($from: geography!, $distance: Float!, $limit: Int, $offset: Int, $is_open: Boolean_comparison_exp = {}, $online_ordering: Boolean_comparison_exp = {}) {
-  laundry_store(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, is_open: $is_open, online_ordering: $online_ordering}}, limit: $limit, offset: $offset, order_by: {details: {referral_points: desc}}) {
+query getLaundries($from: geography!, $distance: Float!, $limit: Int, $offset: Int, $online_ordering: Boolean_comparison_exp = {}) {
+  laundry_store(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, online_ordering: $online_ordering}}, limit: $limit, offset: $offset, order_by: {details: {referral_points: desc}}) {
     id
     reviews_aggregate {
       aggregate {

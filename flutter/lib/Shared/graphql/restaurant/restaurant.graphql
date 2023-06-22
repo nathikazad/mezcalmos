@@ -42,6 +42,7 @@ query getRestaurants(
       image
       language
       is_open
+      online_ordering
       name
       online_ordering
       location {

@@ -10,7 +10,6 @@ class Variables$Query$getLaundries {
     required double distance,
     int? limit,
     int? offset,
-    Input$Boolean_comparison_exp? is_open,
     Input$Boolean_comparison_exp? online_ordering,
   }) =>
       Variables$Query$getLaundries._({
@@ -18,7 +17,6 @@ class Variables$Query$getLaundries {
         r'distance': distance,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
-        if (is_open != null) r'is_open': is_open,
         if (online_ordering != null) r'online_ordering': online_ordering,
       });
 
@@ -38,13 +36,6 @@ class Variables$Query$getLaundries {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
     }
-    if (data.containsKey('is_open')) {
-      final l$is_open = data['is_open'];
-      result$data['is_open'] = l$is_open == null
-          ? null
-          : Input$Boolean_comparison_exp.fromJson(
-              (l$is_open as Map<String, dynamic>));
-    }
     if (data.containsKey('online_ordering')) {
       final l$online_ordering = data['online_ordering'];
       result$data['online_ordering'] = l$online_ordering == null
@@ -61,8 +52,6 @@ class Variables$Query$getLaundries {
   double get distance => (_$data['distance'] as double);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
-  Input$Boolean_comparison_exp? get is_open =>
-      (_$data['is_open'] as Input$Boolean_comparison_exp?);
   Input$Boolean_comparison_exp? get online_ordering =>
       (_$data['online_ordering'] as Input$Boolean_comparison_exp?);
   Map<String, dynamic> toJson() {
@@ -78,10 +67,6 @@ class Variables$Query$getLaundries {
     if (_$data.containsKey('offset')) {
       final l$offset = offset;
       result$data['offset'] = l$offset;
-    }
-    if (_$data.containsKey('is_open')) {
-      final l$is_open = is_open;
-      result$data['is_open'] = l$is_open?.toJson();
     }
     if (_$data.containsKey('online_ordering')) {
       final l$online_ordering = online_ordering;
@@ -130,14 +115,6 @@ class Variables$Query$getLaundries {
     if (l$offset != lOther$offset) {
       return false;
     }
-    final l$is_open = is_open;
-    final lOther$is_open = other.is_open;
-    if (_$data.containsKey('is_open') != other._$data.containsKey('is_open')) {
-      return false;
-    }
-    if (l$is_open != lOther$is_open) {
-      return false;
-    }
     final l$online_ordering = online_ordering;
     final lOther$online_ordering = other.online_ordering;
     if (_$data.containsKey('online_ordering') !=
@@ -156,14 +133,12 @@ class Variables$Query$getLaundries {
     final l$distance = distance;
     final l$limit = limit;
     final l$offset = offset;
-    final l$is_open = is_open;
     final l$online_ordering = online_ordering;
     return Object.hashAll([
       l$from,
       l$distance,
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
-      _$data.containsKey('is_open') ? l$is_open : const {},
       _$data.containsKey('online_ordering') ? l$online_ordering : const {},
     ]);
   }
@@ -183,7 +158,6 @@ abstract class CopyWith$Variables$Query$getLaundries<TRes> {
     double? distance,
     int? limit,
     int? offset,
-    Input$Boolean_comparison_exp? is_open,
     Input$Boolean_comparison_exp? online_ordering,
   });
 }
@@ -206,7 +180,6 @@ class _CopyWithImpl$Variables$Query$getLaundries<TRes>
     Object? distance = _undefined,
     Object? limit = _undefined,
     Object? offset = _undefined,
-    Object? is_open = _undefined,
     Object? online_ordering = _undefined,
   }) =>
       _then(Variables$Query$getLaundries._({
@@ -216,8 +189,6 @@ class _CopyWithImpl$Variables$Query$getLaundries<TRes>
           'distance': (distance as double),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
-        if (is_open != _undefined)
-          'is_open': (is_open as Input$Boolean_comparison_exp?),
         if (online_ordering != _undefined)
           'online_ordering': (online_ordering as Input$Boolean_comparison_exp?),
       }));
@@ -234,7 +205,6 @@ class _CopyWithStubImpl$Variables$Query$getLaundries<TRes>
     double? distance,
     int? limit,
     int? offset,
-    Input$Boolean_comparison_exp? is_open,
     Input$Boolean_comparison_exp? online_ordering,
   }) =>
       _res;
@@ -435,15 +405,6 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
         directives: [],
       ),
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'is_open')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Boolean_comparison_exp'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
-        directives: [],
-      ),
-      VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'online_ordering')),
         type: NamedTypeNode(
           name: NameNode(value: 'Boolean_comparison_exp'),
@@ -489,10 +450,6 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
                         ]),
                       )
                     ]),
-                  ),
-                  ObjectFieldNode(
-                    name: NameNode(value: 'is_open'),
-                    value: VariableNode(name: NameNode(value: 'is_open')),
                   ),
                   ObjectFieldNode(
                     name: NameNode(value: 'online_ordering'),

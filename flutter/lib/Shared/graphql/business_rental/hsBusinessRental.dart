@@ -18,10 +18,15 @@ Future<List<RentalCard>> get_rental_by_category(
     required Location fromLocation,
     List<RentalCategory2>? categories2,
     List<String>? tags,
+    bool? online_ordering,
     int? offset,
     int? limit,
     required bool withCache}) async {
   final List<RentalCard> _rentals = <RentalCard>[];
+  Input$Boolean_comparison_exp? online_ordering_exp;
+  if (online_ordering != null) {
+    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+  }
 
   final QueryResult<Query$get_rental_by_category> response = await _db
       .graphQLClient
@@ -36,6 +41,7 @@ Future<List<RentalCard>> get_rental_by_category(
                   ["uncategorized"],
               tags: tags ?? [],
               distance: distance,
+              online_ordering: online_ordering_exp,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               offset: offset,
@@ -263,8 +269,13 @@ Future<List<HomeCard>> get_home_rentals(
     required Location fromLocation,
     int? offset,
     int? limit,
+    bool? onlineOrdering,
     required bool withCache}) async {
   final List<HomeCard> _homes = <HomeCard>[];
+  Input$Boolean_comparison_exp? onlineOrderingExp;
+  if (onlineOrdering != null) {
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: onlineOrdering);
+  }
   mezDbgPrint(
       "distance $distance location ${fromLocation.lat.toDouble()} ${fromLocation.lng.toDouble()}");
   final QueryResult<Query$get_home> response = await _db.graphQLClient
@@ -274,6 +285,7 @@ Future<List<HomeCard>> get_home_rentals(
               distance: distance,
               location: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+              online_ordering: onlineOrderingExp,
               offset: offset,
               limit: limit)));
 
@@ -398,10 +410,15 @@ Future<List<HomeCard>> get_business_home_rentals(
 Future<List<HomeCard>> get_real_estate(
     {required double distance,
     required Location fromLocation,
+    bool? onlineOrdering,
     int? offset,
     int? limit,
     required bool withCache}) async {
   final List<HomeCard> _homes = <HomeCard>[];
+  Input$Boolean_comparison_exp? onlineOrderingExp;
+  if (onlineOrdering != null) {
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: onlineOrdering);
+  }
 
   final QueryResult<Query$get_real_estates> response = await _db.graphQLClient
       .query$get_real_estates(Options$Query$get_real_estates(
@@ -409,6 +426,7 @@ Future<List<HomeCard>> get_real_estate(
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables: Variables$Query$get_real_estates(
               distance: distance,
+              online_ordering: onlineOrderingExp,
               location: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               offset: offset,
@@ -769,8 +787,8 @@ Future<Home?> update_business_home_rental(
     final Mutation$update_home_by_id$update_business_home_by_pk data =
         res.parsedData!.update_business_home_by_pk!;
     return Home(
-      locationId: res2
-            .parsedData!.update_business_home_location!.returning.first.id,
+      locationId:
+          res2.parsedData!.update_business_home_location!.returning.first.id,
       location: HomeLocation(
         name: res2
             .parsedData!.update_business_home_location!.returning.first.name,
