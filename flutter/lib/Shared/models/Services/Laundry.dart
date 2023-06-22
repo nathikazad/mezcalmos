@@ -13,6 +13,9 @@ class Laundry extends Service {
   num averageNumberOfDays = 2;
   bool selfDelivery;
   int deliveryDetailsId;
+  num? averageRating;
+  int? reviewCount;
+  DateTime? lastActive;
 
   Laundry({
     required ServiceInfo userInfo,
@@ -21,6 +24,9 @@ class Laundry extends Service {
     required ServiceState laundryState,
     super.rate,
     super.reviews,
+    this.lastActive,
+    this.averageRating,
+    this.reviewCount,
     required super.deliveryCost,
     required this.deliveryDetailsId,
     this.averageNumberOfDays = 2,

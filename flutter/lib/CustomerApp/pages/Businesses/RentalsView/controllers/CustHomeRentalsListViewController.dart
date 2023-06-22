@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 
 import 'package:flutter/material.dart';
@@ -57,6 +58,8 @@ class CustHomeRentalsListViewController {
   List<HomeCard> get rentals => _rentals;
   List<BusinessCard> get businesses => _businesses;
 
+  late FilterInput _filterInput;
+
   // Map view //
   GoogleMapController? _googleMapController;
 
@@ -100,6 +103,17 @@ class CustHomeRentalsListViewController {
   // Map view //
 
 // methods //
+
+  FilterInput get filterInput => _filterInput;
+
+  FilterInput defaultFilters() {
+    return {
+      "categories": [],
+      "schedule": [],
+      "onlineOrder": ["true"],
+    };
+  }
+
   Future<void> init(BuildContext context) async {
     try {
       ctx = context;
@@ -110,6 +124,7 @@ class CustHomeRentalsListViewController {
       });
 
       // todo @ChiragKr04 fix the location thing
+      _filterInput = defaultFilters();
 
       final locPkg.LocationData location =
           await locPkg.Location().getLocation();
@@ -145,6 +160,7 @@ class CustHomeRentalsListViewController {
         withCache: false,
         offset: _rentalCurrentOffset,
         limit: rentalFetchSize,
+        onlineOrdering: _filterInput["onlineOrder"]!.contains("true"),
       );
       _rentals.value += newList;
       if (newList.length == 0) {
@@ -332,17 +348,19 @@ class CustHomeRentalsListViewController {
 
   // Map view //
 
-  void filter() {
-    // selectedCategories.value = List.from(previewCategories);
-
-    // _resetRentals();
-    // _fetchRentals();
+  void filter(FilterInput newData) {
+    _filterInput.clear();
+    newData.forEach((String key, List<String> value) {
+      _filterInput[key] = List.from(value);
+    });
+    mezDbgPrint("new data :::::::::=====>_filterInput $_filterInput");
+    _resetRentals();
+    _fetchRentals();
   }
 
   void resetFilter() {
-    // previewCategories.value = List.from(filterCategories);
-    // selectedCategories.value = List.from(filterCategories);
-    // _fetchRentals();
+    _filterInput = defaultFilters();
+    _fetchRentals();
   }
 
   void switchFilterCategory(bool? value, int index) {

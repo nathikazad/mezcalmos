@@ -23,12 +23,14 @@ class ItemOptionCard extends StatefulWidget {
       required this.option,
       required this.cartItem,
       this.margin = const EdgeInsets.only(bottom: 15),
+      required this.isOnlineOrdering,
       this.editMode = false})
       : super(key: key);
   final Option option;
   final bool editMode;
   final Rxn<CartItem> cartItem;
   final EdgeInsetsGeometry margin;
+  final bool isOnlineOrdering;
 
   @override
   State<ItemOptionCard> createState() => _ItemOptionCardState();
@@ -136,7 +138,8 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               ),
             ),
             //  Spacer(),
-            if (widget.option.optionType == OptionType.ChooseMany)
+            if (widget.option.optionType == OptionType.ChooseMany &&
+                widget.isOnlineOrdering)
               _selectCircle(
                   value: widget.cartItem.value!.chosenChoices[optionId]
                           ?.contains(choice) ??
@@ -144,7 +147,8 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                   onTap: (bool? v) {
                     handleChoiceCheckBox(choice);
                   }),
-            if (widget.option.optionType == OptionType.ChooseOne)
+            if (widget.option.optionType == OptionType.ChooseOne &&
+                widget.isOnlineOrdering)
               _radioCircle(
                 value: widget.cartItem.value!.chosenChoices[optionId]
                         ?.contains(choice) ??
@@ -153,7 +157,8 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                   handleChoiceCheckBox(choice);
                 },
               ),
-            if (widget.option.optionType == OptionType.Custom)
+            if (widget.option.optionType == OptionType.Custom &&
+                widget.isOnlineOrdering)
               Container(
                 child: _selectCircle(
                     value: widget.cartItem.value!.chosenChoices[optionId]

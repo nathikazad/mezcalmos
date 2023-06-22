@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -12,6 +13,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -66,7 +68,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
 
   @override
   void initState() {
-    phoneNumber = MezRouter.bodyArguments?['phoneNumber'].toString();
+    phoneNumber = MezRouter.bodyArguments?['phoneNumber'];
     if (MezRouter.urlArguments['chatId'] == null) {
       customSnackBar(
         title: 'Error',
@@ -382,7 +384,28 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   Widget _whatsAppButton() {
     return GestureDetector(
       onTap: () {
-        //TO Add WhatsApp call
+        // To Add WhatsApp call
+        final String? contact = phoneNumber;
+        mezDbgPrint("contact $contact");
+        final String androidUrl = "whatsapp://send?phone=$contact";
+        final String iosUrl = "https://wa.me/$contact}";
+        if (kIsWeb) {
+          final Uri launchUri = Uri(
+            scheme: 'https',
+            path: 'web.whatsapp.com/send?phone=$phoneNumber',
+          );
+          launchUrl(launchUri);
+        } else {
+          if (contact != null) {
+            if (Platform.isIOS) {
+              launchUrl(Uri.parse(iosUrl));
+            } else {
+              launchUrl(Uri.parse(androidUrl));
+            }
+          } else {
+            showErrorSnackBar(errorTitle: "Not available");
+          }
+        }
       },
       child: Padding(
         padding: const EdgeInsets.only(right: 5),

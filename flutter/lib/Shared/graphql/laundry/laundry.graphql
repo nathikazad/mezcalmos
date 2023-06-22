@@ -75,7 +75,14 @@ query getLaundries($from: geography!, $distance: Float!, $limit: Int, $offset: I
 query getLaundryStoreById($id: Int!) {
   laundry_store_by_pk(id: $id) {
     id
-
+    reviews_aggregate {
+      aggregate {
+        count
+        avg {
+          rating
+        }
+      }
+    }
     delivery_details_id
     normal_delivery_time
     minimum_cost
@@ -106,6 +113,7 @@ query getLaundryStoreById($id: Int!) {
       is_open
       location_id
       currency
+      last_active_time
       image
       online_ordering
       language

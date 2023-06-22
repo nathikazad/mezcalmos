@@ -1,6 +1,14 @@
 query getDeliveryCompanyById($id: Int!) {
   delivery_company_by_pk(id: $id) {
     id
+    reviews_aggregate {
+      aggregate {
+        count
+        avg {
+          rating
+        }
+      }
+    }
     delivery_details {
       cost_per_km
       customer_pickup
@@ -21,6 +29,7 @@ query getDeliveryCompanyById($id: Int!) {
       image
       location_id
       name
+      last_active_time
       online_ordering
       language
       open_status
