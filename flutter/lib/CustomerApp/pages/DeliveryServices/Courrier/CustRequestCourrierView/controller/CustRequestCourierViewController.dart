@@ -74,7 +74,7 @@ class CustRequestCourierViewController {
   }
 
   void _fetchCompanies() {
-    get_dv_companies(isOpen: true).then((List<DeliveryCompany>? value) {
+    get_dv_companies(isOpen: false).then((List<DeliveryCompany>? value) {
       if (value != null) {
         deliveryCompanies.value = value;
         selectedCompanies.value = deliveryCompanies
