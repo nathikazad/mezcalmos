@@ -341,3 +341,25 @@ mutation setRestaurantOrderEstFoodReadyTime(
     estimated_package_ready_time
   }
 }
+query get_restaurant_order_items_by_id($deliveryOrderId: Int!) {
+  restaurant_order(where: {delivery_id: {_eq: $deliveryOrderId}}) {
+    items {
+      id
+      notes
+      unavailable
+      quantity
+      cost_per_one
+      restaurant_item {
+        id
+        image
+        name {
+          id
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+  }
+}
