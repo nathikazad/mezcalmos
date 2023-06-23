@@ -105,11 +105,28 @@ class CustBusinessEventCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Divider(),
-                  Text(event.businessName),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(event.businessName),
+                      Text(classType(event.scheduleType, event.category1)),
+                    ],
+                  )
                 ],
               )
           ],
         ));
+  }
+
+  String classType(ScheduleType scheduleType, EventCategory1 category) {
+    switch (scheduleType) {
+      case ScheduleType.OnDemand:
+        return '${_i18n()['private']}/${_i18n()[category.toFirebaseFormatString()]}';
+      case ScheduleType.OneTime:
+        return '${_i18n()['workshop']}/${_i18n()[category.toFirebaseFormatString()]}';
+      default:
+        return '${_i18n()['weekly']}/${_i18n()[category.toFirebaseFormatString()]}';
+    }
   }
 
   Widget oneTimeBuilder(EventCard eventData) {

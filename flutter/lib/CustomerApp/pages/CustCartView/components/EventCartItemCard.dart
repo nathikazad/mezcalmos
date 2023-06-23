@@ -5,10 +5,14 @@ import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/CartItemImage.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustCartView']['components']['EventCartItemCard'];
 
 class EventCartItemCard extends StatelessWidget {
   const EventCartItemCard({
@@ -32,9 +36,9 @@ class EventCartItemCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Item ${index + 1}",
+              '${_i18n()['item']} ${index + 1}',
               style: context.textTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
               ),
             ),
             isEditable
@@ -49,7 +53,7 @@ class EventCartItemCard extends StatelessWidget {
                           color: Colors.red,
                         ),
                         Text(
-                          "Remove",
+                          '${_i18n()['remove']}',
                           style: context.textTheme.bodyMedium!.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -142,7 +146,7 @@ class EventCartItemCard extends StatelessWidget {
                           color: primaryBlueColor,
                         ),
                       ),
-                      onTap: () async{
+                      onTap: () async {
                         await controller.editCartItem(item);
                       },
                     ),

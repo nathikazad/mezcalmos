@@ -535,6 +535,63 @@
     },
     "pages": {
       "CustCartView": {
+        "components": {
+          "HomeCartItemCard": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "noDate": "Sin cita",
+            "roomType": {
+              "singleBed": "Cama individual",
+              "doubleBed": "Cama matrimonial",
+              "dormRoom": "Dormitorio",
+              "suite": "Suite"
+            }
+          },
+          "ProductCartItemCard": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "noDate": "Sin cita",
+            "roomType": {
+              "singleBed": "Cama individual",
+              "doubleBed": "Cama matrimonial",
+              "dormRoom": "Dormitorio",
+              "suite": "Suite"
+            }
+          },
+          "ServiceCartItemCard": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "noDate": "Sin cita",
+            "roomType": {
+              "singleBed": "Cama individual",
+              "doubleBed": "Cama matrimonial",
+              "dormRoom": "Dormitorio",
+              "suite": "Suite"
+            }
+          },
+          "EventCartItemCard": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "noDate": "Sin cita",
+            "roomType": {
+              "singleBed": "Cama individual",
+              "doubleBed": "Cama matrimonial",
+              "dormRoom": "Dormitorio",
+              "suite": "Suite"
+            }
+          },
+          "RentalCartItemCard": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "noDate": "Sin cita",
+            "roomType": {
+              "singleBed": "Cama individual",
+              "doubleBed": "Cama matrimonial",
+              "dormRoom": "Dormitorio",
+              "suite": "Suite"
+            }
+          }
+        },
         "CustCartView": {
           "myCart": "Mi carrito",
           "request": "Pedido",
@@ -1423,7 +1480,16 @@
             "person": "persona",
             "total": "total",
             "unit": "unidad",
-            "free": "GRATIS"
+            "free": "GRATIS",
+            "filter": "Filter",
+            "weekly": "Weekly",
+            "workshop": "Workshop",
+            "private": "Private",
+            "surf": "Surf",
+            "yoga": "Yoga",
+            "fitness": "Fitness",
+            "dance": "Dance",
+            "therapy": "Terapia"
           },
           "CustBusinessRentalCost": {
             "hour": "hora",

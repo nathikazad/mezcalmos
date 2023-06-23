@@ -538,6 +538,63 @@
     },
     "pages": {
       "CustCartView": {
+        "components": {
+          "HomeCartItemCard": {
+            "item": "Item",
+            "remove": "Remove",
+            "noDate": "No date",
+            "roomType": {
+              "singleBed": "Single Bed",
+              "doubleBed": "Double Bed",
+              "dormRoom": "Dorm Room",
+              "suite": "Suite"
+            }
+          },
+          "ProductCartItemCard": {
+            "item": "Item",
+            "remove": "Remove",
+            "noDate": "No date",
+            "roomType": {
+              "singleBed": "Single Bed",
+              "doubleBed": "Double Bed",
+              "dormRoom": "Dorm Room",
+              "suite": "Suite"
+            }
+          },
+          "ServiceCartItemCard": {
+            "item": "Item",
+            "remove": "Remove",
+            "noDate": "No date",
+            "roomType": {
+              "singleBed": "Single Bed",
+              "doubleBed": "Double Bed",
+              "dormRoom": "Dorm Room",
+              "suite": "Suite"
+            }
+          },
+          "EventCartItemCard": {
+            "item": "Item",
+            "remove": "Remove",
+            "noDate": "No date",
+            "roomType": {
+              "singleBed": "Single Bed",
+              "doubleBed": "Double Bed",
+              "dormRoom": "Dorm Room",
+              "suite": "Suite"
+            }
+          },
+          "RentalCartItemCard": {
+            "item": "Item",
+            "remove": "Remove",
+            "noDate": "No date",
+            "roomType": {
+              "singleBed": "Single Bed",
+              "doubleBed": "Double Bed",
+              "dormRoom": "Dorm Room",
+              "suite": "Suite"
+            }
+          }
+        },
         "CustCartView": {
           "myCart": "My cart",
           "request": "Request",
@@ -1390,7 +1447,16 @@
             "person": "person",
             "total": "total",
             "unit": "unit",
-            "free": "FREE"
+            "free": "FREE",
+            "filter": "Filter",
+            "weekly": "Weekly",
+            "workshop": "Workshop",
+            "private": "Private",
+            "surf": "Surf",
+            "yoga": "Yoga",
+            "fitness": "Fitness",
+            "dance": "Dance",
+            "therapy": "Therapy"
           },
           "CustBusinessRentalCost": {
             "hour": "hour",

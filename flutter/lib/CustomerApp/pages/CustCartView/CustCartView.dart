@@ -123,16 +123,20 @@ class _CustCartViewState extends State<CustCartView> {
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
-                      TextFormField(
-                        maxLines: 5,
-                        minLines: 3,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: '${_i18n()['writeNotesHere']}',
+                      Material(
+                        elevation: .5,
+                        child: TextFormField(
+                          maxLines: 5,
+                          minLines: 3,
+                          decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            hintText: '${_i18n()['writeNotesHere']}',
+                          ),
                         ),
                       ),
                       bigSeperator,
                       MezCard(
+                        elevation: .5,
                         content: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

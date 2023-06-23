@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
@@ -26,7 +27,8 @@ class DvOrderItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => (viewController.items.value != null)
+      () => (viewController.items.value != null &&
+              viewController.restaurantOrderItem.value != null)
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,91 +42,193 @@ class DvOrderItems extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
-                Column(
-                    children: List.generate(
-                        viewController.items.value!.length,
-                        (int index) => MezExpandableCard(
-                                onTapHeaderImage: () async {
-                                  unawaited(showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          contentPadding: EdgeInsets.zero,
-                                          content: Container(
-                                            width: 70.w,
-                                            height: 60.h,
-                                            child: PhotoView(
-                                              imageProvider:
-                                                  CachedNetworkImageProvider(
-                                                viewController
-                                                    .items.value![index].image!,
-                                                //  style: context.txt.titleSmall,
+                viewController.items.value != null
+                    ? Column(
+                        children: List.generate(
+                            viewController.items.value!.length,
+                            (int index) => MezExpandableCard(
+                                    onTapHeaderImage: () async {
+                                      unawaited(showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              contentPadding: EdgeInsets.zero,
+                                              content: Container(
+                                                width: 70.w,
+                                                height: 60.h,
+                                                child: PhotoView(
+                                                  imageProvider:
+                                                      CachedNetworkImageProvider(
+                                                    viewController.items
+                                                        .value![index].image!,
+                                                    //  style: context.txt.titleSmall,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          ),
-                                        );
-                                      }));
-                                },
-                                title: _itemHeader(index, context),
-                                imageUrl:
-                                    viewController.items.value![index].image,
-                                expandableWidget: [
-                                  Text(
-                                    "${_i18n()['estCost']}",
-                                    style: context.txt.bodyLarge,
-                                  ),
-                                  Text(
-                                      "${viewController.items.value![index].estCost?.toPriceString() ?? "_"}"),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  if (viewController.items.value![index].notes
-                                          ?.isNotEmpty ==
-                                      true)
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Divider(),
-                                        Text(
-                                          "${_i18n()['note']}",
-                                          style: context.txt.bodyLarge,
-                                        ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text(
-                                            "${viewController.items.value![index].notes}"),
-                                        Divider(),
-                                      ],
-                                    ),
-                                  if (viewController
-                                              .order.value?.isDriverAssigned ==
-                                          true &&
-                                      viewController.order.value?.inProcess() ==
+                                            );
+                                          }));
+                                    },
+                                    title: _itemHeader(index, context),
+                                    imageUrl: viewController
+                                        .items.value![index].image,
+                                    expandableWidget: [
+                                      Text(
+                                        "${_i18n()['estCost']}",
+                                        style: context.txt.bodyLarge,
+                                      ),
+                                      Text(
+                                          "${viewController.items.value![index].estCost?.toPriceString() ?? "_"}"),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      if (viewController.items.value![index]
+                                              .notes?.isNotEmpty ==
                                           true)
-                                    MezButton(
-                                      label: (viewController
-                                              .items.value![index].unavailable)
-                                          ? "${_i18n()['markAv']}"
-                                          : "${_i18n()['markUnav']}",
-                                      backgroundColor: (!viewController
-                                              .items.value![index].unavailable)
-                                          ? offRedColor
-                                          : secondaryLightBlueColor,
-                                      textColor: (!viewController
-                                              .items.value![index].unavailable)
-                                          ? Colors.red
-                                          : primaryBlueColor,
-                                      onClick: () async {
-                                        await viewController.markItemAvailable(
-                                            itemId: viewController
-                                                .items.value![index].id,
-                                            isAvailable: !viewController.items
-                                                .value![index].unavailable);
-                                      },
-                                    ),
-                                ]))),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Divider(),
+                                            Text(
+                                              "${_i18n()['note']}",
+                                              style: context.txt.bodyLarge,
+                                            ),
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(
+                                                "${viewController.items.value![index].notes}"),
+                                            Divider(),
+                                          ],
+                                        ),
+                                      if (viewController.order.value
+                                                  ?.isDriverAssigned ==
+                                              true &&
+                                          viewController.order.value
+                                                  ?.inProcess() ==
+                                              true)
+                                        MezButton(
+                                          label: (viewController.items
+                                                  .value![index].unavailable)
+                                              ? "${_i18n()['markAv']}"
+                                              : "${_i18n()['markUnav']}",
+                                          backgroundColor: (!viewController
+                                                  .items
+                                                  .value![index]
+                                                  .unavailable)
+                                              ? offRedColor
+                                              : secondaryLightBlueColor,
+                                          textColor: (!viewController.items
+                                                  .value![index].unavailable)
+                                              ? Colors.red
+                                              : primaryBlueColor,
+                                          onClick: () async {
+                                            await viewController
+                                                .markItemAvailable(
+                                                    itemId: viewController
+                                                        .items.value![index].id,
+                                                    isAvailable: !viewController
+                                                        .items
+                                                        .value![index]
+                                                        .unavailable);
+                                          },
+                                        ),
+                                    ])))
+                    : Column(
+                        children: List.generate(
+                            viewController.restaurantOrderItem.value!.length,
+                            (int index) => MezExpandableCard(
+                                    onTapHeaderImage: () async {
+                                      unawaited(showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              contentPadding: EdgeInsets.zero,
+                                              content: Container(
+                                                width: 70.w,
+                                                height: 60.h,
+                                                child: PhotoView(
+                                                  imageProvider:
+                                                      CachedNetworkImageProvider(
+                                                    viewController.items
+                                                        .value![index].image!,
+                                                    //  style: context.txt.titleSmall,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }));
+                                    },
+                                    title:
+                                        _restaurantItemHeader(index, context),
+                                    imageUrl: viewController.restaurantOrderItem
+                                        .value![index].image,
+                                    expandableWidget: [
+                                      Text(
+                                        "${_i18n()['estCost']}",
+                                        style: context.txt.bodyLarge,
+                                      ),
+                                      Text(
+                                          "${viewController.restaurantOrderItem.value![index].totalCost.toPriceString()}"),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      if (viewController
+                                              .restaurantOrderItem
+                                              .value![index]
+                                              .notes
+                                              ?.isNotEmpty ==
+                                          true)
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Divider(),
+                                            Text(
+                                              "${_i18n()['note']}",
+                                              style: context.txt.bodyLarge,
+                                            ),
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(
+                                                "${viewController.restaurantOrderItem.value![index].notes}"),
+                                            Divider(),
+                                          ],
+                                        ),
+                                      if (viewController.order.value
+                                                  ?.isDriverAssigned ==
+                                              true &&
+                                          viewController.order.value
+                                                  ?.inProcess() ==
+                                              true)
+                                        MezButton(
+                                          label: (viewController.items
+                                                  .value![index].unavailable)
+                                              ? "${_i18n()['markAv']}"
+                                              : "${_i18n()['markUnav']}",
+                                          backgroundColor: (!viewController
+                                                  .items
+                                                  .value![index]
+                                                  .unavailable)
+                                              ? offRedColor
+                                              : secondaryLightBlueColor,
+                                          textColor: (!viewController.items
+                                                  .value![index].unavailable)
+                                              ? Colors.red
+                                              : primaryBlueColor,
+                                          onClick: () async {
+                                            await viewController
+                                                .markItemAvailable(
+                                                    itemId: viewController
+                                                        .items.value![index].id,
+                                                    isAvailable: !viewController
+                                                        .restaurantOrderItem
+                                                        .value![index]
+                                                        .unavailable);
+                                          },
+                                        ),
+                                    ]))),
               ],
             )
           : SizedBox(),
@@ -178,7 +282,83 @@ class DvOrderItems extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      if (!viewController.items.value![index].unavailable &&
+                      if (!viewController
+                              .restaurantOrderItem.value![index].unavailable &&
+                          viewController.order.value?.isDriverAssigned ==
+                              true &&
+                          viewController.order.value?.inProcess() == true)
+                        MezIconButton(
+                            elevation: 0,
+                            backgroundColor: backgroundShadeColor,
+                            iconColor: offShadeGreyColor,
+                            iconSize: 18,
+                            padding: EdgeInsets.all(3),
+                            onTap: () async {
+                              viewController.costText.text = viewController
+                                  .items.value![index].actualCost
+                                  .toString();
+                              await _showCostSheet(context, index);
+                            },
+                            icon: Icons.edit_outlined)
+                    ],
+                  ),
+                ),
+        ],
+      ),
+    );
+  }
+
+  Flexible _restaurantItemHeader(int index, BuildContext context) {
+    return Flexible(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            viewController
+                .restaurantOrderItem.value![index].name[userLanguage]!,
+            style: context.txt.bodyLarge?.copyWith(
+                color:
+                    viewController.restaurantOrderItem.value![index].unavailable
+                        ? Colors.grey
+                        : null,
+                decoration:
+                    viewController.restaurantOrderItem.value![index].unavailable
+                        ? TextDecoration.lineThrough
+                        : null),
+          ),
+          (!viewController.restaurantOrderItem.value![index].unavailable &&
+                  viewController.order.value?.isDriverAssigned == true)
+              ? InkWell(
+                  onTap: () async => _showCostSheet(context, index),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 4.sp),
+                    child: Text(
+                      '${_i18n()['addCost']}',
+                      style: context.txt.bodyLarge
+                          ?.copyWith(color: primaryBlueColor),
+                    ),
+                  ))
+              : Container(
+                  margin: const EdgeInsets.only(right: 5, bottom: 5, top: 5),
+                  child: Row(
+                    children: [
+                      Text(
+                        "${viewController.restaurantOrderItem.value![index].totalCost.toPriceString(rounded: false)}",
+                        style: context.txt.bodyLarge?.copyWith(
+                            color: viewController.restaurantOrderItem
+                                    .value![index].unavailable
+                                ? Colors.grey
+                                : null,
+                            decoration: viewController.restaurantOrderItem
+                                    .value![index].unavailable
+                                ? TextDecoration.lineThrough
+                                : null),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      if (!viewController
+                              .restaurantOrderItem.value![index].unavailable &&
                           viewController.order.value?.isDriverAssigned ==
                               true &&
                           viewController.order.value?.inProcess() == true)

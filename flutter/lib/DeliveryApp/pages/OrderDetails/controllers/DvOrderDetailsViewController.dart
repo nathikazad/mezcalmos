@@ -46,6 +46,7 @@ class DvOrderDetailsViewController {
   OrderCosts? get orderCosts =>
       (isCourier) ? _orderCosts.value : order.value?.costs;
   Rxn<List<CourierOrdeItem>> items = Rxn();
+  Rxn<List<RestaurantOrderItem>> restaurantOrderItem = Rxn();
   TextEditingController costText = TextEditingController();
   TextEditingController taxText = TextEditingController();
 // getters //
@@ -87,10 +88,15 @@ class DvOrderDetailsViewController {
     if (order.value != null) {
       unawaited(_fetchOrdersCountAndReviews());
     }
-    if (order.value != null &&
-        order.value!.orderType == cModels.OrderType.Courier) {
-      unawaited(_fetchOrderItems(orderId));
-      unawaited(_fetchOrderBill(orderId));
+
+    if (order.value != null) {
+      if (order.value!.orderType == cModels.OrderType.Courier) {
+        unawaited(_fetchOrderItems(orderId));
+        unawaited(_fetchOrderBill(orderId));
+      } else {
+        unawaited(_fetchRestaurantOrderItems());
+        unawaited(_fetchOrderBill(orderId));
+      }
     }
   }
 
@@ -100,9 +106,10 @@ class DvOrderDetailsViewController {
     items.refresh();
   }
 
-  Future<void> fetchRestaurantOrderItems() async {
-    List<RestaurantOrderItem> res = await get_dv_order_restaurant_items(
+  Future<void> _fetchRestaurantOrderItems() async {
+    restaurantOrderItem.value = await get_dv_order_restaurant_items(
         deliveryOrderId: orderId, withCache: false);
+    restaurantOrderItem.refresh();
   }
 
   Future<void> _fetchOrderBill(int orderId) async {
