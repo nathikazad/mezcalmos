@@ -122,7 +122,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
   return delivery;
 }
 
-export async function getDeliveryOrdersForSupervisor(): Promise<DeliveryOrder[]> {
+export async function getNotifiedDrivers(): Promise<any> {
   let chain = getHasura();
 
   let response = await chain.query({
@@ -146,81 +146,18 @@ export async function getDeliveryOrdersForSupervisor(): Promise<DeliveryOrder[]>
       }
     }, {
       id: true,
-      pickup_gps: true,
-      dropoff_gps: true,
-      dropoff_address: true,
-      chat_with_customer_id: true,
-      payment_type: true,
-      status: true,
-      customer_id: true,
-      delivery_cost: true,
-      order_time: true,
       order_type: true,
-      package_ready: true,
-      service_provider_id: true,
-      direction: true,
-      delivery_driver: {
-        id: true,
-        status: true,
-        delivery_company_id: true,
-        delivery_company_type: true,
-        user: {
-          firebase_id: true,
-          id: true,
-          language_id: true,
-        },
-        notification_info: {
-          token: true,
-          turn_off_notifications: true
-        },
-      }
+      notified_drivers: [{}, true]
     }]
   });
 
-  return response.delivery_order.map((d: any) => {
-    let delivery: DeliveryOrder = {
-      packageReady: d.package_ready,
+  return response.delivery_order.map((d) => {
+    return {
       deliveryId: d.id,
-      // pickupLocation: {
-      //   lat: d.pickup_gps.coordinates[1],
-      //   lng: d.pickup_gps.coordinates[0],
-      // },
-      dropoffLocation: {
-        lat: d.dropoff_gps.coordinates[1],
-        lng: d.dropoff_gps.coordinates[0],
-        address: d.dropoff_address,
-      },
-      chatWithCustomerId: d.chat_with_customer_id,
-      paymentType: d.payment_type as PaymentType,
-      status: d.status as DeliveryOrderStatus,
-      customerId: d.customer_id,
-      deliveryCost: d.delivery_cost,
-      orderTime: d.order_time,
       orderType: d.order_type as OrderType,
-      serviceProviderId: d.service_provider_id,
-      serviceProviderType: DeliveryServiceProviderType.DeliveryCompany,
-      direction: d.direction as DeliveryDirection,
-      notifiedDrivers: {},
-      deliveryDriver: (d.delivery_driver) ? {
-        id: d.delivery_driver.id,
-        userId: d.delivery_driver.user.id,
-        status: d.delivery_driver.status as AuthorizationStatus,
-        deliveryCompanyType: d.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
-        deliveryCompanyId: d.delivery_driver.delivery_company_id,
-        user: {
-          id: d.delivery_driver.user.id,
-          firebaseId: d.delivery_driver.user.firebase_id,
-          language: d.delivery_driver.user.language_id as Language
-        },
-        notificationInfo: (d.delivery_driver.notification_info) ? {
-          appType: AppType.Delivery,
-          token: d.delivery_driver.notification_info.token,
-          turnOffNotifications: d.delivery_driver.notification_info.turn_off_notifications
-        } : undefined,
-      } : undefined
+      notifiedDrivers: d.notified_drivers as Record<number, boolean>
     }
-    return delivery;
-  })
+  });
 }
 export async function getDeliveryCompany(deliveryCompanyId: number): Promise<ServiceProvider> {
   let chain = getHasura();
