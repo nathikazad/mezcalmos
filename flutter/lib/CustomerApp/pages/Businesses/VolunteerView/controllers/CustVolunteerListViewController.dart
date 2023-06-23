@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
@@ -62,7 +62,8 @@ class CustVolunteerListViewController {
       _isLoading.value = true;
       selectedCategories.value = List.from(_filterCategories);
 
-      locPkg.LocationData location = await locPkg.Location().getLocation();
+      final locPkg.LocationData location =
+          await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation = Location(
           lat: location.latitude!,

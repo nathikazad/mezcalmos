@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
+import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -18,6 +19,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 class DvOrderDetailsViewController {
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -98,6 +100,11 @@ class DvOrderDetailsViewController {
     items.refresh();
   }
 
+  Future<void> fetchRestaurantOrderItems() async {
+    List<RestaurantOrderItem> res = await get_dv_order_restaurant_items(
+        deliveryOrderId: orderId, withCache: false);
+  }
+
   Future<void> _fetchOrderBill(int orderId) async {
     newBillUrl.value =
         await get_courier_bill_order_image(orderId: orderId, withCache: false);
@@ -162,7 +169,7 @@ class DvOrderDetailsViewController {
         if (_res != null) {
           newBillFile.value = _res;
           if (newBillFile.value != null) {
-            String imageUrl = await uploadImgToFbStorage(
+            final String imageUrl = await uploadImgToFbStorage(
                 compressLevel: 50,
                 imageFile: newBillFile.value!,
                 storageFolder:
@@ -185,7 +192,7 @@ class DvOrderDetailsViewController {
   Future<void> requestPriceChange(BuildContext context) async {
     if (updatePriceFormKey.currentState?.validate() == true) {
       try {
-        cModels.ChangePriceReqResponse res =
+        final cModels.ChangePriceReqResponse res =
             await CloudFunctions.delivery3_changeDeliveryPrice(
                 deliveryOrderId: order.value!.orderId,
                 newPrice: double.parse(openOrderPriceText.text),
@@ -213,7 +220,7 @@ class DvOrderDetailsViewController {
 
   Future<bool> cancelOrder() async {
     try {
-      cModels.ChangeDeliveryStatusResponse res =
+      final cModels.ChangeDeliveryStatusResponse res =
           await CloudFunctions.delivery3_changeStatus(
         deliveryId: order.value!.orderId,
         newStatus: cModels.DeliveryOrderStatus.CancelledByDeliverer,

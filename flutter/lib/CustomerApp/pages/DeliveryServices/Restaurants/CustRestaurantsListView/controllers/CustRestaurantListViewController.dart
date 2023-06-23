@@ -7,6 +7,7 @@ import 'package:location/location.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRestaurantCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
@@ -70,10 +71,23 @@ class CustRestaurantListViewController {
   BuildContext? ctx;
   // Map view //
 
+  late FilterInput _filterInput;
+
+  FilterInput get filterInput => _filterInput;
+
+  FilterInput defaultFilters() {
+    return {
+      "categories": [],
+      "schedule": [],
+      "onlineOrder": ["true"],
+    };
+  }
+
   final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   Future<void> init({required BuildContext context}) async {
+    _filterInput = defaultFilters();
     ctx = context;
 
     await locPkg.Location().getLocation().then((LocationData location) {
@@ -83,7 +97,7 @@ class CustRestaurantListViewController {
 
     await fetchRestaurants();
     callbackId = appLifeCycleController.attachCallback(
-        AppLifecycleState.resumed, () => filter());
+        AppLifecycleState.resumed, () => filter(filterInput));
   }
 
   Future<void> fetchRestaurants() async {
@@ -96,12 +110,13 @@ class CustRestaurantListViewController {
                 address: ''),
             is_open: showOnlyOpen.value,
             withCache: false,
+            online_ordering: _filterInput["onlineOrder"]!.contains("true"),
             distance: getFetchDistance)
         .then((List<Restaurant> list) {
       _restaurants = list;
 
       _assignServiceIds();
-      filter();
+      filter(_filterInput);
       _getCustomerCurrentLocation();
     }).whenComplete(() {
       isLoading.value = false;
@@ -126,7 +141,12 @@ class CustRestaurantListViewController {
         .toList();
   }
 
-  void filter() {
+  void filter(Map<String, List<String>> newData) {
+    _filterInput.clear();
+    newData.forEach((String key, List<String> value) {
+      _filterInput[key] = List.from(value);
+    });
+    mezDbgPrint("_filterInput $_filterInput $newData");
     List<Restaurant> newList = new List<Restaurant>.from(_restaurants);
     if (searchType.value == SearchType.searchByRestaurantName) {
       newList = newList.searchByName(searchQuery.value) as List<Restaurant>;
@@ -144,7 +164,7 @@ class CustRestaurantListViewController {
 
   void switchSearchType(SearchType value) {
     searchType.value = value;
-    filter();
+    filter(filterInput);
   }
 
   bool get showFilters {
@@ -161,6 +181,7 @@ class CustRestaurantListViewController {
         servicesIds: servicesIds,
         keyword: searchQuery.value,
         lang: userLanguage,
+        onlineOrdering: _filterInput["onlineOrder"]!.contains("true"),
         withCache: false);
   }
 
@@ -177,6 +198,7 @@ class CustRestaurantListViewController {
                 address: ''),
             is_open: showOnlyOpen.value,
             withCache: false,
+            online_ordering: _filterInput["onlineOrder"]!.contains("true"),
             distance: getFetchDistance);
       } else {
         _mapViewRestaurants.value = await fetch_restaurants(
@@ -187,6 +209,7 @@ class CustRestaurantListViewController {
                 lng: _screenToWorldPosition!.longitude,
                 address: ''),
             is_open: showOnlyOpen.value,
+            online_ordering: _filterInput["onlineOrder"]!.contains("true"),
             withCache: false);
       }
     } catch (e) {

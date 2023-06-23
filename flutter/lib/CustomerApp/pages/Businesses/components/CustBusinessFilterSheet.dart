@@ -41,7 +41,7 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
 
   bool isOnlineOrder =
       selectedFilters["onlineOrder"]?.contains("true") ?? false;
-  mezDbgPrint("defaultFilterInput $defaultFilterInput");
+  mezDbgPrint("defaultFilterInput $defaultFilterInput $isOnlineOrder $selectedFilters");
 
   return showModalBottomSheet<Map<String, List<String>>?>(
       // isDismissible: false,
