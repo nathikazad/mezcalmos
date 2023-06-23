@@ -553,6 +553,8 @@
       },
       "JoinUsView": {
         "joinUs": "Join us",
+        "whichBusinessDoYouHave": "Which business you have?",
+        "growYourBusiness": "With our help, grow your online business and increase your profits.",
         "restaurantBusiness": {
           "title": "Restaurant",
           "subtitle": "If you own a restaurant and want to expand it online."
@@ -1535,7 +1537,7 @@
           "home": "Home",
           "map": "Map",
           "realEstate": "Realestate",
-          "properties": "Properties",
+          "properties": "Property",
           "store": "Agency",
           "offerOnly": "Offers only",
           "viewOnMap": "View on map",
@@ -1695,7 +1697,7 @@
             "noBusinessesFound": "No businesses found",
             "store": "Store",
             "services": "Services",
-            "offerOnly":"Offers only",
+            "offerOnly": "Offers only",
             "filter": "Filter",
             "service": "Service",
             "mealPlanning": "Meal planning",

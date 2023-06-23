@@ -550,6 +550,8 @@
       },
       "JoinUsView": {
         "joinUs": "Únete a nosotros",
+        "whichBusinessDoYouHave": "¿Qué negocio tienes?",
+        "growYourBusiness": "Con nuestra ayuda, aumente su negocio en línea y aumente sus ganancias.",
         "restaurantBusiness": {
           "title": "Negocio de los restaurantes",
           "subtitle": "Si posee un restaurante y desea expandirlo en línea."
@@ -1569,7 +1571,7 @@
           "map": "Mapa",
           "offerOnly": "Solo ofertas",
           "realEstate": "Realestate",
-          "properties": "Propiedades",
+          "properties": "Propiedad",
           "store": "Agency",
           "viewOnMap": "Ver en el mapa",
           "viewAsList": "Ver como lista",
