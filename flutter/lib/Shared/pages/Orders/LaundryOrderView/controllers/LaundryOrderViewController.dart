@@ -69,9 +69,9 @@ class LaundryOrderViewController {
     try {
       _order.value =
           await get_laundry_order_by_id(orderId: orderId, withCache: false);
-      if (_order.value != null) {
+      if (_order.value != null && order.serviceProvider != null) {
         laundryCategories.value = await get_laundry_categories(
-            storeId: _order.value!.serviceProvider.hasuraId);
+            storeId: _order.value!.serviceProvider!.hasuraId);
       }
 
       if (_order.value!.routeInformation != null) {
@@ -181,7 +181,7 @@ class LaundryOrderViewController {
 
   Future<void> cancelOrder() async {
     try {
-      cModels.ChangeLaundryStatusResponse res =
+      final cModels.ChangeLaundryStatusResponse res =
           await CloudFunctions.laundry3_cancelFromAdmin(orderId: order.orderId);
       showSavedSnackBar(
           title: "Cancelled", subtitle: "Order cancelled successfuly");
@@ -223,7 +223,7 @@ class LaundryOrderViewController {
 
 // handling when the weight and category is well formated and go throught the process of editing or adding new items weight
   Future<void> handlingNewOrderWeight() async {
-    LaundryOrderCostLineItem newCostLineItem = _constructCategory();
+    final LaundryOrderCostLineItem newCostLineItem = _constructCategory();
 
     final LaundryOrderCostLineItem? _tempCatgeory = order.costsByType?.lineItems
         .firstWhereOrNull((LaundryOrderCostLineItem element) =>
@@ -314,7 +314,7 @@ class LaundryOrderViewController {
 
   Future<void> sertOrderReady() async {
     try {
-      cModels.ChangeLaundryStatusResponse res =
+      final cModels.ChangeLaundryStatusResponse res =
           await CloudFunctions.laundry3_readyForDeliveryOrder(
               orderId: _order.value!.orderId);
       if (res.success == false) {

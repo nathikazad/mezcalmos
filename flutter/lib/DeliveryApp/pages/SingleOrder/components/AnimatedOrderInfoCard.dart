@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -271,12 +270,13 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             ),
           ),
         if (order.status == cModels.DeliveryOrderStatus.Delivered &&
-            order.serviceReviewByDriver == null)
+            order.serviceReviewByDriver == null &&
+            order.serviceProvider != null)
           InkWell(
             onTap: () async {
               int? resviewId = await addReviewDialog(
                   context: context,
-                  toEntityId: order.serviceProvider.hasuraId,
+                  toEntityId: order.serviceProvider!.hasuraId,
                   toEntityType: order.orderType.toServiceProviderType(),
                   fromEntityId: Get.find<AuthController>().hasuraUserId!,
                   fromEntityType: cModels.ServiceProviderType.DeliveryDriver,

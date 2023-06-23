@@ -4,9 +4,7 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 // enum LaundryOrderStatus {
 //   OrderReceived,
@@ -196,7 +194,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   }
 
   bool get canAddReview {
-    return review == null && status == LaundryOrderStatus.Delivered;
+    return review == null &&
+        status == LaundryOrderStatus.Delivered &&
+        serviceProvider?.hasuraId != null;
   }
 
   bool afterAtLaundry() {

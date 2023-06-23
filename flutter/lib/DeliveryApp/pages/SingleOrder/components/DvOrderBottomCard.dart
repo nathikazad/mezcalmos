@@ -70,10 +70,10 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
           },
           // landry
           serviceProviderImage:
-              widget.viewcontroller.order.serviceProvider.image,
+              widget.viewcontroller.order.serviceProvider?.image ?? "",
           serviceProviderName: widget.viewcontroller.isCourier
               ? widget.viewcontroller.order.pickupLocation?.address ?? ""
-              : widget.viewcontroller.order.serviceProvider.name,
+              : widget.viewcontroller.order.serviceProvider?.name ?? "",
           serviceProviderTimeWidget: widget.viewcontroller.inPickupPhase
               ? _dropOffTimeSetter()
               : _pickUpTimeSetter(),
@@ -147,8 +147,6 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                 DeliveryOrderStatus.OrderReceived ||
             widget.viewcontroller.order.packageReady == true);
   }
-
-
 
   Widget _pickUpTimeSetter() {
     return (widget.viewcontroller.pickuSetted)

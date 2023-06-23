@@ -21,7 +21,8 @@ abstract class Order {
   cModels.ServiceProviderType deliveryProviderType;
   DateTime orderTime;
   UserInfo customer;
-  UserInfo serviceProvider;
+  UserInfo? serviceProvider;
+
   MezLocation dropOffLocation;
   String? notes;
 

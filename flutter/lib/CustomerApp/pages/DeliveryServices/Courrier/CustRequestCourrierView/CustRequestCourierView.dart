@@ -128,7 +128,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
           OrderSummaryCard(
               margin: EdgeInsets.only(top: 20),
               costs: OrderCosts(
-                  deliveryCost: viewController.shippingCost.value,
+                  deliveryCost: viewController.estDeliveryCost.value,
                   refundAmmount: null,
                   tax: null,
                   orderItemsCost: null,

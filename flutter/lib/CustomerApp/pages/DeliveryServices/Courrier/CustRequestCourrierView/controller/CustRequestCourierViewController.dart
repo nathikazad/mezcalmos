@@ -128,7 +128,7 @@ class CustRequestCourierViewController {
             .whenComplete(
                 () => currentPage.value = pageController.page!.toInt()));
       }
-    } else if (secondFormKey.currentState?.validate() == true) {
+    } else if (currentPage == 1) {
       // call cloud func
       await _makeOrder();
     }
@@ -183,6 +183,7 @@ class CustRequestCourierViewController {
         // todo @m66are
         // deliveryCompanyId: 0,
         // deliveryCost: shippingCost.value,
+        customerOffer: estDeliveryCost.value,
         deliveryCompanyIds: selectedCompanies,
         scheduledTime: deliveryTime.value?.toUtc().toString(),
         customerAppType: cModels.CustomerAppType.Native,
@@ -191,6 +192,7 @@ class CustRequestCourierViewController {
         tripPolyline: routeInfo?.polyline,
       );
       if (res.success == true) {
+        mezlog(res.toFirebaseFormattedJson());
         await MezRouter.popEverythingTillBeforeHome().then((_) =>
             CustCourierOrderView.navigate(orderId: res.orderId!.toInt()));
       } else {

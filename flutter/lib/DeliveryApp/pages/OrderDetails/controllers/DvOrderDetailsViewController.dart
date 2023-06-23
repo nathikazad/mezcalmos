@@ -105,18 +105,20 @@ class DvOrderDetailsViewController {
   }
 
   Future<void> _fetchOrdersCountAndReviews() async {
-    serviceOrdersCount.value = await fetch_delivery_orders_count(
-        entityId: order.value!.serviceProvider.hasuraId,
-        serviceProviderType: order.value!.orderType.toServiceProviderType());
+    if (order.value?.serviceProvider != null) {
+      serviceOrdersCount.value = await fetch_delivery_orders_count(
+          entityId: order.value!.serviceProvider!.hasuraId,
+          serviceProviderType: order.value!.orderType.toServiceProviderType());
+      serviceReview.value = await get_service_review_average(
+          serviceId: order.value!.serviceProvider!.hasuraId,
+          serviceProviderType: order.value!.orderType.toServiceProviderType());
+    }
     customerOrdersCount.value = await fetch_delivery_orders_count(
         entityId: order.value!.customer.hasuraId,
         serviceProviderType: cModels.ServiceProviderType.Customer);
     customerReview.value = await get_service_review_average(
         serviceId: order.value!.customer.hasuraId,
         serviceProviderType: cModels.ServiceProviderType.Customer);
-    serviceReview.value = await get_service_review_average(
-        serviceId: order.value!.serviceProvider.hasuraId,
-        serviceProviderType: order.value!.orderType.toServiceProviderType());
   }
 
   Future<void> markItemAvailable(
