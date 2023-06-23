@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/CustShowOnlyOpenService.dart';
 import 'package:mezcalmos/CustomerApp/components/NoOpenServiceComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/components/CustomerLaundrySelectCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/controllers/CustLaundriesListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
@@ -164,12 +165,62 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
     ]);
   }
 
+  Widget _filterButton(BuildContext context) {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.only(top: 0),
+      color: Color(0xFFF0F0F0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () async {
+          FilterInput? data = await cusShowBusinessFilerSheet(
+              context: context,
+              filterInput: viewController.filterInput,
+              defaultFilterInput: viewController.defaultFilters());
+          if (data != null) {
+            viewController.filter(data);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.filter_alt,
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '${_i18n()['filter']}:',
+              ),
+              SizedBox(
+                width: 3,
+              ),
+              Flexible(
+                child: Text(
+                  "${_i18n()["offerOnly"]}",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildLaundries() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _searchCoomponent(context),
         _sortingSwitcher(),
+        _filterButton(context),
         (viewController.filteredServices.value.isNotEmpty)
             ? Column(
                 children: List.generate(
@@ -184,7 +235,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
                 showOnlyOpen: viewController.showOnlyOpen.value,
                 onClick: () {
                   viewController.changeAlwaysOpenSwitch(false);
-                  viewController.filter();
+                  viewController.filter(viewController.filterInput);
                 },
               ),
       ],
@@ -197,7 +248,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
           showOnlyOpen: viewController.showOnlyOpen.value,
           onChange: (bool value) {
             viewController.changeAlwaysOpenSwitch(value);
-            viewController.filter();
+            viewController.filter(viewController.filterInput);
           },
         ));
   }
@@ -208,7 +259,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
       style: context.textTheme.bodyLarge,
       onChanged: (String value) {
         viewController.searchQuery.value = value;
-        viewController.filter();
+        viewController.filter(viewController.filterInput);
       },
       decoration: InputDecoration(
           fillColor: Colors.white,

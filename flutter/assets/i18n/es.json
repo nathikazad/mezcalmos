@@ -700,6 +700,8 @@
           "title": "Empresas de entrega a su alrededor",
           "courier": "Entrega abierta",
           "min": "Min",
+          "offerOnly": "Solo ofertas",
+          "filter": "Filtrar",
           "showOnlyOpenCompanies": "Mostrar solo compañías abiertas",
           "search": "Buscar"
         },
@@ -848,6 +850,8 @@
           "ListRestaurantScreen": {
             "restaurants": "Restaurantes",
             "search": "Búsqueda",
+            "offerOnly": "Reserva en línea",
+            "filter": "Filtrar",
             "showOnlyOpenRestaurants": "Mostrar solo restaurantes abiertos",
             "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
             "noOpenRestaurant": "No hay restaurantes abiertos",
@@ -2036,6 +2040,8 @@
           "noLaundaryFound": "No se encontró lavandería",
           "showOnlyOpenLaundries": "Mostrar solo lavas abiertas",
           "map": "Mapa",
+          "offerOnly": "Reserva en línea",
+          "filter": "Filtrar",
           "viewOnMap": "Ver en el mapa",
           "viewAsList": "Ver como lista",
           "showCost": "Costo de exhibición",

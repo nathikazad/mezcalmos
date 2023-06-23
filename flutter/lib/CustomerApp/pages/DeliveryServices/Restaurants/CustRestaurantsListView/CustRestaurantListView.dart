@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/CustShowOnlyOpenService.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/components/RestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/components/RestaurantShimmerList.dart';
@@ -107,10 +108,12 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             return SingleChildScrollView(
                 padding: const EdgeInsets.all(8),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _searchInput(),
                     _searchFilter(),
                     _sortingSwitcher(),
+                    _filterButton(context),
                     Obx(() {
                       if (viewController.byRestaurants)
                         return Padding(
@@ -124,6 +127,55 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                 ));
           }
         }));
+  }
+
+  Widget _filterButton(BuildContext context) {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.only(top: 0),
+      color: Color(0xFFF0F0F0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () async {
+          FilterInput? data = await cusShowBusinessFilerSheet(
+              context: context,
+              filterInput: viewController.filterInput,
+              defaultFilterInput: viewController.defaultFilters());
+          if (data != null) {
+            viewController.filter(data);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.filter_alt,
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '${_i18n()['filter']}:',
+              ),
+              SizedBox(
+                width: 3,
+              ),
+              Flexible(
+                child: Text(
+                  "${_i18n()["offerOnly"]}",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _mapView() {
@@ -355,24 +407,26 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
           }),
         );
       } else {
-        return Column(
-          children: [
-            //give space when its bigger size.
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              child: Image.asset(
-                "assets/images/customer/restaurants/noOpenRestaurants.png",
-                height: 35.h,
-                width: 65.w,
+        return Center(
+          child: Column(
+            children: [
+              //give space when its bigger size.
+              SizedBox(
+                height: 20,
               ),
-            ),
-            Text(
-              '${_i18n()["noOpenRestaurant"]}',
-              style: context.txt.bodyLarge,
-            )
-          ],
+              Container(
+                child: Image.asset(
+                  "assets/images/customer/restaurants/noOpenRestaurants.png",
+                  height: 35.h,
+                  width: 65.w,
+                ),
+              ),
+              Text(
+                '${_i18n()["noOpenRestaurant"]}',
+                style: context.txt.bodyLarge,
+              )
+            ],
+          ),
         );
       }
     });
@@ -384,7 +438,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
           showOnlyOpen: viewController.showOnlyOpen.value,
           onChange: (bool value) {
             viewController.changeAlwaysOpenSwitch(value);
-            viewController.filter();
+            viewController.filter(viewController.filterInput);
           },
         ));
   }
@@ -395,7 +449,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
       style: context.txt.bodyLarge,
       onChanged: (String value) {
         viewController.searchQuery.value = value;
-        viewController.filter();
+        viewController.filter(viewController.filterInput);
         mezDbgPrint(viewController.searchQuery);
       },
       decoration: InputDecoration(

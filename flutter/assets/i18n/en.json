@@ -703,6 +703,8 @@
           "title": "Delivery companies arround you",
           "courier": "Open Delivery",
           "min": "Min",
+          "offerOnly": "Offers only",
+          "filter": "Filter",
           "showOnlyOpenCompanies": "Show only open companies",
           "search": "Search"
         },
@@ -856,6 +858,8 @@
             "emptRestaurantList": "Sorry no restaurant found.",
             "noOpenRestaurant": "No open restaurants founds",
             "meals": "Meals",
+            "offerOnly": "Online booking",
+            "filter": "Filter",
             "noItemTitle": "No result found",
             "noItemDesc": "Sorry, we couldn’t find what you’re looking for please try a new keyword.",
             "map": "Map",
@@ -1963,6 +1967,8 @@
               "startingFrom": "Starting"
             }
           },
+          "offerOnly": "Online booking",
+          "filter": "Filter",
           "laundries": "Laundries",
           "title": "Laundries arround you ",
           "noLaundaryFound": "No laundry found",

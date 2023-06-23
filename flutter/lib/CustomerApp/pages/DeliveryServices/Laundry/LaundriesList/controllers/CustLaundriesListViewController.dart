@@ -7,6 +7,7 @@ import 'package:location/location.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapLaundryCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
@@ -59,7 +60,20 @@ class CustLaundriesListViewController {
   BuildContext? ctx;
   // Map view //
 
+  late FilterInput _filterInput;
+
+  FilterInput get filterInput => _filterInput;
+
+  FilterInput defaultFilters() {
+    return {
+      "categories": [],
+      "schedule": [],
+      "onlineOrder": ["true"],
+    };
+  }
+
   Future<void> init(BuildContext context) async {
+    _filterInput = defaultFilters();
     ctx = context;
 
     await locPkg.Location().getLocation().then((LocationData location) {
@@ -75,11 +89,12 @@ class CustLaundriesListViewController {
                 lng: _currentLocation.longitude,
                 address: ''),
             withCache: false,
+            online_ordering: _filterInput['onlineOrder']!.contains('true'),
             distance: getFetchDistance)
         .then((List<Laundry> list) {
       _services = list;
 
-      filter();
+      filter(_filterInput);
       _getCustomerCurrentLocation();
     }).whenComplete(() {
       isLoading.value = false;
@@ -96,7 +111,11 @@ class CustLaundriesListViewController {
     showOnlyOpen.value = value;
   }
 
-  void filter() {
+  void filter(Map<String, List<String>> newData) {
+    _filterInput.clear();
+    newData.forEach((String key, List<String> value) {
+      _filterInput[key] = List.from(value);
+    });
     List<Laundry> newList = new List<Laundry>.from(_services);
 
     newList = newList
@@ -119,6 +138,7 @@ class CustLaundriesListViewController {
                 lng: _currentLocation.longitude,
                 address: ''),
             withCache: false,
+            online_ordering: _filterInput['onlineOrder']!.contains('true'),
             distance: getFetchDistance);
       } else {
         _mapViewLaundries.value = await get_laundries(
@@ -128,6 +148,7 @@ class CustLaundriesListViewController {
                 lat: _screenToWorldPosition!.latitude,
                 lng: _screenToWorldPosition!.longitude,
                 address: ''),
+            online_ordering: _filterInput['onlineOrder']!.contains('true'),
             withCache: false);
       }
     } catch (e) {

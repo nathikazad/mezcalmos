@@ -643,7 +643,6 @@ mutation delete_business_rental($id: Int!) {
 query getHomeRentalOrderRequest($orderId: Int!) {
   business_order_request_by_pk(id: $orderId) {
     business_id
-
     customer_id
     customer_app_type
     business {
@@ -683,7 +682,82 @@ query getHomeRentalOrderRequest($orderId: Int!) {
             }
           }
           additional_parameters
-
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+      }
+      home {
+        id
+        details {
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+      }
+      event {
+        id
+        details {
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+      }
+      service {
+        id
+        details {
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+      }
+      product {
+        id
+        details {
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
           category1
           category2
           cost

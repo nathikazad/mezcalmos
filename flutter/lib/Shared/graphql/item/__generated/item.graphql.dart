@@ -8485,11 +8485,13 @@ class Variables$Query$searchItems {
     List<int>? servicesIds,
     String? languageId,
     String? keyword,
+    bool? online_ordering,
   }) =>
       Variables$Query$searchItems._({
         if (servicesIds != null) r'servicesIds': servicesIds,
         if (languageId != null) r'languageId': languageId,
         if (keyword != null) r'keyword': keyword,
+        if (online_ordering != null) r'online_ordering': online_ordering,
       });
 
   Variables$Query$searchItems._(this._$data);
@@ -8509,6 +8511,10 @@ class Variables$Query$searchItems {
       final l$keyword = data['keyword'];
       result$data['keyword'] = (l$keyword as String?);
     }
+    if (data.containsKey('online_ordering')) {
+      final l$online_ordering = data['online_ordering'];
+      result$data['online_ordering'] = (l$online_ordering as bool?);
+    }
     return Variables$Query$searchItems._(result$data);
   }
 
@@ -8517,6 +8523,7 @@ class Variables$Query$searchItems {
   List<int>? get servicesIds => (_$data['servicesIds'] as List<int>?);
   String? get languageId => (_$data['languageId'] as String?);
   String? get keyword => (_$data['keyword'] as String?);
+  bool? get online_ordering => (_$data['online_ordering'] as bool?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('servicesIds')) {
@@ -8530,6 +8537,10 @@ class Variables$Query$searchItems {
     if (_$data.containsKey('keyword')) {
       final l$keyword = keyword;
       result$data['keyword'] = l$keyword;
+    }
+    if (_$data.containsKey('online_ordering')) {
+      final l$online_ordering = online_ordering;
+      result$data['online_ordering'] = l$online_ordering;
     }
     return result$data;
   }
@@ -8585,6 +8596,15 @@ class Variables$Query$searchItems {
     if (l$keyword != lOther$keyword) {
       return false;
     }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (_$data.containsKey('online_ordering') !=
+        other._$data.containsKey('online_ordering')) {
+      return false;
+    }
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
     return true;
   }
 
@@ -8593,6 +8613,7 @@ class Variables$Query$searchItems {
     final l$servicesIds = servicesIds;
     final l$languageId = languageId;
     final l$keyword = keyword;
+    final l$online_ordering = online_ordering;
     return Object.hashAll([
       _$data.containsKey('servicesIds')
           ? l$servicesIds == null
@@ -8601,6 +8622,7 @@ class Variables$Query$searchItems {
           : const {},
       _$data.containsKey('languageId') ? l$languageId : const {},
       _$data.containsKey('keyword') ? l$keyword : const {},
+      _$data.containsKey('online_ordering') ? l$online_ordering : const {},
     ]);
   }
 }
@@ -8618,6 +8640,7 @@ abstract class CopyWith$Variables$Query$searchItems<TRes> {
     List<int>? servicesIds,
     String? languageId,
     String? keyword,
+    bool? online_ordering,
   });
 }
 
@@ -8638,6 +8661,7 @@ class _CopyWithImpl$Variables$Query$searchItems<TRes>
     Object? servicesIds = _undefined,
     Object? languageId = _undefined,
     Object? keyword = _undefined,
+    Object? online_ordering = _undefined,
   }) =>
       _then(Variables$Query$searchItems._({
         ..._instance._$data,
@@ -8645,6 +8669,8 @@ class _CopyWithImpl$Variables$Query$searchItems<TRes>
           'servicesIds': (servicesIds as List<int>?),
         if (languageId != _undefined) 'languageId': (languageId as String?),
         if (keyword != _undefined) 'keyword': (keyword as String?),
+        if (online_ordering != _undefined)
+          'online_ordering': (online_ordering as bool?),
       }));
 }
 
@@ -8658,6 +8684,7 @@ class _CopyWithStubImpl$Variables$Query$searchItems<TRes>
     List<int>? servicesIds,
     String? languageId,
     String? keyword,
+    bool? online_ordering,
   }) =>
       _res;
 }
@@ -8846,6 +8873,15 @@ const documentNodeQuerysearchItems = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'keyword')),
         type: NamedTypeNode(
           name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'online_ordering')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
           isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -9063,7 +9099,27 @@ const documentNodeQuerysearchItems = DocumentNode(definitions: [
                     )
                   ]),
                 ]),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'restaurant'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'online_ordering'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: VariableNode(
+                                name: NameNode(value: 'online_ordering')),
+                          )
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
             ]),
           )
         ],

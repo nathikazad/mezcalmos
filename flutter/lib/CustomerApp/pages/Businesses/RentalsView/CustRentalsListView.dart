@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -195,7 +195,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
         firstButtonIcon = Icons.house_rounded;
     }
 
-    IconData secondButtonIcon = Icons.store;
+    final IconData secondButtonIcon = Icons.store;
     // if (viewController.rentalCategory == RentalCategory1.Home) {
     //   secondButtonIcon = Icons.store;
     // }
