@@ -205,7 +205,9 @@ class CustBusinessCartController extends GetxController {
       final CustBusinessCart? cartData = await get_business_cart(
         customerId: _auth.hasuraUserId!,
       );
-      if (cartData != null && cartData.businessId == null) {
+      if (cartData != null &&
+          cartData.businessId == null &&
+          cartData.businessId != cart.value!.businessId) {
         await setCartBusinessId(cart.value!.businessId!.toInt());
       }
       if (cart.value != null && cart.value!.items.isNotEmpty) {
