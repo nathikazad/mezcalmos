@@ -116,7 +116,7 @@ select_permissions:
         - actual_delivered_time
         - actual_package_ready_time
         - cancellation_time
-        - notified_drivers
+        
         - chat_with_customer_id
         - chat_with_service_provider_id
         - current_gps
@@ -141,6 +141,8 @@ select_permissions:
         - payment_type
         - pickup_address
         - pickup_gps
+        - counter_offers
+        - notified_drivers
         - schedule_time
         - service_provider_id
         - service_provider_review_by_driver_id
@@ -171,6 +173,8 @@ select_permissions:
         - delivery_cost
         - delivery_driver_id
         - customer_offer
+        - counter_offers
+       
         - direction
         - distance_from_base
         - driver_review_by_customer_id

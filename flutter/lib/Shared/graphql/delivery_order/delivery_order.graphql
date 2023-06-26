@@ -25,6 +25,8 @@ query get_driver_order($orderId: Int!) {
     customer_review_by_driver_id
     delivery_cost
     customer_offer
+    counter_offers
+    notified_drivers
     dropoff_address
     dropoff_gps
     estimated_arrival_at_dropoff_time
@@ -208,6 +210,8 @@ subscription listen_on_driver_order_variables($orderId: Int!) {
     estimated_arrival_at_pickup_time
     estimated_package_ready_time
     status
+       
+    counter_offers
     package_ready
     delivery_driver{
       user {
@@ -414,6 +418,7 @@ subscription listen_open_driver_orders($in_process: Boolean!) {
     dropoff_address
     delivery_cost
     customer_offer
+ 
     dropoff_gps
     customer {
       user {

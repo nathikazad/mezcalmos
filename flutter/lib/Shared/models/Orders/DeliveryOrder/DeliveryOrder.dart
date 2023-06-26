@@ -7,8 +7,8 @@ import 'package:mezcalmos/Shared/models/User.dart' as user;
 class DeliveryOrder extends DeliverableOrder {
   int? serviceOrderId;
   double? customerOffer;
-  List<DvCounterOffer> counterOffers = [];
-  Map<int, bool> notifiedDrivers = {};
+  Map<int, CounterOffer>? counterOffers;
+  Map<int, bool>? notifiedDrivers;
 
   DeliveryOrderStatus status;
 
@@ -24,6 +24,8 @@ class DeliveryOrder extends DeliverableOrder {
       super.stripePaymentInfo,
       super.customerReviewByDriver,
       super.serviceReviewByDriver,
+      this.counterOffers,
+      this.notifiedDrivers,
       required super.costs,
       required this.packageReady,
       required this.serviceOrderId,
@@ -78,6 +80,10 @@ class DeliveryOrder extends DeliverableOrder {
   bool get driverCanReviewCustomer {
     return status == DeliveryOrderStatus.Delivered &&
         customerReviewByDriver == null;
+  }
+
+  bool hasSentOffer(int driverId) {
+    return counterOffers?.containsKey(driverId) ?? false;
   }
 
   @override
@@ -143,6 +149,7 @@ class DeliveryOrderVariables {
   DateTime? cancellationTime;
   DeliveryOrderStatus status;
   user.UserInfo? driverInfo;
+  Map<int, CounterOffer>? counterOffers;
   bool packageReady;
   DeliveryOrderVariables(
       {required this.status,
@@ -151,9 +158,7 @@ class DeliveryOrderVariables {
       this.estimatedArrivalAtDropoff,
       this.estimatedPackageReadyTime,
       this.scheduleTime,
+      this.counterOffers,
       this.cancellationTime,
       this.driverInfo});
-}
-class DvCounterOffer {
-  
 }

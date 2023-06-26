@@ -428,6 +428,20 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'counter_offers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'notified_drivers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'dropoff_address'),
             alias: null,
             arguments: [],
@@ -1536,6 +1550,8 @@ class Query$get_driver_order$delivery_order_by_pk {
     this.customer_review_by_driver_id,
     required this.delivery_cost,
     this.customer_offer,
+    this.counter_offers,
+    this.notified_drivers,
     required this.dropoff_address,
     required this.dropoff_gps,
     this.estimated_arrival_at_dropoff_time,
@@ -1582,6 +1598,8 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$customer_review_by_driver_id = json['customer_review_by_driver_id'];
     final l$delivery_cost = json['delivery_cost'];
     final l$customer_offer = json['customer_offer'];
+    final l$counter_offers = json['counter_offers'];
+    final l$notified_drivers = json['notified_drivers'];
     final l$dropoff_address = json['dropoff_address'];
     final l$dropoff_gps = json['dropoff_gps'];
     final l$estimated_arrival_at_dropoff_time =
@@ -1632,6 +1650,10 @@ class Query$get_driver_order$delivery_order_by_pk {
       delivery_cost: moneyFromJson(l$delivery_cost),
       customer_offer:
           l$customer_offer == null ? null : moneyFromJson(l$customer_offer),
+      counter_offers:
+          l$counter_offers == null ? null : mapFromJson(l$counter_offers),
+      notified_drivers:
+          l$notified_drivers == null ? null : mapFromJson(l$notified_drivers),
       dropoff_address: (l$dropoff_address as String),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
       estimated_arrival_at_dropoff_time:
@@ -1718,6 +1740,10 @@ class Query$get_driver_order$delivery_order_by_pk {
   final double delivery_cost;
 
   final double? customer_offer;
+
+  final dynamic? counter_offers;
+
+  final dynamic? notified_drivers;
 
   final String dropoff_address;
 
@@ -1812,6 +1838,12 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$customer_offer = customer_offer;
     _resultData['customer_offer'] =
         l$customer_offer == null ? null : moneyToJson(l$customer_offer);
+    final l$counter_offers = counter_offers;
+    _resultData['counter_offers'] =
+        l$counter_offers == null ? null : mapToJson(l$counter_offers);
+    final l$notified_drivers = notified_drivers;
+    _resultData['notified_drivers'] =
+        l$notified_drivers == null ? null : mapToJson(l$notified_drivers);
     final l$dropoff_address = dropoff_address;
     _resultData['dropoff_address'] = l$dropoff_address;
     final l$dropoff_gps = dropoff_gps;
@@ -1901,6 +1933,8 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
     final l$delivery_cost = delivery_cost;
     final l$customer_offer = customer_offer;
+    final l$counter_offers = counter_offers;
+    final l$notified_drivers = notified_drivers;
     final l$dropoff_address = dropoff_address;
     final l$dropoff_gps = dropoff_gps;
     final l$estimated_arrival_at_dropoff_time =
@@ -1946,6 +1980,8 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$customer_review_by_driver_id,
       l$delivery_cost,
       l$customer_offer,
+      l$counter_offers,
+      l$notified_drivers,
       l$dropoff_address,
       l$dropoff_gps,
       l$estimated_arrival_at_dropoff_time,
@@ -2040,6 +2076,16 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$customer_offer = customer_offer;
     final lOther$customer_offer = other.customer_offer;
     if (l$customer_offer != lOther$customer_offer) {
+      return false;
+    }
+    final l$counter_offers = counter_offers;
+    final lOther$counter_offers = other.counter_offers;
+    if (l$counter_offers != lOther$counter_offers) {
+      return false;
+    }
+    final l$notified_drivers = notified_drivers;
+    final lOther$notified_drivers = other.notified_drivers;
+    if (l$notified_drivers != lOther$notified_drivers) {
       return false;
     }
     final l$dropoff_address = dropoff_address;
@@ -2244,6 +2290,8 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     int? customer_review_by_driver_id,
     double? delivery_cost,
     double? customer_offer,
+    dynamic? counter_offers,
+    dynamic? notified_drivers,
     String? dropoff_address,
     Geography? dropoff_gps,
     String? estimated_arrival_at_dropoff_time,
@@ -2328,6 +2376,8 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? customer_review_by_driver_id = _undefined,
     Object? delivery_cost = _undefined,
     Object? customer_offer = _undefined,
+    Object? counter_offers = _undefined,
+    Object? notified_drivers = _undefined,
     Object? dropoff_address = _undefined,
     Object? dropoff_gps = _undefined,
     Object? estimated_arrival_at_dropoff_time = _undefined,
@@ -2394,6 +2444,12 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
         customer_offer: customer_offer == _undefined
             ? _instance.customer_offer
             : (customer_offer as double?),
+        counter_offers: counter_offers == _undefined
+            ? _instance.counter_offers
+            : (counter_offers as dynamic?),
+        notified_drivers: notified_drivers == _undefined
+            ? _instance.notified_drivers
+            : (notified_drivers as dynamic?),
         dropoff_address:
             dropoff_address == _undefined || dropoff_address == null
                 ? _instance.dropoff_address
@@ -2618,6 +2674,8 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     int? customer_review_by_driver_id,
     double? delivery_cost,
     double? customer_offer,
+    dynamic? counter_offers,
+    dynamic? notified_drivers,
     String? dropoff_address,
     Geography? dropoff_gps,
     String? estimated_arrival_at_dropoff_time,
@@ -8431,6 +8489,13 @@ const documentNodeSubscriptionlisten_on_driver_order_variables =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'counter_offers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'package_ready'),
             alias: null,
             arguments: [],
@@ -8593,6 +8658,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     this.estimated_arrival_at_pickup_time,
     this.estimated_package_ready_time,
     required this.status,
+    this.counter_offers,
     required this.package_ready,
     this.delivery_driver,
     required this.$__typename,
@@ -8608,6 +8674,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
         json['estimated_arrival_at_pickup_time'];
     final l$estimated_package_ready_time = json['estimated_package_ready_time'];
     final l$status = json['status'];
+    final l$counter_offers = json['counter_offers'];
     final l$package_ready = json['package_ready'];
     final l$delivery_driver = json['delivery_driver'];
     final l$$__typename = json['__typename'];
@@ -8620,6 +8687,8 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
           (l$estimated_arrival_at_pickup_time as String?),
       estimated_package_ready_time: (l$estimated_package_ready_time as String?),
       status: (l$status as String),
+      counter_offers:
+          l$counter_offers == null ? null : mapFromJson(l$counter_offers),
       package_ready: (l$package_ready as bool),
       delivery_driver: l$delivery_driver == null
           ? null
@@ -8640,6 +8709,8 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
   final String? estimated_package_ready_time;
 
   final String status;
+
+  final dynamic? counter_offers;
 
   final bool package_ready;
 
@@ -8666,6 +8737,9 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
         l$estimated_package_ready_time;
     final l$status = status;
     _resultData['status'] = l$status;
+    final l$counter_offers = counter_offers;
+    _resultData['counter_offers'] =
+        l$counter_offers == null ? null : mapToJson(l$counter_offers);
     final l$package_ready = package_ready;
     _resultData['package_ready'] = l$package_ready;
     final l$delivery_driver = delivery_driver;
@@ -8684,6 +8758,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
     final l$estimated_package_ready_time = estimated_package_ready_time;
     final l$status = status;
+    final l$counter_offers = counter_offers;
     final l$package_ready = package_ready;
     final l$delivery_driver = delivery_driver;
     final l$$__typename = $__typename;
@@ -8694,6 +8769,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
       l$estimated_arrival_at_pickup_time,
       l$estimated_package_ready_time,
       l$status,
+      l$counter_offers,
       l$package_ready,
       l$delivery_driver,
       l$$__typename,
@@ -8746,6 +8822,11 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     if (l$status != lOther$status) {
       return false;
     }
+    final l$counter_offers = counter_offers;
+    final lOther$counter_offers = other.counter_offers;
+    if (l$counter_offers != lOther$counter_offers) {
+      return false;
+    }
     final l$package_ready = package_ready;
     final lOther$package_ready = other.package_ready;
     if (l$package_ready != lOther$package_ready) {
@@ -8796,6 +8877,7 @@ abstract class CopyWith$Subscription$listen_on_driver_order_variables$delivery_o
     String? estimated_arrival_at_pickup_time,
     String? estimated_package_ready_time,
     String? status,
+    dynamic? counter_offers,
     bool? package_ready,
     Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver?
         delivery_driver,
@@ -8830,6 +8912,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order
     Object? estimated_arrival_at_pickup_time = _undefined,
     Object? estimated_package_ready_time = _undefined,
     Object? status = _undefined,
+    Object? counter_offers = _undefined,
     Object? package_ready = _undefined,
     Object? delivery_driver = _undefined,
     Object? $__typename = _undefined,
@@ -8855,6 +8938,9 @@ class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
+        counter_offers: counter_offers == _undefined
+            ? _instance.counter_offers
+            : (counter_offers as dynamic?),
         package_ready: package_ready == _undefined || package_ready == null
             ? _instance.package_ready
             : (package_ready as bool),
@@ -8894,6 +8980,7 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_o
     String? estimated_arrival_at_pickup_time,
     String? estimated_package_ready_time,
     String? status,
+    dynamic? counter_offers,
     bool? package_ready,
     Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver?
         delivery_driver,

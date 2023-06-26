@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart'
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -42,9 +43,22 @@ Stream<DeliveryOrderVariables?> listen_on_driver_order_variables(
           1
         ];
       }
+      mezlog(orderData.counter_offers);
       return DeliveryOrderVariables(
         status: orderData.status.toDeliveryOrderStatus(),
         packageReady: orderData.package_ready,
+        counterOffers: orderData.counter_offers
+            ?.map<int, CounterOffer>((String id, value) {
+          return MapEntry(
+              int.parse(id),
+              CounterOffer(
+                  price: value["price"],
+                  offerValidTime: DateTime.parse(value["expiryTime"]),
+                  driverInfo: UserInfo(
+                      hasuraId: value["hasuraId"],
+                      name: value["name"],
+                      image: value["image"])));
+        }),
         estimatedArrivalAtDropoff:
             (orderData.estimated_arrival_at_dropoff_time != null)
                 ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
