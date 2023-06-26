@@ -57,9 +57,9 @@ class MezDateTimePickerController {
               _getTheCLosestOpenDay().toLocal().month,
           initialDate?.toLocal().day ?? _getTheCLosestOpenDay().toLocal().day);
       hours.value = initialDate?.toLocal().hour ??
-          selectedWorkDay?.value.from.first.toInt();
+          selectedWorkDay?.value.fromOld.first.toInt();
       minutes.value = initialDate?.toLocal().minute ??
-          selectedWorkDay?.value.from[1].toInt();
+          selectedWorkDay?.value.fromOld[1].toInt();
     } else {
       periodOfTime.value = initPeriod.toLocal();
       pickedDate.value = DateTime(
@@ -94,8 +94,8 @@ class MezDateTimePickerController {
   void changeDate(DateTime newValue) {
     pickedDate.value = newValue;
     if (!pickFromPeriod) {
-      hours.value = selectedWorkDay?.value.from.first.toInt();
-      minutes.value = selectedWorkDay?.value.from[1].toInt();
+      hours.value = selectedWorkDay?.value.fromOld.first.toInt();
+      minutes.value = selectedWorkDay?.value.fromOld[1].toInt();
     } else {
       hours.value = minHours.value;
       minutes.value = minMinutes.value;
@@ -160,8 +160,9 @@ class MezDateTimePickerController {
     final List<int> hours = [];
 
     if (selectedWorkDay != null) {
-      for (int i = minHours.value ?? selectedWorkDay!.value.from.first.toInt();
-          i <= (maxHours.value ?? selectedWorkDay!.value.to.first);
+      for (int i =
+              minHours.value ?? selectedWorkDay!.value.fromOld.first.toInt();
+          i <= (maxHours.value ?? selectedWorkDay!.value.toOld.first);
           i++) {
         hours.add(i);
       }
@@ -179,15 +180,15 @@ class MezDateTimePickerController {
             i = i + 5) {
           data.add(i);
         }
-      } else if (hours.value == selectedWorkDay!.value.from.first) {
-        for (int i = selectedWorkDay!.value.from[1].toInt();
+      } else if (hours.value == selectedWorkDay!.value.fromOld.first) {
+        for (int i = selectedWorkDay!.value.fromOld[1].toInt();
             i <= 59;
             i = i + 5) {
           data.add(i);
         }
-      } else if (hours.value == selectedWorkDay!.value.to.first) {
+      } else if (hours.value == selectedWorkDay!.value.toOld.first) {
         if (selectedWorkDay!.value.to[1] != 0) {
-          for (int i = 0; i <= selectedWorkDay!.value.to[1]; i = i + 5) {
+          for (int i = 0; i <= selectedWorkDay!.value.toOld[1]; i = i + 5) {
             data.add(i);
           }
         } else

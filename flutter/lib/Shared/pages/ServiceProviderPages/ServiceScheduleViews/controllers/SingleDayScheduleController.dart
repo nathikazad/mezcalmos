@@ -39,7 +39,7 @@ class SingleDayScheduleViewController {
   }
 
   void newWorkingHours() {
-    _workingDay.value?.openHours.add(OpenHours(from: [00, 00], to: [20, 00]));
+    _workingDay.value?.openHours.add(OpenHours(from: "00:00", to: "20:00"));
     _workingDay.refresh();
   }
 
@@ -58,13 +58,13 @@ class SingleDayScheduleViewController {
 
   void updateToTime(
       {required int index, required int hour, required int minute}) {
-    _workingDay.value?.openHours[index].to = [hour, minute];
+    _workingDay.value?.openHours[index].to = "$hour:$minute";
     _workingDay.refresh();
   }
 
   void updateFromTime(
       {required int index, required int hour, required int minute}) {
-    _workingDay.value?.openHours[index].from = [hour, minute];
+    _workingDay.value?.openHours[index].from = "$hour:$minute";
     _workingDay.refresh();
   }
 

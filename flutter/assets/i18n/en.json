@@ -75,7 +75,7 @@
           "total": "total",
           "unit": "unit",
           "none": "none",
-          "free": "Free"
+          "free": "FREE"
         }
       },
       "services": {
@@ -534,6 +534,20 @@
       }
     },
     "pages": {
+      "CustCartView": {
+        "CustCartView": {
+          "myCart": "My cart",
+          "request": "Request",
+          "notes": "Notes",
+          "writeNotesHere": "Write your notes here.",
+          "summary": "Summary",
+          "orderCost": "Order Cost",
+          "disclaimer": "Disclaimer",
+          "disclaimerPartOneText": "Mezkala is only relaying your order request to the business",
+          "disclaimerPartTwoText": " and is not responsible for the quality or the actions of the business.",
+          "okay": "Okay"
+        }
+      },
       "JoinUsView": {
         "joinUs": "Join us",
         "restaurantBusiness": {
@@ -712,6 +726,7 @@
           "next": "Next",
           "orderNow": "Order now",
           "deliveryCompany": "Delivery company",
+          "topDescription": "You can ask for any item from anywhere and a delivery driver will pick it up for you.",
           "CustRequestCourierItems": {
             "item": "Item",
             "remove": "Remove",
@@ -2182,18 +2197,24 @@
         "delivery": "Delivery",
         "reviews": "Reviews",
         "share": "Share",
+        "onlineOrdering": "Online Ordering",
+        "onlineOrderTip": "When the toggle is turned on, customers will be able to make orders. Otherwise, customer will only be able to see the products and services you offer.",
         "privacyPolicies": "Privacy Policies",
         "logout": "Logout",
         "openService": "Open service",
         "closeService": "Close forever",
         "serviceClosed": "Service is closed indefinitely",
-        "serviceUnderReview": "Your service is under review, you’ll be notified, once it’s approved."
+        "serviceUnderReview": "Your service is under review, you’ll be notified, once it’s approved.",
+        "businessId": "Business ID",
+        "onlySevenDays": "You can change your ID only once every 7 days.",
+        "cancel": "Cancel",
+        "save": "Save"
       },
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage": {
             "create": "Create",
-            "opNote" : "If you want to be added as an operator to an existing business, ask the owner of the business to send you invite code",
+            "opNote": "If you want to be added as an operator to an existing business, ask the owner of the business to send you invite code",
 
             "subtitle": {
               "restaurant": "Create a new restaurant and receive orders from your local customers.",
@@ -2229,6 +2250,8 @@
             "businessTypeErrorText": "Please select a business type",
             "save": "Save",
             "cancel": "Cancel",
+            "businessId": "Business ID",
+            "enterYourBusiness": "Enter your business ID",
             "businessProfile": {
               "surfShop": "Surf Shop",
               "vehicleRental": "Vehicle Rental",
@@ -4028,6 +4051,6 @@
     "min": "min",
     "slowInternet": "Slow internet",
     "noInternet": "No internet connection",
-    "addingOp" : "Adding you as an operator"
+    "addingOp": "Adding you as an operator"
   }
 }

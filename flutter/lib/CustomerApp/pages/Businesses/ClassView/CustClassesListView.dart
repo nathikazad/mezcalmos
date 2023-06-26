@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/controllers/CustClassesListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
@@ -11,10 +12,11 @@ import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
@@ -23,8 +25,6 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:intl/intl.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['ClassView']['CustEventsListView'];
@@ -284,8 +284,9 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                             imageUrl: viewController
                                     .classes[index].details.firstImage ??
                                 defaultUserImgUrl,
-                            errorWidget: (BuildContext context, url, error) =>
-                                Icon(Icons.error),
+                            errorWidget:
+                                (BuildContext context, String url, error) =>
+                                    Icon(Icons.error),
                             imageBuilder: (BuildContext context,
                                     ImageProvider<Object> imageProvider) =>
                                 CircleAvatar(
@@ -326,7 +327,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                           period: viewController.classes[index].period,
                           showTitle: false,
                           showIcons: false,
-                          schedule: viewController.classes[index].schedule,
+                          schedule: viewController.classes[index].schedule!,
                           scheduleType:
                               viewController.classes[index].scheduleType)
                     ],

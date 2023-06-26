@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 abstract class Service {
   ServiceInfo info;
@@ -20,7 +21,8 @@ abstract class Service {
   num? numberOfReviews;
   DeliveryCost? deliveryCost;
   bool isOpen;
-
+  bool onlineOrdering;
+  String? uniqueId;
   PaymentInfo? paymentInfo;
 
   Service(
@@ -37,7 +39,9 @@ abstract class Service {
       this.rate,
       required this.isOpen,
       required this.deliveryCost,
+      required this.onlineOrdering,
       this.paymentInfo,
+      this.uniqueId,
       this.currency});
 
   cModels.Language get primaryLanguage => languages.primary;
@@ -103,5 +107,7 @@ class MainService extends Service {
     required super.serviceLinkId,
     required super.serviceProviderType,
     required super.deliveryCost,
+    required super.onlineOrdering,
+    super.uniqueId,
   });
 }

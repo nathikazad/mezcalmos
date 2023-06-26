@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/controllers/CustomerOrdersListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
@@ -47,7 +48,6 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return MinimalOrderCard(
                     order: viewController.currentOrders[index],
-                 
                     onTap: () {
                       // todo switch case
                       switch (viewController.currentOrders[index].orderType) {
@@ -61,6 +61,10 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                           break;
                         case OrderType.Laundry:
                           CustLaundryOrderView.navigate(
+                              orderId: viewController.currentOrders[index].id);
+                          break;
+                        case OrderType.Business:
+                          CustOrderView.navigate(
                               orderId: viewController.currentOrders[index].id);
                           break;
                         default:

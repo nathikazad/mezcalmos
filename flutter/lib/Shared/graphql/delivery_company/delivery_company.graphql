@@ -1,7 +1,15 @@
 query getDeliveryCompanyById($id: Int!) {
   delivery_company_by_pk(id: $id) {
     id
-     delivery_details {
+    reviews_aggregate {
+      aggregate {
+        count
+        avg {
+          rating
+        }
+      }
+    }
+    delivery_details {
       cost_per_km
       customer_pickup
       delivery_available
@@ -21,6 +29,8 @@ query getDeliveryCompanyById($id: Int!) {
       image
       location_id
       name
+      last_active_time
+      online_ordering
       language
       open_status
       creation_time
@@ -43,7 +53,7 @@ query getDeliveryCompanyById($id: Int!) {
 query getDeliveryCompanies($is_open: Boolean!) {
   delivery_company(where: {details: {is_open: {_eq: $is_open}}}) {
     id
-      reviews_aggregate {
+    reviews_aggregate {
       aggregate {
         count
         avg {
@@ -51,7 +61,7 @@ query getDeliveryCompanies($is_open: Boolean!) {
         }
       }
     }
-     delivery_details {
+    delivery_details {
       cost_per_km
       customer_pickup
       delivery_available
@@ -72,7 +82,7 @@ query getDeliveryCompanies($is_open: Boolean!) {
       location_id
       name
       language
-
+      online_ordering
       open_status
       creation_time
       service_provider_type
@@ -96,7 +106,7 @@ query getDeliveryCompanies($is_open: Boolean!) {
 query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
   delivery_get_delivery_companies(args: $args) {
     id
-     delivery_details {
+    delivery_details {
       cost_per_km
       customer_pickup
       delivery_available
@@ -116,6 +126,7 @@ query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
       location_id
       name
       language
+      online_ordering
       schedule
       open_status
       creation_time

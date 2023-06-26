@@ -57,6 +57,7 @@ query get_product_by_category(
   $offset: Int
   $categories2: [String!]
   $tags: [String!]
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_product(
     where: {
@@ -75,6 +76,7 @@ query get_product_by_category(
             }
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering
           }
         }
       }

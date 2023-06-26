@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -13,6 +12,7 @@ import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class CustRealEstateListViewController {
@@ -194,7 +194,7 @@ class CustRealEstateListViewController {
       if (currentPostitionBased) {
         _mapViewBusinesses.value = await get_business_by_home(
             homeType: HomeAvailabilityOption.Sale,
-            distance: 25000,
+            distance: getFetchDistance,
             fromLocation: _fromLocation!,
             offset: 0,
             limit: 25,
@@ -245,7 +245,7 @@ class CustRealEstateListViewController {
             business.location!.lng.toDouble()),
       ));
     }
-    _buisinessesMarkers.update((value) {});
+    _buisinessesMarkers.update((Iterable<Marker>? value) {});
     _buisinessesMarkers.refresh();
   }
 

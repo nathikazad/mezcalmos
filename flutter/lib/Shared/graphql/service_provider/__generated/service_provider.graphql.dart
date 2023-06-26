@@ -1005,6 +1005,13 @@ const documentNodeQuerygetServiceDetails = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'unique_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'accepted_payments'),
             alias: null,
             arguments: [],
@@ -1083,6 +1090,13 @@ const documentNodeQuerygetServiceDetails = DocumentNode(definitions: [
           ),
           FieldNode(
             name: NameNode(value: 'phone_number'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'online_ordering'),
             alias: null,
             arguments: [],
             directives: [],
@@ -1398,6 +1412,7 @@ extension ClientExtension$Query$getServiceDetails on graphql.GraphQLClient {
 
 class Query$getServiceDetails$service_provider_details_by_pk {
   Query$getServiceDetails$service_provider_details_by_pk({
+    required this.unique_id,
     required this.accepted_payments,
     required this.approved,
     this.is_open,
@@ -1410,6 +1425,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     required this.name,
     required this.open_status,
     this.phone_number,
+    required this.online_ordering,
     this.service_link_id,
     this.stripe_info,
     required this.service_provider_type,
@@ -1421,6 +1437,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
 
   factory Query$getServiceDetails$service_provider_details_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$unique_id = json['unique_id'];
     final l$accepted_payments = json['accepted_payments'];
     final l$approved = json['approved'];
     final l$is_open = json['is_open'];
@@ -1433,6 +1450,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     final l$name = json['name'];
     final l$open_status = json['open_status'];
     final l$phone_number = json['phone_number'];
+    final l$online_ordering = json['online_ordering'];
     final l$service_link_id = json['service_link_id'];
     final l$stripe_info = json['stripe_info'];
     final l$service_provider_type = json['service_provider_type'];
@@ -1441,6 +1459,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     final l$description = json['description'];
     final l$$__typename = json['__typename'];
     return Query$getServiceDetails$service_provider_details_by_pk(
+      unique_id: (l$unique_id as String),
       accepted_payments: mapFromJson(l$accepted_payments),
       approved: (l$approved as bool),
       is_open: (l$is_open as bool?),
@@ -1453,6 +1472,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
       name: (l$name as String),
       open_status: (l$open_status as String),
       phone_number: (l$phone_number as String?),
+      online_ordering: (l$online_ordering as bool),
       service_link_id: (l$service_link_id as int?),
       stripe_info: l$stripe_info == null
           ? null
@@ -1469,6 +1489,8 @@ class Query$getServiceDetails$service_provider_details_by_pk {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String unique_id;
 
   final dynamic accepted_payments;
 
@@ -1494,6 +1516,8 @@ class Query$getServiceDetails$service_provider_details_by_pk {
 
   final String? phone_number;
 
+  final bool online_ordering;
+
   final int? service_link_id;
 
   final Query$getServiceDetails$service_provider_details_by_pk$stripe_info?
@@ -1513,6 +1537,8 @@ class Query$getServiceDetails$service_provider_details_by_pk {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$unique_id = unique_id;
+    _resultData['unique_id'] = l$unique_id;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$approved = approved;
@@ -1537,6 +1563,8 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     _resultData['open_status'] = l$open_status;
     final l$phone_number = phone_number;
     _resultData['phone_number'] = l$phone_number;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
     final l$service_link_id = service_link_id;
     _resultData['service_link_id'] = l$service_link_id;
     final l$stripe_info = stripe_info;
@@ -1556,6 +1584,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
 
   @override
   int get hashCode {
+    final l$unique_id = unique_id;
     final l$accepted_payments = accepted_payments;
     final l$approved = approved;
     final l$is_open = is_open;
@@ -1568,6 +1597,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     final l$name = name;
     final l$open_status = open_status;
     final l$phone_number = phone_number;
+    final l$online_ordering = online_ordering;
     final l$service_link_id = service_link_id;
     final l$stripe_info = stripe_info;
     final l$service_provider_type = service_provider_type;
@@ -1576,6 +1606,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     final l$description = description;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$unique_id,
       l$accepted_payments,
       l$approved,
       l$is_open,
@@ -1588,6 +1619,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
       l$name,
       l$open_status,
       l$phone_number,
+      l$online_ordering,
       l$service_link_id,
       l$stripe_info,
       l$service_provider_type,
@@ -1605,6 +1637,11 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     }
     if (!(other is Query$getServiceDetails$service_provider_details_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$unique_id = unique_id;
+    final lOther$unique_id = other.unique_id;
+    if (l$unique_id != lOther$unique_id) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -1665,6 +1702,11 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     final l$phone_number = phone_number;
     final lOther$phone_number = other.phone_number;
     if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
       return false;
     }
     final l$service_link_id = service_link_id;
@@ -1729,6 +1771,7 @@ abstract class CopyWith$Query$getServiceDetails$service_provider_details_by_pk<
       _CopyWithStubImpl$Query$getServiceDetails$service_provider_details_by_pk;
 
   TRes call({
+    String? unique_id,
     dynamic? accepted_payments,
     bool? approved,
     bool? is_open,
@@ -1741,6 +1784,7 @@ abstract class CopyWith$Query$getServiceDetails$service_provider_details_by_pk<
     String? name,
     String? open_status,
     String? phone_number,
+    bool? online_ordering,
     int? service_link_id,
     Query$getServiceDetails$service_provider_details_by_pk$stripe_info?
         stripe_info,
@@ -1775,6 +1819,7 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? unique_id = _undefined,
     Object? accepted_payments = _undefined,
     Object? approved = _undefined,
     Object? is_open = _undefined,
@@ -1787,6 +1832,7 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk<TRes>
     Object? name = _undefined,
     Object? open_status = _undefined,
     Object? phone_number = _undefined,
+    Object? online_ordering = _undefined,
     Object? service_link_id = _undefined,
     Object? stripe_info = _undefined,
     Object? service_provider_type = _undefined,
@@ -1796,6 +1842,9 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getServiceDetails$service_provider_details_by_pk(
+        unique_id: unique_id == _undefined || unique_id == null
+            ? _instance.unique_id
+            : (unique_id as String),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
@@ -1829,6 +1878,10 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk<TRes>
         phone_number: phone_number == _undefined
             ? _instance.phone_number
             : (phone_number as String?),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
         service_link_id: service_link_id == _undefined
             ? _instance.service_link_id
             : (service_link_id as int?),
@@ -1893,6 +1946,7 @@ class _CopyWithStubImpl$Query$getServiceDetails$service_provider_details_by_pk<
   TRes _res;
 
   call({
+    String? unique_id,
     dynamic? accepted_payments,
     bool? approved,
     bool? is_open,
@@ -1905,6 +1959,7 @@ class _CopyWithStubImpl$Query$getServiceDetails$service_provider_details_by_pk<
     String? name,
     String? open_status,
     String? phone_number,
+    bool? online_ordering,
     int? service_link_id,
     Query$getServiceDetails$service_provider_details_by_pk$stripe_info?
         stripe_info,
@@ -12135,6 +12190,621 @@ class _CopyWithStubImpl$Mutation$setLastActiveTime$update_service_provider_detai
 
   call({
     String? last_active_time,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_business_online_ordering {
+  factory Variables$Mutation$update_business_online_ordering({
+    required bool online_ordering,
+    required int id,
+  }) =>
+      Variables$Mutation$update_business_online_ordering._({
+        r'online_ordering': online_ordering,
+        r'id': id,
+      });
+
+  Variables$Mutation$update_business_online_ordering._(this._$data);
+
+  factory Variables$Mutation$update_business_online_ordering.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$online_ordering = data['online_ordering'];
+    result$data['online_ordering'] = (l$online_ordering as bool);
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Mutation$update_business_online_ordering._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  bool get online_ordering => (_$data['online_ordering'] as bool);
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$online_ordering = online_ordering;
+    result$data['online_ordering'] = l$online_ordering;
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_business_online_ordering<
+          Variables$Mutation$update_business_online_ordering>
+      get copyWith =>
+          CopyWith$Variables$Mutation$update_business_online_ordering(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_business_online_ordering) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$online_ordering = online_ordering;
+    final l$id = id;
+    return Object.hashAll([
+      l$online_ordering,
+      l$id,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_business_online_ordering<
+    TRes> {
+  factory CopyWith$Variables$Mutation$update_business_online_ordering(
+    Variables$Mutation$update_business_online_ordering instance,
+    TRes Function(Variables$Mutation$update_business_online_ordering) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_business_online_ordering;
+
+  factory CopyWith$Variables$Mutation$update_business_online_ordering.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_business_online_ordering;
+
+  TRes call({
+    bool? online_ordering,
+    int? id,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_business_online_ordering<TRes>
+    implements
+        CopyWith$Variables$Mutation$update_business_online_ordering<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_business_online_ordering(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_business_online_ordering _instance;
+
+  final TRes Function(Variables$Mutation$update_business_online_ordering) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? online_ordering = _undefined,
+    Object? id = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_business_online_ordering._({
+        ..._instance._$data,
+        if (online_ordering != _undefined && online_ordering != null)
+          'online_ordering': (online_ordering as bool),
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_business_online_ordering<TRes>
+    implements
+        CopyWith$Variables$Mutation$update_business_online_ordering<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_business_online_ordering(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? online_ordering,
+    int? id,
+  }) =>
+      _res;
+}
+
+class Mutation$update_business_online_ordering {
+  Mutation$update_business_online_ordering({
+    this.update_service_provider_details_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_business_online_ordering.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_service_provider_details_by_pk =
+        json['update_service_provider_details_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_business_online_ordering(
+      update_service_provider_details_by_pk:
+          l$update_service_provider_details_by_pk == null
+              ? null
+              : Mutation$update_business_online_ordering$update_service_provider_details_by_pk
+                  .fromJson((l$update_service_provider_details_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_business_online_ordering$update_service_provider_details_by_pk?
+      update_service_provider_details_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_service_provider_details_by_pk =
+        update_service_provider_details_by_pk;
+    _resultData['update_service_provider_details_by_pk'] =
+        l$update_service_provider_details_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_service_provider_details_by_pk =
+        update_service_provider_details_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_service_provider_details_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_business_online_ordering) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_service_provider_details_by_pk =
+        update_service_provider_details_by_pk;
+    final lOther$update_service_provider_details_by_pk =
+        other.update_service_provider_details_by_pk;
+    if (l$update_service_provider_details_by_pk !=
+        lOther$update_service_provider_details_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_business_online_ordering
+    on Mutation$update_business_online_ordering {
+  CopyWith$Mutation$update_business_online_ordering<
+          Mutation$update_business_online_ordering>
+      get copyWith => CopyWith$Mutation$update_business_online_ordering(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_business_online_ordering<TRes> {
+  factory CopyWith$Mutation$update_business_online_ordering(
+    Mutation$update_business_online_ordering instance,
+    TRes Function(Mutation$update_business_online_ordering) then,
+  ) = _CopyWithImpl$Mutation$update_business_online_ordering;
+
+  factory CopyWith$Mutation$update_business_online_ordering.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_business_online_ordering;
+
+  TRes call({
+    Mutation$update_business_online_ordering$update_service_provider_details_by_pk?
+        update_service_provider_details_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk<
+      TRes> get update_service_provider_details_by_pk;
+}
+
+class _CopyWithImpl$Mutation$update_business_online_ordering<TRes>
+    implements CopyWith$Mutation$update_business_online_ordering<TRes> {
+  _CopyWithImpl$Mutation$update_business_online_ordering(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_business_online_ordering _instance;
+
+  final TRes Function(Mutation$update_business_online_ordering) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_service_provider_details_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_business_online_ordering(
+        update_service_provider_details_by_pk:
+            update_service_provider_details_by_pk == _undefined
+                ? _instance.update_service_provider_details_by_pk
+                : (update_service_provider_details_by_pk
+                    as Mutation$update_business_online_ordering$update_service_provider_details_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk<
+      TRes> get update_service_provider_details_by_pk {
+    final local$update_service_provider_details_by_pk =
+        _instance.update_service_provider_details_by_pk;
+    return local$update_service_provider_details_by_pk == null
+        ? CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk(
+            local$update_service_provider_details_by_pk,
+            (e) => call(update_service_provider_details_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_business_online_ordering<TRes>
+    implements CopyWith$Mutation$update_business_online_ordering<TRes> {
+  _CopyWithStubImpl$Mutation$update_business_online_ordering(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_business_online_ordering$update_service_provider_details_by_pk?
+        update_service_provider_details_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk<
+          TRes>
+      get update_service_provider_details_by_pk =>
+          CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_business_online_ordering =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_business_online_ordering'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'online_ordering')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_service_provider_details_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'online_ordering'),
+                value: VariableNode(name: NameNode(value: 'online_ordering')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'online_ordering'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_business_online_ordering
+    _parserFn$Mutation$update_business_online_ordering(
+            Map<String, dynamic> data) =>
+        Mutation$update_business_online_ordering.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_business_online_ordering
+    = FutureOr<void> Function(
+  dynamic,
+  Mutation$update_business_online_ordering?,
+);
+
+class Options$Mutation$update_business_online_ordering
+    extends graphql.MutationOptions<Mutation$update_business_online_ordering> {
+  Options$Mutation$update_business_online_ordering({
+    String? operationName,
+    required Variables$Mutation$update_business_online_ordering variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_business_online_ordering? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_business_online_ordering>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_business_online_ordering(
+                            data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_business_online_ordering,
+          parserFn: _parserFn$Mutation$update_business_online_ordering,
+        );
+
+  final OnMutationCompleted$Mutation$update_business_online_ordering?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_business_online_ordering extends graphql
+    .WatchQueryOptions<Mutation$update_business_online_ordering> {
+  WatchOptions$Mutation$update_business_online_ordering({
+    String? operationName,
+    required Variables$Mutation$update_business_online_ordering variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_business_online_ordering,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_business_online_ordering,
+        );
+}
+
+extension ClientExtension$Mutation$update_business_online_ordering
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_business_online_ordering>>
+      mutate$update_business_online_ordering(
+              Options$Mutation$update_business_online_ordering options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_business_online_ordering>
+      watchMutation$update_business_online_ordering(
+              WatchOptions$Mutation$update_business_online_ordering options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_business_online_ordering$update_service_provider_details_by_pk {
+  Mutation$update_business_online_ordering$update_service_provider_details_by_pk({
+    required this.online_ordering,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_business_online_ordering$update_service_provider_details_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$online_ordering = json['online_ordering'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_business_online_ordering$update_service_provider_details_by_pk(
+      online_ordering: (l$online_ordering as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool online_ordering;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$online_ordering = online_ordering;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$online_ordering,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_business_online_ordering$update_service_provider_details_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_business_online_ordering$update_service_provider_details_by_pk
+    on Mutation$update_business_online_ordering$update_service_provider_details_by_pk {
+  CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk<
+          Mutation$update_business_online_ordering$update_service_provider_details_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk(
+    Mutation$update_business_online_ordering$update_service_provider_details_by_pk
+        instance,
+    TRes Function(
+            Mutation$update_business_online_ordering$update_service_provider_details_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$update_business_online_ordering$update_service_provider_details_by_pk;
+
+  factory CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_business_online_ordering$update_service_provider_details_by_pk;
+
+  TRes call({
+    bool? online_ordering,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_business_online_ordering$update_service_provider_details_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$update_business_online_ordering$update_service_provider_details_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_business_online_ordering$update_service_provider_details_by_pk
+      _instance;
+
+  final TRes Function(
+          Mutation$update_business_online_ordering$update_service_provider_details_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? online_ordering = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$update_business_online_ordering$update_service_provider_details_by_pk(
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_business_online_ordering$update_service_provider_details_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_business_online_ordering$update_service_provider_details_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_business_online_ordering$update_service_provider_details_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? online_ordering,
     String? $__typename,
   }) =>
       _res;

@@ -393,7 +393,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           viewController.order.deliveryOrderId != null) {
         return CustAddReviewButton(
           orderId: viewController.order.deliveryOrderId!,
-          toEntityId: viewController.order.serviceProvider.hasuraId,
+          toEntityId: viewController.order.serviceProvider!.hasuraId,
           toEntityType: cModels.ServiceProviderType.DeliveryCompany,
         );
       } else {

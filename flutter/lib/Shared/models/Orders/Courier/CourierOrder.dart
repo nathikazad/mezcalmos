@@ -42,6 +42,8 @@ class CourierOrder extends DeliveryOrder {
       required super.pickupLocation});
 
   bool get canAddReview {
-    return review == null && status == cModels.DeliveryOrderStatus.Delivered;
+    return review == null &&
+        status == cModels.DeliveryOrderStatus.Delivered &&
+        serviceProvider?.hasuraId != null;
   }
 }

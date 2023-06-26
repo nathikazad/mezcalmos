@@ -6,21 +6,26 @@ import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 class Laundry extends Service {
   LaundryCosts laundryCosts;
   num averageNumberOfDays = 2;
   bool selfDelivery;
   int deliveryDetailsId;
+  num? averageRating;
+  int? reviewCount;
+  DateTime? lastActive;
 
   Laundry({
     required ServiceInfo userInfo,
-    required cModels.Schedule? schedule,
+    required super.schedule,
     required PaymentInfo paymentInfo,
     required ServiceState laundryState,
     super.rate,
     super.reviews,
+    this.lastActive,
+    this.averageRating,
+    this.reviewCount,
     required super.deliveryCost,
     required this.deliveryDetailsId,
     this.averageNumberOfDays = 2,
@@ -28,10 +33,10 @@ class Laundry extends Service {
     required super.isOpen,
     required this.selfDelivery,
     required this.laundryCosts,
+    required super.onlineOrdering,
     required cModels.ServiceProviderLanguage languages,
   }) : super(
             info: userInfo,
-            schedule: schedule,
             languages: languages,
             state: laundryState,
             paymentInfo: paymentInfo);

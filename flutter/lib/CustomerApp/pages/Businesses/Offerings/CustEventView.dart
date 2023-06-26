@@ -6,10 +6,14 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessAdditionalData.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
@@ -18,14 +22,11 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
@@ -117,16 +118,20 @@ class _CustEventViewState extends State<CustEventView> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Obx(
-        () => MezButton(
-          label: viewController.isEditingMode.value
-              ? "Update Item"
-              : "Add to cart",
-          withGradient: true,
-          borderRadius: 0,
-          onClick: () async {
-            await viewController.bookOffering();
-          },
-        ),
+        () => viewController.isOnlineOrdering.value!
+            ? MezButton(
+                label: viewController.isEditingMode.value
+                    ? "Update Item"
+                    : "Add to cart",
+                withGradient: true,
+                borderRadius: 0,
+                onClick: viewController.isValidated.value
+                    ? () async {
+                        await viewController.bookOffering();
+                      }
+                    : null,
+              )
+            : SizedBox.shrink(),
       ),
       body: Obx(() {
         if (viewController.event != null) {
@@ -185,64 +190,71 @@ class _CustEventViewState extends State<CustEventView> {
                         business: viewController.event!.business,
                         offering: viewController.event!.details,
                       ),
-                      // CustBusinessNoOrderBanner(),
+                      if (!viewController.isOnlineOrdering.value!)
+                        CustBusinessNoOrderBanner(),
 
                       /// Booking
-                      if (viewController.event!.scheduleType !=
-                          ScheduleType.OneTime)
-                        BsOpDateTimePicker(
-                          fillColor: Colors.white,
-                          onNewPeriodSelected: (DateTime v) {
-                            viewController.startDate.value = v;
-                          },
-                          label: "Start Date",
-                          validator: (DateTime? p0) {
-                            if (p0 == null) return "Please select a time";
-
-                            return null;
-                          },
-                          time: viewController.startDate.value,
-                        ),
-                      if (viewController.event!.scheduleType ==
-                          ScheduleType.OnDemand)
-                        Column(
-                          children: [
-                            CustGuestPicker(
-                              label: "Hours",
-                              icon: Icons.hourglass_bottom,
-                              onNewGuestSelected: (int v) {
-                                viewController.setTotalHours(v);
-                              },
-                              value: viewController.totalHours.value,
-                              lowestValue: 1,
-                            ),
-                            bigSeperator,
-                          ],
-                        ),
-                      if (viewController.event!.scheduleType ==
-                          ScheduleType.OnDemand)
+                      if (viewController.isOnlineOrdering.value!)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Notes",
-                              style: context.textTheme.bodyLarge,
-                            ),
-                            smallSepartor,
-                            TextFormField(
-                              maxLines: 5,
-                              minLines: 3,
-                              decoration: InputDecoration(
+                            if (viewController.event!.scheduleType !=
+                                ScheduleType.OneTime)
+                              BsOpDateTimePicker(
                                 fillColor: Colors.white,
-                                hintText: "Write your notes here.",
+                                onNewPeriodSelected: (DateTime v) {
+                                  viewController.startDate.value = v;
+                                },
+                                label: "Start Date",
+                                validator: (DateTime? p0) {
+                                  if (p0 == null) return "Please select a time";
+
+                                  return null;
+                                },
+                                time: viewController.startDate.value,
                               ),
+                            if (viewController.event!.scheduleType ==
+                                ScheduleType.OnDemand)
+                              Column(
+                                children: [
+                                  CustGuestPicker(
+                                    label: "Hours",
+                                    icon: Icons.hourglass_bottom,
+                                    onNewGuestSelected: (int v) {
+                                      viewController.setTotalHours(v);
+                                    },
+                                    value: viewController.totalHours.value,
+                                    lowestValue: 1,
+                                  ),
+                                  bigSeperator,
+                                ],
+                              ),
+                            if (viewController.event!.scheduleType ==
+                                ScheduleType.OnDemand)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Notes",
+                                    style: context.textTheme.bodyLarge,
+                                  ),
+                                  smallSepartor,
+                                  TextFormField(
+                                    maxLines: 5,
+                                    minLines: 3,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      hintText: "Write your notes here.",
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            bigSeperator,
+                            CustOrderCostCard(
+                              orderCostString: viewController.orderString.value,
                             ),
                           ],
-                        ),
-                      bigSeperator,
-                      CustOrderCostCard(
-                        orderCostString: viewController.orderString.value,
-                      ),
+                        )
                     ],
                   ),
                 ),
@@ -262,12 +274,13 @@ class _CustEventViewState extends State<CustEventView> {
         SizedBox(
           height: 15,
         ),
-        CustBusinessScheduleBuilder(
-          period: viewController.event!.period,
-          icon: Icons.calendar_today,
-          schedule: viewController.event!.schedule,
-          scheduleType: viewController.event!.scheduleType,
-        )
+        if (viewController.event!.schedule != null)
+          CustBusinessScheduleBuilder(
+            period: viewController.event!.period,
+            icon: Icons.calendar_today,
+            schedule: viewController.event!.schedule!,
+            scheduleType: viewController.event!.scheduleType,
+          )
       ],
     );
   }

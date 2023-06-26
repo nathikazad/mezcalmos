@@ -31,12 +31,11 @@ abstract class MessagesListViewController {
 
   Future<void> navigateToChatScreen({
     required int chatid,
+    String? phoneNumber,
     IncomingViewLink? viewLink,
   }) async {
     await BaseMessagingScreen.navigate(
-      chatId: chatid,
-      incomingViewLink: viewLink,
-    );
+        chatId: chatid, incomingViewLink: viewLink, phoneNumber: phoneNumber);
   }
 }
 
@@ -52,6 +51,7 @@ class CustMessagesListViewController extends MessagesListViewController {
 
   Future<void> initiateChat(
       {required int businessId,
+      String? phoneNumber,
       required String offeringImage,
       required Map<Language, String>? offeringName}) async {
     final IncomingViewLink? viewLink = offeringName == null
@@ -79,9 +79,9 @@ class CustMessagesListViewController extends MessagesListViewController {
         mezDbgPrint(
             "initiateChat: HasuraChat is null ${newChatData.toFirebaseFormattedJson()}");
         await BaseMessagingScreen.navigate(
-          chatId: newChatData.chatId!.toInt(),
-          incomingViewLink: viewLink,
-        );
+            chatId: newChatData.chatId!.toInt(),
+            incomingViewLink: viewLink,
+            phoneNumber: phoneNumber);
       } else {
         mezDbgPrint(
             "initiateChat: HasuraChat is with error ${newChatData.toFirebaseFormattedJson()}");
@@ -93,9 +93,68 @@ class CustMessagesListViewController extends MessagesListViewController {
       // initiate previous chat
       mezDbgPrint("initiateChat: HasuraChat is not null $chatData");
       await navigateToChatScreen(
-        chatid: chatData.id,
-        viewLink: viewLink,
+          chatid: chatData.id, viewLink: viewLink, phoneNumber: phoneNumber);
+      return;
+    }
+  }
+}
+
+class CustDeliveryListViewController extends MessagesListViewController {
+  @override
+  Future<void> getMessages() async {
+    isLoading.value = true;
+    List<HasuraChat> chatData =
+        await get_customer_chats(customerId: _authController.user!.hasuraId);
+    _allChats.value = chatData;
+    isLoading.value = false;
+  }
+
+  Future<void> initiateChat(
+      {required int businessId,
+      String? phoneNumber,
+      required String offeringImage,
+      required ServiceProviderType serviceProviderType,
+      required Map<Language, String>? offeringName}) async {
+    final IncomingViewLink? viewLink = offeringName == null
+        ? null
+        : IncomingViewLink(
+            image: offeringImage,
+            name: offeringName,
+            url: MezRouter.currentRoute().name,
+          );
+
+    final HasuraChat? chatData = await get_service_provider_customer_chat(
+      customerId: _authController.user!.hasuraId,
+      serviceProviderId: businessId,
+      serviceProviderType: serviceProviderType,
+    );
+
+    if (chatData == null) {
+      // initiate new chat
+      final ServiceProviderChatResponse newChatData =
+          await CloudFunctions.serviceProvider_createServiceProviderChat(
+        serviceProviderId: businessId,
+        serviceProviderType: serviceProviderType,
       );
+      if (newChatData.success) {
+        mezDbgPrint(
+            "initiateChat: HasuraChat is null ${newChatData.toFirebaseFormattedJson()}");
+        await BaseMessagingScreen.navigate(
+            chatId: newChatData.chatId!.toInt(),
+            incomingViewLink: viewLink,
+            phoneNumber: phoneNumber);
+      } else {
+        mezDbgPrint(
+            "initiateChat: HasuraChat is with error ${newChatData.toFirebaseFormattedJson()}");
+        showErrorSnackBar(errorText: "businessId is null");
+      }
+
+      return;
+    } else {
+      // initiate previous chat
+      mezDbgPrint("initiateChat: HasuraChat is not null $chatData");
+      await navigateToChatScreen(
+          chatid: chatData.id, viewLink: viewLink, phoneNumber: phoneNumber);
       return;
     }
   }

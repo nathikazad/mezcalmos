@@ -19,10 +19,15 @@ Future<List<EventCard>> get_event_by_category(
     required List<ScheduleType> scheduleType,
     List<EventCategory2>? categories2,
     List<String>? tags,
+    bool? online_ordering,
     int? offset,
     int? limit,
     required bool withCache}) async {
   final List<EventCard> _events = <EventCard>[];
+  Input$Boolean_comparison_exp? online_ordering_exp;
+  if (online_ordering != null) {
+    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+  }
 
   final QueryResult<Query$get_event_by_category> response = await _db
       .graphQLClient
@@ -44,6 +49,7 @@ Future<List<EventCard>> get_event_by_category(
                   .map((ScheduleType e) => e.toFirebaseFormatString())
                   .toList(),
               tags: tags ?? [],
+              online_ordering: online_ordering_exp,
               offset: offset,
               limit: limit)));
   mezDbgPrint("Event response ======>${response.parsedData?.toJson()}");
@@ -100,10 +106,15 @@ Future<List<EventCard>> get_class_by_category(
     required List<ScheduleType> scheduleType,
     List<EventCategory2>? categories2,
     List<String>? tags,
+    bool? online_ordering,
     int? offset,
     int? limit,
     required bool withCache}) async {
   final List<EventCard> _classes = <EventCard>[];
+  Input$Boolean_comparison_exp? online_ordering_exp;
+  if (online_ordering != null) {
+    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+  }
 
   final QueryResult<Query$get_class_by_category> response = await _db
       .graphQLClient
@@ -125,6 +136,7 @@ Future<List<EventCard>> get_class_by_category(
                   .map((ScheduleType e) => e.toFirebaseFormatString())
                   .toList(),
               tags: tags ?? [],
+              online_ordering: online_ordering_exp,
               offset: offset,
               limit: limit)));
   mezDbgPrint("Event response ======>${response.data}");
@@ -235,7 +247,7 @@ Future<EventWithBusinessCard?> get_event_by_id(
             phoneNo: data.business.details.phone_number,
             onlineOrdering: data.business.details.online_ordering,
             lastActive: data.business.details.last_active_time != null
-                ? DateTime.parse(data.business.details.last_active_time!)
+                ? DateTime.parse(data.business.details.last_active_time)
                 : null,
             id: data.business.id,
             detailsId: data.business.details.id,

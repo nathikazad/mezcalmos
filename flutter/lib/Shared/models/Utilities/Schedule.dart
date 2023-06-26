@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +20,28 @@ extension ParseStringToDaysOfWeek on String {
         (Weekday e) => e.toFirebaseFormatString().toLowerCase() == this);
   }
 }
+
+// class Schedule {
+//   final Map<Weekday, WorkingDay> openHours;
+//   const Schedule({
+//     required this.openHours,
+//   });
+// }
+// WorkingDay workingDayFrom(Map<String, dynamic> json) {
+//   final bool isOpen = json['isOpen'] ?? false;
+//   final dynamic openHoursData = json['openHours'];
+
+//   List<OpenHours> openHours;
+//   if (openHoursData is List) {
+//     openHours = openHoursData.map((data) => OpenHours.fromFirebaseFormattedJson(data)).toList();
+//   } else if (openHoursData is Map<String, dynamic>) {
+//     openHours = [OpenHours.fromFirebaseFormattedJson(openHoursData)];
+//   } else {
+//     openHours = [];
+//   }
+
+//   return WorkingDay(isOpen: isOpen, openHours: openHours);
+// }
 
 Schedule scheduleFromData(json) {
   Map<Weekday, WorkingDay> openHours = {};
@@ -253,7 +276,7 @@ extension WorkingDayExtension on WorkingDay {
       final OpenHours next = openHours[i + 1];
       mezDbgPrint("current ${current.from[0]} next ${next.from[0]}");
 
-      if (current.to[0] > next.from[0]) {
+      if (current.toOld[0] > next.fromOld[0]) {
         return true;
       }
     }
@@ -263,20 +286,33 @@ extension WorkingDayExtension on WorkingDay {
 
 // open hours
 extension OpenHoursFunctions on OpenHours {
+  List<num> get fromOld {
+    final List<String> timeParts = from.split(':');
+    final int hours = int.parse(timeParts[0]);
+    final int minutes = int.parse(timeParts[1]);
+    return [hours, minutes];
+  }
+
+  List<num> get toOld {
+    final List<String> timeParts = to.split(':');
+    final int hours = int.parse(timeParts[0]);
+    final int minutes = int.parse(timeParts[1]);
+    return [hours, minutes];
+  }
+
   Map<String, dynamic> toFirebaseFormattedString() {
-    return <String, dynamic>{
-      "from": from.join(":"),
-      "to": to.join(":"),
-    };
+    return <String, dynamic>{"from": from, "to": to};
   }
 
   String get fromTimeFormatted {
-    final String hours = from[0] == 12
+    final String hours = fromOld[0] == 12
         ? '12'
-        : (from[0] > 12 ? from[0] - 12 : from[0]).toString().padLeft(2, '0');
+        : (fromOld[0] > 12 ? fromOld[0] - 12 : fromOld[0])
+            .toString()
+            .padLeft(2, '0');
 
     final String minutes = from[1].toString().padLeft(2, '0');
-    final String period = from[0] < 12 ? 'AM' : 'PM';
+    final String period = fromOld[0] < 12 ? 'AM' : 'PM';
 
     return '$hours:$minutes $period';
   }
@@ -284,11 +320,11 @@ extension OpenHoursFunctions on OpenHours {
   String get toTimeFormatted {
     final String hours = to[0] == 12
         ? '12'
-        : (to[0] > 12 ? to[0] - 12 : to[0]).toString().padLeft(2, '0');
+        : (toOld[0] > 12 ? toOld[0] - 12 : toOld[0]).toString().padLeft(2, '0');
 
-    final String minutes = to[1].toString().padLeft(2, '0');
+    final String minutes = toOld[1].toString().padLeft(2, '0');
 
-    final String period = to[0] < 12 ? 'AM' : 'PM';
+    final String period = toOld[0] < 12 ? 'AM' : 'PM';
 
     return '$hours:$minutes $period';
   }
@@ -303,8 +339,8 @@ extension OpenHoursFunctions on OpenHours {
 
 OpenHours openHoursfromJson(Map<dynamic, dynamic> json) {
   return OpenHours(
-    from: (json['from'] as String).split(':').map(int.parse).toList(),
-    to: (json['to'] as String).split(':').map(int.parse).toList(),
+    from: json['from'] as String,
+    to: json['to'],
   );
 }
 
@@ -314,5 +350,27 @@ extension WeekdayExtension on Weekday {
   String translate() {
     return Get.find<LanguageController>().strings["BusinessApp"]["pages"]
         ["services"]["weekdays"][toFirebaseFormatString()];
+  }
+}
+
+extension ScheduleMapHelper on Map<Weekday, WorkingDay> {
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+
+    Weekday.values.forEach((Weekday weekday) {
+      json[weekday.toFirebaseFormatString()] = {
+        "isOpen": this[weekday]!.isOpen,
+        "openHours": this[weekday]
+            ?.openHours
+            .map((OpenHours e) => e.toFirebaseFormattedString())
+            .toList()
+      };
+    });
+    mezDbgPrint(" ------- Schedule toFirebaseFormattedJson  ------- \n $json");
+    return json;
+  }
+
+  Schedule toSchedule() {
+    return Schedule(openHours: this);
   }
 }

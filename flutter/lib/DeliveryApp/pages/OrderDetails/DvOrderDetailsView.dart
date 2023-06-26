@@ -60,11 +60,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
     super.initState();
   }
- @override 
- void dispose(){
-  viewController.dispose();
-  super.dispose();
- }
+
+  @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,7 +170,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 SizedBox(
                   height: 5,
                 ),
-                _serviceCard(),
+                if (viewController.order.value?.serviceProvider != null)
+                  _serviceCard(),
                 DvOrderItems(
                   viewController: viewController,
                 ),
@@ -410,7 +413,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           children: [
             CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(
-                  viewController.order.value!.serviceProvider.image),
+                  viewController.order.value!.serviceProvider!.image),
             ),
             SizedBox(
               width: 8,
@@ -421,7 +424,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${viewController.order.value!.serviceProvider.name}",
+                    "${viewController.order.value!.serviceProvider!.name}",
                     style: context.txt.bodyLarge,
                   ),
                   SizedBox(

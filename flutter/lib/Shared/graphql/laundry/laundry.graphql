@@ -1,5 +1,5 @@
-query getLaundries($is_open: Boolean, $from: geography, $distance: Float, $limit: Int = 10, $offset: Int = 10) {
-  laundry_store(where: {details: {is_open: {_eq: $is_open}, location: {gps: {_st_d_within: {distance: $distance, from: $from}}}}}, limit: $limit, offset: $offset, order_by: {details: {referral_points: desc}}) {
+query getLaundries($from: geography!, $distance: Float!, $limit: Int, $offset: Int, $online_ordering: Boolean_comparison_exp = {}) {
+  laundry_store(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, online_ordering: $online_ordering}}, limit: $limit, offset: $offset, order_by: {details: {referral_points: desc}}) {
     id
     reviews_aggregate {
       aggregate {
@@ -38,6 +38,7 @@ query getLaundries($is_open: Boolean, $from: geography, $distance: Float, $limit
       is_open
       image
       language
+      online_ordering
       name
       location {
         gps
@@ -74,22 +75,29 @@ query getLaundries($is_open: Boolean, $from: geography, $distance: Float, $limit
 query getLaundryStoreById($id: Int!) {
   laundry_store_by_pk(id: $id) {
     id
-
+    reviews_aggregate {
+      aggregate {
+        count
+        avg {
+          rating
+        }
+      }
+    }
     delivery_details_id
     normal_delivery_time
     minimum_cost
- categories {
-        cost_by_kilo
-    id
-    name_id
-    position
-    
-    name {
-      translations {
-        value
-        language_id
+    categories {
+      cost_by_kilo
+      id
+      name_id
+      position
+
+      name {
+        translations {
+          value
+          language_id
+        }
       }
-    }
     }
     delivery_details_of_deliverer {
       cost_per_km
@@ -105,7 +113,9 @@ query getLaundryStoreById($id: Int!) {
       is_open
       location_id
       currency
+      last_active_time
       image
+      online_ordering
       language
       description_id
       location {

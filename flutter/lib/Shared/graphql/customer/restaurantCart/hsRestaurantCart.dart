@@ -53,6 +53,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
     final Cart cart = Cart(
         restaurant: cartData.restaurant != null
             ? Restaurant(
+                onlineOrdering: cartData.restaurant!.details!.online_ordering,
                 isOpen: cartData.restaurant!.details!.is_open ?? false,
                 serviceDetailsId: cartData.restaurant!.details_id,
                 languages:
@@ -277,6 +278,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
       }
       if (cart.parsedData?.restaurant_cart.first.restaurant != null) {
         _cartEvent.restaurant = Restaurant(
+          onlineOrdering: _res!.details!.online_ordering ?? false,
           isOpen: _res!.details!.is_open ?? false,
           languages: convertToLanguages(_res.details!.language),
           serviceDetailsId: _res.details_id,

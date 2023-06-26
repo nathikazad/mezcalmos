@@ -284,39 +284,37 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 10),
+        SizedBox(height: 20),
         Text(
           "${_i18n()['phoneNumber']}",
           style: context.textTheme.bodyLarge,
         ),
+        SizedBox(height: 7.5),
         Row(
           children: [
-            Container(
-              height: 49,
-              width: 75,
-              child: Expanded(
-                child: TextFormField(
-                    style: context.txt.bodyLarge,
-                    onChanged: (String s) {
-                      // if (_prefixTextFieldController.value.text.length > 0 &&
-                      //     _numberTextFieldController.value.text.length >= 8) {
-                      //   canSendOtp.value = true;
-                      // } else {
-                      //   canSendOtp.value = false;
-                      // }
-                      // mezDbgPrint(canSendOtp.value);
-                    },
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: "+52",
-                      border: InputBorder.none,
-                    ),
-                    controller: viewController.prefixTextFieldController,
-                    keyboardType: TextInputType.phone),
-              ),
+            Expanded(
+              flex: 1,
+              child: TextFormField(
+                  style: context.txt.bodyLarge,
+                  onChanged: (String s) {
+                    // if (_prefixTextFieldController.value.text.length > 0 &&
+                    //     _numberTextFieldController.value.text.length >= 8) {
+                    //   canSendOtp.value = true;
+                    // } else {
+                    //   canSendOtp.value = false;
+                    // }
+                    // mezDbgPrint(canSendOtp.value);
+                  },
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: "+52",
+                  ),
+                  controller: viewController.prefixTextFieldController,
+                  keyboardType: TextInputType.phone),
             ),
             SizedBox(width: 10),
             Expanded(
+              flex: 3,
               child: TextFormField(
                 controller: viewController.phoneNumber,
                 style: context.txt.bodyLarge,
@@ -324,7 +322,10 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                 validator: (String? v) {
                   if (v == null || v.isEmpty) {
                     return null;
-                  } else if (v.toString().validatePhoneNumber() == false) {
+                  } else if ((viewController.prefixTextFieldController.text +
+                              viewController.phoneNumber.text)
+                          .validatePhoneNumber() ==
+                      false) {
                     return "${_i18n()['phoneErrorText']}";
                   }
                   return null;
@@ -333,7 +334,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
             )
           ],
         ),
-        SizedBox(width: 5),
+        SizedBox(height: 15),
       ],
     );
   }

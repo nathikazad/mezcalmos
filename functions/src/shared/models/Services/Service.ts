@@ -23,7 +23,7 @@ export interface ServiceProvider {
   links?: ServiceLink;
   creationTime?: string;
   language: ServiceProviderLanguage;
-  schedule?: Record<Weekday, WorkingDay>;
+  schedule?: Schedule;
   deliveryDetails: DeliveryDetails;
   operators?: Array<Operator>;
   serviceProviderType: ServiceProviderType;

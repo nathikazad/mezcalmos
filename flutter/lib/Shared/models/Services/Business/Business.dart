@@ -1,5 +1,4 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class BusinessCard {
   int id;
@@ -70,7 +69,8 @@ class HomeCard extends Home {
           bathrooms: home.bathrooms,
           bedrooms: home.bedrooms,
           gpsLocation: home.gpsLocation,
-          locationId: home.locationId,
+
+          // locationId: home.locationId,
         );
 }
 
@@ -159,7 +159,7 @@ class HomeWithBusinessCard extends Home {
           bathrooms: home.bathrooms,
           bedrooms: home.bedrooms,
           gpsLocation: home.gpsLocation,
-          locationId: home.locationId,
+        //  locationId: home.locationId,
         );
 }
 

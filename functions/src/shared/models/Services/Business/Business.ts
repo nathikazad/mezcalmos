@@ -67,7 +67,7 @@ export interface Event {
   category1: EventCategory1;
   category2?: EventCategory2;
   scheduleType: ScheduleType;
-  schedule?: Record<Weekday, WorkingDay>;
+  schedule?: Schedule;
   details: BusinessItemDetails;
   gpsLocation?: Location;
   startsAt?: string;
@@ -77,7 +77,7 @@ export interface Event {
 export interface Service {
   id?: number;
   category1: ServiceCategory1;
-  schedule?: Record<Weekday, WorkingDay>;
+  schedule?: Schedule;
   details: BusinessItemDetails;
 }
 export interface Product {

@@ -17,7 +17,7 @@ export interface RestaurantDetails {
   image: string,
   phoneNumber: string,
   location: Location,
-  schedule: Record<Weekday, WorkingDay>,
+  schedule: Schedule,
   restaurantOperatorNotificationToken?: string,
   firebaseId?: string,
   deliveryPartnerId?: number,

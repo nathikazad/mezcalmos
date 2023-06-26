@@ -19,15 +19,18 @@ export enum Weekday {
     Sunday = "sunday"
 }
 
-export type Schedule = {
-    [day in Weekday]: {
-      isOpen: boolean;
-      openHours: {
-        to: string;
-        from: string;
-      }[];
-    };
-  };
+// export type Schedule = {
+//     [day in Weekday]: {
+//       isOpen: boolean;
+//       openHours: {
+//         to: string;
+//         from: string;
+//       }[];
+//     };
+//   };
   
+export interface Schedule {
+  openHours: Record<Weekday, WorkingDay>;
+  }
   
 

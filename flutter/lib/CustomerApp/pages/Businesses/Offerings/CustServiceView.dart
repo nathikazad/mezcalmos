@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
@@ -82,16 +83,20 @@ class _CustServiceViewState extends State<CustServiceView> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Obx(
-        () => MezButton(
-          label: viewController.isEditingMode.value
-              ? "Update Item"
-              : "Add to cart",
-          withGradient: true,
-          borderRadius: 0,
-          onClick: () async {
-            await viewController.bookOffering();
-          },
-        ),
+        () => viewController.isOnlineOrdering.value!
+            ? MezButton(
+                label: viewController.isEditingMode.value
+                    ? "Update Item"
+                    : "Add to cart",
+                withGradient: true,
+                borderRadius: 0,
+                onClick: viewController.startDate.value == null
+                    ? null
+                    : () async {
+                        await viewController.bookOffering();
+                      },
+              )
+            : SizedBox.shrink(),
       ),
       body: Obx(() {
         if (viewController.service != null) {
@@ -128,79 +133,90 @@ class _CustServiceViewState extends State<CustServiceView> {
                               cost: viewController.service!.details.cost,
                             ),
                       _description(context),
-                      CustBusinessScheduleBuilder(
-                        period: null,
-                        isService: true,
-                        schedule: viewController.service!.schedule,
-                        scheduleType: ScheduleType.Scheduled,
-                      ),
+                      if (viewController.service!.schedule != null)
+                        CustBusinessScheduleBuilder(
+                          period: null,
+                          isService: true,
+                          schedule: viewController.service!.schedule!,
+                          scheduleType: ScheduleType.Scheduled,
+                        ),
                       CustBusinessMessageCard(
                         margin: EdgeInsets.only(top: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.service!.business,
                         offering: viewController.service!.details,
                       ),
-                      CustBusinessNoOrderBanner(),
+                      if (!viewController.isOnlineOrdering.value!)
+                        CustBusinessNoOrderBanner(),
 
                       /// Booking
-                      bigSeperator,
-                      BsOpDateTimePicker(
-                        fillColor: Colors.white,
-                        onNewPeriodSelected: (DateTime v) {
-                          viewController.startDate.value = v;
-                        },
-                        label: "Choose Time",
-                        validator: (DateTime? p0) {
-                          if (p0 == null) return "Please select a time";
-
-                          return null;
-                        },
-                        time: viewController.startDate.value,
-                      ),
-                      bigSeperator,
-                      if (viewController.service!.category1 ==
-                          ServiceCategory1.Cleaning)
+                      if (viewController.isOnlineOrdering.value!)
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustGuestPicker(
-                              label: "Hours",
-                              icon: Icons.hourglass_bottom,
-                              onNewGuestSelected: (int v) {
-                                viewController.setTotalHours(v);
-                              },
-                              value: viewController.totalHours.value,
-                              lowestValue: 1,
-                            ),
                             bigSeperator,
-                          ],
-                        ),
-                      if (viewController.service!.category1 ==
-                          ServiceCategory1.PetSitting)
-                        Column(
-                          children: [
-                            CustBusinessDurationPicker(
-                              costUnits: viewController.service!.details.cost,
-                              label: "Duration",
-                              unitValue:
-                                  viewController.timeCost.value?.keys.first,
-                              value: viewController.totalHours.value,
-                              validator: (TimeUnit? p0) {
+                            BsOpDateTimePicker(
+                              fillColor: Colors.white,
+                              onNewPeriodSelected: (DateTime v) {
+                                viewController.startDate.value = v;
+                              },
+                              label: "Choose Time",
+                              validator: (DateTime? p0) {
                                 if (p0 == null) return "Please select a time";
+
                                 return null;
                               },
-                              onNewCostUnitSelected: (Map<TimeUnit, num> v) {
-                                viewController.setTimeCost(v);
-                              },
-                              onNewDurationSelected: (int v) {
-                                viewController.setTotalHours(v);
-                              },
+                              time: viewController.startDate.value,
                             ),
                             bigSeperator,
+                            if (viewController.service!.category1 ==
+                                ServiceCategory1.Cleaning)
+                              Column(
+                                children: [
+                                  CustGuestPicker(
+                                    label: "Hours",
+                                    icon: Icons.hourglass_bottom,
+                                    onNewGuestSelected: (int v) {
+                                      viewController.setTotalHours(v);
+                                    },
+                                    value: viewController.totalHours.value,
+                                    lowestValue: 1,
+                                  ),
+                                  bigSeperator,
+                                ],
+                              ),
+                            if (viewController.service!.category1 ==
+                                ServiceCategory1.PetSitting)
+                              Column(
+                                children: [
+                                  CustBusinessDurationPicker(
+                                    costUnits:
+                                        viewController.service!.details.cost,
+                                    label: "Duration",
+                                    unitValue: viewController
+                                        .timeCost.value?.keys.first,
+                                    value: viewController.totalHours.value,
+                                    validator: (TimeUnit? p0) {
+                                      if (p0 == null)
+                                        return "Please select a time";
+                                      return null;
+                                    },
+                                    onNewCostUnitSelected:
+                                        (Map<TimeUnit, num> v) {
+                                      viewController.setTimeCost(v);
+                                    },
+                                    onNewDurationSelected: (int v) {
+                                      viewController.setTotalHours(v);
+                                    },
+                                  ),
+                                  bigSeperator,
+                                ],
+                              ),
+                            CustOrderCostCard(
+                              orderCostString: viewController.orderString.value,
+                            ),
                           ],
                         ),
-                      CustOrderCostCard(
-                        orderCostString: viewController.orderString.value,
-                      ),
                     ],
                   ),
                 ),

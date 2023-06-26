@@ -206,13 +206,8 @@ select_permissions:
           - delivery_driver:
               user_id:
                 _eq: X-Hasura-User-Id
-          - _and:
-              - delivery_driver_id:
-                  _is_null: true
-              - delivery_company:
-                  drivers:
-                    user_id:
-                      _eq: X-Hasura-User-Id
+          - delivery_driver_id:
+              _is_null: true
       allow_aggregations: true
   - role: delivery_operator
     permission:
