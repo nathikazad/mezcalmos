@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ServiceCartI
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -18,6 +19,9 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustOrderView']['CustOrderView'];
 
 class CustOrderView extends StatefulWidget {
   const CustOrderView({super.key});
@@ -51,7 +55,7 @@ class _CustOrderViewState extends State<CustOrderView> {
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
         title: (custBusinessCartController.currentOrderInView.value == null)
-            ? "Order"
+            ? '${_i18n()['order']}'
             : "${custBusinessCartController.currentOrderInView.value!.getBusinessName()}",
       ),
       bottomNavigationBar: Obx(() {
@@ -73,6 +77,10 @@ class _CustOrderViewState extends State<CustOrderView> {
           return SizedBox.shrink();
         }
       }),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: bottomButtons(context),
+      ),
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.all(8.0),
@@ -114,6 +122,9 @@ class _CustOrderViewState extends State<CustOrderView> {
                           ),
                         ],
                       )),
+                      if (custBusinessCartController
+                          .currentOrderInView.value!.items.isNotEmpty)
+                        smallSepartor,
                       if (custBusinessCartController
                           .currentOrderInView.value!.items.isNotEmpty)
                         ...custBusinessCartController
@@ -163,10 +174,13 @@ class _CustOrderViewState extends State<CustOrderView> {
                             }
                           },
                         ).toList(),
-                      bigSeperator,
-                      Text(
-                        "Notes",
-                        style: context.textTheme.bodyLarge,
+                      smallSepartor,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Text(
+                          '${_i18n()['notes']}',
+                          style: context.textTheme.bodyLarge,
+                        ),
                       ),
                       smallSepartor,
                       TextFormField(
@@ -174,16 +188,16 @@ class _CustOrderViewState extends State<CustOrderView> {
                         minLines: 3,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
-                          hintText: "Write your notes here.",
+                          hintText: '${_i18n()['writeNotesHere']}',
                         ),
                       ),
-                      bigSeperator,
+                      smallSepartor,
                       MezCard(
                         content: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Summary",
+                              '${_i18n()['summary']}',
                               style: context.textTheme.bodyLarge,
                             ),
                             smallSepartor,
@@ -191,7 +205,7 @@ class _CustOrderViewState extends State<CustOrderView> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Order cost",
+                                  '${_i18n()['orderCost']}',
                                   style: context.textTheme.bodyMedium,
                                 ),
                                 Text(
@@ -203,8 +217,8 @@ class _CustOrderViewState extends State<CustOrderView> {
                           ],
                         ),
                       ),
-                      smallSepartor,
-                      bottomButtons(context),
+                      // smallSepartor,
+                      // bottomButtons(context),
                     ],
                   ),
           ),
@@ -284,7 +298,7 @@ class _CustOrderViewState extends State<CustOrderView> {
                     BusinessOrderRequestStatus.RequestReceived)
                   Expanded(
                     child: Text(
-                      "Reservation not confirmed yet",
+                      '${_i18n()['notComfirmed']}',
                       style: context.textTheme.bodyMedium!.copyWith(
                         color: primaryBlueColor,
                       ),
@@ -295,7 +309,7 @@ class _CustOrderViewState extends State<CustOrderView> {
                     BusinessOrderRequestStatus.ModificationRequestByBusiness)
                   Expanded(
                     child: Text(
-                      "Business has made modifications, please revise if everything okay click on accept.",
+                      '${_i18n()['businessModifications']}',
                       style: context.textTheme.bodyMedium!.copyWith(
                         color: primaryBlueColor,
                       ),
@@ -304,11 +318,10 @@ class _CustOrderViewState extends State<CustOrderView> {
               ],
             ),
           ),
-        smallSepartor,
         if (custBusinessCartController.currentOrderInView.value!.status ==
             BusinessOrderRequestStatus.ModificationRequestByBusiness)
           MezButton(
-            label: "Accept Change",
+            label: '${_i18n()['acceptChange']}',
             onClick: () async {
               await custBusinessCartController.acceptOrderRequest();
             },
@@ -319,7 +332,7 @@ class _CustOrderViewState extends State<CustOrderView> {
             custBusinessCartController.currentOrderInView.value!.status ==
                 BusinessOrderRequestStatus.ModificationRequestByBusiness)
           MezButton(
-            label: "Cancel Request",
+            label: '${_i18n()['cancelRequest']}',
             textColor: Colors.red,
             backgroundColor: Colors.red.shade100,
             onClick: () async {
@@ -339,12 +352,13 @@ class _CustOrderViewState extends State<CustOrderView> {
             Icon(
               custBusinessCartController.currentOrderInView.value!.status!
                   .getIcon(),
-              color: primaryBlueColor,
+              color: custBusinessCartController.isCanceled
+                  ? redAccentColor
+                  : primaryBlueColor,
             ),
             Expanded(
               child: Text(
-                custBusinessCartController.currentOrderInView.value!.status!
-                    .toReadableString(),
+                "${_i18n()[custBusinessCartController.currentOrderInView.value!.status!.toReadableString()]}",
                 style: context.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),

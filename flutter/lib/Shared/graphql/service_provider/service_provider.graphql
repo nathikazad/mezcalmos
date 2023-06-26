@@ -105,14 +105,12 @@ query getServiceInfo($serviceDetailsId: Int!) {
     firebase_id
     id
     image
-is_open
+    is_open
     name
-
+    unique_id
     phone_number
     language
-   
     service_provider_type
-
     location {
       id
       gps

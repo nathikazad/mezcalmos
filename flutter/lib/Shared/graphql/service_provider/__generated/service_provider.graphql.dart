@@ -5305,6 +5305,13 @@ const documentNodeQuerygetServiceInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'unique_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'phone_number'),
             alias: null,
             arguments: [],
@@ -5533,6 +5540,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     required this.image,
     this.is_open,
     required this.name,
+    required this.unique_id,
     this.phone_number,
     required this.language,
     required this.service_provider_type,
@@ -5549,6 +5557,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$image = json['image'];
     final l$is_open = json['is_open'];
     final l$name = json['name'];
+    final l$unique_id = json['unique_id'];
     final l$phone_number = json['phone_number'];
     final l$language = json['language'];
     final l$service_provider_type = json['service_provider_type'];
@@ -5562,6 +5571,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
       image: (l$image as String),
       is_open: (l$is_open as bool?),
       name: (l$name as String),
+      unique_id: (l$unique_id as String),
       phone_number: (l$phone_number as String?),
       language: mapFromJson(l$language),
       service_provider_type: (l$service_provider_type as String),
@@ -5587,6 +5597,8 @@ class Query$getServiceInfo$service_provider_details_by_pk {
   final bool? is_open;
 
   final String name;
+
+  final String unique_id;
 
   final String? phone_number;
 
@@ -5615,6 +5627,8 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     _resultData['is_open'] = l$is_open;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$unique_id = unique_id;
+    _resultData['unique_id'] = l$unique_id;
     final l$phone_number = phone_number;
     _resultData['phone_number'] = l$phone_number;
     final l$language = language;
@@ -5638,6 +5652,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$image = image;
     final l$is_open = is_open;
     final l$name = name;
+    final l$unique_id = unique_id;
     final l$phone_number = phone_number;
     final l$language = language;
     final l$service_provider_type = service_provider_type;
@@ -5651,6 +5666,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
       l$image,
       l$is_open,
       l$name,
+      l$unique_id,
       l$phone_number,
       l$language,
       l$service_provider_type,
@@ -5697,6 +5713,11 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$unique_id = unique_id;
+    final lOther$unique_id = other.unique_id;
+    if (l$unique_id != lOther$unique_id) {
       return false;
     }
     final l$phone_number = phone_number;
@@ -5762,6 +5783,7 @@ abstract class CopyWith$Query$getServiceInfo$service_provider_details_by_pk<
     String? image,
     bool? is_open,
     String? name,
+    String? unique_id,
     String? phone_number,
     dynamic? language,
     String? service_provider_type,
@@ -5798,6 +5820,7 @@ class _CopyWithImpl$Query$getServiceInfo$service_provider_details_by_pk<TRes>
     Object? image = _undefined,
     Object? is_open = _undefined,
     Object? name = _undefined,
+    Object? unique_id = _undefined,
     Object? phone_number = _undefined,
     Object? language = _undefined,
     Object? service_provider_type = _undefined,
@@ -5820,6 +5843,9 @@ class _CopyWithImpl$Query$getServiceInfo$service_provider_details_by_pk<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        unique_id: unique_id == _undefined || unique_id == null
+            ? _instance.unique_id
+            : (unique_id as String),
         phone_number: phone_number == _undefined
             ? _instance.phone_number
             : (phone_number as String?),
@@ -5876,6 +5902,7 @@ class _CopyWithStubImpl$Query$getServiceInfo$service_provider_details_by_pk<
     String? image,
     bool? is_open,
     String? name,
+    String? unique_id,
     String? phone_number,
     dynamic? language,
     String? service_provider_type,

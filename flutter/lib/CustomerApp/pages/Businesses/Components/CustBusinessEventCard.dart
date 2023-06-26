@@ -74,9 +74,7 @@ class CustBusinessEventCard extends StatelessWidget {
                       : '${event.details.cost.values.first.toPriceString()}/${'${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
                   overflow: TextOverflow.ellipsis,
                   style: context.textTheme.bodyLarge?.copyWith(
-                      fontSize: 12.5.mezSp,
-                      fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis),
+                      fontSize: 12.5.mezSp, fontWeight: FontWeight.w600),
                 )
               ],
             ),
@@ -121,11 +119,35 @@ class CustBusinessEventCard extends StatelessWidget {
   String classType(ScheduleType scheduleType, EventCategory1 category) {
     switch (scheduleType) {
       case ScheduleType.OnDemand:
-        return '${_i18n()['private']}/${_i18n()[category.toFirebaseFormatString()]}';
+        return [
+          EventCategory1.Dance,
+          EventCategory1.Social,
+          EventCategory1.Surf,
+          EventCategory1.Fitness,
+          EventCategory1.Yoga
+        ].contains(category)
+            ? '${_i18n()['private']}/${_i18n()[category.toFirebaseFormatString()]}'
+            : '${_i18n()['private']}';
       case ScheduleType.OneTime:
-        return '${_i18n()['workshop']}/${_i18n()[category.toFirebaseFormatString()]}';
+        return [
+          EventCategory1.Dance,
+          EventCategory1.Social,
+          EventCategory1.Surf,
+          EventCategory1.Fitness,
+          EventCategory1.Yoga
+        ].contains(category)
+            ? '${_i18n()['workshop']}/${_i18n()[category.toFirebaseFormatString()]}'
+            : '${_i18n()['workshop']}';
       default:
-        return '${_i18n()['weekly']}/${_i18n()[category.toFirebaseFormatString()]}';
+        return [
+          EventCategory1.Dance,
+          EventCategory1.Social,
+          EventCategory1.Surf,
+          EventCategory1.Fitness,
+          EventCategory1.Yoga
+        ].contains(category)
+            ? '${_i18n()['weekly']}/${_i18n()[category.toFirebaseFormatString()]}'
+            : '${_i18n()['weekly']}';
     }
   }
 

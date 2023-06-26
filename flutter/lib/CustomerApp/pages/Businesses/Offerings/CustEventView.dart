@@ -29,8 +29,8 @@ import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() =>
-    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Businesses']['Offerings']['CustEventView'];
 
 class CustEventView extends StatefulWidget {
   const CustEventView({super.key});
@@ -123,7 +123,7 @@ class _CustEventViewState extends State<CustEventView> {
         () => viewController.isOnlineOrdering.value!
             ? MezButton(
                 label: viewController.isEditingMode.value
-                    ? '${_i18n()['updateItme']}'
+                    ? '${_i18n()['updateItem']}'
                     : '${_i18n()['addToCart']}',
                 withGradient: true,
                 borderRadius: 0,
@@ -227,7 +227,6 @@ class _CustEventViewState extends State<CustEventView> {
                                   ),
                                   CustGuestPicker(
                                     label: '${_i18n()['hours']}',
-                                    icon: Icons.hourglass_bottom,
                                     onNewGuestSelected: (int v) {
                                       viewController.setTotalHours(v);
                                     },
@@ -255,9 +254,9 @@ class _CustEventViewState extends State<CustEventView> {
                                       hintText: '${_i18n()['writeNotesHere']}',
                                     ),
                                   ),
+                                  bigSeperator
                                 ],
                               ),
-                            bigSeperator,
                             CustOrderCostCard(
                               orderCostString: viewController.orderString.value,
                             ),

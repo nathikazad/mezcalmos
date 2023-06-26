@@ -178,7 +178,6 @@ class _CustServiceViewState extends State<CustServiceView> {
                                 children: [
                                   CustGuestPicker(
                                     label: "Hours",
-                                    icon: Icons.hourglass_bottom,
                                     onNewGuestSelected: (int v) {
                                       viewController.setTotalHours(v);
                                     },

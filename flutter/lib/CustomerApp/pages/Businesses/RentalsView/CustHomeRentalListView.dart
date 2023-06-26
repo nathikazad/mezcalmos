@@ -53,13 +53,13 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        onClick: MezRouter.back,
-        title: viewController.isMapView
-            ? '${_i18n()['map']}'
-            : '${_i18n()['homes']}',
-      ),
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: MezRouter.back,
+          titleWidget: Obx(() => Text(
+                viewController.isMapView
+                    ? '${_i18n()['map']}'
+                    : '${_i18n()['homes']}',
+              ))),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 100),
         child: Obx(
@@ -127,8 +127,10 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
       TimeUnit.PerMonth
     ];
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
+      Container(
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+        color: Colors.white,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -448,7 +450,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                         style: context.textTheme.bodyLarge
                                             ?.copyWith(
                                                 fontSize: 12.5.mezSp,
-                                                fontWeight: FontWeight.w500),
+                                                fontWeight: FontWeight.w600),
                                       ),
                                     ],
                                   ),

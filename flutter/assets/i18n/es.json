@@ -5,6 +5,11 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
+              "pending": "Pendiente",
+              "waitingCustomer": "Esperando su aprobación",
+              "cancelled": "Cancelada",
+              "confirmed": "Confirmada",
+              "completed": "Terminada",
               "error": "Error",
               "edit": "Editar",
               "markAsUnavailable": "Marcar como no disponible",
@@ -15,7 +20,6 @@
               "save": "Guardar",
               "cancel": "Cancelar",
               "startFrom": "Comienza desde",
-
               "updateTimeTitle": "Tiempo de actualizacion"
             }
           }
@@ -534,6 +538,19 @@
       }
     },
     "pages": {
+      "CustOrderView": {
+        "CustOrderView": {
+          "order": "Orden",
+          "notes": "Notas",
+          "writeNotesHere": "Escribe tus notas aquí.",
+          "summary": "Resumen",
+          "orderCost": "Costo de la orden",
+          "notComfirmed": "Reserva aún no confirmada",
+          "businessModifications": "El negocio ha realizado modificaciones, por favor revise si todo está bien, haga clic en Aceptar.",
+          "acceptChange": "Aceptar el cambio",
+          "cancelRequest": "Cancelar petición"
+        }
+      },
       "CustCartView": {
         "components": {
           "HomeCartItemCard": {
@@ -628,6 +645,7 @@
           "notes": "Notas",
           "writeNotesHere": "Escribe tus notas aquí.",
           "summary": "Resumen",
+          "myOrders": "Mis ordenes",
           "orderCost": "Costo de la orden",
           "disclaimer": "Descargo de responsabilidad",
           "disclaimerPartOneText": "Mezkala solo transmite su solicitud de pedido al negocio",
@@ -1484,6 +1502,34 @@
         }
       },
       "Businesses": {
+        "Offerings": {
+          "CustEventView": {
+            "hour": "hora",
+            "hours": "Horas",
+            "description": "Descripción",
+            "noDescription": "Sin descripción",
+            "startDate": "Fecha de inicio",
+            "selectATime": "Seleccione una hora",
+            "updateItem": "Artículo de actualización",
+            "addToCart": "Añadir artículo",
+            "notes": "Notas",
+            "writeNotesHere": "Escribe tus notas aquí.",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "perHour": "hora",
+            "perDay": "día",
+            "perWeek": "semana",
+            "perMonth": "mes",
+            "perPerson": "persona",
+            "perUnit": "unidad",
+            "none": "ninguna",
+            "free": "GRATIS"
+          }
+        },
         "components": {
           "OnMapRentalCard": {
             "hour": "hora",
@@ -2579,7 +2625,8 @@
         "sameLangErrorText": "Se utiliza este idioma, ingrese un idioma diferente.",
         "none": "Ninguna",
         "en": "Ingles",
-        "es": "Español"
+        "es": "Español",
+        "uniqueId": "Unique ID"
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",

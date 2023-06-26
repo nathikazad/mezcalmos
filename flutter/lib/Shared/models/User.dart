@@ -157,7 +157,7 @@ class MainUserInfo {
 class ServiceInfo extends UserInfo {
   MezLocation location;
   int? locationId;
-
+  String? uniqueId;
   int? descriptionId;
   String? phoneNumber;
   LanguageMap? description;
@@ -174,6 +174,7 @@ class ServiceInfo extends UserInfo {
     required super.image,
     this.descriptionId,
     this.currency,
+    this.uniqueId,
     this.languages,
     required super.name,
     Language? lang,

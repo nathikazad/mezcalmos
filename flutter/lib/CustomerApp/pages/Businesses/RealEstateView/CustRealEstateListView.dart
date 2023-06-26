@@ -51,9 +51,11 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
-          titleWidget: Text(
-            '${_i18n()['properties']}',
-          )),
+          titleWidget: Obx(() => Text(
+                viewController.isMapView
+                    ? '${_i18n()['map']}'
+                    : '${_i18n()['properties']}',
+              ))),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 100),
         child: Obx(
@@ -387,7 +389,7 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                                         style: context.textTheme.bodyLarge
                                             ?.copyWith(
                                                 fontSize: 12.5.mezSp,
-                                                fontWeight: FontWeight.w500),
+                                                fontWeight: FontWeight.w600),
                                       ),
                                     ],
                                   ),

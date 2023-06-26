@@ -70,23 +70,25 @@ class BsOpDateTimePicker extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.watch_later,
-                                  size: 18,
-                                ),
-                                SizedBox(width: 5),
-                                Text(state.value
+                          Text.rich(TextSpan(children: <InlineSpan>[
+                            WidgetSpan(
+                                child: Icon(
+                              Icons.watch_later,
+                              size: 18,
+                            )),
+                            WidgetSpan(
+                                child: const SizedBox(
+                              width: 8,
+                            )),
+                            TextSpan(
+                                text: state.value
                                         ?.getEstimatedTime()
                                         .toString() ??
-                                    label),
-                              ],
-                            ),
-                          ),
+                                    label)
+                          ])),
                           Icon(Icons.chevron_right),
                         ],
                       ),

@@ -81,6 +81,32 @@ class _CustCartViewState extends State<CustCartView> {
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${_i18n()["myOrders"]}",
+                                style: context.textTheme.bodyLarge,
+                              ),
+                              InkWell(
+                                onTap: () async {
+                                  await custBusinessCartController.clearCart();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: Icon(
+                                      Icons.delete_outline,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           if (custBusinessCartController
                               .cart.value!.items.isNotEmpty)
                             ...custBusinessCartController.cart.value!.items
