@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ProductCartI
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/RentalCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ServiceCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/controllers/CustCartViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/CartIsEmptyScreen.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -51,17 +52,21 @@ class _CustCartViewState extends State<CustCartView> {
         onClick: MezRouter.back,
         title: '${_i18n()['myCart']}',
       ),
-      bottomNavigationBar: MezButton(
-        label: '${_i18n()['request']}',
-        withGradient: true,
-        borderRadius: 0,
-        onClick: () async {
-          if (custBusinessCartController.pastOrders == null ||
-              custBusinessCartController.pastOrders!.length <= 5) {
-            await _alertTermsAndServices();
-          }
-          await custBusinessCartController.requestOrder();
-        },
+      bottomNavigationBar: Obx(
+        () => custBusinessCartController.cart.value!.items.isEmpty
+            ? SizedBox.shrink()
+            : MezButton(
+                label: '${_i18n()['request']}',
+                withGradient: true,
+                borderRadius: 0,
+                onClick: () async {
+                  if (custBusinessCartController.pastOrders == null ||
+                      custBusinessCartController.pastOrders!.length <= 5) {
+                    await _alertTermsAndServices();
+                  }
+                  await custBusinessCartController.requestOrder();
+                },
+              ),
       ),
       body: Obx(
         () => Padding(
@@ -71,98 +76,101 @@ class _CustCartViewState extends State<CustCartView> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (custBusinessCartController
-                          .cart.value!.items.isNotEmpty)
-                        ...custBusinessCartController.cart.value!.items
-                            .asMap()
-                            .entries
-                            .map(
-                          (data) {
-                            final int index = data.key;
-                            final BusinessCartItem item = data.value;
-                            switch (item.offeringType) {
-                              case OfferingType.Home:
-                                return HomeCartItemCard(
-                                  index: index,
-                                  item: item,
-                                  controller: custBusinessCartController,
-                                );
-                              case OfferingType.Rental:
-                                return RentalCartItemCard(
-                                  index: index,
-                                  item: item,
-                                  controller: custBusinessCartController,
-                                );
-                              case OfferingType.Event:
-                                return EventCartItemCard(
-                                  index: index,
-                                  item: item,
-                                  controller: custBusinessCartController,
-                                );
-                              case OfferingType.Service:
-                                return ServiceCartItemCard(
-                                  index: index,
-                                  item: item,
-                                  controller: custBusinessCartController,
-                                );
-                              case OfferingType.Product:
-                                return ProductCartItemCard(
-                                  index: index,
-                                  item: item,
-                                  controller: custBusinessCartController,
-                                );
-                            }
-                          },
-                        ).toList(),
-                      bigSeperator,
-                      Text(
-                        '${_i18n()['notes']}',
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Material(
-                        elevation: .5,
-                        child: TextFormField(
-                          maxLines: 5,
-                          minLines: 3,
-                          decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            hintText: '${_i18n()['writeNotesHere']}',
+                : (custBusinessCartController.cart.value!.items.isEmpty)
+                    ? CartIsEmptyScreen()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (custBusinessCartController
+                              .cart.value!.items.isNotEmpty)
+                            ...custBusinessCartController.cart.value!.items
+                                .asMap()
+                                .entries
+                                .map(
+                              (data) {
+                                final int index = data.key;
+                                final BusinessCartItem item = data.value;
+                                switch (item.offeringType) {
+                                  case OfferingType.Home:
+                                    return HomeCartItemCard(
+                                      index: index,
+                                      item: item,
+                                      controller: custBusinessCartController,
+                                    );
+                                  case OfferingType.Rental:
+                                    return RentalCartItemCard(
+                                      index: index,
+                                      item: item,
+                                      controller: custBusinessCartController,
+                                    );
+                                  case OfferingType.Event:
+                                    return EventCartItemCard(
+                                      index: index,
+                                      item: item,
+                                      controller: custBusinessCartController,
+                                    );
+                                  case OfferingType.Service:
+                                    return ServiceCartItemCard(
+                                      index: index,
+                                      item: item,
+                                      controller: custBusinessCartController,
+                                    );
+                                  case OfferingType.Product:
+                                    return ProductCartItemCard(
+                                      index: index,
+                                      item: item,
+                                      controller: custBusinessCartController,
+                                    );
+                                }
+                              },
+                            ).toList(),
+                          bigSeperator,
+                          Text(
+                            '${_i18n()['notes']}',
+                            style: context.textTheme.bodyLarge,
                           ),
-                        ),
-                      ),
-                      bigSeperator,
-                      MezCard(
-                        elevation: .5,
-                        content: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${_i18n()['summary']}',
-                              style: context.textTheme.bodyLarge,
+                          smallSepartor,
+                          Material(
+                            elevation: .5,
+                            child: TextFormField(
+                              maxLines: 5,
+                              minLines: 3,
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                hintText: '${_i18n()['writeNotesHere']}',
+                              ),
                             ),
-                            smallSepartor,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          ),
+                          bigSeperator,
+                          MezCard(
+                            elevation: .5,
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${_i18n()['orderCost']}',
-                                  style: context.textTheme.bodyMedium,
+                                  '${_i18n()['summary']}',
+                                  style: context.textTheme.bodyLarge,
                                 ),
-                                Text(
-                                  "\$${custBusinessCartController.cart.value?.cost.toDouble().toStringAsFixed(0)}",
-                                  style: context.textTheme.bodyMedium,
+                                smallSepartor,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '${_i18n()['orderCost']}',
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                    Text(
+                                      "\$${custBusinessCartController.cart.value?.cost.toDouble().toStringAsFixed(0)}",
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
           ),
         ),
       ),

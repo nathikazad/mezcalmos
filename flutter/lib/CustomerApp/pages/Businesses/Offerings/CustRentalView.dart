@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
@@ -42,7 +43,9 @@ class CustRentalView extends StatefulWidget {
     Map<TimeUnit, num>? timeCost,
     int? duration,
   }) async {
-    final String route = constructRoute(rentalId);
+    final String route = cartId != null
+        ? CustBusinessRoutes.custRentalRoute.replaceFirst(":id", "$rentalId")
+        : constructRoute(rentalId);
     return MezRouter.toPath(route, arguments: {
       "startDate": startDate,
       "timeCost": timeCost,
@@ -161,6 +164,8 @@ class _CustRentalViewState extends State<CustRentalView> {
                       ),
                       if (!viewController.isOnlineOrdering.value!)
                         CustBusinessNoOrderBanner(),
+                      if (viewController.isOnlineOrdering.value!)
+                        CustBusinessInquryBanner(),
 
                       /// Bookings
                       if (viewController.isOnlineOrdering.value!)

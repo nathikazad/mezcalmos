@@ -108,7 +108,7 @@ class HomeCartItemCard extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toFirebaseFormatString()}",
+                                    "${item.parameters.numberOfUnits} ${_i18n()[item.parameters.timeUnit?.toFirebaseFormatString()]}",
                                     style:
                                         context.textTheme.bodyMedium!.copyWith(
                                       fontWeight: FontWeight.bold,

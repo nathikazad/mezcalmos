@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessAdditionalData.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
@@ -44,7 +45,9 @@ class CustEventView extends StatefulWidget {
     Map<TimeUnit, num>? timeCost,
     int? duration,
   }) async {
-    final String route = constructRoute(eventId);
+    final String route = cartId != null
+        ? CustBusinessRoutes.custEventRouteEdit.replaceFirst(":id", "$eventId")
+        : constructRoute(eventId);
     return MezRouter.toPath(route, arguments: {
       "startDate": startDate,
       "timeCost": timeCost,
@@ -191,6 +194,8 @@ class _CustEventViewState extends State<CustEventView> {
                       ),
                       if (!viewController.isOnlineOrdering.value!)
                         CustBusinessNoOrderBanner(),
+                      if (viewController.isOnlineOrdering.value!)
+                        CustBusinessInquryBanner(),
 
                       /// Booking
                       if (viewController.isOnlineOrdering.value!)

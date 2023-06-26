@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.d
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -104,8 +105,8 @@ class CustBusinessCartController extends GetxController {
   void setCurrentOrderInView(int orderId) {
     currentOrderIdInView.value = orderId;
     if (previousOrders.value != null) {
-      final CustBusinessCart? order = previousOrders.value!
-          .firstWhere((CustBusinessCart element) => element.id == orderId);
+      final CustBusinessCart? order = previousOrders.value?.firstWhereOrNull(
+          (CustBusinessCart element) => element.id == orderId);
       if (order != null) {
         currentOrderInView.value = order;
         currentOrderInView.refresh();
@@ -153,9 +154,13 @@ class CustBusinessCartController extends GetxController {
   }
 
   Future<int?> addCartItem(BusinessCartItem cartItem) async {
-    await setCartBusinessId(cartItem.businessId!.toInt());
-
     try {
+      final CustBusinessCart? cartData = await get_business_cart(
+        customerId: _auth.hasuraUserId!,
+      );
+      if (cartData != null && cartData.businessId == null) {
+        await setCartBusinessId(cartItem.businessId!.toInt());
+      }
       final int res = await add_item_to_business_cart(
         cartItem: cartItem,
       );
@@ -197,16 +202,26 @@ class CustBusinessCartController extends GetxController {
 
   Future<bool?> requestOrder() async {
     try {
+      final CustBusinessCart? cartData = await get_business_cart(
+        customerId: _auth.hasuraUserId!,
+      );
+      if (cartData != null &&
+          cartData.businessId == null &&
+          cartData.businessId != cart.value!.businessId) {
+        await setCartBusinessId(cart.value!.businessId!.toInt());
+      }
       if (cart.value != null && cart.value!.items.isNotEmpty) {
         var requestData = await CloudFunctions.business_requestOrder(
           businessId: cart.value!.businessId!.toInt(),
           customerAppType: CustomerAppType.Native,
         );
-        mezDbgPrint("requestOrder: ${requestData.success}");
+        mezDbgPrint(
+            "requestOrder: ${requestData.success} ${requestData.orderId}");
         if (requestData.success) {
-          cart.value = null;
+          cart.value?.items = [];
           cart.refresh();
-          await MezRouter.back();
+          // await MezRouter.back();
+          await CustOrderView.navigate(orderId: requestData.orderId!.toInt());
         }
         return requestData.success;
       }
