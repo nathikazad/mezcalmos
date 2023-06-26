@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ServiceCartI
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -18,6 +19,9 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustOrderView'];
 
 class CustOrderView extends StatefulWidget {
   const CustOrderView({super.key});
@@ -343,8 +347,7 @@ class _CustOrderViewState extends State<CustOrderView> {
             ),
             Expanded(
               child: Text(
-                custBusinessCartController.currentOrderInView.value!.status!
-                    .toReadableString(),
+                "${_i18n()[custBusinessCartController.currentOrderInView.value!.status!.toReadableString()]}",
                 style: context.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),

@@ -5,6 +5,12 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
+              "pending": "Pending",
+              "waitingCustomer": "Waiting for customer",
+              "cancelled": "Cancelled",
+              "confirmed": "Confirmed",
+              "completed": "Completed",
+
               "error": "Error",
               "edit": "Edit",
               "markAsUnavailable": "Mark as unavailable",
@@ -537,6 +543,13 @@
       }
     },
     "pages": {
+      "CustOrderView": {
+        "pending": "Pending",
+        "waitingCustomer": "Waiting for customer",
+        "cancelled": "Cancelled",
+        "confirmed": "Confirmed",
+        "completed": "Completed"
+      },
       "CustCartView": {
         "components": {
           "HomeCartItemCard": {

@@ -5,6 +5,11 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
+              "pending": "Pendiente",
+              "waitingCustomer": "esperando a un cliente",
+              "cancelled": "Cancelada",
+              "confirmed": "Confirmada",
+              "completed": "Terminada",
               "error": "Error",
               "edit": "Editar",
               "markAsUnavailable": "Marcar como no disponible",
@@ -15,7 +20,6 @@
               "save": "Guardar",
               "cancel": "Cancelar",
               "startFrom": "Comienza desde",
-
               "updateTimeTitle": "Tiempo de actualizacion"
             }
           }
@@ -534,6 +538,13 @@
       }
     },
     "pages": {
+      "CustOrderView": {
+        "pending": "Pendiente",
+        "waitingCustomer": "esperando a un cliente",
+        "cancelled": "Cancelada",
+        "confirmed": "Confirmada",
+        "completed": "Terminada"
+      },
       "CustCartView": {
         "components": {
           "HomeCartItemCard": {
