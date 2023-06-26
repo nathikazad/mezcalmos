@@ -49,7 +49,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
                     trip_distance: true,
                     trip_duration: true,
                     trip_polyline: true,
-                    change_price_request: [{}, true],
+                    // change_price_request: [{}, true],
                     delivery_driver: {
                         id: true,
                         delivery_company_type: true,
@@ -111,7 +111,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
         deliveryOrder: {
             packageReady: response.delivery_courier_order_by_pk.delivery_order.package_ready,
             deliveryId: response.delivery_courier_order_by_pk.delivery_order_id,
-            serviceProviderId: response.delivery_courier_order_by_pk.delivery_order.service_provider_id,
+            serviceProviderId: response.delivery_courier_order_by_pk.delivery_order.service_provider_id!,
             orderType: response.delivery_courier_order_by_pk.delivery_order.order_type as OrderType,
             pickupLocation: (response.delivery_courier_order_by_pk.delivery_order.pickup_gps && response.delivery_courier_order_by_pk.delivery_order.pickup_address) ? {
                 lat: response.delivery_courier_order_by_pk.delivery_order.pickup_gps.coordinates[1],
@@ -137,9 +137,9 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
             tripDistance: response.delivery_courier_order_by_pk.delivery_order.trip_distance,
             tripDuration: response.delivery_courier_order_by_pk.delivery_order.trip_duration,
             tripPolyline: response.delivery_courier_order_by_pk.delivery_order.trip_polyline,
-            changePriceRequest: (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
-                ? (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
-                : undefined,
+            // changePriceRequest: (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
+            //     ? (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
+            //     : undefined,
             deliveryDriver: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver) ? {
                 id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.id,
                 deliveryCompanyType: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_type as DeliveryServiceProviderType,

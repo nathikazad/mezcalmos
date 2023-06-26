@@ -13,7 +13,7 @@ export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDeta
       _set: {
         // delivery_driver_type: ParticipantType.DeliveryDriver,
         delivery_driver_id: assignDriverDetails.deliveryDriverId,
-        change_price_request: null
+        // change_price_request: null
       }
     }, {
       id: true,

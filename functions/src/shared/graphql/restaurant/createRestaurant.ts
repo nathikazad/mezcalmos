@@ -61,11 +61,6 @@ export async function createRestaurant(
             }
           }
         },
-        delivery_partners: (restaurantDetails.deliveryPartnerId) ? {
-          data: [{
-            delivery_company_id: restaurantDetails.deliveryPartnerId
-          }]
-        }: undefined,
         restaurant_operators: {
           data: [{
             user_id: restaurantOperatorUserId,
