@@ -10,7 +10,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { laundryUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
-import { Weekday, WorkingDay } from "../shared/models/Generic/Schedule";
+import { Schedule } from "../shared/models/Generic/Schedule";
 
 export interface LaundryDetails {
   name: string,

@@ -1,5 +1,5 @@
 import { Language, Location } from "../../Generic/Generic";
-import { Weekday, WorkingDay } from "../../Generic/Schedule";
+import { Schedule } from "../../Generic/Schedule";
 import { ForegroundNotification } from "../../Notification";
 import { ServiceProvider } from "../Service";
 

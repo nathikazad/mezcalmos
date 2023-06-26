@@ -180,3 +180,78 @@ export async function getDeliveryDrivers(deliveryCompanyIds: number[]): Promise<
     
   // }
 }
+
+
+export async function getAllDrivers(): Promise<DeliveryDriver[]> {
+
+  let chain = getHasura();
+  let response = await chain.query({
+    delivery_company: [{}, {
+      id: true
+    }],
+    delivery_driver: [{
+      where: {
+        delivery_company_type: {
+          _eq: DeliveryServiceProviderType.DeliveryCompany
+        },
+        status: {
+          _eq: AuthorizationStatus.Authorized
+        },
+        online: {
+          _eq: true
+        }
+      }
+    }, {
+        id: true,
+        user_id: true,
+        delivery_company_type: true,
+        delivery_company_id: true,
+        status: true,
+        online: true,
+        current_location: true,
+        user: {
+          firebase_id: true,
+          language_id: true,
+          image: true,
+          name: true,
+          phone: true
+        },
+        notification_info: {
+          token: true,
+          turn_off_notifications: true
+        },
+      }]
+    });
+    if(response.delivery_company.length == 0) {
+      throw new MezError("noDeliveryCompanyFound");
+    }
+    if (response.delivery_driver.length == 0) {
+      throw new MezError("deliveryCompaniesHaveNoDrivers");
+    }
+    return response.delivery_driver.map((d: any) => {
+      return {
+        id: d.id,
+        userId: d.user_id,
+        deliveryCompanyType: DeliveryServiceProviderType.DeliveryCompany,
+        deliveryCompanyId: d.delivery_company_id,
+        status: d.status as AuthorizationStatus,
+        online: d.online,
+        user: {
+          id: d.user_id,
+          firebaseId: d.user.firebase_id,
+          language: d.user.language_id as Language,
+          image: d.user.image,
+          name: d.user.name,
+          phoneNumber: d.user.phone
+        },
+        notificationInfo: (d.notification_info) ? {
+          appType: AppType.Delivery,
+          token: d.notification_info.token,
+          turnOffNotifications: d.notification_info.turn_off_notifications
+        } : undefined,
+        // deliveryDriverType: ParticipantType.DeliveryDriver
+      }
+    })
+    
+  // }
+}

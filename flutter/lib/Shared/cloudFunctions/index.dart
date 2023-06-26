@@ -1,6 +1,8 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'dart:convert';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CloudFunctions {
   static Future<dynamic> callCloudFunction(
@@ -599,6 +601,20 @@ class CloudFunctions {
             functionName: "delivery3-cancelCourierFromCustomer",
             parameters: <String, dynamic>{
           "orderId": orderId,
+        }));
+  }
+
+  static Future<CounterOfferResponse> delivery3_requestCounterOffer(
+      {required num deliveryOrderId,
+      required num deliveryDriverId,
+      required num newPrice}) async {
+    return CounterOfferResponse.fromFirebaseFormattedJson(
+        await callCloudFunction(
+            functionName: "delivery3-requestCounterOffer",
+            parameters: <String, dynamic>{
+          "deliveryOrderId": deliveryOrderId,
+          "deliveryDriverId": deliveryDriverId,
+          "newPrice": newPrice,
         }));
   }
 }
