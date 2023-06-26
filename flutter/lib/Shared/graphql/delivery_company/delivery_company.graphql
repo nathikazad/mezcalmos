@@ -50,8 +50,11 @@ query getDeliveryCompanyById($id: Int!) {
     }
   }
 }
-query getDeliveryCompanies {
-  delivery_company {
+query getDeliveryCompanies($online_ordering: Boolean) {
+  delivery_company(
+    where: { details: { online_ordering: { _eq: $online_ordering } } }
+    order_by: { details: { referral_points: desc_nulls_last } }
+  ) {
     id
     reviews_aggregate {
       aggregate {

@@ -89,13 +89,30 @@ class CustLaundriesListViewController {
                 lng: _currentLocation.longitude,
                 address: ''),
             withCache: false,
-            online_ordering: _filterInput['onlineOrder']!.contains('true'),
+            online_ordering: _filterInput['onlineOrder']!.last.contains('true'),
             distance: getFetchDistance)
         .then((List<Laundry> list) {
       _services = list;
 
       filter(_filterInput);
       _getCustomerCurrentLocation();
+    }).whenComplete(() {
+      isLoading.value = false;
+    });
+  }
+
+  Future<void> _getLaundries() async {
+    isLoading.value = true;
+    await get_laundries(
+            fromLocation: cModels.Location(
+                lat: _currentLocation.latitude,
+                lng: _currentLocation.longitude,
+                address: ''),
+            withCache: false,
+            online_ordering: _filterInput['onlineOrder']!.last.contains('true'),
+            distance: getFetchDistance)
+        .then((List<Laundry> list) {
+      _services = list;
     }).whenComplete(() {
       isLoading.value = false;
     });
@@ -111,11 +128,12 @@ class CustLaundriesListViewController {
     showOnlyOpen.value = value;
   }
 
-  void filter(Map<String, List<String>> newData) {
-    _filterInput.clear();
+  Future<void> filter(Map<String, List<String>> newData) async {
+    // _filterInput.clear();
     newData.forEach((String key, List<String> value) {
       _filterInput[key] = List.from(value);
     });
+    await _getLaundries();
     List<Laundry> newList = new List<Laundry>.from(_services);
 
     newList = newList
@@ -138,7 +156,7 @@ class CustLaundriesListViewController {
                 lng: _currentLocation.longitude,
                 address: ''),
             withCache: false,
-            online_ordering: _filterInput['onlineOrder']!.contains('true'),
+            online_ordering: _filterInput['onlineOrder']!.last.contains('true'),
             distance: getFetchDistance);
       } else {
         _mapViewLaundries.value = await get_laundries(
@@ -148,7 +166,7 @@ class CustLaundriesListViewController {
                 lat: _screenToWorldPosition!.latitude,
                 lng: _screenToWorldPosition!.longitude,
                 address: ''),
-            online_ordering: _filterInput['onlineOrder']!.contains('true'),
+            online_ordering: _filterInput['onlineOrder']!.last.contains('true'),
             withCache: false);
       }
     } catch (e) {

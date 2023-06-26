@@ -24631,8 +24631,30 @@ type mutation_root {
   update data of the table: "service_provider.service_link"
   """
   update_service_provider_service_link(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: service_provider_service_link_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: service_provider_service_link_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: service_provider_service_link_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: service_provider_service_link_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: service_provider_service_link_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: service_provider_service_link_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: service_provider_service_link_set_input
@@ -24645,8 +24667,30 @@ type mutation_root {
   update single row of the table: "service_provider.service_link"
   """
   update_service_provider_service_link_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: service_provider_service_link_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: service_provider_service_link_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: service_provider_service_link_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: service_provider_service_link_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: service_provider_service_link_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: service_provider_service_link_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: service_provider_service_link_set_input
@@ -38728,6 +38772,10 @@ columns and relationships of "service_provider.service_link"
 """
 type service_provider_service_link {
   customer_deep_link: String
+  customer_flyer_links(
+    """JSON select path"""
+    path: String
+  ): jsonb
   customer_qr_image_link: String
   driver_deep_link: String
   driver_qr_image_link: String
@@ -38764,6 +38812,11 @@ type service_provider_service_link_aggregate_fields {
   variance: service_provider_service_link_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input service_provider_service_link_append_input {
+  customer_flyer_links: jsonb
+}
+
 """aggregate avg on columns"""
 type service_provider_service_link_avg_fields {
   id: Float
@@ -38778,6 +38831,7 @@ input service_provider_service_link_bool_exp {
   _not: service_provider_service_link_bool_exp
   _or: [service_provider_service_link_bool_exp!]
   customer_deep_link: String_comparison_exp
+  customer_flyer_links: jsonb_comparison_exp
   customer_qr_image_link: String_comparison_exp
   driver_deep_link: String_comparison_exp
   driver_qr_image_link: String_comparison_exp
@@ -38798,6 +38852,28 @@ enum service_provider_service_link_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input service_provider_service_link_delete_at_path_input {
+  customer_flyer_links: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input service_provider_service_link_delete_elem_input {
+  customer_flyer_links: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input service_provider_service_link_delete_key_input {
+  customer_flyer_links: String
+}
+
+"""
 input type for incrementing numeric columns in table "service_provider.service_link"
 """
 input service_provider_service_link_inc_input {
@@ -38809,6 +38885,7 @@ input type for inserting data into table "service_provider.service_link"
 """
 input service_provider_service_link_insert_input {
   customer_deep_link: String
+  customer_flyer_links: jsonb
   customer_qr_image_link: String
   driver_deep_link: String
   driver_qr_image_link: String
@@ -38875,6 +38952,7 @@ Ordering options when selecting data from "service_provider.service_link".
 """
 input service_provider_service_link_order_by {
   customer_deep_link: order_by
+  customer_flyer_links: order_by
   customer_qr_image_link: order_by
   driver_deep_link: order_by
   driver_qr_image_link: order_by
@@ -38889,12 +38967,20 @@ input service_provider_service_link_pk_columns_input {
   id: Int!
 }
 
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input service_provider_service_link_prepend_input {
+  customer_flyer_links: jsonb
+}
+
 """
 select columns of table "service_provider.service_link"
 """
 enum service_provider_service_link_select_column {
   """column name"""
   customer_deep_link
+
+  """column name"""
+  customer_flyer_links
 
   """column name"""
   customer_qr_image_link
@@ -38920,6 +39006,7 @@ input type for updating data in table "service_provider.service_link"
 """
 input service_provider_service_link_set_input {
   customer_deep_link: String
+  customer_flyer_links: jsonb
   customer_qr_image_link: String
   driver_deep_link: String
   driver_qr_image_link: String
@@ -38957,6 +39044,7 @@ input service_provider_service_link_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input service_provider_service_link_stream_cursor_value_input {
   customer_deep_link: String
+  customer_flyer_links: jsonb
   customer_qr_image_link: String
   driver_deep_link: String
   driver_qr_image_link: String
@@ -38978,6 +39066,9 @@ enum service_provider_service_link_update_column {
   customer_deep_link
 
   """column name"""
+  customer_flyer_links
+
+  """column name"""
   customer_qr_image_link
 
   """column name"""
@@ -38997,8 +39088,30 @@ enum service_provider_service_link_update_column {
 }
 
 input service_provider_service_link_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: service_provider_service_link_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: service_provider_service_link_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: service_provider_service_link_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: service_provider_service_link_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: service_provider_service_link_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: service_provider_service_link_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_service_link_set_input
