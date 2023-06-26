@@ -14,6 +14,7 @@ import { BusinessCart, BusinessOrder, NewBusinessOrderRequestNotification } from
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { clearBusinessCart } from "../shared/graphql/business/cart/clearCart";
+import { OpenStatus } from "../shared/models/Services/Service";
 
 export interface OrderRequestDetails {
     businessId: number,
@@ -88,7 +89,7 @@ function errorChecks(business: Business, cart: BusinessCart) {
   if(business.details.approved == false) {
     throw new MezError(OrderReqError.BusinessNotApproved);
   }
-  if(business.details.openStatus != "open") {
+  if(business.details.openStatus != OpenStatus.Open) {
     throw new MezError(OrderReqError.BusinessClosed);
   }
   if(cart.businessId == null || (cart.items.length ?? 0) == 0) {
