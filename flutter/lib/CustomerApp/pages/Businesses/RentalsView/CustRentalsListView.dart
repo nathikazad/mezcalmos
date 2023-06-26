@@ -58,12 +58,13 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        onClick: MezRouter.back,
-        titleWidget: Text(
-            '${_i18n()[viewController.rentalCategory.toFirebaseFormatString()]}'),
-      ),
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: MezRouter.back,
+          titleWidget: Obx(() => Text(
+                viewController.isMapView
+                    ? '${_i18n()['map']}'
+                    : '${_i18n()[viewController.rentalCategory.toFirebaseFormatString()]}',
+              ))),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 100),
         child: Obx(

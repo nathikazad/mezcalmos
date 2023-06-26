@@ -11,7 +11,7 @@ class JoinUsController {
   static const String _mezDeliveryPlayStoreUrl =
       'https://play.google.com/store/apps/details?id=com.mezcalmos.delivery';
   static const String _mezDeliveryAppStoreUrl =
-      'https://play.google.com/store/apps/details?id=com.mezcalmos.delivery';
+      'https://play.google.com/store/apps/details?id=com.mezcalmos.delivery'; //ddd
 
   static const String _mezChefPlayStoreUrl =
       'https://play.google.com/store/apps/details?id=com.mezcalmos.restaurant';
@@ -21,7 +21,7 @@ class JoinUsController {
   static const String _mezLaundryPlayStoreUrl =
       'https://play.google.com/store/apps/details?id=com.mezcalmos.laundry';
   static const String _mezLaundryAppStoreUrl =
-      'https://play.google.com/store/apps/details?id=com.mezcalmos.business';
+      'https://play.google.com/store/apps/details?id=com.mezcalmos.business'; //dd
 
   final Map<String, Map<String, String>> options = {
     'restaurantBusiness': {

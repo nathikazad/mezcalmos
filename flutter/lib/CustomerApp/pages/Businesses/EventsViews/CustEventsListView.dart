@@ -87,12 +87,12 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              "${_i18n()["scheduled"]} ${_i18n()['events'].toString().toLowerCase()}",
-                                              style:
-                                                  context.textTheme.bodyLarge,
-                                            ),
-                                            smallSepartor,
+                                            // Text(
+                                            //   "${_i18n()["scheduled"]} ${_i18n()['events'].toString().toLowerCase()}",
+                                            //   style:
+                                            //       context.textTheme.bodyLarge,
+                                            // ),
+                                            // smallSepartor,
                                             _buildEvents(
                                                 ScheduleType.Scheduled),
                                           ],
@@ -103,12 +103,12 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              "${_i18n()["oneTime"]} ${_i18n()['events'].toString().toLowerCase()}",
-                                              style:
-                                                  context.textTheme.bodyLarge,
-                                            ),
-                                            smallSepartor,
+                                            // Text(
+                                            //   "${_i18n()["oneTime"]} ${_i18n()['events'].toString().toLowerCase()}",
+                                            //   style:
+                                            //       context.textTheme.bodyLarge,
+                                            // ),
+                                            // smallSepartor,
                                             _buildEvents(ScheduleType.OneTime),
                                           ],
                                         ),

@@ -113,6 +113,11 @@ class CustBusinessCartController extends GetxController {
     }
   }
 
+  bool get isCanceled => <BusinessOrderRequestStatus>[
+        BusinessOrderRequestStatus.CancelledByBusiness,
+        BusinessOrderRequestStatus.CancelledByCustomer
+      ].contains(currentOrderInView.value!.status!);
+
   Future<void> fetchCart() async {
     if (_auth.hasuraUserId != null) {
       final CustBusinessCart? value = await get_business_cart(

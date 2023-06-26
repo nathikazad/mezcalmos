@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
@@ -35,16 +36,23 @@ class EventCartItemCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              '${_i18n()['item']} ${index + 1}',
-              style: context.textTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeight.w500,
+            Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Text(
+                '${_i18n()['item']} ${index + 1}',
+                style: context.textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             isEditable
                 ? InkWell(
                     onTap: () async {
                       await controller.deleteCartItem(item.id!.toInt());
+                      if (controller.cart.value == null ||
+                          controller.cart.value!.items.isEmpty) {
+                        await MezRouter.back();
+                      }
                     },
                     child: Row(
                       children: [

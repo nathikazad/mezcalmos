@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/components/ServiceEditLocationCard.dart';
@@ -251,6 +250,53 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                                           "";
                                   viewController.languages.refresh();
                                 }),
+                            bigSeperator,
+                            Text(
+                              "${_i18n()['uniqueId']}",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            smallSepartor,
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.only(
+                                              left: 17.5,
+                                              top: 12.5,
+                                              bottom: 15),
+                                          hintText: 'mezkala.app/',
+                                          hintStyle: context
+                                              .textTheme.bodyMedium
+                                              ?.copyWith(
+                                                  color: Colors.black54)),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: TextFormField(
+                                      enabled: false,
+                                      style: context.textTheme.bodyMedium
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.w600),
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.only(
+                                              left: 0, top: 12.5, bottom: 15),
+                                          hintText: 'puerto_fitness',
+                                          hintStyle:
+                                              context.textTheme.bodyMedium),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       )),

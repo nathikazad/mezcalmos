@@ -65,7 +65,12 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         // ),
 
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-            onClick: MezRouter.back, title: "${_i18n()['restaurants']}"),
+            onClick: MezRouter.back,
+            titleWidget: Obx(() => Text(
+                  viewController.isMapView
+                      ? '${_i18n()['map']}'
+                      : '${_i18n()['restaurants']}',
+                ))),
         floatingActionButton: Padding(
           padding: const EdgeInsets.all(0),
           child: Stack(

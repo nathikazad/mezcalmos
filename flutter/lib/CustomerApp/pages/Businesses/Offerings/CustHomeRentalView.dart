@@ -213,7 +213,6 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                             bigSeperator,
                             CustGuestPicker(
                               label: "Guests",
-                              icon: Icons.person,
                               onNewGuestSelected: (int v) {
                                 viewController.setTotalGuests(v);
                               },

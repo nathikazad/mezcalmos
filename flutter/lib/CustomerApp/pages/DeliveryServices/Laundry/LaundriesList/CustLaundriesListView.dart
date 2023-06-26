@@ -41,11 +41,13 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        onClick: MezRouter.back,
-        title: '${_i18n()["laundries"]}',
-      ),
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: MezRouter.back,
+          titleWidget: Obx(() => Text(
+                viewController.isMapView
+                    ? '${_i18n()['map']}'
+                    : '${_i18n()['laundries']}',
+              ))),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 100),
         child: Obx(

@@ -496,7 +496,7 @@
     },
     "components": {
       "CustOrderCostCard": {
-        "orderCost": "Order Cost"
+        "orderCost": "Order cost"
       },
       "NoOpenServiceComponent": {
         "title": "No open services",
@@ -537,6 +537,19 @@
       }
     },
     "pages": {
+      "CustOrderView": {
+        "CustOrderView": {
+          "order": "Order",
+          "notes": "Notes",
+          "writeNotesHere": "Write your notes here.",
+          "summary": "Summary",
+          "orderCost": "Order Cost",
+          "notComfirmed": "Reservation not confirmed yet",
+          "businessModifications": "Business has made modifications, please revise if everything okay click on accept.",
+          "acceptChange": "Accept Change",
+          "cancelRequest": "Cancel Request"
+        }
+      },
       "CustCartView": {
         "components": {
           "HomeCartItemCard": {
@@ -1380,6 +1393,34 @@
         }
       },
       "Businesses": {
+        "Offerings": {
+          "CustEventView": {
+            "hour": "hour",
+            "hours": "Hours",
+            "description": "Description",
+            "noDescription": "No Description",
+            "startDate": "Start date",
+            "selectATime": "Please select a time",
+            "updateItem": "Update item",
+            "addToCart": "Add item",
+            "notes": "Notes",
+            "writeNotesHere": "Write your notes here.",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "total",
+            "unit": "unit",
+            "perHour": "hour",
+            "perDay": "day",
+            "perWeek": "week",
+            "perMonth": "month",
+            "perPerson": "person",
+            "perUnit": "unit",
+            "none": "none",
+            "free": "FREE"
+          }
+        },
         "LocallyMadeView": {
           "CustLocallyMadeListView": {
             "localMade": "Made locally",
@@ -1456,7 +1497,8 @@
             "yoga": "Yoga",
             "fitness": "Fitness",
             "dance": "Dance",
-            "therapy": "Therapy"
+            "therapy": "Therapy",
+            "social": "Social"
           },
           "CustBusinessRentalCost": {
             "hour": "hour",
@@ -2484,7 +2526,8 @@
         "save": "Save",
         "saved": "Saved",
         "error": "Error",
-        "savedSuccess": "Your information has been successfully saved "
+        "savedSuccess": "Your information has been successfully saved ",
+        "uniqueId": "Unique ID"
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No restaurant found on your operator",

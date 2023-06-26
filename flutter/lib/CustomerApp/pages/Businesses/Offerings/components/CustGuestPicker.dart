@@ -8,7 +8,7 @@ class CustGuestPicker extends StatelessWidget {
     super.key,
     required this.onNewGuestSelected,
     required this.label,
-    required this.icon,
+    this.icon,
     required this.value,
     this.lowestValue,
     this.highestValue,
@@ -16,7 +16,7 @@ class CustGuestPicker extends StatelessWidget {
 
   final void Function(int) onNewGuestSelected;
   final String label;
-  final IconData icon;
+  final IconData? icon;
   final int value;
   final int? lowestValue;
   final int? highestValue;
@@ -37,6 +37,7 @@ class CustGuestPicker extends StatelessWidget {
             int durationCount = value;
             return StatefulBuilder(builder: (context, setState) {
               return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustIconButton(
                     onPressed: () {
@@ -48,23 +49,28 @@ class CustGuestPicker extends StatelessWidget {
                     isEnabled: durationCount > (lowestValue ?? 1),
                     icon: Icons.remove,
                   ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          icon,
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(
+                  icon == null
+                      ? Text(
                           durationCount.toString(),
                           textAlign: TextAlign.center,
+                        )
+                      : Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                icon,
+                              ),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              Text(
+                                durationCount.toString(),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
                   CustIconButton(
                     onPressed: () {
                       setState(() {
