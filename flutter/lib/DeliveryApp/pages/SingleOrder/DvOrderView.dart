@@ -7,10 +7,12 @@ import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/DvOrderStatus
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -173,6 +175,13 @@ class _DvOrderViewState extends State<DvOrderView> {
                             ),
                           ),
                         ),
+                        smallSepartor,
+                        MezButton(
+                          label: "Send offer",
+                          onClick: () async {
+                           await viewController.sendCounterOffer();
+                          },
+                        )
                       ],
                     ),
                   )

@@ -149,7 +149,7 @@ class DvOrderViewcontroller {
       cModels.DeliveryOrderStatus status) async {
     mezDbgPrint("😇 Status called ==========>$status");
     try {
-      cModels.ChangeDeliveryStatusResponse res =
+      final cModels.ChangeDeliveryStatusResponse res =
           await CloudFunctions.delivery3_changeStatus(
         deliveryId: order.orderId,
         newStatus: status,
@@ -203,7 +203,7 @@ class DvOrderViewcontroller {
 
   Future<void> acceptOpenOrder() async {
     try {
-      cModels.AssignDriverResponse res =
+      final cModels.AssignDriverResponse res =
           await CloudFunctions.delivery3_assignDriver(
               deliveryOrderId: order.orderId,
               deliveryDriverId:
@@ -266,4 +266,6 @@ class DvOrderViewcontroller {
     }
     return null;
   }
+
+  Future<void> sendCounterOffer() async {}
 }

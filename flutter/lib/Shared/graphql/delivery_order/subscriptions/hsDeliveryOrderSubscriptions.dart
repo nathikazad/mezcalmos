@@ -5,19 +5,12 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -261,49 +254,12 @@ Stream<LatLng?> listen_order_driver_location({required int orderId}) {
         Get.find<HasuraDb>().dataConsumption["listen_order_driver_location"] =
             <int>[event.data.toString().length, 1];
       }
-      Geography data = event
+      final Geography data = event
           .parsedData!.delivery_order_by_pk!.delivery_driver!.current_location!;
       return LatLng(data.latitude, data.longitude);
     }
     return null;
   });
-}
-
-ServiceInfo? _getServiceInfo(orderData) {
-  final cModels.OrderType orderType =
-      orderData.order_type.toString().toOrderType();
-  switch (orderType) {
-    case cModels.OrderType.Restaurant:
-      return ServiceInfo(
-          location: MezLocation.fromHasura(
-              orderData.restaurant_order!.restaurant.details.location.gps,
-              orderData.restaurant_order!.restaurant.details.location.address
-                  .toString()),
-          hasuraId: orderData.restaurant_order!.restaurant.id,
-          image: orderData.restaurant_order!.restaurant.details.image,
-          name: orderData.restaurant_order!.restaurant.details.name);
-    case cModels.OrderType.Laundry:
-      dynamic laundryOrder =
-          orderData?.laundry_pickup_order ?? orderData?.laundry_delivery_order;
-      return ServiceInfo(
-          location: MezLocation.fromHasura(
-              laundryOrder.store.details.location.gps,
-              laundryOrder.store.details.location.address),
-          hasuraId: laundryOrder.store.id,
-          image: laundryOrder.store.details.image,
-          name: laundryOrder.store.details.name);
-    case cModels.OrderType.Courier:
-      return ServiceInfo(
-          location: MezLocation.fromHasura(
-              orderData.delivery_company.details.location.gps,
-              orderData.delivery_company.details.location.address),
-          hasuraId: orderData.delivery_company.id,
-          image: orderData.delivery_company.details.image,
-          name: orderData.delivery_company.details.name);
-
-    default:
-  }
-  return null;
 }
 
 Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
@@ -333,7 +289,7 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
       }
       mezDbgPrint(
           "listen_on_driver_order_costs: ${Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"]}");
-      Subscription$listen_driver_order_prices$delivery_order_by_pk data =
+      final Subscription$listen_driver_order_prices$delivery_order_by_pk data =
           event.parsedData!.delivery_order_by_pk!;
       return OrderCosts(
           deliveryCost: data.delivery_cost.toDouble(),
