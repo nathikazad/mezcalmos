@@ -114,6 +114,11 @@ class CustBusinessCartController extends GetxController {
     }
   }
 
+  void clearCart() {
+    cart.value!.items = [];
+    cart.refresh();
+  }
+
   Future<void> fetchCart() async {
     if (_auth.hasuraUserId != null) {
       final CustBusinessCart? value = await get_business_cart(
