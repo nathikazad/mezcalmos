@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
@@ -63,9 +62,9 @@ abstract class Order {
         return (this as LaundryOrder).status ==
             cModels.LaundryOrderStatus.OrderReceived;
       case cModels.OrderType.Taxi:
-        return (this as TaxiOrder).status == TaxiOrdersStatus.LookingForTaxi ||
-            (this as TaxiOrder).status ==
-                TaxiOrdersStatus.LookingForTaxiScheduled;
+      // return (this as TaxiOrder).status == TaxiOrdersStatus.LookingForTaxi ||
+      //     (this as TaxiOrder).status ==
+      //         TaxiOrdersStatus.LookingForTaxiScheduled;
 
       default:
         return false;
@@ -172,7 +171,6 @@ abstract class DeliverableOrder extends Order {
     required this.deliveryOrderId,
     required this.driverLocation,
     required this.deliveryDirection,
-  
     super.notes,
     super.review,
     this.customerReviewByDriver,

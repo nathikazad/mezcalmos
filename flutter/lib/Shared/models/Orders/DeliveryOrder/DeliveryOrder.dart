@@ -86,6 +86,18 @@ class DeliveryOrder extends DeliverableOrder {
     return counterOffers?.containsKey(driverId) ?? false;
   }
 
+  num? driverOffer(int driverId) {
+    return counterOffers?[driverId]?.price;
+  }
+
+  bool waitingForOffer(int driverId) {
+    return driverInfo == null &&
+        counterOffers?.containsKey(driverId) == true &&
+        DateTime.parse(counterOffers![driverId]!.expiryTime)
+            .toLocal()
+            .isBefore(DateTime.now().toLocal());
+  }
+
   @override
   bool operator ==(covariant DeliveryOrder other) {
     if (identical(this, other)) return true;

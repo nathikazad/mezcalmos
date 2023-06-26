@@ -65,6 +65,19 @@ class DvOrderViewcontroller {
   // streams //
   StreamSubscription<DeliveryOrderVariables?>? orderStream;
   String? subscriptionId;
+
+  bool get showSendOfferButton =>
+      order.isDriverAssigned == false &&
+      order.counterOffers?.containsKey(
+              deliveryAuthAuthController.driver!.deliveryDriverId) ==
+          false;
+
+  bool get isWaitingForOffer => order
+      .waitingForOffer(deliveryAuthAuthController.driver!.deliveryDriverId);
+
+  num? get driverOffer =>
+      order.driverOffer(deliveryAuthAuthController.driver!.deliveryDriverId);
+
   // map vars //
 
   // init
@@ -96,6 +109,7 @@ class DvOrderViewcontroller {
             _order.value!.status = event.status;
             _order.value!.packageReady = event.packageReady;
             _order.value!.driverInfo = event.driverInfo;
+            _order.value!.counterOffers = event.counterOffers;
             // _order.value = null;
             // _order.value = event;
 
@@ -268,15 +282,13 @@ class DvOrderViewcontroller {
 
   Future<void> sendCounterOffer({required double newPrice}) async {
     try {
-      cModels.CounterOfferResponse res =
+      final cModels.CounterOfferResponse res =
           await CloudFunctions.delivery3_requestCounterOffer(
               deliveryOrderId: order.orderId,
               deliveryDriverId:
                   deliveryAuthAuthController.driver!.deliveryDriverId,
               newPrice: newPrice);
-     if(res.success){
-      
-     }         
+      if (res.success) {}
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());
       mezlog(e);
@@ -286,4 +298,6 @@ class DvOrderViewcontroller {
       mezlog(stk);
     }
   }
+
+  cancelOffer() {}
 }
