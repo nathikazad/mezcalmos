@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
@@ -148,6 +149,8 @@ class _CustServiceViewState extends State<CustServiceView> {
                       ),
                       if (!viewController.isOnlineOrdering.value!)
                         CustBusinessNoOrderBanner(),
+                      if (viewController.isOnlineOrdering.value!)
+                        CustBusinessInquryBanner(),
 
                       /// Booking
                       if (viewController.isOnlineOrdering.value!)
@@ -160,7 +163,7 @@ class _CustServiceViewState extends State<CustServiceView> {
                               onNewPeriodSelected: (DateTime v) {
                                 viewController.startDate.value = v;
                               },
-                              label: "Choose Time",
+                              label: _i18n()["choostTime"],
                               validator: (DateTime? p0) {
                                 if (p0 == null) return "Please select a time";
 

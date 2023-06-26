@@ -740,6 +740,7 @@
         "bedrooms": "Dormitorios",
         "bathrooms": "Baños",
         "apartment": "Departamento",
+        "choostTime": "Elige el tiempo",
         "villa": "Villa",
         "condo": "Condominio",
         "bungalow": "Bungalow",
@@ -761,6 +762,7 @@
           "availability": "Disponibilidad",
           "time": "Tiempo",
           "noBooking": "No se pueden hacer reservas en línea, pero puede enviar un mensaje a la empresa para cualquier consulta.",
+          "inqury": "Puede enviar mensajes al negocio con respecto a cualquier consulta.",
           "weekDays": {
             "monday": "Lunes",
             "tuesday": "Martes",
@@ -3995,6 +3997,7 @@
             "totalCost": "Coste total",
             "waiting": "En proceso",
             "delivered": "Entregada",
+            "confirmed": "Confirmada",
             "canceled": "Cancelada"
           }
         },

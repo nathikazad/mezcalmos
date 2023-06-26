@@ -744,6 +744,7 @@
         "bathrooms": "Bathrooms",
         "apartment": "Apartment",
         "villa": "Villa",
+        "choostTime": "Choose time",
         "condo": "Condo",
         "bungalow": "Bungalow",
         "hotel": "Hotel",
@@ -764,6 +765,7 @@
           "availability": "Availability",
           "time": "Time",
           "noBooking": "Online booking is not available, you can message the business for any inquiries.",
+          "inqury": "You can message the business regarding any inquiries.",
           "weekDays": {
             "monday": "Monday",
             "tuesday": "Tuesday",
@@ -3939,6 +3941,7 @@
             "totalCost": "Total cost",
             "waiting": "In process",
             "delivered": "Delivered",
+            "confirmed": "Confirmed",
             "canceled": "Cancelled"
           }
         },
