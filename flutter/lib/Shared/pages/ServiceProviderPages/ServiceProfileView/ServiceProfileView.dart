@@ -127,9 +127,12 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   icon: Icons.delivery_dining,
                                 ),
                               _navigationLink(
-                                onClick: () async => _accountIdModal(),
+                                onClick: () async {
+                                  // _accountIdModal();
+                                },
                                 label: '${_i18n()['businessId']}',
-                                subtitle: 'mezkala.app/${_viewController.service.uniqueId}',
+                                subtitle:
+                                    'mezkala.app/${_viewController.service.uniqueId}',
                                 icon: Icons.fingerprint,
                               ),
                               if (_viewController.selfDelivery &&
