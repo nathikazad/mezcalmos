@@ -44,7 +44,9 @@ class CustEventView extends StatefulWidget {
     Map<TimeUnit, num>? timeCost,
     int? duration,
   }) async {
-    final String route = constructRoute(eventId);
+    final String route = cartId != null
+        ? CustBusinessRoutes.custEventRouteEdit.replaceFirst(":id", "$eventId")
+        : constructRoute(eventId);
     return MezRouter.toPath(route, arguments: {
       "startDate": startDate,
       "timeCost": timeCost,

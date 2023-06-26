@@ -55,7 +55,10 @@ class _CustOrderViewState extends State<CustOrderView> {
             : "${custBusinessCartController.currentOrderInView.value!.getBusinessName()}",
       ),
       bottomNavigationBar: Obx(() {
-        if (custBusinessCartController.currentOrderInView.value!.status ==
+        if (custBusinessCartController.currentOrderInView.value == null) {
+          return SizedBox.shrink();
+        } else if (custBusinessCartController
+                    .currentOrderInView.value!.status ==
                 BusinessOrderRequestStatus.Confirmed ||
             custBusinessCartController.currentOrderInView.value!.status ==
                 BusinessOrderRequestStatus.Completed) {

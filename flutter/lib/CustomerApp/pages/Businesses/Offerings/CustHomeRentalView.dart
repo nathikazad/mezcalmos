@@ -39,8 +39,11 @@ class CustHomeRentalView extends StatefulWidget {
     int? guestCount,
     String? roomType,
   }) async {
-    final String route =
-        CustBusinessRoutes.custHomeRentalRoute.replaceFirst(":id", "$rentalId");
+    final String route = cartId != null
+        ? CustBusinessRoutes.custHomeRentalRouteEdit
+            .replaceFirst(":id", "$rentalId")
+        : CustBusinessRoutes.custHomeRentalRoute
+            .replaceFirst(":id", "$rentalId");
     return MezRouter.toPath(route, arguments: {
       "startDate": startDate,
       "timeCost": timeCost,

@@ -42,7 +42,9 @@ class CustRentalView extends StatefulWidget {
     Map<TimeUnit, num>? timeCost,
     int? duration,
   }) async {
-    final String route = constructRoute(rentalId);
+    final String route = cartId != null
+        ? CustBusinessRoutes.custRentalRoute.replaceFirst(":id", "$rentalId")
+        : constructRoute(rentalId);
     return MezRouter.toPath(route, arguments: {
       "startDate": startDate,
       "timeCost": timeCost,

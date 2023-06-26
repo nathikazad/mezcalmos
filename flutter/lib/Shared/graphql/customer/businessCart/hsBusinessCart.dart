@@ -417,7 +417,7 @@ Future<int> set_cart_business_id({
   final QueryResult<Mutation$set_cart_business_id> _cart =
       await _hasuraDb.graphQLClient.mutate$set_cart_business_id(
     Options$Mutation$set_cart_business_id(
-      fetchPolicy: FetchPolicy.noCache,
+      fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Mutation$set_cart_business_id(
         business_id: business_id,
         customer_id: customer_id,

@@ -36,8 +36,10 @@ class CustServiceView extends StatefulWidget {
     Map<TimeUnit, num>? timeCost,
     int? duration,
   }) async {
-    final String route =
-        CustBusinessRoutes.custServiceRoute.replaceFirst(":id", "$serviceId");
+    final String route = cartId != null
+        ? CustBusinessRoutes.custServiceRouteEdit
+            .replaceFirst(":id", "$serviceId")
+        : CustBusinessRoutes.custServiceRoute.replaceFirst(":id", "$serviceId");
     return MezRouter.toPath(route, arguments: {
       "startDate": startDate,
       "timeCost": timeCost,
