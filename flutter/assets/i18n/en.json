@@ -6,7 +6,7 @@
           "components": {
             "BsHomeRentalOrderItemCard": {
               "pending": "Pending",
-              "waitingCustomer": "Waiting for customer",
+              "waitingCustomer": "Waiting for your approval",
               "cancelled": "Cancelled",
               "confirmed": "Confirmed",
               "completed": "Completed",
