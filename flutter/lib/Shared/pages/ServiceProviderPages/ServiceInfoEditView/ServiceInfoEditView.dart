@@ -289,7 +289,8 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                                       decoration: InputDecoration(
                                           contentPadding: EdgeInsets.only(
                                               left: 0, top: 12.5, bottom: 15),
-                                          hintText: 'puerto_fitness',
+                                          hintText: viewController
+                                              .service.value?.uniqueId,
                                           hintStyle:
                                               context.textTheme.bodyMedium),
                                     ),
