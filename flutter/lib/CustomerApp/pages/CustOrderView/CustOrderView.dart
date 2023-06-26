@@ -59,7 +59,10 @@ class _CustOrderViewState extends State<CustOrderView> {
             : "${custBusinessCartController.currentOrderInView.value!.getBusinessName()}",
       ),
       bottomNavigationBar: Obx(() {
-        if (custBusinessCartController.currentOrderInView.value!.status ==
+        if (custBusinessCartController.currentOrderInView.value == null) {
+          return SizedBox.shrink();
+        } else if (custBusinessCartController
+                    .currentOrderInView.value!.status ==
                 BusinessOrderRequestStatus.Confirmed ||
             custBusinessCartController.currentOrderInView.value!.status ==
                 BusinessOrderRequestStatus.Completed) {
@@ -355,8 +358,7 @@ class _CustOrderViewState extends State<CustOrderView> {
             ),
             Expanded(
               child: Text(
-                custBusinessCartController.currentOrderInView.value!.status!
-                    .toReadableString(),
+                "${_i18n()[custBusinessCartController.currentOrderInView.value!.status!.toReadableString()]}",
                 style: context.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),

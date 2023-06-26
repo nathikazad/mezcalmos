@@ -53,10 +53,14 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class CustBusinessRoutes {
   static String custServiceRoute = "/service/:id";
+  static String custServiceRouteEdit = "/serviceEdit/:id";
   static String custProductRoute = "/product/:id";
   static String custEventRoute = "/event/:id";
+  static String custEventRouteEdit = "/eventEdit/:id";
   static String custHomeRentalRoute = "/homeRental/:id";
+  static String custHomeRentalRouteEdit = "/homeRentalEdit/:id";
   static String custRentalRoute = "/otherRental/:id";
+  static String custRentalRouteEdit = "/otherRentalEdit/:id";
   static String custEventsListRoute = "/customer/events";
   static String custServicesListRoute = "/customer/services";
   static String custRentalsListRoute = "/customer/rentals";
@@ -89,6 +93,13 @@ class CustBusinessRoutes {
           DefferedLoader(custServiceView.loadLibrary),
         ]),
     QRoute(
+        name: custServiceRouteEdit,
+        path: custServiceRouteEdit,
+        builder: () => custServiceView.CustServiceView(),
+        middleware: <QMiddleware>[
+          DefferedLoader(custServiceView.loadLibrary),
+        ]),
+    QRoute(
         name: custProductRoute,
         path: custProductRoute,
         builder: () => custProducView.CustProductView(),
@@ -98,6 +109,13 @@ class CustBusinessRoutes {
     QRoute(
         name: custEventRoute,
         path: custEventRoute,
+        builder: () => custEventView.CustEventView(),
+        middleware: <QMiddleware>[
+          DefferedLoader(custEventView.loadLibrary),
+        ]),
+    QRoute(
+        name: custEventRouteEdit,
+        path: custEventRouteEdit,
         builder: () => custEventView.CustEventView(),
         middleware: <QMiddleware>[
           DefferedLoader(custEventView.loadLibrary),
@@ -174,8 +192,24 @@ class CustBusinessRoutes {
       ],
     ),
     QRoute(
+      name: custHomeRentalRouteEdit,
+      path: custHomeRentalRouteEdit,
+      builder: () => custHomeRentalView.CustHomeRentalView(),
+      middleware: <QMiddleware>[
+        DefferedLoader(custHomeRentalView.loadLibrary),
+      ],
+    ),
+    QRoute(
       name: custRentalRoute,
       path: custRentalRoute,
+      builder: () => custRentalView.CustRentalView(),
+      middleware: <QMiddleware>[
+        DefferedLoader(custRentalView.loadLibrary),
+      ],
+    ),
+    QRoute(
+      name: custRentalRouteEdit,
+      path: custRentalRouteEdit,
       builder: () => custRentalView.CustRentalView(),
       middleware: <QMiddleware>[
         DefferedLoader(custRentalView.loadLibrary),

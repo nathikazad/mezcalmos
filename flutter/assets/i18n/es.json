@@ -5,6 +5,11 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
+              "pending": "Pendiente",
+              "waitingCustomer": "Esperando su aprobación",
+              "cancelled": "Cancelada",
+              "confirmed": "Confirmada",
+              "completed": "Terminada",
               "error": "Error",
               "edit": "Editar",
               "markAsUnavailable": "Marcar como no disponible",
@@ -15,7 +20,6 @@
               "save": "Guardar",
               "cancel": "Cancelar",
               "startFrom": "Comienza desde",
-
               "updateTimeTitle": "Tiempo de actualizacion"
             }
           }
@@ -553,6 +557,12 @@
             "item": "Artículo",
             "remove": "Eliminar",
             "noDate": "Sin cita",
+            "perHour": "Hora",
+            "perDay": "Día",
+            "perWeek": "Semana",
+            "perMonth": "Mes",
+            "perPerson": "Persona",
+            "unit": "Unidad",
             "roomType": {
               "singleBed": "Cama individual",
               "doubleBed": "Cama matrimonial",
@@ -564,6 +574,12 @@
             "item": "Artículo",
             "remove": "Eliminar",
             "noDate": "Sin cita",
+            "perHour": "Hora",
+            "perDay": "Día",
+            "perWeek": "Semana",
+            "perMonth": "Mes",
+            "perPerson": "Persona",
+            "unit": "Unidad",
             "roomType": {
               "singleBed": "Cama individual",
               "doubleBed": "Cama matrimonial",
@@ -575,6 +591,12 @@
             "item": "Artículo",
             "remove": "Eliminar",
             "noDate": "Sin cita",
+            "perHour": "Hora",
+            "perDay": "Día",
+            "perWeek": "Semana",
+            "perMonth": "Mes",
+            "perPerson": "Persona",
+            "unit": "Unidad",
             "roomType": {
               "singleBed": "Cama individual",
               "doubleBed": "Cama matrimonial",
@@ -586,6 +608,12 @@
             "item": "Artículo",
             "remove": "Eliminar",
             "noDate": "Sin cita",
+            "perHour": "Hora",
+            "perDay": "Día",
+            "perWeek": "Semana",
+            "perMonth": "Mes",
+            "perPerson": "Persona",
+            "unit": "Unidad",
             "roomType": {
               "singleBed": "Cama individual",
               "doubleBed": "Cama matrimonial",
@@ -597,6 +625,12 @@
             "item": "Artículo",
             "remove": "Eliminar",
             "noDate": "Sin cita",
+            "perHour": "Hora",
+            "perDay": "Día",
+            "perWeek": "Semana",
+            "perMonth": "Mes",
+            "perPerson": "Persona",
+            "unit": "Unidad",
             "roomType": {
               "singleBed": "Cama individual",
               "doubleBed": "Cama matrimonial",
@@ -611,6 +645,7 @@
           "notes": "Notas",
           "writeNotesHere": "Escribe tus notas aquí.",
           "summary": "Resumen",
+          "myOrders": "Mis ordenes",
           "orderCost": "Costo de la orden",
           "disclaimer": "Descargo de responsabilidad",
           "disclaimerPartOneText": "Mezkala solo transmite su solicitud de pedido al negocio",
@@ -723,6 +758,7 @@
         "bedrooms": "Dormitorios",
         "bathrooms": "Baños",
         "apartment": "Departamento",
+        "choostTime": "Elige el tiempo",
         "villa": "Villa",
         "condo": "Condominio",
         "bungalow": "Bungalow",
@@ -744,6 +780,7 @@
           "availability": "Disponibilidad",
           "time": "Tiempo",
           "noBooking": "No se pueden hacer reservas en línea, pero puede enviar un mensaje a la empresa para cualquier consulta.",
+          "inqury": "Puede enviar mensajes al negocio con respecto a cualquier consulta.",
           "weekDays": {
             "monday": "Lunes",
             "tuesday": "Martes",
@@ -4007,6 +4044,7 @@
             "totalCost": "Coste total",
             "waiting": "En proceso",
             "delivered": "Entregada",
+            "confirmed": "Confirmada",
             "canceled": "Cancelada"
           }
         },

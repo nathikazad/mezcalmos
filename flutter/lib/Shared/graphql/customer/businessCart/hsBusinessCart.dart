@@ -387,6 +387,25 @@ Future<bool> update_item_to_business_cart(
   }
 }
 
+Future<bool> clear_business_cart({required int customer_id}) async {
+  final QueryResult<Mutation$clear_business_cart> response =
+      await _hasuraDb.graphQLClient.mutate$clear_business_cart(
+    Options$Mutation$clear_business_cart(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Mutation$clear_business_cart(customer_id: customer_id),
+    ),
+  );
+
+  if (response.parsedData?.delete_business_cart_item == null) {
+    throw Exception(
+        " 🛑🛑 Clear customer cart exceptions 🛑🛑 \n ${response.exception}");
+  } else {
+    return response.parsedData?.delete_business_cart_item!.affected_rows
+            .isGreaterThan(0) ==
+        true;
+  }
+}
+
 Future<int> delete_item_to_business_cart({required int itemId}) async {
   final QueryResult<Mutation$delete_business_cart_item> deleteItemResult =
       await _hasuraDb.graphQLClient.mutate$delete_business_cart_item(
@@ -417,7 +436,7 @@ Future<int> set_cart_business_id({
   final QueryResult<Mutation$set_cart_business_id> _cart =
       await _hasuraDb.graphQLClient.mutate$set_cart_business_id(
     Options$Mutation$set_cart_business_id(
-      fetchPolicy: FetchPolicy.noCache,
+      fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Mutation$set_cart_business_id(
         business_id: business_id,
         customer_id: customer_id,

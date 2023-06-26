@@ -11,9 +11,6 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
       id: restaurantId
     },{
       details_id: true,
-      delivery_partners: [{}, {
-        delivery_company_id: true,
-      }],
       delivery_details: {
         cost_per_km: true,
         free_delivery_km_range: true,
@@ -141,9 +138,6 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
       }: undefined,
     acceptedPayments: (response.restaurant_restaurant_by_pk.details.accepted_payments),
     operators,
-    deliveryPartnerId: response.restaurant_restaurant_by_pk.delivery_partners[0] 
-      ? response.restaurant_restaurant_by_pk.delivery_partners[0].delivery_company_id
-      : undefined,
     language: /*(*/response.restaurant_restaurant_by_pk.details.language,
     deliveryDetails: {
       costPerKm: response.restaurant_restaurant_by_pk.delivery_details.cost_per_km,

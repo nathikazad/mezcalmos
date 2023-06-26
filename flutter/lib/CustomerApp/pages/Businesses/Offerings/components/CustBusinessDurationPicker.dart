@@ -3,6 +3,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustIconButton.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
 
 class CustBusinessDurationPicker extends StatelessWidget {
   const CustBusinessDurationPicker({
@@ -105,7 +110,7 @@ class CustBusinessDurationPicker extends StatelessWidget {
                                     return DropdownMenuItem<TimeUnit>(
                                       value: costKey,
                                       child: Text(
-                                        '${costKey.toFirebaseFormatString()}',
+                                        '${_i18n()[costKey.toFirebaseFormatString()].toString().inCaps}',
                                       ),
                                     );
                                   }).toList(),

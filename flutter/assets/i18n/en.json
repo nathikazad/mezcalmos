@@ -5,6 +5,12 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
+              "pending": "Pending",
+              "waitingCustomer": "Waiting for your approval",
+              "cancelled": "Cancelled",
+              "confirmed": "Confirmed",
+              "completed": "Completed",
+
               "error": "Error",
               "edit": "Edit",
               "markAsUnavailable": "Mark as unavailable",
@@ -556,6 +562,12 @@
             "item": "Item",
             "remove": "Remove",
             "noDate": "No date",
+            "perHour": "Hour",
+            "perDay": "Day",
+            "perWeek": "Week",
+            "perMonth": "Month",
+            "perPerson": "Person",
+            "unit": "Unit",
             "roomType": {
               "singleBed": "Single Bed",
               "doubleBed": "Double Bed",
@@ -567,6 +579,12 @@
             "item": "Item",
             "remove": "Remove",
             "noDate": "No date",
+            "perHour": "Hour",
+            "perDay": "Day",
+            "perWeek": "Week",
+            "perMonth": "Month",
+            "perPerson": "Person",
+            "unit": "Unit",
             "roomType": {
               "singleBed": "Single Bed",
               "doubleBed": "Double Bed",
@@ -578,6 +596,12 @@
             "item": "Item",
             "remove": "Remove",
             "noDate": "No date",
+            "perHour": "Hour",
+            "perDay": "Day",
+            "perWeek": "Week",
+            "perMonth": "Month",
+            "perPerson": "Person",
+            "unit": "Unit",
             "roomType": {
               "singleBed": "Single Bed",
               "doubleBed": "Double Bed",
@@ -589,6 +613,12 @@
             "item": "Item",
             "remove": "Remove",
             "noDate": "No date",
+            "perHour": "Hour",
+            "perDay": "Day",
+            "perWeek": "Week",
+            "perMonth": "Month",
+            "perPerson": "Person",
+            "unit": "Unit",
             "roomType": {
               "singleBed": "Single Bed",
               "doubleBed": "Double Bed",
@@ -600,6 +630,12 @@
             "item": "Item",
             "remove": "Remove",
             "noDate": "No date",
+            "perHour": "Hour",
+            "perDay": "Day",
+            "perWeek": "Week",
+            "perMonth": "Month",
+            "perPerson": "Person",
+            "unit": "Unit",
             "roomType": {
               "singleBed": "Single Bed",
               "doubleBed": "Double Bed",
@@ -612,6 +648,7 @@
           "myCart": "My cart",
           "request": "Request",
           "notes": "Notes",
+          "myOrders": "My orders",
           "writeNotesHere": "Write your notes here.",
           "summary": "Summary",
           "orderCost": "Order Cost",
@@ -727,6 +764,7 @@
         "bathrooms": "Bathrooms",
         "apartment": "Apartment",
         "villa": "Villa",
+        "choostTime": "Choose time",
         "condo": "Condo",
         "bungalow": "Bungalow",
         "hotel": "Hotel",
@@ -747,6 +785,7 @@
           "availability": "Availability",
           "time": "Time",
           "noBooking": "Online booking is not available, you can message the business for any inquiries.",
+          "inqury": "You can message the business regarding any inquiries.",
           "weekDays": {
             "monday": "Monday",
             "tuesday": "Tuesday",
@@ -3952,6 +3991,7 @@
             "totalCost": "Total cost",
             "waiting": "In process",
             "delivered": "Delivered",
+            "confirmed": "Confirmed",
             "canceled": "Cancelled"
           }
         },

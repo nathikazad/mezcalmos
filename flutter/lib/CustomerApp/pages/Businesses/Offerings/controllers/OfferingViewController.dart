@@ -123,6 +123,8 @@ class CustServiceViewController {
       );
     }
     await CustCartView.navigate();
+    startDate.value = null;
+    startDate.refresh();
     orderString.value = "-";
     totalOrderCost.value = 0;
     _setInitialTimeCost();
@@ -305,6 +307,8 @@ class CustEventViewController {
       );
     }
     await CustCartView.navigate();
+    startDate.value = null;
+    startDate.refresh();
     orderString.value = "-";
     totalOrderCost.value = 0;
     _setInitialTimeCost();
@@ -353,15 +357,14 @@ class CustHomeRentalViewController {
     if (cartId != null &&
         startDate != null &&
         duration != null &&
-        guestCount != null &&
-        roomType != null) {
+        guestCount != null) {
       _startDate.value = startDate;
       _timeCost.value = timeCost;
       _duration.value = duration;
       _totalGuests.value = guestCount;
       isEditingMode.value = true;
       _cartId.value = cartId;
-      changeSelectedRoom(roomType);
+      if (roomType != null) changeSelectedRoom(roomType);
     }
     _calcTotalOrderCost();
   }
@@ -475,6 +478,8 @@ class CustHomeRentalViewController {
       );
     }
     await CustCartView.navigate();
+    startDate.value = null;
+    startDate.refresh();
     _duration.value = 1;
     _totalGuests.value = 1;
     orderString.value = "-";
@@ -591,6 +596,8 @@ class CustRentalViewController {
       );
     }
     await CustCartView.navigate();
+    startDate.value = null;
+    startDate.refresh();
     _duration.value = 1;
     orderString.value = "-";
     totalOrderCost.value = 0;

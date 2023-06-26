@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -216,7 +217,9 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               color: deliveredBackgroundColor,
               borderRadius: BorderRadius.circular(18)),
           child: Text(
-            '${_i18n()["delivered"]}',
+            widget.order.orderType == OrderType.Business
+                ? '${_i18n()["confirmed"]}'
+                : '${_i18n()["delivered"]}',
             style: context.txt.bodyLarge
                 ?.copyWith(color: Color(0xFF6779FE), fontSize: 10.mezSp),
           ),
