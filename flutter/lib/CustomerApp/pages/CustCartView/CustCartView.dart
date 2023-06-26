@@ -89,8 +89,8 @@ class _CustCartViewState extends State<CustCartView> {
                                 style: context.textTheme.bodyLarge,
                               ),
                               InkWell(
-                                onTap: () {
-                                  custBusinessCartController.clearCart();
+                                onTap: () async {
+                                  await custBusinessCartController.clearCart();
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(4),
