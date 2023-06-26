@@ -823,6 +823,82 @@ subscription listenHomeRentalOrderRequest($orderId: Int!) {
           tags
         }
       }
+      home {
+        id
+        details {
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+      }
+      event {
+        id
+        details {
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+      }
+      service {
+        id
+        details {
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+      }
+      product {
+        id
+        details {
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+      }
       time
     }
   }
