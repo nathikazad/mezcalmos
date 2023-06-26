@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
@@ -179,12 +180,17 @@ class _DvOrderViewState extends State<DvOrderView> {
                         MezButton(
                           label: "Send offer",
                           onClick: () async {
-                           await viewController.sendCounterOffer();
+                            double? newPrice = await _showCostSheet(context);
+                            if (newPrice != null) {
+                              await viewController.sendCounterOffer(
+                                  newPrice: newPrice);
+                            }
                           },
                         )
                       ],
                     ),
-                  )
+                  ),
+                  smallSepartor
                 ],
               )
             : MezLogoAnimation(
@@ -193,4 +199,87 @@ class _DvOrderViewState extends State<DvOrderView> {
       ),
     );
   }
+}
+
+Future<double?> _showCostSheet(BuildContext context) {
+  final TextEditingController _textEditingController = TextEditingController();
+  return showModalBottomSheet<double?>(
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      )),
+      context: context,
+      builder: (BuildContext ctx) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+          child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "${_i18n()['actualCost']}",
+                    style: context.textTheme.bodyLarge,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: _textEditingController,
+                    style: context.textTheme.bodyLarge,
+                    textAlignVertical: TextAlignVertical.center,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.attach_money_rounded,
+                        color: Colors.black,
+                      ),
+                    ),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: MezButton(
+                          height: 45,
+                          label: "${_i18n()['cancel']}",
+                          backgroundColor: offRedColor,
+                          textColor: Colors.red,
+                          onClick: () async {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Flexible(
+                        child: MezButton(
+                          height: 45,
+                          label: "${_i18n()['save']}",
+                          onClick: () async {
+                            Navigator.pop(context,
+                                double.tryParse(_textEditingController.text));
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                ],
+              )),
+        );
+      });
 }

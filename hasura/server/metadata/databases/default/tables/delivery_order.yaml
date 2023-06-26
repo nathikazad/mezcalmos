@@ -170,6 +170,7 @@ select_permissions:
         - customer_review_by_driver_id
         - delivery_cost
         - delivery_driver_id
+        - customer_offer
         - direction
         - distance_from_base
         - driver_review_by_customer_id

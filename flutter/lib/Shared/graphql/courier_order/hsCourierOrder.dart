@@ -37,6 +37,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
       _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
     }
     return CourierOrder(
+      customerOffer: null,
       orderType: cModels.OrderType.Courier,
       orderId: orderData.id,
       review: (orderData.delivery_order.driver_review_by_customer != null)
@@ -213,6 +214,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
         _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
       }
       return CourierOrder(
+        customerOffer: null,
         orderType: cModels.OrderType.Courier,
         orderId: orderData.id,
         scheduleTime: (orderData.delivery_order.schedule_time != null)

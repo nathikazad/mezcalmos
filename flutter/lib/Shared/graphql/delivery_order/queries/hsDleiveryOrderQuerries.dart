@@ -47,12 +47,14 @@ Future<DeliveryOrder?> get_driver_order_by_id(
     _paymentInfo = StripeOrderPaymentInfo.fromJson(
         orderData.restaurant_order!.stripe_info);
   }
+  mezlog(orderData.customer_offer);
   return DeliveryOrder(
     orderId: orderData.id,
     scheduleTime: (orderData.schedule_time != null)
         ? DateTime.tryParse(orderData.schedule_time!)
         : null,
     packageReady: orderData.package_ready,
+    customerOffer: orderData.customer_offer,
 
     orderType: orderData.order_type.toOrderType(),
     stripePaymentInfo: _paymentInfo,
@@ -355,6 +357,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
   return DeliveryOrder(
       deliveryDirection: cModels.DeliveryDirection.FromCustomer,
       packageReady: false,
+      customerOffer: orderData.customer_offer,
       scheduleTime: null,
       orderId: orderData.id,
       orderType: orderData.order_type.toOrderType(),

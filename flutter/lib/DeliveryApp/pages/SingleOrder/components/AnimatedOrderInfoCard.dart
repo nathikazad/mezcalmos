@@ -451,28 +451,44 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                "${order.costs.totalCost?.toPriceString(rounded: true)}",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 13.sp,
+              if (order.costs.deliveryCost != null &&
+                  order.costs.deliveryCost! > 0) ...[
+                Text(
+                  "${order.costs.totalCost?.toPriceString(rounded: true)}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13.sp,
+                  ),
                 ),
-              ),
-              Text(
-                "${order.costs.itemCostsWithTax.toPriceString(rounded: true)} + ${order.costs.deliveryCost?.toPriceString(rounded: true)}",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.grey.shade700,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 11.sp,
+                Text(
+                  "${order.costs.itemCostsWithTax.toPriceString(rounded: true)} + ${order.costs.deliveryCost?.toPriceString(rounded: true)}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 11.sp,
+                  ),
                 ),
-              ),
+              ] else if (order.customerOffer != null) ...[
+                Row(
+                  children: [
+                    Icon(Icons.delivery_dining),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      order.customerOffer!.toPriceString(),
+                      style: context.textTheme.bodyLarge,
+                    )
+                  ],
+                )
+              ],
               Text(
                   "${_i18n()["${order.paymentType.toNormalString().toLowerCase()}"]}")
             ],

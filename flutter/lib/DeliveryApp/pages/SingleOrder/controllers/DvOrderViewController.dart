@@ -75,8 +75,7 @@ class DvOrderViewcontroller {
     });
     clearNotifications(orderId);
     _order.value = await get_driver_order_by_id(orderId: orderId);
-    mezDbgPrint(
-        "TIME FROM QUERY ========>${_order.value?.estimatedArrivalAtDropoff}");
+    mezDbgPrint("TIME FROM QUERY ========>${_order.value?.customerOffer}");
 
     if (_order.value == null) {
       mezDbgPrint(
@@ -267,5 +266,24 @@ class DvOrderViewcontroller {
     return null;
   }
 
-  Future<void> sendCounterOffer() async {}
+  Future<void> sendCounterOffer({required double newPrice}) async {
+    try {
+      cModels.CounterOfferResponse res =
+          await CloudFunctions.delivery3_requestCounterOffer(
+              deliveryOrderId: order.orderId,
+              deliveryDriverId:
+                  deliveryAuthAuthController.driver!.deliveryDriverId,
+              newPrice: newPrice);
+     if(res.success){
+      
+     }         
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezlog(e);
+      mezlog(stk);
+    } catch (e, stk) {
+      mezlog(e);
+      mezlog(stk);
+    }
+  }
 }

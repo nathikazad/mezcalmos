@@ -18,6 +18,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 
 export interface CounterOfferRequest {
     deliveryOrderId: number,
+
     deliveryDriverId: number,
     newPrice: number,
 }
@@ -48,6 +49,8 @@ export async function requestCounterOffer(userId: number, counterOfferRequest: C
         deliveryOrder.counterOffers = deliveryOrder.counterOffers || {};
         deliveryOrder.counterOffers[deliveryDriver.id] = {
             price: counterOfferRequest.newPrice,
+            name: deliveryDriver.user?.name ,
+            image : deliveryDriver.user?.image,
             status: CounterOfferStatus.Requested,
             time: (new Date()).toISOString(),
             expiryTime: (new Date(Date.now() + 1000 * 60 * 5)).toISOString(),

@@ -35,6 +35,8 @@ class CourierOrder extends DeliveryOrder {
       required super.chatId,
       this.billImage,
       required super.customer,
+      required super.customerOffer,
+
       required super.dropOffLocation,
       required super.serviceProviderDriverChatId,
       required super.customerDriverChatId,

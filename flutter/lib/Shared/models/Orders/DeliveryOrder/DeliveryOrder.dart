@@ -1,11 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/models/User.dart' as user;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/User.dart' as user;
 
 class DeliveryOrder extends DeliverableOrder {
   int? serviceOrderId;
+  double? customerOffer;
+  List<DvCounterOffer> counterOffers = [];
+  Map<int, bool> notifiedDrivers = {};
 
   DeliveryOrderStatus status;
 
@@ -17,6 +20,7 @@ class DeliveryOrder extends DeliverableOrder {
       required super.paymentType,
       required super.deliveryOrderId,
       required super.orderTime,
+      required this.customerOffer,
       super.stripePaymentInfo,
       super.customerReviewByDriver,
       super.serviceReviewByDriver,
@@ -149,4 +153,7 @@ class DeliveryOrderVariables {
       this.scheduleTime,
       this.cancellationTime,
       this.driverInfo});
+}
+class DvCounterOffer {
+  
 }

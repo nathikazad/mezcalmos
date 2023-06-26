@@ -172,6 +172,7 @@ abstract class DeliverableOrder extends Order {
     required this.deliveryOrderId,
     required this.driverLocation,
     required this.deliveryDirection,
+  
     super.notes,
     super.review,
     this.customerReviewByDriver,

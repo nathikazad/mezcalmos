@@ -55,6 +55,8 @@ export interface DeliveryOrder {
 export interface CounterOffer {
   price: number;
   time: string;
+  name?: string;
+  image?: string;
   status: CounterOfferStatus;
   expiryTime: string;
 }
