@@ -11,7 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsWr
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/CustVolunteerListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
@@ -56,8 +56,8 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         );
         return;
       case MezService.Courier:
-        CustRequestCourierView.navigate();
-        // CustCourierRequestView.navigate();
+        //  CustRequestCourierView.navigate();
+        CustCourierOrderView.navigate(orderId: 256);
         return;
       case MezService.Rentals:
         CustRentalWrapper.navigate(

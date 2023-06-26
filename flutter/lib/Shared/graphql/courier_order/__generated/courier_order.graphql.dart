@@ -550,6 +550,27 @@ const documentNodeQueryget_courier_order_by_id = DocumentNode(definitions: [
                 ]),
               ),
               FieldNode(
+                name: NameNode(value: 'counter_offers'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'notified_drivers'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'customer_offer'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'driver_review_by_customer'),
                 alias: null,
                 arguments: [],
@@ -1937,6 +1958,9 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
   Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order({
     this.schedule_time,
     required this.customer,
+    this.counter_offers,
+    this.notified_drivers,
+    this.customer_offer,
     this.driver_review_by_customer,
     required this.chat_with_customer_id,
     this.chat_with_service_provider_id,
@@ -1967,6 +1991,9 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       Map<String, dynamic> json) {
     final l$schedule_time = json['schedule_time'];
     final l$customer = json['customer'];
+    final l$counter_offers = json['counter_offers'];
+    final l$notified_drivers = json['notified_drivers'];
+    final l$customer_offer = json['customer_offer'];
     final l$driver_review_by_customer = json['driver_review_by_customer'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$chat_with_service_provider_id =
@@ -1999,6 +2026,12 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       customer:
           Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
               .fromJson((l$customer as Map<String, dynamic>)),
+      counter_offers:
+          l$counter_offers == null ? null : mapFromJson(l$counter_offers),
+      notified_drivers:
+          l$notified_drivers == null ? null : mapFromJson(l$notified_drivers),
+      customer_offer:
+          l$customer_offer == null ? null : moneyFromJson(l$customer_offer),
       driver_review_by_customer: l$driver_review_by_customer == null
           ? null
           : Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
@@ -2041,6 +2074,12 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
 
   final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer
       customer;
+
+  final dynamic? counter_offers;
+
+  final dynamic? notified_drivers;
+
+  final double? customer_offer;
 
   final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
       driver_review_by_customer;
@@ -2099,6 +2138,15 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     _resultData['schedule_time'] = l$schedule_time;
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
+    final l$counter_offers = counter_offers;
+    _resultData['counter_offers'] =
+        l$counter_offers == null ? null : mapToJson(l$counter_offers);
+    final l$notified_drivers = notified_drivers;
+    _resultData['notified_drivers'] =
+        l$notified_drivers == null ? null : mapToJson(l$notified_drivers);
+    final l$customer_offer = customer_offer;
+    _resultData['customer_offer'] =
+        l$customer_offer == null ? null : moneyToJson(l$customer_offer);
     final l$driver_review_by_customer = driver_review_by_customer;
     _resultData['driver_review_by_customer'] =
         l$driver_review_by_customer?.toJson();
@@ -2161,6 +2209,9 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
   int get hashCode {
     final l$schedule_time = schedule_time;
     final l$customer = customer;
+    final l$counter_offers = counter_offers;
+    final l$notified_drivers = notified_drivers;
+    final l$customer_offer = customer_offer;
     final l$driver_review_by_customer = driver_review_by_customer;
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -2189,6 +2240,9 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     return Object.hashAll([
       l$schedule_time,
       l$customer,
+      l$counter_offers,
+      l$notified_drivers,
+      l$customer_offer,
       l$driver_review_by_customer,
       l$chat_with_customer_id,
       l$chat_with_service_provider_id,
@@ -2234,6 +2288,21 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     final l$customer = customer;
     final lOther$customer = other.customer;
     if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$counter_offers = counter_offers;
+    final lOther$counter_offers = other.counter_offers;
+    if (l$counter_offers != lOther$counter_offers) {
+      return false;
+    }
+    final l$notified_drivers = notified_drivers;
+    final lOther$notified_drivers = other.notified_drivers;
+    if (l$notified_drivers != lOther$notified_drivers) {
+      return false;
+    }
+    final l$customer_offer = customer_offer;
+    final lOther$customer_offer = other.customer_offer;
+    if (l$customer_offer != lOther$customer_offer) {
       return false;
     }
     final l$driver_review_by_customer = driver_review_by_customer;
@@ -2397,6 +2466,9 @@ abstract class CopyWith$Query$get_courier_order_by_id$delivery_courier_order_by_
     String? schedule_time,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,
+    dynamic? counter_offers,
+    dynamic? notified_drivers,
+    double? customer_offer,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
         driver_review_by_customer,
     int? chat_with_customer_id,
@@ -2457,6 +2529,9 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
   TRes call({
     Object? schedule_time = _undefined,
     Object? customer = _undefined,
+    Object? counter_offers = _undefined,
+    Object? notified_drivers = _undefined,
+    Object? customer_offer = _undefined,
     Object? driver_review_by_customer = _undefined,
     Object? chat_with_customer_id = _undefined,
     Object? chat_with_service_provider_id = _undefined,
@@ -2491,6 +2566,15 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
             ? _instance.customer
             : (customer
                 as Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer),
+        counter_offers: counter_offers == _undefined
+            ? _instance.counter_offers
+            : (counter_offers as dynamic?),
+        notified_drivers: notified_drivers == _undefined
+            ? _instance.notified_drivers
+            : (notified_drivers as dynamic?),
+        customer_offer: customer_offer == _undefined
+            ? _instance.customer_offer
+            : (customer_offer as double?),
         driver_review_by_customer: driver_review_by_customer == _undefined
             ? _instance.driver_review_by_customer
             : (driver_review_by_customer
@@ -2624,6 +2708,9 @@ class _CopyWithStubImpl$Query$get_courier_order_by_id$delivery_courier_order_by_
     String? schedule_time,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$customer?
         customer,
+    dynamic? counter_offers,
+    dynamic? notified_drivers,
+    double? customer_offer,
     Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
         driver_review_by_customer,
     int? chat_with_customer_id,
@@ -8379,11 +8466,39 @@ const documentNodeSubscriptionlisten_on_courier_order_by_id =
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'counter_offers'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'customer_offer'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'notified_drivers'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'driver_review_by_customer'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'to_image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
                   FieldNode(
                     name: NameNode(value: 'from_name'),
                     alias: null,
@@ -8400,13 +8515,6 @@ const documentNodeSubscriptionlisten_on_courier_order_by_id =
                   ),
                   FieldNode(
                     name: NameNode(value: 'to_name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'to_image'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -9801,6 +9909,9 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
 
 class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order {
   Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order({
+    this.counter_offers,
+    this.customer_offer,
+    this.notified_drivers,
     this.driver_review_by_customer,
     this.schedule_time,
     required this.customer,
@@ -9831,6 +9942,9 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   factory Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order.fromJson(
       Map<String, dynamic> json) {
+    final l$counter_offers = json['counter_offers'];
+    final l$customer_offer = json['customer_offer'];
+    final l$notified_drivers = json['notified_drivers'];
     final l$driver_review_by_customer = json['driver_review_by_customer'];
     final l$schedule_time = json['schedule_time'];
     final l$customer = json['customer'];
@@ -9861,6 +9975,12 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$delivery_driver = json['delivery_driver'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order(
+      counter_offers:
+          l$counter_offers == null ? null : mapFromJson(l$counter_offers),
+      customer_offer:
+          l$customer_offer == null ? null : moneyFromJson(l$customer_offer),
+      notified_drivers:
+          l$notified_drivers == null ? null : mapFromJson(l$notified_drivers),
       driver_review_by_customer: l$driver_review_by_customer == null
           ? null
           : Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer
@@ -9902,6 +10022,12 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final dynamic? counter_offers;
+
+  final double? customer_offer;
+
+  final dynamic? notified_drivers;
 
   final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
       driver_review_by_customer;
@@ -9961,6 +10087,15 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$counter_offers = counter_offers;
+    _resultData['counter_offers'] =
+        l$counter_offers == null ? null : mapToJson(l$counter_offers);
+    final l$customer_offer = customer_offer;
+    _resultData['customer_offer'] =
+        l$customer_offer == null ? null : moneyToJson(l$customer_offer);
+    final l$notified_drivers = notified_drivers;
+    _resultData['notified_drivers'] =
+        l$notified_drivers == null ? null : mapToJson(l$notified_drivers);
     final l$driver_review_by_customer = driver_review_by_customer;
     _resultData['driver_review_by_customer'] =
         l$driver_review_by_customer?.toJson();
@@ -10025,6 +10160,9 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   @override
   int get hashCode {
+    final l$counter_offers = counter_offers;
+    final l$customer_offer = customer_offer;
+    final l$notified_drivers = notified_drivers;
     final l$driver_review_by_customer = driver_review_by_customer;
     final l$schedule_time = schedule_time;
     final l$customer = customer;
@@ -10053,6 +10191,9 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$delivery_driver = delivery_driver;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$counter_offers,
+      l$customer_offer,
+      l$notified_drivers,
       l$driver_review_by_customer,
       l$schedule_time,
       l$customer,
@@ -10090,6 +10231,21 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     if (!(other
             is Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$counter_offers = counter_offers;
+    final lOther$counter_offers = other.counter_offers;
+    if (l$counter_offers != lOther$counter_offers) {
+      return false;
+    }
+    final l$customer_offer = customer_offer;
+    final lOther$customer_offer = other.customer_offer;
+    if (l$customer_offer != lOther$customer_offer) {
+      return false;
+    }
+    final l$notified_drivers = notified_drivers;
+    final lOther$notified_drivers = other.notified_drivers;
+    if (l$notified_drivers != lOther$notified_drivers) {
       return false;
     }
     final l$driver_review_by_customer = driver_review_by_customer;
@@ -10260,6 +10416,9 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
       _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order;
 
   TRes call({
+    dynamic? counter_offers,
+    double? customer_offer,
+    dynamic? notified_drivers,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
         driver_review_by_customer,
     String? schedule_time,
@@ -10321,6 +10480,9 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   static const _undefined = {};
 
   TRes call({
+    Object? counter_offers = _undefined,
+    Object? customer_offer = _undefined,
+    Object? notified_drivers = _undefined,
     Object? driver_review_by_customer = _undefined,
     Object? schedule_time = _undefined,
     Object? customer = _undefined,
@@ -10350,6 +10512,15 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   }) =>
       _then(
           Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order(
+        counter_offers: counter_offers == _undefined
+            ? _instance.counter_offers
+            : (counter_offers as dynamic?),
+        customer_offer: customer_offer == _undefined
+            ? _instance.customer_offer
+            : (customer_offer as double?),
+        notified_drivers: notified_drivers == _undefined
+            ? _instance.notified_drivers
+            : (notified_drivers as dynamic?),
         driver_review_by_customer: driver_review_by_customer == _undefined
             ? _instance.driver_review_by_customer
             : (driver_review_by_customer
@@ -10487,6 +10658,9 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
   TRes _res;
 
   call({
+    dynamic? counter_offers,
+    double? customer_offer,
+    dynamic? notified_drivers,
     Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer?
         driver_review_by_customer,
     String? schedule_time,
@@ -10543,10 +10717,10 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
 
 class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer {
   Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer({
+    this.to_image,
     this.from_name,
     this.from_image,
     this.to_name,
-    this.to_image,
     required this.created_at,
     required this.from_entity_id,
     required this.from_entity_type,
@@ -10561,10 +10735,10 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   factory Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer.fromJson(
       Map<String, dynamic> json) {
+    final l$to_image = json['to_image'];
     final l$from_name = json['from_name'];
     final l$from_image = json['from_image'];
     final l$to_name = json['to_name'];
-    final l$to_image = json['to_image'];
     final l$created_at = json['created_at'];
     final l$from_entity_id = json['from_entity_id'];
     final l$from_entity_type = json['from_entity_type'];
@@ -10576,10 +10750,10 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$customer = json['customer'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+      to_image: (l$to_image as String?),
       from_name: (l$from_name as String?),
       from_image: (l$from_image as String?),
       to_name: (l$to_name as String?),
-      to_image: (l$to_image as String?),
       created_at: (l$created_at as String),
       from_entity_id: (l$from_entity_id as int),
       from_entity_type: (l$from_entity_type as String),
@@ -10596,13 +10770,13 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     );
   }
 
+  final String? to_image;
+
   final String? from_name;
 
   final String? from_image;
 
   final String? to_name;
-
-  final String? to_image;
 
   final String created_at;
 
@@ -10627,14 +10801,14 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$to_image = to_image;
+    _resultData['to_image'] = l$to_image;
     final l$from_name = from_name;
     _resultData['from_name'] = l$from_name;
     final l$from_image = from_image;
     _resultData['from_image'] = l$from_image;
     final l$to_name = to_name;
     _resultData['to_name'] = l$to_name;
-    final l$to_image = to_image;
-    _resultData['to_image'] = l$to_image;
     final l$created_at = created_at;
     _resultData['created_at'] = l$created_at;
     final l$from_entity_id = from_entity_id;
@@ -10660,10 +10834,10 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   @override
   int get hashCode {
+    final l$to_image = to_image;
     final l$from_name = from_name;
     final l$from_image = from_image;
     final l$to_name = to_name;
-    final l$to_image = to_image;
     final l$created_at = created_at;
     final l$from_entity_id = from_entity_id;
     final l$from_entity_type = from_entity_type;
@@ -10675,10 +10849,10 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$customer = customer;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$to_image,
       l$from_name,
       l$from_image,
       l$to_name,
-      l$to_image,
       l$created_at,
       l$from_entity_id,
       l$from_entity_type,
@@ -10702,6 +10876,11 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
         runtimeType != other.runtimeType) {
       return false;
     }
+    final l$to_image = to_image;
+    final lOther$to_image = other.to_image;
+    if (l$to_image != lOther$to_image) {
+      return false;
+    }
     final l$from_name = from_name;
     final lOther$from_name = other.from_name;
     if (l$from_name != lOther$from_name) {
@@ -10715,11 +10894,6 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     final l$to_name = to_name;
     final lOther$to_name = other.to_name;
     if (l$to_name != lOther$to_name) {
-      return false;
-    }
-    final l$to_image = to_image;
-    final lOther$to_image = other.to_image;
-    if (l$to_image != lOther$to_image) {
       return false;
     }
     final l$created_at = created_at;
@@ -10802,10 +10976,10 @@ abstract class CopyWith$Subscription$listen_on_courier_order_by_id$delivery_cour
       _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer;
 
   TRes call({
+    String? to_image,
     String? from_name,
     String? from_image,
     String? to_name,
-    String? to_image,
     String? created_at,
     int? from_entity_id,
     String? from_entity_type,
@@ -10842,10 +11016,10 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   static const _undefined = {};
 
   TRes call({
+    Object? to_image = _undefined,
     Object? from_name = _undefined,
     Object? from_image = _undefined,
     Object? to_name = _undefined,
-    Object? to_image = _undefined,
     Object? created_at = _undefined,
     Object? from_entity_id = _undefined,
     Object? from_entity_type = _undefined,
@@ -10859,6 +11033,8 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
   }) =>
       _then(
           Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$driver_review_by_customer(
+        to_image:
+            to_image == _undefined ? _instance.to_image : (to_image as String?),
         from_name: from_name == _undefined
             ? _instance.from_name
             : (from_name as String?),
@@ -10867,8 +11043,6 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
             : (from_image as String?),
         to_name:
             to_name == _undefined ? _instance.to_name : (to_name as String?),
-        to_image:
-            to_image == _undefined ? _instance.to_image : (to_image as String?),
         created_at: created_at == _undefined || created_at == null
             ? _instance.created_at
             : (created_at as String),
@@ -10920,10 +11094,10 @@ class _CopyWithStubImpl$Subscription$listen_on_courier_order_by_id$delivery_cour
   TRes _res;
 
   call({
+    String? to_image,
     String? from_name,
     String? from_image,
     String? to_name,
-    String? to_image,
     String? created_at,
     int? from_entity_id,
     String? from_entity_type,

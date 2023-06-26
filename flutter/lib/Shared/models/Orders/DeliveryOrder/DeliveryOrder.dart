@@ -86,6 +86,14 @@ class DeliveryOrder extends DeliverableOrder {
     return counterOffers?.containsKey(driverId) ?? false;
   }
 
+  int get driversSawOfferCount {
+    if (notifiedDrivers == null) {
+      return 0;
+    }
+
+    return notifiedDrivers!.values.where((bool value) => value == true).length;
+  }
+
   num? driverOffer(int driverId) {
     return counterOffers?[driverId]?.price;
   }

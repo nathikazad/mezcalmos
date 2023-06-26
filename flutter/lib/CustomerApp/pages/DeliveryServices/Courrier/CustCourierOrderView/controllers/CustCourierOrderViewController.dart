@@ -44,6 +44,8 @@ class CustCourierOrderViewController {
   StreamSubscription<CourierOrder?>? orderStream;
   String? subscriptionId;
 
+  get sawNotifDrivers => null;
+
   // init
   Future<void> init(
       {required int orderId, required BuildContext context}) async {
@@ -246,4 +248,8 @@ class CustCourierOrderViewController {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
     _order.close();
   }
+
+  acceptOffer({required int id}) {}
+
+  rejectOffer({required int id}) {}
 }

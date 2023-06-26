@@ -37,7 +37,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
       _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
     }
     return CourierOrder(
-      customerOffer: null,
+      customerOffer: orderData.delivery_order.customer_offer,
       orderType: cModels.OrderType.Courier,
       orderId: orderData.id,
       review: (orderData.delivery_order.driver_review_by_customer != null)
@@ -154,7 +154,23 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
                   .delivery_order.delivery_company!.details!.currency
                   .toCurrency())
           : null,
-
+      notifiedDrivers: orderData.delivery_order.notified_drivers
+          .map<int, bool>((key, value) {
+        return MapEntry<int, bool>(int.parse(key), value as bool);
+      }),
+      counterOffers: orderData.delivery_order.counter_offers
+          ?.map<int, cModels.CounterOffer>((String id, value) {
+        return MapEntry(
+            int.parse(id),
+            cModels.CounterOffer(
+              price: value["price"],
+              status: value["status"].toString().toCounterOfferStatus(),
+              time: value["time"],
+              name: value["name"],
+              image: value["image"],
+              expiryTime: value["expiryTime"],
+            ));
+      }),
       items: orderData.items
           .map((Query$get_courier_order_by_id$delivery_courier_order_by_pk$items
                   item) =>
@@ -214,7 +230,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
         _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
       }
       return CourierOrder(
-        customerOffer: null,
+        customerOffer: orderData.delivery_order.customer_offer,
         orderType: cModels.OrderType.Courier,
         orderId: orderData.id,
         scheduleTime: (orderData.delivery_order.schedule_time != null)
@@ -327,6 +343,23 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                     .delivery_order.delivery_company!.details!.currency
                     .toCurrency())
             : null,
+        notifiedDrivers: orderData.delivery_order.notified_drivers
+            .map<int, bool>((key, value) {
+          return MapEntry<int, bool>(int.parse(key), value as bool);
+        }),
+        counterOffers: orderData.delivery_order.counter_offers
+            ?.map<int, cModels.CounterOffer>((String id, value) {
+          return MapEntry(
+              int.parse(id),
+              cModels.CounterOffer(
+                price: value["price"],
+                status: value["status"].toString().toCounterOfferStatus(),
+                time: value["time"],
+                name: value["name"],
+                image: value["image"],
+                expiryTime: value["expiryTime"],
+              ));
+        }),
 
         items: orderData.items
             .map(
@@ -361,6 +394,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
             : null,
         deliveryOrderId: orderData.delivery_order.id,
         chatId: orderData.delivery_order.chat_with_service_provider_id ?? 0,
+
         costs: OrderCosts(
             deliveryCost: orderData.delivery_order.delivery_cost,
             refundAmmount: orderData.refund_amount,

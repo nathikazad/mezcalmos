@@ -36,7 +36,8 @@ class CourierOrder extends DeliveryOrder {
       this.billImage,
       required super.customer,
       required super.customerOffer,
-
+      super.counterOffers,
+      super.notifiedDrivers,
       required super.dropOffLocation,
       required super.serviceProviderDriverChatId,
       required super.customerDriverChatId,
