@@ -10,7 +10,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { DeliveryDetails } from "../shared/models/Generic/Delivery";
 import { ServiceProvider, ServiceProviderLanguage } from "../shared/models/Services/Service";
-import { Weekday, WorkingDay } from "../shared/models/Generic/Schedule";
+import { Schedule } from "../shared/models/Generic/Schedule";
 
 export interface RestaurantDetails {
   name: string,
