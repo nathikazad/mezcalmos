@@ -119,6 +119,14 @@ class CustBusinessCartController extends GetxController {
         BusinessOrderRequestStatus.CancelledByCustomer
       ].contains(currentOrderInView.value!.status!);
 
+  Future<void> clearCart() async {
+    cart.value!.items = [];
+    cart.refresh();
+    await clear_business_cart(
+      customer_id: _auth.hasuraUserId!,
+    );
+  }
+
   Future<void> fetchCart() async {
     if (_auth.hasuraUserId != null) {
       final CustBusinessCart? value = await get_business_cart(

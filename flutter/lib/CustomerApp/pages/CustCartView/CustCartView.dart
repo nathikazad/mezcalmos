@@ -91,6 +91,12 @@ class _CustCartViewState extends State<CustCartView> {
                               InkWell(
                                 onTap: () async {
                                   await custBusinessCartController.clearCart();
+                                  if (custBusinessCartController.cart.value ==
+                                          null ||
+                                      custBusinessCartController
+                                          .cart.value!.items.isEmpty) {
+                                    await MezRouter.back();
+                                  }
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(4),

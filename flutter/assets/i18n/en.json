@@ -2,6 +2,17 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
+        "BsOrdersListViews": {
+          "BsOrdersListView": {
+            "orders": "Orders",
+            "pending": "Pending",
+            "upcoming": "Upcoming",
+            "past": "Past",
+            "pendingOrders": "Pending orders",
+            "upcomingOrders": "Upcoming orders",
+            "pastOrders": "Past orders"
+          }
+        },
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
@@ -27,6 +38,9 @@
         }
       },
       "Components": {
+        "BsOrderCard": {
+          "items": "Items"
+        },
         "BsRentalCard": {
           "hour": "hour",
           "day": "day",
@@ -1568,6 +1582,7 @@
           },
           "cusShowBusinessFilerSheet": {
             "canBookOnline": "Show only items that can be booked online.",
+            "showOnlyOpenRestaurants": "Show only open restaurants",
             "confirm": "Confirm",
             "cancel": "Cancel",
             "filter": "Filter",
@@ -1954,7 +1969,9 @@
         "onDemandClasses": "Private Lessons",
         "weeklyEvents": "Weekly Events",
         "oneTimeEvents": "Upcoming Events",
-        "onDemandEvents": "Experiences"
+        "onDemandEvents": "Experiences",
+        "description": "Description",
+        "noDescription": "No description"
       },
       "CustomerWrapper": {
         "orders": "Orders",

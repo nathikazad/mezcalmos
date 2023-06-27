@@ -472,7 +472,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
                                   left: 0, top: 7.5, bottom: 10),
-                              hintText: 'puerto_fitness',
+                              hintText: _viewController.service.uniqueId,
                               hintStyle: context.textTheme.bodyMedium),
                         ),
                       ),

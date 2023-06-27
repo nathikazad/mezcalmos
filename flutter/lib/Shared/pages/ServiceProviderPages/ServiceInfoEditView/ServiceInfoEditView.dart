@@ -289,7 +289,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                                       decoration: InputDecoration(
                                           contentPadding: EdgeInsets.only(
                                               left: 0, top: 12.5, bottom: 15),
-                                          hintText: 'puerto_fitness',
+                                          hintText: 'for Chirag!',
                                           hintStyle:
                                               context.textTheme.bodyMedium),
                                     ),

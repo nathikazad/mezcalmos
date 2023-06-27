@@ -2,6 +2,17 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
+        "BsOrdersListViews": {
+          "BsOrdersListView": {
+            "orders": "Pedidos",
+            "pending": "Pendiente",
+            "upcoming": "Próxima",
+            "past": "Pasado",
+            "pendingOrders": "Ordenes pendientes",
+            "upcomingOrders": "Próximos pedidos",
+            "pastOrders": "Órdenes pasadas"
+          }
+        },
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
@@ -26,6 +37,9 @@
         }
       },
       "Components": {
+        "BsOrderCard": {
+          "items": "Elementos"
+        },
         "BsRentalCard": {
           "hour": "hora",
           "day": "día",
@@ -1598,6 +1612,7 @@
           },
           "cusShowBusinessFilerSheet": {
             "canBookOnline": "Muestre solo artículos que se pueden reservar en línea.",
+            "showOnlyOpenRestaurants": "Show only open restaurants",
             "confirm": "Confirmar",
             "cancel": "Cancelar",
             "filter": "Filtrar",
@@ -2016,7 +2031,9 @@
         "onDemandClasses": "Lecciones privadas",
         "weeklyEvents": "Eventos semanales",
         "oneTimeEvents": "Próximos Eventos",
-        "onDemandEvents": "Experiencias"
+        "onDemandEvents": "Experiencias",
+        "description": "Descripción",
+        "noDescription": "Sin descripción"
       },
 
       "CustomerWrapper": {

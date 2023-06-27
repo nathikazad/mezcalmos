@@ -2,9 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
+    ['pages']['Components']['BsOrderCard'];
 
 class BsOrderCard extends StatelessWidget {
   final String imageUrl;
@@ -61,7 +65,7 @@ class BsOrderCard extends StatelessWidget {
                             color: offShadeGreyColor,
                           ),
                           hSmallSepartor,
-                          Text("$numItems items",
+                          Text('$numItems ${_i18n()['items']}',
                               style: TextStyle(color: offShadeGreyColor))
                         ],
                       ),

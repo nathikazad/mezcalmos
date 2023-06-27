@@ -79,7 +79,7 @@ class CustRestaurantListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["true"]
     };
   }
 
@@ -168,6 +168,8 @@ class CustRestaurantListViewController {
     newData.forEach((String key, List<String> value) {
       _filterInput[key] = List.from(value);
     });
+
+    changeAlwaysOpenSwitch(newData['restaurantOpened']!.contains('true'));
     mezDbgPrint("_filterInput $_filterInput $newData");
     _fetchRestaurantsOnFilter();
     List<Restaurant> newList = new List<Restaurant>.from(_restaurants);
