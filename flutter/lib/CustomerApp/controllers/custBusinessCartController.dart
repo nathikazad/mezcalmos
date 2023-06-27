@@ -69,7 +69,6 @@ class CustBusinessCartController extends GetxController {
     unawaited(get_customer_orders_count(
             customerId: _auth.hasuraUserId!, orderType: OrderType.Business)
         .then((int? value) {
-      
       if (value != null) {
         _numberOfOldBusinessOrders = value;
       }
@@ -215,14 +214,6 @@ class CustBusinessCartController extends GetxController {
       mezDbgPrint(stk);
     }
     return;
-  }
-
-  Future<void> clearCart() async {
-    cart.value!.items = [];
-    cart.refresh();
-    await clear_business_cart(
-      customer_id: _auth.hasuraUserId!,
-    );
   }
 
   Future<bool?> deleteCartItem(int cartItemId) async {
