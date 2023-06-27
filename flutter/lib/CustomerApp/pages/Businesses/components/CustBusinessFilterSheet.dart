@@ -9,13 +9,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['components']['cusShowBusinessFilerSheet'];
 
 typedef FilterInput = Map<String, List<String>>;
-Future<FilterInput?> cusShowBusinessFilerSheet({
-  required BuildContext context,
-  required FilterInput filterInput,
-  required FilterInput defaultFilterInput,
-  bool isClass = false,
-  bool isTherapy = false,
-}) async {
+Future<FilterInput?> cusShowBusinessFilerSheet(
+    {required BuildContext context,
+    required FilterInput filterInput,
+    required FilterInput defaultFilterInput,
+    bool isClass = false,
+    bool isTherapy = false,
+    bool isRestaurant = false}) async {
   RxMap<String, List<String>> selectedFilters = RxMap<String, List<String>>({});
   filterInput.forEach((String key, List<String> value) {
     selectedFilters[key] = List.from(value);
@@ -39,9 +39,30 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
     ]);
   }
 
+  Widget _switchTile(
+      {required String title,
+      required bool value,
+      required Function(bool?)? onChanged}) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Flexible(
+        child: Text(
+          title,
+        ),
+      ),
+      Switch(
+        value: value,
+        onChanged: onChanged,
+        activeColor: primaryBlueColor,
+      )
+    ]);
+  }
+
   bool isOnlineOrder =
       selectedFilters["onlineOrder"]?.contains("true") ?? false;
-  mezDbgPrint("defaultFilterInput $defaultFilterInput $isOnlineOrder $selectedFilters");
+  bool isRestaurantOpened =
+      selectedFilters["restaurantOpened"]?.contains("true") ?? true;
+  mezDbgPrint(
+      "defaultFilterInput $defaultFilterInput $isOnlineOrder $selectedFilters");
 
   return showModalBottomSheet<Map<String, List<String>>?>(
       // isDismissible: false,
@@ -169,16 +190,26 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                     ],
                   ),
                 ),
-              StatefulBuilder(builder: (context, setState) {
-                return _checkBoxTile(
-                  title: "${_i18n()["canBookOnline"]}",
-                  value: isOnlineOrder,
-                  onChanged: (value) {
-                    setState(() {
-                      isOnlineOrder = value ?? false;
-                    });
-                  },
-                );
+              StatefulBuilder(builder: (BuildContext context, setState) {
+                return Column(mainAxisSize: MainAxisSize.min, children: [
+                  if (isRestaurant)
+                    _switchTile(
+                        title: "${_i18n()["showOnlyOpenRestaurants"]}",
+                        value: isRestaurantOpened,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isRestaurantOpened = value ?? false;
+                          });
+                        }),
+                  _switchTile(
+                      title: "${_i18n()["canBookOnline"]}",
+                      value: isOnlineOrder,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          isOnlineOrder = value ?? false;
+                        });
+                      })
+                ]);
               }),
               SizedBox(
                 height: 20,
@@ -213,6 +244,11 @@ Future<FilterInput?> cusShowBusinessFilerSheet({
                             selectedFilters.value.addAll({
                               "onlineOrder": ["$isOnlineOrder"]
                             });
+                            if (isRestaurant) {
+                              selectedFilters.value.addAll({
+                                "restaurantOpened": ["$isRestaurantOpened"]
+                              });
+                            }
                             Navigator.pop(
                               context,
                               selectedFilters.value,

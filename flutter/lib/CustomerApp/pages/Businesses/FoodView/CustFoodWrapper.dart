@@ -47,7 +47,7 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
   Future<void> navigateToListView(MezService mezService) async {
     if (Get.find<AuthController>().hasuraUserId != null &&
         mezService == MezService.Restaurants) {
-      final int? orderId = await get_customer_orders_by_type(
+      final int? orderId = await get_customer_last_order_id(
           customerId: Get.find<AuthController>().hasuraUserId!,
           orderType: mezService.toOrderType());
       if (orderId != null && orderId > 0) {

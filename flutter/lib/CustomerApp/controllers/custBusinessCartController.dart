@@ -7,15 +7,16 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalV
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/businessCart/hsBusinessCart.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/customer/businessCart/hsBusinessCart.dart';
+import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class CustBusinessCartController extends GetxController {
 // instances //
@@ -29,20 +30,26 @@ class CustBusinessCartController extends GetxController {
 
   Rxn<List<CustBusinessCart>?> previousOrders = Rxn<List<CustBusinessCart>?>();
   RxBool get hasPendingOrder => previousOrders.value != null
-      ? previousOrders.value!.any((element) => element.status!.isPending).obs
+      ? previousOrders.value!
+          .any((CustBusinessCart element) => element.status!.isPending)
+          .obs
       : false.obs;
   RxBool get hasPastOrder => previousOrders.value != null
-      ? previousOrders.value!.any((element) => element.status!.isPast).obs
+      ? previousOrders.value!
+          .any((CustBusinessCart element) => element.status!.isPast)
+          .obs
       : false.obs;
   RxList<CustBusinessCart>? get pastOrders => previousOrders.value != null
       ? previousOrders.value!
-          .where((element) => element.status!.isPast)
+          .where((CustBusinessCart element) => element.status!.isPast)
           .toList()
           .obs
       : <CustBusinessCart>[].obs;
   // streams //
   StreamSubscription<List<CustBusinessCart>?>? cartStream;
   String? subscriptionId;
+  int _numberOfOldBusinessOrders = 0;
+  int get numberOfOldBusinessOrders => _numberOfOldBusinessOrders;
 
   @override
   Future<void> onInit() async {
@@ -53,8 +60,19 @@ class CustBusinessCartController extends GetxController {
 
       cart.refresh();
     }
+    _getPastBusinessOrdersCount();
     mezDbgPrint("[+] CustBusinessCartController::onInit -> Callback Executed.");
     super.onInit();
+  }
+
+  void _getPastBusinessOrdersCount() {
+    unawaited(get_customer_orders_count(
+            customerId: _auth.hasuraUserId!, orderType: OrderType.Business)
+        .then((int? value) {
+      if (value != null) {
+        _numberOfOldBusinessOrders = value;
+      }
+    }));
   }
 
   @override
@@ -117,6 +135,14 @@ class CustBusinessCartController extends GetxController {
         BusinessOrderRequestStatus.CancelledByBusiness,
         BusinessOrderRequestStatus.CancelledByCustomer
       ].contains(currentOrderInView.value!.status!);
+
+  Future<void> clearCart() async {
+    cart.value!.items = [];
+    cart.refresh();
+    await clear_business_cart(
+      customer_id: _auth.hasuraUserId!,
+    );
+  }
 
   Future<void> fetchCart() async {
     if (_auth.hasuraUserId != null) {
@@ -190,14 +216,6 @@ class CustBusinessCartController extends GetxController {
     return;
   }
 
-  Future<void> clearCart() async {
-    cart.value!.items = [];
-    cart.refresh();
-    await clear_business_cart(
-      customer_id: _auth.hasuraUserId!,
-    );
-  }
-
   Future<bool?> deleteCartItem(int cartItemId) async {
     final BusinessCartItem? cartItem = cart.value!.items.firstWhereOrNull(
         (BusinessCartItem element) => element.id == cartItemId);
@@ -223,7 +241,8 @@ class CustBusinessCartController extends GetxController {
         await setCartBusinessId(cart.value!.businessId!.toInt());
       }
       if (cart.value != null && cart.value!.items.isNotEmpty) {
-        var requestData = await CloudFunctions.business_requestOrder(
+        final OrderReqResponse requestData =
+            await CloudFunctions.business_requestOrder(
           customerAppType: CustomerAppType.Native,
         );
         mezDbgPrint(

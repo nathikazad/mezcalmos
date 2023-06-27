@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -74,6 +75,11 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
+         actionIcons: [
+          FloatingCartComponent(
+            cartType: CartType.business,
+          ),
+        ],
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
         title: _i18n()['locallyMade'],
