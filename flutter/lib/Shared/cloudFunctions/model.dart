@@ -585,6 +585,27 @@ class MezAdminChatResponse {
   }
 }
 
+class ChangeUniqueIdResponse {
+  bool success;
+  ChangeUniqueIdError? error;
+  String? unhandledError;
+  ChangeUniqueIdResponse(this.success, this.error, this.unhandledError);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+
+  factory ChangeUniqueIdResponse.fromFirebaseFormattedJson(json) {
+    return ChangeUniqueIdResponse(
+        json["success"],
+        json["error"]?.toString().toChangeUniqueIdError(),
+        json["unhandledError"]);
+  }
+}
+
 class Location {
   num lat;
   num lng;
@@ -3679,6 +3700,30 @@ extension ParseStringToMezAdminChatError on String {
     return MezAdminChatError.values.firstWhere(
         (MezAdminChatError mezAdminChatError) =>
             mezAdminChatError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum ChangeUniqueIdError {
+  ServiceProviderDetailsNotFound,
+  UnauthorizedAccess,
+  MutationError,
+  InvalidServiceProviderType,
+  DeepLinkError
+}
+
+extension ParseChangeUniqueIdErrorToString on ChangeUniqueIdError {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToChangeUniqueIdError on String {
+  ChangeUniqueIdError toChangeUniqueIdError() {
+    return ChangeUniqueIdError.values.firstWhere(
+        (ChangeUniqueIdError changeUniqueIdError) =>
+            changeUniqueIdError.toFirebaseFormatString().toLowerCase() ==
             toLowerCase());
   }
 }

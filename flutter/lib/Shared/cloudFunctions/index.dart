@@ -231,6 +231,17 @@ class CloudFunctions {
       }));
   }
 
+  static Future<ChangeUniqueIdResponse> serviceProvider_changeUniqueId(
+      {required String currentuniqueId,
+      required String newUniqueId}  ) async {
+    return ChangeUniqueIdResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "serviceProvider-changeUniqueId",
+      parameters: <String, dynamic>{
+        "currentuniqueId": currentuniqueId,
+        "newUniqueId": newUniqueId,
+      }));
+  }
+
   static Future<RestaurantResponse> restaurant3_createRestaurant(
       {required String name,
       required String image,

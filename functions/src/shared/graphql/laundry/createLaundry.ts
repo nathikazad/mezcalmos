@@ -1,6 +1,7 @@
 import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { LaundryDetails, LaundryError } from "../../../laundry/createNewLaundry";
 import { getHasura } from "../../../utilities/hasura";
+import { htmlToPdf } from "../../../utilities/links/HTMLToPDF";
 import { DeepLinkType, IDeepLink, generateDeepLinks } from "../../../utilities/links/deeplink";
 import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { PaymentType } from "../../models/Generic/Order";
@@ -15,7 +16,7 @@ export async function createLaundryStore(
     let uniqueId: string = laundryDetails.uniqueId ?? generateString();
 
     let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Laundry)
-
+    let flyers = await htmlToPdf(uniqueId, linksResponse[DeepLinkType.Customer].urlQrImage);    
 
     let response = await chain.mutation({
         insert_laundry_store_one: [{
@@ -54,6 +55,7 @@ export async function createLaundryStore(
                               operator_qr_image_link: linksResponse[DeepLinkType.AddOperator].urlQrImage,
                               driver_deep_link: linksResponse[DeepLinkType.AddDriver].url,
                               driver_qr_image_link: linksResponse[DeepLinkType.AddDriver].urlQrImage,
+                              customer_flyer_links: $`customer_flyer_links`,
                             }
                           }
                     }
@@ -97,7 +99,8 @@ export async function createLaundryStore(
         "gps": {
             "type": "Point",
             "coordinates": [laundryDetails.location.lng, laundryDetails.location.lat]
-        }
+        },
+        "customer_flyer_links": flyers
     });
     
     console.log("response: ", response);
