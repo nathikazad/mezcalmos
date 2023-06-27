@@ -62,7 +62,8 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
             home: data.home != null
                 ? HomeWithBusinessCard(
                     business: BusinessCard(
-                      onlineOrdering: data.home!.business!.details.online_ordering,
+                      onlineOrdering:
+                          data.home!.business!.details.online_ordering,
                       id: data.home!.business!.details.id,
                       name: data.home!.business!.details.name,
                       currency:
@@ -79,13 +80,6 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
                       id: data.home!.id,
                       bathrooms: data.home!.bathrooms,
                       bedrooms: data.home!.bedrooms,
-                      gpsLocation: data.home!.location?.gps != null
-                          ? Location(
-                              lat: data.home!.location!.gps.latitude,
-                              lng: data.home!.location!.gps.longitude,
-                              address: data.home!.location!.address,
-                            )
-                          : null,
                       location: HomeLocation(
                         name: data.home!.location!.name,
                         location: Location(
@@ -123,7 +117,8 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
             rental: data.rental != null
                 ? RentalWithBusinessCard(
                     business: BusinessCard(
-                      onlineOrdering: data.rental!.business.details.online_ordering,
+                      onlineOrdering:
+                          data.rental!.business.details.online_ordering,
                       id: data.rental!.business.details.id,
                       name: data.rental!.business.details.name,
                       currency:
@@ -164,7 +159,8 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
             event: data.event != null
                 ? EventWithBusinessCard(
                     business: BusinessCard(
-                      onlineOrdering: data.event!.business.details.online_ordering,
+                      onlineOrdering:
+                          data.event!.business.details.online_ordering,
                       id: data.event!.business.details.id,
                       name: data.event!.business.details.name,
                       currency:
@@ -212,7 +208,8 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
             service: data.service != null
                 ? ServiceWithBusinessCard(
                     business: BusinessCard(
-                      onlineOrdering: data.service!.business.details.online_ordering,
+                      onlineOrdering:
+                          data.service!.business.details.online_ordering,
                       id: data.service!.business.details.id,
                       name: data.service!.business.details.name,
                       currency:
@@ -253,7 +250,8 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
             product: data.product != null
                 ? ProductWithBusinessCard(
                     business: BusinessCard(
-                      onlineOrdering: data.product!.business.details.online_ordering,
+                      onlineOrdering:
+                          data.product!.business.details.online_ordering,
                       id: data.product!.business.details.id,
                       name: data.product!.business.details.name,
                       currency:
@@ -392,7 +390,8 @@ Future<bool> clear_business_cart({required int customer_id}) async {
       await _hasuraDb.graphQLClient.mutate$clear_business_cart(
     Options$Mutation$clear_business_cart(
       fetchPolicy: FetchPolicy.noCache,
-      variables: Variables$Mutation$clear_business_cart(customer_id: customer_id),
+      variables:
+          Variables$Mutation$clear_business_cart(customer_id: customer_id),
     ),
   );
 

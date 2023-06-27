@@ -152,16 +152,16 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
 
                       if (viewController.isMultipleRooms.value)
                         _multipleRoomSelector(context),
-                      if (viewController.homeRental?.gpsLocation != null)
+                      if (viewController.homeRental?.location.location != null)
                         ServiceLocationCard(
                           height: 20.h,
                           location: MezLocation(
-                            viewController.homeRental!.gpsLocation?.address ??
-                                "",
+                            viewController
+                                .homeRental!.location.location.address,
                             MezLocation.buildLocationData(
-                              viewController.homeRental!.gpsLocation!.lat
+                              viewController.homeRental!.location.location.lat
                                   .toDouble(),
-                              viewController.homeRental!.gpsLocation!.lng
+                              viewController.homeRental!.location.location.lng
                                   .toDouble(),
                             ),
                           ),

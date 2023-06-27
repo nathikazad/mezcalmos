@@ -17,7 +17,6 @@ import { clearBusinessCart } from "../shared/graphql/business/cart/clearCart";
 import { OpenStatus } from "../shared/models/Services/Service";
 
 export interface OrderRequestDetails {
-    businessId: number,
     customerAppType: CustomerAppType,
     notes?: string,
 } 
@@ -41,17 +40,18 @@ enum OrderReqError {
 export async function requestOrder(customerId: number, orderRequestDetails: OrderRequestDetails): Promise<OrderReqResponse> {
   try {
     let response = await Promise.all([
-        getBusiness(orderRequestDetails.businessId), 
         getCustomer(customerId),
         getMezAdmins(),
         getBusinessCart(customerId)
     ])
-    let business: Business = response[0];
-    let customer: CustomerInfo = response[1];
-    let mezAdmins: MezAdmin[] = response[2];
-    let cart: BusinessCart = response[3];
+    let customer: CustomerInfo = response[0];
+    let mezAdmins: MezAdmin[] = response[1];
+    let cart: BusinessCart = response[2];
+    errorChecks(cart);
 
-    errorChecks(business, cart);
+    let business: Business = await getBusiness(cart.businessId!);
+
+    errorChecks(cart, business);
     
     let order: BusinessOrder = await createOrderRequest(customerId, orderRequestDetails, business, mezAdmins, cart);
 
@@ -85,16 +85,18 @@ export async function requestOrder(customerId: number, orderRequestDetails: Orde
   }
 }
 
-function errorChecks(business: Business, cart: BusinessCart) {
-  if(business.details.approved == false) {
-    throw new MezError(OrderReqError.BusinessNotApproved);
-  }
-  if(business.details.openStatus != OpenStatus.Open) {
-    throw new MezError(OrderReqError.BusinessClosed);
-  }
+function errorChecks(cart: BusinessCart, business?: Business) {
   if(cart.businessId == null || (cart.items.length ?? 0) == 0) {
     throw new MezError(OrderReqError.EmptyCart);
   }
+  if(business) {
+    if(business.details.approved == false) {
+      throw new MezError(OrderReqError.BusinessNotApproved);
+    }
+    if(business.details.openStatus == OpenStatus.ClosedIndefinitely) {
+      throw new MezError(OrderReqError.BusinessClosed);
+    }
+  } 
 }
 
 async function notify(order: BusinessOrder, business: Business, mezAdmins: MezAdmin[]) {

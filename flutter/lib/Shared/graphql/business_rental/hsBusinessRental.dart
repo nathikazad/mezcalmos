@@ -202,11 +202,6 @@ Future<HomeWithBusinessCard?> get_home_by_id(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           ),
           business: BusinessCard(
             phoneNo: data.business!.details.phone_number,
@@ -328,11 +323,6 @@ Future<List<HomeCard>> get_home_rentals(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -394,11 +384,6 @@ Future<List<HomeCard>> get_business_home_rentals(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -471,11 +456,6 @@ Future<List<HomeCard>> get_real_estate(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -538,11 +518,6 @@ Future<List<HomeCard>> get_business_real_estate(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -768,7 +743,7 @@ Future<Home?> update_business_home_rental(
     Options$Mutation$update_home_location(
       fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Mutation$update_home_location(
-        id: rental.locationId!,
+        id: rental.locationId!.toInt(),
         address: rental.location.location.address,
         name: rental.location.name,
         gps: Geography(
@@ -819,14 +794,6 @@ Future<Home?> update_business_home_rental(
       ),
       bathrooms: data.bathrooms,
       bedrooms: data.bedrooms,
-      gpsLocation: Location(
-        lat: res2.parsedData!.update_business_home_location!.returning.first.gps
-            .latitude,
-        lng: res2.parsedData!.update_business_home_location!.returning.first.gps
-            .longitude,
-        address: res2
-            .parsedData!.update_business_home_location!.returning.first.address,
-      ),
     );
   }
 

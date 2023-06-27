@@ -97,7 +97,7 @@ class BsHomeRentalViewController {
               .trim() ??
           "";
       petFriendly.value = rental!.details.additionalParameters?["petFriendly"];
-      homeLocation.value = rental!.gpsLocation;
+      homeLocation.value = rental!.location.location;
       homeType.value = rental!.category1;
       final String? roomType1 =
           rental!.details.additionalParameters?["roomType1"];
@@ -163,7 +163,6 @@ class BsHomeRentalViewController {
       location: HomeLocation(
           name: homeLocation.value!.address, location: homeLocation.value!),
       category1: homeType.value!,
-      gpsLocation: homeLocation.value,
       details: details,
       bathrooms: int.tryParse(bathroomsController.text),
       bedrooms: int.tryParse(bedroomsController.text),
@@ -180,7 +179,6 @@ class BsHomeRentalViewController {
       ),
       category1: homeType.value!,
       availableFor: HomeAvailabilityOption.Rent,
-      gpsLocation: homeLocation.value,
       bathrooms: int.tryParse(bathroomsController.text),
       bedrooms: int.tryParse(bedroomsController.text),
       details: detailsController.details!,

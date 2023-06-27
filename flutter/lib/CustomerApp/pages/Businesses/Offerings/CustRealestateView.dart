@@ -91,17 +91,19 @@ class _CustRealestateViewState extends State<CustRealestateView> {
                             ],
                           ),
                           _description(context),
-                          if (viewController.realEstate?.gpsLocation != null)
+                          if (viewController.realEstate?.location.location !=
+                              null)
                             ServiceLocationCard(
                               height: 20.h,
                               location: MezLocation(
                                 viewController
-                                        .realEstate!.gpsLocation?.address ??
-                                    "",
+                                    .realEstate!.location.location.address,
                                 MezLocation.buildLocationData(
-                                  viewController.realEstate!.gpsLocation!.lat
+                                  viewController
+                                      .realEstate!.location.location.lat
                                       .toDouble(),
-                                  viewController.realEstate!.gpsLocation!.lng
+                                  viewController
+                                      .realEstate!.location.location.lng
                                       .toDouble(),
                                 ),
                               ),

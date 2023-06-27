@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
 
 class CustBusinessCartController extends GetxController {
@@ -225,7 +224,6 @@ class CustBusinessCartController extends GetxController {
       }
       if (cart.value != null && cart.value!.items.isNotEmpty) {
         var requestData = await CloudFunctions.business_requestOrder(
-          businessId: cart.value!.businessId!.toInt(),
           customerAppType: CustomerAppType.Native,
         );
         mezDbgPrint(

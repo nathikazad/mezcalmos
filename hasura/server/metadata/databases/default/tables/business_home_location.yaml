@@ -1,3 +1,80 @@
 table:
   name: home_location
   schema: business
+object_relationships:
+  - name: home
+    using:
+      manual_configuration:
+        column_mapping:
+          id: location_id
+        insertion_order: null
+        remote_table:
+          name: home
+          schema: business
+insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        home:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - address
+        - gps
+        - name
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+        - name
+      filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - id
+        - name
+        - gps
+        - address
+      filter:
+        home:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: customer
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+        - name
+      filter: {}
+update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - address
+        - gps
+        - id
+        - name
+      filter:
+        home:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: business_operator
+    permission:
+      filter:
+        home:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
