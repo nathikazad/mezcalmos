@@ -60,8 +60,8 @@ class _CustCartViewState extends State<CustCartView> {
                 withGradient: true,
                 borderRadius: 0,
                 onClick: () async {
-                  if (custBusinessCartController.pastOrders == null ||
-                      custBusinessCartController.pastOrders!.length <= 5) {
+                  if (custBusinessCartController.numberOfOldBusinessOrders <
+                      5) {
                     await _alertTermsAndServices();
                   }
                   await custBusinessCartController.requestOrder();
@@ -113,7 +113,7 @@ class _CustCartViewState extends State<CustCartView> {
                                 .asMap()
                                 .entries
                                 .map(
-                              (data) {
+                              (MapEntry<int, BusinessCartItem> data) {
                                 final int index = data.key;
                                 final BusinessCartItem item = data.value;
                                 switch (item.offeringType) {
