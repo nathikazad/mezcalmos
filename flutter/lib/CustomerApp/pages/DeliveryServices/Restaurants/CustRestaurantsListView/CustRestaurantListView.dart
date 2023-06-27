@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFi
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/components/RestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/components/RestaurantShimmerList.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/components/SearchItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/controllers/CustRestaurantListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -19,8 +20,6 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
-
-import 'components/SearchItemCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ListRestaurantsScreen"]["ListRestaurantScreen"];
@@ -66,40 +65,30 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
 
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
             onClick: MezRouter.back,
+            actionIcons: [
+              FloatingCartComponent(cartType: CartType.restaurant,),
+            ],
             titleWidget: Obx(() => Text(
                   viewController.isMapView
                       ? '${_i18n()['map']}'
                       : '${_i18n()['restaurants']}',
                 ))),
         floatingActionButton: Padding(
-          padding: const EdgeInsets.all(0),
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: MezButton(
-                    width: 52.5.mezW,
-                    height: 42.5,
-                    onClick: () async {
-                      viewController.switchView();
-                    },
-                    icon: viewController.isMapView ? Icons.list : Icons.room,
-                    label: viewController.isMapView
-                        ? '${_i18n()['viewAsList']}'
-                        : '${_i18n()['viewOnMap']}',
-                    borderRadius: 50,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: FloatingCartComponent()),
-              ),
-            ],
+          padding: const EdgeInsets.only(bottom: 30),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: MezButton(
+              width: 52.5.mezW,
+              height: 42.5,
+              onClick: () async {
+                viewController.switchView();
+              },
+              icon: viewController.isMapView ? Icons.list : Icons.room,
+              label: viewController.isMapView
+                  ? '${_i18n()['viewAsList']}'
+                  : '${_i18n()['viewOnMap']}',
+              borderRadius: 50,
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

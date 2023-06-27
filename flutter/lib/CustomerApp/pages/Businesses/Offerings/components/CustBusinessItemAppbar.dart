@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -252,7 +253,16 @@ class CustBusinessItemAppbar extends StatelessWidget {
         if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
         if (Get.find<AuthController>().isUserSignedIn)
           _notificationAppBarIcon(),
-        // if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+        FloatingCartComponent(
+          backgroundColor: Colors.white,
+          iconColor: primaryBlueColor,
+          cartType: CartType.business,
+          withGradient: false,
+          badgePosition: badge.BadgePosition.topEnd(),
+        ),
+        SizedBox(
+          width: 15,
+        )
       ],
     );
   }

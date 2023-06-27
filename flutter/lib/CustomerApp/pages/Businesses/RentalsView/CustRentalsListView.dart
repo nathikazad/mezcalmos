@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
@@ -60,6 +61,11 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
+           actionIcons: [
+          FloatingCartComponent(
+            cartType: CartType.business,
+          ),
+        ],
           titleWidget: Obx(() => Text(
                 viewController.isMapView
                     ? '${_i18n()['map']}'
