@@ -80,7 +80,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
             status: DeliveryOrderStatus.OrderReceived,
             service_provider_id: (restaurant.deliveryDetails.selfDelivery) 
               ? restaurant.id 
-              : restaurant.deliveryPartnerId,
+              : 7,
             service_provider_type: (restaurant.deliveryDetails.selfDelivery) 
               ? DeliveryServiceProviderType.Restaurant
               : DeliveryServiceProviderType.DeliveryCompany,
@@ -198,11 +198,11 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,
       tripPolyline : checkoutReq.tripPolyline,
-      serviceProviderType: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
+      serviceProviderType: (restaurant.deliveryDetails.selfDelivery == false) 
         ? DeliveryServiceProviderType.DeliveryCompany 
         : DeliveryServiceProviderType.Restaurant,
-      serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
-        ? restaurant.deliveryPartnerId 
+      serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false) 
+        ? 7
         : restaurant.id,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,
@@ -225,11 +225,11 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,
       tripPolyline : checkoutReq.tripPolyline,
-      serviceProviderType: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
+      serviceProviderType: (restaurant.deliveryDetails.selfDelivery == false) 
         ? DeliveryServiceProviderType.DeliveryCompany 
         : DeliveryServiceProviderType.Restaurant,
-      serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false && restaurant.deliveryPartnerId) 
-        ? restaurant.deliveryPartnerId 
+      serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false) 
+        ? 7
         : restaurant.id,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,

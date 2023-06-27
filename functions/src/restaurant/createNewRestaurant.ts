@@ -33,7 +33,6 @@ export interface RestaurantResponse {
 export enum RestaurantError {
   UnhandledError = "unhandledError",
   DeliveryDetailsNotSet = "deliveryDetailsNotSet",
-  NoDeliveryPartner = "noDeliveryPartner",
   UserNotFound = "userNotFound",
   DeepLinkError = "deepLinkError",
   QRGenerationError = "qrGenerationError",
@@ -45,8 +44,6 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     if(restaurantDetails.deliveryDetails.deliveryAvailable) {
       if(restaurantDetails.deliveryDetails.selfDelivery && restaurantDetails.deliveryDetails.radius == 0) {
         throw new MezError(RestaurantError.DeliveryDetailsNotSet);
-      } else if(!(restaurantDetails.deliveryDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
-        throw new MezError(RestaurantError.NoDeliveryPartner);
       }
     }
     let userPromise = getUser(userId);

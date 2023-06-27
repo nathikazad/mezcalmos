@@ -50,7 +50,6 @@ enum CheckoutResponseError {
   RestaurantClosed = "restaurantClosed",
   CartEmpty = "cartEmpty",
   RestaurantNotApproved = "restaurantNotApproved",
-  NoDeliveryPartner = "noDeliveryPartner",
   NotAcceptingDeliveryOrders = "notAcceptingDeliveryOrders",
   RestaurantNotFound = "restaurantNotFound",
   CartNotFound = "cartNotFound",
@@ -82,7 +81,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
 
-      updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, restaurant.deliveryPartnerId!);
+      updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, 7);
       notifyDeliveryCompany(orderResponse.deliveryOrder);
     }
     
@@ -137,13 +136,7 @@ function errorChecks(restaurant: ServiceProvider, checkoutRequest: CheckoutReque
 
   }
   if(checkoutRequest.deliveryType == undefined || checkoutRequest.deliveryType == DeliveryType.Delivery) {
-    if(restaurant.deliveryDetails.deliveryAvailable) {
-      if(restaurant.deliveryDetails.selfDelivery == false) {
-        if(restaurant.deliveryPartnerId == null) {
-          throw new MezError(CheckoutResponseError.NoDeliveryPartner);
-        }
-      }
-    } else {
+    if(restaurant.deliveryDetails.deliveryAvailable == false) {
       throw new MezError(CheckoutResponseError.NotAcceptingDeliveryOrders);
     }
   }

@@ -92,7 +92,7 @@ export async function createLaundryOrder(
                         status: DeliveryOrderStatus.OrderReceived,
                         service_provider_id: (laundryStore.deliveryDetails.selfDelivery) 
                             ? laundryStore.id 
-                            : laundryStore.deliveryPartnerId,
+                            : 7,
                         service_provider_type: (laundryStore.deliveryDetails.selfDelivery) 
                             ? DeliveryServiceProviderType.Laundry
                             : DeliveryServiceProviderType.DeliveryCompany,
@@ -171,8 +171,12 @@ export async function createLaundryOrder(
                 tripDistance : laundryRequestDetails.tripDistance,
                 tripDuration : laundryRequestDetails.tripDuration,
                 tripPolyline : laundryRequestDetails.tripPolyline,
-                serviceProviderType: DeliveryServiceProviderType.Laundry,
-                serviceProviderId: laundryStore.id!,
+                serviceProviderType: (laundryStore.deliveryDetails.selfDelivery == false) 
+                ? DeliveryServiceProviderType.DeliveryCompany 
+                : DeliveryServiceProviderType.Laundry,
+                serviceProviderId:(laundryStore.deliveryDetails.selfDelivery) 
+                ? laundryStore.id 
+                : 7,
                 direction: DeliveryDirection.FromCustomer,
                 packageReady: true,
                 distanceFromBase: laundryRequestDetails.distanceFromBase
@@ -197,11 +201,11 @@ export async function createLaundryOrder(
             tripDistance : laundryRequestDetails.tripDistance,
             tripDuration : laundryRequestDetails.tripDuration,
             tripPolyline : laundryRequestDetails.tripPolyline,
-            serviceProviderType: (laundryStore.deliveryDetails.selfDelivery == false && laundryStore.deliveryPartnerId) 
+            serviceProviderType: (laundryStore.deliveryDetails.selfDelivery == false) 
                 ? DeliveryServiceProviderType.DeliveryCompany 
                 : DeliveryServiceProviderType.Laundry,
-            serviceProviderId: (laundryStore.deliveryDetails.selfDelivery == false && laundryStore.deliveryPartnerId) 
-                ? laundryStore.deliveryPartnerId 
+            serviceProviderId: (laundryStore.deliveryDetails.selfDelivery == false) 
+                ? 7
                 : laundryStore.id,
             direction: DeliveryDirection.FromCustomer,
             packageReady: false,

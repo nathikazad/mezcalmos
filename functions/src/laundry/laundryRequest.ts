@@ -46,7 +46,6 @@ export enum ReqLaundryError {
     CustomerNotFound = "customerNotFound",
     LaundryStoreNotApproved = "laundryStoreNotApproved",
     StoreClosed = "storeClosed",
-    NoDeliveryPartner = "noDeliveryPartner",
     DeliveryNotAvailable = "deliveryNotAvailable",
     OrderCreationError = "orderCreationError",
     NoChatId = "noChatId",
@@ -77,7 +76,7 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
         // assign delivery company 
         if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
 
-            updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
+            updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, 7);
             notifyDeliveryCompany(orderResponse.fromCustomerDeliveryOrder)
         }
 
@@ -125,13 +124,7 @@ function errorChecks(laundryStore: ServiceProvider, laundryRequestDetails: Laund
         throw new MezError(ReqLaundryError.StoreClosed);
     }
     if(laundryRequestDetails.deliveryType == DeliveryType.Delivery) {
-        if(laundryStore.deliveryDetails.deliveryAvailable) {
-            if(!(laundryStore.deliveryDetails.selfDelivery)) {
-                if(laundryStore.deliveryPartnerId == null) {
-                    throw new MezError(ReqLaundryError.NoDeliveryPartner);
-                }
-            }
-        } else {
+        if(laundryStore.deliveryDetails.deliveryAvailable == false) {
             throw new MezError(ReqLaundryError.DeliveryNotAvailable);
         }
     }

@@ -90,11 +90,10 @@ class CustomerOrdersListViewController {
   }
 
   Future<void> init() async {
+    _scrollController.onBottomReach(fetchPastOrders, sensitivity: 200);
     await fetchCurrentOrders();
     _listenOnOrders();
     await fetchPastOrders();
-
-    _scrollController.onBottomReach(fetchPastOrders, sensitivity: 200);
   }
 
   void dispose() {

@@ -32,7 +32,6 @@ export interface LaundryResponse {
 export enum LaundryError {
   UnhandledError = "unhandledError",
   DeliveryDetailsNotSet = "deliveryDetailsNotSet",
-  NoDeliveryPartner = "noDeliveryPartner",
   UserNotFound = "userNotFound",
   DeepLinkError = "deepLinkError",
   QRGenerationError = "qrGenerationError",
@@ -44,8 +43,6 @@ export async function createLaundry(userId: number, laundryDetails: LaundryDetai
     if(laundryDetails.deliveryDetails.deliveryAvailable) {
       if(laundryDetails.deliveryDetails.selfDelivery && !(laundryDetails.deliveryDetails.radius)) {
         throw new MezError(LaundryError.DeliveryDetailsNotSet);
-      } else if(!(laundryDetails.deliveryDetails.selfDelivery) && !(laundryDetails.deliveryPartnerId)) {
-        throw new MezError(LaundryError.NoDeliveryPartner);
       }
     }
   
