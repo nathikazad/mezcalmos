@@ -38,6 +38,22 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
     return null;
   }
 
+  int? getBusinessId(Query$getBusinessCart$business_cart$items data) {
+    if (data.home != null) {
+      return data.home!.business!.id;
+    } else if (data.rental != null) {
+      return data.rental!.business.id;
+    } else if (data.event != null) {
+      return data.event!.business.id;
+    } else if (data.service != null) {
+      return data.service!.business.id;
+    } else if (data.product != null) {
+      return data.product!.business.id;
+    } else {
+      return null;
+    }
+  }
+
   return CustBusinessCart(
     customerId: cartData.customer_id,
     businessId: cartData.business_id?.toInt(),
@@ -49,6 +65,7 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
             itemId: data.item_id,
             cost: data.cost,
             time: data.time,
+            businessId: getBusinessId(data),
             offeringType: data.offering_type.toOfferingType(),
             parameters: BusinessItemParameters(
               guests: data.parameters?["guests"],
@@ -512,6 +529,24 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                 ? cart.parsedData?.business_order_request.first
                 : null;
         if (parsedCart != null) {
+          int? getBusinessId(
+              Subscription$listen_on_business_order_request$business_order_request$items
+                  data) {
+            if (data.home != null) {
+              return data.home!.business!.id;
+            } else if (data.rental != null) {
+              return data.rental!.business.id;
+            } else if (data.event != null) {
+              return data.event!.business.id;
+            } else if (data.service != null) {
+              return data.service!.business.id;
+            } else if (data.product != null) {
+              return data.product!.business.id;
+            } else {
+              return null;
+            }
+          }
+
           final List<
                   Subscription$listen_on_business_order_request$business_order_request>
               _res = cart.parsedData!.business_order_request;
@@ -536,6 +571,7 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                 itemId: data.item_id,
                                 cost: data.cost ?? 0,
                                 time: data.time,
+                                businessId: getBusinessId(data),
                                 offeringType:
                                     data.offering_type.toOfferingType(),
                                 parameters: BusinessItemParameters(

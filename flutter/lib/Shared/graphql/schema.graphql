@@ -2219,6 +2219,45 @@ columns and relationships of "business.home_location"
 type business_home_location {
   address: String!
   gps: geography!
+
+  """An object relationship"""
+  home: business_home
+
+  """An array relationship"""
+  homes(
+    """distinct select on columns"""
+    distinct_on: [business_home_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_bool_exp
+  ): [business_home!]!
+
+  """An aggregate relationship"""
+  homes_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_home_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_home_order_by!]
+
+    """filter the rows returned"""
+    where: business_home_bool_exp
+  ): business_home_aggregate!
   id: Int!
   name: String!
 }
@@ -2262,6 +2301,9 @@ input business_home_location_bool_exp {
   _or: [business_home_location_bool_exp!]
   address: String_comparison_exp
   gps: geography_comparison_exp
+  home: business_home_bool_exp
+  homes: business_home_bool_exp
+  homes_aggregate: business_home_aggregate_bool_exp
   id: Int_comparison_exp
   name: String_comparison_exp
 }
@@ -2289,6 +2331,8 @@ input type for inserting data into table "business.home_location"
 input business_home_location_insert_input {
   address: String
   gps: geography
+  home: business_home_obj_rel_insert_input
+  homes: business_home_arr_rel_insert_input
   id: Int
   name: String
 }
@@ -2341,6 +2385,8 @@ input business_home_location_on_conflict {
 input business_home_location_order_by {
   address: order_by
   gps: order_by
+  home: business_home_order_by
+  homes_aggregate: business_home_aggregate_order_by
   id: order_by
   name: order_by
 }
