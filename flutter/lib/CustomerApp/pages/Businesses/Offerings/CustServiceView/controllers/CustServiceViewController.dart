@@ -86,7 +86,7 @@ class CustServiceViewController {
     _calcTotalOrderCost();
   }
 
-  bool isAbleToBook() {
+  bool _isAbleToBook() {
     if (custBusinessCartController.cart.value != null) {
       return custBusinessCartController.cart.value!.items
           .every((BusinessCartItem e) => e.businessId == service!.business.id);
@@ -95,7 +95,7 @@ class CustServiceViewController {
   }
 
   Future<void> bookOffering() async {
-    if (!isAbleToBook()) {
+    if (!_isAbleToBook()) {
       showErrorSnackBar(
         errorTitle: "You can only book items from one business at a time",
       );
