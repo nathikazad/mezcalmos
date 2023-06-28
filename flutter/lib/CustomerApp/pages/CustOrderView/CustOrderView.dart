@@ -79,7 +79,7 @@ class _CustOrderViewState extends State<CustOrderView> {
       }),
       bottomSheet: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: bottomButtons(context),
+        child: Obx(() => bottomButtons(context)),
       ),
       body: Obx(
         () => Padding(
