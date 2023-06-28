@@ -92,11 +92,9 @@ class _CustServiceViewState extends State<CustServiceView> {
                     : "Add to cart",
                 withGradient: true,
                 borderRadius: 0,
-                onClick: viewController.startDate.value == null
-                    ? null
-                    : () async {
-                        await viewController.bookOffering();
-                      },
+                onClick: () async {
+                  await viewController.bookOffering();
+                },
               )
             : SizedBox.shrink(),
       ),
@@ -154,70 +152,73 @@ class _CustServiceViewState extends State<CustServiceView> {
 
                       /// Booking
                       if (viewController.isOnlineOrdering.value!)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            bigSeperator,
-                            BsOpDateTimePicker(
-                              fillColor: Colors.white,
-                              onNewPeriodSelected: (DateTime v) {
-                                viewController.startDate.value = v;
-                              },
-                              label: _i18n()["choostTime"],
-                              validator: (DateTime? p0) {
-                                if (p0 == null) return "Please select a time";
-
-                                return null;
-                              },
-                              time: viewController.startDate.value,
-                            ),
-                            bigSeperator,
-                            if (viewController.service!.category1 ==
-                                ServiceCategory1.Cleaning)
-                              Column(
-                                children: [
-                                  CustGuestPicker(
-                                    label: "Hours",
-                                    onNewGuestSelected: (int v) {
-                                      viewController.setTotalHours(v);
-                                    },
-                                    value: viewController.totalHours.value,
-                                    lowestValue: 1,
-                                  ),
-                                  bigSeperator,
-                                ],
+                        Form(
+                          key: viewController.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              bigSeperator,
+                              BsOpDateTimePicker(
+                                fillColor: Colors.white,
+                                onNewPeriodSelected: (DateTime v) {
+                                  viewController.startDate.value = v;
+                                },
+                                label: _i18n()["choostTime"],
+                                validator: (DateTime? p0) {
+                                  if (p0 == null) return "Please select a time";
+                        
+                                  return null;
+                                },
+                                time: viewController.startDate.value,
                               ),
-                            if (viewController.service!.category1 ==
-                                ServiceCategory1.PetSitting)
-                              Column(
-                                children: [
-                                  CustBusinessDurationPicker(
-                                    costUnits:
-                                        viewController.service!.details.cost,
-                                    label: "Duration",
-                                    unitValue: viewController
-                                        .timeCost.value?.keys.first,
-                                    value: viewController.totalHours.value,
-                                    validator: (TimeUnit? p0) {
-                                      if (p0 == null)
-                                        return "Please select a time";
-                                      return null;
-                                    },
-                                    onNewCostUnitSelected:
-                                        (Map<TimeUnit, num> v) {
-                                      viewController.setTimeCost(v);
-                                    },
-                                    onNewDurationSelected: (int v) {
-                                      viewController.setTotalHours(v);
-                                    },
-                                  ),
-                                  bigSeperator,
-                                ],
+                              bigSeperator,
+                              if (viewController.service!.category1 ==
+                                  ServiceCategory1.Cleaning)
+                                Column(
+                                  children: [
+                                    CustGuestPicker(
+                                      label: "Hours",
+                                      onNewGuestSelected: (int v) {
+                                        viewController.setTotalHours(v);
+                                      },
+                                      value: viewController.totalHours.value,
+                                      lowestValue: 1,
+                                    ),
+                                    bigSeperator,
+                                  ],
+                                ),
+                              if (viewController.service!.category1 ==
+                                  ServiceCategory1.PetSitting)
+                                Column(
+                                  children: [
+                                    CustBusinessDurationPicker(
+                                      costUnits:
+                                          viewController.service!.details.cost,
+                                      label: "Duration",
+                                      unitValue: viewController
+                                          .timeCost.value?.keys.first,
+                                      value: viewController.totalHours.value,
+                                      validator: (TimeUnit? p0) {
+                                        if (p0 == null)
+                                          return "Please select a time";
+                                        return null;
+                                      },
+                                      onNewCostUnitSelected:
+                                          (Map<TimeUnit, num> v) {
+                                        viewController.setTimeCost(v);
+                                      },
+                                      onNewDurationSelected: (int v) {
+                                        viewController.setTotalHours(v);
+                                      },
+                                    ),
+                                    bigSeperator,
+                                  ],
+                                ),
+                              CustOrderCostCard(
+                                orderCostString: viewController.orderString.value,
                               ),
-                            CustOrderCostCard(
-                              orderCostString: viewController.orderString.value,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                     ],
                   ),

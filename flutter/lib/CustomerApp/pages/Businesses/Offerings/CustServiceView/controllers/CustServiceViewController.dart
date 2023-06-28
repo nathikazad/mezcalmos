@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
@@ -20,6 +21,7 @@ class CustServiceViewController {
   Rx<bool> isEditingMode = Rx<bool>(false);
   Rxn<int> _cartId = Rxn<int>();
   Rxn<bool> isOnlineOrdering = Rxn<bool>(false);
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   // getters //
   ServiceWithBusinessCard? get service => _service.value;
@@ -93,8 +95,18 @@ class CustServiceViewController {
     }
     return true;
   }
+  bool validate() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      return true;
+    }
+    return false;
+  }
 
   Future<void> bookOffering() async {
+    if (!validate()) {
+      return;
+    }
     if (!_isAbleToBook()) {
       showErrorSnackBar(
         errorTitle: "You can only book items from one business at a time",

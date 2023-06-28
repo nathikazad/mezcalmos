@@ -127,11 +127,9 @@ class _CustEventViewState extends State<CustEventView> {
                     : '${_i18n()['addToCart']}',
                 withGradient: true,
                 borderRadius: 0,
-                onClick: viewController.isValidated.value
-                    ? () async {
-                        await viewController.bookOffering();
-                      }
-                    : null,
+                onClick: () async {
+                  await viewController.bookOffering();
+                },
               )
             : SizedBox.shrink(),
       ),
@@ -199,68 +197,73 @@ class _CustEventViewState extends State<CustEventView> {
 
                       /// Booking
                       if (viewController.isOnlineOrdering.value!)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (viewController.event!.scheduleType !=
-                                ScheduleType.OneTime)
-                              BsOpDateTimePicker(
-                                fillColor: Colors.white,
-                                onNewPeriodSelected: (DateTime v) {
-                                  viewController.startDate.value = v;
-                                },
-                                label: '${_i18n()['startDate']}',
-                                validator: (DateTime? p0) {
-                                  if (p0 == null)
-                                    return '${_i18n()['selectATime']}';
+                        Form(
+                          key: viewController.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (viewController.event!.scheduleType !=
+                                  ScheduleType.OneTime)
+                                BsOpDateTimePicker(
+                                  fillColor: Colors.white,
+                                  onNewPeriodSelected: (DateTime v) {
+                                    viewController.startDate.value = v;
+                                  },
+                                  label: '${_i18n()['startDate']}',
+                                  validator: (DateTime? p0) {
+                                    if (p0 == null)
+                                      return '${_i18n()['selectATime']}';
 
-                                  return null;
-                                },
-                                time: viewController.startDate.value,
-                              ),
-                            if (viewController.event!.scheduleType ==
-                                ScheduleType.OnDemand)
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  CustGuestPicker(
-                                    label: '${_i18n()['hours']}',
-                                    onNewGuestSelected: (int v) {
-                                      viewController.setTotalHours(v);
-                                    },
-                                    value: viewController.totalHours.value,
-                                    lowestValue: 1,
-                                  ),
-                                  bigSeperator,
-                                ],
-                              ),
-                            if (viewController.event!.scheduleType ==
-                                ScheduleType.OnDemand)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${_i18n()['notes']}',
-                                    style: context.textTheme.bodyLarge,
-                                  ),
-                                  smallSepartor,
-                                  TextFormField(
-                                    maxLines: 5,
-                                    minLines: 3,
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      hintText: '${_i18n()['writeNotesHere']}',
+                                    return null;
+                                  },
+                                  time: viewController.startDate.value,
+                                ),
+                              if (viewController.event!.scheduleType ==
+                                  ScheduleType.OnDemand)
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 15,
                                     ),
-                                  ),
-                                  bigSeperator
-                                ],
+                                    CustGuestPicker(
+                                      label: '${_i18n()['hours']}',
+                                      onNewGuestSelected: (int v) {
+                                        viewController.setTotalHours(v);
+                                      },
+                                      value: viewController.totalHours.value,
+                                      lowestValue: 1,
+                                    ),
+                                    bigSeperator,
+                                  ],
+                                ),
+                              if (viewController.event!.scheduleType ==
+                                  ScheduleType.OnDemand)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${_i18n()['notes']}',
+                                      style: context.textTheme.bodyLarge,
+                                    ),
+                                    smallSepartor,
+                                    TextFormField(
+                                      maxLines: 5,
+                                      minLines: 3,
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        hintText:
+                                            '${_i18n()['writeNotesHere']}',
+                                      ),
+                                    ),
+                                    bigSeperator
+                                  ],
+                                ),
+                              CustOrderCostCard(
+                                orderCostString:
+                                    viewController.orderString.value,
                               ),
-                            CustOrderCostCard(
-                              orderCostString: viewController.orderString.value,
-                            ),
-                          ],
+                            ],
+                          ),
                         )
                     ],
                   ),
