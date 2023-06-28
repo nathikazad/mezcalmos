@@ -96,11 +96,9 @@ class _CustRentalViewState extends State<CustRentalView> {
                     : "Add to cart",
                 withGradient: true,
                 borderRadius: 0,
-                onClick: viewController.startDate.value == null
-                    ? null
-                    : () async {
-                        await viewController.bookOffering();
-                      },
+                onClick: () async {
+                  await viewController.bookOffering();
+                },
               )
             : SizedBox.shrink(),
       ),
@@ -166,60 +164,64 @@ class _CustRentalViewState extends State<CustRentalView> {
 
                       /// Bookings
                       if (viewController.isOnlineOrdering.value!)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            bigSeperator,
-                            BsOpDateTimePicker(
-                              fillColor: Colors.white,
-                              onNewPeriodSelected: (DateTime v) {
-                                viewController.startDate.value = v;
-                              },
-                              label: "Start Date",
-                              validator: (DateTime? p0) {
-                                if (p0 == null) return "Please select a time";
-
-                                return null;
-                              },
-                              time: viewController.startDate.value,
-                            ),
-                            bigSeperator,
-                            CustBusinessDurationPicker(
-                              costUnits: viewController.rental!.details.cost,
-                              unitValue:
-                                  viewController.timeCost.value?.keys.first,
-                              label: "Duration",
-                              value: viewController.duration.value,
-                              validator: (TimeUnit? p0) {
-                                if (p0 == null) return "Please select a time";
-                                return null;
-                              },
-                              onNewCostUnitSelected: (Map<TimeUnit, num> v) {
-                                viewController.setTimeCost(v);
-                              },
-                              onNewDurationSelected: (int v) {
-                                viewController.setDuration(v);
-                              },
-                            ),
-                            bigSeperator,
-                            Text(
-                              "Notes",
-                              style: context.textTheme.bodyLarge,
-                            ),
-                            smallSepartor,
-                            TextFormField(
-                              maxLines: 7,
-                              minLines: 5,
-                              decoration: InputDecoration(
+                        Form(
+                          key: viewController.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              bigSeperator,
+                              BsOpDateTimePicker(
                                 fillColor: Colors.white,
-                                hintText: "Write your notes here.",
+                                onNewPeriodSelected: (DateTime v) {
+                                  viewController.startDate.value = v;
+                                },
+                                label: "Start Date",
+                                validator: (DateTime? p0) {
+                                  if (p0 == null) return "Please select a time";
+
+                                  return null;
+                                },
+                                time: viewController.startDate.value,
                               ),
-                            ),
-                            bigSeperator,
-                            CustOrderCostCard(
-                              orderCostString: viewController.orderString.value,
-                            ),
-                          ],
+                              bigSeperator,
+                              CustBusinessDurationPicker(
+                                costUnits: viewController.rental!.details.cost,
+                                unitValue:
+                                    viewController.timeCost.value?.keys.first,
+                                label: "Duration",
+                                value: viewController.duration.value,
+                                validator: (TimeUnit? p0) {
+                                  if (p0 == null) return "Please select a time";
+                                  return null;
+                                },
+                                onNewCostUnitSelected: (Map<TimeUnit, num> v) {
+                                  viewController.setTimeCost(v);
+                                },
+                                onNewDurationSelected: (int v) {
+                                  viewController.setDuration(v);
+                                },
+                              ),
+                              bigSeperator,
+                              Text(
+                                "Notes",
+                                style: context.textTheme.bodyLarge,
+                              ),
+                              smallSepartor,
+                              TextFormField(
+                                maxLines: 7,
+                                minLines: 5,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  hintText: "Write your notes here.",
+                                ),
+                              ),
+                              bigSeperator,
+                              CustOrderCostCard(
+                                orderCostString:
+                                    viewController.orderString.value,
+                              ),
+                            ],
+                          ),
                         ),
                     ],
                   ),

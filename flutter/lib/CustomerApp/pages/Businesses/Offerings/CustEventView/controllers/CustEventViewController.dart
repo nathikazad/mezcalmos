@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
@@ -31,6 +32,7 @@ class CustEventViewController {
         return _startDate.value != null ? Rx(true) : Rx(false);
     }
   }
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   // getters //
   EventWithBusinessCard? get event => _event.value;
@@ -100,7 +102,18 @@ class CustEventViewController {
     return true;
   }
 
+  bool validate() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      return true;
+    }
+    return false;
+  }
+
   Future<void> bookOffering() async {
+    if (!validate()) {
+      return;
+    }
     if (!_isAbleToBook()) {
       showErrorSnackBar(
         errorTitle: "You can only book items from one business at a time",
