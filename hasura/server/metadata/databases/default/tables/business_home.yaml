@@ -44,6 +44,7 @@ insert_permissions:
         - business_id
         - details_id
         - location_id
+        - offering_type
 select_permissions:
   - role: anonymous
     permission:

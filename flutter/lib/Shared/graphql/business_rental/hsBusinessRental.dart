@@ -662,6 +662,7 @@ Future<int?> add_one_home_rental({required Home rental}) async {
               data: Input$business_home_location_insert_input(
                 address: rental.location.name,
                 name: rental.location.name,
+                business_id: rental.details.businessId.toInt(),
                 gps: Geography(
                   rental.location.location.lat.toDouble(),
                   rental.location.location.lng.toDouble(),

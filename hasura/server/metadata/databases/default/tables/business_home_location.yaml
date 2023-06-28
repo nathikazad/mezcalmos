@@ -2,6 +2,9 @@ table:
   name: home_location
   schema: business
 object_relationships:
+  - name: business
+    using:
+      foreign_key_constraint_on: business_id
   - name: home
     using:
       manual_configuration:
@@ -15,13 +18,13 @@ insert_permissions:
   - role: business_operator
     permission:
       check:
-        home:
-          business:
-            operators:
-              user_id:
-                _eq: X-Hasura-User-Id
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
       columns:
         - address
+        - business_id
         - gps
         - name
 select_permissions:
@@ -36,16 +39,16 @@ select_permissions:
   - role: business_operator
     permission:
       columns:
+        - address
+        - business_id
+        - gps
         - id
         - name
-        - gps
-        - address
       filter:
-        home:
-          business:
-            operators:
-              user_id:
-                _eq: X-Hasura-User-Id
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
@@ -63,18 +66,16 @@ update_permissions:
         - id
         - name
       filter:
-        home:
-          business:
-            operators:
-              user_id:
-                _eq: X-Hasura-User-Id
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
       check: null
 delete_permissions:
   - role: business_operator
     permission:
       filter:
-        home:
-          business:
-            operators:
-              user_id:
-                _eq: X-Hasura-User-Id
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
