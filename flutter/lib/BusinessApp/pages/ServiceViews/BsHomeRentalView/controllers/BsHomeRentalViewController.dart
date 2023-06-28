@@ -157,6 +157,16 @@ class BsHomeRentalViewController {
     details.additionalParameters = {
       "area": areaController.text.trim() + " sq ft",
       "petFriendly": petFriendly.value,
+      "roomType1": roomType.value?.toFirebaseFormatString(),
+      "additionalRooms": [
+        for (final Map<String, dynamic> room in additionalRooms)
+          {
+            "roomType": room["roomType"],
+            "cost": room["controller"].priceTimeUnitMap.value.map(
+                (TimeUnit key, TextEditingController value) => MapEntry(
+                    key.toFirebaseFormatString(), double.parse(value.text))),
+          },
+      ],
     };
     final Home rental = Home(
       availableFor: HomeAvailabilityOption.Rent,

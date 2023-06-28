@@ -754,9 +754,18 @@ Future<Home?> update_business_home_rental(
       ),
     ),
   );
-  if (res.hasException || res2.hasException) {
+  final QueryResult<Mutation$update_home_category1> res3 =
+      await _db.graphQLClient.mutate$update_home_category1(
+    Options$Mutation$update_home_category1(
+      variables: Variables$Mutation$update_home_category1(
+        detailsId: rental.details.id.toInt(),
+        category: rental.category1.toFirebaseFormatString(),
+      ),
+    ),
+  );
+  if (res.hasException || res2.hasException || res3.hasException) {
     mezDbgPrint(
-        "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data}");
+        "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data} ${res2.data} ${res3.data}");
     throwError(res.exception);
   } else if (res.parsedData?.update_business_home_by_pk != null &&
       res2.parsedData?.update_business_home_location != null) {
