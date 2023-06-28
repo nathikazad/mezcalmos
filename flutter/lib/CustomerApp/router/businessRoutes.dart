@@ -1,20 +1,20 @@
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart'
     deferred as custEventsListView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart'
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart'
     deferred as custEventView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart'
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart'
     deferred as custHomeRentalView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart'
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView/CustProductView.dart'
     deferred as custProducView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart'
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView/CustRentalView.dart'
     deferred as custRentalView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart'
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView/CustServiceView.dart'
     deferred as custServiceView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart'
     deferred as custHomeRentalsListView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/CustRealEstateListView.dart'
     deferred as custRealEstateListView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealestateView.dart'
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealEstateView/CustRealestateView.dart'
     deferred as custRealestateView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart'
     deferred as custRentalsListView;

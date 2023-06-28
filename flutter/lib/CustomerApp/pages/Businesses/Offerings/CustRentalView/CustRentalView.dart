@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView/controllers/CustRentalViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -14,80 +19,68 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
-import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
 
-class CustHomeRentalView extends StatefulWidget {
-  const CustHomeRentalView({super.key});
+class CustRentalView extends StatefulWidget {
+  const CustRentalView({super.key});
+
+  static String constructRoute(int rentalId) {
+    return CustBusinessRoutes.custRentalRoute.replaceFirst(":id", "$rentalId");
+  }
+
   static Future<void> navigate({
     required int rentalId,
     int? cartId,
     DateTime? startDate,
     Map<TimeUnit, num>? timeCost,
     int? duration,
-    int? guestCount,
-    String? roomType,
   }) async {
     final String route = cartId != null
-        ? CustBusinessRoutes.custHomeRentalRouteEdit
-            .replaceFirst(":id", "$rentalId")
-        : CustBusinessRoutes.custHomeRentalRoute
-            .replaceFirst(":id", "$rentalId");
+        ? CustBusinessRoutes.custRentalRoute.replaceFirst(":id", "$rentalId")
+        : constructRoute(rentalId);
     return MezRouter.toPath(route, arguments: {
       "startDate": startDate,
       "timeCost": timeCost,
-      "guestCount": guestCount,
       "duration": duration,
       "cartId": cartId,
-      "roomType": roomType,
     });
   }
 
   @override
-  State<CustHomeRentalView> createState() => _CustHomeRentalViewState();
+  State<CustRentalView> createState() => _CustRentalViewState();
 }
 
-class _CustHomeRentalViewState extends State<CustHomeRentalView> {
-  CustHomeRentalViewController viewController = CustHomeRentalViewController();
+class _CustRentalViewState extends State<CustRentalView> {
+  CustRentalViewController viewController = CustRentalViewController();
   int? rentalId;
   @override
   void initState() {
     rentalId = int.tryParse(MezRouter.urlArguments["id"].toString());
-    mezDbgPrint("✅ init home rental view with id => $rentalId");
+    mezDbgPrint("✅ init rental view with id => $rentalId");
     final DateTime? startDate =
         MezRouter.bodyArguments!["startDate"] as DateTime?;
     final Map<TimeUnit, num>? timeCost =
         MezRouter.bodyArguments!["timeCost"] as Map<TimeUnit, num>?;
-    final int? guestCount = MezRouter.bodyArguments!["guestCount"] as int?;
     final int? duration = MezRouter.bodyArguments!["duration"] as int?;
     final int? cartId = MezRouter.bodyArguments!["cartId"] as int?;
-    final String? roomType = MezRouter.bodyArguments!["roomType"] as String?;
-
     if (rentalId != null) {
       viewController.init(
         rentalId: rentalId!,
         startDate: startDate,
         timeCost: timeCost,
         duration: duration,
-        guestCount: guestCount,
         cartId: cartId,
-        roomType: roomType,
       );
       // viewController.fetchData(rentalId: rentalId!);
     } else {
-      showErrorSnackBar(errorText: "Error: Home Rental ID $rentalId not found");
+      showErrorSnackBar(errorText: "Error: Rental ID $rentalId not found");
     }
     super.initState();
   }
@@ -112,11 +105,11 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
             : SizedBox.shrink(),
       ),
       body: Obx(() {
-        if (viewController.homeRental != null) {
+        if (viewController.rental != null) {
           return CustomScrollView(
             slivers: [
               CustBusinessItemAppbar(
-                  itemDetails: viewController.homeRental!.details),
+                  itemDetails: viewController.rental!.details),
               SliverToBoxAdapter(
                 child: Container(
                   margin: const EdgeInsets.all(12),
@@ -124,53 +117,47 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        viewController.homeRental!.details.name
+                        viewController.rental!.details.name
                             .getTranslation(userLanguage)!
                             .inCaps,
                         style: context.textTheme.displayMedium,
                       ),
-                      if (!viewController.isMultipleRooms.value)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _CustBusinessAdditionalData(
-                              homeRental: viewController.homeRental!,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              _i18n()['price'],
-                              style: context.textTheme.bodyLarge,
-                            ),
-                            CustBusinessRentalCost(
-                              cost: viewController.homeRental!.details.cost,
-                            ),
-                          ],
-                        ),
+                      _CustBusinessAdditionalData(
+                        rental: viewController.rental!,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        _i18n()['price'],
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      CustBusinessRentalCost(
+                        cost: viewController.rental!.details.cost,
+                      ),
                       _description(context),
-
-                      if (viewController.isMultipleRooms.value)
-                        _multipleRoomSelector(context),
-                      if (viewController.homeRental?.location.location != null)
-                        ServiceLocationCard(
-                          height: 20.h,
-                          location: MezLocation(
-                            viewController
-                                .homeRental!.location.location.address,
-                            MezLocation.buildLocationData(
-                              viewController.homeRental!.location.location.lat
-                                  .toDouble(),
-                              viewController.homeRental!.location.location.lng
-                                  .toDouble(),
+                      viewController.rental!.business.location == null
+                          ? const SizedBox.shrink()
+                          : ServiceLocationCard(
+                              height: 20.h,
+                              location: MezLocation(
+                                viewController
+                                        .rental!.business.location?.address ??
+                                    "",
+                                MezLocation.buildLocationData(
+                                  viewController.rental!.business.location!.lat
+                                      .toDouble(),
+                                  viewController.rental!.business.location!.lng
+                                      .toDouble(),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
                       CustBusinessMessageCard(
                         margin: EdgeInsets.only(top: 15),
-                        contentPadding: EdgeInsets.symmetric(vertical: 10),
-                        business: viewController.homeRental!.business,
-                        offering: viewController.homeRental!.details,
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 12.5, horizontal: 5),
+                        business: viewController.rental!.business,
+                        offering: viewController.rental!.details,
                       ),
                       if (!viewController.isOnlineOrdering.value!)
                         CustBusinessNoOrderBanner(),
@@ -198,13 +185,11 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                             ),
                             bigSeperator,
                             CustBusinessDurationPicker(
-                              costUnits: viewController.isMultipleRooms.value
-                                  ? viewController.selectedRoomCostUnits.value!
-                                  : viewController.homeRental!.details.cost,
-                              label: "Duration",
-                              value: viewController.duration.value,
+                              costUnits: viewController.rental!.details.cost,
                               unitValue:
                                   viewController.timeCost.value?.keys.first,
+                              label: "Duration",
+                              value: viewController.duration.value,
                               validator: (TimeUnit? p0) {
                                 if (p0 == null) return "Please select a time";
                                 return null;
@@ -215,15 +200,6 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                               onNewDurationSelected: (int v) {
                                 viewController.setDuration(v);
                               },
-                            ),
-                            bigSeperator,
-                            CustGuestPicker(
-                              label: "Guests",
-                              onNewGuestSelected: (int v) {
-                                viewController.setTotalGuests(v);
-                              },
-                              value: viewController.totalGuests.value,
-                              lowestValue: 1,
                             ),
                             bigSeperator,
                             Text(
@@ -258,65 +234,19 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
     );
   }
 
-  Widget _multipleRoomSelector(BuildContext context) {
-    return Column(
-      children: List.generate(
-        viewController.additionalRooms.length,
-        (index) {
-          final String roomType =
-              viewController.additionalRooms[index]["roomType"];
-          final Map<TimeUnit, num> costs =
-              viewController.additionalRooms[index]["cost"];
-          final bool isSelected = viewController.selectedRoom.value == index;
-          final String circle = "•";
-          return Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Wrap(
-                    children: [
-                      Text(
-                        "${_i18n()[roomType]}",
-                        style: context.textTheme.bodyMedium!.copyWith(
-                          color: isSelected ? primaryBlueColor : Colors.black,
-                          fontWeight:
-                              isSelected ? FontWeight.bold : FontWeight.w600,
-                        ),
-                      ),
-                      ...costs.entries.map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.only(left: 4.0),
-                          child: Text(
-                            "$circle \$${e.value.toDouble().toStringAsFixed(0)}/${_i18n()[e.key.toFirebaseFormatString()]}",
-                            style: context.textTheme.bodyMedium!.copyWith(
-                              color: primaryBlueColor,
-                              fontWeight: isSelected
-                                  ? FontWeight.bold
-                                  : FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (viewController.isOnlineOrdering.value!)
-                  Radio<String>(
-                    activeColor: primaryBlueColor,
-                    value: roomType,
-                    groupValue: viewController.selectedRoom.value,
-                    onChanged: (value) {
-                      mezDbgPrint("RADIO Value: $value");
-                      viewController.changeSelectedRoom(value!);
-                    },
-                  )
-              ],
-            ),
-          );
-        },
-      ),
-    );
+  IconData _getIcon() {
+    switch (viewController.rental!.category2) {
+      case RentalCategory2.Motorcycle:
+        return Icons.two_wheeler;
+      case RentalCategory2.Car:
+        return Icons.directions_car;
+      case RentalCategory2.ATB:
+        return Icons.two_wheeler;
+      case RentalCategory2.Bicycle:
+        return Icons.pedal_bike;
+      default:
+        return Icons.two_wheeler;
+    }
   }
 
   Column _description(BuildContext context) {
@@ -331,7 +261,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
           style: context.textTheme.bodyLarge,
         ),
         Text(
-          viewController.homeRental!.details.description
+          viewController.rental!.details.description
                   ?.getTranslation(userLanguage)
                   ?.trim() ??
               _i18n()['noDescription'],
@@ -344,49 +274,60 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
 
 class _CustBusinessAdditionalData extends StatelessWidget {
   const _CustBusinessAdditionalData({
-    required this.homeRental,
+    required this.rental,
   });
 
-  final HomeWithBusinessCard? homeRental;
+  final RentalWithBusinessCard? rental;
 
   @override
   Widget build(BuildContext context) {
     String wholeAdditionalParamString() {
       final String circle = "•";
-      final Map<String, String> additionalValues = {
-        'bedRooms': '${homeRental?.bedrooms ?? 0} ${_i18n()['bedrooms']}',
-        'bathRooms': '${homeRental?.bathrooms ?? 0} ${_i18n()['bathrooms']}',
-        'houseType':
-            '${_i18n()[homeRental?.category1.name.toLowerCase()] ?? ''}',
-      };
-      final Map<String, String> moreAdditionalValues = homeRental
+
+      final Map<String, String> additionalValues = rental
               ?.details.additionalParameters
               ?.map((key, value) => MapEntry(key, value.toString())) ??
           {};
 
-      additionalValues.addAll(
-        moreAdditionalValues,
-      );
       final StringBuffer wholeString = StringBuffer();
+
+      if (additionalValues['minLength'] != null &&
+          additionalValues['maxLength'] != null) {
+        wholeString.write(
+            '${additionalValues['minLength']} ${_i18n()['to']} ${additionalValues['maxLength']} inch');
+        additionalValues.remove('minLength');
+        additionalValues.remove('maxLength');
+      }
+
       additionalValues.map(
         (key, value) {
-          if (additionalValues.keys.toList().indexOf(key) == 0) {
-            wholeString.write("$value ");
-          } else {
-            wholeString.write("$circle $value ");
-          }
+          // if (additionalValues.keys.toList().indexOf(key) == 0) {
+          //   wholeString.write("$value ");
+          // } else {
+          wholeString.write("$circle $value ");
+          // }
+
+          // if (key == "minLength") {
+          //   wholeString.write("inch ");
+          // } else if (key == "maxLength") {
+          //   wholeString.write("inch ");
+          // }
+
           return MapEntry(key, value);
         },
       );
       return wholeString.toString();
     }
 
-    return Text(
-      wholeAdditionalParamString(),
-      style: context.textTheme.bodyLarge!.copyWith(
-        color: primaryBlueColor,
-        fontWeight: FontWeight.w600,
-      ),
-    );
+    final String addtionalData = wholeAdditionalParamString();
+    return addtionalData.isEmpty
+        ? const SizedBox.shrink()
+        : Text(
+            addtionalData,
+            style: context.textTheme.bodyLarge!.copyWith(
+              color: primaryBlueColor,
+              fontWeight: FontWeight.w600,
+            ),
+          );
   }
 }

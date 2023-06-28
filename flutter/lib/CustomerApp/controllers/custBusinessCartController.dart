@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView/CustRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView/CustServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';

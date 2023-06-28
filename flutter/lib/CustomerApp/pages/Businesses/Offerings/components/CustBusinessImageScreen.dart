@@ -4,7 +4,6 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 class CustBusinessImageScreen extends StatefulWidget {
   const CustBusinessImageScreen({super.key});

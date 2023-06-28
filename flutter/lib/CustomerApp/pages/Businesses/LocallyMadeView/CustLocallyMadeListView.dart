@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/controllers/CustLocallyMadeListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView/CustProductView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
