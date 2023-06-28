@@ -5,10 +5,13 @@ import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 class CustRentalViewController {
   // state vars //
   Rxn<RentalWithBusinessCard> _rental = Rxn<RentalWithBusinessCard>();
+  final CustBusinessCartController custBusinessCartController =
+      Get.find<CustBusinessCartController>();
   Rxn<DateTime> _startDate = Rxn();
   Rxn<Map<TimeUnit, num>> _timeCost = Rxn();
   Rx<int> _duration = Rx(1);
@@ -77,7 +80,21 @@ class CustRentalViewController {
     orderString.value = "\$${totalOrderCost.value.toStringAsFixed(0)}";
   }
 
+  bool isAbleToBook() {
+    if (custBusinessCartController.cart.value != null) {
+      return custBusinessCartController.cart.value!.items
+          .every((BusinessCartItem e) => e.businessId == rental!.business.id);
+    }
+    return true;
+  }
+
   Future<void> bookOffering() async {
+    if (!isAbleToBook()) {
+      showErrorSnackBar(
+        errorTitle: "You can only book items from one business at a time",
+      );
+      return;
+    }
     final CustBusinessCartController custBusinessCartController =
         Get.find<CustBusinessCartController>();
     if (isEditingMode.value) {

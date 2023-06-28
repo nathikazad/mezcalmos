@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
@@ -91,7 +92,21 @@ class CustEventViewController {
     _calcTotalOrderCost();
   }
 
+  bool isAbleToBook() {
+    if (custBusinessCartController.cart.value != null) {
+      return custBusinessCartController.cart.value!.items
+          .every((BusinessCartItem e) => e.businessId == event!.business.id);
+    }
+    return true;
+  }
+
   Future<void> bookOffering() async {
+    if (!isAbleToBook()) {
+      showErrorSnackBar(
+        errorTitle: "You can only book items from one business at a time",
+      );
+      return;
+    }
     if (isEditingMode.value) {
       await custBusinessCartController.updateCartItem(
         BusinessCartItem(
