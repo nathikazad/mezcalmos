@@ -31,9 +31,12 @@ class BsHomeRentalOrderViewController {
   bool get orderIsRequested =>
       order?.status == BusinessOrderRequestStatus.RequestReceived;
   bool get canCancel {
-    final DateTime? maxTime = order?.items
-        .map((BusinessOrderItem e) => DateTime.parse(e.time!))
-        .reduce((DateTime? value, DateTime element) {
+    final DateTime? maxTime = order?.items.map((BusinessOrderItem e) {
+      if (e.offeringType == OfferingType.Product) {
+        return DateTime.now();
+      }
+      return DateTime.parse(e.time!);
+    }).reduce((DateTime? value, DateTime element) {
       if (value == null) return element;
       return (value.isAfter(element)) ? value : element;
     });
