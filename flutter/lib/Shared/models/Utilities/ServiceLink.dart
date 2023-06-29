@@ -9,6 +9,7 @@ class ServiceLink {
   String? driverQrImageLink;
   String? customerDeepLink;
   String? customerQrImageLink;
+  Map<Language, String>? customerFlyerLinks;
   ServiceLink({
     required this.id,
     this.operatorDeepLink,
@@ -17,6 +18,7 @@ class ServiceLink {
     this.driverQrImageLink,
     this.customerDeepLink,
     this.customerQrImageLink,
+    this.customerFlyerLinks
   });
 
   ServiceLink copyWith({
