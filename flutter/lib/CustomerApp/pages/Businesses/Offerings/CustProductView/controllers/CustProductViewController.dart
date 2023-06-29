@@ -78,6 +78,7 @@ class CustProductViewController {
         offeringType: OfferingType.Product,
         parameters: BusinessItemParameters(
           numberOfUnits: 1,
+          timeUnit: TimeUnit.Unit,
         ),
         cost: totalOrderCost.value,
         product: _product.value,

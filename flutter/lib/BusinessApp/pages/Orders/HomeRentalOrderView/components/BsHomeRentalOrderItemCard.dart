@@ -182,88 +182,90 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
               ],
             ),
             Divider(),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    alignment: WrapAlignment.start,
-                    runSpacing: 5,
-                    children: [
-                      if (item.parameters.previoustime != null)
+            if (item.offeringType != OfferingType.Product) ...[
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      alignment: WrapAlignment.start,
+                      runSpacing: 5,
+                      children: [
+                        if (item.parameters.previoustime != null)
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.event_busy,
+                                color: (item.available == true)
+                                    ? offLightShadeGreyColor
+                                    : Colors.grey.shade400,
+                              ),
+                              SizedBox(width: 3),
+                              Text(
+                                DateTime.tryParse(item.parameters.previoustime!)
+                                        ?.getOrderTime() ??
+                                    "${_i18n()['error']}",
+                                style: context.textTheme.bodyLarge?.copyWith(
+                                    color: (item.available == true)
+                                        ? offLightShadeGreyColor
+                                        : Colors.grey.shade400,
+                                    decoration: TextDecoration.lineThrough),
+                              ),
+                            ],
+                          ),
                         Row(
                           children: [
+                            if (item.parameters.previoustime != null)
+                              Icon(
+                                Icons.arrow_forward,
+                                color: (item.available == true)
+                                    ? Colors.black
+                                    : Colors.grey.shade400,
+                              ),
                             Icon(
-                              Icons.event_busy,
+                              Icons.event_available_rounded,
                               color: (item.available == true)
-                                  ? offLightShadeGreyColor
+                                  ? Colors.black
                                   : Colors.grey.shade400,
                             ),
                             SizedBox(width: 3),
                             Text(
-                              DateTime.tryParse(item.parameters.previoustime!)
+                              DateTime.tryParse(item.time ?? "")
                                       ?.getOrderTime() ??
                                   "${_i18n()['error']}",
                               style: context.textTheme.bodyLarge?.copyWith(
-                                  color: (item.available == true)
-                                      ? offLightShadeGreyColor
-                                      : Colors.grey.shade400,
-                                  decoration: TextDecoration.lineThrough),
+                                color: (item.available == true)
+                                    ? Colors.black
+                                    : Colors.grey.shade400,
+                              ),
                             ),
                           ],
                         ),
-                      Row(
-                        children: [
-                          if (item.parameters.previoustime != null)
-                            Icon(
-                              Icons.arrow_forward,
-                              color: (item.available == true)
-                                  ? Colors.black
-                                  : Colors.grey.shade400,
-                            ),
-                          Icon(
-                            Icons.event_available_rounded,
-                            color: (item.available == true)
-                                ? Colors.black
-                                : Colors.grey.shade400,
-                          ),
-                          SizedBox(width: 3),
-                          Text(
-                            DateTime.tryParse(item.time ?? "")
-                                    ?.getOrderTime() ??
-                                "${_i18n()['error']}",
-                            style: context.textTheme.bodyLarge?.copyWith(
-                              color: (item.available == true)
-                                  ? Colors.black
-                                  : Colors.grey.shade400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                if (viewController.orderIsRequested && item.available == true)
-                  MezIconButton(
-                    onTap: () async {
-                      await _showTimeSheet(
-                          context: context,
-                          initDate: DateTime.tryParse(item.time ?? "") ??
-                              DateTime.now());
-                    },
-                    icon: Icons.edit_outlined,
-                    backgroundColor: Colors.grey.shade300,
-                    iconColor: Colors.black,
-                    elevation: 0,
-                  )
-              ],
-            ),
-            if (viewController.orderIsRequested) ...[
+                  if (viewController.orderIsRequested && item.available == true)
+                    MezIconButton(
+                      onTap: () async {
+                        await _showTimeSheet(
+                            context: context,
+                            initDate: DateTime.tryParse(item.time ?? "") ??
+                                DateTime.now());
+                      },
+                      icon: Icons.edit_outlined,
+                      backgroundColor: Colors.grey.shade300,
+                      iconColor: Colors.black,
+                      elevation: 0,
+                    )
+                ],
+              ),
               Divider(),
+            ],
+            if (viewController.orderIsRequested) ...[
               MezInkwell(
                 icon: Icons.remove_circle_outlined,
                 textColor: (item.available != true) ? null : redAccentColor,
