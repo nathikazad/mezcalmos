@@ -55,7 +55,7 @@ class CustServiceListViewController {
 
   late List<ServiceCategory1> _currentServicesCategory;
 
-    late FilterInput _filterInput;
+  late FilterInput _filterInput;
 
   FilterInput get filterInput => _filterInput;
 
@@ -63,7 +63,7 @@ class CustServiceListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -120,7 +120,8 @@ class CustServiceListViewController {
         withCache: false,
         offset: _servicesCurrentOffset,
         limit: servicesFetchSize,
-        onlineOrdering: filterInput["onlineOrder"]!.contains("true"),
+        onlineOrdering:
+            filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _services.value += newList;
       if (newList.length == 0) {

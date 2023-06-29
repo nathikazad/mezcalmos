@@ -122,7 +122,7 @@ class CustClassesListViewController {
         ScheduleType.OneTime,
         ScheduleType.OnDemand
       ].map((ScheduleType e) => e.toFirebaseFormatString()).toList(),
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -148,7 +148,7 @@ class CustClassesListViewController {
         withCache: false,
         offset: _classesCurrentOffset,
         limit: eventFetchSize,
-        online_ordering: filterInput["onlineOrder"]!.contains("true"),
+        online_ordering: filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _classes.value += newList;
       if (newList.length == 0) {

@@ -121,7 +121,7 @@ class CustAdventureListViewController {
         ScheduleType.OnDemand,
         ScheduleType.OneTime,
       ].map((ScheduleType e) => e.toFirebaseFormatString()).toList(),
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -147,7 +147,7 @@ class CustAdventureListViewController {
         withCache: false,
         offset: _adventureCurrentOffset,
         limit: adventureFetchSize,
-        online_ordering: filterInput["onlineOrder"]!.contains("true"),
+        online_ordering: filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _adventure.value += newList;
       if (newList.length == 0) {

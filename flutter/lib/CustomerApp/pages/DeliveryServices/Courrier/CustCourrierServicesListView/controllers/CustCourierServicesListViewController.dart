@@ -28,7 +28,7 @@ class CustCourierServicesListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -37,7 +37,8 @@ class CustCourierServicesListViewController {
     isLoading.value = true;
 
     get_dv_companies(
-      onlineOrdering: _filterInput['onlineOrder']!.last.contains('true'),
+      onlineOrdering:
+          _filterInput['onlineOrder']!.last.contains('true') ? true : null,
     ).then((List<DeliveryCompany>? list) {
       if (list != null) {
         _services = list;
@@ -53,7 +54,8 @@ class CustCourierServicesListViewController {
   Future<void> _getDvCompanies() async {
     isLoading.value = true;
     await get_dv_companies(
-      onlineOrdering: _filterInput['onlineOrder']!.last.contains('true'),
+      onlineOrdering:
+          _filterInput['onlineOrder']!.last.contains('true') ? true : null,
     ).then((List<DeliveryCompany>? list) {
       if (list != null) {
         _services = list;
@@ -74,12 +76,12 @@ class CustCourierServicesListViewController {
     showOnlyOpen.value = value;
   }
 
-  Future<void> filter(Map<String, List<String>> newData) async{
+  Future<void> filter(Map<String, List<String>> newData) async {
     // _filterInput.clear();
     newData.forEach((String key, List<String> value) {
       _filterInput[key] = List.from(value);
     });
-   await _getDvCompanies();
+    await _getDvCompanies();
     List<DeliveryCompany> newList = new List<DeliveryCompany>.from(_services);
 
     newList = newList
