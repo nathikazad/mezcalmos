@@ -4,15 +4,19 @@ import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dar
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 
 class CustRentalViewController {
   // state vars //
   Rxn<RentalWithBusinessCard> _rental = Rxn<RentalWithBusinessCard>();
-  final CustBusinessCartController custBusinessCartController =
-      Get.find<CustBusinessCartController>();
+  CustBusinessCartController? custBusinessCartController =
+      Get.find<AuthController>().isUserSignedIn
+          ? Get.find<CustBusinessCartController>()
+          : null;
   Rxn<DateTime> _startDate = Rxn();
   Rxn<Map<TimeUnit, num>> _timeCost = Rxn();
   Rx<int> _duration = Rx(1);
@@ -84,8 +88,8 @@ class CustRentalViewController {
 
   ///
   bool _isAbleToBook() {
-    if (custBusinessCartController.cart.value != null) {
-      return custBusinessCartController.cart.value!.items
+    if (custBusinessCartController!.cart.value != null) {
+      return custBusinessCartController!.cart.value!.items
           .every((BusinessCartItem e) => e.businessId == rental!.business.id);
     }
     return true;
@@ -100,6 +104,15 @@ class CustRentalViewController {
   }
 
   Future<void> bookOffering() async {
+    if (custBusinessCartController == null) {
+      if (Get.find<AuthController>().isUserSignedIn) {
+        custBusinessCartController = Get.find<CustBusinessCartController>();
+      } else {
+        // Go to sign in screen
+        await SignInView.navigateAtOrderTime();
+        return;
+      }
+    }
     if (!validate()) {
       return;
     }
@@ -109,10 +122,8 @@ class CustRentalViewController {
       );
       return;
     }
-    final CustBusinessCartController custBusinessCartController =
-        Get.find<CustBusinessCartController>();
     if (isEditingMode.value) {
-      await custBusinessCartController.updateCartItem(
+      await custBusinessCartController!.updateCartItem(
         BusinessCartItem(
           id: _cartId.value,
           businessId: _rental.value!.business.id,
@@ -128,7 +139,7 @@ class CustRentalViewController {
         ),
       );
     } else {
-      await custBusinessCartController.addCartItem(
+      await custBusinessCartController!.addCartItem(
         BusinessCartItem(
           businessId: _rental.value!.business.id,
           itemId: _rental.value!.id!,

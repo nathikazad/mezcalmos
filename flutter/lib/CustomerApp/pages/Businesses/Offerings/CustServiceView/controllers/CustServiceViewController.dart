@@ -4,13 +4,17 @@ import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dar
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 
 class CustServiceViewController {
-  final CustBusinessCartController custBusinessCartController =
-      Get.find<CustBusinessCartController>();
+  CustBusinessCartController? custBusinessCartController =
+      Get.find<AuthController>().isUserSignedIn
+          ? Get.find<CustBusinessCartController>()
+          : null;
   // state vars //
   Rxn<ServiceWithBusinessCard> _service = Rxn<ServiceWithBusinessCard>();
   Rxn<DateTime> _startDate = Rxn();
@@ -89,8 +93,8 @@ class CustServiceViewController {
   }
 
   bool _isAbleToBook() {
-    if (custBusinessCartController.cart.value != null) {
-      return custBusinessCartController.cart.value!.items
+    if (custBusinessCartController!.cart.value != null) {
+      return custBusinessCartController!.cart.value!.items
           .every((BusinessCartItem e) => e.businessId == service!.business.id);
     }
     return true;
@@ -104,6 +108,15 @@ class CustServiceViewController {
   }
 
   Future<void> bookOffering() async {
+    if (custBusinessCartController == null) {
+      if (Get.find<AuthController>().isUserSignedIn) {
+        custBusinessCartController = Get.find<CustBusinessCartController>();
+      } else {
+        // Go to sign in screen
+        await SignInView.navigateAtOrderTime();
+        return;
+      }
+    }
     if (!validate()) {
       return;
     }
@@ -114,7 +127,7 @@ class CustServiceViewController {
       return;
     }
     if (isEditingMode.value) {
-      await custBusinessCartController.updateCartItem(
+      await custBusinessCartController!.updateCartItem(
         BusinessCartItem(
           id: _cartId.value,
           businessId: _service.value!.business.id,
@@ -130,7 +143,7 @@ class CustServiceViewController {
         ),
       );
     } else {
-      await custBusinessCartController.addCartItem(
+      await custBusinessCartController!.addCartItem(
         BusinessCartItem(
           businessId: _service.value!.business.id,
           itemId: _service.value!.id!,

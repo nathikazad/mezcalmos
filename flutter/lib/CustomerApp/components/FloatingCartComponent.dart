@@ -42,18 +42,17 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
       return Obx(
         () {
           items = widget.cartType == CartType.restaurant
-              ? Get.find<CustRestaurantCartController>().cart.value!.cartItems
-              : Get.find<CustBusinessCartController>().cart.value!.items;
+              ? Get.find<CustRestaurantCartController>()
+                      .cart
+                      .value
+                      ?.cartItems ??
+                  []
+              : Get.find<CustBusinessCartController>().cart.value?.items ?? [];
           return items.length > 0
               ? badge.Badge(
                   badgeContent: Text(
-                    Get.find<CustRestaurantCartController>()
-                        .cart
-                        .value!
-                        .cartItems
-                        .length
-                        .toStringAsFixed(0),
-                    style: context.txt.bodyMedium
+                    items.length.toStringAsFixed(0),
+                    style: context.txt.labelLarge
                         ?.copyWith(color: primaryBlueColor),
                   ),
                   position: widget.badgePosition ??

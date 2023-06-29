@@ -3,15 +3,19 @@ import 'package:get/get.dart';
 
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 
 class CustEventViewController {
-  final CustBusinessCartController custBusinessCartController =
-      Get.find<CustBusinessCartController>();
+  CustBusinessCartController? custBusinessCartController =
+      Get.find<AuthController>().isUserSignedIn
+          ? Get.find<CustBusinessCartController>()
+          : null;
   // state vars //
   Rxn<EventWithBusinessCard> _event = Rxn<EventWithBusinessCard>();
   Rxn<DateTime> _startDate = Rxn();
@@ -95,8 +99,8 @@ class CustEventViewController {
   }
 
   bool _isAbleToBook() {
-    if (custBusinessCartController.cart.value != null) {
-      return custBusinessCartController.cart.value!.items
+    if (custBusinessCartController!.cart.value != null) {
+      return custBusinessCartController!.cart.value!.items
           .every((BusinessCartItem e) => e.businessId == event!.business.id);
     }
     return true;
@@ -111,6 +115,15 @@ class CustEventViewController {
   }
 
   Future<void> bookOffering() async {
+    if (custBusinessCartController == null) {
+      if (Get.find<AuthController>().isUserSignedIn) {
+        custBusinessCartController = Get.find<CustBusinessCartController>();
+      } else {
+        // Go to sign in screen
+        await SignInView.navigateAtOrderTime();
+        return;
+      }
+    }
     if (!validate()) {
       return;
     }
@@ -121,7 +134,7 @@ class CustEventViewController {
       return;
     }
     if (isEditingMode.value) {
-      await custBusinessCartController.updateCartItem(
+      await custBusinessCartController!.updateCartItem(
         BusinessCartItem(
           id: _cartId.value,
           businessId: _event.value!.business.id,
@@ -139,7 +152,7 @@ class CustEventViewController {
         ),
       );
     } else {
-      await custBusinessCartController.addCartItem(
+      await custBusinessCartController!.addCartItem(
         BusinessCartItem(
           businessId: _event.value!.business.id,
           itemId: _event.value!.id!,

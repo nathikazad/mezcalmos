@@ -110,7 +110,7 @@ class CustHomeRentalsListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -160,7 +160,8 @@ class CustHomeRentalsListViewController {
         withCache: false,
         offset: _rentalCurrentOffset,
         limit: rentalFetchSize,
-        onlineOrdering: _filterInput["onlineOrder"]!.contains("true"),
+        onlineOrdering:
+            _filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _rentals.value += newList;
       if (newList.length == 0) {

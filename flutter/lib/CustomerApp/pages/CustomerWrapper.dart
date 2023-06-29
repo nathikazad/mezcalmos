@@ -100,28 +100,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Get.find<AuthController>().isUserSignedIn
-          ? Obx(
-              () => Get.find<CustBusinessCartController>().cart.value != null &&
-                      Get.find<CustBusinessCartController>()
-                          .cart
-                          .value!
-                          .items
-                          .isNotEmpty
-                  ? FloatingActionButton(
-                      heroTag: "cart",
-                      child: Icon(
-                        Icons.shopping_cart,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: primaryBlueColor,
-                      onPressed: () async {
-                        await CustCartView.navigate();
-                      },
-                    )
-                  : SizedBox(),
-            )
-          : null,
       bottomNavigationBar: _navBar(),
       body: Obx(() {
         if (authController.user != null) {
