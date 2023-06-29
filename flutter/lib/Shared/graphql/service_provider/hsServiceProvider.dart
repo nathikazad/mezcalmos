@@ -42,13 +42,15 @@ Future<ServiceLink?> get_service_link_by_id(
         data = response.parsedData!.service_provider_service_link_by_pk!;
     mezDbgPrint("✅ Getting service links done ✅ \n ${data.toJson()}");
     return ServiceLink(
-        id: data.id,
-        driverDeepLink: data.driver_deep_link,
-        driverQrImageLink: data.driver_qr_image_link,
-        customerDeepLink: data.customer_deep_link,
-        customerQrImageLink: data.customer_qr_image_link,
-        operatorDeepLink: data.operator_deep_link,
-        operatorQrImageLink: data.operator_qr_image_link);
+      id: data.id,
+      driverDeepLink: data.driver_deep_link,
+      driverQrImageLink: data.driver_qr_image_link,
+      customerDeepLink: data.customer_deep_link,
+      customerQrImageLink: data.customer_qr_image_link,
+      operatorDeepLink: data.operator_deep_link,
+      operatorQrImageLink: data.operator_qr_image_link,
+      customerFlyerLinks: data.customer_flyer_links,
+    );
   }
 
   return null;

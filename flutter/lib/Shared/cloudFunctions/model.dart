@@ -2039,6 +2039,7 @@ class ServiceLink {
   String? operatorQrImageLink;
   String? driverDeepLink;
   String? driverQrImageLink;
+  Map<Language, String>? customerFlyerLinks;
   ServiceLink(
       {this.id,
       required this.serviceProviderId,
@@ -2046,7 +2047,8 @@ class ServiceLink {
       this.operatorDeepLink,
       this.operatorQrImageLink,
       this.driverDeepLink,
-      this.driverQrImageLink});
+      this.driverQrImageLink,
+      this.customerFlyerLinks});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -2056,6 +2058,7 @@ class ServiceLink {
       "operatorQrImageLink": operatorQrImageLink,
       "driverDeepLink": driverDeepLink,
       "driverQrImageLink": driverQrImageLink,
+      "customerFlyerLinks": customerFlyerLinks,
     };
   }
 }

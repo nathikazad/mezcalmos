@@ -341,6 +341,13 @@ const documentNodeQuerygetServiceProviderLinks = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'customer_flyer_links'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -476,6 +483,7 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     this.operator_qr_image_link,
     this.customer_deep_link,
     this.customer_qr_image_link,
+    this.customer_flyer_links,
     required this.$__typename,
   });
 
@@ -488,6 +496,7 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     final l$operator_qr_image_link = json['operator_qr_image_link'];
     final l$customer_deep_link = json['customer_deep_link'];
     final l$customer_qr_image_link = json['customer_qr_image_link'];
+    final l$customer_flyer_links = json['customer_flyer_links'];
     final l$$__typename = json['__typename'];
     return Query$getServiceProviderLinks$service_provider_service_link_by_pk(
       id: (l$id as int),
@@ -497,6 +506,9 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
       operator_qr_image_link: (l$operator_qr_image_link as String?),
       customer_deep_link: (l$customer_deep_link as String?),
       customer_qr_image_link: (l$customer_qr_image_link as String?),
+      customer_flyer_links: l$customer_flyer_links == null
+          ? null
+          : mapFromJson(l$customer_flyer_links),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -514,6 +526,8 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
   final String? customer_deep_link;
 
   final String? customer_qr_image_link;
+
+  final dynamic? customer_flyer_links;
 
   final String $__typename;
 
@@ -533,6 +547,10 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     _resultData['customer_deep_link'] = l$customer_deep_link;
     final l$customer_qr_image_link = customer_qr_image_link;
     _resultData['customer_qr_image_link'] = l$customer_qr_image_link;
+    final l$customer_flyer_links = customer_flyer_links;
+    _resultData['customer_flyer_links'] = l$customer_flyer_links == null
+        ? null
+        : mapToJson(l$customer_flyer_links);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -547,6 +565,7 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     final l$operator_qr_image_link = operator_qr_image_link;
     final l$customer_deep_link = customer_deep_link;
     final l$customer_qr_image_link = customer_qr_image_link;
+    final l$customer_flyer_links = customer_flyer_links;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -556,6 +575,7 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
       l$operator_qr_image_link,
       l$customer_deep_link,
       l$customer_qr_image_link,
+      l$customer_flyer_links,
       l$$__typename,
     ]);
   }
@@ -605,6 +625,11 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     if (l$customer_qr_image_link != lOther$customer_qr_image_link) {
       return false;
     }
+    final l$customer_flyer_links = customer_flyer_links;
+    final lOther$customer_flyer_links = other.customer_flyer_links;
+    if (l$customer_flyer_links != lOther$customer_flyer_links) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -646,6 +671,7 @@ abstract class CopyWith$Query$getServiceProviderLinks$service_provider_service_l
     String? operator_qr_image_link,
     String? customer_deep_link,
     String? customer_qr_image_link,
+    dynamic? customer_flyer_links,
     String? $__typename,
   });
 }
@@ -676,6 +702,7 @@ class _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link_
     Object? operator_qr_image_link = _undefined,
     Object? customer_deep_link = _undefined,
     Object? customer_qr_image_link = _undefined,
+    Object? customer_flyer_links = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getServiceProviderLinks$service_provider_service_link_by_pk(
@@ -698,6 +725,9 @@ class _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link_
         customer_qr_image_link: customer_qr_image_link == _undefined
             ? _instance.customer_qr_image_link
             : (customer_qr_image_link as String?),
+        customer_flyer_links: customer_flyer_links == _undefined
+            ? _instance.customer_flyer_links
+            : (customer_flyer_links as dynamic?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -722,6 +752,7 @@ class _CopyWithStubImpl$Query$getServiceProviderLinks$service_provider_service_l
     String? operator_qr_image_link,
     String? customer_deep_link,
     String? customer_qr_image_link,
+    dynamic? customer_flyer_links,
     String? $__typename,
   }) =>
       _res;
