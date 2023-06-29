@@ -33,6 +33,17 @@ Future<ServiceLink?> get_service_link_by_id(
           Variables$Query$getServiceProviderLinks(serviceLinkId: serviceLinkId),
     ),
   );
+  Map<cModels.Language, String> convertCustomerFlyerLinks(
+      Map<String, dynamic> map) {
+    final Map<cModels.Language, String> list = {};
+    map.forEach((key, value) {
+      list.addAll({
+        key.toLanguage(): value,
+      });
+    });
+    return list;
+  }
+
   mezDbgPrint("👋 called get service link ===========>${response.data}");
   if (response.parsedData == null) {
     mezDbgPrint(
@@ -49,7 +60,7 @@ Future<ServiceLink?> get_service_link_by_id(
       customerQrImageLink: data.customer_qr_image_link,
       operatorDeepLink: data.operator_deep_link,
       operatorQrImageLink: data.operator_qr_image_link,
-      customerFlyerLinks: data.customer_flyer_links,
+      customerFlyerLinks: convertCustomerFlyerLinks(data.customer_flyer_links),
     );
   }
 
