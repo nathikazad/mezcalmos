@@ -820,7 +820,12 @@
           "organizer": "Organizadora",
           "studio": "Estudio",
           "view": "Ver",
-          "agency": "Agencia"
+          "agency": "Agencia",
+          "days": "días",
+          "hour": "horas",
+          "min": "minutos",
+          "ago": "atrás",
+          "active": "Activa"
         }
       },
       "cards": {

@@ -305,7 +305,7 @@ class _CustBusinessAdditionalData extends StatelessWidget {
       if (additionalValues['minLength'] != null &&
           additionalValues['maxLength'] != null) {
         wholeString.write(
-            '${additionalValues['minLength']} ${_i18n()['to']} ${additionalValues['maxLength']} inch');
+            '$circle ${additionalValues['minLength']} ${_i18n()['to']} ${additionalValues['maxLength']} inch');
         additionalValues.remove('minLength');
         additionalValues.remove('maxLength');
       }

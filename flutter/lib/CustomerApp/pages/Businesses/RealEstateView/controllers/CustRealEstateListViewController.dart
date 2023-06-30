@@ -130,8 +130,6 @@ class CustRealEstateListViewController {
         withCache: false,
         offset: _realEstateCurrentOffset,
         limit: realEstateFetchSize,
-        onlineOrdering:
-            filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _realEstates.value += newList;
       if (newList.length == 0) {

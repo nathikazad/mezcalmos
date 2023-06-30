@@ -825,7 +825,12 @@
           "organizer": "Organizer",
           "studio": "Studio",
           "view": "View",
-          "agency": "Agency"
+          "agency": "Agency",
+          "days": "days",
+          "hour": "hours",
+          "min": "min",
+          "ago": "ago",
+          "active": "Active"
         }
       },
       "cards": {
