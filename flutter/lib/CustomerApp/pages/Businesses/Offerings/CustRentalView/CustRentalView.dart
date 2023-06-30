@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
@@ -177,7 +178,11 @@ class _CustRentalViewState extends State<CustRentalView> {
                                 },
                                 label: "Start Date",
                                 validator: (DateTime? p0) {
-                                  if (p0 == null) return "Please select a time";
+                                  if (p0 == null){
+                                    BotToast.showText(
+                                        text: "Please select a time",
+                                        duration: Duration(seconds: 5));
+                                         return "Please select a time";}
 
                                   return null;
                                 },
@@ -191,7 +196,11 @@ class _CustRentalViewState extends State<CustRentalView> {
                                 label: "Duration",
                                 value: viewController.duration.value,
                                 validator: (TimeUnit? p0) {
-                                  if (p0 == null) return "Please select a time";
+                                  if (p0 == null) {
+                                    BotToast.showText(
+                                        text: "Please select a time",
+                                        duration: Duration(seconds: 5));
+                                    return "Please select a time";}
                                   return null;
                                 },
                                 onNewCostUnitSelected: (Map<TimeUnit, num> v) {

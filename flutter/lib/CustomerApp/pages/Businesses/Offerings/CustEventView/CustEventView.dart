@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
@@ -211,9 +212,12 @@ class _CustEventViewState extends State<CustEventView> {
                                   },
                                   label: '${_i18n()['startDate']}',
                                   validator: (DateTime? p0) {
-                                    if (p0 == null)
+                                    if (p0 == null) {
+                                      BotToast.showText(
+                                          text: _i18n()['selectATime'],
+                                          duration: Duration(seconds: 5));
                                       return '${_i18n()['selectATime']}';
-
+                                    }
                                     return null;
                                   },
                                   time: viewController.startDate.value,

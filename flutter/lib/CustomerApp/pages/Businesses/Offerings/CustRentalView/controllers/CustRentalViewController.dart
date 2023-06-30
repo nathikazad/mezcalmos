@@ -148,6 +148,7 @@ class CustRentalViewController {
           parameters: BusinessItemParameters(
             numberOfUnits: _duration.value,
             timeUnit: timeCost.value!.keys.first,
+            previousCost: totalOrderCost.value,
           ),
           cost: totalOrderCost.value,
           rental: _rental.value,

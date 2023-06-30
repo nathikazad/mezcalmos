@@ -270,6 +270,9 @@ class _CustOrderViewState extends State<CustOrderView> {
   }
 
   Widget bottomButtons(BuildContext context) {
+    if (custBusinessCartController.currentOrderInView.value == null) {
+      return SizedBox.shrink();
+    }
     if (custBusinessCartController.currentOrderInView.value!.status ==
             BusinessOrderRequestStatus.CancelledByCustomer ||
         custBusinessCartController.currentOrderInView.value!.status ==

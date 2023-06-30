@@ -133,7 +133,8 @@ class CustRestaurantListViewController {
 
   void changeAlwaysOpenSwitch(bool value) {
     showOnlyOpen.value = value;
-    fetchRestaurants();
+    // fetchRestaurants();
+    _fetchRestaurantsOnFilter();
   }
 
   void _assignServiceIds() {
@@ -173,7 +174,8 @@ class CustRestaurantListViewController {
       _filterInput[key] = List.from(value);
     });
 
-    changeAlwaysOpenSwitch(newData['restaurantOpened']!.contains('true'));
+    changeAlwaysOpenSwitch(
+        newData['restaurantOpened']?.contains('true') ?? false);
     mezDbgPrint("_filterInput $_filterInput $newData");
     _fetchRestaurantsOnFilter();
     List<Restaurant> newList = new List<Restaurant>.from(_restaurants);

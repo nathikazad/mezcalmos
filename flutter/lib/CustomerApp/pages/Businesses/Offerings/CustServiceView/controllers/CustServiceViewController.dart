@@ -99,6 +99,7 @@ class CustServiceViewController {
     }
     return true;
   }
+
   bool validate() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
@@ -152,6 +153,7 @@ class CustServiceViewController {
           parameters: BusinessItemParameters(
             numberOfUnits: totalHours.value,
             timeUnit: timeCost.value!.keys.first,
+            previousCost: totalOrderCost.value,
           ),
           cost: totalOrderCost.value,
           service: _service.value,

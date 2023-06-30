@@ -204,6 +204,7 @@ class CustHomeRentalViewController {
             numberOfUnits: _duration.value,
             timeUnit: timeCost.value!.keys.first,
             roomType: selectedRoom.value,
+            previousCost: totalOrderCost.value,
           ),
           cost: totalOrderCost.value,
           home: _homeRental.value,

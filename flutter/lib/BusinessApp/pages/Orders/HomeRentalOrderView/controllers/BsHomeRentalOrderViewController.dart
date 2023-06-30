@@ -126,10 +126,11 @@ class BsHomeRentalOrderViewController {
     final res = await update_bs_order_item(
         id: itemId,
         item: item.copyWith(
-            cost: newPrice,
-            parameters: item.parameters.copyWith(
-              previousCost: item.cost,
-            )));
+          cost: newPrice,
+          // parameters: item.parameters.copyWith(
+          //   previousCost: item.cost,
+          // )
+        ));
   }
 
   Future<void> _requestChanges() async {

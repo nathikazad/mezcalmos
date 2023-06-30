@@ -136,7 +136,8 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (item.parameters.previousCost != null) ...[
+                      if (item.parameters.previousCost != null &&
+                          item.parameters.previousCost != item.cost) ...[
                         Icon(
                           Icons.price_check,
                           color: offLightShadeGreyColor,

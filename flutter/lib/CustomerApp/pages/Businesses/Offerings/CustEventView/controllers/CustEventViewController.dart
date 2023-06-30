@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:bot_toast/src/toast.dart';
 
 class CustEventViewController {
   CustBusinessCartController? custBusinessCartController =
@@ -36,6 +37,7 @@ class CustEventViewController {
         return _startDate.value != null ? Rx(true) : Rx(false);
     }
   }
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   // getters //
@@ -163,6 +165,7 @@ class CustEventViewController {
           parameters: BusinessItemParameters(
             numberOfUnits: totalHours.value,
             timeUnit: timeCost.value!.keys.first,
+            previousCost: totalOrderCost.value,
           ),
           cost: totalOrderCost.value,
           event: _event.value,

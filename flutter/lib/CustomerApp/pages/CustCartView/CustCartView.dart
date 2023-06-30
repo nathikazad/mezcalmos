@@ -54,7 +54,7 @@ class _CustCartViewState extends State<CustCartView> {
       ),
       bottomNavigationBar: Obx(
         () => custBusinessCartController.cart.value!.items.isEmpty
-            ? SizedBox.shrink()
+            ? SizedBox.shrink().obs.value
             : MezButton(
                 label: '${_i18n()['request']}',
                 withGradient: true,

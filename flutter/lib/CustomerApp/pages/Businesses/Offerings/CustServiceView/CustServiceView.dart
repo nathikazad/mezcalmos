@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
@@ -165,8 +166,13 @@ class _CustServiceViewState extends State<CustServiceView> {
                                 },
                                 label: _i18n()["choostTime"],
                                 validator: (DateTime? p0) {
-                                  if (p0 == null) return "Please select a time";
-                        
+                                  if (p0 == null) {
+                                    BotToast.showText(
+                                        text: "Please select a time",
+                                        duration: Duration(seconds: 5));
+                                    return "Please select a time";
+                                  }
+
                                   return null;
                                 },
                                 time: viewController.startDate.value,
@@ -199,8 +205,12 @@ class _CustServiceViewState extends State<CustServiceView> {
                                           .timeCost.value?.keys.first,
                                       value: viewController.totalHours.value,
                                       validator: (TimeUnit? p0) {
-                                        if (p0 == null)
+                                        if (p0 == null) {
+                                          BotToast.showText(
+                                              text: "Please select a time",
+                                              duration: Duration(seconds: 5));
                                           return "Please select a time";
+                                        }
                                         return null;
                                       },
                                       onNewCostUnitSelected:
@@ -215,7 +225,8 @@ class _CustServiceViewState extends State<CustServiceView> {
                                   ],
                                 ),
                               CustOrderCostCard(
-                                orderCostString: viewController.orderString.value,
+                                orderCostString:
+                                    viewController.orderString.value,
                               ),
                             ],
                           ),
