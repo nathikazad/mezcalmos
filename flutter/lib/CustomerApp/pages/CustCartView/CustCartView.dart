@@ -53,20 +53,23 @@ class _CustCartViewState extends State<CustCartView> {
         title: '${_i18n()['myCart']}',
       ),
       bottomNavigationBar: Obx(
-        () => custBusinessCartController.cart.value == null ||
-                custBusinessCartController.cart.value!.items.isEmpty
-            ? SizedBox.shrink()
-            : MezButton(
-                label: '${_i18n()['request']}',
-                withGradient: true,
-                borderRadius: 0,
-                onClick: () async {
-                  if (await custBusinessCartController.showDisclaimerPopup()) {
-                    await _alertTermsAndServices();
-                  }
-                  await custBusinessCartController.requestOrder();
-                },
-              ),
+        () {
+          if (custBusinessCartController.cart.value == null)
+            return SizedBox.shrink();
+          if (custBusinessCartController.cart.value!.items.isEmpty)
+            return SizedBox.shrink();
+          return MezButton(
+            label: '${_i18n()['request']}',
+            withGradient: true,
+            borderRadius: 0,
+            onClick: () async {
+              if (await custBusinessCartController.showDisclaimerPopup()) {
+                await _alertTermsAndServices();
+              }
+              await custBusinessCartController.requestOrder();
+            },
+          );
+        },
       ),
       body: Obx(
         () => Padding(
