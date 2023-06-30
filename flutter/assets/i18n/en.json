@@ -832,7 +832,7 @@
           "view": "View",
           "agency": "Agency",
           "days": "days",
-          "hour": "hours",
+          "hours": "hours",
           "min": "min",
           "ago": "ago",
           "active": "Active"
