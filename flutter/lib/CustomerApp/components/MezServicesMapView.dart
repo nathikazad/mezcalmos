@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:location/location.dart' as locPkg;
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
+import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 typedef MezServicesMapViewCallBack = Future<List<MezMarker>> Function(
     LatLng? mapCenter, double distance);
@@ -20,8 +20,12 @@ typedef MezServicesMapViewCallBack = Future<List<MezMarker>> Function(
 class MezServicesMapView extends StatefulWidget {
   final Set<Marker> markers;
   final MezServicesMapViewCallBack fetchNewData;
+  final MGoogleMapController mGoogleMapController;
 
-  const MezServicesMapView({required this.markers, required this.fetchNewData});
+  const MezServicesMapView(
+      {required this.markers,
+      required this.fetchNewData,
+      required this.mGoogleMapController});
 
   @override
   _MezServicesMapViewState createState() => _MezServicesMapViewState();
@@ -33,30 +37,50 @@ class _MezServicesMapViewState extends State<MezServicesMapView> {
   @override
   void initState() {
     super.initState();
-    _controller = MezServicesMapController(widget.markers, widget.fetchNewData);
+    _controller = MezServicesMapController(
+        markers: widget.markers,
+        fetchNewData: widget.fetchNewData,
+        mGoogleMapController: widget.mGoogleMapController);
     _controller.init();
   }
 
   @override
+  void didUpdateWidget(covariant MezServicesMapView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _controller.markers.addAll(widget.markers);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        MGoogleMap(
-          mGoogleMapController: _controller.mGoogleMapController,
-        ),
-        if (_controller.showRefetchButton)
-          Positioned(
-            top: 5,
-            child: MezButton(
-              height: 60,
-              width: 50.mezW,
-              onClick: () async {
-                await _controller.fetchData();
-              },
-              label: 'Fetch in this area',
-            ),
+    return Obx(
+      () => Stack(
+        children: [
+          MGoogleMap(
+            mGoogleMapController: _controller.mGoogleMapController,
+            zoomGesturesEnabled: true,
+            onCameraMove: (CameraPosition p0) {
+              _controller.onMapMove(p0);
+            },
           ),
-      ],
+          if (_controller.showRefetchButton)
+            Align(
+              alignment: Alignment.topCenter,
+              child: MezInkwell(
+                borderRadius: 15,
+                elevation: 1,
+                margin: EdgeInsets.only(top: 10),
+                width: 50.mezW,
+                height: 40,
+                backgroundColor: Colors.white,
+                textColor: primaryBlueColor,
+                onClick: () async {
+                  await _controller.fetchData();
+                },
+                label: 'Fetch in this area',
+              ),
+            )
+        ],
+      ),
     );
   }
 }
@@ -64,44 +88,46 @@ class _MezServicesMapViewState extends State<MezServicesMapView> {
 class MezServicesMapController {
   final Set<Marker> markers;
   final MezServicesMapViewCallBack fetchNewData;
-  final MGoogleMapController mGoogleMapController = MGoogleMapController(
-    enableMezSmartPointer: true,
-  );
+  final MGoogleMapController mGoogleMapController;
   Rxn<LatLng> _currentLocation = Rxn();
   RxBool _showRefetchButton = RxBool(true);
   bool get showRefetchButton => _showRefetchButton.value;
 
-  MezServicesMapController(this.markers, this.fetchNewData);
+  MezServicesMapController(
+      {required this.markers,
+      required this.fetchNewData,
+      required this.mGoogleMapController});
 
-  void init() {
+  Future<void> init() async {
     mezlog("init");
 
-    mGoogleMapController.periodicRerendering.value = true;
-
-    mGoogleMapController.minMaxZoomPrefs =
-        MinMaxZoomPreference.unbounded; // LEZEM
+    mGoogleMapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
+    mGoogleMapController.initialZoomLevel = 12;
+    mGoogleMapController.periodicRerendering.value = false;
     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
+    // mGoogleMapController.setZoomLvl(zoomLvl: 14.0);
 
-    mGoogleMapController.setLocation(
-      MezLocation(
-        "",
-        MezLocation.buildLocationData(
-          15.862782,
-          -97.07638,
-        ),
-      ),
-    );
-
-    mGoogleMapController.markers
-        .addAll(markers.map((Marker e) => MezMarker(markerId: e.markerId)));
-    mezlog(mGoogleMapController.markers.length);
-
-    unawaited(locPkg.Location().getLocation().then((LocationData location) {
-      mezlog(location);
-      if (location.latitude != null && location.longitude != null)
+    unawaited(locPkg.Location()
+        .getLocation()
+        .then((locPkg.LocationData locationData) {
+      if (locationData.latitude != null && locationData.longitude != null) {
         _currentLocation.value =
-            LatLng(location.latitude!, location.longitude!);
-      mezlog(_currentLocation.value!);
+            LatLng(locationData.latitude!, locationData.longitude!);
+        mezlog("Current loc==================>${_currentLocation.value}");
+
+        mGoogleMapController.setLocation(
+          MezLocation(
+            "",
+            MezLocation.buildLocationData(
+              _currentLocation.value!.latitude,
+              _currentLocation.value!.longitude,
+            ),
+          ),
+        );
+
+        mGoogleMapController.markers
+            .addAll(markers.map((Marker e) => MezMarker(markerId: e.markerId)));
+      }
     }));
   }
 
@@ -118,7 +144,13 @@ class MezServicesMapController {
     if (mapCenter != null) {
       List<MezMarker> newMarkers = await fetchNewData(mapCenter, distance);
       mezDbgPrint("👊new markers ========>${newMarkers.length}");
-      mGoogleMapController.markers.addAll(newMarkers);
+
+      // add new markers to markers in controller but only new ones check if dosent exist
+      mGoogleMapController.markers.addAll(newMarkers
+          .where((MezMarker newMarker) => !mGoogleMapController.markers.any(
+              (MezMarker oldMarker) =>
+                  oldMarker.markerId.value == newMarker.markerId.value))
+          .map((MezMarker newMarker) => newMarker));
       mGoogleMapController.markers.value =
           mGoogleMapController.markers.toSet().toList();
 

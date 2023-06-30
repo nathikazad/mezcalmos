@@ -15,6 +15,10 @@ class MezInkwell extends StatefulWidget {
     this.textColor,
     this.borderRadius = 20,
     this.textStyle,
+    this.width,
+    this.height,
+    this.elevation,
+    this.margin,
     this.border,
     this.icon,
     this.padding = const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
@@ -38,6 +42,10 @@ class MezInkwell extends StatefulWidget {
   final BoxBorder? border;
   final double? fontSize;
   final EdgeInsets padding;
+  final double? width;
+  final double? height;
+  final double? elevation;
+  final EdgeInsets? margin;
 
   @override
   State<MezInkwell> createState() => _MezInkwellState();
@@ -49,8 +57,8 @@ class _MezInkwellState extends State<MezInkwell> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Card(
-        elevation: 0,
-        margin: EdgeInsets.zero,
+        elevation: widget.elevation ?? 0,
+        margin: widget.margin ?? EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widget.borderRadius),
           side: BorderSide(
@@ -75,8 +83,8 @@ class _MezInkwellState extends State<MezInkwell> {
                       }
                     : null,
             child: Ink(
-              // width: widget.width ?? double.infinity,
-              // height: widget.height,
+              width: widget.width,
+              height: widget.height,
               decoration: BoxDecoration(
                   gradient: widget.withGradient &&
                           widget.enabled &&
@@ -93,11 +101,21 @@ class _MezInkwellState extends State<MezInkwell> {
                 // alignment: Alignment.center,
                 padding: widget.padding,
                 child: (isLoading.value)
-                    ? Transform.scale(
-                        scale: 0.6,
-                        child: CircularProgressIndicator(
-                          color: widget.textColor ?? Colors.white,
-                        ),
+                    ? LayoutBuilder(
+                        builder:
+                            (BuildContext context, BoxConstraints constraints) {
+                          final double width = constraints.maxWidth;
+                          final double height = constraints.maxHeight;
+                          return SizedBox(
+                              height: height,
+                              width: width,
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                color: widget.textColor ?? Colors.white,
+
+                                //   strokeWidth: 1.5,
+                              )));
+                        },
                       )
                     : Row(
                         mainAxisSize: MainAxisSize.min,
