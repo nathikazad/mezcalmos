@@ -340,6 +340,10 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
       ],
     );
   }
+
+  String _additionalData() {
+    return '';
+  }
 }
 
 class _CustBusinessAdditionalData extends StatelessWidget {
@@ -352,7 +356,6 @@ class _CustBusinessAdditionalData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String wholeAdditionalParamString() {
-      final String circle = "•";
       final Map<String, String> additionalValues = {
         'bedRooms': '${homeRental?.bedrooms ?? 0} ${_i18n()['bedrooms']}',
         'bathRooms': '${homeRental?.bathrooms ?? 0} ${_i18n()['bathrooms']}',
@@ -367,18 +370,18 @@ class _CustBusinessAdditionalData extends StatelessWidget {
       additionalValues.addAll(
         moreAdditionalValues,
       );
-      final StringBuffer wholeString = StringBuffer();
-      additionalValues.map(
-        (key, value) {
-          if (additionalValues.keys.toList().indexOf(key) == 0) {
-            wholeString.write("$value ");
-          } else {
-            wholeString.write("$circle $value ");
-          }
-          return MapEntry(key, value);
-        },
-      );
-      return wholeString.toString();
+
+      String additionalData = '';
+
+      for (String key in additionalValues.keys) {
+        additionalData += additionalValues[key]!;
+
+        if (additionalValues.keys.toList().indexOf(key) !=
+            additionalValues.length - 1) {
+          additionalData += ' • ';
+        }
+      }
+      return additionalData;
     }
 
     return Text(

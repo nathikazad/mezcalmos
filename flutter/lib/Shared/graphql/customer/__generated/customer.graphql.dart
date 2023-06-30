@@ -7386,16 +7386,7 @@ const documentNodeQuerygetCustomerOrdersByType = DocumentNode(definitions: [
                     value: VariableNode(name: NameNode(value: 'orderType')),
                   )
                 ]),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'in_process'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: BooleanValueNode(value: true),
-                  )
-                ]),
-              ),
+              )
             ]),
           ),
           ArgumentNode(
