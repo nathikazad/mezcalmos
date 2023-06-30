@@ -567,7 +567,12 @@
           "notComfirmed": "Reserva aún no confirmada",
           "businessModifications": "El negocio ha realizado modificaciones, por favor revise si todo está bien, haga clic en Aceptar.",
           "acceptChange": "Aceptar el cambio",
-          "cancelRequest": "Cancelar petición"
+          "cancelRequest": "Cancelar petición",
+          "pending": "Pending",
+          "waitingCustomer": "Waiting...",
+          "cancelled": "Cancelled",
+          "confirmed": "Confirmed",
+          "completed": "Completed"
         }
       },
       "CustCartView": {

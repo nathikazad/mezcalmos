@@ -293,41 +293,34 @@ class _CustBusinessAdditionalData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String wholeAdditionalParamString() {
-      final String circle = "•";
-
       final Map<String, String> additionalValues = rental
               ?.details.additionalParameters
               ?.map((key, value) => MapEntry(key, value.toString())) ??
           {};
 
-      final StringBuffer wholeString = StringBuffer();
+      String additionalData = '';
 
       if (additionalValues['minLength'] != null &&
           additionalValues['maxLength'] != null) {
-        wholeString.write(
-            '$circle ${additionalValues['minLength']} ${_i18n()['to']} ${additionalValues['maxLength']} inch');
+        additionalData +=
+            '${additionalValues['minLength']} ${_i18n()['to']} ${additionalValues['maxLength']} inch';
         additionalValues.remove('minLength');
         additionalValues.remove('maxLength');
       }
 
-      additionalValues.map(
-        (key, value) {
-          // if (additionalValues.keys.toList().indexOf(key) == 0) {
-          //   wholeString.write("$value ");
-          // } else {
-          wholeString.write("$circle $value ");
-          // }
+      if (additionalValues.length > 0) {
+        additionalData += " • ";
+      }
 
-          // if (key == "minLength") {
-          //   wholeString.write("inch ");
-          // } else if (key == "maxLength") {
-          //   wholeString.write("inch ");
-          // }
+      for (String key in additionalValues.keys) {
+        additionalData += additionalValues[key]!;
 
-          return MapEntry(key, value);
-        },
-      );
-      return wholeString.toString();
+        if (additionalValues.keys.toList().indexOf(key) !=
+            additionalValues.length - 1) {
+          additionalData += ' • ';
+        }
+      }
+      return additionalData;
     }
 
     final String addtionalData = wholeAdditionalParamString();

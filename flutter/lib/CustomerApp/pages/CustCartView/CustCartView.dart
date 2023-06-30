@@ -53,15 +53,15 @@ class _CustCartViewState extends State<CustCartView> {
         title: '${_i18n()['myCart']}',
       ),
       bottomNavigationBar: Obx(
-        () => custBusinessCartController.cart.value!.items.isEmpty
-            ? SizedBox.shrink().obs.value
+        () => custBusinessCartController.cart.value == null ||
+                custBusinessCartController.cart.value!.items.isEmpty
+            ? SizedBox.shrink()
             : MezButton(
                 label: '${_i18n()['request']}',
                 withGradient: true,
                 borderRadius: 0,
                 onClick: () async {
-                  if (custBusinessCartController.numberOfOldBusinessOrders <
-                      5) {
+                  if (await custBusinessCartController.showDisclaimerPopup()) {
                     await _alertTermsAndServices();
                   }
                   await custBusinessCartController.requestOrder();
