@@ -832,6 +832,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'details'),
                         alias: null,
                         arguments: [],
@@ -925,6 +932,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
                       FieldNode(
                         name: NameNode(value: 'details'),
                         alias: null,
@@ -1193,6 +1207,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'details'),
                         alias: null,
                         arguments: [],
@@ -1459,6 +1480,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
                       FieldNode(
                         name: NameNode(value: 'details'),
                         alias: null,
@@ -5208,20 +5236,25 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$rental$details
 
 class Query$getBusinessCart$business_cart$items$rental$business {
   Query$getBusinessCart$business_cart$items$rental$business({
+    required this.id,
     required this.details,
     required this.$__typename,
   });
 
   factory Query$getBusinessCart$business_cart$items$rental$business.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$rental$business(
+      id: (l$id as int),
       details: Query$getBusinessCart$business_cart$items$rental$business$details
           .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Query$getBusinessCart$business_cart$items$rental$business$details
       details;
@@ -5230,6 +5263,8 @@ class Query$getBusinessCart$business_cart$items$rental$business {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -5239,9 +5274,11 @@ class Query$getBusinessCart$business_cart$items$rental$business {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details,
       l$$__typename,
     ]);
@@ -5254,6 +5291,11 @@ class Query$getBusinessCart$business_cart$items$rental$business {
     }
     if (!(other is Query$getBusinessCart$business_cart$items$rental$business) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details = details;
@@ -5294,6 +5336,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$rental$busines
       _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$rental$business;
 
   TRes call({
+    int? id,
     Query$getBusinessCart$business_cart$items$rental$business$details? details,
     String? $__typename,
   });
@@ -5319,10 +5362,12 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$rental$business<
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$rental$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -5350,6 +5395,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$rental$busines
   TRes _res;
 
   call({
+    int? id,
     Query$getBusinessCart$business_cart$items$rental$business$details? details,
     String? $__typename,
   }) =>
@@ -5807,21 +5853,26 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$product<TRes>
 
 class Query$getBusinessCart$business_cart$items$product$business {
   Query$getBusinessCart$business_cart$items$product$business({
+    required this.id,
     required this.details,
     required this.$__typename,
   });
 
   factory Query$getBusinessCart$business_cart$items$product$business.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$product$business(
+      id: (l$id as int),
       details:
           Query$getBusinessCart$business_cart$items$product$business$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Query$getBusinessCart$business_cart$items$product$business$details
       details;
@@ -5830,6 +5881,8 @@ class Query$getBusinessCart$business_cart$items$product$business {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -5839,9 +5892,11 @@ class Query$getBusinessCart$business_cart$items$product$business {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details,
       l$$__typename,
     ]);
@@ -5855,6 +5910,11 @@ class Query$getBusinessCart$business_cart$items$product$business {
     if (!(other
             is Query$getBusinessCart$business_cart$items$product$business) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details = details;
@@ -5895,6 +5955,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$product$busine
       _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$product$business;
 
   TRes call({
+    int? id,
     Query$getBusinessCart$business_cart$items$product$business$details? details,
     String? $__typename,
   });
@@ -5920,10 +5981,12 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$product$business<
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$product$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -5951,6 +6014,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$product$busine
   TRes _res;
 
   call({
+    int? id,
     Query$getBusinessCart$business_cart$items$product$business$details? details,
     String? $__typename,
   }) =>
@@ -7494,21 +7558,26 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$service<TRes>
 
 class Query$getBusinessCart$business_cart$items$service$business {
   Query$getBusinessCart$business_cart$items$service$business({
+    required this.id,
     required this.details,
     required this.$__typename,
   });
 
   factory Query$getBusinessCart$business_cart$items$service$business.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$service$business(
+      id: (l$id as int),
       details:
           Query$getBusinessCart$business_cart$items$service$business$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Query$getBusinessCart$business_cart$items$service$business$details
       details;
@@ -7517,6 +7586,8 @@ class Query$getBusinessCart$business_cart$items$service$business {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -7526,9 +7597,11 @@ class Query$getBusinessCart$business_cart$items$service$business {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details,
       l$$__typename,
     ]);
@@ -7542,6 +7615,11 @@ class Query$getBusinessCart$business_cart$items$service$business {
     if (!(other
             is Query$getBusinessCart$business_cart$items$service$business) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details = details;
@@ -7582,6 +7660,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$service$busine
       _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$service$business;
 
   TRes call({
+    int? id,
     Query$getBusinessCart$business_cart$items$service$business$details? details,
     String? $__typename,
   });
@@ -7607,10 +7686,12 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$service$business<
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$service$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -7638,6 +7719,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$service$busine
   TRes _res;
 
   call({
+    int? id,
     Query$getBusinessCart$business_cart$items$service$business$details? details,
     String? $__typename,
   }) =>
@@ -9254,20 +9336,25 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$event<TRes>
 
 class Query$getBusinessCart$business_cart$items$event$business {
   Query$getBusinessCart$business_cart$items$event$business({
+    required this.id,
     required this.details,
     required this.$__typename,
   });
 
   factory Query$getBusinessCart$business_cart$items$event$business.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$event$business(
+      id: (l$id as int),
       details: Query$getBusinessCart$business_cart$items$event$business$details
           .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Query$getBusinessCart$business_cart$items$event$business$details
       details;
@@ -9276,6 +9363,8 @@ class Query$getBusinessCart$business_cart$items$event$business {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -9285,9 +9374,11 @@ class Query$getBusinessCart$business_cart$items$event$business {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details,
       l$$__typename,
     ]);
@@ -9300,6 +9391,11 @@ class Query$getBusinessCart$business_cart$items$event$business {
     }
     if (!(other is Query$getBusinessCart$business_cart$items$event$business) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details = details;
@@ -9340,6 +9436,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$event$business
       _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$event$business;
 
   TRes call({
+    int? id,
     Query$getBusinessCart$business_cart$items$event$business$details? details,
     String? $__typename,
   });
@@ -9365,10 +9462,12 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$event$business<
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart$items$event$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -9396,6 +9495,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$event$business
   TRes _res;
 
   call({
+    int? id,
     Query$getBusinessCart$business_cart$items$event$business$details? details,
     String? $__typename,
   }) =>
@@ -14825,6 +14925,13 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'details'),
                         alias: null,
                         arguments: [],
@@ -14911,6 +15018,13 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
                       FieldNode(
                         name: NameNode(value: 'details'),
                         alias: null,
@@ -15166,11 +15280,25 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'business'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
                       FieldNode(
                         name: NameNode(value: 'details'),
                         alias: null,
@@ -15426,11 +15554,25 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'business'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
                       FieldNode(
                         name: NameNode(value: 'details'),
                         alias: null,
@@ -19442,21 +19584,26 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
 
 class Subscription$listen_on_business_order_request$business_order_request$items$rental$business {
   Subscription$listen_on_business_order_request$business_order_request$items$rental$business({
+    required this.id,
     required this.details,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_business_order_request$business_order_request$items$rental$business.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$rental$business(
+      id: (l$id as int),
       details:
           Subscription$listen_on_business_order_request$business_order_request$items$rental$business$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Subscription$listen_on_business_order_request$business_order_request$items$rental$business$details
       details;
@@ -19465,6 +19612,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -19474,9 +19623,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details,
       l$$__typename,
     ]);
@@ -19490,6 +19641,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     if (!(other
             is Subscription$listen_on_business_order_request$business_order_request$items$rental$business) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details = details;
@@ -19532,6 +19688,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
       _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_order_request$items$rental$business;
 
   TRes call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$rental$business$details?
         details,
     String? $__typename,
@@ -19560,11 +19717,13 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_business_order_request$business_order_request$items$rental$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -19592,6 +19751,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
   TRes _res;
 
   call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$rental$business$details?
         details,
     String? $__typename,
@@ -20055,21 +20215,26 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
 
 class Subscription$listen_on_business_order_request$business_order_request$items$product$business {
   Subscription$listen_on_business_order_request$business_order_request$items$product$business({
+    required this.id,
     required this.details,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_business_order_request$business_order_request$items$product$business.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$product$business(
+      id: (l$id as int),
       details:
           Subscription$listen_on_business_order_request$business_order_request$items$product$business$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Subscription$listen_on_business_order_request$business_order_request$items$product$business$details
       details;
@@ -20078,6 +20243,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -20087,9 +20254,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details,
       l$$__typename,
     ]);
@@ -20103,6 +20272,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     if (!(other
             is Subscription$listen_on_business_order_request$business_order_request$items$product$business) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details = details;
@@ -20145,6 +20319,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
       _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_order_request$items$product$business;
 
   TRes call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$product$business$details?
         details,
     String? $__typename,
@@ -20173,11 +20348,13 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_business_order_request$business_order_request$items$product$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -20205,6 +20382,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
   TRes _res;
 
   call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$product$business$details?
         details,
     String? $__typename,
@@ -21564,6 +21742,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
 
 class Subscription$listen_on_business_order_request$business_order_request$items$service {
   Subscription$listen_on_business_order_request$business_order_request$items$service({
+    required this.id,
     required this.business,
     required this.details,
     required this.$__typename,
@@ -21571,10 +21750,12 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   factory Subscription$listen_on_business_order_request$business_order_request$items$service.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$business = json['business'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$service(
+      id: (l$id as int),
       business:
           Subscription$listen_on_business_order_request$business_order_request$items$service$business
               .fromJson((l$business as Map<String, dynamic>)),
@@ -21584,6 +21765,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Subscription$listen_on_business_order_request$business_order_request$items$service$business
       business;
@@ -21595,6 +21778,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$details = details;
@@ -21606,10 +21791,12 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$business = business;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$business,
       l$details,
       l$$__typename,
@@ -21624,6 +21811,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     if (!(other
             is Subscription$listen_on_business_order_request$business_order_request$items$service) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$business = business;
@@ -21671,6 +21863,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
       _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_order_request$items$service;
 
   TRes call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$service$business?
         business,
     Subscription$listen_on_business_order_request$business_order_request$items$service$details?
@@ -21703,12 +21896,14 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? business = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_business_order_request$business_order_request$items$service(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         business: business == _undefined || business == null
             ? _instance.business
             : (business
@@ -21747,6 +21942,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
   TRes _res;
 
   call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$service$business?
         business,
     Subscription$listen_on_business_order_request$business_order_request$items$service$details?
@@ -21768,21 +21964,26 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
 
 class Subscription$listen_on_business_order_request$business_order_request$items$service$business {
   Subscription$listen_on_business_order_request$business_order_request$items$service$business({
+    required this.id,
     required this.details,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_business_order_request$business_order_request$items$service$business.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$service$business(
+      id: (l$id as int),
       details:
           Subscription$listen_on_business_order_request$business_order_request$items$service$business$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Subscription$listen_on_business_order_request$business_order_request$items$service$business$details
       details;
@@ -21791,6 +21992,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -21800,9 +22003,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details,
       l$$__typename,
     ]);
@@ -21816,6 +22021,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     if (!(other
             is Subscription$listen_on_business_order_request$business_order_request$items$service$business) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details = details;
@@ -21858,6 +22068,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
       _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_order_request$items$service$business;
 
   TRes call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$service$business$details?
         details,
     String? $__typename,
@@ -21886,11 +22097,13 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_business_order_request$business_order_request$items$service$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -21918,6 +22131,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
   TRes _res;
 
   call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$service$business$details?
         details,
     String? $__typename,
@@ -23277,9 +23491,9 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
 
 class Subscription$listen_on_business_order_request$business_order_request$items$event {
   Subscription$listen_on_business_order_request$business_order_request$items$event({
+    required this.id,
     required this.business,
     required this.details,
-    required this.id,
     required this.schedule_type,
     this.schedule,
     this.starts_at,
@@ -23289,22 +23503,22 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   factory Subscription$listen_on_business_order_request$business_order_request$items$event.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$business = json['business'];
     final l$details = json['details'];
-    final l$id = json['id'];
     final l$schedule_type = json['schedule_type'];
     final l$schedule = json['schedule'];
     final l$starts_at = json['starts_at'];
     final l$ends_at = json['ends_at'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$event(
+      id: (l$id as int),
       business:
           Subscription$listen_on_business_order_request$business_order_request$items$event$business
               .fromJson((l$business as Map<String, dynamic>)),
       details:
           Subscription$listen_on_business_order_request$business_order_request$items$event$details
               .fromJson((l$details as Map<String, dynamic>)),
-      id: (l$id as int),
       schedule_type: (l$schedule_type as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       starts_at: (l$starts_at as String?),
@@ -23313,13 +23527,13 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     );
   }
 
+  final int id;
+
   final Subscription$listen_on_business_order_request$business_order_request$items$event$business
       business;
 
   final Subscription$listen_on_business_order_request$business_order_request$items$event$details
       details;
-
-  final int id;
 
   final String schedule_type;
 
@@ -23333,12 +23547,12 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$business = business;
     _resultData['business'] = l$business.toJson();
     final l$details = details;
     _resultData['details'] = l$details.toJson();
-    final l$id = id;
-    _resultData['id'] = l$id;
     final l$schedule_type = schedule_type;
     _resultData['schedule_type'] = l$schedule_type;
     final l$schedule = schedule;
@@ -23354,18 +23568,18 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$business = business;
     final l$details = details;
-    final l$id = id;
     final l$schedule_type = schedule_type;
     final l$schedule = schedule;
     final l$starts_at = starts_at;
     final l$ends_at = ends_at;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$business,
       l$details,
-      l$id,
       l$schedule_type,
       l$schedule,
       l$starts_at,
@@ -23384,6 +23598,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
         runtimeType != other.runtimeType) {
       return false;
     }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
     final l$business = business;
     final lOther$business = other.business;
     if (l$business != lOther$business) {
@@ -23392,11 +23611,6 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$details = details;
     final lOther$details = other.details;
     if (l$details != lOther$details) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
       return false;
     }
     final l$schedule_type = schedule_type;
@@ -23454,11 +23668,11 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
       _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_order_request$items$event;
 
   TRes call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$event$business?
         business,
     Subscription$listen_on_business_order_request$business_order_request$items$event$details?
         details,
-    int? id,
     String? schedule_type,
     dynamic? schedule,
     String? starts_at,
@@ -23491,9 +23705,9 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? business = _undefined,
     Object? details = _undefined,
-    Object? id = _undefined,
     Object? schedule_type = _undefined,
     Object? schedule = _undefined,
     Object? starts_at = _undefined,
@@ -23502,6 +23716,7 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
   }) =>
       _then(
           Subscription$listen_on_business_order_request$business_order_request$items$event(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         business: business == _undefined || business == null
             ? _instance.business
             : (business
@@ -23510,7 +23725,6 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             ? _instance.details
             : (details
                 as Subscription$listen_on_business_order_request$business_order_request$items$event$details),
-        id: id == _undefined || id == null ? _instance.id : (id as int),
         schedule_type: schedule_type == _undefined || schedule_type == null
             ? _instance.schedule_type
             : (schedule_type as String),
@@ -23552,11 +23766,11 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
   TRes _res;
 
   call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$event$business?
         business,
     Subscription$listen_on_business_order_request$business_order_request$items$event$details?
         details,
-    int? id,
     String? schedule_type,
     dynamic? schedule,
     String? starts_at,
@@ -23578,21 +23792,26 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
 
 class Subscription$listen_on_business_order_request$business_order_request$items$event$business {
   Subscription$listen_on_business_order_request$business_order_request$items$event$business({
+    required this.id,
     required this.details,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_business_order_request$business_order_request$items$event$business.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$event$business(
+      id: (l$id as int),
       details:
           Subscription$listen_on_business_order_request$business_order_request$items$event$business$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Subscription$listen_on_business_order_request$business_order_request$items$event$business$details
       details;
@@ -23601,6 +23820,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
@@ -23610,9 +23831,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details,
       l$$__typename,
     ]);
@@ -23626,6 +23849,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     if (!(other
             is Subscription$listen_on_business_order_request$business_order_request$items$event$business) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details = details;
@@ -23668,6 +23896,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
       _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_order_request$items$event$business;
 
   TRes call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$event$business$details?
         details,
     String? $__typename,
@@ -23696,11 +23925,13 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_business_order_request$business_order_request$items$event$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined || details == null
             ? _instance.details
             : (details
@@ -23728,6 +23959,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
   TRes _res;
 
   call({
+    int? id,
     Subscription$listen_on_business_order_request$business_order_request$items$event$business$details?
         details,
     String? $__typename,

@@ -33,6 +33,7 @@ import { handleOrderRequestByAdmin } from "./business/adminHandleRequest";
 import { handleOrderRequestFromCustomer } from "./business/customerHandleRequest";
 import { requestOrder } from "./business/orderRequest";
 import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
+import { changeUniqueId } from "./serviceProvider/changeUniqueId";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -81,6 +82,7 @@ export const serviceProvider = {
   removeDriver: authenticatedCall((userId, data) => removeDriver(userId, data)),
   deleteServiceProvider: authenticatedCall((userId, data) => deleteServiceProvider(userId, data)),
   createMezAdminChat: authenticatedCall((userId, data) => createNewMezAdminChat(userId, data)),
+  changeUniqueId: authenticatedCall((userId, data) => changeUniqueId(userId, data)),
 }
 
 export const restaurant3 = {

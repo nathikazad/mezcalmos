@@ -22,11 +22,12 @@ select_permissions:
   - role: business_operator
     permission:
       columns:
-        - id
         - customer_deep_link
+        - customer_flyer_links
         - customer_qr_image_link
         - driver_deep_link
         - driver_qr_image_link
+        - id
         - operator_deep_link
         - operator_qr_image_link
       filter:

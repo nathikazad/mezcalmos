@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessPa
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessProductCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessRentalCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessServiceCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/controllers/cusBusinessViewController.dart';
@@ -18,6 +19,7 @@ import 'package:mezcalmos/Shared/helpers/BusinessHelpers/RentalHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
@@ -120,6 +122,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
                   children: [
                     // todo @iyadh implements info tab view
                     __headerButtons(),
+                    _description(context),
                     if (_viewController.business!.details.schedule != null)
                       MezServiceOpenHours(
                           schedule:
@@ -145,6 +148,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     //       PaymentType.Cash: true,
                     //       PaymentType.BankTransfer: true
                     //     }),
+
                     if (_viewController.business!.details.schedule != null)
                       MezServiceOpenHours(
                           schedule:
@@ -652,6 +656,27 @@ class _CustBusinessViewState extends State<CustBusinessView>
             });
           }),
         ),
+      ],
+    );
+  }
+
+  Column _description(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          '${_i18n()['description']}',
+          style: context.textTheme.bodyLarge,
+        ),
+        Text(
+          '${_viewController.business?.details.description?[userLanguage]?.trim() ?? _i18n()['noDescription']}',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        SizedBox(height: 5),
       ],
     );
   }

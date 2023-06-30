@@ -120,7 +120,7 @@ class CustTherapyListViewController {
         ScheduleType.OneTime,
         ScheduleType.OnDemand
       ].map((ScheduleType e) => e.toFirebaseFormatString()).toList(),
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -146,7 +146,8 @@ class CustTherapyListViewController {
         withCache: false,
         offset: _therapyCurrentOffset,
         limit: therapyFetchSize,
-        online_ordering: filterInput["onlineOrder"]!.contains("true"),
+        online_ordering:
+            filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _therapy.value += newList;
       if (newList.length == 0) {

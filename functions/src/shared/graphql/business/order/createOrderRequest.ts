@@ -42,7 +42,7 @@ export async function createOrderRequest(
         insert_business_order_request_one: [{
             object: {
                 customer_id: customerId,
-                business_id: orderRequestDetails.businessId,
+                business_id: business.id,
                 status: BusinessOrderRequestStatus.RequestReceived,
                 customer_app_type: orderRequestDetails.customerAppType,
                 notes: orderRequestDetails.notes,
@@ -81,7 +81,7 @@ export async function createOrderRequest(
     let businessOrder: BusinessOrder = {
         orderId: response.insert_business_order_request_one.id,
         customerId,
-        businessId: orderRequestDetails.businessId,
+        businessId: business.id,
         spDetailsId: business.details.serviceProviderDetailsId,
         customerAppType: orderRequestDetails.customerAppType,
         notes: orderRequestDetails.notes,

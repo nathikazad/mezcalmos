@@ -2,11 +2,22 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
+        "BsOrdersListViews": {
+          "BsOrdersListView": {
+            "orders": "Orders",
+            "pending": "Pending",
+            "upcoming": "Upcoming",
+            "past": "Past",
+            "pendingOrders": "Pending orders",
+            "upcomingOrders": "Upcoming orders",
+            "pastOrders": "Past orders"
+          }
+        },
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
               "pending": "Pending",
-              "waitingCustomer": "Waiting for your approval",
+              "waitingCustomer": "Waiting for customer",
               "cancelled": "Cancelled",
               "confirmed": "Confirmed",
               "completed": "Completed",
@@ -27,6 +38,9 @@
         }
       },
       "Components": {
+        "BsOrderCard": {
+          "items": "Items"
+        },
         "BsRentalCard": {
           "hour": "hour",
           "day": "day",
@@ -547,6 +561,11 @@
         "CustOrderView": {
           "order": "Order",
           "notes": "Notes",
+          "pending": "Pending",
+          "waitingCustomer": "Waiting for your approval",
+          "cancelled": "Cancelled",
+          "confirmed": "Confirmed",
+          "completed": "Completed",
           "writeNotesHere": "Write your notes here.",
           "summary": "Summary",
           "orderCost": "Order Cost",
@@ -1568,6 +1587,7 @@
           },
           "cusShowBusinessFilerSheet": {
             "canBookOnline": "Show only items that can be booked online.",
+            "showOnlyOpenRestaurants": "Show only open restaurants",
             "confirm": "Confirm",
             "cancel": "Cancel",
             "filter": "Filter",
@@ -1954,7 +1974,9 @@
         "onDemandClasses": "Private Lessons",
         "weeklyEvents": "Weekly Events",
         "oneTimeEvents": "Upcoming Events",
-        "onDemandEvents": "Experiences"
+        "onDemandEvents": "Experiences",
+        "description": "Description",
+        "noDescription": "No description"
       },
       "CustomerWrapper": {
         "orders": "Orders",

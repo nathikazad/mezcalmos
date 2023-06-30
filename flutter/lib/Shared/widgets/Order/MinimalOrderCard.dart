@@ -57,7 +57,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          widget.order.title.inCaps,
+                          widget.order.title?.inCaps ?? "Courier Order",
                           style: context.txt.headlineMedium,
                         ),
                         SizedBox(

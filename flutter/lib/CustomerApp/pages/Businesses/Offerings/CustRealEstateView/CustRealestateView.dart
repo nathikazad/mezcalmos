@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealEstateView/controllers/CustRealestateViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -91,17 +91,19 @@ class _CustRealestateViewState extends State<CustRealestateView> {
                             ],
                           ),
                           _description(context),
-                          if (viewController.realEstate?.gpsLocation != null)
+                          if (viewController.realEstate?.location.location !=
+                              null)
                             ServiceLocationCard(
                               height: 20.h,
                               location: MezLocation(
                                 viewController
-                                        .realEstate!.gpsLocation?.address ??
-                                    "",
+                                    .realEstate!.location.location.address,
                                 MezLocation.buildLocationData(
-                                  viewController.realEstate!.gpsLocation!.lat
+                                  viewController
+                                      .realEstate!.location.location.lat
                                       .toDouble(),
-                                  viewController.realEstate!.gpsLocation!.lng
+                                  viewController
+                                      .realEstate!.location.location.lng
                                       .toDouble(),
                                 ),
                               ),

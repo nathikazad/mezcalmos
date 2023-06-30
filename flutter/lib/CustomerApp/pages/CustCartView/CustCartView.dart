@@ -54,7 +54,7 @@ class _CustCartViewState extends State<CustCartView> {
       ),
       bottomNavigationBar: Obx(
         () => custBusinessCartController.cart.value!.items.isEmpty
-            ? SizedBox.shrink()
+            ? SizedBox.shrink().obs.value
             : MezButton(
                 label: '${_i18n()['request']}',
                 withGradient: true,
@@ -91,6 +91,12 @@ class _CustCartViewState extends State<CustCartView> {
                               InkWell(
                                 onTap: () async {
                                   await custBusinessCartController.clearCart();
+                                  if (custBusinessCartController.cart.value ==
+                                          null ||
+                                      custBusinessCartController
+                                          .cart.value!.items.isEmpty) {
+                                    await MezRouter.back();
+                                  }
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(4),

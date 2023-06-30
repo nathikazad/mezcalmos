@@ -68,7 +68,7 @@ class CustLaundriesListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -89,7 +89,9 @@ class CustLaundriesListViewController {
                 lng: _currentLocation.longitude,
                 address: ''),
             withCache: false,
-            online_ordering: _filterInput['onlineOrder']!.last.contains('true'),
+            online_ordering: _filterInput['onlineOrder']!.last.contains('true')
+                ? true
+                : null,
             distance: getFetchDistance)
         .then((List<Laundry> list) {
       _services = list;
@@ -109,7 +111,9 @@ class CustLaundriesListViewController {
                 lng: _currentLocation.longitude,
                 address: ''),
             withCache: false,
-            online_ordering: _filterInput['onlineOrder']!.last.contains('true'),
+            online_ordering: _filterInput['onlineOrder']!.last.contains('true')
+                ? true
+                : null,
             distance: getFetchDistance)
         .then((List<Laundry> list) {
       _services = list;
@@ -156,7 +160,9 @@ class CustLaundriesListViewController {
                 lng: _currentLocation.longitude,
                 address: ''),
             withCache: false,
-            online_ordering: _filterInput['onlineOrder']!.last.contains('true'),
+            online_ordering: _filterInput['onlineOrder']!.last.contains('true')
+                ? true
+                : null,
             distance: getFetchDistance);
       } else {
         _mapViewLaundries.value = await get_laundries(
@@ -166,7 +172,9 @@ class CustLaundriesListViewController {
                 lat: _screenToWorldPosition!.latitude,
                 lng: _screenToWorldPosition!.longitude,
                 address: ''),
-            online_ordering: _filterInput['onlineOrder']!.last.contains('true'),
+            online_ordering: _filterInput['onlineOrder']!.last.contains('true')
+                ? true
+                : null,
             withCache: false);
       }
     } catch (e) {

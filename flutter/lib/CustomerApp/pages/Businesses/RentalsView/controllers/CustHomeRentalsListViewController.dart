@@ -110,7 +110,7 @@ class CustHomeRentalsListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -160,7 +160,8 @@ class CustHomeRentalsListViewController {
         withCache: false,
         offset: _rentalCurrentOffset,
         limit: rentalFetchSize,
-        onlineOrdering: _filterInput["onlineOrder"]!.contains("true"),
+        onlineOrdering:
+            _filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _rentals.value += newList;
       if (newList.length == 0) {
@@ -251,8 +252,8 @@ class CustHomeRentalsListViewController {
         markerId: MarkerId(rental.id.toString()),
         backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.gpsLocation!.lat.toDouble(),
-            rental.gpsLocation!.lng.toDouble()),
+        position: LatLng(rental.location.location.lat.toDouble(),
+            rental.location.location.lng.toDouble()),
       ));
       await _perDayMarkers.addLabelMarker(LabelMarker(
         flat: true,
@@ -263,8 +264,8 @@ class CustHomeRentalsListViewController {
         markerId: MarkerId(rental.id.toString()),
         backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.gpsLocation!.lat.toDouble(),
-            rental.gpsLocation!.lng.toDouble()),
+        position: LatLng(rental.location.location.lat.toDouble(),
+            rental.location.location.lng.toDouble()),
       ));
 
       await _perWeekMarkers.addLabelMarker(LabelMarker(
@@ -276,8 +277,8 @@ class CustHomeRentalsListViewController {
         markerId: MarkerId(rental.id.toString()),
         backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.gpsLocation!.lat.toDouble(),
-            rental.gpsLocation!.lng.toDouble()),
+        position: LatLng(rental.location.location.lat.toDouble(),
+            rental.location.location.lng.toDouble()),
       ));
 
       await _perMonthMarkers.addLabelMarker(LabelMarker(
@@ -289,8 +290,8 @@ class CustHomeRentalsListViewController {
         markerId: MarkerId(rental.id.toString()),
         backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.gpsLocation!.lat.toDouble(),
-            rental.gpsLocation!.lng.toDouble()),
+        position: LatLng(rental.location.location.lat.toDouble(),
+            rental.location.location.lng.toDouble()),
       ));
     }
   }

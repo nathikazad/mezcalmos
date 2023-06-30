@@ -126,7 +126,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                   children: [
                     _searchInput(),
                     _searchFilter(),
-                    _sortingSwitcher(),
+                    // _sortingSwitcher(),
                     _filterButton(context),
                     Obx(() {
                       if (viewController.byRestaurants)
@@ -146,12 +146,13 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
   Widget _filterButton(BuildContext context) {
     return Card(
       elevation: 0,
-      margin: EdgeInsets.only(top: 0),
+      margin: EdgeInsets.only(top: 10),
       color: Color(0xFFF0F0F0),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
           FilterInput? data = await cusShowBusinessFilerSheet(
+              isRestaurant: true,
               context: context,
               filterInput: viewController.filterInput,
               defaultFilterInput: viewController.defaultFilters());
@@ -353,7 +354,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
     // );
 
     return Obx(() => Container(
-          margin: const EdgeInsets.only(top: 15),
+          margin: const EdgeInsets.only(bottom: 10, top: 15),
           child: Row(
             children: [
               Flexible(
@@ -445,16 +446,16 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
     });
   }
 
-  Widget _sortingSwitcher() {
-    return Obx(() => CustSwitchOpenService(
-          label: '${_i18n()["showOnlyOpenRestaurants"]}',
-          showOnlyOpen: viewController.showOnlyOpen.value,
-          onChange: (bool value) {
-            viewController.changeAlwaysOpenSwitch(value);
-            viewController.filter(viewController.filterInput);
-          },
-        ));
-  }
+  // Widget _sortingSwitcher() {
+  //   return Obx(() => CustSwitchOpenService(
+  //         label: '${_i18n()["showOnlyOpenRestaurants"]}',
+  //         showOnlyOpen: viewController.showOnlyOpen.value,
+  //         onChange: (bool value) {
+  //           viewController.changeAlwaysOpenSwitch(value);
+  //           viewController.filter(viewController.filterInput);
+  //         },
+  //       ));
+  // }
 
   Widget _searchInput() {
     return TextFormField(

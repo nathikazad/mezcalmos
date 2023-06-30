@@ -8,7 +8,7 @@ class MinimalOrder {
   int id;
   String? toAdress;
   DateTime orderTime;
-  String title;
+  String? title;
   String? image;
   MinimalOrderStatus status;
   OrderType orderType;
@@ -92,8 +92,6 @@ class MinimalOrder {
         status.hashCode ^
         totalCost.hashCode;
   }
-
-
 
   bool get isPast {
     return status == RestaurantOrderStatus.Delivered ||

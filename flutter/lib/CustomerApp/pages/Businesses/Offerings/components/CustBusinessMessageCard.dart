@@ -96,54 +96,57 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
               children: [
                 businessLastActiveTimeAgo(),
                 // _getAcceptedPaymentIcons(widget.business.acceptedPayments),
-                Flexible(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.star,
-                        size: 17.5.mezSp,
-                        color: Color(0xFF6779FE),
-                      ),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      // Text('${widget.business.avgRating ?? '0'}',
-                      //     style: context.textTheme.bodySmall),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 2),
-                      //   child: Text(
-                      //     '(${widget.business.reviewCount})',
-                      //     style: context.textTheme.bodyMedium,
-                      //   ),
-                      // )
-                      Container(
-                        alignment: Alignment.center,
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              WidgetSpan(
+                if (widget.business.avgRating != null &&
+                    widget.business.avgRating != 0)
+                  Flexible(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.star,
+                          size: 17.5.mezSp,
+                          color: Color(0xFF6779FE),
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        // Text('${widget.business.avgRating ?? '0'}',
+                        //     style: context.textTheme.bodySmall),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 2),
+                        //   child: Text(
+                        //     '(${widget.business.reviewCount})',
+                        //     style: context.textTheme.bodyMedium,
+                        //   ),
+                        // )
+
+                        Container(
+                          alignment: Alignment.center,
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                    alignment: PlaceholderAlignment.middle,
+                                    child: Text(
+                                        '${widget.business.avgRating ?? '0'}',
+                                        style: context.textTheme.bodySmall)),
+                                WidgetSpan(
                                   alignment: PlaceholderAlignment.middle,
-                                  child: Text(
-                                      '${widget.business.avgRating ?? '0'}',
-                                      style: context.textTheme.bodySmall)),
-                              WidgetSpan(
-                                alignment: PlaceholderAlignment.middle,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 1),
-                                  child: Text(
-                                      '(${widget.business.reviewCount ?? '0'})',
-                                      style: context.textTheme.bodySmall
-                                          ?.copyWith(fontSize: 7.mezSp)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 1),
+                                    child: Text(
+                                        '(${widget.business.reviewCount ?? '0'})',
+                                        style: context.textTheme.bodySmall
+                                            ?.copyWith(fontSize: 7.mezSp)),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                )
+                      ],
+                    ),
+                  )
               ],
             )
           ],

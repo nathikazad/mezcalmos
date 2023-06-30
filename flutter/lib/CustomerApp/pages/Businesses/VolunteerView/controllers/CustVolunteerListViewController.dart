@@ -90,7 +90,7 @@ class CustVolunteerListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -115,7 +115,8 @@ class CustVolunteerListViewController {
         withCache: false,
         offset: _volunteerCurrentOffset,
         limit: volunteerFetchSize,
-        online_ordering: filterInput["onlineOrder"]!.contains("true"),
+        online_ordering:
+            filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _volunteer.value += newList;
       if (newList.length == 0) {

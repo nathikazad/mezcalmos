@@ -170,7 +170,8 @@ class HomeCartItemCard extends StatelessWidget {
   }
 
   Widget costBuilder(BuildContext context) {
-    if (item.parameters.previousCost != null) {
+    if (item.parameters.previousCost != null &&
+        item.parameters.previousCost != item.cost) {
       return Row(
         children: [
           Image.asset(aPriceCheck),

@@ -202,7 +202,9 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     padding: const EdgeInsets.only(top: 5),
                     child: (notification.notifWidget != null)
                         ? notification.notifWidget
-                        : (notification.imgUrl?.isURL == true)
+                        : (Uri.parse(notification.imgUrl?.toString() ?? "")
+                                    .isAbsolute ==
+                                true)
                             ? CircleAvatar(
                                 radius: 23,
                                 backgroundColor: Colors.transparent,

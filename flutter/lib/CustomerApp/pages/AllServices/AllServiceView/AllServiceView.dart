@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceListView/AllServiceListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/JoinUs/JoinUsView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -39,6 +40,11 @@ class _AllServiceViewState extends State<AllServiceView> {
       drawer: MezSideMenu(),
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Menu,
+        actionIcons: [
+          FloatingCartComponent(
+            cartType: CartType.business,
+          ),
+        ],
         titleWidget: MezcalmosSharedWidgets.fillMezkalaTitle(),
       ),
       body: Padding(

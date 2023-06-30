@@ -1,10 +1,16 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView/controllers/CustRentalViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -14,17 +20,11 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessRentalCost.dart';
-import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
@@ -97,18 +97,14 @@ class _CustRentalViewState extends State<CustRentalView> {
                     : "Add to cart",
                 withGradient: true,
                 borderRadius: 0,
-                onClick: viewController.startDate.value == null
-                    ? null
-                    : () async {
-                        await viewController.bookOffering();
-                      },
+                onClick: () async {
+                  await viewController.bookOffering();
+                },
               )
             : SizedBox.shrink(),
       ),
       body: Obx(() {
         if (viewController.rental != null) {
-          final bool isSurf =
-              viewController.rental!.category1 == RentalCategory1.Surf;
           return CustomScrollView(
             slivers: [
               CustBusinessItemAppbar(
@@ -169,60 +165,72 @@ class _CustRentalViewState extends State<CustRentalView> {
 
                       /// Bookings
                       if (viewController.isOnlineOrdering.value!)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            bigSeperator,
-                            BsOpDateTimePicker(
-                              fillColor: Colors.white,
-                              onNewPeriodSelected: (DateTime v) {
-                                viewController.startDate.value = v;
-                              },
-                              label: "Start Date",
-                              validator: (DateTime? p0) {
-                                if (p0 == null) return "Please select a time";
-
-                                return null;
-                              },
-                              time: viewController.startDate.value,
-                            ),
-                            bigSeperator,
-                            CustBusinessDurationPicker(
-                              costUnits: viewController.rental!.details.cost,
-                              unitValue:
-                                  viewController.timeCost.value?.keys.first,
-                              label: "Duration",
-                              value: viewController.duration.value,
-                              validator: (TimeUnit? p0) {
-                                if (p0 == null) return "Please select a time";
-                                return null;
-                              },
-                              onNewCostUnitSelected: (Map<TimeUnit, num> v) {
-                                viewController.setTimeCost(v);
-                              },
-                              onNewDurationSelected: (int v) {
-                                viewController.setDuration(v);
-                              },
-                            ),
-                            bigSeperator,
-                            Text(
-                              "Notes",
-                              style: context.textTheme.bodyLarge,
-                            ),
-                            smallSepartor,
-                            TextFormField(
-                              maxLines: 7,
-                              minLines: 5,
-                              decoration: InputDecoration(
+                        Form(
+                          key: viewController.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              bigSeperator,
+                              BsOpDateTimePicker(
                                 fillColor: Colors.white,
-                                hintText: "Write your notes here.",
+                                onNewPeriodSelected: (DateTime v) {
+                                  viewController.startDate.value = v;
+                                },
+                                label: "Start Date",
+                                validator: (DateTime? p0) {
+                                  if (p0 == null){
+                                    BotToast.showText(
+                                        text: "Please select a time",
+                                        duration: Duration(seconds: 5));
+                                         return "Please select a time";}
+
+                                  return null;
+                                },
+                                time: viewController.startDate.value,
                               ),
-                            ),
-                            bigSeperator,
-                            CustOrderCostCard(
-                              orderCostString: viewController.orderString.value,
-                            ),
-                          ],
+                              bigSeperator,
+                              CustBusinessDurationPicker(
+                                costUnits: viewController.rental!.details.cost,
+                                unitValue:
+                                    viewController.timeCost.value?.keys.first,
+                                label: "Duration",
+                                value: viewController.duration.value,
+                                validator: (TimeUnit? p0) {
+                                  if (p0 == null) {
+                                    BotToast.showText(
+                                        text: "Please select a time",
+                                        duration: Duration(seconds: 5));
+                                    return "Please select a time";}
+                                  return null;
+                                },
+                                onNewCostUnitSelected: (Map<TimeUnit, num> v) {
+                                  viewController.setTimeCost(v);
+                                },
+                                onNewDurationSelected: (int v) {
+                                  viewController.setDuration(v);
+                                },
+                              ),
+                              bigSeperator,
+                              Text(
+                                "Notes",
+                                style: context.textTheme.bodyLarge,
+                              ),
+                              smallSepartor,
+                              TextFormField(
+                                maxLines: 7,
+                                minLines: 5,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  hintText: "Write your notes here.",
+                                ),
+                              ),
+                              bigSeperator,
+                              CustOrderCostCard(
+                                orderCostString:
+                                    viewController.orderString.value,
+                              ),
+                            ],
+                          ),
                         ),
                     ],
                   ),

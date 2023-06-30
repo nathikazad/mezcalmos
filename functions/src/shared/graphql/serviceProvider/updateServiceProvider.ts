@@ -2,10 +2,11 @@ import { getHasura } from "../../../utilities/hasura";
 import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../../utilities/links/deeplink";
 import { ServiceProviderStripeInfo } from "../../models/stripe";
 import { SetupStripeError, UpdateStripeError } from "../../../utilities/stripe/serviceProvider";
-import { ChangeUniqueIdError } from "../../changeUniqueId";
+import { ChangeUniqueIdError } from "../../../serviceProvider/changeUniqueId";
 import { AppType, MezError } from "../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
+import { htmlToPdf } from "../../../utilities/links/HTMLToPDF";
 
 export async function createServiceProviderStripe(serviceProvider: ServiceProvider) {
     let chain = getHasura();
@@ -131,6 +132,7 @@ export async function updateUniqueIdAndServiceLinks(serviceProvider: ServiceProv
             throw new MezError(ChangeUniqueIdError.InvalidServiceProviderType);
     }
     let deepLinks: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(newUniqueId, appType);
+    let flyers = await htmlToPdf(newUniqueId, deepLinks[DeepLinkType.Customer].urlQrImage);
     
     await chain.mutation({
         update_service_provider_service_link_by_pk: [{
@@ -144,9 +146,12 @@ export async function updateUniqueIdAndServiceLinks(serviceProvider: ServiceProv
                 operator_qr_image_link: deepLinks[DeepLinkType.AddOperator].urlQrImage,
                 driver_deep_link: deepLinks[DeepLinkType.AddDriver].url,
                 driver_qr_image_link: deepLinks[DeepLinkType.AddDriver].urlQrImage,
+                customer_flyer_links: $`customer_flyer_links`,
             }
         }, {
             id: true,
         }]
+    }, {
+        "customer_flyer_links": flyers
     });
 }

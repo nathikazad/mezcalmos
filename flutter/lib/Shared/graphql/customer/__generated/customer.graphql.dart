@@ -4006,9 +4006,9 @@ extension ClientExtension$Query$get_customer_orders on graphql.GraphQLClient {
 class Query$get_customer_orders$customer_minimal_orders {
   Query$get_customer_orders$customer_minimal_orders({
     required this.id,
-    required this.image,
+    this.image,
     required this.in_process,
-    required this.name,
+    this.name,
     required this.delivery_cost,
     this.to_address,
     required this.order_time,
@@ -4035,9 +4035,9 @@ class Query$get_customer_orders$customer_minimal_orders {
     final l$$__typename = json['__typename'];
     return Query$get_customer_orders$customer_minimal_orders(
       id: (l$id as int),
-      image: (l$image as String),
+      image: (l$image as String?),
       in_process: (l$in_process as bool),
-      name: (l$name as String),
+      name: (l$name as String?),
       delivery_cost: moneyFromJson(l$delivery_cost),
       to_address: (l$to_address as String?),
       order_time: (l$order_time as String),
@@ -4051,11 +4051,11 @@ class Query$get_customer_orders$customer_minimal_orders {
 
   final int id;
 
-  final String image;
+  final String? image;
 
   final bool in_process;
 
-  final String name;
+  final String? name;
 
   final double delivery_cost;
 
@@ -4273,15 +4273,11 @@ class _CopyWithImpl$Query$get_customer_orders$customer_minimal_orders<TRes>
   }) =>
       _then(Query$get_customer_orders$customer_minimal_orders(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        image: image == _undefined || image == null
-            ? _instance.image
-            : (image as String),
+        image: image == _undefined ? _instance.image : (image as String?),
         in_process: in_process == _undefined || in_process == null
             ? _instance.in_process
             : (in_process as bool),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
+        name: name == _undefined ? _instance.name : (name as String?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -4861,9 +4857,9 @@ extension ClientExtension$Subscription$listen_on_customer_orders
 class Subscription$listen_on_customer_orders$customer_minimal_orders {
   Subscription$listen_on_customer_orders$customer_minimal_orders({
     required this.id,
-    required this.image,
+    this.image,
     required this.in_process,
-    required this.name,
+    this.name,
     required this.delivery_cost,
     this.to_address,
     required this.order_time,
@@ -4890,9 +4886,9 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_customer_orders$customer_minimal_orders(
       id: (l$id as int),
-      image: (l$image as String),
+      image: (l$image as String?),
       in_process: (l$in_process as bool),
-      name: (l$name as String),
+      name: (l$name as String?),
       delivery_cost: moneyFromJson(l$delivery_cost),
       to_address: (l$to_address as String?),
       order_time: (l$order_time as String),
@@ -4906,11 +4902,11 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
 
   final int id;
 
-  final String image;
+  final String? image;
 
   final bool in_process;
 
-  final String name;
+  final String? name;
 
   final double delivery_cost;
 
@@ -5135,15 +5131,11 @@ class _CopyWithImpl$Subscription$listen_on_customer_orders$customer_minimal_orde
   }) =>
       _then(Subscription$listen_on_customer_orders$customer_minimal_orders(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        image: image == _undefined || image == null
-            ? _instance.image
-            : (image as String),
+        image: image == _undefined ? _instance.image : (image as String?),
         in_process: in_process == _undefined || in_process == null
             ? _instance.in_process
             : (in_process as bool),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
+        name: name == _undefined ? _instance.name : (name as String?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),

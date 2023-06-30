@@ -132,23 +132,25 @@ query getBsRentalUpcomingOrdersItems(
   $offset: Int!
   $limit: Int!
 ) {
- business_order_request_item(
-  where:  {
+  business_order_request_item(
+    where: {
       _and: [
-        { rental: { business_id: { _eq: $rentalBusinessId } } }
-        { order: { 
-          _and: [
-            { status: { _neq: "cancelledByBusiness" } }
-            { status: { _neq: "cancelledByCustomer" } }
-            { status: { _neq: "requestReceived" } }
-          ]
-        } }
+        { order: { business_id: { _eq: $rentalBusinessId } } }
+        {
+          order: {
+            _and: [
+              { status: { _neq: "cancelledByBusiness" } }
+              { status: { _neq: "cancelledByCustomer" } }
+              { status: { _neq: "requestReceived" } }
+            ]
+          }
+        }
         { time: { _gte: "now()" } }
       ]
     }
-  limit: $limit
-  offset: $offset
-) {
+    limit: $limit
+    offset: $offset
+  ) {
     cost
 
     order_request_id
@@ -172,20 +174,67 @@ query getBsRentalUpcomingOrdersItems(
         }
       }
     }
+    home {
+      details {
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+    event {
+      details {
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+    service {
+      details {
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+    product {
+      details {
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
   }
 }
 
-query getBsRentalPastOrdersItems($rentalBusinessId: Int!, $offset: Int!, $limit: Int!) {
+query getBsRentalPastOrdersItems(
+  $rentalBusinessId: Int!
+  $offset: Int!
+  $limit: Int!
+) {
   business_order_request_item(
     where: {
       _and: [
-        { rental: { business_id: { _eq: $rentalBusinessId } } }
+        { order: { business_id: { _eq: $rentalBusinessId } } }
         {
           _or: [
             { time: { _lte: "now()" } }
             { order: { status: { _eq: "cancelledByBusiness" } } }
             { order: { status: { _eq: "cancelledByCustomer" } } }
-           
           ]
         }
         { order: { status: { _neq: "requestReceived" } } }
@@ -206,6 +255,50 @@ query getBsRentalPastOrdersItems($rentalBusinessId: Int!, $offset: Int!, $limit:
     }
     time
     rental {
+      details {
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+    home {
+      details {
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+    event {
+      details {
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+    service {
+      details {
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+    product {
       details {
         image
         name {

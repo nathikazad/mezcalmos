@@ -202,11 +202,6 @@ Future<HomeWithBusinessCard?> get_home_by_id(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           ),
           business: BusinessCard(
             phoneNo: data.business!.details.phone_number,
@@ -328,11 +323,6 @@ Future<List<HomeCard>> get_home_rentals(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -394,11 +384,6 @@ Future<List<HomeCard>> get_business_home_rentals(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -471,11 +456,6 @@ Future<List<HomeCard>> get_real_estate(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -538,11 +518,6 @@ Future<List<HomeCard>> get_business_real_estate(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -687,6 +662,7 @@ Future<int?> add_one_home_rental({required Home rental}) async {
               data: Input$business_home_location_insert_input(
                 address: rental.location.name,
                 name: rental.location.name,
+                business_id: rental.details.businessId.toInt(),
                 gps: Geography(
                   rental.location.location.lat.toDouble(),
                   rental.location.location.lng.toDouble(),
@@ -768,7 +744,7 @@ Future<Home?> update_business_home_rental(
     Options$Mutation$update_home_location(
       fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Mutation$update_home_location(
-        id: rental.locationId!,
+        id: rental.locationId!.toInt(),
         address: rental.location.location.address,
         name: rental.location.name,
         gps: Geography(
@@ -778,9 +754,18 @@ Future<Home?> update_business_home_rental(
       ),
     ),
   );
-  if (res.hasException || res2.hasException) {
+  final QueryResult<Mutation$update_home_category1> res3 =
+      await _db.graphQLClient.mutate$update_home_category1(
+    Options$Mutation$update_home_category1(
+      variables: Variables$Mutation$update_home_category1(
+        detailsId: rental.details.id.toInt(),
+        category: rental.category1.toFirebaseFormatString(),
+      ),
+    ),
+  );
+  if (res.hasException || res2.hasException || res3.hasException) {
     mezDbgPrint(
-        "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data}");
+        "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data} ${res2.data} ${res3.data}");
     throwError(res.exception);
   } else if (res.parsedData?.update_business_home_by_pk != null &&
       res2.parsedData?.update_business_home_location != null) {
@@ -819,14 +804,6 @@ Future<Home?> update_business_home_rental(
       ),
       bathrooms: data.bathrooms,
       bedrooms: data.bedrooms,
-      gpsLocation: Location(
-        lat: res2.parsedData!.update_business_home_location!.returning.first.gps
-            .latitude,
-        lng: res2.parsedData!.update_business_home_location!.returning.first.gps
-            .longitude,
-        address: res2
-            .parsedData!.update_business_home_location!.returning.first.address,
-      ),
     );
   }
 

@@ -17,7 +17,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView/CustProductView.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
