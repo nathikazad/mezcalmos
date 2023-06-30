@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:math' show cos, sqrt, sin, pi, atan2, pow;
+import 'dart:math' show asin, atan2, cos, pi, pow, sin, sqrt;
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
@@ -17,6 +17,24 @@ import 'package:mezcalmos/env.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["General"];
 
 typedef LocationChangesNotifier = void Function(LocModel.MezLocation? location);
+double calculateDistanceFromBounds(LatLngBounds bounds) {
+  final double centerLat =
+      (bounds.northeast.latitude + bounds.southwest.latitude) / 2;
+  final double centerLng =
+      (bounds.northeast.longitude + bounds.southwest.longitude) / 2;
+  final LatLng center = LatLng(centerLat, centerLng);
+
+  final double p = 0.017453292519943295;
+  final double a = 0.5 -
+      cos((bounds.northeast.latitude - center.latitude) * p) / 2 +
+      cos(center.latitude * p) *
+          cos(bounds.northeast.latitude * p) *
+          (1 - cos((bounds.northeast.longitude - center.longitude) * p)) /
+          2;
+
+  return (12742 * asin(sqrt(a))) * 1000;
+}
+
 double get getFetchDistance =>
     MezEnv.appLaunchMode == AppLaunchMode.prod ? 25000 : 10000000000000;
 

@@ -6,8 +6,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRestaurantCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
@@ -211,34 +211,39 @@ class CustRestaurantListViewController {
   // Map view //
   void switchView() => _isMapView.value = !_isMapView.value;
 
-  Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
+  Future<void> _fetchMapViewRentals(
+      {bool currentPostitionBased = true,
+      LatLng? fromLoc,
+      double? distance}) async {
     try {
       if (currentPostitionBased) {
         _mapViewRestaurants.value = await fetch_restaurants(
             fromLocation: cModels.Location(
-                lat: _currentLocation.latitude,
-                lng: _currentLocation.longitude,
+                lat: fromLoc?.latitude ?? _currentLocation.latitude,
+                lng: fromLoc?.longitude ?? _currentLocation.longitude,
                 address: ''),
             is_open: showOnlyOpen.value,
             withCache: false,
-            online_ordering: _filterInput["onlineOrder"]!.last.contains("true"),
-            distance: getFetchDistance);
+            // online_ordering: _filterInput["onlineOrder"]!.last.contains("true"),
+            distance: distance ?? getFetchDistance);
       } else {
         _mapViewRestaurants.value = await fetch_restaurants(
-            distance: _calculateDistance(
-                await _googleMapController!.getVisibleRegion()),
+            distance: distance ?? getFetchDistance,
             fromLocation: cModels.Location(
-                lat: _screenToWorldPosition!.latitude,
-                lng: _screenToWorldPosition!.longitude,
+                lat: fromLoc?.latitude ?? _screenToWorldPosition!.latitude,
+                lng: fromLoc?.longitude ?? _screenToWorldPosition!.longitude,
                 address: ''),
             is_open: showOnlyOpen.value,
-            online_ordering: _filterInput["onlineOrder"]!.last.contains("true"),
+            // online_ordering: _filterInput["onlineOrder"]!.last.contains("true"),
             withCache: false);
       }
-    } catch (e) {
+    } catch (e, stk) {
       mezDbgPrint(e);
+      mezDbgPrint(stk);
     } finally {
       await _fillMapsMarkers();
+      mezDbgPrint(
+          "Restaurant markers =======>${restaurantsMarkers.value.length}");
     }
   }
 
@@ -269,8 +274,9 @@ class CustRestaurantListViewController {
     }
   }
 
-  void fetchMapViewRentals() {
-    _fetchMapViewRentals(currentPostitionBased: false);
+  Future<void> fetchMapViewRentals({LatLng? fromLoc, double? distance}) async {
+    await _fetchMapViewRentals(
+        currentPostitionBased: false, fromLoc: fromLoc, distance: distance);
     _showFetchButton.value = false;
   }
 
