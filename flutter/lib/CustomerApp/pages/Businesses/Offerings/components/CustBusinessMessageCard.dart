@@ -162,20 +162,20 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
       final DateTime lastActiveTime = widget.business.lastActive!;
       final Duration difference = now.difference(lastActiveTime);
       if (difference.inDays > 0) {
-        return '${difference.inDays} days';
+        return '${difference.inDays} ${_i18n()['days']}';
       } else if (difference.inHours > 0) {
-        return '${difference.inHours} hours';
+        return '${difference.inHours} ${_i18n()['hours']}';
       } else if (difference.inMinutes > 0) {
-        return '${difference.inMinutes} min';
+        return '${difference.inMinutes} ${_i18n()['min']}';
       } else {
-        return '${difference.inMinutes} min';
+        return 'less than a min';
       }
     }
 
     return Padding(
       padding: const EdgeInsets.only(right: 12.0),
       child: Text(
-        'Active ${createTimeAgoString()} ago',
+        '${_i18n()['active']} ${createTimeAgoString()} ${_i18n()['ago']}',
         style: Theme.of(context).textTheme.bodyMedium,
         textAlign: TextAlign.center,
       ),

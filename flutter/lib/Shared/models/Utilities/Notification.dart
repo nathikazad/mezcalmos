@@ -75,8 +75,8 @@ class Notification {
   }
 
   bool? get isServiceProvderChat {
-    if (variableParams['isServiceProvderChat'] != null) {
-      return variableParams['isServiceProvderChat'];
+    if (variableParams['isServiceProviderChat'] != null) {
+      return variableParams['isServiceProviderChat'];
     }
     return null;
   }

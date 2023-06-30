@@ -49,7 +49,6 @@ class CustBusinessCartController extends GetxController {
   StreamSubscription<List<CustBusinessCart>?>? cartStream;
   String? subscriptionId;
   int _numberOfOldBusinessOrders = 0;
-  int get numberOfOldBusinessOrders => _numberOfOldBusinessOrders;
 
   @override
   Future<void> onInit() async {
@@ -60,19 +59,19 @@ class CustBusinessCartController extends GetxController {
 
       cart.refresh();
     }
-    _getPastBusinessOrdersCount();
+    unawaited(_getPastBusinessOrdersCount());
     mezDbgPrint("[+] CustBusinessCartController::onInit -> Callback Executed.");
     super.onInit();
   }
 
-  void _getPastBusinessOrdersCount() {
-    unawaited(get_customer_orders_count(
+  Future<void> _getPastBusinessOrdersCount() async {
+    await get_customer_orders_count(
             customerId: _auth.hasuraUserId!, orderType: OrderType.Business)
         .then((int? value) {
       if (value != null) {
         _numberOfOldBusinessOrders = value;
       }
-    }));
+    });
   }
 
   @override
@@ -117,6 +116,14 @@ class CustBusinessCartController extends GetxController {
       cartStream?.cancel();
       cartStream = null;
     });
+  }
+
+  Future<bool> showDisclaimerPopup() async {
+    final int? numberOfOrders = await get_customer_orders_count(
+        customerId: _auth.hasuraUserId!, orderType: OrderType.Business);
+
+    print('dddddddddddddddddddddddd $numberOfOrders');
+    return numberOfOrders == null || _numberOfOldBusinessOrders < 5;
   }
 
   void setCurrentOrderInView(int orderId) {

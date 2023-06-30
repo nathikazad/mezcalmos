@@ -102,8 +102,8 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                       _viewBusinessesSwitcher(),
 
                       // filter bar
-                      if (viewController.showBusiness.isFalse)
-                        _filterButton(context),
+                      // if (viewController.showBusiness.isFalse)
+                      //   _filterButton(context),
 
                       Container(
                         margin: const EdgeInsets.only(top: 15),

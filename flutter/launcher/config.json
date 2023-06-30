@@ -337,6 +337,10 @@
     },
     "MezAdminApp": {
       "folderName": "MezAdminApp",
+      "appPermissions": [
+        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>",
+        "<uses-permission android:name='android.permission.MANAGE_EXTERNAL_STORAGE' />"
+      ],
       "packages": {
         "stage": {
           "appName": "MezAdmin Stage",
@@ -365,7 +369,8 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0"
+          "agora_rtc_engine": "6.1.0",
+          "open_file": "^3.3.2"
         },
         "assets": [
           "assets/images/",
