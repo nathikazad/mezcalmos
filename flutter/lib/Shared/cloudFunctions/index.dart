@@ -30,6 +30,20 @@ class CloudFunctions {
       parameters: <String, dynamic>{}));
   }
 
+  static Future<void> referral_incrementReferralCount(
+  ) async {
+    return await callCloudFunction(
+      functionName: "referral-incrementReferralCount",
+      parameters: <String, dynamic>{});
+  }
+
+  static Future<void> referral_saveIpReferral(
+  ) async {
+    return await callCloudFunction(
+      functionName: "referral-saveIpReferral",
+      parameters: <String, dynamic>{});
+  }
+
   static Future<SendOtpResponse> otp3_sendOTPForLogin(
       {required String language,
       required String phoneNumber}  ) async {
@@ -184,15 +198,6 @@ class CloudFunctions {
       }));
   }
 
-  static Future<AddReferralResponse> serviceProvider_addReferral(
-      {required String uniqueId}  ) async {
-    return AddReferralResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "serviceProvider-addReferral",
-      parameters: <String, dynamic>{
-        "uniqueId": uniqueId,
-      }));
-  }
-
   static Future<RemoveDriverResponse> serviceProvider_removeDriver(
       {required num deliveryDriverId,
       required DeliveryServiceProviderType deliveryServiceProviderType}  ) async {
@@ -223,6 +228,17 @@ class CloudFunctions {
       parameters: <String, dynamic>{
         "recipientId": recipientId,
         "recipientType":recipientType.toFirebaseFormatString(),
+      }));
+  }
+
+  static Future<ChangeUniqueIdResponse> serviceProvider_changeUniqueId(
+      {required String currentuniqueId,
+      required String newUniqueId}  ) async {
+    return ChangeUniqueIdResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "serviceProvider-changeUniqueId",
+      parameters: <String, dynamic>{
+        "currentuniqueId": currentuniqueId,
+        "newUniqueId": newUniqueId,
       }));
   }
 
@@ -367,13 +383,11 @@ class CloudFunctions {
   }
 
   static Future<OrderReqResponse> business_requestOrder(
-      {required num businessId,
-      required CustomerAppType customerAppType,
+      {required CustomerAppType customerAppType,
       String? notes}  ) async {
     return OrderReqResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "business-requestOrder",
       parameters: <String, dynamic>{
-        "businessId": businessId,
         "customerAppType":customerAppType.toFirebaseFormatString(),
         "notes": notes,
       }));

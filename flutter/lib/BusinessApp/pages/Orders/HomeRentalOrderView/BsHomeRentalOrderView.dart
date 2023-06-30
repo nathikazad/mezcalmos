@@ -22,8 +22,8 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 class BsHomeRentalOrderView extends StatefulWidget {
   const BsHomeRentalOrderView({super.key});
   static Future<void> navigate({required int orderId}) async {
-    return await MezRouter.toPath(
-        BusinessOpRoutes.kBsOpHomeRentalOrder.replaceFirst(":id", "$orderId"));
+    return MezRouter.toPath(
+        BusinessOpRoutes.kBsOpBusinessOrder.replaceFirst(":id", "$orderId"));
   }
 
   @override

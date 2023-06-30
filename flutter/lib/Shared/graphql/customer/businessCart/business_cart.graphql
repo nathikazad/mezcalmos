@@ -76,6 +76,7 @@ query getBusinessCart($customer_id: Int!) {
           tags
         }
         business {
+          id
           details {
             name
             currency
@@ -89,6 +90,7 @@ query getBusinessCart($customer_id: Int!) {
       product {
         id
         business {
+          id
           details {
             name
             currency
@@ -126,6 +128,7 @@ query getBusinessCart($customer_id: Int!) {
       service {
         id
         business {
+          id
           details {
             name
             currency
@@ -163,6 +166,7 @@ query getBusinessCart($customer_id: Int!) {
       event {
         id
         business {
+          id
           details {
             name
             currency
@@ -338,6 +342,7 @@ subscription listen_on_business_order_request($_id: Int!) {
           tags
         }
         business {
+          id
           details {
             name
             online_ordering
@@ -350,6 +355,7 @@ subscription listen_on_business_order_request($_id: Int!) {
       }
       product {
         business {
+          id
           details {
             name
             currency
@@ -385,7 +391,9 @@ subscription listen_on_business_order_request($_id: Int!) {
         }
       }
       service {
+        id
         business {
+          id
           details {
             name
             currency
@@ -421,7 +429,9 @@ subscription listen_on_business_order_request($_id: Int!) {
         }
       }
       event {
+        id
         business {
+          id
           details {
             name
             currency

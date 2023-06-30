@@ -79,17 +79,54 @@ Future<List<MinimumBusinessItem>> get_upcoming_rental_orders_items(
   if (res.hasException || res.parsedData?.business_order_request_item == null) {
     throw res.exception!;
   }
+  String mapImage(
+      Query$getBsRentalUpcomingOrdersItems$business_order_request_item data) {
+    if (data.rental != null) {
+      return data.rental!.details.image!.first.toString();
+    } else if (data.home != null) {
+      return data.home!.details!.image!.first.toString();
+    } else if (data.service != null) {
+      return data.service!.details.image!.first.toString();
+    } else if (data.product != null) {
+      return data.product!.details.image!.first.toString();
+    } else if (data.event != null) {
+      return data.event!.details.image!.first.toString();
+    } else {
+      return "";
+    }
+  }
+
+  Map<Language, String> mapNames(
+      Query$getBsRentalUpcomingOrdersItems$business_order_request_item data) {
+    if (data.rental != null) {
+      return toLanguageMap(
+          translations: data.rental!.details.name.translations);
+    } else if (data.home != null) {
+      return toLanguageMap(translations: data.home!.details!.name.translations);
+    } else if (data.service != null) {
+      return toLanguageMap(
+          translations: data.service!.details.name.translations);
+    } else if (data.product != null) {
+      return toLanguageMap(
+          translations: data.product!.details.name.translations);
+    } else if (data.event != null) {
+      return toLanguageMap(translations: data.event!.details.name.translations);
+    } else {
+      return toLanguageMap(translations: []);
+    }
+  }
+
   mezDbgPrint(res.data);
   return res.parsedData!.business_order_request_item.map<MinimumBusinessItem>(
       (Query$getBsRentalUpcomingOrdersItems$business_order_request_item data) {
     return MinimumBusinessItem(
       orderId: data.order_request_id,
-      time: DateTime.parse(data.time!),
+      time: data.product != null ? DateTime.now() : DateTime.parse(data.time!),
       parameters: businessItemParamsFromData(data.parameters),
       cost: data.cost.toDouble(),
       customerName: data.order.customer.user.name!,
-      image: data.rental!.details.image!.first.toString(),
-      name: toLanguageMap(translations: data.rental!.details.name.translations),
+      image: mapImage(data),
+      name: mapNames(data),
     );
   }).toList();
 }
@@ -109,17 +146,54 @@ Future<List<MinimumBusinessItem>> get_past_rental_orders_items(
   if (res.hasException || res.parsedData?.business_order_request_item == null) {
     throw res.exception!;
   }
+  String mapImage(
+      Query$getBsRentalPastOrdersItems$business_order_request_item data) {
+    if (data.rental != null) {
+      return data.rental!.details.image!.first.toString();
+    } else if (data.home != null) {
+      return data.home!.details!.image!.first.toString();
+    } else if (data.service != null) {
+      return data.service!.details.image!.first.toString();
+    } else if (data.product != null) {
+      return data.product!.details.image!.first.toString();
+    } else if (data.event != null) {
+      return data.event!.details.image!.first.toString();
+    } else {
+      return "";
+    }
+  }
+
+  Map<Language, String> mapNames(
+      Query$getBsRentalPastOrdersItems$business_order_request_item data) {
+    if (data.rental != null) {
+      return toLanguageMap(
+          translations: data.rental!.details.name.translations);
+    } else if (data.home != null) {
+      return toLanguageMap(translations: data.home!.details!.name.translations);
+    } else if (data.service != null) {
+      return toLanguageMap(
+          translations: data.service!.details.name.translations);
+    } else if (data.product != null) {
+      return toLanguageMap(
+          translations: data.product!.details.name.translations);
+    } else if (data.event != null) {
+      return toLanguageMap(translations: data.event!.details.name.translations);
+    } else {
+      return toLanguageMap(translations: []);
+    }
+  }
+
   mezDbgPrint(res.data);
   return res.parsedData!.business_order_request_item.map<MinimumBusinessItem>(
       (Query$getBsRentalPastOrdersItems$business_order_request_item data) {
     return MinimumBusinessItem(
       orderId: data.order_request_id,
-      time: DateTime.parse(data.time!),
+      time: data.product != null ? DateTime.now() : DateTime.parse(data.time!),
       parameters: businessItemParamsFromData(data.parameters),
       cost: data.cost.toDouble(),
       customerName: data.order.customer.user.name!,
-      image: data.rental!.details.image!.first.toString(),
-      name: toLanguageMap(translations: data.rental!.details.name.translations),
+      image: mapImage(data),
+      name: mapNames(data),
     );
   }).toList();
 }

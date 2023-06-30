@@ -5,6 +5,7 @@ import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../../utilities/l
 import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 import { PaymentType } from '../../models/Generic/Order';
+import { htmlToPdf } from "../../../utilities/links/HTMLToPDF";
 
 
 export async function createRestaurant(
@@ -16,6 +17,7 @@ export async function createRestaurant(
   let uniqueId: string = restaurantDetails.uniqueId ?? generateString();
 
   let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Restaurant)
+  let flyers = await htmlToPdf(uniqueId, linksResponse[DeepLinkType.Customer].urlQrImage);
   
   let response = await chain.mutation({
     insert_restaurant_restaurant_one: [{
@@ -57,6 +59,7 @@ export async function createRestaurant(
                 operator_qr_image_link: linksResponse[DeepLinkType.AddOperator].urlQrImage,
                 driver_deep_link: linksResponse[DeepLinkType.AddDriver].url,
                 driver_qr_image_link: linksResponse[DeepLinkType.AddDriver].urlQrImage,
+                customer_flyer_links: $`customer_flyer_links`,
               }
             }
           }
@@ -93,7 +96,8 @@ export async function createRestaurant(
     "gps": {
       "type": "Point",
       "coordinates": [restaurantDetails.location.lng, restaurantDetails.location.lat]
-    }
+    },
+    "customer_flyer_links": flyers
   })
   console.log("response: ", response);
 

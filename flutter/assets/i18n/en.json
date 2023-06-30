@@ -17,7 +17,7 @@
           "components": {
             "BsHomeRentalOrderItemCard": {
               "pending": "Pending",
-              "waitingCustomer": "Waiting for your approval",
+              "waitingCustomer": "Waiting for customer",
               "cancelled": "Cancelled",
               "confirmed": "Confirmed",
               "completed": "Completed",
@@ -561,6 +561,11 @@
         "CustOrderView": {
           "order": "Order",
           "notes": "Notes",
+          "pending": "Pending",
+          "waitingCustomer": "Waiting for your approval",
+          "cancelled": "Cancelled",
+          "confirmed": "Confirmed",
+          "completed": "Completed",
           "writeNotesHere": "Write your notes here.",
           "summary": "Summary",
           "orderCost": "Order Cost",
@@ -825,7 +830,12 @@
           "organizer": "Organizer",
           "studio": "Studio",
           "view": "View",
-          "agency": "Agency"
+          "agency": "Agency",
+          "days": "days",
+          "hour": "hours",
+          "min": "min",
+          "ago": "ago",
+          "active": "Active"
         }
       },
       "cards": {

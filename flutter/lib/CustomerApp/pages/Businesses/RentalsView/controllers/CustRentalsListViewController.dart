@@ -127,7 +127,7 @@ class CustRentalsListViewController {
           .map((RentalCategory2 e) => e.toFirebaseFormatString())
           .toList(),
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -201,7 +201,8 @@ class CustRentalsListViewController {
         withCache: false,
         offset: _rentalCurrentOffset,
         limit: rentalFetchSize,
-        online_ordering: filterInput["onlineOrder"]!.contains("true"),
+        online_ordering:
+            filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _rentals.value += newList;
       if (newList.length == 0) {

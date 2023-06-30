@@ -41,7 +41,7 @@ class ServiceCartItemCard extends StatelessWidget {
               child: Text(
                 '${_i18n()['item']} ${index + 1}',
                 style: context.textTheme.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -57,7 +57,7 @@ class ServiceCartItemCard extends StatelessWidget {
                     child: Row(
                       children: [
                         Icon(
-                          Icons.delete,
+                          Icons.delete_outline,
                           color: Colors.red,
                         ),
                         Text(
@@ -167,7 +167,8 @@ class ServiceCartItemCard extends StatelessWidget {
   }
 
   Widget costBuilder(BuildContext context) {
-    if (item.parameters.previousCost != null) {
+    if (item.parameters.previousCost != null &&
+        item.parameters.previousCost != item.cost) {
       return Row(
         children: [
           Image.asset(aPriceCheck),

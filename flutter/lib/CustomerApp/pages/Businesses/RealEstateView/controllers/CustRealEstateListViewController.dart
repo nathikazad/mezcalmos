@@ -84,7 +84,7 @@ class CustRealEstateListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -130,7 +130,6 @@ class CustRealEstateListViewController {
         withCache: false,
         offset: _realEstateCurrentOffset,
         limit: realEstateFetchSize,
-        onlineOrdering: filterInput["onlineOrder"]!.contains("true"),
       );
       _realEstates.value += newList;
       if (newList.length == 0) {

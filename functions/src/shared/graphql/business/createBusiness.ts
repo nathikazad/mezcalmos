@@ -1,6 +1,7 @@
 import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { BusinessDetails, BusinessError } from "../../../business/createNewBusiness";
 import { getHasura } from "../../../utilities/hasura";
+import { htmlToPdf } from "../../../utilities/links/HTMLToPDF";
 import { DeepLinkType, IDeepLink, generateDeepLinks } from "../../../utilities/links/deeplink";
 import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { Business } from "../../models/Services/Business/Business";
@@ -12,7 +13,8 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
 
     let uniqueId: string = businessDetails.uniqueId ?? generateString();
 
-    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Business)
+    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Business);
+    let flyers = await htmlToPdf(uniqueId, linksResponse[DeepLinkType.Customer].urlQrImage);
 
     let response = await chain.mutation({
         insert_business_business_one: [{
@@ -41,6 +43,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                                 operator_qr_image_link: linksResponse[DeepLinkType.AddOperator].urlQrImage,
                                 driver_deep_link: linksResponse[DeepLinkType.AddDriver].url,
                                 driver_qr_image_link: linksResponse[DeepLinkType.AddDriver].urlQrImage,
+                                customer_flyer_links: $`customer_flyer_links`,
                               }
                         }
                     }
@@ -70,7 +73,8 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
         "gps": {
             "type": "Point",
             "coordinates": [businessDetails.location.lng, businessDetails.location.lat]
-        }
+        },
+        "customer_flyer_links": flyers
     });
     
     console.log("response: ", response);

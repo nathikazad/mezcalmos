@@ -79,7 +79,7 @@ class _CustOrderViewState extends State<CustOrderView> {
       }),
       bottomSheet: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: bottomButtons(context),
+        child: Obx(() => bottomButtons(context)),
       ),
       body: Obx(
         () => Padding(
@@ -270,6 +270,9 @@ class _CustOrderViewState extends State<CustOrderView> {
   }
 
   Widget bottomButtons(BuildContext context) {
+    if (custBusinessCartController.currentOrderInView.value == null) {
+      return SizedBox.shrink();
+    }
     if (custBusinessCartController.currentOrderInView.value!.status ==
             BusinessOrderRequestStatus.CancelledByCustomer ||
         custBusinessCartController.currentOrderInView.value!.status ==

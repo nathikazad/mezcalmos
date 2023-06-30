@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealestateView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealEstateView/CustRealestateView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/controllers/CustRealEstateListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -102,8 +102,8 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                       _viewBusinessesSwitcher(),
 
                       // filter bar
-                      if (viewController.showBusiness.isFalse)
-                        _filterButton(context),
+                      // if (viewController.showBusiness.isFalse)
+                      //   _filterButton(context),
 
                       Container(
                         margin: const EdgeInsets.only(top: 15),

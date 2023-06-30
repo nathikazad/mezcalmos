@@ -61,7 +61,7 @@ class CustFoodListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -118,7 +118,8 @@ class CustFoodListViewController {
         withCache: false,
         offset: _servicesCurrentOffset,
         limit: servicesFetchSize,
-        onlineOrdering: _filterInput["onlineOrder"]!.contains("true"),
+        onlineOrdering:
+            _filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _services.value += newList;
       if (newList.length == 0) {

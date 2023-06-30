@@ -79,7 +79,7 @@ class CustRestaurantListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"]
+      "onlineOrder": ["false"]
     };
   }
 
@@ -110,7 +110,9 @@ class CustRestaurantListViewController {
                 address: ''),
             is_open: showOnlyOpen.value,
             withCache: false,
-            online_ordering: _filterInput["onlineOrder"]!.last.contains("true"),
+            online_ordering: _filterInput["onlineOrder"]!.last.contains("true")
+                ? true
+                : null,
             distance: getFetchDistance)
         .then((List<Restaurant> list) {
       _restaurants = list;
@@ -131,7 +133,8 @@ class CustRestaurantListViewController {
 
   void changeAlwaysOpenSwitch(bool value) {
     showOnlyOpen.value = value;
-    fetchRestaurants();
+    // fetchRestaurants();
+    _fetchRestaurantsOnFilter();
   }
 
   void _assignServiceIds() {
@@ -151,7 +154,9 @@ class CustRestaurantListViewController {
                 address: ''),
             is_open: showOnlyOpen.value,
             withCache: false,
-            online_ordering: _filterInput["onlineOrder"]!.last.contains("true"),
+            online_ordering: _filterInput["onlineOrder"]!.last.contains("true")
+                ? true
+                : null,
             distance: getFetchDistance)
         .then((List<Restaurant> list) {
       _restaurants = list;
@@ -169,7 +174,8 @@ class CustRestaurantListViewController {
       _filterInput[key] = List.from(value);
     });
 
-    changeAlwaysOpenSwitch(newData['restaurantOpened']!.contains('true'));
+    changeAlwaysOpenSwitch(
+        newData['restaurantOpened']?.contains('true') ?? false);
     mezDbgPrint("_filterInput $_filterInput $newData");
     _fetchRestaurantsOnFilter();
     List<Restaurant> newList = new List<Restaurant>.from(_restaurants);
@@ -206,7 +212,8 @@ class CustRestaurantListViewController {
         servicesIds: servicesIds,
         keyword: searchQuery.value,
         lang: userLanguage,
-        onlineOrdering: _filterInput["onlineOrder"]!.last.contains("true"),
+        onlineOrdering:
+            _filterInput["onlineOrder"]!.last.contains("true") ? true : null,
         withCache: false);
   }
 
@@ -223,7 +230,9 @@ class CustRestaurantListViewController {
                 address: ''),
             is_open: showOnlyOpen.value,
             withCache: false,
-            online_ordering: _filterInput["onlineOrder"]!.last.contains("true"),
+            online_ordering: _filterInput["onlineOrder"]!.last.contains("true")
+                ? true
+                : null,
             distance: getFetchDistance);
       } else {
         _mapViewRestaurants.value = await fetch_restaurants(
@@ -234,7 +243,9 @@ class CustRestaurantListViewController {
                 lng: _screenToWorldPosition!.longitude,
                 address: ''),
             is_open: showOnlyOpen.value,
-            online_ordering: _filterInput["onlineOrder"]!.last.contains("true"),
+            online_ordering: _filterInput["onlineOrder"]!.last.contains("true")
+                ? true
+                : null,
             withCache: false);
       }
     } catch (e) {

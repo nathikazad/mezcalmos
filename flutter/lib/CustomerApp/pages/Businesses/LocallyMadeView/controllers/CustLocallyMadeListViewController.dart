@@ -69,7 +69,7 @@ class CustLocallyMadeListViewController {
     return {
       "categories": [],
       "schedule": [],
-      "onlineOrder": ["true"],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -127,7 +127,8 @@ class CustLocallyMadeListViewController {
         withCache: false,
         offset: _productsCurrentOffset,
         limit: productsFetchSize,
-        onlineOrdering: filterInput["onlineOrder"]!.contains("true"),
+        onlineOrdering:
+            filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _products.value += newList;
       if (newList.length == 0) {
