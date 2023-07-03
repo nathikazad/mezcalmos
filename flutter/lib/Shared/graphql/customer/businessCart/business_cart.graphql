@@ -477,6 +477,218 @@ subscription listen_on_business_order_request($_id: Int!) {
   }
 }
 
+query get_business_order_request($id: Int!) {
+  business_order_request_by_pk(id: $id) {
+    items {
+      id
+      parameters
+      cost
+      item_id
+      offering_type
+      time
+      home {
+        available_for
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        id
+        business {
+          id
+          details {
+            id
+            name
+            currency
+            online_ordering
+            accepted_payments
+            image
+            location {
+              gps
+              address
+            }
+          }
+        }
+        bathrooms
+        bedrooms
+        location {
+          address
+          gps
+          name
+        }
+        available_for
+        offering_type
+      }
+      rental {
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        business {
+          id
+          details {
+            name
+            online_ordering
+            currency
+            id
+            accepted_payments
+            image
+          }
+        }
+      }
+      product {
+        business {
+          id
+          details {
+            name
+            currency
+            id
+            online_ordering
+            accepted_payments
+            image
+          }
+        }
+        details {
+          additional_parameters
+          available
+          category1
+          category2
+          name_id
+          description_id
+          cost
+          tags
+          description {
+            translations {
+              language_id
+              value
+            }
+          }
+          id
+          image
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+        }
+      }
+      service {
+        id
+        business {
+          id
+          details {
+            name
+            currency
+            id
+            accepted_payments
+            online_ordering
+            image
+          }
+        }
+        details {
+          additional_parameters
+          available
+          category1
+          name_id
+          description_id
+          category2
+          cost
+          tags
+          description {
+            translations {
+              language_id
+              value
+            }
+          }
+          id
+          image
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+        }
+      }
+      event {
+        id
+        business {
+          id
+          details {
+            name
+            currency
+            id
+            accepted_payments
+            online_ordering
+            image
+          }
+        }
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        id
+        schedule_type
+        schedule
+        starts_at
+        ends_at
+      }
+    }
+    business_id
+    status
+    customer_id
+    cost
+    cancellation_time
+    id
+    chat_id
+  }
+}
+
 mutation update_product_item_count(
   $id: Int!
   $parameters: jsonb!

@@ -24947,6 +24947,10863 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
       _res;
 }
 
+class Variables$Query$get_business_order_request {
+  factory Variables$Query$get_business_order_request({required int id}) =>
+      Variables$Query$get_business_order_request._({
+        r'id': id,
+      });
+
+  Variables$Query$get_business_order_request._(this._$data);
+
+  factory Variables$Query$get_business_order_request.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Query$get_business_order_request._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_business_order_request<
+          Variables$Query$get_business_order_request>
+      get copyWith => CopyWith$Variables$Query$get_business_order_request(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_business_order_request) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_business_order_request<TRes> {
+  factory CopyWith$Variables$Query$get_business_order_request(
+    Variables$Query$get_business_order_request instance,
+    TRes Function(Variables$Query$get_business_order_request) then,
+  ) = _CopyWithImpl$Variables$Query$get_business_order_request;
+
+  factory CopyWith$Variables$Query$get_business_order_request.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_business_order_request;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Query$get_business_order_request<TRes>
+    implements CopyWith$Variables$Query$get_business_order_request<TRes> {
+  _CopyWithImpl$Variables$Query$get_business_order_request(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_business_order_request _instance;
+
+  final TRes Function(Variables$Query$get_business_order_request) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Query$get_business_order_request._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_business_order_request<TRes>
+    implements CopyWith$Variables$Query$get_business_order_request<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_business_order_request(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Query$get_business_order_request {
+  Query$get_business_order_request({
+    this.business_order_request_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request.fromJson(Map<String, dynamic> json) {
+    final l$business_order_request_by_pk = json['business_order_request_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request(
+      business_order_request_by_pk: l$business_order_request_by_pk == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk
+              .fromJson(
+                  (l$business_order_request_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_business_order_request$business_order_request_by_pk?
+      business_order_request_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_order_request_by_pk = business_order_request_by_pk;
+    _resultData['business_order_request_by_pk'] =
+        l$business_order_request_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_order_request_by_pk = business_order_request_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_order_request_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_business_order_request) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_order_request_by_pk = business_order_request_by_pk;
+    final lOther$business_order_request_by_pk =
+        other.business_order_request_by_pk;
+    if (l$business_order_request_by_pk != lOther$business_order_request_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request
+    on Query$get_business_order_request {
+  CopyWith$Query$get_business_order_request<Query$get_business_order_request>
+      get copyWith => CopyWith$Query$get_business_order_request(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request<TRes> {
+  factory CopyWith$Query$get_business_order_request(
+    Query$get_business_order_request instance,
+    TRes Function(Query$get_business_order_request) then,
+  ) = _CopyWithImpl$Query$get_business_order_request;
+
+  factory CopyWith$Query$get_business_order_request.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request;
+
+  TRes call({
+    Query$get_business_order_request$business_order_request_by_pk?
+        business_order_request_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk<TRes>
+      get business_order_request_by_pk;
+}
+
+class _CopyWithImpl$Query$get_business_order_request<TRes>
+    implements CopyWith$Query$get_business_order_request<TRes> {
+  _CopyWithImpl$Query$get_business_order_request(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request _instance;
+
+  final TRes Function(Query$get_business_order_request) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_order_request_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_order_request(
+        business_order_request_by_pk: business_order_request_by_pk == _undefined
+            ? _instance.business_order_request_by_pk
+            : (business_order_request_by_pk
+                as Query$get_business_order_request$business_order_request_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk<TRes>
+      get business_order_request_by_pk {
+    final local$business_order_request_by_pk =
+        _instance.business_order_request_by_pk;
+    return local$business_order_request_by_pk == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk(
+            local$business_order_request_by_pk,
+            (e) => call(business_order_request_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request<TRes>
+    implements CopyWith$Query$get_business_order_request<TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_business_order_request$business_order_request_by_pk?
+        business_order_request_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk<TRes>
+      get business_order_request_by_pk =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk
+              .stub(_res);
+}
+
+const documentNodeQueryget_business_order_request = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_business_order_request'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_order_request_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'items'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'parameters'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'item_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'offering_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'home'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'available_for'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'name_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'available'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'business'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'details'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'name'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'currency'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'online_ordering'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'location'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'gps'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'address'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'bathrooms'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'bedrooms'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'available_for'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'offering_type'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'rental'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'name_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'available'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'business'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'details'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'name'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'online_ordering'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'currency'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'product'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'business'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'details'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'name'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'currency'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'online_ordering'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'available'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'service'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'business'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'details'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'name'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'currency'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'online_ordering'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'available'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'event'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'business'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'details'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'name'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'currency'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'online_ordering'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'image'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'name_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'available'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'schedule_type'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'schedule'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'starts_at'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'ends_at'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'business_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'cancellation_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'chat_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_business_order_request _parserFn$Query$get_business_order_request(
+        Map<String, dynamic> data) =>
+    Query$get_business_order_request.fromJson(data);
+
+class Options$Query$get_business_order_request
+    extends graphql.QueryOptions<Query$get_business_order_request> {
+  Options$Query$get_business_order_request({
+    String? operationName,
+    required Variables$Query$get_business_order_request variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_business_order_request,
+          parserFn: _parserFn$Query$get_business_order_request,
+        );
+}
+
+class WatchOptions$Query$get_business_order_request
+    extends graphql.WatchQueryOptions<Query$get_business_order_request> {
+  WatchOptions$Query$get_business_order_request({
+    String? operationName,
+    required Variables$Query$get_business_order_request variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_business_order_request,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_business_order_request,
+        );
+}
+
+class FetchMoreOptions$Query$get_business_order_request
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_business_order_request({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$get_business_order_request variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryget_business_order_request,
+        );
+}
+
+extension ClientExtension$Query$get_business_order_request
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_business_order_request>>
+      query$get_business_order_request(
+              Options$Query$get_business_order_request options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$get_business_order_request>
+      watchQuery$get_business_order_request(
+              WatchOptions$Query$get_business_order_request options) =>
+          this.watchQuery(options);
+  void writeQuery$get_business_order_request({
+    required Query$get_business_order_request data,
+    required Variables$Query$get_business_order_request variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryget_business_order_request),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_business_order_request? readQuery$get_business_order_request({
+    required Variables$Query$get_business_order_request variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryget_business_order_request),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$get_business_order_request.fromJson(result);
+  }
+}
+
+class Query$get_business_order_request$business_order_request_by_pk {
+  Query$get_business_order_request$business_order_request_by_pk({
+    required this.items,
+    required this.business_id,
+    required this.status,
+    required this.customer_id,
+    this.cost,
+    this.cancellation_time,
+    required this.id,
+    this.chat_id,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$items = json['items'];
+    final l$business_id = json['business_id'];
+    final l$status = json['status'];
+    final l$customer_id = json['customer_id'];
+    final l$cost = json['cost'];
+    final l$cancellation_time = json['cancellation_time'];
+    final l$id = json['id'];
+    final l$chat_id = json['chat_id'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk(
+      items: (l$items as List<dynamic>)
+          .map((e) =>
+              Query$get_business_order_request$business_order_request_by_pk$items
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      business_id: (l$business_id as int),
+      status: (l$status as String),
+      customer_id: (l$customer_id as int),
+      cost: l$cost == null ? null : moneyFromJson(l$cost),
+      cancellation_time: (l$cancellation_time as String?),
+      id: (l$id as int),
+      chat_id: (l$chat_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_business_order_request$business_order_request_by_pk$items>
+      items;
+
+  final int business_id;
+
+  final String status;
+
+  final int customer_id;
+
+  final double? cost;
+
+  final String? cancellation_time;
+
+  final int id;
+
+  final int? chat_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$items = items;
+    _resultData['items'] = l$items.map((e) => e.toJson()).toList();
+    final l$business_id = business_id;
+    _resultData['business_id'] = l$business_id;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$customer_id = customer_id;
+    _resultData['customer_id'] = l$customer_id;
+    final l$cost = cost;
+    _resultData['cost'] = l$cost == null ? null : moneyToJson(l$cost);
+    final l$cancellation_time = cancellation_time;
+    _resultData['cancellation_time'] = l$cancellation_time;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$chat_id = chat_id;
+    _resultData['chat_id'] = l$chat_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$items = items;
+    final l$business_id = business_id;
+    final l$status = status;
+    final l$customer_id = customer_id;
+    final l$cost = cost;
+    final l$cancellation_time = cancellation_time;
+    final l$id = id;
+    final l$chat_id = chat_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$items.map((v) => v)),
+      l$business_id,
+      l$status,
+      l$customer_id,
+      l$cost,
+      l$cancellation_time,
+      l$id,
+      l$chat_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$items = items;
+    final lOther$items = other.items;
+    if (l$items.length != lOther$items.length) {
+      return false;
+    }
+    for (int i = 0; i < l$items.length; i++) {
+      final l$items$entry = l$items[i];
+      final lOther$items$entry = lOther$items[i];
+      if (l$items$entry != lOther$items$entry) {
+        return false;
+      }
+    }
+    final l$business_id = business_id;
+    final lOther$business_id = other.business_id;
+    if (l$business_id != lOther$business_id) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$cancellation_time = cancellation_time;
+    final lOther$cancellation_time = other.cancellation_time;
+    if (l$cancellation_time != lOther$cancellation_time) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$chat_id = chat_id;
+    final lOther$chat_id = other.chat_id;
+    if (l$chat_id != lOther$chat_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk
+    on Query$get_business_order_request$business_order_request_by_pk {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk<
+          Query$get_business_order_request$business_order_request_by_pk>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk(
+    Query$get_business_order_request$business_order_request_by_pk instance,
+    TRes Function(Query$get_business_order_request$business_order_request_by_pk)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk;
+
+  TRes call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items>?
+        items,
+    int? business_id,
+    String? status,
+    int? customer_id,
+    double? cost,
+    String? cancellation_time,
+    int? id,
+    int? chat_id,
+    String? $__typename,
+  });
+  TRes items(
+      Iterable<Query$get_business_order_request$business_order_request_by_pk$items> Function(
+              Iterable<
+                  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items<
+                      Query$get_business_order_request$business_order_request_by_pk$items>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk _instance;
+
+  final TRes Function(
+      Query$get_business_order_request$business_order_request_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? items = _undefined,
+    Object? business_id = _undefined,
+    Object? status = _undefined,
+    Object? customer_id = _undefined,
+    Object? cost = _undefined,
+    Object? cancellation_time = _undefined,
+    Object? id = _undefined,
+    Object? chat_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_order_request$business_order_request_by_pk(
+        items: items == _undefined || items == null
+            ? _instance.items
+            : (items as List<
+                Query$get_business_order_request$business_order_request_by_pk$items>),
+        business_id: business_id == _undefined || business_id == null
+            ? _instance.business_id
+            : (business_id as int),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        customer_id: customer_id == _undefined || customer_id == null
+            ? _instance.customer_id
+            : (customer_id as int),
+        cost: cost == _undefined ? _instance.cost : (cost as double?),
+        cancellation_time: cancellation_time == _undefined
+            ? _instance.cancellation_time
+            : (cancellation_time as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes items(
+          Iterable<Query$get_business_order_request$business_order_request_by_pk$items> Function(
+                  Iterable<
+                      CopyWith$Query$get_business_order_request$business_order_request_by_pk$items<
+                          Query$get_business_order_request$business_order_request_by_pk$items>>)
+              _fn) =>
+      call(
+          items: _fn(_instance.items.map((e) =>
+              CopyWith$Query$get_business_order_request$business_order_request_by_pk$items(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items>?
+        items,
+    int? business_id,
+    String? status,
+    int? customer_id,
+    double? cost,
+    String? cancellation_time,
+    int? id,
+    int? chat_id,
+    String? $__typename,
+  }) =>
+      _res;
+  items(_fn) => _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items {
+  Query$get_business_order_request$business_order_request_by_pk$items({
+    required this.id,
+    required this.parameters,
+    required this.cost,
+    required this.item_id,
+    required this.offering_type,
+    this.time,
+    this.home,
+    this.rental,
+    this.product,
+    this.service,
+    this.event,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$parameters = json['parameters'];
+    final l$cost = json['cost'];
+    final l$item_id = json['item_id'];
+    final l$offering_type = json['offering_type'];
+    final l$time = json['time'];
+    final l$home = json['home'];
+    final l$rental = json['rental'];
+    final l$product = json['product'];
+    final l$service = json['service'];
+    final l$event = json['event'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items(
+      id: (l$id as int),
+      parameters: mapFromJson(l$parameters),
+      cost: moneyFromJson(l$cost),
+      item_id: (l$item_id as int),
+      offering_type: (l$offering_type as String),
+      time: (l$time as String?),
+      home: l$home == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk$items$home
+              .fromJson((l$home as Map<String, dynamic>)),
+      rental: l$rental == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk$items$rental
+              .fromJson((l$rental as Map<String, dynamic>)),
+      product: l$product == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk$items$product
+              .fromJson((l$product as Map<String, dynamic>)),
+      service: l$service == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk$items$service
+              .fromJson((l$service as Map<String, dynamic>)),
+      event: l$event == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk$items$event
+              .fromJson((l$event as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic parameters;
+
+  final double cost;
+
+  final int item_id;
+
+  final String offering_type;
+
+  final String? time;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home?
+      home;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental?
+      rental;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product?
+      product;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service?
+      service;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event?
+      event;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$parameters = parameters;
+    _resultData['parameters'] = mapToJson(l$parameters);
+    final l$cost = cost;
+    _resultData['cost'] = moneyToJson(l$cost);
+    final l$item_id = item_id;
+    _resultData['item_id'] = l$item_id;
+    final l$offering_type = offering_type;
+    _resultData['offering_type'] = l$offering_type;
+    final l$time = time;
+    _resultData['time'] = l$time;
+    final l$home = home;
+    _resultData['home'] = l$home?.toJson();
+    final l$rental = rental;
+    _resultData['rental'] = l$rental?.toJson();
+    final l$product = product;
+    _resultData['product'] = l$product?.toJson();
+    final l$service = service;
+    _resultData['service'] = l$service?.toJson();
+    final l$event = event;
+    _resultData['event'] = l$event?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$parameters = parameters;
+    final l$cost = cost;
+    final l$item_id = item_id;
+    final l$offering_type = offering_type;
+    final l$time = time;
+    final l$home = home;
+    final l$rental = rental;
+    final l$product = product;
+    final l$service = service;
+    final l$event = event;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$parameters,
+      l$cost,
+      l$item_id,
+      l$offering_type,
+      l$time,
+      l$home,
+      l$rental,
+      l$product,
+      l$service,
+      l$event,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$parameters = parameters;
+    final lOther$parameters = other.parameters;
+    if (l$parameters != lOther$parameters) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$item_id = item_id;
+    final lOther$item_id = other.item_id;
+    if (l$item_id != lOther$item_id) {
+      return false;
+    }
+    final l$offering_type = offering_type;
+    final lOther$offering_type = other.offering_type;
+    if (l$offering_type != lOther$offering_type) {
+      return false;
+    }
+    final l$time = time;
+    final lOther$time = other.time;
+    if (l$time != lOther$time) {
+      return false;
+    }
+    final l$home = home;
+    final lOther$home = other.home;
+    if (l$home != lOther$home) {
+      return false;
+    }
+    final l$rental = rental;
+    final lOther$rental = other.rental;
+    if (l$rental != lOther$rental) {
+      return false;
+    }
+    final l$product = product;
+    final lOther$product = other.product;
+    if (l$product != lOther$product) {
+      return false;
+    }
+    final l$service = service;
+    final lOther$service = other.service;
+    if (l$service != lOther$service) {
+      return false;
+    }
+    final l$event = event;
+    final lOther$event = other.event;
+    if (l$event != lOther$event) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items
+    on Query$get_business_order_request$business_order_request_by_pk$items {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items<
+          Query$get_business_order_request$business_order_request_by_pk$items>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items(
+    Query$get_business_order_request$business_order_request_by_pk$items
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items;
+
+  TRes call({
+    int? id,
+    dynamic? parameters,
+    double? cost,
+    int? item_id,
+    String? offering_type,
+    String? time,
+    Query$get_business_order_request$business_order_request_by_pk$items$home?
+        home,
+    Query$get_business_order_request$business_order_request_by_pk$items$rental?
+        rental,
+    Query$get_business_order_request$business_order_request_by_pk$items$product?
+        product,
+    Query$get_business_order_request$business_order_request_by_pk$items$service?
+        service,
+    Query$get_business_order_request$business_order_request_by_pk$items$event?
+        event,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home<
+      TRes> get home;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental<
+      TRes> get rental;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product<
+      TRes> get product;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service<
+      TRes> get service;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event<
+      TRes> get event;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? parameters = _undefined,
+    Object? cost = _undefined,
+    Object? item_id = _undefined,
+    Object? offering_type = _undefined,
+    Object? time = _undefined,
+    Object? home = _undefined,
+    Object? rental = _undefined,
+    Object? product = _undefined,
+    Object? service = _undefined,
+    Object? event = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_order_request$business_order_request_by_pk$items(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        parameters: parameters == _undefined || parameters == null
+            ? _instance.parameters
+            : (parameters as dynamic),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as double),
+        item_id: item_id == _undefined || item_id == null
+            ? _instance.item_id
+            : (item_id as int),
+        offering_type: offering_type == _undefined || offering_type == null
+            ? _instance.offering_type
+            : (offering_type as String),
+        time: time == _undefined ? _instance.time : (time as String?),
+        home: home == _undefined
+            ? _instance.home
+            : (home
+                as Query$get_business_order_request$business_order_request_by_pk$items$home?),
+        rental: rental == _undefined
+            ? _instance.rental
+            : (rental
+                as Query$get_business_order_request$business_order_request_by_pk$items$rental?),
+        product: product == _undefined
+            ? _instance.product
+            : (product
+                as Query$get_business_order_request$business_order_request_by_pk$items$product?),
+        service: service == _undefined
+            ? _instance.service
+            : (service
+                as Query$get_business_order_request$business_order_request_by_pk$items$service?),
+        event: event == _undefined
+            ? _instance.event
+            : (event
+                as Query$get_business_order_request$business_order_request_by_pk$items$event?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home<
+      TRes> get home {
+    final local$home = _instance.home;
+    return local$home == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home(
+            local$home, (e) => call(home: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental<
+      TRes> get rental {
+    final local$rental = _instance.rental;
+    return local$rental == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental(
+            local$rental, (e) => call(rental: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product<
+      TRes> get product {
+    final local$product = _instance.product;
+    return local$product == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product(
+            local$product, (e) => call(product: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service<
+      TRes> get service {
+    final local$service = _instance.service;
+    return local$service == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service(
+            local$service, (e) => call(service: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event<
+      TRes> get event {
+    final local$event = _instance.event;
+    return local$event == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event(
+            local$event, (e) => call(event: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? parameters,
+    double? cost,
+    int? item_id,
+    String? offering_type,
+    String? time,
+    Query$get_business_order_request$business_order_request_by_pk$items$home?
+        home,
+    Query$get_business_order_request$business_order_request_by_pk$items$rental?
+        rental,
+    Query$get_business_order_request$business_order_request_by_pk$items$product?
+        product,
+    Query$get_business_order_request$business_order_request_by_pk$items$service?
+        service,
+    Query$get_business_order_request$business_order_request_by_pk$items$event?
+        event,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home<
+          TRes>
+      get home =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental<
+          TRes>
+      get rental =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product<
+          TRes>
+      get product =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service<
+          TRes>
+      get service =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event<
+          TRes>
+      get event =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$home {
+  Query$get_business_order_request$business_order_request_by_pk$items$home({
+    required this.available_for,
+    this.details,
+    required this.id,
+    this.business,
+    required this.bathrooms,
+    required this.bedrooms,
+    this.location,
+    required this.offering_type,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$home.fromJson(
+      Map<String, dynamic> json) {
+    final l$available_for = json['available_for'];
+    final l$details = json['details'];
+    final l$id = json['id'];
+    final l$business = json['business'];
+    final l$bathrooms = json['bathrooms'];
+    final l$bedrooms = json['bedrooms'];
+    final l$location = json['location'];
+    final l$offering_type = json['offering_type'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$home(
+      available_for: (l$available_for as String),
+      details: l$details == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk$items$home$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      id: (l$id as int),
+      business: l$business == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk$items$home$business
+              .fromJson((l$business as Map<String, dynamic>)),
+      bathrooms: (l$bathrooms as int),
+      bedrooms: (l$bedrooms as int),
+      location: l$location == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk$items$home$location
+              .fromJson((l$location as Map<String, dynamic>)),
+      offering_type: (l$offering_type as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String available_for;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$details?
+      details;
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$business?
+      business;
+
+  final int bathrooms;
+
+  final int bedrooms;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$location?
+      location;
+
+  final String offering_type;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$available_for = available_for;
+    _resultData['available_for'] = l$available_for;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
+    final l$bathrooms = bathrooms;
+    _resultData['bathrooms'] = l$bathrooms;
+    final l$bedrooms = bedrooms;
+    _resultData['bedrooms'] = l$bedrooms;
+    final l$location = location;
+    _resultData['location'] = l$location?.toJson();
+    final l$offering_type = offering_type;
+    _resultData['offering_type'] = l$offering_type;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$available_for = available_for;
+    final l$details = details;
+    final l$id = id;
+    final l$business = business;
+    final l$bathrooms = bathrooms;
+    final l$bedrooms = bedrooms;
+    final l$location = location;
+    final l$offering_type = offering_type;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$available_for,
+      l$details,
+      l$id,
+      l$business,
+      l$bathrooms,
+      l$bedrooms,
+      l$location,
+      l$offering_type,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$home) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$available_for = available_for;
+    final lOther$available_for = other.available_for;
+    if (l$available_for != lOther$available_for) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$bathrooms = bathrooms;
+    final lOther$bathrooms = other.bathrooms;
+    if (l$bathrooms != lOther$bathrooms) {
+      return false;
+    }
+    final l$bedrooms = bedrooms;
+    final lOther$bedrooms = other.bedrooms;
+    if (l$bedrooms != lOther$bedrooms) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$offering_type = offering_type;
+    final lOther$offering_type = other.offering_type;
+    if (l$offering_type != lOther$offering_type) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$home
+    on Query$get_business_order_request$business_order_request_by_pk$items$home {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home<
+          Query$get_business_order_request$business_order_request_by_pk$items$home>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home(
+    Query$get_business_order_request$business_order_request_by_pk$items$home
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$home)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home;
+
+  TRes call({
+    String? available_for,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$details?
+        details,
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$business?
+        business,
+    int? bathrooms,
+    int? bedrooms,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$location?
+        location,
+    String? offering_type,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details<
+      TRes> get details;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business<
+      TRes> get business;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location<
+      TRes> get location;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$home)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? available_for = _undefined,
+    Object? details = _undefined,
+    Object? id = _undefined,
+    Object? business = _undefined,
+    Object? bathrooms = _undefined,
+    Object? bedrooms = _undefined,
+    Object? location = _undefined,
+    Object? offering_type = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$home(
+        available_for: available_for == _undefined || available_for == null
+            ? _instance.available_for
+            : (available_for as String),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$get_business_order_request$business_order_request_by_pk$items$home$details?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business: business == _undefined
+            ? _instance.business
+            : (business
+                as Query$get_business_order_request$business_order_request_by_pk$items$home$business?),
+        bathrooms: bathrooms == _undefined || bathrooms == null
+            ? _instance.bathrooms
+            : (bathrooms as int),
+        bedrooms: bedrooms == _undefined || bedrooms == null
+            ? _instance.bedrooms
+            : (bedrooms as int),
+        location: location == _undefined
+            ? _instance.location
+            : (location
+                as Query$get_business_order_request$business_order_request_by_pk$items$home$location?),
+        offering_type: offering_type == _undefined || offering_type == null
+            ? _instance.offering_type
+            : (offering_type as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details(
+            local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business<
+      TRes> get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business(
+            local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location(
+            local$location, (e) => call(location: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? available_for,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$details?
+        details,
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$business?
+        business,
+    int? bathrooms,
+    int? bedrooms,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$location?
+        location,
+    String? offering_type,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details<
+          TRes>
+      get details =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business<
+          TRes>
+      get business =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$home$details {
+  Query$get_business_order_request$business_order_request_by_pk$items$home$details({
+    required this.name_id,
+    this.description_id,
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.available,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$home$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$available = json['available'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$home$details(
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
+      id: (l$id as int),
+      name:
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      available: (l$available as bool),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int name_id;
+
+  final int? description_id;
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final bool available;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$available = available;
+    _resultData['available'] = l$available;
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name_id = name_id;
+    final l$description_id = description_id;
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$available = available;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name_id,
+      l$description_id,
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$available,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$home$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$home$details
+    on Query$get_business_order_request$business_order_request_by_pk$items$home$details {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details<
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details(
+    Query$get_business_order_request$business_order_request_by_pk$items$home$details
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$home$details)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details;
+
+  TRes call({
+    int? name_id,
+    int? description_id,
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$details$name?
+        name,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$details
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? available = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details(
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$get_business_order_request$business_order_request_by_pk$items$home$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        available: available == _undefined || available == null
+            ? _instance.available
+            : (available as bool),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? name_id,
+    int? description_id,
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$details$name?
+        name,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$home$details$name {
+  Query$get_business_order_request$business_order_request_by_pk$items$home$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$home$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$home$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$home$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name
+    on Query$get_business_order_request$business_order_request_by_pk$items$home$details$name {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name<
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details$name>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name(
+    Query$get_business_order_request$business_order_request_by_pk$items$home$details$name
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$home$details$name)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name;
+
+  TRes call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations<
+                      Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$details$name
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations<
+                          Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations {
+  Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations
+    on Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations<
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations(
+    Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$home$business {
+  Query$get_business_order_request$business_order_request_by_pk$items$home$business({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$home$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$home$business(
+      id: (l$id as int),
+      details:
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$business$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$home$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$home$business
+    on Query$get_business_order_request$business_order_request_by_pk$items$home$business {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business<
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business(
+    Query$get_business_order_request$business_order_request_by_pk$items$home$business
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$home$business)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business;
+
+  TRes call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$business$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$business
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_business_order_request$business_order_request_by_pk$items$home$business$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$business$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details<
+          TRes>
+      get details =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$home$business$details {
+  Query$get_business_order_request$business_order_request_by_pk$items$home$business$details({
+    required this.id,
+    required this.name,
+    required this.currency,
+    required this.online_ordering,
+    required this.accepted_payments,
+    required this.image,
+    required this.location,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$home$business$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$currency = json['currency'];
+    final l$online_ordering = json['online_ordering'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
+    final l$location = json['location'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$home$business$details(
+      id: (l$id as int),
+      name: (l$name as String),
+      currency: (l$currency as String),
+      online_ordering: (l$online_ordering as bool),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
+      location:
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String name;
+
+  final String currency;
+
+  final bool online_ordering;
+
+  final dynamic accepted_payments;
+
+  final String image;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location
+      location;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$currency = currency;
+    final l$online_ordering = online_ordering;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
+    final l$location = location;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$currency,
+      l$online_ordering,
+      l$accepted_payments,
+      l$image,
+      l$location,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$home$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details
+    on Query$get_business_order_request$business_order_request_by_pk$items$home$business$details {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details<
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business$details>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details(
+    Query$get_business_order_request$business_order_request_by_pk$items$home$business$details
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$home$business$details)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details;
+
+  TRes call({
+    int? id,
+    String? name,
+    String? currency,
+    bool? online_ordering,
+    dynamic? accepted_payments,
+    String? image,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location?
+        location,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location<
+      TRes> get location;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$business$details
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? currency = _undefined,
+    Object? online_ordering = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
+    Object? location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location(
+        local$location, (e) => call(location: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? name,
+    String? currency,
+    bool? online_ordering,
+    dynamic? accepted_payments,
+    String? image,
+    Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location?
+        location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location {
+  Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location
+    on Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location<
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location(
+    Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$business$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$home$location {
+  Query$get_business_order_request$business_order_request_by_pk$items$home$location({
+    required this.address,
+    required this.gps,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$home$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$address = json['address'];
+    final l$gps = json['gps'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$home$location(
+      address: (l$address as String),
+      gps: geographyFromJson(l$gps),
+      name: (l$name as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String address;
+
+  final Geography gps;
+
+  final String name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$address = address;
+    final l$gps = gps;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$address,
+      l$gps,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$home$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$home$location
+    on Query$get_business_order_request$business_order_request_by_pk$items$home$location {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location<
+          Query$get_business_order_request$business_order_request_by_pk$items$home$location>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location(
+    Query$get_business_order_request$business_order_request_by_pk$items$home$location
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$home$location)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$location;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$location;
+
+  TRes call({
+    String? address,
+    Geography? gps,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$location
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? address = _undefined,
+    Object? gps = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$home$location(
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$location<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$home$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? address,
+    Geography? gps,
+    String? name,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$rental {
+  Query$get_business_order_request$business_order_request_by_pk$items$rental({
+    required this.details,
+    required this.business,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$rental.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$business = json['business'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$rental(
+      details:
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      business:
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$business
+              .fromJson((l$business as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental$details
+      details;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental$business
+      business;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$business = business;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$business,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$rental) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$rental
+    on Query$get_business_order_request$business_order_request_by_pk$items$rental {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental<
+          Query$get_business_order_request$business_order_request_by_pk$items$rental>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental(
+    Query$get_business_order_request$business_order_request_by_pk$items$rental
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$rental)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental;
+
+  TRes call({
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$details?
+        details,
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$business?
+        business,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details<
+      TRes> get details;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business<
+      TRes> get business;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? business = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental(
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_business_order_request$business_order_request_by_pk$items$rental$details),
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business
+                as Query$get_business_order_request$business_order_request_by_pk$items$rental$business),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details(
+        local$details, (e) => call(details: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business<
+      TRes> get business {
+    final local$business = _instance.business;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business(
+        local$business, (e) => call(business: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$details?
+        details,
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$business?
+        business,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details<
+          TRes>
+      get details =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business<
+          TRes>
+      get business =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$rental$details {
+  Query$get_business_order_request$business_order_request_by_pk$items$rental$details({
+    required this.name_id,
+    this.description_id,
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.available,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$rental$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$available = json['available'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$rental$details(
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
+      id: (l$id as int),
+      name:
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      available: (l$available as bool),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int name_id;
+
+  final int? description_id;
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final bool available;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$available = available;
+    _resultData['available'] = l$available;
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name_id = name_id;
+    final l$description_id = description_id;
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$available = available;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name_id,
+      l$description_id,
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$available,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$rental$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$rental$details
+    on Query$get_business_order_request$business_order_request_by_pk$items$rental$details {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details<
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details(
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$details
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$rental$details)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details;
+
+  TRes call({
+    int? name_id,
+    int? description_id,
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name?
+        name,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental$details
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? available = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details(
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        available: available == _undefined || available == null
+            ? _instance.available
+            : (available as bool),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? name_id,
+    int? description_id,
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name?
+        name,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name {
+  Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name
+    on Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name<
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name(
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name;
+
+  TRes call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations<
+                      Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations<
+                          Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations {
+  Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations
+    on Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations<
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations(
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$rental$business {
+  Query$get_business_order_request$business_order_request_by_pk$items$rental$business({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$rental$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$rental$business(
+      id: (l$id as int),
+      details:
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$rental$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$rental$business
+    on Query$get_business_order_request$business_order_request_by_pk$items$rental$business {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business<
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$business>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business(
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$business
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$rental$business)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business;
+
+  TRes call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental$business
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$business)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details<
+          TRes>
+      get details =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details {
+  Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details({
+    required this.name,
+    required this.online_ordering,
+    required this.currency,
+    required this.id,
+    required this.accepted_payments,
+    required this.image,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$online_ordering = json['online_ordering'];
+    final l$currency = json['currency'];
+    final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details(
+      name: (l$name as String),
+      online_ordering: (l$online_ordering as bool),
+      currency: (l$currency as String),
+      id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final bool online_ordering;
+
+  final String currency;
+
+  final int id;
+
+  final dynamic accepted_payments;
+
+  final String image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$online_ordering = online_ordering;
+    final l$currency = currency;
+    final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$online_ordering,
+      l$currency,
+      l$id,
+      l$accepted_payments,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details
+    on Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details<
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details(
+    Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details;
+
+  TRes call({
+    String? name,
+    bool? online_ordering,
+    String? currency,
+    int? id,
+    dynamic? accepted_payments,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? online_ordering = _undefined,
+    Object? currency = _undefined,
+    Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    bool? online_ordering,
+    String? currency,
+    int? id,
+    dynamic? accepted_payments,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$product {
+  Query$get_business_order_request$business_order_request_by_pk$items$product({
+    required this.business,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$product.fromJson(
+      Map<String, dynamic> json) {
+    final l$business = json['business'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$product(
+      business:
+          Query$get_business_order_request$business_order_request_by_pk$items$product$business
+              .fromJson((l$business as Map<String, dynamic>)),
+      details:
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$business
+      business;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business = business;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$product) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$product
+    on Query$get_business_order_request$business_order_request_by_pk$items$product {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product<
+          Query$get_business_order_request$business_order_request_by_pk$items$product>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product(
+    Query$get_business_order_request$business_order_request_by_pk$items$product
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$product)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product;
+
+  TRes call({
+    Query$get_business_order_request$business_order_request_by_pk$items$product$business?
+        business,
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business<
+      TRes> get business;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$product)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$product(
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business
+                as Query$get_business_order_request$business_order_request_by_pk$items$product$business),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_business_order_request$business_order_request_by_pk$items$product$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business<
+      TRes> get business {
+    final local$business = _instance.business;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business(
+        local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_business_order_request$business_order_request_by_pk$items$product$business?
+        business,
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business<
+          TRes>
+      get business =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details<
+          TRes>
+      get details =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$product$business {
+  Query$get_business_order_request$business_order_request_by_pk$items$product$business({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$product$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$product$business(
+      id: (l$id as int),
+      details:
+          Query$get_business_order_request$business_order_request_by_pk$items$product$business$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$business$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$product$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$product$business
+    on Query$get_business_order_request$business_order_request_by_pk$items$product$business {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business<
+          Query$get_business_order_request$business_order_request_by_pk$items$product$business>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business(
+    Query$get_business_order_request$business_order_request_by_pk$items$product$business
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$product$business)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business;
+
+  TRes call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$product$business$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$business
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$business)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_business_order_request$business_order_request_by_pk$items$product$business$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$product$business$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details<
+          TRes>
+      get details =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$product$business$details {
+  Query$get_business_order_request$business_order_request_by_pk$items$product$business$details({
+    required this.name,
+    required this.currency,
+    required this.id,
+    required this.online_ordering,
+    required this.accepted_payments,
+    required this.image,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$product$business$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$currency = json['currency'];
+    final l$id = json['id'];
+    final l$online_ordering = json['online_ordering'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$product$business$details(
+      name: (l$name as String),
+      currency: (l$currency as String),
+      id: (l$id as int),
+      online_ordering: (l$online_ordering as bool),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      image: (l$image as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final String currency;
+
+  final int id;
+
+  final bool online_ordering;
+
+  final dynamic accepted_payments;
+
+  final String image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$currency = currency;
+    final l$id = id;
+    final l$online_ordering = online_ordering;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$currency,
+      l$id,
+      l$online_ordering,
+      l$accepted_payments,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$product$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details
+    on Query$get_business_order_request$business_order_request_by_pk$items$product$business$details {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details<
+          Query$get_business_order_request$business_order_request_by_pk$items$product$business$details>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details(
+    Query$get_business_order_request$business_order_request_by_pk$items$product$business$details
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$product$business$details)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details;
+
+  TRes call({
+    String? name,
+    String? currency,
+    int? id,
+    bool? online_ordering,
+    dynamic? accepted_payments,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$business$details
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$business$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? currency = _undefined,
+    Object? id = _undefined,
+    Object? online_ordering = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$business$details(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? currency,
+    int? id,
+    bool? online_ordering,
+    dynamic? accepted_payments,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$product$details {
+  Query$get_business_order_request$business_order_request_by_pk$items$product$details({
+    this.additional_parameters,
+    required this.available,
+    required this.category1,
+    required this.category2,
+    required this.name_id,
+    this.description_id,
+    required this.cost,
+    required this.tags,
+    this.description,
+    required this.id,
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$product$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$additional_parameters = json['additional_parameters'];
+    final l$available = json['available'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
+    final l$cost = json['cost'];
+    final l$tags = json['tags'];
+    final l$description = json['description'];
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$product$details(
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      available: (l$available as bool),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
+      cost: mapFromJson(l$cost),
+      tags: mapFromJson(l$tags),
+      description: l$description == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk$items$product$details$description
+              .fromJson((l$description as Map<String, dynamic>)),
+      id: (l$id as int),
+      image: l$image == null ? null : mapFromJson(l$image),
+      name:
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? additional_parameters;
+
+  final bool available;
+
+  final String category1;
+
+  final String category2;
+
+  final int name_id;
+
+  final int? description_id;
+
+  final dynamic cost;
+
+  final dynamic tags;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$details$description?
+      description;
+
+  final int id;
+
+  final dynamic? image;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$details$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$available = available;
+    _resultData['available'] = l$available;
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$additional_parameters = additional_parameters;
+    final l$available = available;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$name_id = name_id;
+    final l$description_id = description_id;
+    final l$cost = cost;
+    final l$tags = tags;
+    final l$description = description;
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$additional_parameters,
+      l$available,
+      l$category1,
+      l$category2,
+      l$name_id,
+      l$description_id,
+      l$cost,
+      l$tags,
+      l$description,
+      l$id,
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$product$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$product$details
+    on Query$get_business_order_request$business_order_request_by_pk$items$product$details {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details<
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details(
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$product$details)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details;
+
+  TRes call({
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    int? name_id,
+    int? description_id,
+    dynamic? cost,
+    dynamic? tags,
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details$description?
+        description,
+    int? id,
+    dynamic? image,
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description<
+      TRes> get description;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$details
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? additional_parameters = _undefined,
+    Object? available = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
+    Object? cost = _undefined,
+    Object? tags = _undefined,
+    Object? description = _undefined,
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details(
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        available: available == _undefined || available == null
+            ? _instance.available
+            : (available as bool),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Query$get_business_order_request$business_order_request_by_pk$items$product$details$description?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$get_business_order_request$business_order_request_by_pk$items$product$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description<
+      TRes> get description {
+    final local$description = _instance.description;
+    return local$description == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description(
+            local$description, (e) => call(description: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    int? name_id,
+    int? description_id,
+    dynamic? cost,
+    dynamic? tags,
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details$description?
+        description,
+    int? id,
+    dynamic? image,
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description<
+          TRes>
+      get description =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$product$details$description {
+  Query$get_business_order_request$business_order_request_by_pk$items$product$details$description({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$product$details$description.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$product$details$description(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$product$details$description) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description
+    on Query$get_business_order_request$business_order_request_by_pk$items$product$details$description {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description<
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$description>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description(
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details$description
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$product$details$description)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description;
+
+  TRes call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations<
+                      Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$details$description
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$description)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$description(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations<
+                          Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations {
+  Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations
+    on Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations<
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations(
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$description$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$product$details$name {
+  Query$get_business_order_request$business_order_request_by_pk$items$product$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$product$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$product$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$product$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name
+    on Query$get_business_order_request$business_order_request_by_pk$items$product$details$name {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name<
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$name>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name(
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details$name
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$product$details$name)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name;
+
+  TRes call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations<
+                      Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$details$name
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations<
+                          Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations {
+  Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations
+    on Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations<
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations(
+    Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$product$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$service {
+  Query$get_business_order_request$business_order_request_by_pk$items$service({
+    required this.id,
+    required this.business,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$service.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$business = json['business'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$service(
+      id: (l$id as int),
+      business:
+          Query$get_business_order_request$business_order_request_by_pk$items$service$business
+              .fromJson((l$business as Map<String, dynamic>)),
+      details:
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$business
+      business;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$business = business;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$business,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$service) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$service
+    on Query$get_business_order_request$business_order_request_by_pk$items$service {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service<
+          Query$get_business_order_request$business_order_request_by_pk$items$service>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service(
+    Query$get_business_order_request$business_order_request_by_pk$items$service
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$service)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service;
+
+  TRes call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$service$business?
+        business,
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business<
+      TRes> get business;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$service)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? business = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$service(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business
+                as Query$get_business_order_request$business_order_request_by_pk$items$service$business),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_business_order_request$business_order_request_by_pk$items$service$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business<
+      TRes> get business {
+    final local$business = _instance.business;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business(
+        local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$service$business?
+        business,
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business<
+          TRes>
+      get business =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details<
+          TRes>
+      get details =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$service$business {
+  Query$get_business_order_request$business_order_request_by_pk$items$service$business({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$service$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$service$business(
+      id: (l$id as int),
+      details:
+          Query$get_business_order_request$business_order_request_by_pk$items$service$business$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$business$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$service$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$service$business
+    on Query$get_business_order_request$business_order_request_by_pk$items$service$business {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business<
+          Query$get_business_order_request$business_order_request_by_pk$items$service$business>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business(
+    Query$get_business_order_request$business_order_request_by_pk$items$service$business
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$service$business)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business;
+
+  TRes call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$service$business$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$business
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$business)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_business_order_request$business_order_request_by_pk$items$service$business$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$service$business$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details<
+          TRes>
+      get details =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$service$business$details {
+  Query$get_business_order_request$business_order_request_by_pk$items$service$business$details({
+    required this.name,
+    required this.currency,
+    required this.id,
+    required this.accepted_payments,
+    required this.online_ordering,
+    required this.image,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$service$business$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$currency = json['currency'];
+    final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$online_ordering = json['online_ordering'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$service$business$details(
+      name: (l$name as String),
+      currency: (l$currency as String),
+      id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      online_ordering: (l$online_ordering as bool),
+      image: (l$image as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final String currency;
+
+  final int id;
+
+  final dynamic accepted_payments;
+
+  final bool online_ordering;
+
+  final String image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$currency = currency;
+    final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$online_ordering = online_ordering;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$currency,
+      l$id,
+      l$accepted_payments,
+      l$online_ordering,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$service$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details
+    on Query$get_business_order_request$business_order_request_by_pk$items$service$business$details {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details<
+          Query$get_business_order_request$business_order_request_by_pk$items$service$business$details>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details(
+    Query$get_business_order_request$business_order_request_by_pk$items$service$business$details
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$service$business$details)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details;
+
+  TRes call({
+    String? name,
+    String? currency,
+    int? id,
+    dynamic? accepted_payments,
+    bool? online_ordering,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$business$details
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$business$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? currency = _undefined,
+    Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? online_ordering = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$business$details(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? currency,
+    int? id,
+    dynamic? accepted_payments,
+    bool? online_ordering,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$service$details {
+  Query$get_business_order_request$business_order_request_by_pk$items$service$details({
+    this.additional_parameters,
+    required this.available,
+    required this.category1,
+    required this.name_id,
+    this.description_id,
+    required this.category2,
+    required this.cost,
+    required this.tags,
+    this.description,
+    required this.id,
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$service$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$additional_parameters = json['additional_parameters'];
+    final l$available = json['available'];
+    final l$category1 = json['category1'];
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$tags = json['tags'];
+    final l$description = json['description'];
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$service$details(
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      available: (l$available as bool),
+      category1: (l$category1 as String),
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      tags: mapFromJson(l$tags),
+      description: l$description == null
+          ? null
+          : Query$get_business_order_request$business_order_request_by_pk$items$service$details$description
+              .fromJson((l$description as Map<String, dynamic>)),
+      id: (l$id as int),
+      image: l$image == null ? null : mapFromJson(l$image),
+      name:
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? additional_parameters;
+
+  final bool available;
+
+  final String category1;
+
+  final int name_id;
+
+  final int? description_id;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic tags;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$details$description?
+      description;
+
+  final int id;
+
+  final dynamic? image;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$details$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$available = available;
+    _resultData['available'] = l$available;
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$additional_parameters = additional_parameters;
+    final l$available = available;
+    final l$category1 = category1;
+    final l$name_id = name_id;
+    final l$description_id = description_id;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$tags = tags;
+    final l$description = description;
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$additional_parameters,
+      l$available,
+      l$category1,
+      l$name_id,
+      l$description_id,
+      l$category2,
+      l$cost,
+      l$tags,
+      l$description,
+      l$id,
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$service$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$service$details
+    on Query$get_business_order_request$business_order_request_by_pk$items$service$details {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details<
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details(
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$service$details)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details;
+
+  TRes call({
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    int? name_id,
+    int? description_id,
+    String? category2,
+    dynamic? cost,
+    dynamic? tags,
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details$description?
+        description,
+    int? id,
+    dynamic? image,
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description<
+      TRes> get description;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$details
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? additional_parameters = _undefined,
+    Object? available = _undefined,
+    Object? category1 = _undefined,
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? tags = _undefined,
+    Object? description = _undefined,
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details(
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        available: available == _undefined || available == null
+            ? _instance.available
+            : (available as bool),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Query$get_business_order_request$business_order_request_by_pk$items$service$details$description?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$get_business_order_request$business_order_request_by_pk$items$service$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description<
+      TRes> get description {
+    final local$description = _instance.description;
+    return local$description == null
+        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description
+            .stub(_then(_instance))
+        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description(
+            local$description, (e) => call(description: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    int? name_id,
+    int? description_id,
+    String? category2,
+    dynamic? cost,
+    dynamic? tags,
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details$description?
+        description,
+    int? id,
+    dynamic? image,
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description<
+          TRes>
+      get description =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$service$details$description {
+  Query$get_business_order_request$business_order_request_by_pk$items$service$details$description({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$service$details$description.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$service$details$description(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$service$details$description) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description
+    on Query$get_business_order_request$business_order_request_by_pk$items$service$details$description {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description<
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$description>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description(
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details$description
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$service$details$description)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description;
+
+  TRes call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations<
+                      Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$details$description
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$description)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$description(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations<
+                          Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations {
+  Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations
+    on Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations<
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations(
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$description$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$service$details$name {
+  Query$get_business_order_request$business_order_request_by_pk$items$service$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$service$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$service$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$service$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name
+    on Query$get_business_order_request$business_order_request_by_pk$items$service$details$name {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name<
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$name>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name(
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details$name
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$service$details$name)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name;
+
+  TRes call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations<
+                      Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$details$name
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations<
+                          Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations {
+  Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations
+    on Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations<
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations(
+    Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$service$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$event {
+  Query$get_business_order_request$business_order_request_by_pk$items$event({
+    required this.id,
+    required this.business,
+    required this.details,
+    required this.schedule_type,
+    this.schedule,
+    this.starts_at,
+    this.ends_at,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$event.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$business = json['business'];
+    final l$details = json['details'];
+    final l$schedule_type = json['schedule_type'];
+    final l$schedule = json['schedule'];
+    final l$starts_at = json['starts_at'];
+    final l$ends_at = json['ends_at'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$event(
+      id: (l$id as int),
+      business:
+          Query$get_business_order_request$business_order_request_by_pk$items$event$business
+              .fromJson((l$business as Map<String, dynamic>)),
+      details:
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      schedule_type: (l$schedule_type as String),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+      starts_at: (l$starts_at as String?),
+      ends_at: (l$ends_at as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event$business
+      business;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event$details
+      details;
+
+  final String schedule_type;
+
+  final dynamic? schedule;
+
+  final String? starts_at;
+
+  final String? ends_at;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business = business;
+    _resultData['business'] = l$business.toJson();
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$schedule_type = schedule_type;
+    _resultData['schedule_type'] = l$schedule_type;
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$starts_at = starts_at;
+    _resultData['starts_at'] = l$starts_at;
+    final l$ends_at = ends_at;
+    _resultData['ends_at'] = l$ends_at;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$business = business;
+    final l$details = details;
+    final l$schedule_type = schedule_type;
+    final l$schedule = schedule;
+    final l$starts_at = starts_at;
+    final l$ends_at = ends_at;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$business,
+      l$details,
+      l$schedule_type,
+      l$schedule,
+      l$starts_at,
+      l$ends_at,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$event) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$schedule_type = schedule_type;
+    final lOther$schedule_type = other.schedule_type;
+    if (l$schedule_type != lOther$schedule_type) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$starts_at = starts_at;
+    final lOther$starts_at = other.starts_at;
+    if (l$starts_at != lOther$starts_at) {
+      return false;
+    }
+    final l$ends_at = ends_at;
+    final lOther$ends_at = other.ends_at;
+    if (l$ends_at != lOther$ends_at) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$event
+    on Query$get_business_order_request$business_order_request_by_pk$items$event {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event<
+          Query$get_business_order_request$business_order_request_by_pk$items$event>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event(
+    Query$get_business_order_request$business_order_request_by_pk$items$event
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$event)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event;
+
+  TRes call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$event$business?
+        business,
+    Query$get_business_order_request$business_order_request_by_pk$items$event$details?
+        details,
+    String? schedule_type,
+    dynamic? schedule,
+    String? starts_at,
+    String? ends_at,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business<
+      TRes> get business;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$event)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? business = _undefined,
+    Object? details = _undefined,
+    Object? schedule_type = _undefined,
+    Object? schedule = _undefined,
+    Object? starts_at = _undefined,
+    Object? ends_at = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$event(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business: business == _undefined || business == null
+            ? _instance.business
+            : (business
+                as Query$get_business_order_request$business_order_request_by_pk$items$event$business),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_business_order_request$business_order_request_by_pk$items$event$details),
+        schedule_type: schedule_type == _undefined || schedule_type == null
+            ? _instance.schedule_type
+            : (schedule_type as String),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
+        starts_at: starts_at == _undefined
+            ? _instance.starts_at
+            : (starts_at as String?),
+        ends_at:
+            ends_at == _undefined ? _instance.ends_at : (ends_at as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business<
+      TRes> get business {
+    final local$business = _instance.business;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business(
+        local$business, (e) => call(business: e));
+  }
+
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$event$business?
+        business,
+    Query$get_business_order_request$business_order_request_by_pk$items$event$details?
+        details,
+    String? schedule_type,
+    dynamic? schedule,
+    String? starts_at,
+    String? ends_at,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business<
+          TRes>
+      get business =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business
+              .stub(_res);
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details<
+          TRes>
+      get details =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$event$business {
+  Query$get_business_order_request$business_order_request_by_pk$items$event$business({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$event$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$event$business(
+      id: (l$id as int),
+      details:
+          Query$get_business_order_request$business_order_request_by_pk$items$event$business$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event$business$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$event$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$event$business
+    on Query$get_business_order_request$business_order_request_by_pk$items$event$business {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business<
+          Query$get_business_order_request$business_order_request_by_pk$items$event$business>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business(
+    Query$get_business_order_request$business_order_request_by_pk$items$event$business
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$event$business)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business;
+
+  TRes call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$event$business$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event$business
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$event$business)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$event$business(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$get_business_order_request$business_order_request_by_pk$items$event$business$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$event$business$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details<
+          TRes>
+      get details =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$event$business$details {
+  Query$get_business_order_request$business_order_request_by_pk$items$event$business$details({
+    required this.name,
+    required this.currency,
+    required this.id,
+    required this.accepted_payments,
+    required this.online_ordering,
+    required this.image,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$event$business$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$currency = json['currency'];
+    final l$id = json['id'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$online_ordering = json['online_ordering'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$event$business$details(
+      name: (l$name as String),
+      currency: (l$currency as String),
+      id: (l$id as int),
+      accepted_payments: mapFromJson(l$accepted_payments),
+      online_ordering: (l$online_ordering as bool),
+      image: (l$image as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final String currency;
+
+  final int id;
+
+  final dynamic accepted_payments;
+
+  final bool online_ordering;
+
+  final String image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$currency = currency;
+    _resultData['currency'] = l$currency;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$online_ordering = online_ordering;
+    _resultData['online_ordering'] = l$online_ordering;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$currency = currency;
+    final l$id = id;
+    final l$accepted_payments = accepted_payments;
+    final l$online_ordering = online_ordering;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$currency,
+      l$id,
+      l$accepted_payments,
+      l$online_ordering,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$event$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$currency = currency;
+    final lOther$currency = other.currency;
+    if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$online_ordering = online_ordering;
+    final lOther$online_ordering = other.online_ordering;
+    if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details
+    on Query$get_business_order_request$business_order_request_by_pk$items$event$business$details {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details<
+          Query$get_business_order_request$business_order_request_by_pk$items$event$business$details>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details(
+    Query$get_business_order_request$business_order_request_by_pk$items$event$business$details
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$event$business$details)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details;
+
+  TRes call({
+    String? name,
+    String? currency,
+    int? id,
+    dynamic? accepted_payments,
+    bool? online_ordering,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event$business$details
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$event$business$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? currency = _undefined,
+    Object? id = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? online_ordering = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$event$business$details(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        currency: currency == _undefined || currency == null
+            ? _instance.currency
+            : (currency as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
+        online_ordering:
+            online_ordering == _undefined || online_ordering == null
+                ? _instance.online_ordering
+                : (online_ordering as bool),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? currency,
+    int? id,
+    dynamic? accepted_payments,
+    bool? online_ordering,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$event$details {
+  Query$get_business_order_request$business_order_request_by_pk$items$event$details({
+    required this.name_id,
+    this.description_id,
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.available,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$event$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name_id = json['name_id'];
+    final l$description_id = json['description_id'];
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$available = json['available'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$event$details(
+      name_id: (l$name_id as int),
+      description_id: (l$description_id as int?),
+      id: (l$id as int),
+      name:
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      available: (l$available as bool),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int name_id;
+
+  final int? description_id;
+
+  final int id;
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final bool available;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$available = available;
+    _resultData['available'] = l$available;
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name_id = name_id;
+    final l$description_id = description_id;
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$available = available;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name_id,
+      l$description_id,
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$available,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$event$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$available = available;
+    final lOther$available = other.available;
+    if (l$available != lOther$available) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$event$details
+    on Query$get_business_order_request$business_order_request_by_pk$items$event$details {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details<
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details(
+    Query$get_business_order_request$business_order_request_by_pk$items$event$details
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$event$details)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details;
+
+  TRes call({
+    int? name_id,
+    int? description_id,
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$event$details$name?
+        name,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event$details
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name_id = _undefined,
+    Object? description_id = _undefined,
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? available = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details(
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$get_business_order_request$business_order_request_by_pk$items$event$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        available: available == _undefined || available == null
+            ? _instance.available
+            : (available as bool),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? name_id,
+    int? description_id,
+    int? id,
+    Query$get_business_order_request$business_order_request_by_pk$items$event$details$name?
+        name,
+    dynamic? additional_parameters,
+    bool? available,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name
+              .stub(_res);
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$event$details$name {
+  Query$get_business_order_request$business_order_request_by_pk$items$event$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$event$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$event$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$event$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name
+    on Query$get_business_order_request$business_order_request_by_pk$items$event$details$name {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name<
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details$name>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name(
+    Query$get_business_order_request$business_order_request_by_pk$items$event$details$name
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$event$details$name)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name;
+
+  TRes call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations<
+                      Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event$details$name
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations<
+                          Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations {
+  Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations
+    on Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations {
+  CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations<
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations(
+    Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations
+        instance,
+    TRes Function(
+            Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations;
+
+  factory CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_business_order_request$business_order_request_by_pk$items$event$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Mutation$update_product_item_count {
   factory Variables$Mutation$update_product_item_count({
     required int id,
