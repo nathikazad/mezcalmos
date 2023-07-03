@@ -170,7 +170,7 @@ function notifyAdmins(mezAdmins: MezAdmin[], orderId: number, restaurant: Servic
     linkUrl: orderUrl(OrderType.Restaurant, orderId)
   }
   mezAdmins.forEach((m) => {
-      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
   });
 }
 
@@ -203,7 +203,7 @@ function notifyOperators(orderId: number, restaurant: ServiceProvider) {
   if(restaurant.operators != undefined) {
     restaurant.operators.forEach((r) => {
       if(r.user) {
-        pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+        pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator, r.user.language);
       }
     });
   }

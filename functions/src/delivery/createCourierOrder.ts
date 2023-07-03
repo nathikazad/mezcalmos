@@ -103,6 +103,6 @@ function notifyAdmins(mezAdmins: MezAdmin[], orderId: number) {
         linkUrl: orderUrl(OrderType.Courier, orderId)
     }
     mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
 }

@@ -118,10 +118,10 @@ function notify(mezAdmins: MezAdmin[], businessOperators: Operator[], order: Bus
         linkUrl: orderUrl(OrderType.Business, order.orderId)
     };
     mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
     businessOperators.forEach((r) => {
-        pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.BusinessOperator);
+        pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.BusinessOperator, r.user?.language);
     });
 }
   
