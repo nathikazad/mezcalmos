@@ -62,6 +62,10 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
                 operator_details: {
                     status: true,
                     online: true,
+                    notification_info: {
+                        token: true,
+                        turn_off_notifications: true
+                    }
                 },
                 user: {
                     firebase_id: true,
@@ -85,6 +89,10 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
                 id: o.user_id,
                 firebaseId: o.user.firebase_id,
                 language: o.user.language_id as Language
+            },
+            notificationInfo: {
+                token: o.operator_details.notification_info.token,
+                turnOffNotifications: o.operator_details.notification_info.turn_off_notifications
             }
         }
     })

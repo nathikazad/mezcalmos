@@ -131,7 +131,7 @@ async function notify(order: BusinessOrder, business: Business, mezAdmins: MezAd
     });
     if(business.details.operators != undefined) {
         business.details.operators.forEach((l) => {
-          if(l.user) {
+          if(l.user && l.notificationInfo?.turnOffNotifications == false) {
             pushNotification(l.user.firebaseId, notification, l.notificationInfo, ParticipantType.BusinessOperator);
           }
         });

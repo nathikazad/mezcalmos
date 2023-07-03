@@ -212,6 +212,7 @@ select_permissions:
         - last_active_time
         - location_id
         - name
+        - online_ordering
         - open_status
         - phone_number
         - schedule

@@ -161,7 +161,7 @@ async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider,
     });
     if(laundryStore.operators != undefined) {
         laundryStore.operators.forEach((l) => {
-          if(l.user) {
+          if(l.user && l.notificationInfo?.turnOffNotifications == false) {
             pushNotification(l.user.firebaseId, notification, l.notificationInfo, ParticipantType.LaundryOperator);
           }
         });
