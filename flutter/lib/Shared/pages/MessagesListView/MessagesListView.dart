@@ -126,120 +126,117 @@ class _MessagesListViewState extends State<MessagesListView> {
             ),
           );
         }
-        return SingleChildScrollView(
+        return ListView(
+          controller: viewcontroller.scrollController,
+          physics: AlwaysScrollableScrollPhysics(),
           padding: EdgeInsets.all(10),
-          child: Column(
-            children: List.generate(
-              viewcontroller.allChats.length,
-              (int index) {
-                /// This is special case
-                /// This condition means user has created the chat
-                /// but did not send any message. In that case,
-                /// we just skip the message list card to being build
-                if (viewcontroller.allChats[index].lastMessage == null) {
-                  return SizedBox.shrink();
-                }
-                return MezCard(
-                  margin: EdgeInsets.only(bottom: 10),
-                  contentPadding: EdgeInsets.symmetric(vertical: 15),
-                  elevation: 0,
-                  onClick: () {
-                    if (Get.find<AuthController>().user == null) {
-                      SignInView.navigateAtOrderTime();
-                    } else {
-                      viewcontroller.navigateToChatScreen(
-                        chatid: viewcontroller.allChats[index].id,
-                      );
-                    }
-                  },
-                  content: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 16.5.mezSp,
-                        backgroundImage: NetworkImage(
-                          viewcontroller.allChats[index].chatInfo.chatImg,
-                        ),
+          children: List.generate(
+            viewcontroller.allChats.length,
+            (int index) {
+              /// This is special case
+              /// This condition means user has created the chat
+              /// but did not send any message. In that case,
+              /// we just skip the message list card to being build
+              if (viewcontroller.allChats[index].lastMessage == null) {
+                return SizedBox.shrink();
+              }
+              return MezCard(
+                margin: EdgeInsets.only(bottom: 10),
+                contentPadding: EdgeInsets.symmetric(vertical: 15),
+                elevation: 0,
+                onClick: () {
+                  if (Get.find<AuthController>().user == null) {
+                    SignInView.navigateAtOrderTime();
+                  } else {
+                    viewcontroller.navigateToChatScreen(
+                      chatid: viewcontroller.allChats[index].id,
+                    );
+                  }
+                },
+                content: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 16.5.mezSp,
+                      backgroundImage: NetworkImage(
+                        viewcontroller.allChats[index].chatInfo.chatImg,
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    viewcontroller
-                                        .allChats[index].chatInfo.chatTite,
-                                    style: context.textTheme.bodyLarge,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    viewcontroller.allChats[index].lastMessage!
-                                            .timestamp.isToday
-                                        ? viewcontroller.allChats[index]
-                                            .lastMessage!.timestamp
-                                            .timeAgo()
-                                        : viewcontroller.allChats[index]
-                                            .lastMessage!.timestamp
-                                            .getOrderTime(),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Obx(
-                                    () => Expanded(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 4.0),
-                                        child: Text(
-                                          viewcontroller.allChats[index]
-                                              .lastMessage!.message,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  viewcontroller
+                                      .allChats[index].chatInfo.chatTite,
+                                  style: context.textTheme.bodyLarge,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  viewcontroller.allChats[index].lastMessage!
+                                          .timestamp.isToday
+                                      ? viewcontroller.allChats[index]
+                                          .lastMessage!.timestamp
+                                          .timeAgo()
+                                      : viewcontroller.allChats[index]
+                                          .lastMessage!.timestamp
+                                          .getOrderTime(),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Obx(
+                                  () => Expanded(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 4.0),
+                                      child: Text(
+                                        viewcontroller.allChats[index]
+                                            .lastMessage!.message,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ),
-                                  Get.find<ForegroundNotificationsController>()
-                                          .hasNewMessageNotification(
-                                              viewcontroller.allChats[index].id)
-                                      ? Padding(
-                                          padding: const EdgeInsets.only(
-                                            right: 2.0,
-                                            top: 4.0,
-                                          ),
-                                          child: CircleAvatar(
-                                            radius: 8,
-                                            backgroundColor: Colors.red,
-                                            child: Text(
-                                              // TODO: How to get length of new message
-                                              "",
-                                              style: context
-                                                  .textTheme.labelSmall!
-                                                  .copyWith(
-                                                color: Colors.white,
-                                              ),
+                                ),
+                                Get.find<ForegroundNotificationsController>()
+                                        .hasNewMessageNotification(
+                                            viewcontroller.allChats[index].id)
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 2.0,
+                                          top: 4.0,
+                                        ),
+                                        child: CircleAvatar(
+                                          radius: 8,
+                                          backgroundColor: Colors.red,
+                                          child: Text(
+                                            // TODO: How to get length of new message
+                                            "",
+                                            style: context.textTheme.labelSmall!
+                                                .copyWith(
+                                              color: Colors.white,
                                             ),
                                           ),
-                                        )
-                                      : SizedBox.shrink(),
-                                ],
-                              ),
-                            ],
-                          ),
+                                        ),
+                                      )
+                                    : SizedBox.shrink(),
+                              ],
+                            ),
+                          ],
                         ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
           ),
         );
       }),

@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/pages/MessagesListView/models/ChatListVars.dart';
 import 'package:mezcalmos/env.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -276,7 +275,7 @@ Future<List<HasuraChat>> get_service_provider_chats({
   }
 }
 
-Stream<List<ChatListVars>?> listen_on_service_provider_chats({
+Stream<List<Message>?> listen_on_service_provider_chats({
   required int serviceId,
   required ServiceProviderType serviceType,
   bool withCache = true,
@@ -293,25 +292,29 @@ Stream<List<ChatListVars>?> listen_on_service_provider_chats({
                       service_id: serviceId,
                       service_provider_type:
                           serviceType.toFirebaseFormatString())))
-      .map<List<ChatListVars>?>(
+      .map<List<Message>?>(
           (QueryResult<Subscription$listen_on_service_provider_chats> event) {
     if (event.hasException) {
       throwError(event.exception);
     }
     if (event.parsedData?.service_provider_customer_chat != null) {
       return event.parsedData!.service_provider_customer_chat
-          .map<ChatListVars>(
+          .map<Message>(
               (Subscription$listen_on_service_provider_chats$service_provider_customer_chat
                       e) =>
-                  ChatListVars(
-                      chatId: e.chat.id, lastMessage: e.chat.last_message))
+                  Message(
+                    message: e.chat.last_message['message'],
+                    timestamp: DateTime.parse(e.chat.last_message['timestamp'])
+                        .toLocal(),
+                    userId: e.chat.last_message['userId'],
+                  ))
           .toList();
     }
     return null;
   });
 }
 
-Stream<List<ChatListVars>?> listen_on_customer_chats({
+Stream<List<Message>?> listen_on_customer_chats({
   required int customerId,
   bool withCache = true,
   int limit = 10,
@@ -322,18 +325,22 @@ Stream<List<ChatListVars>?> listen_on_customer_chats({
           Options$Subscription$listen_on_customer_chats(
               variables: Variables$Subscription$listen_on_customer_chats(
                   limit: limit, offset: offset, customer_id: customerId)))
-      .map<List<ChatListVars>?>(
+      .map<List<Message>?>(
           (QueryResult<Subscription$listen_on_customer_chats> event) {
     if (event.hasException) {
       throwError(event.exception);
     }
     if (event.parsedData?.service_provider_customer_chat != null) {
       return event.parsedData!.service_provider_customer_chat
-          .map<ChatListVars>(
+          .map<Message>(
               (Subscription$listen_on_customer_chats$service_provider_customer_chat
                       e) =>
-                  ChatListVars(
-                      chatId: e.chat.id, lastMessage: e.chat.last_message))
+                  Message(
+                    message: e.chat.last_message['message'],
+                    timestamp: DateTime.parse(e.chat.last_message['timestamp'])
+                        .toLocal(),
+                    userId: e.chat.last_message['userId'],
+                  ))
           .toList();
     }
     return null;

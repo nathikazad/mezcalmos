@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
-import 'package:mezcalmos/Shared/pages/MessagesListView/models/ChatListVars.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
@@ -29,7 +28,7 @@ abstract class MessagesListViewController {
   bool _hasReachedEndData = false;
   bool isFetching = false;
   // streams //
-  StreamSubscription<List<ChatListVars>?>? chatsStream;
+  StreamSubscription<List<Message>?>? chatsStream;
   String? subscriptionId;
   void init() {
     MezRouter.registerReturnToViewCallback(
@@ -63,16 +62,12 @@ abstract class MessagesListViewController {
 class CustMessagesListViewController extends MessagesListViewController {
   @override
   Future<void> getMessages() async {
-    mezDbgPrint("Getting busines messages ....");
-
-    if (isLoading.isTrue || _hasReachedEndData) {
-      mezDbgPrint(
-          " cancelled isloading : ${isLoading.isTrue} or endData : $_hasReachedEndData");
+    if (isFetching || _hasReachedEndData) {
       return;
     }
 
     try {
-      isLoading.value = true;
+      isFetching = true;
       mezDbgPrint("Fetching new chats with offset $offset");
       final List<HasuraChat> chatData = await get_customer_chats(
           customerId: _authController.hasuraUserId!,
@@ -85,10 +80,10 @@ class CustMessagesListViewController extends MessagesListViewController {
         _hasReachedEndData = true;
       }
       offset += fetchSize;
-      isLoading.value = false;
     } catch (e) {
+      mezDbgPrint(e);
     } finally {
-      isLoading.value = false;
+      isFetching = false;
     }
   }
 
@@ -144,18 +139,23 @@ class CustMessagesListViewController extends MessagesListViewController {
   @override
   void listenOnChats() {
     subscriptionId = _hasuraDb.createSubscription(start: () {
-      chatsStream =
-          listen_on_customer_chats(customerId: _authController.user!.hasuraId)
-              .listen((List<ChatListVars>? event) {
+      chatsStream = listen_on_customer_chats(
+              customerId: _authController.user!.hasuraId,
+              withCache: false,
+              limit: _allChats.length,
+              offset: 0)
+          .listen((List<Message>? event) {
         if (event != null) {
-          event.forEach((ChatListVars element) {
+          event.forEach((Message element) {
             final HasuraChat? chat = _allChats.value.firstWhereOrNull(
-                (HasuraChat element2) => element2.id == element.chatId);
-            if (chat != null) {
-              mezDbgPrint("Updating last message ${element.lastMessage}");
-              chat.lastMessage?.message = element.lastMessage;
+                (HasuraChat element2) =>
+                    element2.lastMessage?.userId == element.userId);
+            if (chat != null && chat.lastMessage?.message != element.message) {
+              mezDbgPrint("Updating last message ${element.message}");
+              chat.lastMessage = element;
             }
           });
+          _allChats.refresh();
         }
       });
     }, cancel: () {
@@ -241,16 +241,12 @@ class ServiceProviderMessagesListViewController
 
   @override
   Future<void> getMessages() async {
-    mezDbgPrint("Getting busines messages ....");
-
-    if (isLoading.isTrue || _hasReachedEndData) {
-      mezDbgPrint(
-          " cancelled isloading : ${isLoading.isTrue} or endData : $_hasReachedEndData");
+    if (isFetching || _hasReachedEndData) {
       return;
     }
 
     try {
-      isLoading.value = true;
+      isFetching = true;
       mezDbgPrint("Fetching new chats with offset $offset");
       final List<HasuraChat> chatData = await get_service_provider_chats(
           serviceId: serviceId,
@@ -264,10 +260,9 @@ class ServiceProviderMessagesListViewController
         _hasReachedEndData = true;
       }
       offset += fetchSize;
-      isLoading.value = false;
     } catch (e) {
     } finally {
-      isLoading.value = false;
+      isFetching = false;
     }
     // todo
   }
@@ -276,18 +271,24 @@ class ServiceProviderMessagesListViewController
   void listenOnChats() {
     subscriptionId = _hasuraDb.createSubscription(start: () {
       chatsStream = listen_on_service_provider_chats(
-              serviceId: serviceId, serviceType: type)
-          .listen((List<ChatListVars>? event) {
+              serviceId: serviceId,
+              serviceType: type,
+              withCache: false,
+              limit: _allChats.length,
+              offset: 0)
+          .listen((List<Message>? event) {
         if (event != null) {
           // update all the chats list last message with one coming from event
-          event.forEach((ChatListVars element) {
+          event.forEach((Message element) {
             final HasuraChat? chat = _allChats.value.firstWhereOrNull(
-                (HasuraChat element2) => element2.id == element.chatId);
-            if (chat != null) {
-              mezDbgPrint("Updating last message ${element.lastMessage}");
-              chat.lastMessage?.message = element.lastMessage;
+                (HasuraChat element2) =>
+                    element2.lastMessage?.userId == element.userId);
+            if (chat != null && chat.lastMessage?.message != element.message) {
+              mezDbgPrint("Updating last message ${element.message}");
+              chat.lastMessage = element;
             }
           });
+          _allChats.refresh();
         }
       });
     }, cancel: () {

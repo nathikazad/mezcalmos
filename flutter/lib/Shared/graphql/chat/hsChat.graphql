@@ -51,7 +51,7 @@ subscription listen_on_customer_chats($customer_id: Int, $limit: Int, $offset: I
     service_provider_id
     chat {
       id
-     
+    
       last_message
      
     }
@@ -82,6 +82,7 @@ subscription listen_on_service_provider_chats($service_id: Int, $service_provide
     chat {
       id
       last_message
+   
       
     }
   }
