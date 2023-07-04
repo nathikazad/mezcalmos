@@ -408,7 +408,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.only(right: 5),
+        padding: const EdgeInsets.only(right: 10),
         child: CircleAvatar(
           radius: 14,
           backgroundColor: Color(0xFF60D669),
