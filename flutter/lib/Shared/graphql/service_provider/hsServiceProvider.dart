@@ -171,6 +171,7 @@ Future<ServiceInfo?> get_service_info(
           : null,
       location:
           MezLocation.fromHasura(data.location.gps, data.location.address),
+      locationId: data.location.id,
       hasuraId: serviceId,
       image: data.image,
       name: data.name,

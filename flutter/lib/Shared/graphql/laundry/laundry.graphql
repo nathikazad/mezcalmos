@@ -25,6 +25,7 @@ query getLaundries($from: geography!, $distance: Float!, $limit: Int, $offset: I
     }
     delivery_details_of_deliverer {
       cost_per_km
+      cost_per_km_from_base
       free_delivery_km_range
       self_delivery
       free_delivery_minimum_cost
@@ -101,6 +102,7 @@ query getLaundryStoreById($id: Int!) {
     }
     delivery_details_of_deliverer {
       cost_per_km
+      cost_per_km_from_base
       free_delivery_km_range
       free_delivery_minimum_cost
       id
@@ -183,6 +185,7 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
     delivery_details_id
     delivery_details_of_deliverer {
       cost_per_km
+      cost_per_km_from_base
       free_delivery_km_range
       free_delivery_minimum_cost
       id

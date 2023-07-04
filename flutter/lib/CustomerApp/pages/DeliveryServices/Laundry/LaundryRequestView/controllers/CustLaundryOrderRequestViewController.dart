@@ -87,7 +87,8 @@ class CustLaundryOrderRequestViewController {
         mezDbgPrint("🤣  ${routeInfo.distance.distanceInMeters}");
         if (_orderDistanceInKm <= 15) {
           final num _shippingCost =
-              deliveryCost!.costPerKm * (_orderDistanceInKm);
+              (deliveryCost!.costPerKm * (_orderDistanceInKm)) +
+                  getShippingCostFromBase();
           mezDbgPrint(
               "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
           if (_shippingCost < deliveryCost!.minimumCost) {
@@ -122,6 +123,22 @@ class CustLaundryOrderRequestViewController {
 
       return true;
     }
+  }
+
+  double getShippingCostFromBase() {
+    mezDbgPrint(
+        "Gett shipping cost from base =====>${deliveryCost?.costPerKmFromBase}");
+    double result = 0;
+    if (deliveryCost?.costPerKmFromBase != null) {
+      final double dist = MapHelper.calculateDistance(
+          MapHelper.alitasLoc.toLocationData(),
+          laundry.value!.info.location.toLocationData());
+      mezDbgPrint("distance from base ========>$dist");
+      final double cost = dist * deliveryCost!.costPerKmFromBase!;
+      result = cost;
+    }
+    mezDbgPrint("shipping cost from base ==========>$result");
+    return result;
   }
 
   LaundryRequest _constructLaundryRequest(MapHelper.Route route) {
