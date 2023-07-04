@@ -2474,6 +2474,12 @@
         "businessId": "Identificación del negocio",
         "onlySevenDays": "Puede cambiar su identificación solo una vez cada 7 días.",
         "cancel": "Cancelar",
+        "copyLink": "Copiar link",
+        "whatsapp": "WhatsApp",
+        "status": "Estado",
+        "instagram": "Instagram",
+        "story": "Historia",
+        "facebook": "Facebook",
         "save": "Ahorrar"
       },
       "CreateServiceView": {

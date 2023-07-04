@@ -133,6 +133,7 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
                       MinimumBusinessItem element2) =>
                   element2.time.compareTo(element1.time),
               physics: NeverScrollableScrollPhysics(),
+              reverse: true,
               groupHeaderBuilder: (MinimumBusinessItem element) {
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 8),

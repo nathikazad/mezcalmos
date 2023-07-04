@@ -24,6 +24,7 @@ import 'package:mezcalmos/env.dart';
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
+import 'package:social_share/social_share.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
@@ -424,31 +425,36 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
   }
 
   void _showQrPdfModal() {
+    Future<File?> getFilePath() async {
+      final String fileName = "business_flyer_${DateTime.now()}.pdf";
+      // Get the application documents directory
+      File? file;
+      if (Platform.isIOS) {
+        final Directory dir = await getApplicationDocumentsDirectory();
+        file = File('${dir.path}/$fileName');
+      } else if (Platform.isAndroid) {
+        final Map<Permission, PermissionStatus> statuses = await [
+          Permission.storage,
+          Permission.manageExternalStorage,
+        ].request();
+
+        var storage = statuses[Permission.storage];
+        var manageExternalStorage = statuses[Permission.manageExternalStorage];
+        if (storage!.isGranted || manageExternalStorage!.isGranted) {
+          final String downloadsFolderPath = '/storage/emulated/0/Download';
+          final Directory dir = Directory(downloadsFolderPath);
+          file = File('${dir.path}/$fileName');
+        }
+      }
+      return file;
+    }
+
     Future<void> downloadPdfFromLink(String url) async {
       try {
-        final String fileName = "business_flyer_${DateTime.now()}.pdf";
-        // Get the application documents directory
-        File? file;
         if (kIsWeb) {
           return;
-        } else if (Platform.isIOS) {
-          final Directory dir = await getApplicationDocumentsDirectory();
-          file = File('${dir.path}/$fileName');
-        } else if (Platform.isAndroid) {
-          final Map<Permission, PermissionStatus> statuses = await [
-            Permission.storage,
-            Permission.manageExternalStorage,
-          ].request();
-
-          var storage = statuses[Permission.storage];
-          var manageExternalStorage =
-              statuses[Permission.manageExternalStorage];
-          if (storage!.isGranted || manageExternalStorage!.isGranted) {
-            final String downloadsFolderPath = '/storage/emulated/0/Download';
-            final Directory dir = Directory(downloadsFolderPath);
-            file = File('${dir.path}/$fileName');
-          }
         }
+        final File? file = await getFilePath();
         final String filePath = file!.path;
 
         // Download the PDF file
@@ -465,8 +471,55 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
       }
     }
 
+    Future<void> shareToSocial(ShareType type) async {
+      String filePath = "";
+      try {
+        final File? file = await getFilePath();
+        filePath = file!.path;
+        final http.Response response = await http.get(Uri.parse(
+            _viewController.serviceLink!.customerFlyerLinks![Language.EN]!));
+
+        // Save the file to the specified path
+        // File file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+      } catch (e) {
+        print(e);
+      }
+      switch (type) {
+        case ShareType.CopyLink:
+          final String text =
+              _viewController.serviceLink!.customerDeepLink.toString();
+          Clipboard.setData(ClipboardData(text: text)).then(
+              (value) => showSavedSnackBar(title: "Copied", subtitle: text));
+          return;
+        case ShareType.WhatsApp:
+          await SocialShare.shareWhatsapp("content");
+          return;
+        case ShareType.WhatsAppStatus:
+          await SocialShare.shareWhatsapp("content");
+          return;
+        case ShareType.Instagram:
+          await SocialShare.shareInstagramStory(
+              appId: "content", imagePath: filePath);
+          return;
+        case ShareType.InstagramStory:
+          await SocialShare.shareInstagramStory(
+              appId: "content", imagePath: filePath);
+          return;
+        case ShareType.Facebook:
+          await SocialShare.shareFacebookStory(
+              appId: "content", imagePath: filePath);
+          return;
+        case ShareType.FacebookStory:
+          await SocialShare.shareFacebookStory(
+              appId: "content", imagePath: filePath);
+          return;
+      }
+    }
+
     showModalBottomSheet<void>(
       context: context,
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
         topLeft: Radius.circular(15),
@@ -528,6 +581,50 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                 ],
               ),
               SizedBox(height: 10),
+              SizedBox(
+                height: 40.sp,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: 7,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: GestureDetector(
+                        onTap: () {
+                          shareToSocial(
+                            _viewController.shareIconData[index].type,
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 2.0),
+                              child: SizedBox(
+                                height: 40,
+                                width: 40,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  radius: 40,
+                                  backgroundImage: AssetImage(
+                                    _viewController.shareIconData[index].icon,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "${_i18n()[_viewController.shareIconData[index].label]}",
+                              style: context.textTheme.labelSmall!.copyWith(
+                                letterSpacing: 0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
               Row(
                 children: [
                   Expanded(

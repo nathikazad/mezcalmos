@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_partner/hsDeliveryPartner.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
@@ -15,6 +15,8 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
+
+import 'package:flutter/material.dart';
 
 class ServiceProfileController extends GetxController {
   // constants //
@@ -37,6 +39,44 @@ class ServiceProfileController extends GetxController {
       service.serviceProviderType == cm.ServiceProviderType.Business;
 
   bool get isAvailable => _service.value!.state.isOpen;
+
+  final List<SocialShareData> shareIconData = [
+    SocialShareData(
+      icon: copyLinkAsset,
+      label: "copyLink",
+      type: ShareType.CopyLink,
+    ),
+    SocialShareData(
+      icon: whatsappAsset,
+      label: "whatsapp",
+      type: ShareType.WhatsApp,
+    ),
+    SocialShareData(
+      icon: whatsappStatusAsset,
+      label: "status",
+      type: ShareType.WhatsAppStatus,
+    ),
+    SocialShareData(
+      icon: instaAsset,
+      label: "instagram",
+      type: ShareType.Instagram,
+    ),
+    SocialShareData(
+      icon: instaStoryAsset,
+      label: "story",
+      type: ShareType.InstagramStory,
+    ),
+    SocialShareData(
+      icon: facebookAsset,
+      label: "facebook",
+      type: ShareType.Facebook,
+    ),
+    SocialShareData(
+      icon: facebookStoryAsset,
+      label: "story",
+      type: ShareType.FacebookStory,
+    ),
+  ];
 
   @override
   void onInit() {
@@ -155,4 +195,25 @@ class ServiceProfileController extends GetxController {
           controllerType: service.serviceProviderType!);
     }
   }
+}
+
+enum ShareType {
+  CopyLink,
+  WhatsApp,
+  WhatsAppStatus,
+  Instagram,
+  InstagramStory,
+  Facebook,
+  FacebookStory,
+}
+
+class SocialShareData {
+  String icon;
+  String label;
+  ShareType type;
+  SocialShareData({
+    required this.icon,
+    required this.label,
+    required this.type,
+  });
 }
