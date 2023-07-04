@@ -81,6 +81,17 @@ class CustBusinessRoutes {
   static String custLocallyMadeWrapperRoute = "/locallyMadeWrapper";
   static String custFoodWrapperRoute = "/food";
 
+  static final List<QRoute> sharedWitAdminRoutes = [
+    QRoute(
+      name: custOrderViewRoute,
+      path: custOrderViewRoute,
+      builder: () => custOrderView.CustOrderView(),
+      middleware: <QMiddleware>[
+        DefferedLoader(custOrderView.loadLibrary),
+      ],
+    ),
+  ];
+
   final List<QRoute> routes = [
     QRoute(
         name: custServiceRoute,

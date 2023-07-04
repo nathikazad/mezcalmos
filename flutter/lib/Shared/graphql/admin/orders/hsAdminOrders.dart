@@ -304,3 +304,82 @@ Future<List<MinimalOrder>?> get_admin_service__orders({
         "🚨 Getting min orders exceptions \n ${queryResult.exception}");
   }
 }
+
+Stream<List<MinimalOrder>?> listen_on_admin_business_orders({
+  required bool inProcess,
+}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$admin_listen_on_business_orders(
+    Options$Subscription$admin_listen_on_business_orders(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Subscription$admin_listen_on_business_orders(
+        inProccess: inProcess,
+      ),
+    ),
+  )
+      .map<List<MinimalOrder>?>(
+          (QueryResult<Subscription$admin_listen_on_business_orders> event) {
+    final List<
+            Subscription$admin_listen_on_business_orders$business_order_request>?
+        ordersData = event.parsedData?.business_order_request;
+    if (ordersData != null) {
+      final List<MinimalOrder> orders = ordersData.map(
+          (Subscription$admin_listen_on_business_orders$business_order_request
+              orderData) {
+        return MinimalOrder(
+            id: orderData.id,
+            toAdress: null,
+            orderType: OrderType.Business,
+            serviceProviderId: orderData.business_id,
+            serviceProviderType: ServiceProviderType.Business,
+            orderTime: DateTime.parse(orderData.order_time),
+            title: orderData.customer.user.name!,
+            image: orderData.customer.user.image,
+            status:
+                orderData.status.toBusinessOrderRequestStatus().toMinimalOrderStatus(),
+            totalCost: orderData.cost!);
+      }).toList();
+      return orders;
+    }
+    return null;
+  });
+}
+
+Future<List<MinimalOrder>?> get_admin_business_orders(
+    {required bool inProcess,
+    bool withCache = true,
+    int? offset,
+    int? limit}) async {
+  final QueryResult<Query$admin_get_business_orders> queryResult =
+      await _hasuraDb.graphQLClient.query$admin_get_business_orders(
+          Options$Query$admin_get_business_orders(
+              fetchPolicy:
+                  withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+              variables: Variables$Query$admin_get_business_orders(
+                  inProccess: inProcess, offset: offset, limit: limit)));
+
+  if (queryResult.parsedData?.business_order_request != null) {
+    final List<Query$admin_get_business_orders$business_order_request>
+        ordersData = queryResult.parsedData!.business_order_request;
+
+    final List<MinimalOrder> orders = ordersData.map(
+        (Query$admin_get_business_orders$business_order_request orderData) {
+      return MinimalOrder(
+          id: orderData.id,
+          toAdress: null,
+          orderType: OrderType.Business,
+          serviceProviderId: orderData.business_id,
+          serviceProviderType: ServiceProviderType.Business,
+          orderTime: DateTime.parse(orderData.order_time),
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
+          status:
+              orderData.status.toBusinessOrderRequestStatus().toMinimalOrderStatus(),
+          totalCost: orderData.cost!);
+    }).toList();
+    return orders;
+  } else {
+    throw Exception(
+        "🚨 Getting min orders exceptions \n ${queryResult.exception}");
+  }
+}

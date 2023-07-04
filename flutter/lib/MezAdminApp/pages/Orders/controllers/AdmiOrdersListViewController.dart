@@ -24,14 +24,18 @@ class AdmiOrdersListViewController {
   int laundryOffset = 0;
   RxList<MinimalOrder> dvPastOrders = RxList.empty();
   int dvOffset = 0;
+  RxList<MinimalOrder> businessPastOrders = RxList.empty();
+  int businessOffset = 0;
   int fetchSize = 10;
   Rxn<List<MinimalOrder>> deliveryOrders = Rxn();
   Rxn<List<MinimalOrder>> laundryOrders = Rxn();
+  Rxn<List<MinimalOrder>> businessOrders = Rxn();
   RxBool isFetching = RxBool(false);
   // streams
   StreamSubscription<List<MinimalOrder>?>? rOrdersStream;
   StreamSubscription<List<MinimalOrder>?>? dvOrdersStream;
   StreamSubscription<List<MinimalOrder>?>? laundryOrderStream;
+  StreamSubscription<List<MinimalOrder>?>? businessOrderStream;
   String? subscriptionId;
 
 // getters //
@@ -43,7 +47,8 @@ class AdmiOrdersListViewController {
         return laundryPastOrders;
       case ServiceProviderType.DeliveryCompany:
         return dvPastOrders;
-
+      case ServiceProviderType.Business:
+        return businessPastOrders;
       default:
         return [];
     }
@@ -66,6 +71,8 @@ class AdmiOrdersListViewController {
         await get_admin_dv_orders(inProcess: true, withCache: false);
     laundryOrders.value =
         await get_admin_laundry_orders(inProcess: true, withCache: false);
+    businessOrders.value =
+        await get_admin_business_orders(inProcess: true, withCache: false);
 
     subscriptionId = hasuraDb.createSubscription(start: () {
       rOrdersStream = listen_on_admin_restaurant_orders(inProcess: true)
@@ -95,6 +102,15 @@ class AdmiOrdersListViewController {
           laundryOrders.refresh();
         }
       });
+      businessOrderStream = listen_on_admin_business_orders(inProcess: true)
+          .listen((List<MinimalOrder>? event) {
+        if (event != null) {
+          businessOrders.value?.clear();
+          businessOrders.value?.addAll(event);
+
+          businessOrders.refresh();
+        }
+      });
     }, cancel: () {
       dvOrdersStream?.cancel();
       dvOrdersStream = null;
@@ -102,6 +118,8 @@ class AdmiOrdersListViewController {
       rOrdersStream = null;
       laundryOrderStream?.cancel();
       laundryOrderStream = null;
+      businessOrderStream?.cancel();
+      businessOrderStream = null;
     });
 
     scrollController.onBottomReach(fetchServicePastOrders, sensitivity: 200);
@@ -109,6 +127,8 @@ class AdmiOrdersListViewController {
 
   Future<void> fetchServicePastOrders() async {
     if (isFetching.value) return;
+
+    mezDbgPrint("currentService $currentService");
 
     isFetching.value = true;
     mezDbgPrint("Fetching service orders 🥹");
@@ -147,6 +167,17 @@ class AdmiOrdersListViewController {
                   ?.toList() ??
               []);
           dvOffset += 10;
+
+          break;
+        case ServiceProviderType.Business:
+          businessPastOrders.addAll((await get_admin_business_orders(
+                      inProcess: false,
+                      withCache: false,
+                      offset: businessOffset,
+                      limit: fetchSize))
+                  ?.toList() ??
+              []);
+          businessOffset += 10;
 
           break;
         default:

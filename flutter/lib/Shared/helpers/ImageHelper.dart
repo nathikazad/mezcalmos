@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:http/http.dart' as http;
 
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -20,7 +21,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
-
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['helpers']['ImageHelper'];
 
@@ -368,4 +368,12 @@ Future<File> createFileFromAsset(
   await file.writeAsBytes(
       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   return file;
+}
+Future<Uint8List> getBytesFromUrl(String url) async {
+  final response = await http.get(Uri.parse(url));
+  if (response.statusCode == 200) {
+    return response.bodyBytes;
+  } else {
+    throw Exception('Failed to load image from URL');
+  }
 }

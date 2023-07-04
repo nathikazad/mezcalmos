@@ -211,7 +211,8 @@ async function notifyDriver(deliveryDriverId: number, accepted: boolean, deliver
         deliveryDriver.user!.firebaseId!,
         notification,
         deliveryDriver.notificationInfo,
-        ParticipantType.DeliveryDriver
+        ParticipantType.DeliveryDriver,
+        deliveryDriver.user?.language
     );
 }
 
@@ -295,7 +296,8 @@ async function notifyPriceChangeRequest(deliveryOrder: DeliveryOrder) {
                         d.user.firebaseId,
                         notification,
                         d.notificationInfo,
-                        ParticipantType.DeliveryOperator
+                        ParticipantType.DeliveryOperator,
+                        d.user.language
                     );
                 }
             });

@@ -107,10 +107,10 @@ export async function cancelOrderFromCustomer(userId: number, data: CancelOrderD
       linkUrl: orderUrl(OrderType.Restaurant, data.orderId)
     }
     mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
     restaurantOperators.forEach((r) => {
-      pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+      pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator, r.user?.language);
     });
 
     if(order.deliveryType == DeliveryType.Delivery && order.deliveryId) {

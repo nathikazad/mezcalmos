@@ -89,7 +89,8 @@ async function notify(deliveryDriver: DeliveryDriver, serviceProvider: ServicePr
                         d.user.firebaseId,
                         notification,
                         d.notificationInfo,
-                        ParticipantType.DeliveryOperator
+                        ParticipantType.DeliveryOperator,
+                        d.user.language
                     );
                 }
             });

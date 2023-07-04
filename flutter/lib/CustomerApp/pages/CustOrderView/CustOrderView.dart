@@ -8,10 +8,12 @@ import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/HomeCartItem
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ProductCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/RentalCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ServiceCartItemCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/controllers/AdminOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -29,22 +31,29 @@ class CustOrderView extends StatefulWidget {
   @override
   State<CustOrderView> createState() => _CustOrderViewState();
 
-  static Future<void> navigate({required int orderId}) {
+  static Future<void> navigate({required int orderId, EntityType? entityType}) {
     return MezRouter.toPath(CustBusinessRoutes.custOrderViewRoute,
-        arguments: {"orderId": orderId});
+        arguments: {"orderId": orderId, "entityType": entityType});
   }
 }
 
 class _CustOrderViewState extends State<CustOrderView> {
-  final CustBusinessCartController custBusinessCartController =
-      Get.find<CustBusinessCartController>();
+  late CustBusinessCartController custBusinessCartController;
 
   late int orderId;
+  late EntityType? entityType;
 
   @override
   void initState() {
     orderId = MezRouter.bodyArguments!["orderId"] as int;
-    custBusinessCartController.setCurrentOrderInView(orderId);
+    entityType = MezRouter.bodyArguments!["entityType"] as EntityType?;
+    if (entityType == EntityType.Admin) {
+      custBusinessCartController = AdminOrderViewController();
+      custBusinessCartController.setCurrentOrderInView(orderId);
+    } else {
+      custBusinessCartController = Get.find<CustBusinessCartController>();
+      custBusinessCartController.setCurrentOrderInView(orderId);
+    }
     super.initState();
   }
 
@@ -58,25 +67,34 @@ class _CustOrderViewState extends State<CustOrderView> {
             ? '${_i18n()['order']}'
             : "${custBusinessCartController.currentOrderInView.value!.getBusinessName()}",
       ),
-      bottomNavigationBar: Obx(() {
-        if (custBusinessCartController.currentOrderInView.value == null) {
-          return SizedBox.shrink();
-        } else if (custBusinessCartController
-                    .currentOrderInView.value!.status ==
-                BusinessOrderRequestStatus.Confirmed ||
-            custBusinessCartController.currentOrderInView.value!.status ==
-                BusinessOrderRequestStatus.Completed) {
-          return CustAddReviewButton(
-            orderId: custBusinessCartController.currentOrderInView.value!.id!,
-            toEntityId: custBusinessCartController
-                .currentOrderInView.value!.businessId!
-                .toInt(),
-            toEntityType: ServiceProviderType.Business,
-          );
-        } else {
-          return SizedBox.shrink();
-        }
-      }),
+      bottomNavigationBar: entityType == EntityType.Admin
+          ? null
+          : Obx(() {
+              if (custBusinessCartController.currentOrderInView.value == null) {
+                return SizedBox.shrink();
+              } else if (custBusinessCartController
+                          .currentOrderInView.value!.status ==
+                      BusinessOrderRequestStatus.Confirmed ||
+                  custBusinessCartController.currentOrderInView.value!.status ==
+                      BusinessOrderRequestStatus.Completed) {
+                return CustAddReviewButton(
+                  orderId:
+                      custBusinessCartController.currentOrderInView.value!.id!,
+                  toEntityId: custBusinessCartController
+                      .currentOrderInView.value!.businessId!
+                      .toInt(),
+                  toEntityType: ServiceProviderType.Business,
+                );
+              } else {
+                return SizedBox.shrink();
+              }
+            }),
+      bottomSheet: entityType == EntityType.Admin
+          ? null
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Obx(() => bottomButtons(context)),
+            ),
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.all(8.0),

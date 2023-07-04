@@ -341,6 +341,9 @@ const LinearGradient bluePurpleGradient = LinearGradient(
 
 const String mezPackageMarker =
     "assets/images/shared/markers/packageMarker.png";
+const String mezHomeMarker = "assets/images/shared/markers/homeMarker.png";
+const String mezRestaurantMarker =
+    "assets/images/shared/markers/restaurantMarker.png";
 const String mezDestinationMarker =
     "assets/images/shared/markers/destinationMarker.png";
 const String mezHomeIconMarker = "assets/images/shared/markers/homeIcon.png";
