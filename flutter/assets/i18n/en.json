@@ -2407,7 +2407,13 @@
         "businessId": "Business ID",
         "onlySevenDays": "You can change your ID only once every 7 days.",
         "cancel": "Cancel",
-        "save": "Save"
+        "copyLink": "Copy link",
+        "whatsapp": "WhatsApp",
+        "status": "Status",
+        "instagram": "Instagram",
+        "story": "Story",
+        "facebook": "Facebook",
+        "save": "Sa e"
       },
       "CreateServiceView": {
         "pages": {
