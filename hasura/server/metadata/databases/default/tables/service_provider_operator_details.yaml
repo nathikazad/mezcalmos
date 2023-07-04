@@ -61,8 +61,10 @@ select_permissions:
         - app_type_id
       filter:
         business_operator:
-          user_id:
-            _eq: X-Hasura-User-Id
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
   - role: delivery_operator
     permission:
       columns:
