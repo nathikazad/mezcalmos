@@ -19,8 +19,10 @@ select_permissions:
         - store_id
         - user_id
       filter:
-        user_id:
-          _eq: X-Hasura-User-Id
+        store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:

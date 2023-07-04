@@ -17,11 +17,11 @@ enum CartType {
 class FloatingCartComponent extends StatefulWidget {
   const FloatingCartComponent({
     Key? key,
-    this.withGradient = true,
+    this.withGradient = false,
     required this.cartType,
     this.backgroundColor,
     this.badgePosition,
-    this.iconColor = Colors.white,
+    this.iconColor = primaryBlueColor,
   }) : super(key: key);
   final bool withGradient;
   final Color? backgroundColor;
@@ -50,14 +50,23 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
               : Get.find<CustBusinessCartController>().cart.value?.items ?? [];
           return items.length > 0
               ? badge.Badge(
-                  badgeContent: Text(
-                    items.length.toStringAsFixed(0),
-                    style: context.txt.labelLarge
-                        ?.copyWith(color: primaryBlueColor),
+                  elevation: 0,
+                  badgeContent: CircleAvatar(
+                    radius: 10,
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      radius: 9,
+                      backgroundColor: primaryBlueColor,
+                      child: Text(
+                        items.length.toStringAsFixed(0),
+                        style: context.txt.labelLarge
+                            ?.copyWith(color: secondaryLightBlueColor),
+                      ),
+                    ),
                   ),
                   position: widget.badgePosition ??
-                      badge.BadgePosition.topEnd(top: 0, end: 0),
-                  badgeColor: secondaryLightBlueColor,
+                      badge.BadgePosition.topEnd(top: -3, end: -8),
+                  badgeColor: Colors.transparent,
                   child: InkWell(
                     customBorder: CircleBorder(),
                     onTap: () {
@@ -72,7 +81,8 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
                       width: 30,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: widget.backgroundColor, // circular shape
+                        color: widget.backgroundColor ??
+                            secondaryLightBlueColor, // circular shape
                         gradient: (widget.withGradient)
                             ? LinearGradient(
                                 colors: [primaryBlueColor, Color(0xFFAC59FC)],
@@ -87,7 +97,7 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
                     ),
                   ),
                 )
-              : Container();
+              : SizedBox.shrink();
         },
       );
     } else
