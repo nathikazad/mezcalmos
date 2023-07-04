@@ -98,149 +98,154 @@ class _CustOrderViewState extends State<CustOrderView> {
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: (custBusinessCartController.currentOrderInView.value == null)
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      orderStatusCard(),
-                      smallSepartor,
-                      MezCard(
-                          content: Row(
+          child: (custBusinessCartController.currentOrderInView.value == null)
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(getBusinessImage()),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                getBusinessName(),
-                                style: context.textTheme.bodyLarge,
+                          orderStatusCard(),
+                          smallSepartor,
+                          MezCard(
+                              content: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(getBusinessImage()),
                               ),
-                            ),
-                          ),
-                          MessageButton(
-                            chatId: custBusinessCartController
-                                .currentOrderInView.value!.chatId!
-                                .toInt(),
-                            onTap: () async {
-                              await BaseMessagingScreen.navigate(
-                                  chatId: custBusinessCartController
-                                      .currentOrderInView.value!.chatId!
-                                      .toInt());
-                            },
-                          ),
-                        ],
-                      )),
-                      if (custBusinessCartController
-                          .currentOrderInView.value!.items.isNotEmpty)
-                        smallSepartor,
-                      if (custBusinessCartController
-                          .currentOrderInView.value!.items.isNotEmpty)
-                        ...custBusinessCartController
-                            .currentOrderInView.value!.items
-                            .asMap()
-                            .entries
-                            .map(
-                          (data) {
-                            final int index = data.key;
-                            final BusinessCartItem item = data.value;
-                            switch (item.offeringType) {
-                              case OfferingType.Home:
-                                return HomeCartItemCard(
-                                  index: index,
-                                  item: item,
-                                  controller: custBusinessCartController,
-                                  isEditable: false,
-                                );
-                              case OfferingType.Rental:
-                                return RentalCartItemCard(
-                                  index: index,
-                                  item: item,
-                                  controller: custBusinessCartController,
-                                  isEditable: false,
-                                );
-                              case OfferingType.Event:
-                                return EventCartItemCard(
-                                  index: index,
-                                  item: item,
-                                  controller: custBusinessCartController,
-                                  isEditable: false,
-                                );
-                              case OfferingType.Service:
-                                return ServiceCartItemCard(
-                                  index: index,
-                                  item: item,
-                                  controller: custBusinessCartController,
-                                  isEditable: false,
-                                );
-                              case OfferingType.Product:
-                                return ProductCartItemCard(
-                                  index: index,
-                                  item: item,
-                                  controller: custBusinessCartController,
-                                  isEditable: false,
-                                );
-                            }
-                          },
-                        ).toList(),
-                      if (entityType != EntityType.Admin)
-                        Column(
-                          children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Text(
+                                    getBusinessName(),
+                                    style: context.textTheme.bodyLarge,
+                                  ),
+                                ),
+                              ),
+                              MessageButton(
+                                chatId: custBusinessCartController
+                                    .currentOrderInView.value!.chatId!
+                                    .toInt(),
+                                onTap: () async {
+                                  await BaseMessagingScreen.navigate(
+                                      chatId: custBusinessCartController
+                                          .currentOrderInView.value!.chatId!
+                                          .toInt());
+                                },
+                              ),
+                            ],
+                          )),
+                          if (custBusinessCartController
+                              .currentOrderInView.value!.items.isNotEmpty)
                             smallSepartor,
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Text(
-                                '${_i18n()['notes']}',
-                                style: context.textTheme.bodyLarge,
-                              ),
-                            ),
-                            smallSepartor,
-                            TextFormField(
-                              maxLines: 5,
-                              minLines: 3,
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                hintText: '${_i18n()['writeNotesHere']}',
-                              ),
-                            ),
-                          ],
-                        ),
-                      smallSepartor,
-                      MezCard(
-                        content: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${_i18n()['summary']}',
+                          if (custBusinessCartController
+                              .currentOrderInView.value!.items.isNotEmpty)
+                            ...custBusinessCartController
+                                .currentOrderInView.value!.items
+                                .asMap()
+                                .entries
+                                .map(
+                              (data) {
+                                final int index = data.key;
+                                final BusinessCartItem item = data.value;
+                                switch (item.offeringType) {
+                                  case OfferingType.Home:
+                                    return HomeCartItemCard(
+                                      index: index,
+                                      item: item,
+                                      controller: custBusinessCartController,
+                                      isEditable: false,
+                                    );
+                                  case OfferingType.Rental:
+                                    return RentalCartItemCard(
+                                      index: index,
+                                      item: item,
+                                      controller: custBusinessCartController,
+                                      isEditable: false,
+                                    );
+                                  case OfferingType.Event:
+                                    return EventCartItemCard(
+                                      index: index,
+                                      item: item,
+                                      controller: custBusinessCartController,
+                                      isEditable: false,
+                                    );
+                                  case OfferingType.Service:
+                                    return ServiceCartItemCard(
+                                      index: index,
+                                      item: item,
+                                      controller: custBusinessCartController,
+                                      isEditable: false,
+                                    );
+                                  case OfferingType.Product:
+                                    return ProductCartItemCard(
+                                      index: index,
+                                      item: item,
+                                      controller: custBusinessCartController,
+                                      isEditable: false,
+                                    );
+                                }
+                              },
+                            ).toList(),
+                          smallSepartor,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Text(
+                              '${_i18n()['notes']}',
                               style: context.textTheme.bodyLarge,
                             ),
-                            smallSepartor,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          ),
+                          smallSepartor,
+                          TextFormField(
+                            maxLines: 5,
+                            minLines: 3,
+                            decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              hintText: '${_i18n()['writeNotesHere']}',
+                            ),
+                          ),
+                          smallSepartor,
+                          MezCard(
+                            elevation: 1,
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${_i18n()['orderCost']}',
-                                  style: context.textTheme.bodyMedium,
+                                  '${_i18n()['summary']}',
+                                  style: context.textTheme.bodyLarge,
                                 ),
-                                Text(
-                                  "\$${custBusinessCartController.currentOrderInView.value?.cost.toDouble().toStringAsFixed(0)}",
-                                  style: context.textTheme.bodyMedium,
+                                smallSepartor,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '${_i18n()['orderCost']}',
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                    Text(
+                                      "\$${custBusinessCartController.currentOrderInView.value?.cost.toDouble().toStringAsFixed(0)}",
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+
+                          // smallSepartor,
+                          // bottomButtons(context),
+                        ],
                       ),
-                      // smallSepartor,
-                      // bottomButtons(context),
-                    ],
-                  ),
-          ),
+                    ),
+                    Expanded(child: bottomButtons(context))
+                  ],
+                ),
         ),
       ),
     );
@@ -299,6 +304,7 @@ class _CustOrderViewState extends State<CustOrderView> {
       return SizedBox.shrink();
     }
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
         if (custBusinessCartController.currentOrderInView.value!.status !=
