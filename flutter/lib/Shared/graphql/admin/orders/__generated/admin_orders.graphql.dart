@@ -9648,3 +9648,2244 @@ class _CopyWithStubImpl$Query$admin_get_service__orders$delivery_order$customer$
   }) =>
       _res;
 }
+
+class Variables$Subscription$admin_listen_on_business_orders {
+  factory Variables$Subscription$admin_listen_on_business_orders(
+          {required bool inProccess}) =>
+      Variables$Subscription$admin_listen_on_business_orders._({
+        r'inProccess': inProccess,
+      });
+
+  Variables$Subscription$admin_listen_on_business_orders._(this._$data);
+
+  factory Variables$Subscription$admin_listen_on_business_orders.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$inProccess = data['inProccess'];
+    result$data['inProccess'] = (l$inProccess as bool);
+    return Variables$Subscription$admin_listen_on_business_orders._(
+        result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  bool get inProccess => (_$data['inProccess'] as bool);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$inProccess = inProccess;
+    result$data['inProccess'] = l$inProccess;
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$admin_listen_on_business_orders<
+          Variables$Subscription$admin_listen_on_business_orders>
+      get copyWith =>
+          CopyWith$Variables$Subscription$admin_listen_on_business_orders(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$admin_listen_on_business_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$inProccess = inProccess;
+    final lOther$inProccess = other.inProccess;
+    if (l$inProccess != lOther$inProccess) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$inProccess = inProccess;
+    return Object.hashAll([l$inProccess]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$admin_listen_on_business_orders<
+    TRes> {
+  factory CopyWith$Variables$Subscription$admin_listen_on_business_orders(
+    Variables$Subscription$admin_listen_on_business_orders instance,
+    TRes Function(Variables$Subscription$admin_listen_on_business_orders) then,
+  ) = _CopyWithImpl$Variables$Subscription$admin_listen_on_business_orders;
+
+  factory CopyWith$Variables$Subscription$admin_listen_on_business_orders.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$admin_listen_on_business_orders;
+
+  TRes call({bool? inProccess});
+}
+
+class _CopyWithImpl$Variables$Subscription$admin_listen_on_business_orders<TRes>
+    implements
+        CopyWith$Variables$Subscription$admin_listen_on_business_orders<TRes> {
+  _CopyWithImpl$Variables$Subscription$admin_listen_on_business_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$admin_listen_on_business_orders _instance;
+
+  final TRes Function(Variables$Subscription$admin_listen_on_business_orders)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? inProccess = _undefined}) =>
+      _then(Variables$Subscription$admin_listen_on_business_orders._({
+        ..._instance._$data,
+        if (inProccess != _undefined && inProccess != null)
+          'inProccess': (inProccess as bool),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$admin_listen_on_business_orders<
+        TRes>
+    implements
+        CopyWith$Variables$Subscription$admin_listen_on_business_orders<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$admin_listen_on_business_orders(
+      this._res);
+
+  TRes _res;
+
+  call({bool? inProccess}) => _res;
+}
+
+class Subscription$admin_listen_on_business_orders {
+  Subscription$admin_listen_on_business_orders({
+    required this.business_order_request,
+    required this.$__typename,
+  });
+
+  factory Subscription$admin_listen_on_business_orders.fromJson(
+      Map<String, dynamic> json) {
+    final l$business_order_request = json['business_order_request'];
+    final l$$__typename = json['__typename'];
+    return Subscription$admin_listen_on_business_orders(
+      business_order_request: (l$business_order_request as List<dynamic>)
+          .map((e) =>
+              Subscription$admin_listen_on_business_orders$business_order_request
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Subscription$admin_listen_on_business_orders$business_order_request>
+      business_order_request;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_order_request = business_order_request;
+    _resultData['business_order_request'] =
+        l$business_order_request.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_order_request = business_order_request;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$business_order_request.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$admin_listen_on_business_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_order_request = business_order_request;
+    final lOther$business_order_request = other.business_order_request;
+    if (l$business_order_request.length !=
+        lOther$business_order_request.length) {
+      return false;
+    }
+    for (int i = 0; i < l$business_order_request.length; i++) {
+      final l$business_order_request$entry = l$business_order_request[i];
+      final lOther$business_order_request$entry =
+          lOther$business_order_request[i];
+      if (l$business_order_request$entry !=
+          lOther$business_order_request$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$admin_listen_on_business_orders
+    on Subscription$admin_listen_on_business_orders {
+  CopyWith$Subscription$admin_listen_on_business_orders<
+          Subscription$admin_listen_on_business_orders>
+      get copyWith => CopyWith$Subscription$admin_listen_on_business_orders(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$admin_listen_on_business_orders<TRes> {
+  factory CopyWith$Subscription$admin_listen_on_business_orders(
+    Subscription$admin_listen_on_business_orders instance,
+    TRes Function(Subscription$admin_listen_on_business_orders) then,
+  ) = _CopyWithImpl$Subscription$admin_listen_on_business_orders;
+
+  factory CopyWith$Subscription$admin_listen_on_business_orders.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$admin_listen_on_business_orders;
+
+  TRes call({
+    List<Subscription$admin_listen_on_business_orders$business_order_request>?
+        business_order_request,
+    String? $__typename,
+  });
+  TRes business_order_request(
+      Iterable<Subscription$admin_listen_on_business_orders$business_order_request> Function(
+              Iterable<
+                  CopyWith$Subscription$admin_listen_on_business_orders$business_order_request<
+                      Subscription$admin_listen_on_business_orders$business_order_request>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$admin_listen_on_business_orders<TRes>
+    implements CopyWith$Subscription$admin_listen_on_business_orders<TRes> {
+  _CopyWithImpl$Subscription$admin_listen_on_business_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$admin_listen_on_business_orders _instance;
+
+  final TRes Function(Subscription$admin_listen_on_business_orders) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_order_request = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$admin_listen_on_business_orders(
+        business_order_request: business_order_request == _undefined ||
+                business_order_request == null
+            ? _instance.business_order_request
+            : (business_order_request as List<
+                Subscription$admin_listen_on_business_orders$business_order_request>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes business_order_request(
+          Iterable<Subscription$admin_listen_on_business_orders$business_order_request> Function(
+                  Iterable<
+                      CopyWith$Subscription$admin_listen_on_business_orders$business_order_request<
+                          Subscription$admin_listen_on_business_orders$business_order_request>>)
+              _fn) =>
+      call(
+          business_order_request: _fn(_instance.business_order_request.map((e) =>
+              CopyWith$Subscription$admin_listen_on_business_orders$business_order_request(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$admin_listen_on_business_orders<TRes>
+    implements CopyWith$Subscription$admin_listen_on_business_orders<TRes> {
+  _CopyWithStubImpl$Subscription$admin_listen_on_business_orders(this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$admin_listen_on_business_orders$business_order_request>?
+        business_order_request,
+    String? $__typename,
+  }) =>
+      _res;
+  business_order_request(_fn) => _res;
+}
+
+const documentNodeSubscriptionadmin_listen_on_business_orders =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'admin_listen_on_business_orders'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'inProccess')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_order_request'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'in_progress'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'inProccess')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'business_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'user'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$admin_listen_on_business_orders
+    _parserFn$Subscription$admin_listen_on_business_orders(
+            Map<String, dynamic> data) =>
+        Subscription$admin_listen_on_business_orders.fromJson(data);
+
+class Options$Subscription$admin_listen_on_business_orders extends graphql
+    .SubscriptionOptions<Subscription$admin_listen_on_business_orders> {
+  Options$Subscription$admin_listen_on_business_orders({
+    String? operationName,
+    required Variables$Subscription$admin_listen_on_business_orders variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionadmin_listen_on_business_orders,
+          parserFn: _parserFn$Subscription$admin_listen_on_business_orders,
+        );
+}
+
+class WatchOptions$Subscription$admin_listen_on_business_orders extends graphql
+    .WatchQueryOptions<Subscription$admin_listen_on_business_orders> {
+  WatchOptions$Subscription$admin_listen_on_business_orders({
+    String? operationName,
+    required Variables$Subscription$admin_listen_on_business_orders variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionadmin_listen_on_business_orders,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$admin_listen_on_business_orders,
+        );
+}
+
+class FetchMoreOptions$Subscription$admin_listen_on_business_orders
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$admin_listen_on_business_orders({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$admin_listen_on_business_orders variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeSubscriptionadmin_listen_on_business_orders,
+        );
+}
+
+extension ClientExtension$Subscription$admin_listen_on_business_orders
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$admin_listen_on_business_orders>>
+      subscribe$admin_listen_on_business_orders(
+              Options$Subscription$admin_listen_on_business_orders options) =>
+          this.subscribe(options);
+  graphql.ObservableQuery<Subscription$admin_listen_on_business_orders>
+      watchSubscription$admin_listen_on_business_orders(
+              WatchOptions$Subscription$admin_listen_on_business_orders
+                  options) =>
+          this.watchQuery(options);
+}
+
+class Subscription$admin_listen_on_business_orders$business_order_request {
+  Subscription$admin_listen_on_business_orders$business_order_request({
+    required this.id,
+    required this.business_id,
+    required this.order_time,
+    required this.status,
+    this.cost,
+    required this.customer,
+    required this.$__typename,
+  });
+
+  factory Subscription$admin_listen_on_business_orders$business_order_request.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$business_id = json['business_id'];
+    final l$order_time = json['order_time'];
+    final l$status = json['status'];
+    final l$cost = json['cost'];
+    final l$customer = json['customer'];
+    final l$$__typename = json['__typename'];
+    return Subscription$admin_listen_on_business_orders$business_order_request(
+      id: (l$id as int),
+      business_id: (l$business_id as int),
+      order_time: (l$order_time as String),
+      status: (l$status as String),
+      cost: l$cost == null ? null : moneyFromJson(l$cost),
+      customer:
+          Subscription$admin_listen_on_business_orders$business_order_request$customer
+              .fromJson((l$customer as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final int business_id;
+
+  final String order_time;
+
+  final String status;
+
+  final double? cost;
+
+  final Subscription$admin_listen_on_business_orders$business_order_request$customer
+      customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business_id = business_id;
+    _resultData['business_id'] = l$business_id;
+    final l$order_time = order_time;
+    _resultData['order_time'] = l$order_time;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$cost = cost;
+    _resultData['cost'] = l$cost == null ? null : moneyToJson(l$cost);
+    final l$customer = customer;
+    _resultData['customer'] = l$customer.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$business_id = business_id;
+    final l$order_time = order_time;
+    final l$status = status;
+    final l$cost = cost;
+    final l$customer = customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$business_id,
+      l$order_time,
+      l$status,
+      l$cost,
+      l$customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$admin_listen_on_business_orders$business_order_request) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business_id = business_id;
+    final lOther$business_id = other.business_id;
+    if (l$business_id != lOther$business_id) {
+      return false;
+    }
+    final l$order_time = order_time;
+    final lOther$order_time = other.order_time;
+    if (l$order_time != lOther$order_time) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$admin_listen_on_business_orders$business_order_request
+    on Subscription$admin_listen_on_business_orders$business_order_request {
+  CopyWith$Subscription$admin_listen_on_business_orders$business_order_request<
+          Subscription$admin_listen_on_business_orders$business_order_request>
+      get copyWith =>
+          CopyWith$Subscription$admin_listen_on_business_orders$business_order_request(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$admin_listen_on_business_orders$business_order_request<
+    TRes> {
+  factory CopyWith$Subscription$admin_listen_on_business_orders$business_order_request(
+    Subscription$admin_listen_on_business_orders$business_order_request
+        instance,
+    TRes Function(
+            Subscription$admin_listen_on_business_orders$business_order_request)
+        then,
+  ) = _CopyWithImpl$Subscription$admin_listen_on_business_orders$business_order_request;
+
+  factory CopyWith$Subscription$admin_listen_on_business_orders$business_order_request.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$admin_listen_on_business_orders$business_order_request;
+
+  TRes call({
+    int? id,
+    int? business_id,
+    String? order_time,
+    String? status,
+    double? cost,
+    Subscription$admin_listen_on_business_orders$business_order_request$customer?
+        customer,
+    String? $__typename,
+  });
+  CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer<
+      TRes> get customer;
+}
+
+class _CopyWithImpl$Subscription$admin_listen_on_business_orders$business_order_request<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_business_orders$business_order_request<
+            TRes> {
+  _CopyWithImpl$Subscription$admin_listen_on_business_orders$business_order_request(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$admin_listen_on_business_orders$business_order_request
+      _instance;
+
+  final TRes Function(
+          Subscription$admin_listen_on_business_orders$business_order_request)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? business_id = _undefined,
+    Object? order_time = _undefined,
+    Object? status = _undefined,
+    Object? cost = _undefined,
+    Object? customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$admin_listen_on_business_orders$business_order_request(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business_id: business_id == _undefined || business_id == null
+            ? _instance.business_id
+            : (business_id as int),
+        order_time: order_time == _undefined || order_time == null
+            ? _instance.order_time
+            : (order_time as String),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        cost: cost == _undefined ? _instance.cost : (cost as double?),
+        customer: customer == _undefined || customer == null
+            ? _instance.customer
+            : (customer
+                as Subscription$admin_listen_on_business_orders$business_order_request$customer),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer<
+      TRes> get customer {
+    final local$customer = _instance.customer;
+    return CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer(
+        local$customer, (e) => call(customer: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$admin_listen_on_business_orders$business_order_request<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_business_orders$business_order_request<
+            TRes> {
+  _CopyWithStubImpl$Subscription$admin_listen_on_business_orders$business_order_request(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    int? business_id,
+    String? order_time,
+    String? status,
+    double? cost,
+    Subscription$admin_listen_on_business_orders$business_order_request$customer?
+        customer,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer<
+          TRes>
+      get customer =>
+          CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer
+              .stub(_res);
+}
+
+class Subscription$admin_listen_on_business_orders$business_order_request$customer {
+  Subscription$admin_listen_on_business_orders$business_order_request$customer({
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Subscription$admin_listen_on_business_orders$business_order_request$customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Subscription$admin_listen_on_business_orders$business_order_request$customer(
+      user:
+          Subscription$admin_listen_on_business_orders$business_order_request$customer$user
+              .fromJson((l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Subscription$admin_listen_on_business_orders$business_order_request$customer$user
+      user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$admin_listen_on_business_orders$business_order_request$customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$admin_listen_on_business_orders$business_order_request$customer
+    on Subscription$admin_listen_on_business_orders$business_order_request$customer {
+  CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer<
+          Subscription$admin_listen_on_business_orders$business_order_request$customer>
+      get copyWith =>
+          CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer<
+    TRes> {
+  factory CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer(
+    Subscription$admin_listen_on_business_orders$business_order_request$customer
+        instance,
+    TRes Function(
+            Subscription$admin_listen_on_business_orders$business_order_request$customer)
+        then,
+  ) = _CopyWithImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer;
+
+  factory CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer;
+
+  TRes call({
+    Subscription$admin_listen_on_business_orders$business_order_request$customer$user?
+        user,
+    String? $__typename,
+  });
+  CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user<
+      TRes> get user;
+}
+
+class _CopyWithImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer<
+            TRes> {
+  _CopyWithImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$admin_listen_on_business_orders$business_order_request$customer
+      _instance;
+
+  final TRes Function(
+          Subscription$admin_listen_on_business_orders$business_order_request$customer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$admin_listen_on_business_orders$business_order_request$customer(
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Subscription$admin_listen_on_business_orders$business_order_request$customer$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer<
+            TRes> {
+  _CopyWithStubImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Subscription$admin_listen_on_business_orders$business_order_request$customer$user?
+        user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user<
+          TRes>
+      get user =>
+          CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user
+              .stub(_res);
+}
+
+class Subscription$admin_listen_on_business_orders$business_order_request$customer$user {
+  Subscription$admin_listen_on_business_orders$business_order_request$customer$user({
+    this.name,
+    this.image,
+    required this.$__typename,
+  });
+
+  factory Subscription$admin_listen_on_business_orders$business_order_request$customer$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Subscription$admin_listen_on_business_orders$business_order_request$customer$user(
+      name: (l$name as String?),
+      image: (l$image as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$admin_listen_on_business_orders$business_order_request$customer$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$admin_listen_on_business_orders$business_order_request$customer$user
+    on Subscription$admin_listen_on_business_orders$business_order_request$customer$user {
+  CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user<
+          Subscription$admin_listen_on_business_orders$business_order_request$customer$user>
+      get copyWith =>
+          CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user<
+    TRes> {
+  factory CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user(
+    Subscription$admin_listen_on_business_orders$business_order_request$customer$user
+        instance,
+    TRes Function(
+            Subscription$admin_listen_on_business_orders$business_order_request$customer$user)
+        then,
+  ) = _CopyWithImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer$user;
+
+  factory CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer$user;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer$user<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user<
+            TRes> {
+  _CopyWithImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer$user(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$admin_listen_on_business_orders$business_order_request$customer$user
+      _instance;
+
+  final TRes Function(
+          Subscription$admin_listen_on_business_orders$business_order_request$customer$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$admin_listen_on_business_orders$business_order_request$customer$user(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer$user<
+        TRes>
+    implements
+        CopyWith$Subscription$admin_listen_on_business_orders$business_order_request$customer$user<
+            TRes> {
+  _CopyWithStubImpl$Subscription$admin_listen_on_business_orders$business_order_request$customer$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$admin_get_business_orders {
+  factory Variables$Query$admin_get_business_orders({
+    required bool inProccess,
+    int? limit,
+    int? offset,
+  }) =>
+      Variables$Query$admin_get_business_orders._({
+        r'inProccess': inProccess,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
+      });
+
+  Variables$Query$admin_get_business_orders._(this._$data);
+
+  factory Variables$Query$admin_get_business_orders.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$inProccess = data['inProccess'];
+    result$data['inProccess'] = (l$inProccess as bool);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    return Variables$Query$admin_get_business_orders._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  bool get inProccess => (_$data['inProccess'] as bool);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$inProccess = inProccess;
+    result$data['inProccess'] = l$inProccess;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$admin_get_business_orders<
+          Variables$Query$admin_get_business_orders>
+      get copyWith => CopyWith$Variables$Query$admin_get_business_orders(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$admin_get_business_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$inProccess = inProccess;
+    final lOther$inProccess = other.inProccess;
+    if (l$inProccess != lOther$inProccess) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$inProccess = inProccess;
+    final l$limit = limit;
+    final l$offset = offset;
+    return Object.hashAll([
+      l$inProccess,
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$admin_get_business_orders<TRes> {
+  factory CopyWith$Variables$Query$admin_get_business_orders(
+    Variables$Query$admin_get_business_orders instance,
+    TRes Function(Variables$Query$admin_get_business_orders) then,
+  ) = _CopyWithImpl$Variables$Query$admin_get_business_orders;
+
+  factory CopyWith$Variables$Query$admin_get_business_orders.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$admin_get_business_orders;
+
+  TRes call({
+    bool? inProccess,
+    int? limit,
+    int? offset,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$admin_get_business_orders<TRes>
+    implements CopyWith$Variables$Query$admin_get_business_orders<TRes> {
+  _CopyWithImpl$Variables$Query$admin_get_business_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$admin_get_business_orders _instance;
+
+  final TRes Function(Variables$Query$admin_get_business_orders) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? inProccess = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
+      _then(Variables$Query$admin_get_business_orders._({
+        ..._instance._$data,
+        if (inProccess != _undefined && inProccess != null)
+          'inProccess': (inProccess as bool),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$admin_get_business_orders<TRes>
+    implements CopyWith$Variables$Query$admin_get_business_orders<TRes> {
+  _CopyWithStubImpl$Variables$Query$admin_get_business_orders(this._res);
+
+  TRes _res;
+
+  call({
+    bool? inProccess,
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
+}
+
+class Query$admin_get_business_orders {
+  Query$admin_get_business_orders({
+    required this.business_order_request,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_business_orders.fromJson(Map<String, dynamic> json) {
+    final l$business_order_request = json['business_order_request'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_business_orders(
+      business_order_request: (l$business_order_request as List<dynamic>)
+          .map((e) =>
+              Query$admin_get_business_orders$business_order_request.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$admin_get_business_orders$business_order_request>
+      business_order_request;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_order_request = business_order_request;
+    _resultData['business_order_request'] =
+        l$business_order_request.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_order_request = business_order_request;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$business_order_request.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$admin_get_business_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_order_request = business_order_request;
+    final lOther$business_order_request = other.business_order_request;
+    if (l$business_order_request.length !=
+        lOther$business_order_request.length) {
+      return false;
+    }
+    for (int i = 0; i < l$business_order_request.length; i++) {
+      final l$business_order_request$entry = l$business_order_request[i];
+      final lOther$business_order_request$entry =
+          lOther$business_order_request[i];
+      if (l$business_order_request$entry !=
+          lOther$business_order_request$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_business_orders
+    on Query$admin_get_business_orders {
+  CopyWith$Query$admin_get_business_orders<Query$admin_get_business_orders>
+      get copyWith => CopyWith$Query$admin_get_business_orders(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_business_orders<TRes> {
+  factory CopyWith$Query$admin_get_business_orders(
+    Query$admin_get_business_orders instance,
+    TRes Function(Query$admin_get_business_orders) then,
+  ) = _CopyWithImpl$Query$admin_get_business_orders;
+
+  factory CopyWith$Query$admin_get_business_orders.stub(TRes res) =
+      _CopyWithStubImpl$Query$admin_get_business_orders;
+
+  TRes call({
+    List<Query$admin_get_business_orders$business_order_request>?
+        business_order_request,
+    String? $__typename,
+  });
+  TRes business_order_request(
+      Iterable<Query$admin_get_business_orders$business_order_request> Function(
+              Iterable<
+                  CopyWith$Query$admin_get_business_orders$business_order_request<
+                      Query$admin_get_business_orders$business_order_request>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$admin_get_business_orders<TRes>
+    implements CopyWith$Query$admin_get_business_orders<TRes> {
+  _CopyWithImpl$Query$admin_get_business_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_business_orders _instance;
+
+  final TRes Function(Query$admin_get_business_orders) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_order_request = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_business_orders(
+        business_order_request: business_order_request == _undefined ||
+                business_order_request == null
+            ? _instance.business_order_request
+            : (business_order_request as List<
+                Query$admin_get_business_orders$business_order_request>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes business_order_request(
+          Iterable<Query$admin_get_business_orders$business_order_request> Function(
+                  Iterable<
+                      CopyWith$Query$admin_get_business_orders$business_order_request<
+                          Query$admin_get_business_orders$business_order_request>>)
+              _fn) =>
+      call(
+          business_order_request: _fn(_instance.business_order_request.map((e) =>
+              CopyWith$Query$admin_get_business_orders$business_order_request(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$admin_get_business_orders<TRes>
+    implements CopyWith$Query$admin_get_business_orders<TRes> {
+  _CopyWithStubImpl$Query$admin_get_business_orders(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$admin_get_business_orders$business_order_request>?
+        business_order_request,
+    String? $__typename,
+  }) =>
+      _res;
+  business_order_request(_fn) => _res;
+}
+
+const documentNodeQueryadmin_get_business_orders = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'admin_get_business_orders'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'inProccess')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_order_request'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'in_progress'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'inProccess')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'business_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'user'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$admin_get_business_orders _parserFn$Query$admin_get_business_orders(
+        Map<String, dynamic> data) =>
+    Query$admin_get_business_orders.fromJson(data);
+
+class Options$Query$admin_get_business_orders
+    extends graphql.QueryOptions<Query$admin_get_business_orders> {
+  Options$Query$admin_get_business_orders({
+    String? operationName,
+    required Variables$Query$admin_get_business_orders variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryadmin_get_business_orders,
+          parserFn: _parserFn$Query$admin_get_business_orders,
+        );
+}
+
+class WatchOptions$Query$admin_get_business_orders
+    extends graphql.WatchQueryOptions<Query$admin_get_business_orders> {
+  WatchOptions$Query$admin_get_business_orders({
+    String? operationName,
+    required Variables$Query$admin_get_business_orders variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryadmin_get_business_orders,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$admin_get_business_orders,
+        );
+}
+
+class FetchMoreOptions$Query$admin_get_business_orders
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$admin_get_business_orders({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$admin_get_business_orders variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryadmin_get_business_orders,
+        );
+}
+
+extension ClientExtension$Query$admin_get_business_orders
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$admin_get_business_orders>>
+      query$admin_get_business_orders(
+              Options$Query$admin_get_business_orders options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$admin_get_business_orders>
+      watchQuery$admin_get_business_orders(
+              WatchOptions$Query$admin_get_business_orders options) =>
+          this.watchQuery(options);
+  void writeQuery$admin_get_business_orders({
+    required Query$admin_get_business_orders data,
+    required Variables$Query$admin_get_business_orders variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryadmin_get_business_orders),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$admin_get_business_orders? readQuery$admin_get_business_orders({
+    required Variables$Query$admin_get_business_orders variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryadmin_get_business_orders),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$admin_get_business_orders.fromJson(result);
+  }
+}
+
+class Query$admin_get_business_orders$business_order_request {
+  Query$admin_get_business_orders$business_order_request({
+    required this.id,
+    required this.business_id,
+    required this.order_time,
+    required this.status,
+    this.cost,
+    required this.customer,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_business_orders$business_order_request.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$business_id = json['business_id'];
+    final l$order_time = json['order_time'];
+    final l$status = json['status'];
+    final l$cost = json['cost'];
+    final l$customer = json['customer'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_business_orders$business_order_request(
+      id: (l$id as int),
+      business_id: (l$business_id as int),
+      order_time: (l$order_time as String),
+      status: (l$status as String),
+      cost: l$cost == null ? null : moneyFromJson(l$cost),
+      customer: Query$admin_get_business_orders$business_order_request$customer
+          .fromJson((l$customer as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final int business_id;
+
+  final String order_time;
+
+  final String status;
+
+  final double? cost;
+
+  final Query$admin_get_business_orders$business_order_request$customer
+      customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$business_id = business_id;
+    _resultData['business_id'] = l$business_id;
+    final l$order_time = order_time;
+    _resultData['order_time'] = l$order_time;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$cost = cost;
+    _resultData['cost'] = l$cost == null ? null : moneyToJson(l$cost);
+    final l$customer = customer;
+    _resultData['customer'] = l$customer.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$business_id = business_id;
+    final l$order_time = order_time;
+    final l$status = status;
+    final l$cost = cost;
+    final l$customer = customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$business_id,
+      l$order_time,
+      l$status,
+      l$cost,
+      l$customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$admin_get_business_orders$business_order_request) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$business_id = business_id;
+    final lOther$business_id = other.business_id;
+    if (l$business_id != lOther$business_id) {
+      return false;
+    }
+    final l$order_time = order_time;
+    final lOther$order_time = other.order_time;
+    if (l$order_time != lOther$order_time) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_business_orders$business_order_request
+    on Query$admin_get_business_orders$business_order_request {
+  CopyWith$Query$admin_get_business_orders$business_order_request<
+          Query$admin_get_business_orders$business_order_request>
+      get copyWith =>
+          CopyWith$Query$admin_get_business_orders$business_order_request(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_business_orders$business_order_request<
+    TRes> {
+  factory CopyWith$Query$admin_get_business_orders$business_order_request(
+    Query$admin_get_business_orders$business_order_request instance,
+    TRes Function(Query$admin_get_business_orders$business_order_request) then,
+  ) = _CopyWithImpl$Query$admin_get_business_orders$business_order_request;
+
+  factory CopyWith$Query$admin_get_business_orders$business_order_request.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_business_orders$business_order_request;
+
+  TRes call({
+    int? id,
+    int? business_id,
+    String? order_time,
+    String? status,
+    double? cost,
+    Query$admin_get_business_orders$business_order_request$customer? customer,
+    String? $__typename,
+  });
+  CopyWith$Query$admin_get_business_orders$business_order_request$customer<TRes>
+      get customer;
+}
+
+class _CopyWithImpl$Query$admin_get_business_orders$business_order_request<TRes>
+    implements
+        CopyWith$Query$admin_get_business_orders$business_order_request<TRes> {
+  _CopyWithImpl$Query$admin_get_business_orders$business_order_request(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_business_orders$business_order_request _instance;
+
+  final TRes Function(Query$admin_get_business_orders$business_order_request)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? business_id = _undefined,
+    Object? order_time = _undefined,
+    Object? status = _undefined,
+    Object? cost = _undefined,
+    Object? customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_business_orders$business_order_request(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        business_id: business_id == _undefined || business_id == null
+            ? _instance.business_id
+            : (business_id as int),
+        order_time: order_time == _undefined || order_time == null
+            ? _instance.order_time
+            : (order_time as String),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        cost: cost == _undefined ? _instance.cost : (cost as double?),
+        customer: customer == _undefined || customer == null
+            ? _instance.customer
+            : (customer
+                as Query$admin_get_business_orders$business_order_request$customer),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$admin_get_business_orders$business_order_request$customer<TRes>
+      get customer {
+    final local$customer = _instance.customer;
+    return CopyWith$Query$admin_get_business_orders$business_order_request$customer(
+        local$customer, (e) => call(customer: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$admin_get_business_orders$business_order_request<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_business_orders$business_order_request<TRes> {
+  _CopyWithStubImpl$Query$admin_get_business_orders$business_order_request(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    int? business_id,
+    String? order_time,
+    String? status,
+    double? cost,
+    Query$admin_get_business_orders$business_order_request$customer? customer,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$admin_get_business_orders$business_order_request$customer<TRes>
+      get customer =>
+          CopyWith$Query$admin_get_business_orders$business_order_request$customer
+              .stub(_res);
+}
+
+class Query$admin_get_business_orders$business_order_request$customer {
+  Query$admin_get_business_orders$business_order_request$customer({
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_business_orders$business_order_request$customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_business_orders$business_order_request$customer(
+      user: Query$admin_get_business_orders$business_order_request$customer$user
+          .fromJson((l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$admin_get_business_orders$business_order_request$customer$user
+      user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$admin_get_business_orders$business_order_request$customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_business_orders$business_order_request$customer
+    on Query$admin_get_business_orders$business_order_request$customer {
+  CopyWith$Query$admin_get_business_orders$business_order_request$customer<
+          Query$admin_get_business_orders$business_order_request$customer>
+      get copyWith =>
+          CopyWith$Query$admin_get_business_orders$business_order_request$customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_business_orders$business_order_request$customer<
+    TRes> {
+  factory CopyWith$Query$admin_get_business_orders$business_order_request$customer(
+    Query$admin_get_business_orders$business_order_request$customer instance,
+    TRes Function(
+            Query$admin_get_business_orders$business_order_request$customer)
+        then,
+  ) = _CopyWithImpl$Query$admin_get_business_orders$business_order_request$customer;
+
+  factory CopyWith$Query$admin_get_business_orders$business_order_request$customer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_business_orders$business_order_request$customer;
+
+  TRes call({
+    Query$admin_get_business_orders$business_order_request$customer$user? user,
+    String? $__typename,
+  });
+  CopyWith$Query$admin_get_business_orders$business_order_request$customer$user<
+      TRes> get user;
+}
+
+class _CopyWithImpl$Query$admin_get_business_orders$business_order_request$customer<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_business_orders$business_order_request$customer<
+            TRes> {
+  _CopyWithImpl$Query$admin_get_business_orders$business_order_request$customer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_business_orders$business_order_request$customer
+      _instance;
+
+  final TRes Function(
+      Query$admin_get_business_orders$business_order_request$customer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_business_orders$business_order_request$customer(
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Query$admin_get_business_orders$business_order_request$customer$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$admin_get_business_orders$business_order_request$customer$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Query$admin_get_business_orders$business_order_request$customer$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$admin_get_business_orders$business_order_request$customer<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_business_orders$business_order_request$customer<
+            TRes> {
+  _CopyWithStubImpl$Query$admin_get_business_orders$business_order_request$customer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$admin_get_business_orders$business_order_request$customer$user? user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$admin_get_business_orders$business_order_request$customer$user<
+          TRes>
+      get user =>
+          CopyWith$Query$admin_get_business_orders$business_order_request$customer$user
+              .stub(_res);
+}
+
+class Query$admin_get_business_orders$business_order_request$customer$user {
+  Query$admin_get_business_orders$business_order_request$customer$user({
+    this.name,
+    this.image,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_business_orders$business_order_request$customer$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_business_orders$business_order_request$customer$user(
+      name: (l$name as String?),
+      image: (l$image as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$admin_get_business_orders$business_order_request$customer$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_business_orders$business_order_request$customer$user
+    on Query$admin_get_business_orders$business_order_request$customer$user {
+  CopyWith$Query$admin_get_business_orders$business_order_request$customer$user<
+          Query$admin_get_business_orders$business_order_request$customer$user>
+      get copyWith =>
+          CopyWith$Query$admin_get_business_orders$business_order_request$customer$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_business_orders$business_order_request$customer$user<
+    TRes> {
+  factory CopyWith$Query$admin_get_business_orders$business_order_request$customer$user(
+    Query$admin_get_business_orders$business_order_request$customer$user
+        instance,
+    TRes Function(
+            Query$admin_get_business_orders$business_order_request$customer$user)
+        then,
+  ) = _CopyWithImpl$Query$admin_get_business_orders$business_order_request$customer$user;
+
+  factory CopyWith$Query$admin_get_business_orders$business_order_request$customer$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_business_orders$business_order_request$customer$user;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$admin_get_business_orders$business_order_request$customer$user<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_business_orders$business_order_request$customer$user<
+            TRes> {
+  _CopyWithImpl$Query$admin_get_business_orders$business_order_request$customer$user(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_business_orders$business_order_request$customer$user
+      _instance;
+
+  final TRes Function(
+          Query$admin_get_business_orders$business_order_request$customer$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$admin_get_business_orders$business_order_request$customer$user(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$admin_get_business_orders$business_order_request$customer$user<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_business_orders$business_order_request$customer$user<
+            TRes> {
+  _CopyWithStubImpl$Query$admin_get_business_orders$business_order_request$customer$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}

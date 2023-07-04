@@ -454,26 +454,26 @@ export async function setBusinessOrderRequestChatInfo(
     }]
   }, {
     "chat_info": {
-      CustomerApp: {
+      [ChatInfoAppName.CustomerApp]: {
         chatTitle: business.details.name,
         chatImage: business.details.image,
         phoneNumber: business.details.phoneNumber,
         participantType: ParticipantType.BusinessOperator,
-        parentLink: `/laundryOrders/${order.orderId}`,
+        parentLink: `/businessOrders/${order.orderId}`,
       },
-      LaundryApp: {
+      [ChatInfoAppName.BusinessApp]: {
         chatTitle: customer.name ?? "Customer",
         chatImage: customer.image,
         phoneNumber: customer.phoneNumber,
         participantType: ParticipantType.Customer,
-        parentLink: `/laundryOrders/${order.orderId}`,
+        parentLink: `/businessOrders/${order.orderId}`,
       },
-      MezAdminApp: {
+      [ChatInfoAppName.MezAdminApp]: {
         chatTitle: customer.name ?? "Customer",
         chatImage: customer.image,
         phoneNumber: customer.phoneNumber,
         participantType: ParticipantType.Customer,
-        parentLink: `/laundryOrders/${order.orderId}`
+        parentLink: `/businessOrders/${order.orderId}`
       }
     }
   });

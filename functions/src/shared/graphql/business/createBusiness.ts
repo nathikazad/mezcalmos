@@ -1,7 +1,7 @@
 import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { BusinessDetails, BusinessError } from "../../../business/createNewBusiness";
 import { getHasura } from "../../../utilities/hasura";
-import { htmlToPdf } from "../../../utilities/links/HTMLToPDF";
+import { QRFlyerLinks, createQRFlyerPDF } from "../../../utilities/links/flyer";
 import { DeepLinkType, IDeepLink, generateDeepLinks } from "../../../utilities/links/deeplink";
 import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { Business } from "../../models/Services/Business/Business";
@@ -13,8 +13,8 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
 
     let uniqueId: string = businessDetails.uniqueId ?? generateString();
 
-    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Business);
-    let flyers = await htmlToPdf(uniqueId, linksResponse[DeepLinkType.Customer].urlQrImage);
+    let linksResponse: Partial<Record<DeepLinkType, IDeepLink>> = await generateDeepLinks(uniqueId, AppType.Business);
+    let QRflyer: QRFlyerLinks = await createQRFlyerPDF(uniqueId);
 
     let response = await chain.mutation({
         insert_business_business_one: [{
@@ -29,6 +29,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                         service_provider_type: ServiceProviderType.Business,
                         firebase_id: businessDetails.firebaseId ?? undefined,
                         schedule: $`schedule`,
+                        unique_id: uniqueId,
                         location: {
                             data: {
                                 gps: $`gps`,
@@ -37,12 +38,11 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                         },
                         service_link: {
                             data: {
-                                customer_deep_link: linksResponse[DeepLinkType.Customer].url,
-                                customer_qr_image_link: linksResponse[DeepLinkType.Customer].urlQrImage,
-                                operator_deep_link: linksResponse[DeepLinkType.AddOperator].url,
-                                operator_qr_image_link: linksResponse[DeepLinkType.AddOperator].urlQrImage,
-                                driver_deep_link: linksResponse[DeepLinkType.AddDriver].url,
-                                driver_qr_image_link: linksResponse[DeepLinkType.AddDriver].urlQrImage,
+                                customer_qr_image_link: QRflyer.customerQRImageLink,
+                                operator_deep_link: linksResponse[DeepLinkType.AddOperator]?.url,
+                                operator_qr_image_link: linksResponse[DeepLinkType.AddOperator]?.urlQrImage,
+                                driver_deep_link: linksResponse[DeepLinkType.AddDriver]?.url,
+                                driver_qr_image_link: linksResponse[DeepLinkType.AddDriver]?.urlQrImage,
                                 customer_flyer_links: $`customer_flyer_links`,
                               }
                         }
@@ -74,7 +74,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
             "type": "Point",
             "coordinates": [businessDetails.location.lng, businessDetails.location.lat]
         },
-        "customer_flyer_links": flyers
+        "customer_flyer_links": QRflyer.flyerLinks
     });
     
     console.log("response: ", response);

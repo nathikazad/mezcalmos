@@ -38,7 +38,7 @@ export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder) {
     }
   
     deliveryOperators.forEach((d) => {
-      pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryOperator);
+      pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryOperator, d.user?.language);
     });
     
     deliveryDrivers.filter((d) => (d.status == AuthorizationStatus.Authorized && d.online));
@@ -76,7 +76,7 @@ export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder) {
     deliveryDrivers = deliveryDrivers.slice(0, 10);
     notification.linkUrl = `/orders/${deliveryOrder.deliveryId}`
     deliveryDrivers.forEach((d) => {
-      pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryDriver);
+      pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user?.language);
     });
 }
   

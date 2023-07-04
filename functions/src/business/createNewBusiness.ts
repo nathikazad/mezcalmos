@@ -91,6 +91,6 @@ function notifyAdmins(business: Business, mezAdmins: MezAdmin[]) {
       linkUrl: businessUrl(business.details.id)
     };
     mezAdmins.forEach((m) => {
-      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
   }

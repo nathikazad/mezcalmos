@@ -127,12 +127,12 @@ async function notify(order: BusinessOrder, business: Business, mezAdmins: MezAd
         linkUrl: orderUrl(OrderType.Business, order.orderId)
     }
     mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
     if(business.details.operators != undefined) {
         business.details.operators.forEach((l) => {
-          if(l.user) {
-            pushNotification(l.user.firebaseId, notification, l.notificationInfo, ParticipantType.BusinessOperator);
+          if(l.user && l.notificationInfo?.turnOffNotifications == false) {
+            pushNotification(l.user.firebaseId, notification, l.notificationInfo, ParticipantType.BusinessOperator, l.user.language);
           }
         });
     }

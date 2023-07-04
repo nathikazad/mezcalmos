@@ -118,7 +118,8 @@ function sendNotificationToDriver(deliveryDriver: DeliveryDriver, deliveryOrder:
       deliveryDriver.user!.firebaseId!,
       notification,
       deliveryDriver.notificationInfo,
-      ParticipantType.DeliveryDriver
+      ParticipantType.DeliveryDriver,
+      deliveryDriver.user!.language
     );
 }
 

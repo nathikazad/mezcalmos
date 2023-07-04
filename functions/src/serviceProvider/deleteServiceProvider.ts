@@ -104,6 +104,6 @@ async function notifyAdmins(deleteServiceProviderReq: DeleteServiceProviderReque
       linkUrl: `/`
     };
     mezAdmins.forEach((m) => {
-      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
   }

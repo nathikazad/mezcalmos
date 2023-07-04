@@ -29,7 +29,6 @@ const appStoreIds: Record<AppType, string | undefined> =  {
 }
 
 export enum DeepLinkType {
-  Customer,
   AddDriver,
   AddOperator
 }
@@ -46,32 +45,32 @@ export enum DeepLinkType {
 // create a new function called serviceProvider-changeUniqueId
 // Modify add operator and add driver to accept unique-id and secret
 
-export async function generateDeepLinks(uniqueId: string, appType: AppType): Promise<Record<DeepLinkType, IDeepLink>> {
+export async function generateDeepLinks(uniqueId: string, appType: AppType): Promise<Partial<Record<DeepLinkType, IDeepLink>>> {
   let packageId = appPackageIds[AppType.Customer];
   let appStoreId = appStoreIds[AppType.Customer];
   let prefix = `https://mezc.co`
 
   // Customer Deep Links
-  let customerDeeplink = `https://mezkala.app/${uniqueId}/`
+  // let customerlink = `https://mezkala.app/${uniqueId}/`
   // let customerParameterisedLink = `${prefix}?link=${customerDeeplink}&apn=${packageId}&ibi=${packageId}&isi=${appStoreId}` //&ifl=${customerDeeplink}&afl={customerDeeplink}
-  let customerRequestBody: ShortLinkRequestBody = {
-    // longDynamicLink: customerParameterisedLink,
-    dynamicLinkInfo: {
-      domainUriPrefix: prefix,
-      link: customerDeeplink,
-      androidInfo: {
-        androidPackageName: packageId
-      },
-      iosInfo: {
-        iosBundleId: packageId,
-        iosAppStoreId: appStoreId
-      },
-    },
-    suffix: {
-      option: 'SHORT'
-    }
-  }
-  let customerLinkResponse = await generateDeepLink(customerRequestBody, uniqueId, "customer");
+  // let customerRequestBody: ShortLinkRequestBody = {
+  //   // longDynamicLink: customerParameterisedLink,
+  //   dynamicLinkInfo: {
+  //     domainUriPrefix: prefix,
+  //     link: customerDeeplink,
+  //     androidInfo: {
+  //       androidPackageName: packageId
+  //     },
+  //     iosInfo: {
+  //       iosBundleId: packageId,
+  //       iosAppStoreId: appStoreId
+  //     },
+  //   },
+  //   suffix: {
+  //     option: 'SHORT'
+  //   }
+  // }
+  // let customerLinkResponse = await generateDeepLink(customerRequestBody, uniqueId, "customer");
   // console.log("customerLinkResponse: ", customerLinkResponse)
 
   // Add Operator Deep Links
@@ -102,7 +101,11 @@ export async function generateDeepLinks(uniqueId: string, appType: AppType): Pro
     }
   }
   let addOperatorLinkResponse = await generateDeepLink(addOperatorRequestBody, uniqueId, "operator");
-
+  if(appType == AppType.Business) {
+    return {
+      [DeepLinkType.AddOperator]: addOperatorLinkResponse,
+    }
+  }
   packageId = appPackageIds[AppType.Delivery];
   appStoreId = appStoreIds[AppType.Delivery];
 
@@ -131,7 +134,6 @@ export async function generateDeepLinks(uniqueId: string, appType: AppType): Pro
   let addDriverLinkResponse = await generateDeepLink(addDriverRequestBody, uniqueId, "driver");
 
   return {
-    [DeepLinkType.Customer]: customerLinkResponse,
     [DeepLinkType.AddOperator]: addOperatorLinkResponse,
     [DeepLinkType.AddDriver]: addDriverLinkResponse,
   }

@@ -5,7 +5,7 @@ import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../../utilities/l
 import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 import { PaymentType } from '../../models/Generic/Order';
-import { htmlToPdf } from "../../../utilities/links/HTMLToPDF";
+import { QRFlyerLinks, createQRFlyerPDF } from "../../../utilities/links/flyer";
 
 
 export async function createRestaurant(
@@ -16,8 +16,8 @@ export async function createRestaurant(
 
   let uniqueId: string = restaurantDetails.uniqueId ?? generateString();
 
-  let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Restaurant)
-  let flyers = await htmlToPdf(uniqueId, linksResponse[DeepLinkType.Customer].urlQrImage);
+  let linksResponse: Partial<Record<DeepLinkType, IDeepLink>> = await generateDeepLinks(uniqueId, AppType.Restaurant)
+  let QRflyer: QRFlyerLinks = await createQRFlyerPDF(uniqueId);
   
   let response = await chain.mutation({
     insert_restaurant_restaurant_one: [{
@@ -53,12 +53,11 @@ export async function createRestaurant(
             },
             service_link: {
               data: {
-                customer_deep_link: linksResponse[DeepLinkType.Customer].url,
-                customer_qr_image_link: linksResponse[DeepLinkType.Customer].urlQrImage,
-                operator_deep_link: linksResponse[DeepLinkType.AddOperator].url,
-                operator_qr_image_link: linksResponse[DeepLinkType.AddOperator].urlQrImage,
-                driver_deep_link: linksResponse[DeepLinkType.AddDriver].url,
-                driver_qr_image_link: linksResponse[DeepLinkType.AddDriver].urlQrImage,
+                customer_qr_image_link: QRflyer.customerQRImageLink,
+                operator_deep_link: linksResponse[DeepLinkType.AddOperator]?.url,
+                operator_qr_image_link: linksResponse[DeepLinkType.AddOperator]?.urlQrImage,
+                driver_deep_link: linksResponse[DeepLinkType.AddDriver]?.url,
+                driver_qr_image_link: linksResponse[DeepLinkType.AddDriver]?.urlQrImage,
                 customer_flyer_links: $`customer_flyer_links`,
               }
             }
@@ -97,7 +96,7 @@ export async function createRestaurant(
       "type": "Point",
       "coordinates": [restaurantDetails.location.lng, restaurantDetails.location.lat]
     },
-    "customer_flyer_links": flyers
+    "customer_flyer_links": QRflyer.flyerLinks
   })
   console.log("response: ", response);
 

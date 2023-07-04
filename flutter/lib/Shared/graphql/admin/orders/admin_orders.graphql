@@ -193,3 +193,44 @@ query admin_get_service__orders(
     service_provider_type
   }
 }
+
+subscription admin_listen_on_business_orders($inProccess: Boolean!) {
+  business_order_request(where: { in_progress: { _eq: $inProccess } }) {
+    id
+    business_id
+    order_time
+    status
+    cost
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
+
+query admin_get_business_orders(
+  $inProccess: Boolean!
+  $limit: Int
+  $offset: Int
+) {
+  business_order_request(
+    limit: $limit
+    offset: $offset
+    where: { in_progress: { _eq: $inProccess } }
+    order_by: { order_time: desc }
+  ) {
+    id
+    business_id
+    order_time
+    status
+    cost
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
