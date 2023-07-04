@@ -24,7 +24,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
-import 'package:mezcalmos/Shared/pages/MessagesListView/mmmmm/MessagesListViewController.dart';
+import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';

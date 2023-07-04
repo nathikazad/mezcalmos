@@ -146,15 +146,17 @@ class CustMessagesListViewController extends MessagesListViewController {
     subscriptionId = _hasuraDb.createSubscription(start: () {
       chatsStream =
           listen_on_customer_chats(customerId: _authController.user!.hasuraId)
-              .listen(( event) {
-        event.forEach((ChatListVars element) {
-          final HasuraChat? chat = _allChats.value.firstWhereOrNull(
-              (HasuraChat element2) => element2.id == element.chatId);
-          if (chat != null) {
-            mezDbgPrint("Updating last message ${element.lastMessage}");
-            chat.lastMessage?.message = element.lastMessage;
-          }
-        });
+              .listen((List<ChatListVars>? event) {
+        if (event != null) {
+          event.forEach((ChatListVars element) {
+            final HasuraChat? chat = _allChats.value.firstWhereOrNull(
+                (HasuraChat element2) => element2.id == element.chatId);
+            if (chat != null) {
+              mezDbgPrint("Updating last message ${element.lastMessage}");
+              chat.lastMessage?.message = element.lastMessage;
+            }
+          });
+        }
       });
     }, cancel: () {
       chatsStream?.cancel();
