@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -52,35 +53,34 @@ Future<int?> add_one_item(
     name: Input$translation_obj_rel_insert_input(
       data: Input$translation_insert_input(
         service_provider_id: restaurantId,
-        service_provider_type: OrderType.Restaurant.toFirebaseFormatString(),
+        service_provider_type:
+            cModels.OrderType.Restaurant.toFirebaseFormatString(),
         translations: Input$translation_value_arr_rel_insert_input(
-            data: <Input$translation_value_insert_input>[
-              Input$translation_value_insert_input(
-                  language_id: LanguageType.EN.toFirebaseFormatString(),
-                  value: item.name[LanguageType.EN]),
-              Input$translation_value_insert_input(
-                  language_id: LanguageType.ES.toFirebaseFormatString(),
-                  value: item.name[LanguageType.ES]),
-            ]),
+            data: item.name.entries
+                .map((MapEntry<cModels.Language, String> e) =>
+                    Input$translation_value_insert_input(
+                        language_id: e.key.toFirebaseFormatString(),
+                        value: e.value))
+                .toList()),
       ),
     ),
     special_period_end: item.endsAt?.toUtc().toString(),
-    special_period_start: item.startsAt?.toString(),
+    special_period_start: item.startsAt?.toUtc().toString(),
     item_type: item.itemType.toFirebaseFormatString(),
     image: item.image,
     description: Input$translation_obj_rel_insert_input(
       data: Input$translation_insert_input(
         service_provider_id: restaurantId,
-        service_provider_type: OrderType.Restaurant.toFirebaseFormatString(),
+        service_provider_type:
+            cModels.OrderType.Restaurant.toFirebaseFormatString(),
         translations: Input$translation_value_arr_rel_insert_input(
-            data: <Input$translation_value_insert_input>[
-              Input$translation_value_insert_input(
-                  language_id: LanguageType.EN.toFirebaseFormatString(),
-                  value: item.description?[LanguageType.EN]),
-              Input$translation_value_insert_input(
-                  language_id: LanguageType.ES.toFirebaseFormatString(),
-                  value: item.description?[LanguageType.ES]),
-            ]),
+            data: item.description?.entries
+                    .map((MapEntry<cModels.Language, String> e) =>
+                        Input$translation_value_insert_input(
+                            language_id: e.key.toFirebaseFormatString(),
+                            value: e.value))
+                    .toList() ??
+                []),
       ),
     ),
     restaurant_id: restaurantId,
@@ -256,6 +256,7 @@ List<Choice> _convertChoices(
     return Choice(
         id: oneChoice.id,
         nameId: oneChoice.name.id,
+        available: oneChoice.available,
         name: toLanguageMap(translations: oneChoice.name.translations),
         cost: oneChoice.cost);
   }).toList();
@@ -265,13 +266,15 @@ List<Choice> _convertChoices(
 Future<List<Item>> search_items(
     {required List<int> servicesIds,
     required String keyword,
-    required LanguageType lang,
+    required cModels.Language lang,
+    bool? onlineOrdering,
     bool withCache = true}) async {
   final QueryResult<Query$searchItems> response =
       await _db.graphQLClient.query$searchItems(Options$Query$searchItems(
           variables: Variables$Query$searchItems(
     keyword: "%$keyword%",
     languageId: lang.toFirebaseFormatString(),
+    online_ordering: onlineOrdering,
     servicesIds: servicesIds,
   )));
 
@@ -285,7 +288,7 @@ Future<List<Item>> search_items(
           name: toLanguageMap(translations: item.name.translations),
           itemType: item.item_type.toItemType(),
           id: item.id,
-          restaurantName: item.restaurant?.name,
+          restaurantName: item.restaurant?.details?.name,
           restaurantId: item.restaurant_id,
           image: item.image,
           available: item.available,

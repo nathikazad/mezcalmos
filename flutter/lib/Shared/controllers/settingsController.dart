@@ -1,24 +1,29 @@
 import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_api_availability/google_api_availability.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:soundpool/soundpool.dart';
 
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
+
   // final Connectivity _connectivity = Connectivity();
   // NOTIFICATION RINGTONES
   // this will be customized by the user in future.
   Soundpool _userNotificationsSoundPool = Soundpool.fromOptions(
       options: SoundpoolOptions(streamType: StreamType.notification));
   int? _selectedNotificationsSoundId;
+
   // CALLS RINGTONES
   Soundpool _userCallingSoundPool = Soundpool.fromOptions(
       options: SoundpoolOptions(streamType: StreamType.music));
@@ -27,15 +32,28 @@ class SettingsController extends GetxController {
 
   final List<SideMenuItem> sideMenuItems;
   final LocationPermissionType locationType;
-  AppType appType;
+
   ThemeController get appTheme => _appTheme;
+
   LanguageController get appLanguage => _appLanguage;
-  SettingsController(this.appType, this.locationType,
-      {this.sideMenuItems = const []});
+
+  SettingsController(this.locationType, {this.sideMenuItems = const []});
+  bool _isGooglePlayServiceAvailable = true;
+  bool get isGooglePlayServiceAvailable => _isGooglePlayServiceAvailable;
 
   @override
   Future<void> onInit() async {
     Get.put(LocationController(locationType: locationType), permanent: true);
+    try {
+      GooglePlayServicesAvailability res = await GoogleApiAvailability.instance
+          .checkGooglePlayServicesAvailability();
+      _isGooglePlayServiceAvailable =
+          res == GooglePlayServicesAvailability.success;
+    } catch (e) {
+      mezDbgPrint("Google Play Services not available");
+      _isGooglePlayServiceAvailable = false;
+    }
+
     // here --------
     // FOR NOW WE SET IT TO EN (default  if not passed to LangController)
     _appTheme = Get.put(ThemeController(), permanent: true);

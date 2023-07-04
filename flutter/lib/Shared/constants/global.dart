@@ -4,10 +4,11 @@
 
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:rive/rive.dart' as rive;
+import 'package:url_launcher/url_launcher.dart';
 
 // this is my user that i create in prod for the prod deployement testing.
 const String testUserIdInProd = "BUhQ74BrbBNeYZz60fK4ocrgpqz1";
@@ -18,7 +19,7 @@ const String localhost = "http://127.0.0.1";
 const String authPort = ":9099";
 const String dbRoot = ":9000/?ns=$db";
 const int functionPort = 5001;
-const String placesApikey = "AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY";
+const String proxyUrl = "https://cors-mezc.herokuapp.com";
 const String stripePubTestKey =
     "pk_test_51KxdsRDV5wKm9SNKkEwYTuMUdxRAULh7UUy2w42pV27dDtUc9CBNioU426ftPLzxU5dRd8sZv3UnGgpt8RsDF9xf000oUAmiZS";
 const String stripePubProdKey =
@@ -26,6 +27,7 @@ const String stripePubProdKey =
 const String agoraAppId = "6def50fdd2804ffaaa70d807ee445d28";
 const String hasuraProdLink = "https://mez-production.hasura.app/v1/graphql";
 const String hasuraStageLink = "https://mez-staging.hasura.app/v1/graphql";
+
 const String hasuraDevLink = "http://127.0.0.1:8080/v1/graphql";
 // can be dev / prod
 
@@ -34,42 +36,88 @@ const String hasuraDevLink = "http://127.0.0.1:8080/v1/graphql";
 const String tTestRestaurantOpValue = "restaurantop@mezcalmos.com";
 const String tTestCustomerValue = "customer@mezcalmos.com";
 const String tTestDeliveryDriverValue = "deliverydriver@mezcalmos.com";
-const String tTestAdminValue = "mezAdmin@mezcalmos.com";
+const String tTestAdminValue = "mezadmin@mezcalmos.com";
+const String tTestDeliveryOpValue = "deliveryop@mezcalmos.com";
 const String tEmailTestPassword = "password";
 
 // ----------------- Costants Numbers ----------------- //
 
 const double nDefaultMezcalmosTextSize = 27;
 const int nSplashScreenTimer = 1;
-const int nQualityCompressionOfUserImage = 10;
+// const int nQualityCompressionOfUserImage = 10;
 const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
 const int nScheduledCounterOfferValidExpireTimeInSeconds = 900; // 15mins
-
+const Map<String, dynamic> defaultSchedule = {
+  "monday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "tuesday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "wednesday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "thursday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "friday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "saturday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+  "sunday": {
+    "isOpen": true,
+    "openHours": [
+      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    ],
+  },
+};
 // ----------------- Costants Strings ----------------- //
 const String sPrivacyPolicyCustomerApp =
     "https://www.mezcalmos.com/privacy-policy.html";
 const String sPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
 
-const LanguageType sDefaultLanguage = LanguageType.ES;
+const String sNetworkCheckUrl1 = 'https://www.google.com';
+const String firebaseDbUrl = 'https://www.firebaseio.com';
+const String firebaseAuthUrl = 'https://identitytoolkit.googleapis.com';
+const String firebaseFunctionsProdUrl =
+    'https://us-central1-mezcalmos-31f1c.cloudfunctions.net';
+const String firebaseFunctionsStageUrl =
+    'https://us-central1-mezcalmos-staging.cloudfunctions.net';
+const String hasuraDbUrl = 'https://www.hasura.app';
+
+const Language sDefaultLanguage = Language.ES;
 const String sDefaultTheme = "light";
 
 const String sMez = "MEZ";
 const String sCalmos = "CALMOS";
 const String sMezcalmos = "MEZCALMOS";
+const String sKala = "KALA";
+const String sMezkala = "MEZKALA";
 
 const String sDefaultUserName = "Unknown";
 const String sDefaultCustomerName = "Unknown";
 
-// ----------------- GetStorage Strings ----------------- //
-const String getxPrivacyPolicyLink = "ppLink";
-const String getxLmodeKey = "lmod";
-const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
-const String getxTaxiDescriptor = "taxi_descriptor";
-const String getxDestinationDescriptor = "destination_descriptor";
-const String getxAppVersion = "version";
-const String getxAppName = "appName";
-const String getxPackageName = "packageName";
-const String getxAppStoreId = "iosAppStoreId";
+// ----------------- Default url Strings ----------------- //
 const String defaultUserImgUrl =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
 const String defaultDriverImgUrl =
@@ -85,7 +133,10 @@ const String aUpdate = "assets/images/shared/update.png";
 const String aMoney = "assets/images/shared/money.png";
 const String aGpay = "assets/images/customer/gPay.png";
 
+const String aWhatsApp = "assets/images/shared/whatsApp.png";
+
 const String noOrdersAsset = "assets/images/shared/noOrderIllustration.png";
+const String closedServiceAsset = "assets/images/shared/closedService.png";
 const String aRequestWaiting = "assets/images/shared/requestPerson.png";
 const String aDefaultDbUserImgAsset =
     "assets/images/shared/defaultUserLogo.png";
@@ -110,6 +161,9 @@ const String aDeliveredIcon =
     "assets/images/shared/notifications/delivered.png";
 const String aCancelledIcon = "assets/images/shared/notifications/cancel.png";
 const String aAtLaundry = "assets/images/shared/notifications/atLaundry.png";
+const String aNoMessages = "assets/images/shared/noMessages.png";
+const String aNoResults = "assets/images/shared/noresults.png";
+const String aNoServices = "assets/images/shared/noServicesAdded.png";
 const String aReadyDeliveryLaundry =
     "assets/images/shared/notifications/readyForDelivery.png";
 const rive.RiveAnimation aDriverAnimation = rive.RiveAnimation.asset(
@@ -120,16 +174,68 @@ const rive.RiveAnimation aWashingAnimation = rive.RiveAnimation.asset(
   "assets/animation/washingMachine.riv",
   fit: BoxFit.cover,
 );
+const String aAdventure = "assets/images/customer/adventure.png";
+const String aChakras = "assets/images/customer/chakras.png";
+const String aDelivery = "assets/images/customer/delivery.png";
+const String aDiscoBall = "assets/images/customer/discoBall.png";
+const String aVolunteering = "assets/images/customer/volunteering.png";
+const String aYoga = "assets/images/customer/yoga.png";
+const String aServices = "assets/images/customer/services.png";
+const String aLocallyMade = "assets/images/customer/locallyMade.png";
+const String aCleaning = "assets/images/customer/cleaning.png";
+const String aMealPrep = "assets/images/customer/mealPrep.png";
+const String aPetSitting = "assets/images/customer/petSitting.png";
+const String aFood = "assets/images/customer/food.png";
+const String aRestaurant = "assets/images/customer/restaurant.png";
+const String aFarmers = "assets/images/customer/farmers.png";
+const String aUncategorized = "assets/images/customer/uncategorized.png";
+const String aArt = "assets/images/customer/art.png";
+const String aConsumable = "assets/images/customer/consumable.png";
+const String aPersonalCare = "assets/images/customer/personalCare.png";
+const String aVehicle = "assets/images/customer/vehicle.png";
+const String aProperty = "assets/images/customer/property.png";
 
-enum AppType {
-  CustomerApp,
-  TaxiApp,
-  TaxiAdminApp,
-  DeliveryAdminApp,
-  DeliveryApp,
-  LaundryApp,
-  RestaurantApp
-}
+const String aHouseRentalAgency =
+    "assets/images/customer/houseRentalAgency.png";
+const String aLaundryBusiness = "assets/images/customer/laundryBusiness.png";
+const String aRestaurantBusiness =
+    "assets/images/customer/restaurantBusiness.png";
+const String aTourismAgency = "assets/images/customer/tourismAgency.png";
+const String aMealPlanning = "assets/images/customer/mealPlanning.png";
+const String aRealEstate = "assets/images/customer/realEstate.png";
+const String aLanguageSchool = "assets/images/customer/languageSchool.png";
+
+// Rental Images, Icons
+const String aRentals = "assets/images/customer/rentals.png";
+const String aHomes = "assets/images/customer/rental/homes.png";
+const String aMotocycle = "assets/images/customer/rental/motorcycle.png";
+const String aCar = "assets/images/customer/rental/carRental.png";
+const String aSurf = "assets/images/customer/rental/surf.png";
+const String aHouseSliding = "assets/images/customer/rental/housesliding.png";
+const String aPriceCheck = "assets/images/customer/rental/pricecheck.png";
+const String aSingleBed = "assets/images/customer/rental/singlebed.png";
+// Adventure Images
+const String aTours = "assets/images/customer/tours.png";
+const String aActivities = "assets/images/customer/activities.png";
+// Events Images
+const String aParties = "assets/images/customer/parties.png";
+const String aDance = "assets/images/customer/dance.png";
+const String aGetTogether = "assets/images/customer/getTogether.png";
+
+// Services Images
+const String aPhotography = "assets/images/customer/photography.png";
+const String aTattoo = "assets/images/customer/tattoo.png";
+const String aBeauty = "assets/images/customer/beauty.png";
+
+const String _imgs_path = "assets/images/customer/taxi/";
+const String header_asset = "${_imgs_path}header.png";
+
+const String turnOn_asset = "${_imgs_path}turnOnIllustration.png";
+const String noOrdersFound_asset = "${_imgs_path}noOrderIllustration.png";
+const String usaFlagAsset = "assets/images/shared/usa.png";
+const String mexicoFlagAsset = "assets/images/shared/mexico.png";
+const String money_asset = "assets/images/shared/money.png";
+const String taxi_driver_marker_asset = "${_imgs_path}taxiDriverImg.png";
 
 extension ParseOrderTypeToString on AppType {
   String toShortString() {
@@ -137,23 +243,60 @@ extension ParseOrderTypeToString on AppType {
     return str[0].toLowerCase() + str.substring(1);
   }
 
+  String toHasuraString() {
+    final String str = toString().split('.').last;
+    return (str[0].toLowerCase() + str.substring(1)).replaceFirst('App', '');
+  }
+
   String toNormalString() {
     final String str = toString().split('.').last;
     return str;
   }
 
+  String toChatInfoString() {
+    switch (this) {
+      case AppType.Customer:
+        return "CustomerApp";
+      case AppType.DeliveryAdmin:
+        return "DeliveryAdminApp";
+      case AppType.MezAdmin:
+        return "MezAdminApp";
+      case AppType.Delivery:
+        return "DeliveryApp";
+      case AppType.Laundry:
+        return "LaundryApp";
+      case AppType.Restaurant:
+        return "RestaurantApp";
+      case AppType.Business:
+        return "BusinessApp";
+    }
+  }
+
   ParticipantType? toParticipantType() {
     switch (this) {
-      case AppType.CustomerApp:
+      case AppType.Customer:
         return ParticipantType.Customer;
-      case AppType.TaxiApp:
-        return ParticipantType.Taxi;
-      case AppType.TaxiAdminApp:
-        return ParticipantType.TaxiAdmin;
-      case AppType.DeliveryAdminApp:
-        return ParticipantType.DeliveryAdmin;
+      case AppType.DeliveryAdmin:
+        return ParticipantType.DeliveryOperator;
+      case AppType.MezAdmin:
+        return ParticipantType.MezAdmin;
+      case AppType.Delivery:
+        return ParticipantType.DeliveryDriver;
+      case AppType.Laundry:
+        return ParticipantType.LaundryOperator;
+      case AppType.Restaurant:
+        return ParticipantType.RestaurantOperator;
+      case AppType.Business:
+        return ParticipantType.BusinessOperator;
+    }
+  }
+
+  String getPrivacyLink() {
+    switch (this) {
+      case AppType.Customer:
+        return sPrivacyPolicyCustomerApp;
       default:
-        return null;
+        return sPrivacyPolicyCustomerApp;
     }
   }
 }
@@ -166,9 +309,27 @@ extension StringToParseOrderType on String {
 // -----------STYLES CONSTANT ------------------- //
 
 const Color purpleColor = Color(0xFFAC59FC);
+const Color offPurpleColor = Color(0xFFF4EAFF);
+
 const Color primaryBlueColor = Color(0xFF6779FE);
+const Color redAccentColor = Color(0xFFE21233);
+const Color offOrangeColor = Color(0xFFFFF6E9);
+const Color cancelledBackgroundColor = Color(0XFFFDECEF);
+const Color deliveredBackgroundColor = Color(0xFFEAECFF);
+const Color pickLocationTextFieldColor = Color(0xFFF5F5F5);
+const Color pickLocationHintTextFieldColor = Color(0xFFC4C4C4);
+const Color unselectedIconColor = Color(0xFFC4C4C4);
+const Color waitingBackgroundColor = Color(0xFFFFF0CB);
+const Color onGoingBackgroundColor = Color(0xFFE4F2E5);
+const Color backgroundShadeColor = Color(0xFFEDEDED);
 const Color secondaryLightBlueColor = Color(0xFFE1E4FF);
-const Color offRedColor = Color(0xFFF9D8D6);
+const Color laundaryChipContainerColor = Color(0xFFF0F1FF);
+const Color offRedColor = Color(0xffF9D8D6);
+const Color offShadeGreyColor = Color(0xFF494949);
+const Color offLightShadeGreyColor = Color(0xFF787878);
+const Color blackColor = Colors.black;
+const Color unratedStarColor = Color(0XFFF2F2F2);
+const Color softPurple = Color(0xFFE0E4FF);
 const LinearGradient bluePurpleGradient = LinearGradient(
   colors: [
     primaryBlueColor,
@@ -177,3 +338,53 @@ const LinearGradient bluePurpleGradient = LinearGradient(
   begin: Alignment.centerLeft,
   end: Alignment.centerRight,
 );
+
+const String mezPackageMarker =
+    "assets/images/shared/markers/packageMarker.png";
+const String mezHomeMarker = "assets/images/shared/markers/homeMarker.png";
+const String mezRestaurantMarker =
+    "assets/images/shared/markers/restaurantMarker.png";
+const String mezDestinationMarker =
+    "assets/images/shared/markers/destinationMarker.png";
+const String mezHomeIconMarker = "assets/images/shared/markers/homeIcon.png";
+const String mezSurfIconMarker = "assets/images/shared/markers/surfIcon.png";
+const String mezRestaurantIcon =
+    "assets/images/shared/markers/restaurantIcon.png";
+const String mezVehicleRentalIconMarker =
+    "assets/images/shared/markers/vehicleRentalIcon.png";
+const String mezLaundryIcon = "assets/images/shared/markers/laundryIcon.png";
+const String mezLookingAsset = "assets/images/shared/looking.png";
+
+const String copyLinkAsset = "assets/images/shared/copyLink.png";
+const String instaAsset = "assets/images/shared/insta.png";
+const String instaStoryAsset = "assets/images/shared/instaStory.png";
+const String whatsappAsset = "assets/images/shared/whatsappIcon2.png";
+const String whatsappStatusAsset = "assets/images/shared/whatsappStatus.png";
+const String facebookAsset = "assets/images/shared/facebook.png";
+const String facebookStoryAsset = "assets/images/shared/facebookStory.png";
+
+const String customImageUrl =
+    "https://villaexperience.com/wp-content/uploads/2019/09/zacilna-rivieramaya-1-3.jpg";
+Future<void> launchAppStoreLink() async {
+  if (kIsWeb) {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        await launchUrl(Uri.parse(
+            "https://play.google.com/store/apps/details?id=com.mezcalmos.customer"));
+        break;
+      case TargetPlatform.iOS:
+        await launchUrl(
+            Uri.parse("https://apps.apple.com/us/app/mezkala/id1595882320"));
+        break;
+      default:
+    }
+  }
+  //
+}
+
+Widget get smallSepartor => SizedBox(height: 8);
+Widget get meduimSeperator => SizedBox(height: 15);
+Widget get bigSeperator => SizedBox(height: 25);
+Widget get hSmallSepartor => SizedBox(width: 8);
+Widget get hMeduimSeperator => SizedBox(width: 15);
+Widget get hBigSeperator => SizedBox(width: 25);

@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -10,12 +10,13 @@ class UserInfo {
   int hasuraId;
   String? _name;
   String? _image;
-  LanguageType? language;
+  Language? language;
+  String? creationTime;
   String get name => _name ?? "Unknown User";
   bool get isNameSet => _name != null;
   bool get isImageSet => _image != null;
   String get image {
-    if (_image != null && _image!.toString().isURL) {
+    if (_image != null && _image!.isNotEmpty) {
       return _image!;
     } else {
       return defaultUserImgUrl;
@@ -27,6 +28,7 @@ class UserInfo {
       this.firebaseId,
       required String? name,
       required String? image,
+      this.creationTime,
       this.language}) {
     _name = name;
     _image = image;
@@ -38,7 +40,7 @@ class UserInfo {
   //       name: data["name"],
   //       image: data["image"],
   //       language: data["language"] != null
-  //           ? data["language"].toString().toLanguageType()
+  //           ? data["language"].toString().toLanguage()
   //           : null);
   // }
 
@@ -48,7 +50,7 @@ class UserInfo {
   //     hasuraId: user.id,
   //     name: user.name,
   //     image: user.image,
-  //     language: user.language_id.toLanguageType(),
+  //     language: user.language_id.toLanguage(),
   //   );
   // }
 
@@ -57,7 +59,8 @@ class UserInfo {
         "name": name,
         "image": image,
         "language":
-            language?.toString() ?? LanguageType.EN.toFirebaseFormatString(),
+            language?.toString() ?? Language.EN.toFirebaseFormatString(),
+        "creation_time": creationTime,
       };
 
   // UserInfo copyWith({
@@ -65,7 +68,7 @@ class UserInfo {
   //   int? hasuraId,
   //   String? name,
   //   String? image,
-  //   LanguageType? language,
+  //   Language? language,
   // }) {
   //   return UserInfo(
   //       hasuraId: hasuraId ?? this.hasuraId,
@@ -78,8 +81,9 @@ class UserInfo {
   UserInfo clone({
     String? name,
     String? image,
-    LanguageType? language,
+    Language? language,
   }) {
+    mezDbgPrint("Cloning user info with name: $name and image: $image");
     return UserInfo(
       firebaseId: firebaseId,
       hasuraId: hasuraId,
@@ -94,7 +98,7 @@ class MainUserInfo {
   int id;
   String? name;
   String? image;
-  LanguageType? language;
+  Language? language;
   String? email;
 
   /// Original version of image that was uploaded by the user with some light compression.
@@ -115,7 +119,7 @@ class MainUserInfo {
         name: data["name"],
         image: data["image"],
         language: data["language"] != null
-            ? data["language"].toString().toLanguageType()
+            ? data["language"].toString().toLanguage()
             : null,
         phone: data['phone'],
         email: data['email']);
@@ -126,7 +130,7 @@ class MainUserInfo {
         name: data["name"],
         image: data["image"],
         language: data["language"] != null
-            ? data["language"].toString().toLanguageType()
+            ? data["language"].toString().toLanguage()
             : null,
         phone: data['phone'],
         email: data['email']);
@@ -151,25 +155,34 @@ class MainUserInfo {
 }
 
 class ServiceInfo extends UserInfo {
-  Location location;
+  MezLocation location;
+  int? locationId;
+  String? uniqueId;
   int? descriptionId;
+  String? phoneNumber;
   LanguageMap? description;
+  Currency? currency;
+  ServiceProviderLanguage? languages;
 
   ServiceInfo({
     required this.location,
     super.firebaseId,
     this.description,
+    this.locationId,
+    this.phoneNumber,
     required super.hasuraId,
     required super.image,
     this.descriptionId,
+    this.currency,
+    this.uniqueId,
+    this.languages,
     required super.name,
-    LanguageType? lang,
+    Language? lang,
   }) : super(language: lang);
 
   factory ServiceInfo.fromData(data) {
-    mezDbgPrint(" 👋👋👋👋 Service info data $data");
     return ServiceInfo(
-      location: Location.fromFirebaseData(data['location']),
+      location: MezLocation.fromFirebaseData(data['location']),
       firebaseId: data['firebase_id'],
       hasuraId: data['id'],
       image: data['image'],
@@ -186,7 +199,7 @@ class ServiceInfo extends UserInfo {
       };
   @override
   ServiceInfo copyWith({
-    Location? location,
+    MezLocation? location,
     String? name,
     String? image,
     int? descId,

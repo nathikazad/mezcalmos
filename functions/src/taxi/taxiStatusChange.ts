@@ -1,16 +1,11 @@
 import * as functions from "firebase-functions";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
-import * as customerNodes from "../shared/databaseNodes/customer";
 import { currentOrderIdNode } from "../shared/databaseNodes/taxi";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
-import { pushNotification } from "../utilities/senders/notifyUser";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { orderInProcess, TaxiOrder, TaxiOrderStatus, TaxiOrderStatusChangeNotification } from "../shared/models/Services/Taxi/TaxiOrder";
-import { taxiOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { orderInProcess, TaxiOrder, TaxiOrderStatus, } from "../shared/models/Services/Taxi/TaxiOrder";
 // import { ParticipantType } from "../shared/models/Generic/Chat";
-import { orderUrl } from "../utilities/senders/appRoutes";
 
 let statusArrayInSeq: Array<TaxiOrderStatus> =
   [
@@ -107,34 +102,34 @@ async function changeStatus(data: any, newStatus: TaxiOrderStatus, userId: strin
 
     if (newStatus == TaxiOrderStatus.InTransit || newStatus == TaxiOrderStatus.OnTheWay ) {
       rootNodes.inProcessOrders(OrderType.Taxi, orderId).update(order);
-      customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
+      // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
       taxiNodes.inProcessOrders(taxiId, orderId).update(order);
     } else {
       //TaxiOrderStatus.OnTheWay -> executes this
       rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
       rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
-      await customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order);
-      customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
+      // await customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order);
+      // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
       taxiNodes.inProcessOrders(taxiId, orderId).remove();
       taxiNodes.pastOrders(taxiId, orderId).set(order);
       currentOrderIdNode(taxiId).remove()
     }
     
-    let notification: Notification = {
-      foreground: <TaxiOrderStatusChangeNotification>{
-        status: newStatus,
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.OrderStatusChange,
-        orderType: OrderType.Taxi,
-        orderId: orderId,
-        notificationAction: newStatus != TaxiOrderStatus.CancelledByTaxi
-          ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
-      },
-      background: taxiOrderStatusChangeMessages[newStatus],
-      linkUrl: orderUrl(OrderType.Taxi, parseInt(orderId))
-    }
+    // let notification: Notification = {
+    //   foreground: <TaxiOrderStatusChangeNotification>{
+    //     status: newStatus,
+    //     time: (new Date()).toISOString(),
+    //     notificationType: NotificationType.OrderStatusChange,
+    //     orderType: OrderType.Taxi,
+    //     orderId: orderId,
+    //     notificationAction: newStatus != TaxiOrderStatus.CancelledByTaxi
+    //       ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
+    //   },
+    //   background: taxiOrderStatusChangeMessages[newStatus],
+    //   linkUrl: orderUrl(OrderType.Taxi, parseInt(orderId))
+    // }
 
-    pushNotification(order.customer.firebaseId!, notification);
+    // pushNotification(order.customer.firebaseId!, notification);
 
     return {
       status: ServerResponseStatus.Success,

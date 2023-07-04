@@ -12,10 +12,16 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["restaurantInfoTab"];
 
 class ServiceLocationCard extends StatefulWidget {
-  const ServiceLocationCard({Key? key, required this.location})
-      : super(key: key);
+  const ServiceLocationCard({
+    Key? key,
+    required this.location,
+    this.textStyle,
+    this.height = null,
+  }) : super(key: key);
 
-  final Location location;
+  final MezLocation location;
+  final TextStyle? textStyle;
+  final double? height;
 
   @override
   State<ServiceLocationCard> createState() => _ServiceLocationCardState();
@@ -40,39 +46,43 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 16,
+          ),
           Container(
             child: Text(
               '${_i18n()["location"]}',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-          ),
-          SizedBox(
-            height: 5,
           ),
           Container(
             child: Text(
               widget.location.address,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 8,
           ),
           IgnorePointer(
             ignoring: true,
             child: Card(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Container(
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                height: 35.h,
+                height: widget.height ?? 35.h,
                 width: double.infinity,
                 child: MGoogleMap(mGoogleMapController: mapController),
               ),
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          // SizedBox(
+          //   height: 10,
+          // ),
         ],
       );
     } else {

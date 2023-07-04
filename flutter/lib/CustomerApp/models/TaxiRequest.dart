@@ -1,10 +1,10 @@
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 class TaxiRequest {
-  Location? from;
-  Location? to;
+  MezLocation? from;
+  MezLocation? to;
   RouteInformation? routeInformation;
   int estimatedPrice;
   PaymentType paymentType;
@@ -35,11 +35,11 @@ class TaxiRequest {
     }
   }
 
-  void setFromLocation(Location? loc) {
+  void setFromLocation(MezLocation? loc) {
     from = loc;
   }
 
-  void setToLocation(Location? loc) {
+  void setToLocation(MezLocation? loc) {
     to = loc;
   }
 

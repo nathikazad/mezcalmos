@@ -2,14 +2,14 @@ import { Order, OrderType } from "../../Generic/Order"
 import { UserInfo } from "../../Generic/User"
 import { TaxiOrderRequest } from "./TaxiOrderRequest"
 import { Location } from '../../Generic/Generic';
-import { RouteInformation } from '../../Generic/RouteInformation';
+// import { RouteInformation } from '../../Generic/RouteInformation';
 import { ForegroundNotification, NotificationForQueue, OrderNotification } from "../../Notification";
 
 export interface TaxiOrder extends Order {
   from: Location,
   cost: number,
   status: TaxiOrderStatus,
-  routeInformation: RouteInformation,
+  // routeInformation: RouteInformation,
   acceptRideTime?: string,
   startRideTime?: string,
   finishRideTime?: string,

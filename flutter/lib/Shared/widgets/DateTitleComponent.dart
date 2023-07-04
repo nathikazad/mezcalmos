@@ -21,7 +21,7 @@ class DateTitleComponent extends StatelessWidget {
                       ? const EdgeInsets.symmetric(horizontal: 5)
                       : const EdgeInsets.all(0),
                   child: Text("$date",
-                      style: Theme.of(context).textTheme.bodyText2))
+                      style: Theme.of(context).textTheme.bodyMedium))
             ],
           ),
           SizedBox(

@@ -8,22 +8,24 @@ import "package:http/http.dart" as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
+    as MapHelper;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
-import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
 
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
   RxList<MezMarker> markers = <MezMarker>[].obs;
-  Rxn<Location> location = Rxn<Location>();
+  Rxn<MezLocation> location = Rxn<MezLocation>();
   RxBool animateMarkersPolyLinesBounds = false.obs;
   Rxn<GoogleMapController> controller = Rxn();
   late bool enableMezSmartPointer;
   LatLngBounds? bounds;
   Function? onMapTap;
+
+  double initialZoomLevel = 11;
   bool get isMapReady => controller.value != null;
 
   // this is used when we don't want to re-render the map periodically.
@@ -265,10 +267,35 @@ class MGoogleMapController {
       bool fitWithinBounds = true}) async {
     if (latLng != null) {
       final BitmapDescriptor icon = await bitmapDescriptorLoader(
+          (await cropRonded((await rootBundle.load(mezDestinationMarker))
+              .buffer
+              .asUint8List())),
+          _calculateMarkersSize(),
+          _calculateMarkersSize(),
+          isBytes: true);
+      // markerId = markerId;
+
+      _addOrUpdateMarker(
+        MezMarker(
+          fitWithinBounds: fitWithinBounds,
+          markerId: MarkerId(markerId),
+          icon: icon,
+          position: latLng,
+        ),
+      );
+    } else
+      mezDbgPrint(
+          "addOrUpdatePurpleDestinationMarker skipppping ==> $markerId");
+  }
+
+  Future<void> addOrUpdatePackageMarkerMarker(
+      {String markerId = "package",
+      required LatLng? latLng,
+      bool fitWithinBounds = true}) async {
+    if (latLng != null) {
+      final BitmapDescriptor icon = await bitmapDescriptorLoader(
           (await cropRonded(
-              (await rootBundle.load(purple_destination_marker_asset))
-                  .buffer
-                  .asUint8List())),
+              (await rootBundle.load(mezPackageMarker)).buffer.asUint8List())),
           _calculateMarkersSize(),
           _calculateMarkersSize(),
           isBytes: true);
@@ -292,9 +319,12 @@ class MGoogleMapController {
   }
 
   void decodeAndAddPolyline({required String encodedPolylineString}) {
-    addPolyline(MapHelper.loadUpPolyline(encodedPolylineString)
+    List<PointLatLng> pts = MapHelper.loadUpPolyline(encodedPolylineString)
         .map<PointLatLng>((LatLng e) => PointLatLng(e.latitude, e.longitude))
-        .toList());
+        .toList();
+    mezDbgPrint("[AAA] First cords of polyline => ${pts.first}");
+    mezDbgPrint("[AAA] Last cords of polyline => ${pts.last}");
+    addPolyline(pts);
   }
 
   void removeMarkerById(String? markerId) {
@@ -311,7 +341,7 @@ class MGoogleMapController {
 
   void addPolyline(List<PointLatLng> latLngPoints) {
     final Polyline _poly = Polyline(
-        color: Color.fromARGB(255, 172, 89, 252),
+        color: primaryBlueColor,
         jointType: JointType.round,
         width: 2,
         startCap: Cap.buttCap,
@@ -356,7 +386,7 @@ class MGoogleMapController {
     return centerLatLng;
   }
 
-  void setLocation(Location newLocation) {
+  void setLocation(MezLocation newLocation) {
     location.value = newLocation;
   }
 

@@ -16,6 +16,62 @@ query get_chat_info($chat_id :Int!) {
   }
 }
 
+query get_service_provider_customer_chat($customer_id: Int, $service_provider_id: Int, $service_provider_type: String) {
+  service_provider_customer_chat(where: {customer_id: {_eq: $customer_id}, service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}}) {
+    chat {
+      id
+      chat_info
+      messages
+      creation_time
+    }
+  }
+}
+query getMezAdminChat($recipient_id: Int!, $recipient_type: String!) {
+  mez_admin_chat(where: {recipient_id: {_eq: $recipient_id}, recipient_type: {_eq: $recipient_type}}) {
+    chat_id
+  }
+}
+
+
+query get_customer_chats($customer_id: Int) {
+  service_provider_customer_chat(where: {customer_id: {_eq: $customer_id}}, order_by: {chat: {last_message_sent: desc}}) {
+    service_provider_id
+    chat {
+      id
+      chat_info
+      last_message
+      last_message_sent
+    }
+  }
+}
+query get_service_provider_chats($service_id: Int, $service_provider_type: String) {
+  service_provider_customer_chat(where: {service_provider_id: {_eq: $service_id}, service_provider_type: {_eq: $service_provider_type}}, order_by: {chat: {last_message_sent: desc}}) {
+    service_provider_id
+    chat {
+      id
+      chat_info
+      messages
+      creation_time
+      last_message
+      last_message_sent
+    }
+  }
+}
+query get_admin_chats {
+  mez_admin_chat( order_by: {chat: {last_message_sent: desc}}) {
+     
+    recipient_id
+    recipient_type
+    chat {
+      id
+      chat_info
+      messages
+      creation_time
+      last_message
+      last_message_sent
+    }
+  }
+}
 
 
 # Get chat infos
@@ -27,9 +83,8 @@ subscription listen_on_chat_messages($chat_id :Int!) {
 
 
 # Append messages
-mutation add_message($chat_id : Int! ,  $msg : jsonb!)
-{
-  update_chat( where: {id : {_eq :$chat_id}} , _append : {messages : $msg}){
+mutation add_message($chat_id: Int!, $msg: jsonb!) {
+  update_chat(where: {id: {_eq: $chat_id}}, _append: {messages: $msg}, _set: {last_message_sent: "now()", last_message: $msg}) {
     affected_rows
   }
 }

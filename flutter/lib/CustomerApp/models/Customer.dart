@@ -1,17 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:collection/collection.dart';
-import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
-import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
-import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class Customer {
   // List<Order> currentOrders = [];
   String? appVersion;
-  dynamic notificationInfo;
+  NotificationInfo? notificationInfo;
   SavedLocations savedLocations = <SavedLocation>[];
   CustStripeInfo? stripeInfo;
   dynamic data;
@@ -47,27 +45,11 @@ class Customer {
   }
 }
 
-extension ParseGeography on Geography {
-  LocationData toLocationData() {
-    return LocationData.fromMap({"latitude": latitude, "longitude": longitude});
-  }
-}
-
-extension ParseLocationData on LocationData {
-  Geography? toGeography() {
-    if (latitude != null && longitude != null) {
-      return Geography(latitude!, longitude!);
-    }
-    return null;
-  }
-}
-
 class SavedLocation {
   String name;
   int? id;
-  LocModel.Location location;
+  LocModel.MezLocation location;
   bool defaultLocation;
-  
 
   SavedLocation(
       {required this.name,
@@ -92,7 +74,7 @@ class SavedLocation {
   }) {
     return SavedLocation(
         name: data["name"],
-        location: LocModel.Location.fromFirebaseData(data),
+        location: LocModel.MezLocation.fromFirebaseData(data),
         id: id,
         defaultLocation: data["default"] ?? false);
   }
@@ -106,12 +88,31 @@ class SavedLocation {
     json["default"] = defaultLocation;
     return json;
   }
+
+  @override
+  bool operator ==(covariant SavedLocation other) {
+    if (identical(this, other)) return true;
+
+    return other.name == name &&
+        other.id == id &&
+        other.location == location &&
+        other.defaultLocation == defaultLocation;
+  }
+
+  @override
+  int get hashCode {
+    return name.hashCode ^
+        id.hashCode ^
+        location.hashCode ^
+        defaultLocation.hashCode;
+  }
 }
 
 typedef SavedLocations = List<SavedLocation>;
 
 class CreditCard {
-  String id;
+  int id;
+  String cardId;
   CardBrand brand;
   num expMonth;
   num expYear;
@@ -120,25 +121,26 @@ class CreditCard {
 
   CreditCard({
     required this.id,
+    required this.cardId,
     required this.brand,
     required this.expYear,
     required this.expMonth,
     required this.last4,
   });
 
-  factory CreditCard.fromData({required data}) {
-    return CreditCard(
-      id: data["id"],
-      brand: data["brand"]?.toString().toCardBrand() ?? CardBrand.Visa,
-      expYear: data["expYear"],
-      expMonth: data["expMonth"],
-      last4: data["last4"],
-    );
-  }
+  // factory CreditCard.fromData({required data}) {
+  //   return CreditCard(
+  //     cardId: data["id"],
+  //     brand: data["brand"]?.toString().toCardBrand() ?? CardBrand.Visa,
+  //     expYear: data["expYear"],
+  //     expMonth: data["expMonth"],
+  //     last4: data["last4"],
+  //   );
+  // }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'id': cardId,
       'brand': brand.toFirebaseFormatString(),
       'expMonth': expMonth,
       'expYear': expYear,
@@ -150,7 +152,7 @@ class CreditCard {
   bool operator ==(covariant CreditCard other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other.cardId == cardId &&
         other.brand == brand &&
         other.expMonth == expMonth &&
         other.expYear == expYear &&
@@ -159,7 +161,7 @@ class CreditCard {
 
   @override
   int get hashCode {
-    return id.hashCode ^
+    return cardId.hashCode ^
         brand.hashCode ^
         expMonth.hashCode ^
         expYear.hashCode ^

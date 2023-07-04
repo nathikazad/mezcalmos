@@ -1009,6 +1009,4225 @@ class _CopyWithStubImpl$Query$get_chat_info$chat_by_pk$chat_participants$user<
       _res;
 }
 
+class Variables$Query$get_service_provider_customer_chat {
+  factory Variables$Query$get_service_provider_customer_chat({
+    int? customer_id,
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      Variables$Query$get_service_provider_customer_chat._({
+        if (customer_id != null) r'customer_id': customer_id,
+        if (service_provider_id != null)
+          r'service_provider_id': service_provider_id,
+        if (service_provider_type != null)
+          r'service_provider_type': service_provider_type,
+      });
+
+  Variables$Query$get_service_provider_customer_chat._(this._$data);
+
+  factory Variables$Query$get_service_provider_customer_chat.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('customer_id')) {
+      final l$customer_id = data['customer_id'];
+      result$data['customer_id'] = (l$customer_id as int?);
+    }
+    if (data.containsKey('service_provider_id')) {
+      final l$service_provider_id = data['service_provider_id'];
+      result$data['service_provider_id'] = (l$service_provider_id as int?);
+    }
+    if (data.containsKey('service_provider_type')) {
+      final l$service_provider_type = data['service_provider_type'];
+      result$data['service_provider_type'] =
+          (l$service_provider_type as String?);
+    }
+    return Variables$Query$get_service_provider_customer_chat._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int? get customer_id => (_$data['customer_id'] as int?);
+  int? get service_provider_id => (_$data['service_provider_id'] as int?);
+  String? get service_provider_type =>
+      (_$data['service_provider_type'] as String?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('customer_id')) {
+      final l$customer_id = customer_id;
+      result$data['customer_id'] = l$customer_id;
+    }
+    if (_$data.containsKey('service_provider_id')) {
+      final l$service_provider_id = service_provider_id;
+      result$data['service_provider_id'] = l$service_provider_id;
+    }
+    if (_$data.containsKey('service_provider_type')) {
+      final l$service_provider_type = service_provider_type;
+      result$data['service_provider_type'] = l$service_provider_type;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_service_provider_customer_chat<
+          Variables$Query$get_service_provider_customer_chat>
+      get copyWith =>
+          CopyWith$Variables$Query$get_service_provider_customer_chat(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_service_provider_customer_chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (_$data.containsKey('customer_id') !=
+        other._$data.containsKey('customer_id')) {
+      return false;
+    }
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (_$data.containsKey('service_provider_id') !=
+        other._$data.containsKey('service_provider_id')) {
+      return false;
+    }
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (_$data.containsKey('service_provider_type') !=
+        other._$data.containsKey('service_provider_type')) {
+      return false;
+    }
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$customer_id = customer_id;
+    final l$service_provider_id = service_provider_id;
+    final l$service_provider_type = service_provider_type;
+    return Object.hashAll([
+      _$data.containsKey('customer_id') ? l$customer_id : const {},
+      _$data.containsKey('service_provider_id')
+          ? l$service_provider_id
+          : const {},
+      _$data.containsKey('service_provider_type')
+          ? l$service_provider_type
+          : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_service_provider_customer_chat<
+    TRes> {
+  factory CopyWith$Variables$Query$get_service_provider_customer_chat(
+    Variables$Query$get_service_provider_customer_chat instance,
+    TRes Function(Variables$Query$get_service_provider_customer_chat) then,
+  ) = _CopyWithImpl$Variables$Query$get_service_provider_customer_chat;
+
+  factory CopyWith$Variables$Query$get_service_provider_customer_chat.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_service_provider_customer_chat;
+
+  TRes call({
+    int? customer_id,
+    int? service_provider_id,
+    String? service_provider_type,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$get_service_provider_customer_chat<TRes>
+    implements
+        CopyWith$Variables$Query$get_service_provider_customer_chat<TRes> {
+  _CopyWithImpl$Variables$Query$get_service_provider_customer_chat(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_service_provider_customer_chat _instance;
+
+  final TRes Function(Variables$Query$get_service_provider_customer_chat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? customer_id = _undefined,
+    Object? service_provider_id = _undefined,
+    Object? service_provider_type = _undefined,
+  }) =>
+      _then(Variables$Query$get_service_provider_customer_chat._({
+        ..._instance._$data,
+        if (customer_id != _undefined) 'customer_id': (customer_id as int?),
+        if (service_provider_id != _undefined)
+          'service_provider_id': (service_provider_id as int?),
+        if (service_provider_type != _undefined)
+          'service_provider_type': (service_provider_type as String?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_service_provider_customer_chat<TRes>
+    implements
+        CopyWith$Variables$Query$get_service_provider_customer_chat<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_service_provider_customer_chat(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? customer_id,
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      _res;
+}
+
+class Query$get_service_provider_customer_chat {
+  Query$get_service_provider_customer_chat({
+    required this.service_provider_customer_chat,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_provider_customer_chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_provider_customer_chat =
+        json['service_provider_customer_chat'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_provider_customer_chat(
+      service_provider_customer_chat: (l$service_provider_customer_chat
+              as List<dynamic>)
+          .map((e) =>
+              Query$get_service_provider_customer_chat$service_provider_customer_chat
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_service_provider_customer_chat$service_provider_customer_chat>
+      service_provider_customer_chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_customer_chat = service_provider_customer_chat;
+    _resultData['service_provider_customer_chat'] =
+        l$service_provider_customer_chat.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_customer_chat = service_provider_customer_chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_customer_chat.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_service_provider_customer_chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_customer_chat = service_provider_customer_chat;
+    final lOther$service_provider_customer_chat =
+        other.service_provider_customer_chat;
+    if (l$service_provider_customer_chat.length !=
+        lOther$service_provider_customer_chat.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_customer_chat.length; i++) {
+      final l$service_provider_customer_chat$entry =
+          l$service_provider_customer_chat[i];
+      final lOther$service_provider_customer_chat$entry =
+          lOther$service_provider_customer_chat[i];
+      if (l$service_provider_customer_chat$entry !=
+          lOther$service_provider_customer_chat$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_provider_customer_chat
+    on Query$get_service_provider_customer_chat {
+  CopyWith$Query$get_service_provider_customer_chat<
+          Query$get_service_provider_customer_chat>
+      get copyWith => CopyWith$Query$get_service_provider_customer_chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_provider_customer_chat<TRes> {
+  factory CopyWith$Query$get_service_provider_customer_chat(
+    Query$get_service_provider_customer_chat instance,
+    TRes Function(Query$get_service_provider_customer_chat) then,
+  ) = _CopyWithImpl$Query$get_service_provider_customer_chat;
+
+  factory CopyWith$Query$get_service_provider_customer_chat.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_service_provider_customer_chat;
+
+  TRes call({
+    List<Query$get_service_provider_customer_chat$service_provider_customer_chat>?
+        service_provider_customer_chat,
+    String? $__typename,
+  });
+  TRes service_provider_customer_chat(
+      Iterable<Query$get_service_provider_customer_chat$service_provider_customer_chat> Function(
+              Iterable<
+                  CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat<
+                      Query$get_service_provider_customer_chat$service_provider_customer_chat>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_service_provider_customer_chat<TRes>
+    implements CopyWith$Query$get_service_provider_customer_chat<TRes> {
+  _CopyWithImpl$Query$get_service_provider_customer_chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_provider_customer_chat _instance;
+
+  final TRes Function(Query$get_service_provider_customer_chat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_customer_chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_service_provider_customer_chat(
+        service_provider_customer_chat: service_provider_customer_chat ==
+                    _undefined ||
+                service_provider_customer_chat == null
+            ? _instance.service_provider_customer_chat
+            : (service_provider_customer_chat as List<
+                Query$get_service_provider_customer_chat$service_provider_customer_chat>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_customer_chat(
+          Iterable<Query$get_service_provider_customer_chat$service_provider_customer_chat> Function(
+                  Iterable<
+                      CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat<
+                          Query$get_service_provider_customer_chat$service_provider_customer_chat>>)
+              _fn) =>
+      call(
+          service_provider_customer_chat: _fn(
+              _instance.service_provider_customer_chat.map((e) =>
+                  CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_service_provider_customer_chat<TRes>
+    implements CopyWith$Query$get_service_provider_customer_chat<TRes> {
+  _CopyWithStubImpl$Query$get_service_provider_customer_chat(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_service_provider_customer_chat$service_provider_customer_chat>?
+        service_provider_customer_chat,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_customer_chat(_fn) => _res;
+}
+
+const documentNodeQueryget_service_provider_customer_chat =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_service_provider_customer_chat'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_customer_chat'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'customer_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'customer_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_type')),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'chat'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'chat_info'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'messages'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'creation_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_service_provider_customer_chat
+    _parserFn$Query$get_service_provider_customer_chat(
+            Map<String, dynamic> data) =>
+        Query$get_service_provider_customer_chat.fromJson(data);
+
+class Options$Query$get_service_provider_customer_chat
+    extends graphql.QueryOptions<Query$get_service_provider_customer_chat> {
+  Options$Query$get_service_provider_customer_chat({
+    String? operationName,
+    Variables$Query$get_service_provider_customer_chat? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_service_provider_customer_chat,
+          parserFn: _parserFn$Query$get_service_provider_customer_chat,
+        );
+}
+
+class WatchOptions$Query$get_service_provider_customer_chat extends graphql
+    .WatchQueryOptions<Query$get_service_provider_customer_chat> {
+  WatchOptions$Query$get_service_provider_customer_chat({
+    String? operationName,
+    Variables$Query$get_service_provider_customer_chat? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_service_provider_customer_chat,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_service_provider_customer_chat,
+        );
+}
+
+class FetchMoreOptions$Query$get_service_provider_customer_chat
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_service_provider_customer_chat({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$get_service_provider_customer_chat? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQueryget_service_provider_customer_chat,
+        );
+}
+
+extension ClientExtension$Query$get_service_provider_customer_chat
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_service_provider_customer_chat>>
+      query$get_service_provider_customer_chat(
+              [Options$Query$get_service_provider_customer_chat?
+                  options]) async =>
+          await this.query(
+              options ?? Options$Query$get_service_provider_customer_chat());
+  graphql.ObservableQuery<Query$get_service_provider_customer_chat>
+      watchQuery$get_service_provider_customer_chat(
+              [WatchOptions$Query$get_service_provider_customer_chat?
+                  options]) =>
+          this.watchQuery(options ??
+              WatchOptions$Query$get_service_provider_customer_chat());
+  void writeQuery$get_service_provider_customer_chat({
+    required Query$get_service_provider_customer_chat data,
+    Variables$Query$get_service_provider_customer_chat? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryget_service_provider_customer_chat),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_service_provider_customer_chat?
+      readQuery$get_service_provider_customer_chat({
+    Variables$Query$get_service_provider_customer_chat? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryget_service_provider_customer_chat),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$get_service_provider_customer_chat.fromJson(result);
+  }
+}
+
+class Query$get_service_provider_customer_chat$service_provider_customer_chat {
+  Query$get_service_provider_customer_chat$service_provider_customer_chat({
+    required this.chat,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_provider_customer_chat$service_provider_customer_chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$chat = json['chat'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_provider_customer_chat$service_provider_customer_chat(
+      chat:
+          Query$get_service_provider_customer_chat$service_provider_customer_chat$chat
+              .fromJson((l$chat as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_service_provider_customer_chat$service_provider_customer_chat$chat
+      chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$chat = chat;
+    _resultData['chat'] = l$chat.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$chat = chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$chat,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_service_provider_customer_chat$service_provider_customer_chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$chat = chat;
+    final lOther$chat = other.chat;
+    if (l$chat != lOther$chat) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_provider_customer_chat$service_provider_customer_chat
+    on Query$get_service_provider_customer_chat$service_provider_customer_chat {
+  CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat<
+          Query$get_service_provider_customer_chat$service_provider_customer_chat>
+      get copyWith =>
+          CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat<
+    TRes> {
+  factory CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat(
+    Query$get_service_provider_customer_chat$service_provider_customer_chat
+        instance,
+    TRes Function(
+            Query$get_service_provider_customer_chat$service_provider_customer_chat)
+        then,
+  ) = _CopyWithImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat;
+
+  factory CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat;
+
+  TRes call({
+    Query$get_service_provider_customer_chat$service_provider_customer_chat$chat?
+        chat,
+    String? $__typename,
+  });
+  CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat<
+      TRes> get chat;
+}
+
+class _CopyWithImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat<
+            TRes> {
+  _CopyWithImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_provider_customer_chat$service_provider_customer_chat
+      _instance;
+
+  final TRes Function(
+          Query$get_service_provider_customer_chat$service_provider_customer_chat)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_service_provider_customer_chat$service_provider_customer_chat(
+        chat: chat == _undefined || chat == null
+            ? _instance.chat
+            : (chat
+                as Query$get_service_provider_customer_chat$service_provider_customer_chat$chat),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat<
+      TRes> get chat {
+    final local$chat = _instance.chat;
+    return CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat(
+        local$chat, (e) => call(chat: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat<
+            TRes> {
+  _CopyWithStubImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_service_provider_customer_chat$service_provider_customer_chat$chat?
+        chat,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat<
+          TRes>
+      get chat =>
+          CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat
+              .stub(_res);
+}
+
+class Query$get_service_provider_customer_chat$service_provider_customer_chat$chat {
+  Query$get_service_provider_customer_chat$service_provider_customer_chat$chat({
+    required this.id,
+    this.chat_info,
+    required this.messages,
+    required this.creation_time,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_provider_customer_chat$service_provider_customer_chat$chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$chat_info = json['chat_info'];
+    final l$messages = json['messages'];
+    final l$creation_time = json['creation_time'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_provider_customer_chat$service_provider_customer_chat$chat(
+      id: (l$id as int),
+      chat_info: l$chat_info == null ? null : mapFromJson(l$chat_info),
+      messages: mapFromJson(l$messages),
+      creation_time: (l$creation_time as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic? chat_info;
+
+  final dynamic messages;
+
+  final String creation_time;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$chat_info = chat_info;
+    _resultData['chat_info'] =
+        l$chat_info == null ? null : mapToJson(l$chat_info);
+    final l$messages = messages;
+    _resultData['messages'] = mapToJson(l$messages);
+    final l$creation_time = creation_time;
+    _resultData['creation_time'] = l$creation_time;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$chat_info = chat_info;
+    final l$messages = messages;
+    final l$creation_time = creation_time;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$chat_info,
+      l$messages,
+      l$creation_time,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_service_provider_customer_chat$service_provider_customer_chat$chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$chat_info = chat_info;
+    final lOther$chat_info = other.chat_info;
+    if (l$chat_info != lOther$chat_info) {
+      return false;
+    }
+    final l$messages = messages;
+    final lOther$messages = other.messages;
+    if (l$messages != lOther$messages) {
+      return false;
+    }
+    final l$creation_time = creation_time;
+    final lOther$creation_time = other.creation_time;
+    if (l$creation_time != lOther$creation_time) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat
+    on Query$get_service_provider_customer_chat$service_provider_customer_chat$chat {
+  CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat<
+          Query$get_service_provider_customer_chat$service_provider_customer_chat$chat>
+      get copyWith =>
+          CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat<
+    TRes> {
+  factory CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat(
+    Query$get_service_provider_customer_chat$service_provider_customer_chat$chat
+        instance,
+    TRes Function(
+            Query$get_service_provider_customer_chat$service_provider_customer_chat$chat)
+        then,
+  ) = _CopyWithImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat;
+
+  factory CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat;
+
+  TRes call({
+    int? id,
+    dynamic? chat_info,
+    dynamic? messages,
+    String? creation_time,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat<
+            TRes> {
+  _CopyWithImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_provider_customer_chat$service_provider_customer_chat$chat
+      _instance;
+
+  final TRes Function(
+          Query$get_service_provider_customer_chat$service_provider_customer_chat$chat)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? chat_info = _undefined,
+    Object? messages = _undefined,
+    Object? creation_time = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_service_provider_customer_chat$service_provider_customer_chat$chat(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        chat_info: chat_info == _undefined
+            ? _instance.chat_info
+            : (chat_info as dynamic?),
+        messages: messages == _undefined || messages == null
+            ? _instance.messages
+            : (messages as dynamic),
+        creation_time: creation_time == _undefined || creation_time == null
+            ? _instance.creation_time
+            : (creation_time as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat<
+            TRes> {
+  _CopyWithStubImpl$Query$get_service_provider_customer_chat$service_provider_customer_chat$chat(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? chat_info,
+    dynamic? messages,
+    String? creation_time,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getMezAdminChat {
+  factory Variables$Query$getMezAdminChat({
+    required int recipient_id,
+    required String recipient_type,
+  }) =>
+      Variables$Query$getMezAdminChat._({
+        r'recipient_id': recipient_id,
+        r'recipient_type': recipient_type,
+      });
+
+  Variables$Query$getMezAdminChat._(this._$data);
+
+  factory Variables$Query$getMezAdminChat.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$recipient_id = data['recipient_id'];
+    result$data['recipient_id'] = (l$recipient_id as int);
+    final l$recipient_type = data['recipient_type'];
+    result$data['recipient_type'] = (l$recipient_type as String);
+    return Variables$Query$getMezAdminChat._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get recipient_id => (_$data['recipient_id'] as int);
+  String get recipient_type => (_$data['recipient_type'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$recipient_id = recipient_id;
+    result$data['recipient_id'] = l$recipient_id;
+    final l$recipient_type = recipient_type;
+    result$data['recipient_type'] = l$recipient_type;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getMezAdminChat<Variables$Query$getMezAdminChat>
+      get copyWith => CopyWith$Variables$Query$getMezAdminChat(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getMezAdminChat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$recipient_id = recipient_id;
+    final lOther$recipient_id = other.recipient_id;
+    if (l$recipient_id != lOther$recipient_id) {
+      return false;
+    }
+    final l$recipient_type = recipient_type;
+    final lOther$recipient_type = other.recipient_type;
+    if (l$recipient_type != lOther$recipient_type) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$recipient_id = recipient_id;
+    final l$recipient_type = recipient_type;
+    return Object.hashAll([
+      l$recipient_id,
+      l$recipient_type,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getMezAdminChat<TRes> {
+  factory CopyWith$Variables$Query$getMezAdminChat(
+    Variables$Query$getMezAdminChat instance,
+    TRes Function(Variables$Query$getMezAdminChat) then,
+  ) = _CopyWithImpl$Variables$Query$getMezAdminChat;
+
+  factory CopyWith$Variables$Query$getMezAdminChat.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getMezAdminChat;
+
+  TRes call({
+    int? recipient_id,
+    String? recipient_type,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$getMezAdminChat<TRes>
+    implements CopyWith$Variables$Query$getMezAdminChat<TRes> {
+  _CopyWithImpl$Variables$Query$getMezAdminChat(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getMezAdminChat _instance;
+
+  final TRes Function(Variables$Query$getMezAdminChat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? recipient_id = _undefined,
+    Object? recipient_type = _undefined,
+  }) =>
+      _then(Variables$Query$getMezAdminChat._({
+        ..._instance._$data,
+        if (recipient_id != _undefined && recipient_id != null)
+          'recipient_id': (recipient_id as int),
+        if (recipient_type != _undefined && recipient_type != null)
+          'recipient_type': (recipient_type as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getMezAdminChat<TRes>
+    implements CopyWith$Variables$Query$getMezAdminChat<TRes> {
+  _CopyWithStubImpl$Variables$Query$getMezAdminChat(this._res);
+
+  TRes _res;
+
+  call({
+    int? recipient_id,
+    String? recipient_type,
+  }) =>
+      _res;
+}
+
+class Query$getMezAdminChat {
+  Query$getMezAdminChat({
+    required this.mez_admin_chat,
+    required this.$__typename,
+  });
+
+  factory Query$getMezAdminChat.fromJson(Map<String, dynamic> json) {
+    final l$mez_admin_chat = json['mez_admin_chat'];
+    final l$$__typename = json['__typename'];
+    return Query$getMezAdminChat(
+      mez_admin_chat: (l$mez_admin_chat as List<dynamic>)
+          .map((e) => Query$getMezAdminChat$mez_admin_chat.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getMezAdminChat$mez_admin_chat> mez_admin_chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$mez_admin_chat = mez_admin_chat;
+    _resultData['mez_admin_chat'] =
+        l$mez_admin_chat.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$mez_admin_chat = mez_admin_chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$mez_admin_chat.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getMezAdminChat) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$mez_admin_chat = mez_admin_chat;
+    final lOther$mez_admin_chat = other.mez_admin_chat;
+    if (l$mez_admin_chat.length != lOther$mez_admin_chat.length) {
+      return false;
+    }
+    for (int i = 0; i < l$mez_admin_chat.length; i++) {
+      final l$mez_admin_chat$entry = l$mez_admin_chat[i];
+      final lOther$mez_admin_chat$entry = lOther$mez_admin_chat[i];
+      if (l$mez_admin_chat$entry != lOther$mez_admin_chat$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getMezAdminChat on Query$getMezAdminChat {
+  CopyWith$Query$getMezAdminChat<Query$getMezAdminChat> get copyWith =>
+      CopyWith$Query$getMezAdminChat(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getMezAdminChat<TRes> {
+  factory CopyWith$Query$getMezAdminChat(
+    Query$getMezAdminChat instance,
+    TRes Function(Query$getMezAdminChat) then,
+  ) = _CopyWithImpl$Query$getMezAdminChat;
+
+  factory CopyWith$Query$getMezAdminChat.stub(TRes res) =
+      _CopyWithStubImpl$Query$getMezAdminChat;
+
+  TRes call({
+    List<Query$getMezAdminChat$mez_admin_chat>? mez_admin_chat,
+    String? $__typename,
+  });
+  TRes mez_admin_chat(
+      Iterable<Query$getMezAdminChat$mez_admin_chat> Function(
+              Iterable<
+                  CopyWith$Query$getMezAdminChat$mez_admin_chat<
+                      Query$getMezAdminChat$mez_admin_chat>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getMezAdminChat<TRes>
+    implements CopyWith$Query$getMezAdminChat<TRes> {
+  _CopyWithImpl$Query$getMezAdminChat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getMezAdminChat _instance;
+
+  final TRes Function(Query$getMezAdminChat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? mez_admin_chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getMezAdminChat(
+        mez_admin_chat: mez_admin_chat == _undefined || mez_admin_chat == null
+            ? _instance.mez_admin_chat
+            : (mez_admin_chat as List<Query$getMezAdminChat$mez_admin_chat>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes mez_admin_chat(
+          Iterable<Query$getMezAdminChat$mez_admin_chat> Function(
+                  Iterable<
+                      CopyWith$Query$getMezAdminChat$mez_admin_chat<
+                          Query$getMezAdminChat$mez_admin_chat>>)
+              _fn) =>
+      call(
+          mez_admin_chat: _fn(_instance.mez_admin_chat
+              .map((e) => CopyWith$Query$getMezAdminChat$mez_admin_chat(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getMezAdminChat<TRes>
+    implements CopyWith$Query$getMezAdminChat<TRes> {
+  _CopyWithStubImpl$Query$getMezAdminChat(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getMezAdminChat$mez_admin_chat>? mez_admin_chat,
+    String? $__typename,
+  }) =>
+      _res;
+  mez_admin_chat(_fn) => _res;
+}
+
+const documentNodeQuerygetMezAdminChat = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getMezAdminChat'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'recipient_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'recipient_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'mez_admin_chat'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'recipient_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'recipient_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'recipient_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value:
+                        VariableNode(name: NameNode(value: 'recipient_type')),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'chat_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getMezAdminChat _parserFn$Query$getMezAdminChat(
+        Map<String, dynamic> data) =>
+    Query$getMezAdminChat.fromJson(data);
+
+class Options$Query$getMezAdminChat
+    extends graphql.QueryOptions<Query$getMezAdminChat> {
+  Options$Query$getMezAdminChat({
+    String? operationName,
+    required Variables$Query$getMezAdminChat variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetMezAdminChat,
+          parserFn: _parserFn$Query$getMezAdminChat,
+        );
+}
+
+class WatchOptions$Query$getMezAdminChat
+    extends graphql.WatchQueryOptions<Query$getMezAdminChat> {
+  WatchOptions$Query$getMezAdminChat({
+    String? operationName,
+    required Variables$Query$getMezAdminChat variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetMezAdminChat,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getMezAdminChat,
+        );
+}
+
+class FetchMoreOptions$Query$getMezAdminChat extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getMezAdminChat({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getMezAdminChat variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetMezAdminChat,
+        );
+}
+
+extension ClientExtension$Query$getMezAdminChat on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getMezAdminChat>> query$getMezAdminChat(
+          Options$Query$getMezAdminChat options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$getMezAdminChat> watchQuery$getMezAdminChat(
+          WatchOptions$Query$getMezAdminChat options) =>
+      this.watchQuery(options);
+  void writeQuery$getMezAdminChat({
+    required Query$getMezAdminChat data,
+    required Variables$Query$getMezAdminChat variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetMezAdminChat),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getMezAdminChat? readQuery$getMezAdminChat({
+    required Variables$Query$getMezAdminChat variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetMezAdminChat),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getMezAdminChat.fromJson(result);
+  }
+}
+
+class Query$getMezAdminChat$mez_admin_chat {
+  Query$getMezAdminChat$mez_admin_chat({
+    required this.chat_id,
+    required this.$__typename,
+  });
+
+  factory Query$getMezAdminChat$mez_admin_chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$chat_id = json['chat_id'];
+    final l$$__typename = json['__typename'];
+    return Query$getMezAdminChat$mez_admin_chat(
+      chat_id: (l$chat_id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int chat_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$chat_id = chat_id;
+    _resultData['chat_id'] = l$chat_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$chat_id = chat_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$chat_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getMezAdminChat$mez_admin_chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$chat_id = chat_id;
+    final lOther$chat_id = other.chat_id;
+    if (l$chat_id != lOther$chat_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getMezAdminChat$mez_admin_chat
+    on Query$getMezAdminChat$mez_admin_chat {
+  CopyWith$Query$getMezAdminChat$mez_admin_chat<
+          Query$getMezAdminChat$mez_admin_chat>
+      get copyWith => CopyWith$Query$getMezAdminChat$mez_admin_chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getMezAdminChat$mez_admin_chat<TRes> {
+  factory CopyWith$Query$getMezAdminChat$mez_admin_chat(
+    Query$getMezAdminChat$mez_admin_chat instance,
+    TRes Function(Query$getMezAdminChat$mez_admin_chat) then,
+  ) = _CopyWithImpl$Query$getMezAdminChat$mez_admin_chat;
+
+  factory CopyWith$Query$getMezAdminChat$mez_admin_chat.stub(TRes res) =
+      _CopyWithStubImpl$Query$getMezAdminChat$mez_admin_chat;
+
+  TRes call({
+    int? chat_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getMezAdminChat$mez_admin_chat<TRes>
+    implements CopyWith$Query$getMezAdminChat$mez_admin_chat<TRes> {
+  _CopyWithImpl$Query$getMezAdminChat$mez_admin_chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getMezAdminChat$mez_admin_chat _instance;
+
+  final TRes Function(Query$getMezAdminChat$mez_admin_chat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? chat_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getMezAdminChat$mez_admin_chat(
+        chat_id: chat_id == _undefined || chat_id == null
+            ? _instance.chat_id
+            : (chat_id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getMezAdminChat$mez_admin_chat<TRes>
+    implements CopyWith$Query$getMezAdminChat$mez_admin_chat<TRes> {
+  _CopyWithStubImpl$Query$getMezAdminChat$mez_admin_chat(this._res);
+
+  TRes _res;
+
+  call({
+    int? chat_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$get_customer_chats {
+  factory Variables$Query$get_customer_chats({int? customer_id}) =>
+      Variables$Query$get_customer_chats._({
+        if (customer_id != null) r'customer_id': customer_id,
+      });
+
+  Variables$Query$get_customer_chats._(this._$data);
+
+  factory Variables$Query$get_customer_chats.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('customer_id')) {
+      final l$customer_id = data['customer_id'];
+      result$data['customer_id'] = (l$customer_id as int?);
+    }
+    return Variables$Query$get_customer_chats._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int? get customer_id => (_$data['customer_id'] as int?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('customer_id')) {
+      final l$customer_id = customer_id;
+      result$data['customer_id'] = l$customer_id;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_customer_chats<
+          Variables$Query$get_customer_chats>
+      get copyWith => CopyWith$Variables$Query$get_customer_chats(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_customer_chats) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (_$data.containsKey('customer_id') !=
+        other._$data.containsKey('customer_id')) {
+      return false;
+    }
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$customer_id = customer_id;
+    return Object.hashAll(
+        [_$data.containsKey('customer_id') ? l$customer_id : const {}]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_customer_chats<TRes> {
+  factory CopyWith$Variables$Query$get_customer_chats(
+    Variables$Query$get_customer_chats instance,
+    TRes Function(Variables$Query$get_customer_chats) then,
+  ) = _CopyWithImpl$Variables$Query$get_customer_chats;
+
+  factory CopyWith$Variables$Query$get_customer_chats.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_customer_chats;
+
+  TRes call({int? customer_id});
+}
+
+class _CopyWithImpl$Variables$Query$get_customer_chats<TRes>
+    implements CopyWith$Variables$Query$get_customer_chats<TRes> {
+  _CopyWithImpl$Variables$Query$get_customer_chats(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_customer_chats _instance;
+
+  final TRes Function(Variables$Query$get_customer_chats) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? customer_id = _undefined}) =>
+      _then(Variables$Query$get_customer_chats._({
+        ..._instance._$data,
+        if (customer_id != _undefined) 'customer_id': (customer_id as int?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_customer_chats<TRes>
+    implements CopyWith$Variables$Query$get_customer_chats<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_customer_chats(this._res);
+
+  TRes _res;
+
+  call({int? customer_id}) => _res;
+}
+
+class Query$get_customer_chats {
+  Query$get_customer_chats({
+    required this.service_provider_customer_chat,
+    required this.$__typename,
+  });
+
+  factory Query$get_customer_chats.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_customer_chat =
+        json['service_provider_customer_chat'];
+    final l$$__typename = json['__typename'];
+    return Query$get_customer_chats(
+      service_provider_customer_chat: (l$service_provider_customer_chat
+              as List<dynamic>)
+          .map((e) =>
+              Query$get_customer_chats$service_provider_customer_chat.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$get_customer_chats$service_provider_customer_chat>
+      service_provider_customer_chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_customer_chat = service_provider_customer_chat;
+    _resultData['service_provider_customer_chat'] =
+        l$service_provider_customer_chat.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_customer_chat = service_provider_customer_chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_customer_chat.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_customer_chats) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_customer_chat = service_provider_customer_chat;
+    final lOther$service_provider_customer_chat =
+        other.service_provider_customer_chat;
+    if (l$service_provider_customer_chat.length !=
+        lOther$service_provider_customer_chat.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_customer_chat.length; i++) {
+      final l$service_provider_customer_chat$entry =
+          l$service_provider_customer_chat[i];
+      final lOther$service_provider_customer_chat$entry =
+          lOther$service_provider_customer_chat[i];
+      if (l$service_provider_customer_chat$entry !=
+          lOther$service_provider_customer_chat$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_customer_chats
+    on Query$get_customer_chats {
+  CopyWith$Query$get_customer_chats<Query$get_customer_chats> get copyWith =>
+      CopyWith$Query$get_customer_chats(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$get_customer_chats<TRes> {
+  factory CopyWith$Query$get_customer_chats(
+    Query$get_customer_chats instance,
+    TRes Function(Query$get_customer_chats) then,
+  ) = _CopyWithImpl$Query$get_customer_chats;
+
+  factory CopyWith$Query$get_customer_chats.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_customer_chats;
+
+  TRes call({
+    List<Query$get_customer_chats$service_provider_customer_chat>?
+        service_provider_customer_chat,
+    String? $__typename,
+  });
+  TRes service_provider_customer_chat(
+      Iterable<Query$get_customer_chats$service_provider_customer_chat> Function(
+              Iterable<
+                  CopyWith$Query$get_customer_chats$service_provider_customer_chat<
+                      Query$get_customer_chats$service_provider_customer_chat>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_customer_chats<TRes>
+    implements CopyWith$Query$get_customer_chats<TRes> {
+  _CopyWithImpl$Query$get_customer_chats(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_customer_chats _instance;
+
+  final TRes Function(Query$get_customer_chats) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_customer_chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_customer_chats(
+        service_provider_customer_chat:
+            service_provider_customer_chat == _undefined ||
+                    service_provider_customer_chat == null
+                ? _instance.service_provider_customer_chat
+                : (service_provider_customer_chat as List<
+                    Query$get_customer_chats$service_provider_customer_chat>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_customer_chat(
+          Iterable<Query$get_customer_chats$service_provider_customer_chat> Function(
+                  Iterable<
+                      CopyWith$Query$get_customer_chats$service_provider_customer_chat<
+                          Query$get_customer_chats$service_provider_customer_chat>>)
+              _fn) =>
+      call(
+          service_provider_customer_chat: _fn(
+              _instance.service_provider_customer_chat.map((e) =>
+                  CopyWith$Query$get_customer_chats$service_provider_customer_chat(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_customer_chats<TRes>
+    implements CopyWith$Query$get_customer_chats<TRes> {
+  _CopyWithStubImpl$Query$get_customer_chats(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_customer_chats$service_provider_customer_chat>?
+        service_provider_customer_chat,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_customer_chat(_fn) => _res;
+}
+
+const documentNodeQueryget_customer_chats = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_customer_chats'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_customer_chat'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'customer_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'customer_id')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'chat'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'last_message_sent'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'service_provider_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'chat'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'chat_info'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'last_message'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'last_message_sent'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_customer_chats _parserFn$Query$get_customer_chats(
+        Map<String, dynamic> data) =>
+    Query$get_customer_chats.fromJson(data);
+
+class Options$Query$get_customer_chats
+    extends graphql.QueryOptions<Query$get_customer_chats> {
+  Options$Query$get_customer_chats({
+    String? operationName,
+    Variables$Query$get_customer_chats? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_customer_chats,
+          parserFn: _parserFn$Query$get_customer_chats,
+        );
+}
+
+class WatchOptions$Query$get_customer_chats
+    extends graphql.WatchQueryOptions<Query$get_customer_chats> {
+  WatchOptions$Query$get_customer_chats({
+    String? operationName,
+    Variables$Query$get_customer_chats? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_customer_chats,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_customer_chats,
+        );
+}
+
+class FetchMoreOptions$Query$get_customer_chats
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_customer_chats({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$get_customer_chats? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQueryget_customer_chats,
+        );
+}
+
+extension ClientExtension$Query$get_customer_chats on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_customer_chats>>
+      query$get_customer_chats(
+              [Options$Query$get_customer_chats? options]) async =>
+          await this.query(options ?? Options$Query$get_customer_chats());
+  graphql.ObservableQuery<Query$get_customer_chats>
+      watchQuery$get_customer_chats(
+              [WatchOptions$Query$get_customer_chats? options]) =>
+          this.watchQuery(options ?? WatchOptions$Query$get_customer_chats());
+  void writeQuery$get_customer_chats({
+    required Query$get_customer_chats data,
+    Variables$Query$get_customer_chats? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQueryget_customer_chats),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_customer_chats? readQuery$get_customer_chats({
+    Variables$Query$get_customer_chats? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQueryget_customer_chats),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$get_customer_chats.fromJson(result);
+  }
+}
+
+class Query$get_customer_chats$service_provider_customer_chat {
+  Query$get_customer_chats$service_provider_customer_chat({
+    required this.service_provider_id,
+    required this.chat,
+    required this.$__typename,
+  });
+
+  factory Query$get_customer_chats$service_provider_customer_chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_provider_id = json['service_provider_id'];
+    final l$chat = json['chat'];
+    final l$$__typename = json['__typename'];
+    return Query$get_customer_chats$service_provider_customer_chat(
+      service_provider_id: (l$service_provider_id as int),
+      chat:
+          Query$get_customer_chats$service_provider_customer_chat$chat.fromJson(
+              (l$chat as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int service_provider_id;
+
+  final Query$get_customer_chats$service_provider_customer_chat$chat chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_id = service_provider_id;
+    _resultData['service_provider_id'] = l$service_provider_id;
+    final l$chat = chat;
+    _resultData['chat'] = l$chat.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_id = service_provider_id;
+    final l$chat = chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_provider_id,
+      l$chat,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_customer_chats$service_provider_customer_chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$chat = chat;
+    final lOther$chat = other.chat;
+    if (l$chat != lOther$chat) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_customer_chats$service_provider_customer_chat
+    on Query$get_customer_chats$service_provider_customer_chat {
+  CopyWith$Query$get_customer_chats$service_provider_customer_chat<
+          Query$get_customer_chats$service_provider_customer_chat>
+      get copyWith =>
+          CopyWith$Query$get_customer_chats$service_provider_customer_chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_customer_chats$service_provider_customer_chat<
+    TRes> {
+  factory CopyWith$Query$get_customer_chats$service_provider_customer_chat(
+    Query$get_customer_chats$service_provider_customer_chat instance,
+    TRes Function(Query$get_customer_chats$service_provider_customer_chat) then,
+  ) = _CopyWithImpl$Query$get_customer_chats$service_provider_customer_chat;
+
+  factory CopyWith$Query$get_customer_chats$service_provider_customer_chat.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_customer_chats$service_provider_customer_chat;
+
+  TRes call({
+    int? service_provider_id,
+    Query$get_customer_chats$service_provider_customer_chat$chat? chat,
+    String? $__typename,
+  });
+  CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat<TRes>
+      get chat;
+}
+
+class _CopyWithImpl$Query$get_customer_chats$service_provider_customer_chat<
+        TRes>
+    implements
+        CopyWith$Query$get_customer_chats$service_provider_customer_chat<TRes> {
+  _CopyWithImpl$Query$get_customer_chats$service_provider_customer_chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_customer_chats$service_provider_customer_chat _instance;
+
+  final TRes Function(Query$get_customer_chats$service_provider_customer_chat)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_id = _undefined,
+    Object? chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_customer_chats$service_provider_customer_chat(
+        service_provider_id:
+            service_provider_id == _undefined || service_provider_id == null
+                ? _instance.service_provider_id
+                : (service_provider_id as int),
+        chat: chat == _undefined || chat == null
+            ? _instance.chat
+            : (chat
+                as Query$get_customer_chats$service_provider_customer_chat$chat),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat<TRes>
+      get chat {
+    final local$chat = _instance.chat;
+    return CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat(
+        local$chat, (e) => call(chat: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_customer_chats$service_provider_customer_chat<
+        TRes>
+    implements
+        CopyWith$Query$get_customer_chats$service_provider_customer_chat<TRes> {
+  _CopyWithStubImpl$Query$get_customer_chats$service_provider_customer_chat(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? service_provider_id,
+    Query$get_customer_chats$service_provider_customer_chat$chat? chat,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat<TRes>
+      get chat =>
+          CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat
+              .stub(_res);
+}
+
+class Query$get_customer_chats$service_provider_customer_chat$chat {
+  Query$get_customer_chats$service_provider_customer_chat$chat({
+    required this.id,
+    this.chat_info,
+    this.last_message,
+    required this.last_message_sent,
+    required this.$__typename,
+  });
+
+  factory Query$get_customer_chats$service_provider_customer_chat$chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$chat_info = json['chat_info'];
+    final l$last_message = json['last_message'];
+    final l$last_message_sent = json['last_message_sent'];
+    final l$$__typename = json['__typename'];
+    return Query$get_customer_chats$service_provider_customer_chat$chat(
+      id: (l$id as int),
+      chat_info: l$chat_info == null ? null : mapFromJson(l$chat_info),
+      last_message: l$last_message == null ? null : mapFromJson(l$last_message),
+      last_message_sent: (l$last_message_sent as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic? chat_info;
+
+  final dynamic? last_message;
+
+  final String last_message_sent;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$chat_info = chat_info;
+    _resultData['chat_info'] =
+        l$chat_info == null ? null : mapToJson(l$chat_info);
+    final l$last_message = last_message;
+    _resultData['last_message'] =
+        l$last_message == null ? null : mapToJson(l$last_message);
+    final l$last_message_sent = last_message_sent;
+    _resultData['last_message_sent'] = l$last_message_sent;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$chat_info = chat_info;
+    final l$last_message = last_message;
+    final l$last_message_sent = last_message_sent;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$chat_info,
+      l$last_message,
+      l$last_message_sent,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_customer_chats$service_provider_customer_chat$chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$chat_info = chat_info;
+    final lOther$chat_info = other.chat_info;
+    if (l$chat_info != lOther$chat_info) {
+      return false;
+    }
+    final l$last_message = last_message;
+    final lOther$last_message = other.last_message;
+    if (l$last_message != lOther$last_message) {
+      return false;
+    }
+    final l$last_message_sent = last_message_sent;
+    final lOther$last_message_sent = other.last_message_sent;
+    if (l$last_message_sent != lOther$last_message_sent) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_customer_chats$service_provider_customer_chat$chat
+    on Query$get_customer_chats$service_provider_customer_chat$chat {
+  CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat<
+          Query$get_customer_chats$service_provider_customer_chat$chat>
+      get copyWith =>
+          CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat<
+    TRes> {
+  factory CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat(
+    Query$get_customer_chats$service_provider_customer_chat$chat instance,
+    TRes Function(Query$get_customer_chats$service_provider_customer_chat$chat)
+        then,
+  ) = _CopyWithImpl$Query$get_customer_chats$service_provider_customer_chat$chat;
+
+  factory CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_customer_chats$service_provider_customer_chat$chat;
+
+  TRes call({
+    int? id,
+    dynamic? chat_info,
+    dynamic? last_message,
+    String? last_message_sent,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_customer_chats$service_provider_customer_chat$chat<
+        TRes>
+    implements
+        CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat<
+            TRes> {
+  _CopyWithImpl$Query$get_customer_chats$service_provider_customer_chat$chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_customer_chats$service_provider_customer_chat$chat _instance;
+
+  final TRes Function(
+      Query$get_customer_chats$service_provider_customer_chat$chat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? chat_info = _undefined,
+    Object? last_message = _undefined,
+    Object? last_message_sent = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_customer_chats$service_provider_customer_chat$chat(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        chat_info: chat_info == _undefined
+            ? _instance.chat_info
+            : (chat_info as dynamic?),
+        last_message: last_message == _undefined
+            ? _instance.last_message
+            : (last_message as dynamic?),
+        last_message_sent:
+            last_message_sent == _undefined || last_message_sent == null
+                ? _instance.last_message_sent
+                : (last_message_sent as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_customer_chats$service_provider_customer_chat$chat<
+        TRes>
+    implements
+        CopyWith$Query$get_customer_chats$service_provider_customer_chat$chat<
+            TRes> {
+  _CopyWithStubImpl$Query$get_customer_chats$service_provider_customer_chat$chat(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? chat_info,
+    dynamic? last_message,
+    String? last_message_sent,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$get_service_provider_chats {
+  factory Variables$Query$get_service_provider_chats({
+    int? service_id,
+    String? service_provider_type,
+  }) =>
+      Variables$Query$get_service_provider_chats._({
+        if (service_id != null) r'service_id': service_id,
+        if (service_provider_type != null)
+          r'service_provider_type': service_provider_type,
+      });
+
+  Variables$Query$get_service_provider_chats._(this._$data);
+
+  factory Variables$Query$get_service_provider_chats.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('service_id')) {
+      final l$service_id = data['service_id'];
+      result$data['service_id'] = (l$service_id as int?);
+    }
+    if (data.containsKey('service_provider_type')) {
+      final l$service_provider_type = data['service_provider_type'];
+      result$data['service_provider_type'] =
+          (l$service_provider_type as String?);
+    }
+    return Variables$Query$get_service_provider_chats._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int? get service_id => (_$data['service_id'] as int?);
+  String? get service_provider_type =>
+      (_$data['service_provider_type'] as String?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('service_id')) {
+      final l$service_id = service_id;
+      result$data['service_id'] = l$service_id;
+    }
+    if (_$data.containsKey('service_provider_type')) {
+      final l$service_provider_type = service_provider_type;
+      result$data['service_provider_type'] = l$service_provider_type;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_service_provider_chats<
+          Variables$Query$get_service_provider_chats>
+      get copyWith => CopyWith$Variables$Query$get_service_provider_chats(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_service_provider_chats) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_id = service_id;
+    final lOther$service_id = other.service_id;
+    if (_$data.containsKey('service_id') !=
+        other._$data.containsKey('service_id')) {
+      return false;
+    }
+    if (l$service_id != lOther$service_id) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (_$data.containsKey('service_provider_type') !=
+        other._$data.containsKey('service_provider_type')) {
+      return false;
+    }
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_id = service_id;
+    final l$service_provider_type = service_provider_type;
+    return Object.hashAll([
+      _$data.containsKey('service_id') ? l$service_id : const {},
+      _$data.containsKey('service_provider_type')
+          ? l$service_provider_type
+          : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_service_provider_chats<TRes> {
+  factory CopyWith$Variables$Query$get_service_provider_chats(
+    Variables$Query$get_service_provider_chats instance,
+    TRes Function(Variables$Query$get_service_provider_chats) then,
+  ) = _CopyWithImpl$Variables$Query$get_service_provider_chats;
+
+  factory CopyWith$Variables$Query$get_service_provider_chats.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_service_provider_chats;
+
+  TRes call({
+    int? service_id,
+    String? service_provider_type,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$get_service_provider_chats<TRes>
+    implements CopyWith$Variables$Query$get_service_provider_chats<TRes> {
+  _CopyWithImpl$Variables$Query$get_service_provider_chats(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_service_provider_chats _instance;
+
+  final TRes Function(Variables$Query$get_service_provider_chats) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_id = _undefined,
+    Object? service_provider_type = _undefined,
+  }) =>
+      _then(Variables$Query$get_service_provider_chats._({
+        ..._instance._$data,
+        if (service_id != _undefined) 'service_id': (service_id as int?),
+        if (service_provider_type != _undefined)
+          'service_provider_type': (service_provider_type as String?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_service_provider_chats<TRes>
+    implements CopyWith$Variables$Query$get_service_provider_chats<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_service_provider_chats(this._res);
+
+  TRes _res;
+
+  call({
+    int? service_id,
+    String? service_provider_type,
+  }) =>
+      _res;
+}
+
+class Query$get_service_provider_chats {
+  Query$get_service_provider_chats({
+    required this.service_provider_customer_chat,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_provider_chats.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_customer_chat =
+        json['service_provider_customer_chat'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_provider_chats(
+      service_provider_customer_chat: (l$service_provider_customer_chat
+              as List<dynamic>)
+          .map((e) =>
+              Query$get_service_provider_chats$service_provider_customer_chat
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$get_service_provider_chats$service_provider_customer_chat>
+      service_provider_customer_chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_customer_chat = service_provider_customer_chat;
+    _resultData['service_provider_customer_chat'] =
+        l$service_provider_customer_chat.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_customer_chat = service_provider_customer_chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_customer_chat.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_service_provider_chats) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_customer_chat = service_provider_customer_chat;
+    final lOther$service_provider_customer_chat =
+        other.service_provider_customer_chat;
+    if (l$service_provider_customer_chat.length !=
+        lOther$service_provider_customer_chat.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_customer_chat.length; i++) {
+      final l$service_provider_customer_chat$entry =
+          l$service_provider_customer_chat[i];
+      final lOther$service_provider_customer_chat$entry =
+          lOther$service_provider_customer_chat[i];
+      if (l$service_provider_customer_chat$entry !=
+          lOther$service_provider_customer_chat$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_provider_chats
+    on Query$get_service_provider_chats {
+  CopyWith$Query$get_service_provider_chats<Query$get_service_provider_chats>
+      get copyWith => CopyWith$Query$get_service_provider_chats(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_provider_chats<TRes> {
+  factory CopyWith$Query$get_service_provider_chats(
+    Query$get_service_provider_chats instance,
+    TRes Function(Query$get_service_provider_chats) then,
+  ) = _CopyWithImpl$Query$get_service_provider_chats;
+
+  factory CopyWith$Query$get_service_provider_chats.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_service_provider_chats;
+
+  TRes call({
+    List<Query$get_service_provider_chats$service_provider_customer_chat>?
+        service_provider_customer_chat,
+    String? $__typename,
+  });
+  TRes service_provider_customer_chat(
+      Iterable<Query$get_service_provider_chats$service_provider_customer_chat> Function(
+              Iterable<
+                  CopyWith$Query$get_service_provider_chats$service_provider_customer_chat<
+                      Query$get_service_provider_chats$service_provider_customer_chat>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_service_provider_chats<TRes>
+    implements CopyWith$Query$get_service_provider_chats<TRes> {
+  _CopyWithImpl$Query$get_service_provider_chats(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_provider_chats _instance;
+
+  final TRes Function(Query$get_service_provider_chats) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_customer_chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_service_provider_chats(
+        service_provider_customer_chat: service_provider_customer_chat ==
+                    _undefined ||
+                service_provider_customer_chat == null
+            ? _instance.service_provider_customer_chat
+            : (service_provider_customer_chat as List<
+                Query$get_service_provider_chats$service_provider_customer_chat>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_customer_chat(
+          Iterable<Query$get_service_provider_chats$service_provider_customer_chat> Function(
+                  Iterable<
+                      CopyWith$Query$get_service_provider_chats$service_provider_customer_chat<
+                          Query$get_service_provider_chats$service_provider_customer_chat>>)
+              _fn) =>
+      call(
+          service_provider_customer_chat: _fn(
+              _instance.service_provider_customer_chat.map((e) =>
+                  CopyWith$Query$get_service_provider_chats$service_provider_customer_chat(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_service_provider_chats<TRes>
+    implements CopyWith$Query$get_service_provider_chats<TRes> {
+  _CopyWithStubImpl$Query$get_service_provider_chats(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_service_provider_chats$service_provider_customer_chat>?
+        service_provider_customer_chat,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_customer_chat(_fn) => _res;
+}
+
+const documentNodeQueryget_service_provider_chats = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_service_provider_chats'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_customer_chat'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'service_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_type')),
+                  )
+                ]),
+              ),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'chat'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'last_message_sent'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'service_provider_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'chat'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'chat_info'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'messages'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'creation_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'last_message'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'last_message_sent'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_service_provider_chats _parserFn$Query$get_service_provider_chats(
+        Map<String, dynamic> data) =>
+    Query$get_service_provider_chats.fromJson(data);
+
+class Options$Query$get_service_provider_chats
+    extends graphql.QueryOptions<Query$get_service_provider_chats> {
+  Options$Query$get_service_provider_chats({
+    String? operationName,
+    Variables$Query$get_service_provider_chats? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_service_provider_chats,
+          parserFn: _parserFn$Query$get_service_provider_chats,
+        );
+}
+
+class WatchOptions$Query$get_service_provider_chats
+    extends graphql.WatchQueryOptions<Query$get_service_provider_chats> {
+  WatchOptions$Query$get_service_provider_chats({
+    String? operationName,
+    Variables$Query$get_service_provider_chats? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_service_provider_chats,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_service_provider_chats,
+        );
+}
+
+class FetchMoreOptions$Query$get_service_provider_chats
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_service_provider_chats({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$get_service_provider_chats? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQueryget_service_provider_chats,
+        );
+}
+
+extension ClientExtension$Query$get_service_provider_chats
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_service_provider_chats>>
+      query$get_service_provider_chats(
+              [Options$Query$get_service_provider_chats? options]) async =>
+          await this
+              .query(options ?? Options$Query$get_service_provider_chats());
+  graphql.ObservableQuery<Query$get_service_provider_chats>
+      watchQuery$get_service_provider_chats(
+              [WatchOptions$Query$get_service_provider_chats? options]) =>
+          this.watchQuery(
+              options ?? WatchOptions$Query$get_service_provider_chats());
+  void writeQuery$get_service_provider_chats({
+    required Query$get_service_provider_chats data,
+    Variables$Query$get_service_provider_chats? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryget_service_provider_chats),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_service_provider_chats? readQuery$get_service_provider_chats({
+    Variables$Query$get_service_provider_chats? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryget_service_provider_chats),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$get_service_provider_chats.fromJson(result);
+  }
+}
+
+class Query$get_service_provider_chats$service_provider_customer_chat {
+  Query$get_service_provider_chats$service_provider_customer_chat({
+    required this.service_provider_id,
+    required this.chat,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_provider_chats$service_provider_customer_chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_provider_id = json['service_provider_id'];
+    final l$chat = json['chat'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_provider_chats$service_provider_customer_chat(
+      service_provider_id: (l$service_provider_id as int),
+      chat: Query$get_service_provider_chats$service_provider_customer_chat$chat
+          .fromJson((l$chat as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int service_provider_id;
+
+  final Query$get_service_provider_chats$service_provider_customer_chat$chat
+      chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_id = service_provider_id;
+    _resultData['service_provider_id'] = l$service_provider_id;
+    final l$chat = chat;
+    _resultData['chat'] = l$chat.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_id = service_provider_id;
+    final l$chat = chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_provider_id,
+      l$chat,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_service_provider_chats$service_provider_customer_chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$chat = chat;
+    final lOther$chat = other.chat;
+    if (l$chat != lOther$chat) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_provider_chats$service_provider_customer_chat
+    on Query$get_service_provider_chats$service_provider_customer_chat {
+  CopyWith$Query$get_service_provider_chats$service_provider_customer_chat<
+          Query$get_service_provider_chats$service_provider_customer_chat>
+      get copyWith =>
+          CopyWith$Query$get_service_provider_chats$service_provider_customer_chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_provider_chats$service_provider_customer_chat<
+    TRes> {
+  factory CopyWith$Query$get_service_provider_chats$service_provider_customer_chat(
+    Query$get_service_provider_chats$service_provider_customer_chat instance,
+    TRes Function(
+            Query$get_service_provider_chats$service_provider_customer_chat)
+        then,
+  ) = _CopyWithImpl$Query$get_service_provider_chats$service_provider_customer_chat;
+
+  factory CopyWith$Query$get_service_provider_chats$service_provider_customer_chat.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_service_provider_chats$service_provider_customer_chat;
+
+  TRes call({
+    int? service_provider_id,
+    Query$get_service_provider_chats$service_provider_customer_chat$chat? chat,
+    String? $__typename,
+  });
+  CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat<
+      TRes> get chat;
+}
+
+class _CopyWithImpl$Query$get_service_provider_chats$service_provider_customer_chat<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_chats$service_provider_customer_chat<
+            TRes> {
+  _CopyWithImpl$Query$get_service_provider_chats$service_provider_customer_chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_provider_chats$service_provider_customer_chat
+      _instance;
+
+  final TRes Function(
+      Query$get_service_provider_chats$service_provider_customer_chat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_id = _undefined,
+    Object? chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_service_provider_chats$service_provider_customer_chat(
+        service_provider_id:
+            service_provider_id == _undefined || service_provider_id == null
+                ? _instance.service_provider_id
+                : (service_provider_id as int),
+        chat: chat == _undefined || chat == null
+            ? _instance.chat
+            : (chat
+                as Query$get_service_provider_chats$service_provider_customer_chat$chat),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat<
+      TRes> get chat {
+    final local$chat = _instance.chat;
+    return CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat(
+        local$chat, (e) => call(chat: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_service_provider_chats$service_provider_customer_chat<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_chats$service_provider_customer_chat<
+            TRes> {
+  _CopyWithStubImpl$Query$get_service_provider_chats$service_provider_customer_chat(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? service_provider_id,
+    Query$get_service_provider_chats$service_provider_customer_chat$chat? chat,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat<
+          TRes>
+      get chat =>
+          CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat
+              .stub(_res);
+}
+
+class Query$get_service_provider_chats$service_provider_customer_chat$chat {
+  Query$get_service_provider_chats$service_provider_customer_chat$chat({
+    required this.id,
+    this.chat_info,
+    required this.messages,
+    required this.creation_time,
+    this.last_message,
+    required this.last_message_sent,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_provider_chats$service_provider_customer_chat$chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$chat_info = json['chat_info'];
+    final l$messages = json['messages'];
+    final l$creation_time = json['creation_time'];
+    final l$last_message = json['last_message'];
+    final l$last_message_sent = json['last_message_sent'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_provider_chats$service_provider_customer_chat$chat(
+      id: (l$id as int),
+      chat_info: l$chat_info == null ? null : mapFromJson(l$chat_info),
+      messages: mapFromJson(l$messages),
+      creation_time: (l$creation_time as String),
+      last_message: l$last_message == null ? null : mapFromJson(l$last_message),
+      last_message_sent: (l$last_message_sent as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic? chat_info;
+
+  final dynamic messages;
+
+  final String creation_time;
+
+  final dynamic? last_message;
+
+  final String last_message_sent;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$chat_info = chat_info;
+    _resultData['chat_info'] =
+        l$chat_info == null ? null : mapToJson(l$chat_info);
+    final l$messages = messages;
+    _resultData['messages'] = mapToJson(l$messages);
+    final l$creation_time = creation_time;
+    _resultData['creation_time'] = l$creation_time;
+    final l$last_message = last_message;
+    _resultData['last_message'] =
+        l$last_message == null ? null : mapToJson(l$last_message);
+    final l$last_message_sent = last_message_sent;
+    _resultData['last_message_sent'] = l$last_message_sent;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$chat_info = chat_info;
+    final l$messages = messages;
+    final l$creation_time = creation_time;
+    final l$last_message = last_message;
+    final l$last_message_sent = last_message_sent;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$chat_info,
+      l$messages,
+      l$creation_time,
+      l$last_message,
+      l$last_message_sent,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_service_provider_chats$service_provider_customer_chat$chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$chat_info = chat_info;
+    final lOther$chat_info = other.chat_info;
+    if (l$chat_info != lOther$chat_info) {
+      return false;
+    }
+    final l$messages = messages;
+    final lOther$messages = other.messages;
+    if (l$messages != lOther$messages) {
+      return false;
+    }
+    final l$creation_time = creation_time;
+    final lOther$creation_time = other.creation_time;
+    if (l$creation_time != lOther$creation_time) {
+      return false;
+    }
+    final l$last_message = last_message;
+    final lOther$last_message = other.last_message;
+    if (l$last_message != lOther$last_message) {
+      return false;
+    }
+    final l$last_message_sent = last_message_sent;
+    final lOther$last_message_sent = other.last_message_sent;
+    if (l$last_message_sent != lOther$last_message_sent) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_provider_chats$service_provider_customer_chat$chat
+    on Query$get_service_provider_chats$service_provider_customer_chat$chat {
+  CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat<
+          Query$get_service_provider_chats$service_provider_customer_chat$chat>
+      get copyWith =>
+          CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat<
+    TRes> {
+  factory CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat(
+    Query$get_service_provider_chats$service_provider_customer_chat$chat
+        instance,
+    TRes Function(
+            Query$get_service_provider_chats$service_provider_customer_chat$chat)
+        then,
+  ) = _CopyWithImpl$Query$get_service_provider_chats$service_provider_customer_chat$chat;
+
+  factory CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_service_provider_chats$service_provider_customer_chat$chat;
+
+  TRes call({
+    int? id,
+    dynamic? chat_info,
+    dynamic? messages,
+    String? creation_time,
+    dynamic? last_message,
+    String? last_message_sent,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_service_provider_chats$service_provider_customer_chat$chat<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat<
+            TRes> {
+  _CopyWithImpl$Query$get_service_provider_chats$service_provider_customer_chat$chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_provider_chats$service_provider_customer_chat$chat
+      _instance;
+
+  final TRes Function(
+          Query$get_service_provider_chats$service_provider_customer_chat$chat)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? chat_info = _undefined,
+    Object? messages = _undefined,
+    Object? creation_time = _undefined,
+    Object? last_message = _undefined,
+    Object? last_message_sent = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_service_provider_chats$service_provider_customer_chat$chat(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        chat_info: chat_info == _undefined
+            ? _instance.chat_info
+            : (chat_info as dynamic?),
+        messages: messages == _undefined || messages == null
+            ? _instance.messages
+            : (messages as dynamic),
+        creation_time: creation_time == _undefined || creation_time == null
+            ? _instance.creation_time
+            : (creation_time as String),
+        last_message: last_message == _undefined
+            ? _instance.last_message
+            : (last_message as dynamic?),
+        last_message_sent:
+            last_message_sent == _undefined || last_message_sent == null
+                ? _instance.last_message_sent
+                : (last_message_sent as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_service_provider_chats$service_provider_customer_chat$chat<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_chats$service_provider_customer_chat$chat<
+            TRes> {
+  _CopyWithStubImpl$Query$get_service_provider_chats$service_provider_customer_chat$chat(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? chat_info,
+    dynamic? messages,
+    String? creation_time,
+    dynamic? last_message,
+    String? last_message_sent,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_admin_chats {
+  Query$get_admin_chats({
+    required this.mez_admin_chat,
+    required this.$__typename,
+  });
+
+  factory Query$get_admin_chats.fromJson(Map<String, dynamic> json) {
+    final l$mez_admin_chat = json['mez_admin_chat'];
+    final l$$__typename = json['__typename'];
+    return Query$get_admin_chats(
+      mez_admin_chat: (l$mez_admin_chat as List<dynamic>)
+          .map((e) => Query$get_admin_chats$mez_admin_chat.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$get_admin_chats$mez_admin_chat> mez_admin_chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$mez_admin_chat = mez_admin_chat;
+    _resultData['mez_admin_chat'] =
+        l$mez_admin_chat.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$mez_admin_chat = mez_admin_chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$mez_admin_chat.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_admin_chats) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$mez_admin_chat = mez_admin_chat;
+    final lOther$mez_admin_chat = other.mez_admin_chat;
+    if (l$mez_admin_chat.length != lOther$mez_admin_chat.length) {
+      return false;
+    }
+    for (int i = 0; i < l$mez_admin_chat.length; i++) {
+      final l$mez_admin_chat$entry = l$mez_admin_chat[i];
+      final lOther$mez_admin_chat$entry = lOther$mez_admin_chat[i];
+      if (l$mez_admin_chat$entry != lOther$mez_admin_chat$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_admin_chats on Query$get_admin_chats {
+  CopyWith$Query$get_admin_chats<Query$get_admin_chats> get copyWith =>
+      CopyWith$Query$get_admin_chats(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$get_admin_chats<TRes> {
+  factory CopyWith$Query$get_admin_chats(
+    Query$get_admin_chats instance,
+    TRes Function(Query$get_admin_chats) then,
+  ) = _CopyWithImpl$Query$get_admin_chats;
+
+  factory CopyWith$Query$get_admin_chats.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_admin_chats;
+
+  TRes call({
+    List<Query$get_admin_chats$mez_admin_chat>? mez_admin_chat,
+    String? $__typename,
+  });
+  TRes mez_admin_chat(
+      Iterable<Query$get_admin_chats$mez_admin_chat> Function(
+              Iterable<
+                  CopyWith$Query$get_admin_chats$mez_admin_chat<
+                      Query$get_admin_chats$mez_admin_chat>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_admin_chats<TRes>
+    implements CopyWith$Query$get_admin_chats<TRes> {
+  _CopyWithImpl$Query$get_admin_chats(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_admin_chats _instance;
+
+  final TRes Function(Query$get_admin_chats) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? mez_admin_chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_admin_chats(
+        mez_admin_chat: mez_admin_chat == _undefined || mez_admin_chat == null
+            ? _instance.mez_admin_chat
+            : (mez_admin_chat as List<Query$get_admin_chats$mez_admin_chat>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes mez_admin_chat(
+          Iterable<Query$get_admin_chats$mez_admin_chat> Function(
+                  Iterable<
+                      CopyWith$Query$get_admin_chats$mez_admin_chat<
+                          Query$get_admin_chats$mez_admin_chat>>)
+              _fn) =>
+      call(
+          mez_admin_chat: _fn(_instance.mez_admin_chat
+              .map((e) => CopyWith$Query$get_admin_chats$mez_admin_chat(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_admin_chats<TRes>
+    implements CopyWith$Query$get_admin_chats<TRes> {
+  _CopyWithStubImpl$Query$get_admin_chats(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_admin_chats$mez_admin_chat>? mez_admin_chat,
+    String? $__typename,
+  }) =>
+      _res;
+  mez_admin_chat(_fn) => _res;
+}
+
+const documentNodeQueryget_admin_chats = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_admin_chats'),
+    variableDefinitions: [],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'mez_admin_chat'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'chat'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'last_message_sent'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'recipient_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'recipient_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'chat'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'chat_info'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'messages'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'creation_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'last_message'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'last_message_sent'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_admin_chats _parserFn$Query$get_admin_chats(
+        Map<String, dynamic> data) =>
+    Query$get_admin_chats.fromJson(data);
+
+class Options$Query$get_admin_chats
+    extends graphql.QueryOptions<Query$get_admin_chats> {
+  Options$Query$get_admin_chats({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_admin_chats,
+          parserFn: _parserFn$Query$get_admin_chats,
+        );
+}
+
+class WatchOptions$Query$get_admin_chats
+    extends graphql.WatchQueryOptions<Query$get_admin_chats> {
+  WatchOptions$Query$get_admin_chats({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_admin_chats,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_admin_chats,
+        );
+}
+
+class FetchMoreOptions$Query$get_admin_chats extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_admin_chats(
+      {required graphql.UpdateQuery updateQuery})
+      : super(
+          updateQuery: updateQuery,
+          document: documentNodeQueryget_admin_chats,
+        );
+}
+
+extension ClientExtension$Query$get_admin_chats on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_admin_chats>> query$get_admin_chats(
+          [Options$Query$get_admin_chats? options]) async =>
+      await this.query(options ?? Options$Query$get_admin_chats());
+  graphql.ObservableQuery<Query$get_admin_chats> watchQuery$get_admin_chats(
+          [WatchOptions$Query$get_admin_chats? options]) =>
+      this.watchQuery(options ?? WatchOptions$Query$get_admin_chats());
+  void writeQuery$get_admin_chats({
+    required Query$get_admin_chats data,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+            operation:
+                graphql.Operation(document: documentNodeQueryget_admin_chats)),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_admin_chats? readQuery$get_admin_chats({bool optimistic = true}) {
+    final result = this.readQuery(
+      graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQueryget_admin_chats)),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$get_admin_chats.fromJson(result);
+  }
+}
+
+class Query$get_admin_chats$mez_admin_chat {
+  Query$get_admin_chats$mez_admin_chat({
+    required this.recipient_id,
+    required this.recipient_type,
+    this.chat,
+    required this.$__typename,
+  });
+
+  factory Query$get_admin_chats$mez_admin_chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$recipient_id = json['recipient_id'];
+    final l$recipient_type = json['recipient_type'];
+    final l$chat = json['chat'];
+    final l$$__typename = json['__typename'];
+    return Query$get_admin_chats$mez_admin_chat(
+      recipient_id: (l$recipient_id as int),
+      recipient_type: (l$recipient_type as String),
+      chat: l$chat == null
+          ? null
+          : Query$get_admin_chats$mez_admin_chat$chat.fromJson(
+              (l$chat as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int recipient_id;
+
+  final String recipient_type;
+
+  final Query$get_admin_chats$mez_admin_chat$chat? chat;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$recipient_id = recipient_id;
+    _resultData['recipient_id'] = l$recipient_id;
+    final l$recipient_type = recipient_type;
+    _resultData['recipient_type'] = l$recipient_type;
+    final l$chat = chat;
+    _resultData['chat'] = l$chat?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$recipient_id = recipient_id;
+    final l$recipient_type = recipient_type;
+    final l$chat = chat;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$recipient_id,
+      l$recipient_type,
+      l$chat,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_admin_chats$mez_admin_chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$recipient_id = recipient_id;
+    final lOther$recipient_id = other.recipient_id;
+    if (l$recipient_id != lOther$recipient_id) {
+      return false;
+    }
+    final l$recipient_type = recipient_type;
+    final lOther$recipient_type = other.recipient_type;
+    if (l$recipient_type != lOther$recipient_type) {
+      return false;
+    }
+    final l$chat = chat;
+    final lOther$chat = other.chat;
+    if (l$chat != lOther$chat) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_admin_chats$mez_admin_chat
+    on Query$get_admin_chats$mez_admin_chat {
+  CopyWith$Query$get_admin_chats$mez_admin_chat<
+          Query$get_admin_chats$mez_admin_chat>
+      get copyWith => CopyWith$Query$get_admin_chats$mez_admin_chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_admin_chats$mez_admin_chat<TRes> {
+  factory CopyWith$Query$get_admin_chats$mez_admin_chat(
+    Query$get_admin_chats$mez_admin_chat instance,
+    TRes Function(Query$get_admin_chats$mez_admin_chat) then,
+  ) = _CopyWithImpl$Query$get_admin_chats$mez_admin_chat;
+
+  factory CopyWith$Query$get_admin_chats$mez_admin_chat.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat;
+
+  TRes call({
+    int? recipient_id,
+    String? recipient_type,
+    Query$get_admin_chats$mez_admin_chat$chat? chat,
+    String? $__typename,
+  });
+  CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> get chat;
+}
+
+class _CopyWithImpl$Query$get_admin_chats$mez_admin_chat<TRes>
+    implements CopyWith$Query$get_admin_chats$mez_admin_chat<TRes> {
+  _CopyWithImpl$Query$get_admin_chats$mez_admin_chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_admin_chats$mez_admin_chat _instance;
+
+  final TRes Function(Query$get_admin_chats$mez_admin_chat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? recipient_id = _undefined,
+    Object? recipient_type = _undefined,
+    Object? chat = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_admin_chats$mez_admin_chat(
+        recipient_id: recipient_id == _undefined || recipient_id == null
+            ? _instance.recipient_id
+            : (recipient_id as int),
+        recipient_type: recipient_type == _undefined || recipient_type == null
+            ? _instance.recipient_type
+            : (recipient_type as String),
+        chat: chat == _undefined
+            ? _instance.chat
+            : (chat as Query$get_admin_chats$mez_admin_chat$chat?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> get chat {
+    final local$chat = _instance.chat;
+    return local$chat == null
+        ? CopyWith$Query$get_admin_chats$mez_admin_chat$chat.stub(
+            _then(_instance))
+        : CopyWith$Query$get_admin_chats$mez_admin_chat$chat(
+            local$chat, (e) => call(chat: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat<TRes>
+    implements CopyWith$Query$get_admin_chats$mez_admin_chat<TRes> {
+  _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat(this._res);
+
+  TRes _res;
+
+  call({
+    int? recipient_id,
+    String? recipient_type,
+    Query$get_admin_chats$mez_admin_chat$chat? chat,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> get chat =>
+      CopyWith$Query$get_admin_chats$mez_admin_chat$chat.stub(_res);
+}
+
+class Query$get_admin_chats$mez_admin_chat$chat {
+  Query$get_admin_chats$mez_admin_chat$chat({
+    required this.id,
+    this.chat_info,
+    required this.messages,
+    required this.creation_time,
+    this.last_message,
+    required this.last_message_sent,
+    required this.$__typename,
+  });
+
+  factory Query$get_admin_chats$mez_admin_chat$chat.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$chat_info = json['chat_info'];
+    final l$messages = json['messages'];
+    final l$creation_time = json['creation_time'];
+    final l$last_message = json['last_message'];
+    final l$last_message_sent = json['last_message_sent'];
+    final l$$__typename = json['__typename'];
+    return Query$get_admin_chats$mez_admin_chat$chat(
+      id: (l$id as int),
+      chat_info: l$chat_info == null ? null : mapFromJson(l$chat_info),
+      messages: mapFromJson(l$messages),
+      creation_time: (l$creation_time as String),
+      last_message: l$last_message == null ? null : mapFromJson(l$last_message),
+      last_message_sent: (l$last_message_sent as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic? chat_info;
+
+  final dynamic messages;
+
+  final String creation_time;
+
+  final dynamic? last_message;
+
+  final String last_message_sent;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$chat_info = chat_info;
+    _resultData['chat_info'] =
+        l$chat_info == null ? null : mapToJson(l$chat_info);
+    final l$messages = messages;
+    _resultData['messages'] = mapToJson(l$messages);
+    final l$creation_time = creation_time;
+    _resultData['creation_time'] = l$creation_time;
+    final l$last_message = last_message;
+    _resultData['last_message'] =
+        l$last_message == null ? null : mapToJson(l$last_message);
+    final l$last_message_sent = last_message_sent;
+    _resultData['last_message_sent'] = l$last_message_sent;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$chat_info = chat_info;
+    final l$messages = messages;
+    final l$creation_time = creation_time;
+    final l$last_message = last_message;
+    final l$last_message_sent = last_message_sent;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$chat_info,
+      l$messages,
+      l$creation_time,
+      l$last_message,
+      l$last_message_sent,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_admin_chats$mez_admin_chat$chat) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$chat_info = chat_info;
+    final lOther$chat_info = other.chat_info;
+    if (l$chat_info != lOther$chat_info) {
+      return false;
+    }
+    final l$messages = messages;
+    final lOther$messages = other.messages;
+    if (l$messages != lOther$messages) {
+      return false;
+    }
+    final l$creation_time = creation_time;
+    final lOther$creation_time = other.creation_time;
+    if (l$creation_time != lOther$creation_time) {
+      return false;
+    }
+    final l$last_message = last_message;
+    final lOther$last_message = other.last_message;
+    if (l$last_message != lOther$last_message) {
+      return false;
+    }
+    final l$last_message_sent = last_message_sent;
+    final lOther$last_message_sent = other.last_message_sent;
+    if (l$last_message_sent != lOther$last_message_sent) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_admin_chats$mez_admin_chat$chat
+    on Query$get_admin_chats$mez_admin_chat$chat {
+  CopyWith$Query$get_admin_chats$mez_admin_chat$chat<
+          Query$get_admin_chats$mez_admin_chat$chat>
+      get copyWith => CopyWith$Query$get_admin_chats$mez_admin_chat$chat(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> {
+  factory CopyWith$Query$get_admin_chats$mez_admin_chat$chat(
+    Query$get_admin_chats$mez_admin_chat$chat instance,
+    TRes Function(Query$get_admin_chats$mez_admin_chat$chat) then,
+  ) = _CopyWithImpl$Query$get_admin_chats$mez_admin_chat$chat;
+
+  factory CopyWith$Query$get_admin_chats$mez_admin_chat$chat.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat$chat;
+
+  TRes call({
+    int? id,
+    dynamic? chat_info,
+    dynamic? messages,
+    String? creation_time,
+    dynamic? last_message,
+    String? last_message_sent,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_admin_chats$mez_admin_chat$chat<TRes>
+    implements CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> {
+  _CopyWithImpl$Query$get_admin_chats$mez_admin_chat$chat(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_admin_chats$mez_admin_chat$chat _instance;
+
+  final TRes Function(Query$get_admin_chats$mez_admin_chat$chat) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? chat_info = _undefined,
+    Object? messages = _undefined,
+    Object? creation_time = _undefined,
+    Object? last_message = _undefined,
+    Object? last_message_sent = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_admin_chats$mez_admin_chat$chat(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        chat_info: chat_info == _undefined
+            ? _instance.chat_info
+            : (chat_info as dynamic?),
+        messages: messages == _undefined || messages == null
+            ? _instance.messages
+            : (messages as dynamic),
+        creation_time: creation_time == _undefined || creation_time == null
+            ? _instance.creation_time
+            : (creation_time as String),
+        last_message: last_message == _undefined
+            ? _instance.last_message
+            : (last_message as dynamic?),
+        last_message_sent:
+            last_message_sent == _undefined || last_message_sent == null
+                ? _instance.last_message_sent
+                : (last_message_sent as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat$chat<TRes>
+    implements CopyWith$Query$get_admin_chats$mez_admin_chat$chat<TRes> {
+  _CopyWithStubImpl$Query$get_admin_chats$mez_admin_chat$chat(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? chat_info,
+    dynamic? messages,
+    String? creation_time,
+    dynamic? last_message,
+    String? last_message_sent,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Subscription$listen_on_chat_messages {
   factory Variables$Subscription$listen_on_chat_messages(
           {required int chat_id}) =>
@@ -1823,6 +6042,22 @@ const documentNodeMutationadd_message = DocumentNode(definitions: [
                 name: NameNode(value: 'messages'),
                 value: VariableNode(name: NameNode(value: 'msg')),
               )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'last_message_sent'),
+                value: StringValueNode(
+                  value: 'now()',
+                  isBlock: false,
+                ),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'last_message'),
+                value: VariableNode(name: NameNode(value: 'msg')),
+              ),
             ]),
           ),
         ],

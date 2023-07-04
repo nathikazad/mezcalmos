@@ -9,7 +9,57 @@ object_relationships:
     using:
       foreign_key_constraint_on: translation_id
 insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        translation_group:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - translation_id
+        - language_id
+        - value
   - role: delivery_driver
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - translation_id
+        - language_id
+        - value
+  - role: delivery_operator
+    permission:
+      check:
+        translation_group:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - translation_id
+        - language_id
+        - value
+  - role: laundry_operator
+    permission:
+      check:
+        translation_group:
+          laundry:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - translation_id
+        - language_id
+        - value
+  - role: mez_admin
     permission:
       check:
         _exists:
@@ -43,6 +93,13 @@ select_permissions:
         - language_id
         - value
       filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
   - role: customer
     permission:
       columns:
@@ -51,6 +108,20 @@ select_permissions:
         - value
       filter: {}
   - role: delivery_driver
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
+  - role: laundry_operator
     permission:
       columns:
         - translation_id
@@ -72,6 +143,24 @@ select_permissions:
         - value
       filter: {}
 update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter:
+        translation_group:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check:
+        translation_group:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
   - role: delivery_driver
     permission:
       columns:
@@ -85,6 +174,62 @@ update_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       check: null
+  - role: delivery_operator
+    permission:
+      columns:
+        - language_id
+        - value
+      filter:
+        translation_group:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check:
+        translation_group:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - language_id
+        - value
+      filter:
+        translation_group:
+          laundry:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check:
+        translation_group:
+          laundry:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:

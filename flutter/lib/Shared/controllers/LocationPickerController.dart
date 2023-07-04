@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
+    as MapHelper;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
 
@@ -95,7 +95,7 @@ class LocationPicker extends StatefulWidget {
 enum BottomButtomToShow { Pick, Confirm, GrayedOut, Loading }
 
 class LocationPickerState extends State<LocationPicker> {
-  Location? location;
+  MezLocation? location;
   bool userTaped = false;
 
   @override
@@ -128,11 +128,11 @@ class LocationPickerState extends State<LocationPicker> {
       child: Container(
         margin: EdgeInsets.only(bottom: 30),
         color: Colors.transparent,
-        height: 30,
-        width: 20,
+        height: 35,
+        width: 35,
         child: ClipRect(
           child: Image.asset(
-            aLocationPicker,
+            mezDestinationMarker,
             fit: BoxFit.cover,
           ),
         ),
@@ -156,9 +156,8 @@ class LocationPickerState extends State<LocationPicker> {
         } else {
           return buildBottomButton(_i18n()["signInToMakeOrder"],
               notifier: (_) async {
-            Get.find<AuthController>().preserveNavigationStackAfterSignIn =
-                true;
-            await MezRouter.toNamed<void>(kSignInRouteOptional);
+            //  await MezRouter.toNamed(SharedRoutes.kSignInRouteOptional);
+            await SignInView.navigateAtOrderTime();
 
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
             widget.onSuccessSignIn?.call();
@@ -190,7 +189,7 @@ class LocationPickerState extends State<LocationPicker> {
       child: InkWell(
         onTap: notifier != null
             ? () async {
-                final Location? _loc = await getCenterAndGeoCode();
+                final MezLocation? _loc = await getCenterAndGeoCode();
                 if (_loc != null) {
                   notifier.call(_loc);
                   widget.locationPickerMapController._showFakeMarker.value =
@@ -296,18 +295,19 @@ class LocationPickerState extends State<LocationPicker> {
   }
 
   /******************************  helper functions ************************************/
-  Future<Location?> getCenterAndGeoCode() async {
+  Future<MezLocation?> getCenterAndGeoCode() async {
     final LatLng? _mapCenter =
         await widget.locationPickerMapController.getMapCenter();
-    Location? finalResult;
+    MezLocation? finalResult;
 
     if (_mapCenter != null) {
       final GeoLoc.LocationData _newLocationData =
-          Location.buildLocationData(_mapCenter.latitude, _mapCenter.longitude);
+          MezLocation.buildLocationData(
+              _mapCenter.latitude, _mapCenter.longitude);
 
       final double kmDistance = MapHelper.calculateDistance(
           _newLocationData,
-          Location.buildLocationData(
+          MezLocation.buildLocationData(
               widget.locationPickerMapController.location.value!.latitude,
               widget.locationPickerMapController.location.value!.longitude));
 
@@ -324,8 +324,9 @@ class LocationPickerState extends State<LocationPicker> {
             ) ??
             widget.locationPickerMapController.location.value!.address;
       }
+      mezDbgPrint("Formatted final address 🥹============>$formattedAddress");
 
-      finalResult = Location(formattedAddress, _newLocationData);
+      finalResult = MezLocation(formattedAddress, _newLocationData);
 
       mezDbgPrint("@===> new location : ${finalResult.toString()}");
     }

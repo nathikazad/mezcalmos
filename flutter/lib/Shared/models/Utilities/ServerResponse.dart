@@ -11,9 +11,12 @@ extension ParseResponseStatusToString on ResponseStatus {
 extension ParseStringToResponseStatus on String {
   ResponseStatus toResponseStatus() {
     mezDbgPrint("Causin g so many errors ===========> $this");
-
-    return ResponseStatus.values.firstWhere(
-        (ResponseStatus e) => e.toShortString().toLowerCase() == toLowerCase());
+    try {
+      return ResponseStatus.values.firstWhere((ResponseStatus e) =>
+          e.toShortString().toLowerCase() == toLowerCase());
+    } catch (e) {
+      return ResponseStatus.Success;
+    }
   }
 }
 

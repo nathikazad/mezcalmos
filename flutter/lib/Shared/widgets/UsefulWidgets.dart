@@ -32,10 +32,39 @@ class MezcalmosSharedWidgets {
               ),
             ),
             TextSpan(
-              text: sCalmos,
+              text: 'KALA',
               style: TextStyle(
                 fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
                 color: Color.fromARGB(255, 103, 122, 253),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  static RichText mezkalaTitle({
+    double textSize = nDefaultMezcalmosTextSize,
+    bool isBold = false,
+  }) =>
+      RichText(
+        text: TextSpan(
+          style: TextStyle(
+            fontFamily: 'psr',
+            color: Color.fromARGB(255, 103, 122, 253),
+            fontSize: textSize,
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text: sMez,
+              style: TextStyle(
+                fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
+              ),
+            ),
+            TextSpan(
+              text: sKala,
+              style: TextStyle(
+                fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
+                color: Colors.black,
               ),
             ),
           ],
@@ -48,15 +77,38 @@ class MezcalmosSharedWidgets {
       //  width: ,
       child: FittedBox(
         fit: BoxFit.scaleDown,
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.center,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             if (showLogo)
-              logo(size: getSizeRelativeToScreen(60, Get.width, Get.height)),
+              logo(
+                  size: 9
+                      .mezW), //getSizeRelativeToScreen(60, Get.width, Get.height)),
             Padding(
               padding: EdgeInsets.only(left: 10),
               child: mezcalmosTitle(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget fillMezkalaTitle({bool showLogo = true}) {
+    return Container(
+      width: 45.mezW,
+      //  width: ,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            if (showLogo) logo(size: 30.mezSp),
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: mezkalaTitle(),
             ),
           ],
         ),

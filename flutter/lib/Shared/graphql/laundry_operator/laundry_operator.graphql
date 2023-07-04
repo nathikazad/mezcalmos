@@ -1,0 +1,65 @@
+query getLaundryOperatorByUserId($userId: Int!) {
+  laundry_operator(where: {user_id: {_eq: $userId}}) {
+    id
+     operator_details {
+  owner
+    status
+    }
+    user_id
+    user {
+      firebase_id
+  
+      image
+      language_id
+      name
+   
+    }
+    store_id
+   store{details_id
+      details {
+        service_link_id
+      }
+
+      delivery_details_id
+   }
+    
+   
+  
+  }
+}
+subscription laundryOperatorStatusStream($userId: Int!) {
+  laundry_operator(where: {user_id: {_eq: $userId}}) {
+      operator_details {
+  
+    status
+    }
+  }
+}
+query getLaundryOperators($laundryId: Int!) {
+  laundry_store_by_pk(id: $laundryId) {
+    operators {
+     id
+     operator_details {
+  owner
+    status
+    }
+    user_id
+    user {
+      firebase_id
+  
+      image
+      language_id
+      name
+   
+    }
+    store_id
+   store{  details_id
+      details {
+        service_link_id
+      }
+
+      delivery_details_id}
+   
+    }
+  }
+}

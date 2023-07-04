@@ -6,11 +6,11 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
-["NoInternetConnectionScreen"];
+    ["NoInternetConnectionScreen"];
 
 class NoInternetConnectionScreen extends StatelessWidget {
   const NoInternetConnectionScreen({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

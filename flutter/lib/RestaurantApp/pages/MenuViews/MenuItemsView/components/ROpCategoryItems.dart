@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpMenuView"]["components"]["ROpCategoryItems"];
@@ -31,8 +34,8 @@ class ROpCategoryItems extends StatefulWidget {
 }
 
 class _ROpCategoryItemsState extends State<ROpCategoryItems> {
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -48,8 +51,8 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                   Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      widget.category.name?[userLanguage] ?? "",
-                      style: Get.textTheme.bodyText1,
+                      widget.category.name?.getTranslation(userLanguage) ?? "",
+                      style: context.txt.bodyLarge,
                     ),
                   ),
                   (widget.viewController.reOrderMode.isTrue)
@@ -57,12 +60,13 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                       : _categoryMenuBtn(context)
                 ],
               ),
-              if (widget.category.dialog?[userLanguage] != null)
+              if (widget.category.dialog != null)
                 Container(
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                    widget.category.dialog![userLanguage]!,
-                    style: Get.textTheme.bodyText2,
+                    widget.category.dialog!.getTranslation(userLanguage) ??
+                        "No description",
+                    style: context.txt.bodyMedium,
                   ),
                 ),
               if (widget.category.items.isEmpty)
@@ -137,12 +141,11 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                     ),
                     InkWell(
                       onTap: () async {
-                        MezRouter.popDialog(closeOverlays: true);
-                        final bool? result = await MezRouter.toNamed(
-                            getCategoryEditRoute(
+                        MezRouter.back();
+                        final bool? result =
+                            await ROpCategoryView.navigateWithCategory(
                                 categoryId: widget.category.id!,
-                                restaurantId: widget.restaurantId)) as bool?;
-
+                                restaurantId: widget.restaurantId) as bool?;
                         if (result == true) {
                           await widget.viewController.fetchCategories();
                         }
@@ -153,7 +156,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                           alignment: Alignment.center,
                           child: Text(
                             '${_i18n()["editCatgeory"]}',
-                            style: Get.textTheme.bodyText1,
+                            style: context.txt.bodyLarge,
                           )),
                     ),
                     Divider(),
@@ -169,12 +172,11 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                               .deleteCategory(categoryId: widget.category.id!)
                               .then((bool value) {
                             if (value) {
-                              MezRouter.untill((Route route) =>
-                                  route.settings.name ==
-                                  getROpMenuRoute(
-                                      restaurantId: widget.restaurantId));
+                              Navigator.pop(context, true);
                             }
                           });
+                        }).whenComplete(() {
+                          Navigator.pop(context);
                         });
                       },
                       child: Container(
@@ -183,7 +185,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                               vertical: 12, horizontal: 5),
                           child: Text(
                             '${_i18n()["deleteCatgeory"]}',
-                            style: Get.textTheme.bodyText1
+                            style: context.txt.bodyLarge
                                 ?.copyWith(color: Colors.red),
                           )),
                     ),

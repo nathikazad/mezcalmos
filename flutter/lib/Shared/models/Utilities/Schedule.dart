@@ -1,20 +1,15 @@
+import 'package:collection/collection.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-
-enum Weekday { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
 extension AddDayOfWeekToDateTime on DateTime {
   Weekday getDayOfWeek() {
     return Weekday.values
         .firstWhere((Weekday weekday) => this.weekday == weekday.index + 1);
-  }
-}
-
-extension ParseWeekdayToString on Weekday {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
   }
 }
 
@@ -25,114 +20,136 @@ extension ParseStringToDaysOfWeek on String {
   }
 }
 
-class OpenHours {
-  bool isOpen;
-  List<int> from;
-  List<int> to;
-  OpenHours(this.isOpen, this.from, this.to);
+Schedule scheduleFromData(json) {
+  Map<Weekday, WorkingDay> openHours = {};
+  if (json != null) {
+    for (String weekdayKey in json.keys) {
+      final Weekday weekday = Weekday.values
+          .firstWhere((Weekday e) => e.toFirebaseFormatString() == weekdayKey);
+      final dynamic workindDay = json[weekdayKey];
+      if (workindDay is List) {
+        throw Exception(
+            "The schedule is in the old format <Weekday : <OpenHours>[]>, please update it");
+      }
+      if (workindDay["openHours"] != null) {
+        List<OpenHours> openHoursList = workindDay["openHours"]
+            .map<OpenHours>((hourJson) => openHoursfromJson(hourJson))
+            .toList();
+        openHours[weekday] = WorkingDay(
+            isOpen: workindDay["isOpen"] ?? true, openHours: openHoursList);
+      }
+      // the old format
+      else {
+        final OpenHours singleOpenHour = openHoursfromJson(workindDay);
 
-  Map<String, dynamic> toFirebaseFormattedJson() {
-    return <String, dynamic>{
-      "from": from.join(":"),
-      "to": to.join(":"),
-      "isOpen": isOpen
-    };
+        openHours[weekday] =
+            WorkingDay(isOpen: true, openHours: [singleOpenHour]);
+      }
+      //  }
+    }
   }
+  List<Weekday> sortedKeys = openHours.keys.toList()
+    ..sort((Weekday a, Weekday b) => a.index.compareTo(b.index));
 
-  String toString() {
-    return "$isOpen ${from.join(':')} ${to.join(':')} ";
-  }
-
-  void setOpenHours({
-    required bool isOpen,
-  }) {
-    this.isOpen = isOpen;
-  }
-
-  OpenHours.clone(OpenHours openHours)
-      : this(openHours.isOpen, openHours.from.toList(), openHours.to.toList());
+  Map<Weekday, WorkingDay> sortedOpenHours =
+      Map.fromIterable(sortedKeys, key: (k) => k, value: (k) => openHours[k]!);
+  return Schedule(openHours: sortedOpenHours);
 }
 
-class Schedule {
-  Map<Weekday, OpenHours> openHours;
-  Map<Weekday, OpenHours> get getOpenHours => openHours;
-
-  Schedule({
-    required this.openHours,
-  });
-
-  factory Schedule.fromData(data) {
-    final Map<Weekday, OpenHours> openHours = {};
-
-    data.forEach((day, openHour) {
-      try {
-        final List<int> from = openHour["from"]
-            .toString()
-            .split(':')
-            .map((String val) => int.parse(val))
-            .toList();
-        final List<int> to = openHour["to"]
-            .toString()
-            .split(':')
-            .map((String val) => int.parse(val))
-            .toList();
-
-        openHours[day.toString().toWeekDay()] =
-            OpenHours(openHour["isOpen"], from, to);
-      } catch (e) {
-        mezDbgPrint("something went wrong $e");
-      }
-    });
-
-    return Schedule(openHours: openHours);
+extension ScheduleFunctions on Schedule {
+  bool get atLeastOneDayIsOpen {
+    return openHours.values.toList().firstWhereOrNull((WorkingDay element) {
+          return element.isOpen == true;
+        }) !=
+        null;
   }
 
-  bool isOpen() {
-    bool isOpen = false;
-    final String dayNane = DateFormat('EEEE').format(DateTime.now());
-    final DateTime now = DateTime.now();
-    openHours.forEach((Weekday key, OpenHours value) {
-      if (key.toFirebaseFormatString() == dayNane.toLowerCase()) {
-        if (value.isOpen == true) {
-          final DateTime dateOfStart = DateTime(
-              now.year, now.month, now.day, value.from[0], value.from[1]);
-          final DateTime dateOfClose =
-              DateTime(now.year, now.month, now.day, value.to[0], value.to[1]);
+  // bool isOpen {
+  //   bool isOpen = false;
+  //   final String dayName = DateFormat('EEEE').format(DateTime.now());
+  //   final DateTime now = DateTime.now();
+  //   final Weekday? currentWeekday = Weekday.values.firstWhereOrNull(
+  //     (Weekday weekday) =>
+  //         weekday.toFirebaseFormatString() == dayName.toLowerCase(),
+  //   );
 
-          if (now.isAfter(dateOfStart) && now.isBefore(dateOfClose)) {
-            isOpen = true;
-          }
+  //   if (currentWeekday != null) {
+  //     final List<OpenHours>? hours = openHours[currentWeekday]?.openHours;
+  //     if (hours != null) {
+  //       for (final OpenHours openHour in hours) {
+  //         if (openHours[currentWeekday]?.isOpen == true) {
+  //           final num openingHour = openHour.from[0];
+  //           final num openingMinute = openHour.from[1];
+  //           final num closingHour = openHour.to[0];
+  //           final num closingMinute = openHour.to[1];
 
-          if (dateOfClose.isBefore(dateOfStart)) {
-            isOpen = now.isBefore(dateOfClose) || now.isAfter(dateOfStart);
-          }
-        } else {
-          isOpen = false;
-        }
-      }
-    });
-    return isOpen;
-  }
+  //           final num currentHour = now.hour;
+  //           final num currentMinute = now.minute;
+
+  //           if (currentHour > openingHour && currentHour < closingHour) {
+  //             isOpen = true;
+  //             break;
+  //           } else if (currentHour == openingHour &&
+  //               currentMinute >= openingMinute) {
+  //             isOpen = true;
+  //             break;
+  //           } else if (currentHour == closingHour &&
+  //               currentMinute < closingMinute) {
+  //             isOpen = true;
+  //             break;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   return isOpen;
+  // }
+
+  // Map<String, dynamic> toFirebaseFormattedJson() {
+  //   Map<String, dynamic> json = {};
+  //   openHours.forEach((Weekday weekday, List<OpenHours> openHoursList) {
+  //     if (openHoursList.length == 1) {
+  //       json[weekday.toString().split('.').last] =
+  //           openHoursList[0].toFirebaseFormattedString();
+  //     } else {
+  //       json[weekday.toString().split('.').last] = openHoursList
+  //           .map((OpenHours openHours) => openHours.toFirebaseFormattedString())
+  //           .toList();
+  //     }
+  //   });
+
+  //   return json;
+  // }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
+
     Weekday.values.forEach((Weekday weekday) {
-      json[weekday.toFirebaseFormatString()] =
-          openHours[weekday]?.toFirebaseFormattedJson();
+      json[weekday.toFirebaseFormatString()] = {
+        "isOpen": openHours[weekday]!.isOpen,
+        "openHours": openHours[weekday]
+            ?.openHours
+            .map((OpenHours e) => e.toFirebaseFormattedString())
+            .toList()
+      };
     });
+    mezDbgPrint(" ------- Schedule toFirebaseFormattedJson  ------- \n $json");
     return json;
   }
 
-  Map<String, OpenHours> concatenatedVersion() {
-    final Map<String, OpenHours> json = <String, OpenHours>{};
+  Map<String, WorkingDay> concatenatedVersion() {
+    final Map<String, WorkingDay> json = <String, WorkingDay>{};
     final List<Weekday> weekdays = Weekday.values;
     String? previousDayOpenHours;
     String? currentStringKey;
+
     for (int i = 0; i < weekdays.length; i++) {
       final Weekday weekday = weekdays[i];
       if (openHours[weekday] == null) continue;
+
       if (previousDayOpenHours != openHours[weekday].toString()) {
-        currentStringKey = weekday.toFirebaseFormatString();
+        currentStringKey = weekday.toFirebaseFormatString().inCaps;
         if (openHours[weekday]!.isOpen) {
           json[currentStringKey] = openHours[weekday]!;
           previousDayOpenHours = openHours[weekday].toString();
@@ -140,29 +157,51 @@ class Schedule {
           previousDayOpenHours = null;
         }
       } else {
-        json.remove(currentStringKey);
-        currentStringKey =
-            "${currentStringKey!.split('-')[0].inCaps}-${weekday.toFirebaseFormatString().inCaps}";
-        json[currentStringKey] = openHours[weekday]!;
+        final WorkingDay currentWorkingDay = openHours[weekday]!;
+        final WorkingDay previousWorkingDay = json[currentStringKey]!;
+
+        if (areWorkingDaysEqual(currentWorkingDay, previousWorkingDay)) {
+          json.remove(currentStringKey);
+          currentStringKey =
+              "${currentStringKey!.split('-')[0].toString().inCaps}-${weekday.toFirebaseFormatString().inCaps}";
+          json[currentStringKey] = openHours[weekday]!;
+        } else {
+          currentStringKey = "${weekday.toFirebaseFormatString().inCaps}";
+          json[currentStringKey] = openHours[weekday]!;
+        }
       }
     }
     return json;
   }
 
-  factory Schedule.clone(Schedule schedule) {
-    final Map<Weekday, OpenHours> _cloneSchedule = {};
-    schedule.openHours.forEach((Weekday key, OpenHours value) {
-      _cloneSchedule[key] = OpenHours.clone(value);
-    });
+  bool areWorkingDaysEqual(WorkingDay day1, WorkingDay day2) {
+    if (day1.isOpen != day2.isOpen) return false;
+    if (day1.openHours.length != day2.openHours.length) return false;
 
-    final Schedule newSchedule = Schedule(openHours: _cloneSchedule);
-
-    return newSchedule;
+    for (int i = 0; i < day1.openHours.length; i++) {
+      final OpenHours openHours1 = day1.openHours[i];
+      final OpenHours openHours2 = day2.openHours[i];
+      if (DeepCollectionEquality().equals(openHours1, openHours2)) return false;
+    }
+    return true;
   }
-  List<String> _getServiceDates() {
+
+  Schedule clone() {
+    final Map<Weekday, WorkingDay> clonedOpenHours =
+        Map<Weekday, WorkingDay>.from(openHours.map(
+      (Weekday key, WorkingDay value) => MapEntry(key, value.clone()),
+    ));
+
+    return Schedule(openHours: clonedOpenHours);
+  }
+
+  List<String> getServiceDates() {
     final List<String> data = [];
     openHours.keys.forEach((Weekday element) {
-      if (openHours[element]!.isOpen) {
+      final List<OpenHours>? hours = openHours[element]?.openHours;
+      if (hours != null &&
+          hours.isNotEmpty &&
+          openHours[element]?.isOpen == true) {
         data.add(element.toFirebaseFormatString());
       }
     });
@@ -172,14 +211,16 @@ class Schedule {
 
   DateTime getTheCLosestOpenDay() {
     DateTime data = DateTime.now();
-    if (_getServiceDates()
+    if (getServiceDates()
         .contains(DateFormat("EEEE").format(DateTime.now()).toLowerCase())) {
-      data = DateTime.now();
+      data = DateTime.now(); //.toUtc().add(
+      // Duration(hours: timezone[0].toInt(), minutes: timezone[1].toInt()));
     } else {
-      DateTime testDate = DateTime.now();
+      DateTime testDate = DateTime.now(); //.toUtc().add(
+      // Duration(hours: timezone[0].toInt(), minutes: timezone[1].toInt()));
       for (int i = 0; i < 7; i++) {
         testDate = DateTime(testDate.year, testDate.month, testDate.day + i);
-        if (_getServiceDates()
+        if (getServiceDates()
             .contains(DateFormat("EEEE").format(testDate).toLowerCase())) {
           data = testDate;
           break;
@@ -187,5 +228,91 @@ class Schedule {
       }
     }
     return data;
+  }
+}
+
+// working day
+extension WorkingDayExtension on WorkingDay {
+  WorkingDay clone() {
+    final List<OpenHours> clonedOpenHours = List<OpenHours>.from(openHours.map(
+      (OpenHours openHour) => openHour.clone(),
+    ));
+
+    return WorkingDay(
+      isOpen: isOpen,
+      openHours: clonedOpenHours,
+    );
+  }
+
+  bool get hasOverlaps {
+    openHours
+        .sort((OpenHours a, OpenHours b) => a.from[0].compareTo(b.from[0]));
+
+    for (int i = 0; i < openHours.length - 1; i++) {
+      final OpenHours current = openHours[i];
+      final OpenHours next = openHours[i + 1];
+      mezDbgPrint("current ${current.from[0]} next ${next.from[0]}");
+
+      if (current.to[0] > next.from[0]) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+// open hours
+extension OpenHoursFunctions on OpenHours {
+  Map<String, dynamic> toFirebaseFormattedString() {
+    return <String, dynamic>{
+      "from": from.join(":"),
+      "to": to.join(":"),
+    };
+  }
+
+  String get fromTimeFormatted {
+    final String hours = from[0] == 12
+        ? '12'
+        : (from[0] > 12 ? from[0] - 12 : from[0]).toString().padLeft(2, '0');
+
+    final String minutes = from[1].toString().padLeft(2, '0');
+    final String period = from[0] < 12 ? 'AM' : 'PM';
+
+    return '$hours:$minutes $period';
+  }
+
+  String get toTimeFormatted {
+    final String hours = to[0] == 12
+        ? '12'
+        : (to[0] > 12 ? to[0] - 12 : to[0]).toString().padLeft(2, '0');
+
+    final String minutes = to[1].toString().padLeft(2, '0');
+
+    final String period = to[0] < 12 ? 'AM' : 'PM';
+
+    return '$hours:$minutes $period';
+  }
+
+  OpenHours clone() {
+    return OpenHours(
+      from: from,
+      to: to,
+    );
+  }
+}
+
+OpenHours openHoursfromJson(Map<dynamic, dynamic> json) {
+  return OpenHours(
+    from: (json['from'] as String).split(':').map(int.parse).toList(),
+    to: (json['to'] as String).split(':').map(int.parse).toList(),
+  );
+}
+
+// weekday
+
+extension WeekdayExtension on Weekday {
+  String translate() {
+    return Get.find<LanguageController>().strings["BusinessApp"]["pages"]
+        ["services"]["weekdays"][toFirebaseFormatString()];
   }
 }

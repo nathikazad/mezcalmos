@@ -1,19 +1,22 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show NumberFormat;
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
@@ -22,6 +25,25 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
 /// This calls will contains all the Formatting Stuff
 class MezFormatter {
   static final NumberFormat currency = NumberFormat("#,##0.00", "en_US");
+}
+
+extension ParseGeography on Geography {
+  LocationData toLocationData() {
+    return LocationData.fromMap({"latitude": latitude, "longitude": longitude});
+  }
+
+  LatLng toLatLng() {
+    return LatLng(latitude, longitude);
+  }
+}
+
+extension ParseLocationData on LocationData {
+  Geography? toGeography() {
+    if (latitude != null && longitude != null) {
+      return Geography(latitude!, longitude!);
+    }
+    return null;
+  }
 }
 
 /// Call this with the _i18n fucntion and the wanted path.
@@ -41,12 +63,12 @@ enum AppLaunchMode { prod, dev, stage }
 
 extension AppLaunchModeParser on String {
   /// if couldn't parse it returns dev as default
-  AppLaunchMode toLaunchMode({AppLaunchMode defaultLmode = AppLaunchMode.dev}) {
+  AppLaunchMode toLaunchMode() {
     mezDbgPrint("Called [toLaunchMode] on $this ");
     return AppLaunchMode.values.firstWhere(
       (AppLaunchMode v) =>
           v.toString().toLowerCase().split('.').last == toLowerCase(),
-      orElse: () => defaultLmode,
+      orElse: () => AppLaunchMode.dev,
     );
   }
 }
@@ -56,10 +78,6 @@ extension AppLaunchModeConverter on AppLaunchMode {
   String toShortString() {
     return toString().toLowerCase().split('.').last;
   }
-}
-
-AppLaunchMode getAppLaunchMode() {
-  return (GetStorage().read<String>(getxLmodeKey).toString()).toLaunchMode();
 }
 
 extension DateTimeCopy on DateTime {
@@ -72,20 +90,6 @@ extension DateTimeCopy on DateTime {
   DateTime copyWithDate(DateTime newDate) {
     return new DateTime(newDate.year, newDate.month, newDate.day, hour, minute);
   }
-}
-
-SnackbarController showSuccessSnackBar(
-    {required String tilte,
-    required String subtitle,
-    Color? iconColor = Colors.green}) {
-  return Get.snackbar(tilte, subtitle,
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      shouldIconPulse: false,
-      icon: Icon(
-        Icons.check_circle,
-        color: Colors.green,
-      ));
 }
 
 Future<DateTime?> getDatePicker(
@@ -145,7 +149,7 @@ Future<TimeOfDay?> getTimePicker(
       dialBackgroundColor: Color.fromRGBO(236, 236, 236, 1),
     ),
     textTheme: TextTheme(
-      overline: TextStyle(
+      labelSmall: TextStyle(
         color: Color.fromRGBO(120, 120, 120, 1),
         fontFamily: 'Nunito',
         fontSize: 10,
@@ -171,12 +175,13 @@ Future<TimeOfDay?> getTimePicker(
       });
 }
 
-Future<void> showConfirmationDialog(
+Future showConfirmationDialog(
   BuildContext context, {
   required Future<dynamic> Function() onYesClick,
   void Function()? onNoClick,
   String? title,
   String? helperText,
+  bool autoClose = false,
   String? primaryButtonText,
   String? secondaryButtonText,
 }) async {
@@ -198,8 +203,8 @@ Future<void> showConfirmationDialog(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: 66,
-                  width: 66,
+                  height: 55,
+                  width: 55,
                   child: Icon(
                     Icons.close,
                     color: Color.fromRGBO(252, 89, 99, 1),
@@ -210,7 +215,7 @@ Future<void> showConfirmationDialog(
                     shape: BoxShape.circle,
                   ),
                 ),
-                SizedBox(height: 18),
+                SizedBox(height: 10),
                 Text(
                   title ?? "${_i18n()["cancelOrder"]}",
                   textAlign: TextAlign.center,
@@ -220,35 +225,37 @@ Future<void> showConfirmationDialog(
                     fontSize: 24,
                   ),
                 ),
-                SizedBox(height: 11),
-                Column(
-                  children: [
-                    Text(
-                      helperText ?? '${_i18n()["cancelConfirmationText"]}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Text(
-                      '${_i18n()["subtitle"]}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 18),
+                helperText != ""
+                    ? Column(
+                        children: [
+                          SizedBox(height: 8),
+                          Text(
+                            helperText ??
+                                '${_i18n()["cancelConfirmationText"]}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                color: Color(0xFF494949)),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+                SizedBox(height: 5),
+                Text('${_i18n()["subtitle"]}',
+                    textAlign: TextAlign.center,
+                    style: context.txt.headlineLarge
+                        ?.copyWith(color: Color(0xFF494949))),
+                SizedBox(height: 12),
                 GestureDetector(
                   onTap: () {
                     _clickedYes.value = true;
                     onYesClick.call().whenComplete(() {
                       _clickedYes.value = false;
+                      if (autoClose) {
+                        Navigator.pop(context);
+                      }
                     });
                   },
                   child: Container(
@@ -285,11 +292,11 @@ Future<void> showConfirmationDialog(
                     ),
                   ),
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
-                    MezRouter.back<void>(closeOverlays: true);
+                    Navigator.pop(context);
                   },
                   child: Container(
                     width: double.infinity,
@@ -297,14 +304,74 @@ Future<void> showConfirmationDialog(
                       secondaryButtonText ?? '${_i18n()["no"]}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color.fromRGBO(120, 120, 120, 1),
+                        color: Color(0XFF787878),
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w700,
-                        fontSize: 16.99,
+                        fontSize: 16.34,
                       ),
                     ),
                   ),
                 ),
+              ],
+            ),
+          ),
+        );
+      });
+}
+
+Future<void> showNormalDialog(
+  BuildContext context, {
+  IconData? icon,
+  required String title,
+  String? subtitle,
+}) async {
+  final RxBool _clickedYes = false.obs;
+  return showDialog(
+      context: context,
+      useRootNavigator: true,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(16),
+          content: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 55,
+                  width: 55,
+                  child: Icon(
+                    icon,
+                    color: Colors.orange.shade300,
+                    size: 33,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(252, 89, 99, 0.12),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(height: 15),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                  ),
+                ),
+                SizedBox(height: 2),
+                if (subtitle != null)
+                  Text(subtitle,
+                      textAlign: TextAlign.center,
+                      style: context.txt.headlineLarge
+                          ?.copyWith(color: Color(0xFF494949))),
+                SizedBox(height: 4),
               ],
             ),
           ),
@@ -352,7 +419,7 @@ Future<void> showStatusInfoDialog(
                     width: 66,
                     child: getRightNotifIcon(primaryImageUrl, primaryIcon),
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(103, 121, 254, 1),
+                      color: secondaryLightBlueColor,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -393,20 +460,20 @@ Future<void> showStatusInfoDialog(
                 description,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                ),
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    color: offShadeGreyColor),
               ),
               SizedBox(height: 18),
               GestureDetector(
                 onTap: (primaryCallBack == null)
-                    ? () => MezRouter.back<void>(closeOverlays: true)
+                    ? () => Navigator.pop(context)
                     : primaryCallBack,
                 child: Container(
                   height: 44,
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(225, 228, 255, 1),
+                    color: primaryBlueColor,
                     borderRadius: BorderRadius.circular(9),
                   ),
                   child: Center(
@@ -414,7 +481,7 @@ Future<void> showStatusInfoDialog(
                       primaryClickTitle ?? "${_i18n()["ok"]}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color.fromRGBO(103, 121, 254, 1),
+                        color: Colors.white,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w700,
                         fontSize: 16.34,
@@ -428,7 +495,7 @@ Future<void> showStatusInfoDialog(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      height: 10,
+                      height: 4,
                     ),
                     InkWell(
                       onTap: secondaryCallBack,
@@ -440,10 +507,10 @@ Future<void> showStatusInfoDialog(
                             secondaryClickTitle ?? "${_i18n()["viewOrder"]}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Color.fromRGBO(120, 120, 120, 1),
+                              color: offShadeGreyColor,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
-                              fontSize: 16.99,
+                              fontSize: 16.34,
                             ),
                           ),
                         ),
@@ -457,24 +524,28 @@ Future<void> showStatusInfoDialog(
       });
 }
 
-Future<int?> showReviewDialog(
-  BuildContext context, {
-  required int orderId,
-  required int serviceProviderId,
-  required ServiceProviderType serviceProviderType,
-  required OrderType orderType,
-}) async {
+Future<int?> addReviewDialog(
+    {required BuildContext context,
+    required int toEntityId,
+    required cModels.ServiceProviderType toEntityType,
+    required int fromEntityId,
+    required cModels.ServiceProviderType fromEntityType,
+    required int orderId}) async {
   final TextEditingController controller = TextEditingController();
   num rating = 3;
   return await showDialog<int?>(
       context: context,
       barrierDismissible: false,
+      useRootNavigator: false,
       builder: (BuildContext ctx) {
         return AlertDialog(
-          //  color: Colors.transparent,
           scrollable: true,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+          contentPadding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 18,
+            bottom: 10,
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -490,7 +561,7 @@ Future<int?> showReviewDialog(
                   color: Colors.white,
                 )),
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 10),
               Text(
                 "${_i18n()["review"]["title"]}",
                 textAlign: TextAlign.center,
@@ -500,17 +571,18 @@ Future<int?> showReviewDialog(
                   fontSize: 16.sp,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Text(
                 "${_i18n()["review"]["subtitle"]}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   fontSize: 12.sp,
                 ),
               ),
               RatingBar.builder(
+                unratedColor: unratedStarColor,
                 initialRating: 3,
                 minRating: 1,
                 direction: Axis.horizontal,
@@ -534,14 +606,24 @@ Future<int?> showReviewDialog(
                 controller: controller,
                 style: TextStyle(
                   fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w600,
                 ),
                 decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.none,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    fillColor: unratedStarColor,
                     hintText: "${_i18n()["review"]["hintText"]}"),
               ),
               const SizedBox(height: 18),
               MezButton(
+                textStyle: context.txt.headlineMedium?.copyWith(
+                  color: primaryBlueColor,
+                ),
                 label: "${_i18n()["review"]["send"]}",
                 height: 45,
                 textColor: primaryBlueColor,
@@ -550,28 +632,28 @@ Future<int?> showReviewDialog(
                   final Review review = Review(
                       comment: controller.text,
                       rating: rating,
-                      toEntityId: serviceProviderId,
-                      toEntityType: serviceProviderType,
-                      fromEntityId: Get.find<AuthController>().hasuraUserId!,
-                      fromEntityType: ServiceProviderType.Customer,
+                      toEntityId: toEntityId,
+                      toEntityType: toEntityType,
+                      fromEntityId: fromEntityId,
+                      fromEntityType: fromEntityType,
                       reviewTime: DateTime.now().toUtc());
 
                   final int? reviewId = await insert_review(review: review);
                   if (reviewId != null) {
-                    Get.snackbar('${_i18n()["review"]["successTitle"]}',
-                        "${_i18n()["review"]["successSubtitle"]}",
-                        backgroundColor: Colors.black, colorText: Colors.white);
+                    customSnackBar(
+                      title: _i18n()["review"]["successTitle"],
+                      subTitle: _i18n()["review"]["successSubtitle"],
+                    );
+                    Navigator.pop(context, reviewId);
                   } else {
-                    Get.snackbar("Error", "error",
-                        backgroundColor: Colors.black, colorText: Colors.white);
+                    customSnackBar(title: 'Error', subTitle: 'error');
                   }
-                  MezRouter.popDialog(result: reviewId, closeOverlays: true);
                 },
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 10),
               InkWell(
                 onTap: () {
-                  MezRouter.back(closeOverlays: true);
+                  Navigator.pop(context);
                 },
                 child: Ink(
                   padding: const EdgeInsets.symmetric(vertical: 5),
@@ -579,11 +661,8 @@ Future<int?> showReviewDialog(
                   child: Text(
                     "${_i18n()["review"]["close"]}",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color.fromRGBO(120, 120, 120, 1),
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16.99,
+                    style: context.txt.headlineMedium?.copyWith(
+                      color: offShadeGreyColor,
                     ),
                   ),
                 ),
@@ -595,11 +674,11 @@ Future<int?> showReviewDialog(
 }
 
 Widget radioCircleButton(
-    {bool value = false, required void Function(bool?) onTap}) {
+    {bool value = false, required void Function(bool) onTap}) {
   return InkWell(
     customBorder: CircleBorder(),
     onTap: () {
-      onTap.call(null);
+      onTap.call(value);
     },
     child: Ink(
         child: (value)
@@ -656,14 +735,132 @@ Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
   } else if (icon != null) {
     return Icon(
       icon,
-      color: Colors.white,
+      color: primaryBlueColor,
       size: 33,
     );
   } else {
     return Icon(
-      Icons.local_taxi_rounded,
-      color: Colors.white,
+      Icons.flatware,
+      color: primaryBlueColor,
       size: 33,
     );
   }
+}
+
+void showSavedSnackBar({String? title, String? subtitle}) {
+  return customSnackBar(
+      title: title ?? _i18n()['saved'],
+      subTitle: subtitle ?? _i18n()['savedTitle'],
+      icon: Icon(
+        Icons.check_circle,
+        size: 40,
+        color: Colors.green,
+      ));
+}
+
+void showAddedSnackBar({String? title, String? subtitle}) {
+  return customSnackBar(
+      title: title ?? _i18n()['added'],
+      subTitle: subtitle ?? _i18n()['addedTitle'],
+      icon: Icon(
+        Icons.check_circle,
+        size: 40,
+        color: primaryBlueColor,
+      ));
+}
+
+void showSlowInternetSnackBar() {
+  return customSnackBar(
+      title: "Internet Slow",
+      duration: Duration(seconds: 1),
+      subTitle: "Your internet is currently slow",
+      backgroundColor: Colors.orange.shade100,
+      position: Alignment.topCenter,
+      textColor: Colors.orange.shade600,
+      icon: Icon(
+        Icons.info,
+        color: Colors.orange.shade600,
+        size: 35,
+      ));
+}
+
+void closeAllSnackbars({String? title, String? subtitle}) {
+  ScaffoldMessenger.of(QR.context!).clearSnackBars();
+}
+
+void showErrorSnackBar(
+    {String errorTitle = "Error", String errorText = "", Duration? duration}) {
+  return customSnackBar(
+      title: errorTitle,
+      subTitle: errorText,
+      duration: duration ?? Duration(seconds: 2),
+      icon: Icon(
+        Icons.cancel,
+        size: 40,
+        color: Colors.redAccent,
+      ));
+}
+
+void showLoadingOverlay({String text = "Loading"}) {
+  BotToast.showCustomLoading(
+      backgroundColor: secondaryLightBlueColor.withOpacity(0.7),
+      toastBuilder: (_) => Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(
+                  color: primaryBlueColor,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  text,
+                  style: TextStyle(
+                    fontFamily: "Montserrat",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13.sp,
+                    color: primaryBlueColor,
+                  ),
+                ),
+              ],
+            ),
+          ));
+}
+
+void closeAllLoadings() {
+  BotToast.closeAllLoading();
+}
+
+void showServiceClosedSnackBar() {
+  return customSnackBar(
+      title: "${_i18n()['closed']}",
+      subTitle: "${_i18n()['closedSubtitle']}",
+      duration: Duration(seconds: 2),
+      icon: Icon(
+        Icons.cancel,
+        size: 40,
+        color: Colors.redAccent,
+      ));
+}
+
+void showRouteErrorSnackBar() {
+  return showErrorSnackBar(errorText: "${_i18n()['routeError']}");
+}
+
+class DashedLineVerticalPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    double dashHeight = 5, dashSpace = 3, startY = 0;
+    final Paint paint = Paint()
+      ..color = primaryBlueColor
+      ..strokeWidth = size.width;
+    while (startY < size.height) {
+      canvas.drawLine(Offset(0, startY), Offset(0, startY + dashHeight), paint);
+      startY += dashHeight + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

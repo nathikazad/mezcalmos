@@ -30,6 +30,7 @@ android/app/src/main/res/values/launcher.xml
 google-services.json
 GoogleService-Info.plist
 ios/Runner/Info.plist
+ios/Runner/Runner.entitlements
 ios/Runner.xcodeproj/project.pbxproj
 *.backup
 *sksl*.json
@@ -41,7 +42,10 @@ font_awesome_flutter/
 .dart_tool/
 .packages
 build/
- 
+lib/env.dart
+lib/Shared/pages/AuthScreens/fakeCreds.dart
+pubspec.yaml
+
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
  
@@ -63,4 +67,5 @@ doc/api/
 .flutter-plugins-dependencies
  
 .idea/
- 
+.fvm
+launcher/env

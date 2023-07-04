@@ -1,7 +1,6 @@
 import * as functions from "firebase-functions";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as taxiNodes from "../shared/databaseNodes/taxi";
-import * as customerNodes from "../shared/databaseNodes/customer";
 // import { pushNotification } from "../utilities/senders/notifyUser";
 import { OrderType } from "../shared/models/Generic/Order";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
@@ -76,13 +75,13 @@ export async function cancelTaxiFromCustomer(userId: string, data: any) {
       }
     }
 
-    if (order.customer.firebaseId != userId) {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Order does not belong to customer`,
-        errorCode: "notCustomerOrder"
-      }
-    }
+    // if (order.customer.firebaseId != userId) {
+    //   return {
+    //     status: ServerResponseStatus.Error,
+    //     errorMessage: `Order does not belong to customer`,
+    //     errorCode: "notCustomerOrder"
+    //   }
+    // }
 
     if (!orderInProcess(order.status)) {
       return {
@@ -100,8 +99,8 @@ export async function cancelTaxiFromCustomer(userId: string, data: any) {
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
     rootNodes.inProcessOrders(OrderType.Taxi, orderId).remove();
     rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
-    await customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order);
-    await customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
+    // await customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order);
+    // await customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
     
     if (order.driver !=  null)
     {

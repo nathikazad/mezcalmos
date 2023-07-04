@@ -1667,11 +1667,33 @@ const documentNodeQueryget_customer_info = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'notification_token'),
+            name: NameNode(value: 'notification_info'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'token'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'turn_off_notifications'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'user'),
@@ -1729,13 +1751,6 @@ const documentNodeQueryget_customer_info = DocumentNode(definitions: [
                 selectionSet: null,
               ),
             ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'stripe_info'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: 'saved_locations'),
@@ -1928,9 +1943,8 @@ extension ClientExtension$Query$get_customer_info on graphql.GraphQLClient {
 class Query$get_customer_info$customer_customer {
   Query$get_customer_info$customer_customer({
     this.app_version,
-    this.notification_token,
+    this.notification_info,
     required this.user,
-    this.stripe_info,
     required this.saved_locations,
     required this.$__typename,
   });
@@ -1938,17 +1952,18 @@ class Query$get_customer_info$customer_customer {
   factory Query$get_customer_info$customer_customer.fromJson(
       Map<String, dynamic> json) {
     final l$app_version = json['app_version'];
-    final l$notification_token = json['notification_token'];
+    final l$notification_info = json['notification_info'];
     final l$user = json['user'];
-    final l$stripe_info = json['stripe_info'];
     final l$saved_locations = json['saved_locations'];
     final l$$__typename = json['__typename'];
     return Query$get_customer_info$customer_customer(
       app_version: (l$app_version as String?),
-      notification_token: (l$notification_token as String?),
+      notification_info: l$notification_info == null
+          ? null
+          : Query$get_customer_info$customer_customer$notification_info
+              .fromJson((l$notification_info as Map<String, dynamic>)),
       user: Query$get_customer_info$customer_customer$user.fromJson(
           (l$user as Map<String, dynamic>)),
-      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       saved_locations: (l$saved_locations as List<dynamic>)
           .map((e) => Query$get_customer_info$customer_customer$saved_locations
               .fromJson((e as Map<String, dynamic>)))
@@ -1959,11 +1974,10 @@ class Query$get_customer_info$customer_customer {
 
   final String? app_version;
 
-  final String? notification_token;
+  final Query$get_customer_info$customer_customer$notification_info?
+      notification_info;
 
   final Query$get_customer_info$customer_customer$user user;
-
-  final dynamic? stripe_info;
 
   final List<Query$get_customer_info$customer_customer$saved_locations>
       saved_locations;
@@ -1974,13 +1988,10 @@ class Query$get_customer_info$customer_customer {
     final _resultData = <String, dynamic>{};
     final l$app_version = app_version;
     _resultData['app_version'] = l$app_version;
-    final l$notification_token = notification_token;
-    _resultData['notification_token'] = l$notification_token;
+    final l$notification_info = notification_info;
+    _resultData['notification_info'] = l$notification_info?.toJson();
     final l$user = user;
     _resultData['user'] = l$user.toJson();
-    final l$stripe_info = stripe_info;
-    _resultData['stripe_info'] =
-        l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$saved_locations = saved_locations;
     _resultData['saved_locations'] =
         l$saved_locations.map((e) => e.toJson()).toList();
@@ -1992,16 +2003,14 @@ class Query$get_customer_info$customer_customer {
   @override
   int get hashCode {
     final l$app_version = app_version;
-    final l$notification_token = notification_token;
+    final l$notification_info = notification_info;
     final l$user = user;
-    final l$stripe_info = stripe_info;
     final l$saved_locations = saved_locations;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$app_version,
-      l$notification_token,
+      l$notification_info,
       l$user,
-      l$stripe_info,
       Object.hashAll(l$saved_locations.map((v) => v)),
       l$$__typename,
     ]);
@@ -2021,19 +2030,14 @@ class Query$get_customer_info$customer_customer {
     if (l$app_version != lOther$app_version) {
       return false;
     }
-    final l$notification_token = notification_token;
-    final lOther$notification_token = other.notification_token;
-    if (l$notification_token != lOther$notification_token) {
+    final l$notification_info = notification_info;
+    final lOther$notification_info = other.notification_info;
+    if (l$notification_info != lOther$notification_info) {
       return false;
     }
     final l$user = user;
     final lOther$user = other.user;
     if (l$user != lOther$user) {
-      return false;
-    }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$saved_locations = saved_locations;
@@ -2078,13 +2082,15 @@ abstract class CopyWith$Query$get_customer_info$customer_customer<TRes> {
 
   TRes call({
     String? app_version,
-    String? notification_token,
+    Query$get_customer_info$customer_customer$notification_info?
+        notification_info,
     Query$get_customer_info$customer_customer$user? user,
-    dynamic? stripe_info,
     List<Query$get_customer_info$customer_customer$saved_locations>?
         saved_locations,
     String? $__typename,
   });
+  CopyWith$Query$get_customer_info$customer_customer$notification_info<TRes>
+      get notification_info;
   CopyWith$Query$get_customer_info$customer_customer$user<TRes> get user;
   TRes saved_locations(
       Iterable<Query$get_customer_info$customer_customer$saved_locations> Function(
@@ -2109,9 +2115,8 @@ class _CopyWithImpl$Query$get_customer_info$customer_customer<TRes>
 
   TRes call({
     Object? app_version = _undefined,
-    Object? notification_token = _undefined,
+    Object? notification_info = _undefined,
     Object? user = _undefined,
-    Object? stripe_info = _undefined,
     Object? saved_locations = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -2119,15 +2124,13 @@ class _CopyWithImpl$Query$get_customer_info$customer_customer<TRes>
         app_version: app_version == _undefined
             ? _instance.app_version
             : (app_version as String?),
-        notification_token: notification_token == _undefined
-            ? _instance.notification_token
-            : (notification_token as String?),
+        notification_info: notification_info == _undefined
+            ? _instance.notification_info
+            : (notification_info
+                as Query$get_customer_info$customer_customer$notification_info?),
         user: user == _undefined || user == null
             ? _instance.user
             : (user as Query$get_customer_info$customer_customer$user),
-        stripe_info: stripe_info == _undefined
-            ? _instance.stripe_info
-            : (stripe_info as dynamic?),
         saved_locations:
             saved_locations == _undefined || saved_locations == null
                 ? _instance.saved_locations
@@ -2137,6 +2140,16 @@ class _CopyWithImpl$Query$get_customer_info$customer_customer<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_customer_info$customer_customer$notification_info<TRes>
+      get notification_info {
+    final local$notification_info = _instance.notification_info;
+    return local$notification_info == null
+        ? CopyWith$Query$get_customer_info$customer_customer$notification_info
+            .stub(_then(_instance))
+        : CopyWith$Query$get_customer_info$customer_customer$notification_info(
+            local$notification_info, (e) => call(notification_info: e));
+  }
+
   CopyWith$Query$get_customer_info$customer_customer$user<TRes> get user {
     final local$user = _instance.user;
     return CopyWith$Query$get_customer_info$customer_customer$user(
@@ -2165,17 +2178,182 @@ class _CopyWithStubImpl$Query$get_customer_info$customer_customer<TRes>
 
   call({
     String? app_version,
-    String? notification_token,
+    Query$get_customer_info$customer_customer$notification_info?
+        notification_info,
     Query$get_customer_info$customer_customer$user? user,
-    dynamic? stripe_info,
     List<Query$get_customer_info$customer_customer$saved_locations>?
         saved_locations,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$get_customer_info$customer_customer$notification_info<TRes>
+      get notification_info =>
+          CopyWith$Query$get_customer_info$customer_customer$notification_info
+              .stub(_res);
   CopyWith$Query$get_customer_info$customer_customer$user<TRes> get user =>
       CopyWith$Query$get_customer_info$customer_customer$user.stub(_res);
   saved_locations(_fn) => _res;
+}
+
+class Query$get_customer_info$customer_customer$notification_info {
+  Query$get_customer_info$customer_customer$notification_info({
+    required this.token,
+    required this.turn_off_notifications,
+    required this.$__typename,
+  });
+
+  factory Query$get_customer_info$customer_customer$notification_info.fromJson(
+      Map<String, dynamic> json) {
+    final l$token = json['token'];
+    final l$turn_off_notifications = json['turn_off_notifications'];
+    final l$$__typename = json['__typename'];
+    return Query$get_customer_info$customer_customer$notification_info(
+      token: (l$token as String),
+      turn_off_notifications: (l$turn_off_notifications as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String token;
+
+  final bool turn_off_notifications;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$token = token;
+    _resultData['token'] = l$token;
+    final l$turn_off_notifications = turn_off_notifications;
+    _resultData['turn_off_notifications'] = l$turn_off_notifications;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$token = token;
+    final l$turn_off_notifications = turn_off_notifications;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$token,
+      l$turn_off_notifications,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_customer_info$customer_customer$notification_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$token = token;
+    final lOther$token = other.token;
+    if (l$token != lOther$token) {
+      return false;
+    }
+    final l$turn_off_notifications = turn_off_notifications;
+    final lOther$turn_off_notifications = other.turn_off_notifications;
+    if (l$turn_off_notifications != lOther$turn_off_notifications) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_customer_info$customer_customer$notification_info
+    on Query$get_customer_info$customer_customer$notification_info {
+  CopyWith$Query$get_customer_info$customer_customer$notification_info<
+          Query$get_customer_info$customer_customer$notification_info>
+      get copyWith =>
+          CopyWith$Query$get_customer_info$customer_customer$notification_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_customer_info$customer_customer$notification_info<
+    TRes> {
+  factory CopyWith$Query$get_customer_info$customer_customer$notification_info(
+    Query$get_customer_info$customer_customer$notification_info instance,
+    TRes Function(Query$get_customer_info$customer_customer$notification_info)
+        then,
+  ) = _CopyWithImpl$Query$get_customer_info$customer_customer$notification_info;
+
+  factory CopyWith$Query$get_customer_info$customer_customer$notification_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_customer_info$customer_customer$notification_info;
+
+  TRes call({
+    String? token,
+    bool? turn_off_notifications,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_customer_info$customer_customer$notification_info<
+        TRes>
+    implements
+        CopyWith$Query$get_customer_info$customer_customer$notification_info<
+            TRes> {
+  _CopyWithImpl$Query$get_customer_info$customer_customer$notification_info(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_customer_info$customer_customer$notification_info _instance;
+
+  final TRes Function(
+      Query$get_customer_info$customer_customer$notification_info) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? token = _undefined,
+    Object? turn_off_notifications = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_customer_info$customer_customer$notification_info(
+        token: token == _undefined || token == null
+            ? _instance.token
+            : (token as String),
+        turn_off_notifications: turn_off_notifications == _undefined ||
+                turn_off_notifications == null
+            ? _instance.turn_off_notifications
+            : (turn_off_notifications as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_customer_info$customer_customer$notification_info<
+        TRes>
+    implements
+        CopyWith$Query$get_customer_info$customer_customer$notification_info<
+            TRes> {
+  _CopyWithStubImpl$Query$get_customer_info$customer_customer$notification_info(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? token,
+    bool? turn_off_notifications,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$get_customer_info$customer_customer$user {
@@ -2613,574 +2791,14 @@ class _CopyWithStubImpl$Query$get_customer_info$customer_customer$saved_location
       _res;
 }
 
-class Variables$Query$get_customer_stripe_info {
-  factory Variables$Query$get_customer_stripe_info(
-          {required int customer_id}) =>
-      Variables$Query$get_customer_stripe_info._({
-        r'customer_id': customer_id,
-      });
-
-  Variables$Query$get_customer_stripe_info._(this._$data);
-
-  factory Variables$Query$get_customer_stripe_info.fromJson(
-      Map<String, dynamic> data) {
-    final result$data = <String, dynamic>{};
-    final l$customer_id = data['customer_id'];
-    result$data['customer_id'] = (l$customer_id as int);
-    return Variables$Query$get_customer_stripe_info._(result$data);
-  }
-
-  Map<String, dynamic> _$data;
-
-  int get customer_id => (_$data['customer_id'] as int);
-  Map<String, dynamic> toJson() {
-    final result$data = <String, dynamic>{};
-    final l$customer_id = customer_id;
-    result$data['customer_id'] = l$customer_id;
-    return result$data;
-  }
-
-  CopyWith$Variables$Query$get_customer_stripe_info<
-          Variables$Query$get_customer_stripe_info>
-      get copyWith => CopyWith$Variables$Query$get_customer_stripe_info(
-            this,
-            (i) => i,
-          );
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Variables$Query$get_customer_stripe_info) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$customer_id = customer_id;
-    final lOther$customer_id = other.customer_id;
-    if (l$customer_id != lOther$customer_id) {
-      return false;
-    }
-    return true;
-  }
-
-  @override
-  int get hashCode {
-    final l$customer_id = customer_id;
-    return Object.hashAll([l$customer_id]);
-  }
-}
-
-abstract class CopyWith$Variables$Query$get_customer_stripe_info<TRes> {
-  factory CopyWith$Variables$Query$get_customer_stripe_info(
-    Variables$Query$get_customer_stripe_info instance,
-    TRes Function(Variables$Query$get_customer_stripe_info) then,
-  ) = _CopyWithImpl$Variables$Query$get_customer_stripe_info;
-
-  factory CopyWith$Variables$Query$get_customer_stripe_info.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Query$get_customer_stripe_info;
-
-  TRes call({int? customer_id});
-}
-
-class _CopyWithImpl$Variables$Query$get_customer_stripe_info<TRes>
-    implements CopyWith$Variables$Query$get_customer_stripe_info<TRes> {
-  _CopyWithImpl$Variables$Query$get_customer_stripe_info(
-    this._instance,
-    this._then,
-  );
-
-  final Variables$Query$get_customer_stripe_info _instance;
-
-  final TRes Function(Variables$Query$get_customer_stripe_info) _then;
-
-  static const _undefined = {};
-
-  TRes call({Object? customer_id = _undefined}) =>
-      _then(Variables$Query$get_customer_stripe_info._({
-        ..._instance._$data,
-        if (customer_id != _undefined && customer_id != null)
-          'customer_id': (customer_id as int),
-      }));
-}
-
-class _CopyWithStubImpl$Variables$Query$get_customer_stripe_info<TRes>
-    implements CopyWith$Variables$Query$get_customer_stripe_info<TRes> {
-  _CopyWithStubImpl$Variables$Query$get_customer_stripe_info(this._res);
-
-  TRes _res;
-
-  call({int? customer_id}) => _res;
-}
-
-class Query$get_customer_stripe_info {
-  Query$get_customer_stripe_info({
-    required this.customer_customer,
-    required this.$__typename,
-  });
-
-  factory Query$get_customer_stripe_info.fromJson(Map<String, dynamic> json) {
-    final l$customer_customer = json['customer_customer'];
-    final l$$__typename = json['__typename'];
-    return Query$get_customer_stripe_info(
-      customer_customer: (l$customer_customer as List<dynamic>)
-          .map((e) => Query$get_customer_stripe_info$customer_customer.fromJson(
-              (e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<Query$get_customer_stripe_info$customer_customer>
-      customer_customer;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$customer_customer = customer_customer;
-    _resultData['customer_customer'] =
-        l$customer_customer.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$customer_customer = customer_customer;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$customer_customer.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$get_customer_stripe_info) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$customer_customer = customer_customer;
-    final lOther$customer_customer = other.customer_customer;
-    if (l$customer_customer.length != lOther$customer_customer.length) {
-      return false;
-    }
-    for (int i = 0; i < l$customer_customer.length; i++) {
-      final l$customer_customer$entry = l$customer_customer[i];
-      final lOther$customer_customer$entry = lOther$customer_customer[i];
-      if (l$customer_customer$entry != lOther$customer_customer$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_customer_stripe_info
-    on Query$get_customer_stripe_info {
-  CopyWith$Query$get_customer_stripe_info<Query$get_customer_stripe_info>
-      get copyWith => CopyWith$Query$get_customer_stripe_info(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_customer_stripe_info<TRes> {
-  factory CopyWith$Query$get_customer_stripe_info(
-    Query$get_customer_stripe_info instance,
-    TRes Function(Query$get_customer_stripe_info) then,
-  ) = _CopyWithImpl$Query$get_customer_stripe_info;
-
-  factory CopyWith$Query$get_customer_stripe_info.stub(TRes res) =
-      _CopyWithStubImpl$Query$get_customer_stripe_info;
-
-  TRes call({
-    List<Query$get_customer_stripe_info$customer_customer>? customer_customer,
-    String? $__typename,
-  });
-  TRes customer_customer(
-      Iterable<Query$get_customer_stripe_info$customer_customer> Function(
-              Iterable<
-                  CopyWith$Query$get_customer_stripe_info$customer_customer<
-                      Query$get_customer_stripe_info$customer_customer>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$get_customer_stripe_info<TRes>
-    implements CopyWith$Query$get_customer_stripe_info<TRes> {
-  _CopyWithImpl$Query$get_customer_stripe_info(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_customer_stripe_info _instance;
-
-  final TRes Function(Query$get_customer_stripe_info) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? customer_customer = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_customer_stripe_info(
-        customer_customer:
-            customer_customer == _undefined || customer_customer == null
-                ? _instance.customer_customer
-                : (customer_customer
-                    as List<Query$get_customer_stripe_info$customer_customer>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes customer_customer(
-          Iterable<Query$get_customer_stripe_info$customer_customer> Function(
-                  Iterable<
-                      CopyWith$Query$get_customer_stripe_info$customer_customer<
-                          Query$get_customer_stripe_info$customer_customer>>)
-              _fn) =>
-      call(
-          customer_customer: _fn(_instance.customer_customer.map(
-              (e) => CopyWith$Query$get_customer_stripe_info$customer_customer(
-                    e,
-                    (i) => i,
-                  ))).toList());
-}
-
-class _CopyWithStubImpl$Query$get_customer_stripe_info<TRes>
-    implements CopyWith$Query$get_customer_stripe_info<TRes> {
-  _CopyWithStubImpl$Query$get_customer_stripe_info(this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$get_customer_stripe_info$customer_customer>? customer_customer,
-    String? $__typename,
-  }) =>
-      _res;
-  customer_customer(_fn) => _res;
-}
-
-const documentNodeQueryget_customer_stripe_info = DocumentNode(definitions: [
-  OperationDefinitionNode(
-    type: OperationType.query,
-    name: NameNode(value: 'get_customer_stripe_info'),
-    variableDefinitions: [
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'customer_id')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Int'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      )
-    ],
-    directives: [],
-    selectionSet: SelectionSetNode(selections: [
-      FieldNode(
-        name: NameNode(value: 'customer_customer'),
-        alias: null,
-        arguments: [
-          ArgumentNode(
-            name: NameNode(value: 'where'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'user_id'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: VariableNode(name: NameNode(value: 'customer_id')),
-                  )
-                ]),
-              )
-            ]),
-          )
-        ],
-        directives: [],
-        selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'stripe_info'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: '__typename'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-        ]),
-      ),
-      
-    ]),
-  ),
-]);
-Query$get_customer_stripe_info _parserFn$Query$get_customer_stripe_info(
-        Map<String, dynamic> data) =>
-    Query$get_customer_stripe_info.fromJson(data);
-
-class Options$Query$get_customer_stripe_info
-    extends graphql.QueryOptions<Query$get_customer_stripe_info> {
-  Options$Query$get_customer_stripe_info({
-    String? operationName,
-    required Variables$Query$get_customer_stripe_info variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    Duration? pollInterval,
-    graphql.Context? context,
-  }) : super(
-          variables: variables.toJson(),
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          pollInterval: pollInterval,
-          context: context,
-          document: documentNodeQueryget_customer_stripe_info,
-          parserFn: _parserFn$Query$get_customer_stripe_info,
-        );
-}
-
-class WatchOptions$Query$get_customer_stripe_info
-    extends graphql.WatchQueryOptions<Query$get_customer_stripe_info> {
-  WatchOptions$Query$get_customer_stripe_info({
-    String? operationName,
-    required Variables$Query$get_customer_stripe_info variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    graphql.Context? context,
-    Duration? pollInterval,
-    bool? eagerlyFetchResults,
-    bool carryForwardDataOnException = true,
-    bool fetchResults = false,
-  }) : super(
-          variables: variables.toJson(),
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          context: context,
-          document: documentNodeQueryget_customer_stripe_info,
-          pollInterval: pollInterval,
-          eagerlyFetchResults: eagerlyFetchResults,
-          carryForwardDataOnException: carryForwardDataOnException,
-          fetchResults: fetchResults,
-          parserFn: _parserFn$Query$get_customer_stripe_info,
-        );
-}
-
-class FetchMoreOptions$Query$get_customer_stripe_info
-    extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$get_customer_stripe_info({
-    required graphql.UpdateQuery updateQuery,
-    required Variables$Query$get_customer_stripe_info variables,
-  }) : super(
-          updateQuery: updateQuery,
-          variables: variables.toJson(),
-          document: documentNodeQueryget_customer_stripe_info,
-        );
-}
-
-extension ClientExtension$Query$get_customer_stripe_info
-    on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$get_customer_stripe_info>>
-      query$get_customer_stripe_info(
-              Options$Query$get_customer_stripe_info options) async =>
-          await this.query(options);
-  graphql.ObservableQuery<Query$get_customer_stripe_info>
-      watchQuery$get_customer_stripe_info(
-              WatchOptions$Query$get_customer_stripe_info options) =>
-          this.watchQuery(options);
-  void writeQuery$get_customer_stripe_info({
-    required Query$get_customer_stripe_info data,
-    required Variables$Query$get_customer_stripe_info variables,
-    bool broadcast = true,
-  }) =>
-      this.writeQuery(
-        graphql.Request(
-          operation: graphql.Operation(
-              document: documentNodeQueryget_customer_stripe_info),
-          variables: variables.toJson(),
-        ),
-        data: data.toJson(),
-        broadcast: broadcast,
-      );
-  Query$get_customer_stripe_info? readQuery$get_customer_stripe_info({
-    required Variables$Query$get_customer_stripe_info variables,
-    bool optimistic = true,
-  }) {
-    final result = this.readQuery(
-      graphql.Request(
-        operation: graphql.Operation(
-            document: documentNodeQueryget_customer_stripe_info),
-        variables: variables.toJson(),
-      ),
-      optimistic: optimistic,
-    );
-    return result == null
-        ? null
-        : Query$get_customer_stripe_info.fromJson(result);
-  }
-}
-
-class Query$get_customer_stripe_info$customer_customer {
-  Query$get_customer_stripe_info$customer_customer({
-    this.stripe_info,
-    required this.$__typename,
-  });
-
-  factory Query$get_customer_stripe_info$customer_customer.fromJson(
-      Map<String, dynamic> json) {
-    final l$stripe_info = json['stripe_info'];
-    final l$$__typename = json['__typename'];
-    return Query$get_customer_stripe_info$customer_customer(
-      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final dynamic? stripe_info;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$stripe_info = stripe_info;
-    _resultData['stripe_info'] =
-        l$stripe_info == null ? null : mapToJson(l$stripe_info);
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$stripe_info = stripe_info;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$stripe_info,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$get_customer_stripe_info$customer_customer) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (l$stripe_info != lOther$stripe_info) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_customer_stripe_info$customer_customer
-    on Query$get_customer_stripe_info$customer_customer {
-  CopyWith$Query$get_customer_stripe_info$customer_customer<
-          Query$get_customer_stripe_info$customer_customer>
-      get copyWith => CopyWith$Query$get_customer_stripe_info$customer_customer(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_customer_stripe_info$customer_customer<TRes> {
-  factory CopyWith$Query$get_customer_stripe_info$customer_customer(
-    Query$get_customer_stripe_info$customer_customer instance,
-    TRes Function(Query$get_customer_stripe_info$customer_customer) then,
-  ) = _CopyWithImpl$Query$get_customer_stripe_info$customer_customer;
-
-  factory CopyWith$Query$get_customer_stripe_info$customer_customer.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_customer_stripe_info$customer_customer;
-
-  TRes call({
-    dynamic? stripe_info,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_customer_stripe_info$customer_customer<TRes>
-    implements CopyWith$Query$get_customer_stripe_info$customer_customer<TRes> {
-  _CopyWithImpl$Query$get_customer_stripe_info$customer_customer(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_customer_stripe_info$customer_customer _instance;
-
-  final TRes Function(Query$get_customer_stripe_info$customer_customer) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? stripe_info = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_customer_stripe_info$customer_customer(
-        stripe_info: stripe_info == _undefined
-            ? _instance.stripe_info
-            : (stripe_info as dynamic?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_customer_stripe_info$customer_customer<TRes>
-    implements CopyWith$Query$get_customer_stripe_info$customer_customer<TRes> {
-  _CopyWithStubImpl$Query$get_customer_stripe_info$customer_customer(this._res);
-
-  TRes _res;
-
-  call({
-    dynamic? stripe_info,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
 class Variables$Mutation$set_customer_info {
   factory Variables$Mutation$set_customer_info({
     required int user_id,
     required String app_version,
-    dynamic? stripe_info,
   }) =>
       Variables$Mutation$set_customer_info._({
         r'user_id': user_id,
         r'app_version': app_version,
-        if (stripe_info != null) r'stripe_info': stripe_info,
       });
 
   Variables$Mutation$set_customer_info._(this._$data);
@@ -3192,11 +2810,6 @@ class Variables$Mutation$set_customer_info {
     result$data['user_id'] = (l$user_id as int);
     final l$app_version = data['app_version'];
     result$data['app_version'] = (l$app_version as String);
-    if (data.containsKey('stripe_info')) {
-      final l$stripe_info = data['stripe_info'];
-      result$data['stripe_info'] =
-          l$stripe_info == null ? null : mapFromJson(l$stripe_info);
-    }
     return Variables$Mutation$set_customer_info._(result$data);
   }
 
@@ -3204,18 +2817,12 @@ class Variables$Mutation$set_customer_info {
 
   int get user_id => (_$data['user_id'] as int);
   String get app_version => (_$data['app_version'] as String);
-  dynamic? get stripe_info => (_$data['stripe_info'] as dynamic?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$user_id = user_id;
     result$data['user_id'] = l$user_id;
     final l$app_version = app_version;
     result$data['app_version'] = l$app_version;
-    if (_$data.containsKey('stripe_info')) {
-      final l$stripe_info = stripe_info;
-      result$data['stripe_info'] =
-          l$stripe_info == null ? null : mapToJson(l$stripe_info);
-    }
     return result$data;
   }
 
@@ -3244,15 +2851,6 @@ class Variables$Mutation$set_customer_info {
     if (l$app_version != lOther$app_version) {
       return false;
     }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (_$data.containsKey('stripe_info') !=
-        other._$data.containsKey('stripe_info')) {
-      return false;
-    }
-    if (l$stripe_info != lOther$stripe_info) {
-      return false;
-    }
     return true;
   }
 
@@ -3260,11 +2858,9 @@ class Variables$Mutation$set_customer_info {
   int get hashCode {
     final l$user_id = user_id;
     final l$app_version = app_version;
-    final l$stripe_info = stripe_info;
     return Object.hashAll([
       l$user_id,
       l$app_version,
-      _$data.containsKey('stripe_info') ? l$stripe_info : const {},
     ]);
   }
 }
@@ -3281,7 +2877,6 @@ abstract class CopyWith$Variables$Mutation$set_customer_info<TRes> {
   TRes call({
     int? user_id,
     String? app_version,
-    dynamic? stripe_info,
   });
 }
 
@@ -3301,7 +2896,6 @@ class _CopyWithImpl$Variables$Mutation$set_customer_info<TRes>
   TRes call({
     Object? user_id = _undefined,
     Object? app_version = _undefined,
-    Object? stripe_info = _undefined,
   }) =>
       _then(Variables$Mutation$set_customer_info._({
         ..._instance._$data,
@@ -3309,7 +2903,6 @@ class _CopyWithImpl$Variables$Mutation$set_customer_info<TRes>
           'user_id': (user_id as int),
         if (app_version != _undefined && app_version != null)
           'app_version': (app_version as String),
-        if (stripe_info != _undefined) 'stripe_info': (stripe_info as dynamic?),
       }));
 }
 
@@ -3322,7 +2915,6 @@ class _CopyWithStubImpl$Variables$Mutation$set_customer_info<TRes>
   call({
     int? user_id,
     String? app_version,
-    dynamic? stripe_info,
   }) =>
       _res;
 }
@@ -3501,15 +3093,6 @@ const documentNodeMutationset_customer_info = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'stripe_info')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'jsonb'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -3527,10 +3110,6 @@ const documentNodeMutationset_customer_info = DocumentNode(definitions: [
               ObjectFieldNode(
                 name: NameNode(value: 'app_version'),
                 value: VariableNode(name: NameNode(value: 'app_version')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'stripe_info'),
-                value: VariableNode(name: NameNode(value: 'stripe_info')),
               ),
             ]),
           )
@@ -3791,618 +3370,18 @@ class _CopyWithStubImpl$Mutation$set_customer_info$insert_customer_customer_one<
       _res;
 }
 
-class Variables$Mutation$set_customer_stripe_info {
-  factory Variables$Mutation$set_customer_stripe_info({
-    required int user_id,
-    dynamic? stripe_info,
-  }) =>
-      Variables$Mutation$set_customer_stripe_info._({
-        r'user_id': user_id,
-        if (stripe_info != null) r'stripe_info': stripe_info,
-      });
-
-  Variables$Mutation$set_customer_stripe_info._(this._$data);
-
-  factory Variables$Mutation$set_customer_stripe_info.fromJson(
-      Map<String, dynamic> data) {
-    final result$data = <String, dynamic>{};
-    final l$user_id = data['user_id'];
-    result$data['user_id'] = (l$user_id as int);
-    if (data.containsKey('stripe_info')) {
-      final l$stripe_info = data['stripe_info'];
-      result$data['stripe_info'] =
-          l$stripe_info == null ? null : mapFromJson(l$stripe_info);
-    }
-    return Variables$Mutation$set_customer_stripe_info._(result$data);
-  }
-
-  Map<String, dynamic> _$data;
-
-  int get user_id => (_$data['user_id'] as int);
-  dynamic? get stripe_info => (_$data['stripe_info'] as dynamic?);
-  Map<String, dynamic> toJson() {
-    final result$data = <String, dynamic>{};
-    final l$user_id = user_id;
-    result$data['user_id'] = l$user_id;
-    if (_$data.containsKey('stripe_info')) {
-      final l$stripe_info = stripe_info;
-      result$data['stripe_info'] =
-          l$stripe_info == null ? null : mapToJson(l$stripe_info);
-    }
-    return result$data;
-  }
-
-  CopyWith$Variables$Mutation$set_customer_stripe_info<
-          Variables$Mutation$set_customer_stripe_info>
-      get copyWith => CopyWith$Variables$Mutation$set_customer_stripe_info(
-            this,
-            (i) => i,
-          );
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Variables$Mutation$set_customer_stripe_info) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$user_id = user_id;
-    final lOther$user_id = other.user_id;
-    if (l$user_id != lOther$user_id) {
-      return false;
-    }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (_$data.containsKey('stripe_info') !=
-        other._$data.containsKey('stripe_info')) {
-      return false;
-    }
-    if (l$stripe_info != lOther$stripe_info) {
-      return false;
-    }
-    return true;
-  }
-
-  @override
-  int get hashCode {
-    final l$user_id = user_id;
-    final l$stripe_info = stripe_info;
-    return Object.hashAll([
-      l$user_id,
-      _$data.containsKey('stripe_info') ? l$stripe_info : const {},
-    ]);
-  }
-}
-
-abstract class CopyWith$Variables$Mutation$set_customer_stripe_info<TRes> {
-  factory CopyWith$Variables$Mutation$set_customer_stripe_info(
-    Variables$Mutation$set_customer_stripe_info instance,
-    TRes Function(Variables$Mutation$set_customer_stripe_info) then,
-  ) = _CopyWithImpl$Variables$Mutation$set_customer_stripe_info;
-
-  factory CopyWith$Variables$Mutation$set_customer_stripe_info.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$set_customer_stripe_info;
-
-  TRes call({
-    int? user_id,
-    dynamic? stripe_info,
-  });
-}
-
-class _CopyWithImpl$Variables$Mutation$set_customer_stripe_info<TRes>
-    implements CopyWith$Variables$Mutation$set_customer_stripe_info<TRes> {
-  _CopyWithImpl$Variables$Mutation$set_customer_stripe_info(
-    this._instance,
-    this._then,
-  );
-
-  final Variables$Mutation$set_customer_stripe_info _instance;
-
-  final TRes Function(Variables$Mutation$set_customer_stripe_info) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? user_id = _undefined,
-    Object? stripe_info = _undefined,
-  }) =>
-      _then(Variables$Mutation$set_customer_stripe_info._({
-        ..._instance._$data,
-        if (user_id != _undefined && user_id != null)
-          'user_id': (user_id as int),
-        if (stripe_info != _undefined) 'stripe_info': (stripe_info as dynamic?),
-      }));
-}
-
-class _CopyWithStubImpl$Variables$Mutation$set_customer_stripe_info<TRes>
-    implements CopyWith$Variables$Mutation$set_customer_stripe_info<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$set_customer_stripe_info(this._res);
-
-  TRes _res;
-
-  call({
-    int? user_id,
-    dynamic? stripe_info,
-  }) =>
-      _res;
-}
-
-class Mutation$set_customer_stripe_info {
-  Mutation$set_customer_stripe_info({
-    this.update_customer_customer_by_pk,
-    required this.$__typename,
-  });
-
-  factory Mutation$set_customer_stripe_info.fromJson(
-      Map<String, dynamic> json) {
-    final l$update_customer_customer_by_pk =
-        json['update_customer_customer_by_pk'];
-    final l$$__typename = json['__typename'];
-    return Mutation$set_customer_stripe_info(
-      update_customer_customer_by_pk: l$update_customer_customer_by_pk == null
-          ? null
-          : Mutation$set_customer_stripe_info$update_customer_customer_by_pk
-              .fromJson(
-                  (l$update_customer_customer_by_pk as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final Mutation$set_customer_stripe_info$update_customer_customer_by_pk?
-      update_customer_customer_by_pk;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$update_customer_customer_by_pk = update_customer_customer_by_pk;
-    _resultData['update_customer_customer_by_pk'] =
-        l$update_customer_customer_by_pk?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$update_customer_customer_by_pk = update_customer_customer_by_pk;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$update_customer_customer_by_pk,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Mutation$set_customer_stripe_info) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$update_customer_customer_by_pk = update_customer_customer_by_pk;
-    final lOther$update_customer_customer_by_pk =
-        other.update_customer_customer_by_pk;
-    if (l$update_customer_customer_by_pk !=
-        lOther$update_customer_customer_by_pk) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$set_customer_stripe_info
-    on Mutation$set_customer_stripe_info {
-  CopyWith$Mutation$set_customer_stripe_info<Mutation$set_customer_stripe_info>
-      get copyWith => CopyWith$Mutation$set_customer_stripe_info(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Mutation$set_customer_stripe_info<TRes> {
-  factory CopyWith$Mutation$set_customer_stripe_info(
-    Mutation$set_customer_stripe_info instance,
-    TRes Function(Mutation$set_customer_stripe_info) then,
-  ) = _CopyWithImpl$Mutation$set_customer_stripe_info;
-
-  factory CopyWith$Mutation$set_customer_stripe_info.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$set_customer_stripe_info;
-
-  TRes call({
-    Mutation$set_customer_stripe_info$update_customer_customer_by_pk?
-        update_customer_customer_by_pk,
-    String? $__typename,
-  });
-  CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-      TRes> get update_customer_customer_by_pk;
-}
-
-class _CopyWithImpl$Mutation$set_customer_stripe_info<TRes>
-    implements CopyWith$Mutation$set_customer_stripe_info<TRes> {
-  _CopyWithImpl$Mutation$set_customer_stripe_info(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$set_customer_stripe_info _instance;
-
-  final TRes Function(Mutation$set_customer_stripe_info) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? update_customer_customer_by_pk = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Mutation$set_customer_stripe_info(
-        update_customer_customer_by_pk: update_customer_customer_by_pk ==
-                _undefined
-            ? _instance.update_customer_customer_by_pk
-            : (update_customer_customer_by_pk
-                as Mutation$set_customer_stripe_info$update_customer_customer_by_pk?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-      TRes> get update_customer_customer_by_pk {
-    final local$update_customer_customer_by_pk =
-        _instance.update_customer_customer_by_pk;
-    return local$update_customer_customer_by_pk == null
-        ? CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk
-            .stub(_then(_instance))
-        : CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-            local$update_customer_customer_by_pk,
-            (e) => call(update_customer_customer_by_pk: e));
-  }
-}
-
-class _CopyWithStubImpl$Mutation$set_customer_stripe_info<TRes>
-    implements CopyWith$Mutation$set_customer_stripe_info<TRes> {
-  _CopyWithStubImpl$Mutation$set_customer_stripe_info(this._res);
-
-  TRes _res;
-
-  call({
-    Mutation$set_customer_stripe_info$update_customer_customer_by_pk?
-        update_customer_customer_by_pk,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-          TRes>
-      get update_customer_customer_by_pk =>
-          CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk
-              .stub(_res);
-}
-
-const documentNodeMutationset_customer_stripe_info = DocumentNode(definitions: [
-  OperationDefinitionNode(
-    type: OperationType.mutation,
-    name: NameNode(value: 'set_customer_stripe_info'),
-    variableDefinitions: [
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'user_id')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Int'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'stripe_info')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'jsonb'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-    ],
-    directives: [],
-    selectionSet: SelectionSetNode(selections: [
-      FieldNode(
-        name: NameNode(value: 'update_customer_customer_by_pk'),
-        alias: null,
-        arguments: [
-          ArgumentNode(
-            name: NameNode(value: 'pk_columns'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'user_id'),
-                value: VariableNode(name: NameNode(value: 'user_id')),
-              )
-            ]),
-          ),
-          ArgumentNode(
-            name: NameNode(value: '_set'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'stripe_info'),
-                value: VariableNode(name: NameNode(value: 'stripe_info')),
-              )
-            ]),
-          ),
-        ],
-        directives: [],
-        selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'stripe_info'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: '__typename'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-        ]),
-      ),
-      
-    ]),
-  ),
-]);
-Mutation$set_customer_stripe_info _parserFn$Mutation$set_customer_stripe_info(
-        Map<String, dynamic> data) =>
-    Mutation$set_customer_stripe_info.fromJson(data);
-typedef OnMutationCompleted$Mutation$set_customer_stripe_info = FutureOr<void>
-    Function(
-  dynamic,
-  Mutation$set_customer_stripe_info?,
-);
-
-class Options$Mutation$set_customer_stripe_info
-    extends graphql.MutationOptions<Mutation$set_customer_stripe_info> {
-  Options$Mutation$set_customer_stripe_info({
-    String? operationName,
-    required Variables$Mutation$set_customer_stripe_info variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    graphql.Context? context,
-    OnMutationCompleted$Mutation$set_customer_stripe_info? onCompleted,
-    graphql.OnMutationUpdate<Mutation$set_customer_stripe_info>? update,
-    graphql.OnError? onError,
-  })  : onCompletedWithParsed = onCompleted,
-        super(
-          variables: variables.toJson(),
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          context: context,
-          onCompleted: onCompleted == null
-              ? null
-              : (data) => onCompleted(
-                    data,
-                    data == null
-                        ? null
-                        : _parserFn$Mutation$set_customer_stripe_info(data),
-                  ),
-          update: update,
-          onError: onError,
-          document: documentNodeMutationset_customer_stripe_info,
-          parserFn: _parserFn$Mutation$set_customer_stripe_info,
-        );
-
-  final OnMutationCompleted$Mutation$set_customer_stripe_info?
-      onCompletedWithParsed;
-
-  @override
-  List<Object?> get properties => [
-        ...super.onCompleted == null
-            ? super.properties
-            : super.properties.where((property) => property != onCompleted),
-        onCompletedWithParsed,
-      ];
-}
-
-class WatchOptions$Mutation$set_customer_stripe_info
-    extends graphql.WatchQueryOptions<Mutation$set_customer_stripe_info> {
-  WatchOptions$Mutation$set_customer_stripe_info({
-    String? operationName,
-    required Variables$Mutation$set_customer_stripe_info variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    graphql.Context? context,
-    Duration? pollInterval,
-    bool? eagerlyFetchResults,
-    bool carryForwardDataOnException = true,
-    bool fetchResults = false,
-  }) : super(
-          variables: variables.toJson(),
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          context: context,
-          document: documentNodeMutationset_customer_stripe_info,
-          pollInterval: pollInterval,
-          eagerlyFetchResults: eagerlyFetchResults,
-          carryForwardDataOnException: carryForwardDataOnException,
-          fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$set_customer_stripe_info,
-        );
-}
-
-extension ClientExtension$Mutation$set_customer_stripe_info
-    on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$set_customer_stripe_info>>
-      mutate$set_customer_stripe_info(
-              Options$Mutation$set_customer_stripe_info options) async =>
-          await this.mutate(options);
-  graphql.ObservableQuery<Mutation$set_customer_stripe_info>
-      watchMutation$set_customer_stripe_info(
-              WatchOptions$Mutation$set_customer_stripe_info options) =>
-          this.watchMutation(options);
-}
-
-class Mutation$set_customer_stripe_info$update_customer_customer_by_pk {
-  Mutation$set_customer_stripe_info$update_customer_customer_by_pk({
-    this.stripe_info,
-    required this.$__typename,
-  });
-
-  factory Mutation$set_customer_stripe_info$update_customer_customer_by_pk.fromJson(
-      Map<String, dynamic> json) {
-    final l$stripe_info = json['stripe_info'];
-    final l$$__typename = json['__typename'];
-    return Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final dynamic? stripe_info;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$stripe_info = stripe_info;
-    _resultData['stripe_info'] =
-        l$stripe_info == null ? null : mapToJson(l$stripe_info);
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$stripe_info = stripe_info;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$stripe_info,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Mutation$set_customer_stripe_info$update_customer_customer_by_pk) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (l$stripe_info != lOther$stripe_info) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$set_customer_stripe_info$update_customer_customer_by_pk
-    on Mutation$set_customer_stripe_info$update_customer_customer_by_pk {
-  CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-          Mutation$set_customer_stripe_info$update_customer_customer_by_pk>
-      get copyWith =>
-          CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-    TRes> {
-  factory CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-    Mutation$set_customer_stripe_info$update_customer_customer_by_pk instance,
-    TRes Function(
-            Mutation$set_customer_stripe_info$update_customer_customer_by_pk)
-        then,
-  ) = _CopyWithImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk;
-
-  factory CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk.stub(
-          TRes res) =
-      _CopyWithStubImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk;
-
-  TRes call({
-    dynamic? stripe_info,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-        TRes>
-    implements
-        CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-            TRes> {
-  _CopyWithImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$set_customer_stripe_info$update_customer_customer_by_pk
-      _instance;
-
-  final TRes Function(
-      Mutation$set_customer_stripe_info$update_customer_customer_by_pk) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? stripe_info = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-        stripe_info: stripe_info == _undefined
-            ? _instance.stripe_info
-            : (stripe_info as dynamic?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-        TRes>
-    implements
-        CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-            TRes> {
-  _CopyWithStubImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-      this._res);
-
-  TRes _res;
-
-  call({
-    dynamic? stripe_info,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
 class Variables$Query$get_customer_orders {
-  factory Variables$Query$get_customer_orders({required int customer_id}) =>
+  factory Variables$Query$get_customer_orders({
+    required int custId,
+    required bool inProcess,
+    int? limit,
+    int? offset,
+  }) =>
       Variables$Query$get_customer_orders._({
-        r'customer_id': customer_id,
+        r'custId': custId,
+        r'inProcess': inProcess,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
       });
 
   Variables$Query$get_customer_orders._(this._$data);
@@ -4410,18 +3389,41 @@ class Variables$Query$get_customer_orders {
   factory Variables$Query$get_customer_orders.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$customer_id = data['customer_id'];
-    result$data['customer_id'] = (l$customer_id as int);
+    final l$custId = data['custId'];
+    result$data['custId'] = (l$custId as int);
+    final l$inProcess = data['inProcess'];
+    result$data['inProcess'] = (l$inProcess as bool);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
     return Variables$Query$get_customer_orders._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  int get customer_id => (_$data['customer_id'] as int);
+  int get custId => (_$data['custId'] as int);
+  bool get inProcess => (_$data['inProcess'] as bool);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$customer_id = customer_id;
-    result$data['customer_id'] = l$customer_id;
+    final l$custId = custId;
+    result$data['custId'] = l$custId;
+    final l$inProcess = inProcess;
+    result$data['inProcess'] = l$inProcess;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
     return result$data;
   }
 
@@ -4440,9 +3442,30 @@ class Variables$Query$get_customer_orders {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$customer_id = customer_id;
-    final lOther$customer_id = other.customer_id;
-    if (l$customer_id != lOther$customer_id) {
+    final l$custId = custId;
+    final lOther$custId = other.custId;
+    if (l$custId != lOther$custId) {
+      return false;
+    }
+    final l$inProcess = inProcess;
+    final lOther$inProcess = other.inProcess;
+    if (l$inProcess != lOther$inProcess) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
       return false;
     }
     return true;
@@ -4450,8 +3473,16 @@ class Variables$Query$get_customer_orders {
 
   @override
   int get hashCode {
-    final l$customer_id = customer_id;
-    return Object.hashAll([l$customer_id]);
+    final l$custId = custId;
+    final l$inProcess = inProcess;
+    final l$limit = limit;
+    final l$offset = offset;
+    return Object.hashAll([
+      l$custId,
+      l$inProcess,
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
+    ]);
   }
 }
 
@@ -4464,7 +3495,12 @@ abstract class CopyWith$Variables$Query$get_customer_orders<TRes> {
   factory CopyWith$Variables$Query$get_customer_orders.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$get_customer_orders;
 
-  TRes call({int? customer_id});
+  TRes call({
+    int? custId,
+    bool? inProcess,
+    int? limit,
+    int? offset,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$get_customer_orders<TRes>
@@ -4480,11 +3516,19 @@ class _CopyWithImpl$Variables$Query$get_customer_orders<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? customer_id = _undefined}) =>
+  TRes call({
+    Object? custId = _undefined,
+    Object? inProcess = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
       _then(Variables$Query$get_customer_orders._({
         ..._instance._$data,
-        if (customer_id != _undefined && customer_id != null)
-          'customer_id': (customer_id as int),
+        if (custId != _undefined && custId != null) 'custId': (custId as int),
+        if (inProcess != _undefined && inProcess != null)
+          'inProcess': (inProcess as bool),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
       }));
 }
 
@@ -4494,36 +3538,44 @@ class _CopyWithStubImpl$Variables$Query$get_customer_orders<TRes>
 
   TRes _res;
 
-  call({int? customer_id}) => _res;
+  call({
+    int? custId,
+    bool? inProcess,
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
 }
 
 class Query$get_customer_orders {
   Query$get_customer_orders({
-    required this.restaurant_order,
+    required this.customer_minimal_orders,
     required this.$__typename,
   });
 
   factory Query$get_customer_orders.fromJson(Map<String, dynamic> json) {
-    final l$restaurant_order = json['restaurant_order'];
+    final l$customer_minimal_orders = json['customer_minimal_orders'];
     final l$$__typename = json['__typename'];
     return Query$get_customer_orders(
-      restaurant_order: (l$restaurant_order as List<dynamic>)
-          .map((e) => Query$get_customer_orders$restaurant_order.fromJson(
-              (e as Map<String, dynamic>)))
+      customer_minimal_orders: (l$customer_minimal_orders as List<dynamic>)
+          .map((e) =>
+              Query$get_customer_orders$customer_minimal_orders.fromJson(
+                  (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$get_customer_orders$restaurant_order> restaurant_order;
+  final List<Query$get_customer_orders$customer_minimal_orders>
+      customer_minimal_orders;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$restaurant_order = restaurant_order;
-    _resultData['restaurant_order'] =
-        l$restaurant_order.map((e) => e.toJson()).toList();
+    final l$customer_minimal_orders = customer_minimal_orders;
+    _resultData['customer_minimal_orders'] =
+        l$customer_minimal_orders.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -4531,10 +3583,10 @@ class Query$get_customer_orders {
 
   @override
   int get hashCode {
-    final l$restaurant_order = restaurant_order;
+    final l$customer_minimal_orders = customer_minimal_orders;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$restaurant_order.map((v) => v)),
+      Object.hashAll(l$customer_minimal_orders.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -4548,15 +3600,18 @@ class Query$get_customer_orders {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$restaurant_order = restaurant_order;
-    final lOther$restaurant_order = other.restaurant_order;
-    if (l$restaurant_order.length != lOther$restaurant_order.length) {
+    final l$customer_minimal_orders = customer_minimal_orders;
+    final lOther$customer_minimal_orders = other.customer_minimal_orders;
+    if (l$customer_minimal_orders.length !=
+        lOther$customer_minimal_orders.length) {
       return false;
     }
-    for (int i = 0; i < l$restaurant_order.length; i++) {
-      final l$restaurant_order$entry = l$restaurant_order[i];
-      final lOther$restaurant_order$entry = lOther$restaurant_order[i];
-      if (l$restaurant_order$entry != lOther$restaurant_order$entry) {
+    for (int i = 0; i < l$customer_minimal_orders.length; i++) {
+      final l$customer_minimal_orders$entry = l$customer_minimal_orders[i];
+      final lOther$customer_minimal_orders$entry =
+          lOther$customer_minimal_orders[i];
+      if (l$customer_minimal_orders$entry !=
+          lOther$customer_minimal_orders$entry) {
         return false;
       }
     }
@@ -4588,14 +3643,15 @@ abstract class CopyWith$Query$get_customer_orders<TRes> {
       _CopyWithStubImpl$Query$get_customer_orders;
 
   TRes call({
-    List<Query$get_customer_orders$restaurant_order>? restaurant_order,
+    List<Query$get_customer_orders$customer_minimal_orders>?
+        customer_minimal_orders,
     String? $__typename,
   });
-  TRes restaurant_order(
-      Iterable<Query$get_customer_orders$restaurant_order> Function(
+  TRes customer_minimal_orders(
+      Iterable<Query$get_customer_orders$customer_minimal_orders> Function(
               Iterable<
-                  CopyWith$Query$get_customer_orders$restaurant_order<
-                      Query$get_customer_orders$restaurant_order>>)
+                  CopyWith$Query$get_customer_orders$customer_minimal_orders<
+                      Query$get_customer_orders$customer_minimal_orders>>)
           _fn);
 }
 
@@ -4613,28 +3669,28 @@ class _CopyWithImpl$Query$get_customer_orders<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? restaurant_order = _undefined,
+    Object? customer_minimal_orders = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_customer_orders(
-        restaurant_order:
-            restaurant_order == _undefined || restaurant_order == null
-                ? _instance.restaurant_order
-                : (restaurant_order
-                    as List<Query$get_customer_orders$restaurant_order>),
+        customer_minimal_orders: customer_minimal_orders == _undefined ||
+                customer_minimal_orders == null
+            ? _instance.customer_minimal_orders
+            : (customer_minimal_orders
+                as List<Query$get_customer_orders$customer_minimal_orders>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes restaurant_order(
-          Iterable<Query$get_customer_orders$restaurant_order> Function(
+  TRes customer_minimal_orders(
+          Iterable<Query$get_customer_orders$customer_minimal_orders> Function(
                   Iterable<
-                      CopyWith$Query$get_customer_orders$restaurant_order<
-                          Query$get_customer_orders$restaurant_order>>)
+                      CopyWith$Query$get_customer_orders$customer_minimal_orders<
+                          Query$get_customer_orders$customer_minimal_orders>>)
               _fn) =>
       call(
-          restaurant_order: _fn(_instance.restaurant_order
-              .map((e) => CopyWith$Query$get_customer_orders$restaurant_order(
+          customer_minimal_orders: _fn(_instance.customer_minimal_orders.map(
+              (e) => CopyWith$Query$get_customer_orders$customer_minimal_orders(
                     e,
                     (i) => i,
                   ))).toList());
@@ -4647,11 +3703,12 @@ class _CopyWithStubImpl$Query$get_customer_orders<TRes>
   TRes _res;
 
   call({
-    List<Query$get_customer_orders$restaurant_order>? restaurant_order,
+    List<Query$get_customer_orders$customer_minimal_orders>?
+        customer_minimal_orders,
     String? $__typename,
   }) =>
       _res;
-  restaurant_order(_fn) => _res;
+  customer_minimal_orders(_fn) => _res;
 }
 
 const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
@@ -4660,35 +3717,88 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
     name: NameNode(value: 'get_customer_orders'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        variable: VariableNode(name: NameNode(value: 'custId')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'inProcess')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'restaurant_order'),
+        name: NameNode(value: 'customer_minimal_orders'),
         alias: null,
         arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'args'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'cus_id'),
+                value: VariableNode(name: NameNode(value: 'custId')),
+              )
+            ]),
+          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'customer_id'),
+                name: NameNode(value: 'in_process'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
                     name: NameNode(value: '_eq'),
-                    value: VariableNode(name: NameNode(value: 'customer_id')),
+                    value: VariableNode(name: NameNode(value: 'inProcess')),
                   )
                 ]),
               )
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -4700,385 +3810,21 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'restaurant'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'firebase_id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'image'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'language_id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_gps'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_text'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'name'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'items'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'restaurant_item'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'item_type'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'description'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'translations'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                            name: NameNode(value: 'language_id'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: 'value'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                          FieldNode(
-                            name: NameNode(value: '__typename'),
-                            alias: null,
-                            arguments: [],
-                            directives: [],
-                            selectionSet: null,
-                          ),
-                        ]),
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'position'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'category_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'available'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'restaurant_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'special_period_end'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'special_period_start'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'archived'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'cost'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: 'cost_per_one'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'notes'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'quantity'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'payment_type'),
+            name: NameNode(value: 'image'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'to_location_gps'),
+            name: NameNode(value: 'in_process'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'to_location_address'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'estimated_food_ready_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'actual_food_ready_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'refund_amount'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'delivery_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'status'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'review_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'order_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'order_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'firebase_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'customer_app_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'notes'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'tax'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'chat_id'),
+            name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
             directives: [],
@@ -5092,68 +3838,46 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'delivery'),
+            name: NameNode(value: 'to_address'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'actual_delivered_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'actual_package_ready_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'actual_arrival_at_pickup_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'actual_arrival_at_dropoff_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'cancellation_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'current_gps'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'delivery_cost'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'payment_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'total_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -5279,133 +4003,73 @@ extension ClientExtension$Query$get_customer_orders on graphql.GraphQLClient {
   }
 }
 
-class Query$get_customer_orders$restaurant_order {
-  Query$get_customer_orders$restaurant_order({
+class Query$get_customer_orders$customer_minimal_orders {
+  Query$get_customer_orders$customer_minimal_orders({
     required this.id,
-    required this.restaurant,
-    required this.items,
-    required this.payment_type,
-    this.to_location_gps,
-    this.to_location_address,
-    this.estimated_food_ready_time,
-    this.actual_food_ready_time,
-    required this.refund_amount,
-    this.delivery_id,
-    required this.status,
-    this.review_id,
-    required this.order_type,
-    required this.order_time,
-    this.firebase_id,
-    required this.customer_app_type,
-    this.notes,
-    required this.tax,
-    required this.chat_id,
+    this.image,
+    required this.in_process,
+    this.name,
     required this.delivery_cost,
-    this.delivery,
+    this.to_address,
+    required this.order_time,
+    required this.order_type,
+    this.payment_type,
+    required this.status,
+    required this.total_cost,
     required this.$__typename,
   });
 
-  factory Query$get_customer_orders$restaurant_order.fromJson(
+  factory Query$get_customer_orders$customer_minimal_orders.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$restaurant = json['restaurant'];
-    final l$items = json['items'];
-    final l$payment_type = json['payment_type'];
-    final l$to_location_gps = json['to_location_gps'];
-    final l$to_location_address = json['to_location_address'];
-    final l$estimated_food_ready_time = json['estimated_food_ready_time'];
-    final l$actual_food_ready_time = json['actual_food_ready_time'];
-    final l$refund_amount = json['refund_amount'];
-    final l$delivery_id = json['delivery_id'];
-    final l$status = json['status'];
-    final l$review_id = json['review_id'];
-    final l$order_type = json['order_type'];
-    final l$order_time = json['order_time'];
-    final l$firebase_id = json['firebase_id'];
-    final l$customer_app_type = json['customer_app_type'];
-    final l$notes = json['notes'];
-    final l$tax = json['tax'];
-    final l$chat_id = json['chat_id'];
+    final l$image = json['image'];
+    final l$in_process = json['in_process'];
+    final l$name = json['name'];
     final l$delivery_cost = json['delivery_cost'];
-    final l$delivery = json['delivery'];
+    final l$to_address = json['to_address'];
+    final l$order_time = json['order_time'];
+    final l$order_type = json['order_type'];
+    final l$payment_type = json['payment_type'];
+    final l$status = json['status'];
+    final l$total_cost = json['total_cost'];
     final l$$__typename = json['__typename'];
-    return Query$get_customer_orders$restaurant_order(
+    return Query$get_customer_orders$customer_minimal_orders(
       id: (l$id as int),
-      restaurant:
-          Query$get_customer_orders$restaurant_order$restaurant.fromJson(
-              (l$restaurant as Map<String, dynamic>)),
-      items: (l$items as List<dynamic>)
-          .map((e) => Query$get_customer_orders$restaurant_order$items.fromJson(
-              (e as Map<String, dynamic>)))
-          .toList(),
-      payment_type: (l$payment_type as String),
-      to_location_gps: l$to_location_gps == null
-          ? null
-          : geographyFromJson(l$to_location_gps),
-      to_location_address: (l$to_location_address as String?),
-      estimated_food_ready_time: (l$estimated_food_ready_time as String?),
-      actual_food_ready_time: (l$actual_food_ready_time as String?),
-      refund_amount: moneyFromJson(l$refund_amount),
-      delivery_id: (l$delivery_id as int?),
-      status: (l$status as String),
-      review_id: (l$review_id as int?),
-      order_type: (l$order_type as String),
-      order_time: (l$order_time as String),
-      firebase_id: (l$firebase_id as String?),
-      customer_app_type: (l$customer_app_type as String),
-      notes: (l$notes as String?),
-      tax: moneyFromJson(l$tax),
-      chat_id: (l$chat_id as int),
+      image: (l$image as String?),
+      in_process: (l$in_process as bool),
+      name: (l$name as String?),
       delivery_cost: moneyFromJson(l$delivery_cost),
-      delivery: l$delivery == null
-          ? null
-          : Query$get_customer_orders$restaurant_order$delivery.fromJson(
-              (l$delivery as Map<String, dynamic>)),
+      to_address: (l$to_address as String?),
+      order_time: (l$order_time as String),
+      order_type: (l$order_type as String),
+      payment_type: (l$payment_type as String?),
+      status: (l$status as String),
+      total_cost: moneyFromJson(l$total_cost),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
 
-  final Query$get_customer_orders$restaurant_order$restaurant restaurant;
+  final String? image;
 
-  final List<Query$get_customer_orders$restaurant_order$items> items;
+  final bool in_process;
 
-  final String payment_type;
-
-  final Geography? to_location_gps;
-
-  final String? to_location_address;
-
-  final String? estimated_food_ready_time;
-
-  final String? actual_food_ready_time;
-
-  final double refund_amount;
-
-  final int? delivery_id;
-
-  final String status;
-
-  final int? review_id;
-
-  final String order_type;
-
-  final String order_time;
-
-  final String? firebase_id;
-
-  final String customer_app_type;
-
-  final String? notes;
-
-  final double tax;
-
-  final int chat_id;
+  final String? name;
 
   final double delivery_cost;
 
-  final Query$get_customer_orders$restaurant_order$delivery? delivery;
+  final String? to_address;
+
+  final String order_time;
+
+  final String order_type;
+
+  final String? payment_type;
+
+  final String status;
+
+  final double total_cost;
 
   final String $__typename;
 
@@ -5413,526 +4077,26 @@ class Query$get_customer_orders$restaurant_order {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$restaurant = restaurant;
-    _resultData['restaurant'] = l$restaurant.toJson();
-    final l$items = items;
-    _resultData['items'] = l$items.map((e) => e.toJson()).toList();
-    final l$payment_type = payment_type;
-    _resultData['payment_type'] = l$payment_type;
-    final l$to_location_gps = to_location_gps;
-    _resultData['to_location_gps'] =
-        l$to_location_gps == null ? null : geographyToJson(l$to_location_gps);
-    final l$to_location_address = to_location_address;
-    _resultData['to_location_address'] = l$to_location_address;
-    final l$estimated_food_ready_time = estimated_food_ready_time;
-    _resultData['estimated_food_ready_time'] = l$estimated_food_ready_time;
-    final l$actual_food_ready_time = actual_food_ready_time;
-    _resultData['actual_food_ready_time'] = l$actual_food_ready_time;
-    final l$refund_amount = refund_amount;
-    _resultData['refund_amount'] = moneyToJson(l$refund_amount);
-    final l$delivery_id = delivery_id;
-    _resultData['delivery_id'] = l$delivery_id;
-    final l$status = status;
-    _resultData['status'] = l$status;
-    final l$review_id = review_id;
-    _resultData['review_id'] = l$review_id;
-    final l$order_type = order_type;
-    _resultData['order_type'] = l$order_type;
-    final l$order_time = order_time;
-    _resultData['order_time'] = l$order_time;
-    final l$firebase_id = firebase_id;
-    _resultData['firebase_id'] = l$firebase_id;
-    final l$customer_app_type = customer_app_type;
-    _resultData['customer_app_type'] = l$customer_app_type;
-    final l$notes = notes;
-    _resultData['notes'] = l$notes;
-    final l$tax = tax;
-    _resultData['tax'] = moneyToJson(l$tax);
-    final l$chat_id = chat_id;
-    _resultData['chat_id'] = l$chat_id;
-    final l$delivery_cost = delivery_cost;
-    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
-    final l$delivery = delivery;
-    _resultData['delivery'] = l$delivery?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$restaurant = restaurant;
-    final l$items = items;
-    final l$payment_type = payment_type;
-    final l$to_location_gps = to_location_gps;
-    final l$to_location_address = to_location_address;
-    final l$estimated_food_ready_time = estimated_food_ready_time;
-    final l$actual_food_ready_time = actual_food_ready_time;
-    final l$refund_amount = refund_amount;
-    final l$delivery_id = delivery_id;
-    final l$status = status;
-    final l$review_id = review_id;
-    final l$order_type = order_type;
-    final l$order_time = order_time;
-    final l$firebase_id = firebase_id;
-    final l$customer_app_type = customer_app_type;
-    final l$notes = notes;
-    final l$tax = tax;
-    final l$chat_id = chat_id;
-    final l$delivery_cost = delivery_cost;
-    final l$delivery = delivery;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$restaurant,
-      Object.hashAll(l$items.map((v) => v)),
-      l$payment_type,
-      l$to_location_gps,
-      l$to_location_address,
-      l$estimated_food_ready_time,
-      l$actual_food_ready_time,
-      l$refund_amount,
-      l$delivery_id,
-      l$status,
-      l$review_id,
-      l$order_type,
-      l$order_time,
-      l$firebase_id,
-      l$customer_app_type,
-      l$notes,
-      l$tax,
-      l$chat_id,
-      l$delivery_cost,
-      l$delivery,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$get_customer_orders$restaurant_order) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$restaurant = restaurant;
-    final lOther$restaurant = other.restaurant;
-    if (l$restaurant != lOther$restaurant) {
-      return false;
-    }
-    final l$items = items;
-    final lOther$items = other.items;
-    if (l$items.length != lOther$items.length) {
-      return false;
-    }
-    for (int i = 0; i < l$items.length; i++) {
-      final l$items$entry = l$items[i];
-      final lOther$items$entry = lOther$items[i];
-      if (l$items$entry != lOther$items$entry) {
-        return false;
-      }
-    }
-    final l$payment_type = payment_type;
-    final lOther$payment_type = other.payment_type;
-    if (l$payment_type != lOther$payment_type) {
-      return false;
-    }
-    final l$to_location_gps = to_location_gps;
-    final lOther$to_location_gps = other.to_location_gps;
-    if (l$to_location_gps != lOther$to_location_gps) {
-      return false;
-    }
-    final l$to_location_address = to_location_address;
-    final lOther$to_location_address = other.to_location_address;
-    if (l$to_location_address != lOther$to_location_address) {
-      return false;
-    }
-    final l$estimated_food_ready_time = estimated_food_ready_time;
-    final lOther$estimated_food_ready_time = other.estimated_food_ready_time;
-    if (l$estimated_food_ready_time != lOther$estimated_food_ready_time) {
-      return false;
-    }
-    final l$actual_food_ready_time = actual_food_ready_time;
-    final lOther$actual_food_ready_time = other.actual_food_ready_time;
-    if (l$actual_food_ready_time != lOther$actual_food_ready_time) {
-      return false;
-    }
-    final l$refund_amount = refund_amount;
-    final lOther$refund_amount = other.refund_amount;
-    if (l$refund_amount != lOther$refund_amount) {
-      return false;
-    }
-    final l$delivery_id = delivery_id;
-    final lOther$delivery_id = other.delivery_id;
-    if (l$delivery_id != lOther$delivery_id) {
-      return false;
-    }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
-      return false;
-    }
-    final l$review_id = review_id;
-    final lOther$review_id = other.review_id;
-    if (l$review_id != lOther$review_id) {
-      return false;
-    }
-    final l$order_type = order_type;
-    final lOther$order_type = other.order_type;
-    if (l$order_type != lOther$order_type) {
-      return false;
-    }
-    final l$order_time = order_time;
-    final lOther$order_time = other.order_time;
-    if (l$order_time != lOther$order_time) {
-      return false;
-    }
-    final l$firebase_id = firebase_id;
-    final lOther$firebase_id = other.firebase_id;
-    if (l$firebase_id != lOther$firebase_id) {
-      return false;
-    }
-    final l$customer_app_type = customer_app_type;
-    final lOther$customer_app_type = other.customer_app_type;
-    if (l$customer_app_type != lOther$customer_app_type) {
-      return false;
-    }
-    final l$notes = notes;
-    final lOther$notes = other.notes;
-    if (l$notes != lOther$notes) {
-      return false;
-    }
-    final l$tax = tax;
-    final lOther$tax = other.tax;
-    if (l$tax != lOther$tax) {
-      return false;
-    }
-    final l$chat_id = chat_id;
-    final lOther$chat_id = other.chat_id;
-    if (l$chat_id != lOther$chat_id) {
-      return false;
-    }
-    final l$delivery_cost = delivery_cost;
-    final lOther$delivery_cost = other.delivery_cost;
-    if (l$delivery_cost != lOther$delivery_cost) {
-      return false;
-    }
-    final l$delivery = delivery;
-    final lOther$delivery = other.delivery;
-    if (l$delivery != lOther$delivery) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_customer_orders$restaurant_order
-    on Query$get_customer_orders$restaurant_order {
-  CopyWith$Query$get_customer_orders$restaurant_order<
-          Query$get_customer_orders$restaurant_order>
-      get copyWith => CopyWith$Query$get_customer_orders$restaurant_order(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_customer_orders$restaurant_order<TRes> {
-  factory CopyWith$Query$get_customer_orders$restaurant_order(
-    Query$get_customer_orders$restaurant_order instance,
-    TRes Function(Query$get_customer_orders$restaurant_order) then,
-  ) = _CopyWithImpl$Query$get_customer_orders$restaurant_order;
-
-  factory CopyWith$Query$get_customer_orders$restaurant_order.stub(TRes res) =
-      _CopyWithStubImpl$Query$get_customer_orders$restaurant_order;
-
-  TRes call({
-    int? id,
-    Query$get_customer_orders$restaurant_order$restaurant? restaurant,
-    List<Query$get_customer_orders$restaurant_order$items>? items,
-    String? payment_type,
-    Geography? to_location_gps,
-    String? to_location_address,
-    String? estimated_food_ready_time,
-    String? actual_food_ready_time,
-    double? refund_amount,
-    int? delivery_id,
-    String? status,
-    int? review_id,
-    String? order_type,
-    String? order_time,
-    String? firebase_id,
-    String? customer_app_type,
-    String? notes,
-    double? tax,
-    int? chat_id,
-    double? delivery_cost,
-    Query$get_customer_orders$restaurant_order$delivery? delivery,
-    String? $__typename,
-  });
-  CopyWith$Query$get_customer_orders$restaurant_order$restaurant<TRes>
-      get restaurant;
-  TRes items(
-      Iterable<Query$get_customer_orders$restaurant_order$items> Function(
-              Iterable<
-                  CopyWith$Query$get_customer_orders$restaurant_order$items<
-                      Query$get_customer_orders$restaurant_order$items>>)
-          _fn);
-  CopyWith$Query$get_customer_orders$restaurant_order$delivery<TRes>
-      get delivery;
-}
-
-class _CopyWithImpl$Query$get_customer_orders$restaurant_order<TRes>
-    implements CopyWith$Query$get_customer_orders$restaurant_order<TRes> {
-  _CopyWithImpl$Query$get_customer_orders$restaurant_order(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_customer_orders$restaurant_order _instance;
-
-  final TRes Function(Query$get_customer_orders$restaurant_order) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? restaurant = _undefined,
-    Object? items = _undefined,
-    Object? payment_type = _undefined,
-    Object? to_location_gps = _undefined,
-    Object? to_location_address = _undefined,
-    Object? estimated_food_ready_time = _undefined,
-    Object? actual_food_ready_time = _undefined,
-    Object? refund_amount = _undefined,
-    Object? delivery_id = _undefined,
-    Object? status = _undefined,
-    Object? review_id = _undefined,
-    Object? order_type = _undefined,
-    Object? order_time = _undefined,
-    Object? firebase_id = _undefined,
-    Object? customer_app_type = _undefined,
-    Object? notes = _undefined,
-    Object? tax = _undefined,
-    Object? chat_id = _undefined,
-    Object? delivery_cost = _undefined,
-    Object? delivery = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_customer_orders$restaurant_order(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        restaurant: restaurant == _undefined || restaurant == null
-            ? _instance.restaurant
-            : (restaurant
-                as Query$get_customer_orders$restaurant_order$restaurant),
-        items: items == _undefined || items == null
-            ? _instance.items
-            : (items as List<Query$get_customer_orders$restaurant_order$items>),
-        payment_type: payment_type == _undefined || payment_type == null
-            ? _instance.payment_type
-            : (payment_type as String),
-        to_location_gps: to_location_gps == _undefined
-            ? _instance.to_location_gps
-            : (to_location_gps as Geography?),
-        to_location_address: to_location_address == _undefined
-            ? _instance.to_location_address
-            : (to_location_address as String?),
-        estimated_food_ready_time: estimated_food_ready_time == _undefined
-            ? _instance.estimated_food_ready_time
-            : (estimated_food_ready_time as String?),
-        actual_food_ready_time: actual_food_ready_time == _undefined
-            ? _instance.actual_food_ready_time
-            : (actual_food_ready_time as String?),
-        refund_amount: refund_amount == _undefined || refund_amount == null
-            ? _instance.refund_amount
-            : (refund_amount as double),
-        delivery_id: delivery_id == _undefined
-            ? _instance.delivery_id
-            : (delivery_id as int?),
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
-        review_id:
-            review_id == _undefined ? _instance.review_id : (review_id as int?),
-        order_type: order_type == _undefined || order_type == null
-            ? _instance.order_type
-            : (order_type as String),
-        order_time: order_time == _undefined || order_time == null
-            ? _instance.order_time
-            : (order_time as String),
-        firebase_id: firebase_id == _undefined
-            ? _instance.firebase_id
-            : (firebase_id as String?),
-        customer_app_type:
-            customer_app_type == _undefined || customer_app_type == null
-                ? _instance.customer_app_type
-                : (customer_app_type as String),
-        notes: notes == _undefined ? _instance.notes : (notes as String?),
-        tax: tax == _undefined || tax == null ? _instance.tax : (tax as double),
-        chat_id: chat_id == _undefined || chat_id == null
-            ? _instance.chat_id
-            : (chat_id as int),
-        delivery_cost: delivery_cost == _undefined || delivery_cost == null
-            ? _instance.delivery_cost
-            : (delivery_cost as double),
-        delivery: delivery == _undefined
-            ? _instance.delivery
-            : (delivery
-                as Query$get_customer_orders$restaurant_order$delivery?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$get_customer_orders$restaurant_order$restaurant<TRes>
-      get restaurant {
-    final local$restaurant = _instance.restaurant;
-    return CopyWith$Query$get_customer_orders$restaurant_order$restaurant(
-        local$restaurant, (e) => call(restaurant: e));
-  }
-
-  TRes items(
-          Iterable<Query$get_customer_orders$restaurant_order$items> Function(
-                  Iterable<
-                      CopyWith$Query$get_customer_orders$restaurant_order$items<
-                          Query$get_customer_orders$restaurant_order$items>>)
-              _fn) =>
-      call(
-          items: _fn(_instance.items.map(
-              (e) => CopyWith$Query$get_customer_orders$restaurant_order$items(
-                    e,
-                    (i) => i,
-                  ))).toList());
-  CopyWith$Query$get_customer_orders$restaurant_order$delivery<TRes>
-      get delivery {
-    final local$delivery = _instance.delivery;
-    return local$delivery == null
-        ? CopyWith$Query$get_customer_orders$restaurant_order$delivery.stub(
-            _then(_instance))
-        : CopyWith$Query$get_customer_orders$restaurant_order$delivery(
-            local$delivery, (e) => call(delivery: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order<TRes>
-    implements CopyWith$Query$get_customer_orders$restaurant_order<TRes> {
-  _CopyWithStubImpl$Query$get_customer_orders$restaurant_order(this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    Query$get_customer_orders$restaurant_order$restaurant? restaurant,
-    List<Query$get_customer_orders$restaurant_order$items>? items,
-    String? payment_type,
-    Geography? to_location_gps,
-    String? to_location_address,
-    String? estimated_food_ready_time,
-    String? actual_food_ready_time,
-    double? refund_amount,
-    int? delivery_id,
-    String? status,
-    int? review_id,
-    String? order_type,
-    String? order_time,
-    String? firebase_id,
-    String? customer_app_type,
-    String? notes,
-    double? tax,
-    int? chat_id,
-    double? delivery_cost,
-    Query$get_customer_orders$restaurant_order$delivery? delivery,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$get_customer_orders$restaurant_order$restaurant<TRes>
-      get restaurant =>
-          CopyWith$Query$get_customer_orders$restaurant_order$restaurant.stub(
-              _res);
-  items(_fn) => _res;
-  CopyWith$Query$get_customer_orders$restaurant_order$delivery<TRes>
-      get delivery =>
-          CopyWith$Query$get_customer_orders$restaurant_order$delivery.stub(
-              _res);
-}
-
-class Query$get_customer_orders$restaurant_order$restaurant {
-  Query$get_customer_orders$restaurant_order$restaurant({
-    required this.id,
-    this.firebase_id,
-    required this.image,
-    required this.language_id,
-    required this.location_gps,
-    required this.location_text,
-    required this.name,
-    required this.$__typename,
-  });
-
-  factory Query$get_customer_orders$restaurant_order$restaurant.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$firebase_id = json['firebase_id'];
-    final l$image = json['image'];
-    final l$language_id = json['language_id'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
-    final l$name = json['name'];
-    final l$$__typename = json['__typename'];
-    return Query$get_customer_orders$restaurant_order$restaurant(
-      id: (l$id as int),
-      firebase_id: (l$firebase_id as String?),
-      image: (l$image as String),
-      language_id: (l$language_id as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
-      name: (l$name as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String? firebase_id;
-
-  final String image;
-
-  final String language_id;
-
-  final Geography location_gps;
-
-  final String location_text;
-
-  final String name;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$firebase_id = firebase_id;
-    _resultData['firebase_id'] = l$firebase_id;
     final l$image = image;
     _resultData['image'] = l$image;
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$in_process = in_process;
+    _resultData['in_process'] = l$in_process;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$to_address = to_address;
+    _resultData['to_address'] = l$to_address;
+    final l$order_time = order_time;
+    _resultData['order_time'] = l$order_time;
+    final l$order_type = order_type;
+    _resultData['order_type'] = l$order_type;
+    final l$payment_type = payment_type;
+    _resultData['payment_type'] = l$payment_type;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$total_cost = total_cost;
+    _resultData['total_cost'] = moneyToJson(l$total_cost);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -5941,21 +4105,29 @@ class Query$get_customer_orders$restaurant_order$restaurant {
   @override
   int get hashCode {
     final l$id = id;
-    final l$firebase_id = firebase_id;
     final l$image = image;
-    final l$language_id = language_id;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$in_process = in_process;
     final l$name = name;
+    final l$delivery_cost = delivery_cost;
+    final l$to_address = to_address;
+    final l$order_time = order_time;
+    final l$order_type = order_type;
+    final l$payment_type = payment_type;
+    final l$status = status;
+    final l$total_cost = total_cost;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$firebase_id,
       l$image,
-      l$language_id,
-      l$location_gps,
-      l$location_text,
+      l$in_process,
       l$name,
+      l$delivery_cost,
+      l$to_address,
+      l$order_time,
+      l$order_type,
+      l$payment_type,
+      l$status,
+      l$total_cost,
       l$$__typename,
     ]);
   }
@@ -5965,18 +4137,13 @@ class Query$get_customer_orders$restaurant_order$restaurant {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_customer_orders$restaurant_order$restaurant) ||
+    if (!(other is Query$get_customer_orders$customer_minimal_orders) ||
         runtimeType != other.runtimeType) {
       return false;
     }
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
-      return false;
-    }
-    final l$firebase_id = firebase_id;
-    final lOther$firebase_id = other.firebase_id;
-    if (l$firebase_id != lOther$firebase_id) {
       return false;
     }
     final l$image = image;
@@ -5984,1583 +4151,14 @@ class Query$get_customer_orders$restaurant_order$restaurant {
     if (l$image != lOther$image) {
       return false;
     }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$in_process = in_process;
+    final lOther$in_process = other.in_process;
+    if (l$in_process != lOther$in_process) {
       return false;
     }
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_customer_orders$restaurant_order$restaurant
-    on Query$get_customer_orders$restaurant_order$restaurant {
-  CopyWith$Query$get_customer_orders$restaurant_order$restaurant<
-          Query$get_customer_orders$restaurant_order$restaurant>
-      get copyWith =>
-          CopyWith$Query$get_customer_orders$restaurant_order$restaurant(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_customer_orders$restaurant_order$restaurant<
-    TRes> {
-  factory CopyWith$Query$get_customer_orders$restaurant_order$restaurant(
-    Query$get_customer_orders$restaurant_order$restaurant instance,
-    TRes Function(Query$get_customer_orders$restaurant_order$restaurant) then,
-  ) = _CopyWithImpl$Query$get_customer_orders$restaurant_order$restaurant;
-
-  factory CopyWith$Query$get_customer_orders$restaurant_order$restaurant.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$restaurant;
-
-  TRes call({
-    int? id,
-    String? firebase_id,
-    String? image,
-    String? language_id,
-    Geography? location_gps,
-    String? location_text,
-    String? name,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_customer_orders$restaurant_order$restaurant<TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$restaurant<TRes> {
-  _CopyWithImpl$Query$get_customer_orders$restaurant_order$restaurant(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_customer_orders$restaurant_order$restaurant _instance;
-
-  final TRes Function(Query$get_customer_orders$restaurant_order$restaurant)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? firebase_id = _undefined,
-    Object? image = _undefined,
-    Object? language_id = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
-    Object? name = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_customer_orders$restaurant_order$restaurant(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        firebase_id: firebase_id == _undefined
-            ? _instance.firebase_id
-            : (firebase_id as String?),
-        image: image == _undefined || image == null
-            ? _instance.image
-            : (image as String),
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$restaurant<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$restaurant<TRes> {
-  _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$restaurant(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? firebase_id,
-    String? image,
-    String? language_id,
-    Geography? location_gps,
-    String? location_text,
-    String? name,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$get_customer_orders$restaurant_order$items {
-  Query$get_customer_orders$restaurant_order$items({
-    required this.restaurant_item,
-    required this.cost_per_one,
-    required this.id,
-    this.notes,
-    required this.quantity,
-    required this.$__typename,
-  });
-
-  factory Query$get_customer_orders$restaurant_order$items.fromJson(
-      Map<String, dynamic> json) {
-    final l$restaurant_item = json['restaurant_item'];
-    final l$cost_per_one = json['cost_per_one'];
-    final l$id = json['id'];
-    final l$notes = json['notes'];
-    final l$quantity = json['quantity'];
-    final l$$__typename = json['__typename'];
-    return Query$get_customer_orders$restaurant_order$items(
-      restaurant_item:
-          Query$get_customer_orders$restaurant_order$items$restaurant_item
-              .fromJson((l$restaurant_item as Map<String, dynamic>)),
-      cost_per_one: moneyFromJson(l$cost_per_one),
-      id: (l$id as int),
-      notes: (l$notes as String?),
-      quantity: (l$quantity as int),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final Query$get_customer_orders$restaurant_order$items$restaurant_item
-      restaurant_item;
-
-  final double cost_per_one;
-
-  final int id;
-
-  final String? notes;
-
-  final int quantity;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$restaurant_item = restaurant_item;
-    _resultData['restaurant_item'] = l$restaurant_item.toJson();
-    final l$cost_per_one = cost_per_one;
-    _resultData['cost_per_one'] = moneyToJson(l$cost_per_one);
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$notes = notes;
-    _resultData['notes'] = l$notes;
-    final l$quantity = quantity;
-    _resultData['quantity'] = l$quantity;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$restaurant_item = restaurant_item;
-    final l$cost_per_one = cost_per_one;
-    final l$id = id;
-    final l$notes = notes;
-    final l$quantity = quantity;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$restaurant_item,
-      l$cost_per_one,
-      l$id,
-      l$notes,
-      l$quantity,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$get_customer_orders$restaurant_order$items) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$restaurant_item = restaurant_item;
-    final lOther$restaurant_item = other.restaurant_item;
-    if (l$restaurant_item != lOther$restaurant_item) {
-      return false;
-    }
-    final l$cost_per_one = cost_per_one;
-    final lOther$cost_per_one = other.cost_per_one;
-    if (l$cost_per_one != lOther$cost_per_one) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$notes = notes;
-    final lOther$notes = other.notes;
-    if (l$notes != lOther$notes) {
-      return false;
-    }
-    final l$quantity = quantity;
-    final lOther$quantity = other.quantity;
-    if (l$quantity != lOther$quantity) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_customer_orders$restaurant_order$items
-    on Query$get_customer_orders$restaurant_order$items {
-  CopyWith$Query$get_customer_orders$restaurant_order$items<
-          Query$get_customer_orders$restaurant_order$items>
-      get copyWith => CopyWith$Query$get_customer_orders$restaurant_order$items(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_customer_orders$restaurant_order$items<TRes> {
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items(
-    Query$get_customer_orders$restaurant_order$items instance,
-    TRes Function(Query$get_customer_orders$restaurant_order$items) then,
-  ) = _CopyWithImpl$Query$get_customer_orders$restaurant_order$items;
-
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items;
-
-  TRes call({
-    Query$get_customer_orders$restaurant_order$items$restaurant_item?
-        restaurant_item,
-    double? cost_per_one,
-    int? id,
-    String? notes,
-    int? quantity,
-    String? $__typename,
-  });
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item<
-      TRes> get restaurant_item;
-}
-
-class _CopyWithImpl$Query$get_customer_orders$restaurant_order$items<TRes>
-    implements CopyWith$Query$get_customer_orders$restaurant_order$items<TRes> {
-  _CopyWithImpl$Query$get_customer_orders$restaurant_order$items(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_customer_orders$restaurant_order$items _instance;
-
-  final TRes Function(Query$get_customer_orders$restaurant_order$items) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? restaurant_item = _undefined,
-    Object? cost_per_one = _undefined,
-    Object? id = _undefined,
-    Object? notes = _undefined,
-    Object? quantity = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_customer_orders$restaurant_order$items(
-        restaurant_item: restaurant_item == _undefined ||
-                restaurant_item == null
-            ? _instance.restaurant_item
-            : (restaurant_item
-                as Query$get_customer_orders$restaurant_order$items$restaurant_item),
-        cost_per_one: cost_per_one == _undefined || cost_per_one == null
-            ? _instance.cost_per_one
-            : (cost_per_one as double),
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        notes: notes == _undefined ? _instance.notes : (notes as String?),
-        quantity: quantity == _undefined || quantity == null
-            ? _instance.quantity
-            : (quantity as int),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item<
-      TRes> get restaurant_item {
-    final local$restaurant_item = _instance.restaurant_item;
-    return CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item(
-        local$restaurant_item, (e) => call(restaurant_item: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items<TRes>
-    implements CopyWith$Query$get_customer_orders$restaurant_order$items<TRes> {
-  _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items(this._res);
-
-  TRes _res;
-
-  call({
-    Query$get_customer_orders$restaurant_order$items$restaurant_item?
-        restaurant_item,
-    double? cost_per_one,
-    int? id,
-    String? notes,
-    int? quantity,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item<
-          TRes>
-      get restaurant_item =>
-          CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item
-              .stub(_res);
-}
-
-class Query$get_customer_orders$restaurant_order$items$restaurant_item {
-  Query$get_customer_orders$restaurant_order$items$restaurant_item({
-    required this.item_type,
-    required this.name,
-    this.description,
-    required this.position,
-    this.category_id,
-    required this.available,
-    required this.restaurant_id,
-    this.special_period_end,
-    this.special_period_start,
-    required this.archived,
-    required this.cost,
-    required this.$__typename,
-  });
-
-  factory Query$get_customer_orders$restaurant_order$items$restaurant_item.fromJson(
-      Map<String, dynamic> json) {
-    final l$item_type = json['item_type'];
-    final l$name = json['name'];
-    final l$description = json['description'];
-    final l$position = json['position'];
-    final l$category_id = json['category_id'];
-    final l$available = json['available'];
-    final l$restaurant_id = json['restaurant_id'];
-    final l$special_period_end = json['special_period_end'];
-    final l$special_period_start = json['special_period_start'];
-    final l$archived = json['archived'];
-    final l$cost = json['cost'];
-    final l$$__typename = json['__typename'];
-    return Query$get_customer_orders$restaurant_order$items$restaurant_item(
-      item_type: (l$item_type as String),
-      name:
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$name
-              .fromJson((l$name as Map<String, dynamic>)),
-      description: l$description == null
-          ? null
-          : Query$get_customer_orders$restaurant_order$items$restaurant_item$description
-              .fromJson((l$description as Map<String, dynamic>)),
-      position: (l$position as int),
-      category_id: (l$category_id as int?),
-      available: (l$available as bool),
-      restaurant_id: (l$restaurant_id as int),
-      special_period_end: (l$special_period_end as String?),
-      special_period_start: (l$special_period_start as String?),
-      archived: (l$archived as bool),
-      cost: moneyFromJson(l$cost),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String item_type;
-
-  final Query$get_customer_orders$restaurant_order$items$restaurant_item$name
-      name;
-
-  final Query$get_customer_orders$restaurant_order$items$restaurant_item$description?
-      description;
-
-  final int position;
-
-  final int? category_id;
-
-  final bool available;
-
-  final int restaurant_id;
-
-  final String? special_period_end;
-
-  final String? special_period_start;
-
-  final bool archived;
-
-  final double cost;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$item_type = item_type;
-    _resultData['item_type'] = l$item_type;
-    final l$name = name;
-    _resultData['name'] = l$name.toJson();
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
-    final l$position = position;
-    _resultData['position'] = l$position;
-    final l$category_id = category_id;
-    _resultData['category_id'] = l$category_id;
-    final l$available = available;
-    _resultData['available'] = l$available;
-    final l$restaurant_id = restaurant_id;
-    _resultData['restaurant_id'] = l$restaurant_id;
-    final l$special_period_end = special_period_end;
-    _resultData['special_period_end'] = l$special_period_end;
-    final l$special_period_start = special_period_start;
-    _resultData['special_period_start'] = l$special_period_start;
-    final l$archived = archived;
-    _resultData['archived'] = l$archived;
-    final l$cost = cost;
-    _resultData['cost'] = moneyToJson(l$cost);
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$item_type = item_type;
-    final l$name = name;
-    final l$description = description;
-    final l$position = position;
-    final l$category_id = category_id;
-    final l$available = available;
-    final l$restaurant_id = restaurant_id;
-    final l$special_period_end = special_period_end;
-    final l$special_period_start = special_period_start;
-    final l$archived = archived;
-    final l$cost = cost;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$item_type,
-      l$name,
-      l$description,
-      l$position,
-      l$category_id,
-      l$available,
-      l$restaurant_id,
-      l$special_period_end,
-      l$special_period_start,
-      l$archived,
-      l$cost,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_customer_orders$restaurant_order$items$restaurant_item) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$item_type = item_type;
-    final lOther$item_type = other.item_type;
-    if (l$item_type != lOther$item_type) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
-      return false;
-    }
-    final l$position = position;
-    final lOther$position = other.position;
-    if (l$position != lOther$position) {
-      return false;
-    }
-    final l$category_id = category_id;
-    final lOther$category_id = other.category_id;
-    if (l$category_id != lOther$category_id) {
-      return false;
-    }
-    final l$available = available;
-    final lOther$available = other.available;
-    if (l$available != lOther$available) {
-      return false;
-    }
-    final l$restaurant_id = restaurant_id;
-    final lOther$restaurant_id = other.restaurant_id;
-    if (l$restaurant_id != lOther$restaurant_id) {
-      return false;
-    }
-    final l$special_period_end = special_period_end;
-    final lOther$special_period_end = other.special_period_end;
-    if (l$special_period_end != lOther$special_period_end) {
-      return false;
-    }
-    final l$special_period_start = special_period_start;
-    final lOther$special_period_start = other.special_period_start;
-    if (l$special_period_start != lOther$special_period_start) {
-      return false;
-    }
-    final l$archived = archived;
-    final lOther$archived = other.archived;
-    if (l$archived != lOther$archived) {
-      return false;
-    }
-    final l$cost = cost;
-    final lOther$cost = other.cost;
-    if (l$cost != lOther$cost) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_customer_orders$restaurant_order$items$restaurant_item
-    on Query$get_customer_orders$restaurant_order$items$restaurant_item {
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item<
-          Query$get_customer_orders$restaurant_order$items$restaurant_item>
-      get copyWith =>
-          CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item<
-    TRes> {
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item(
-    Query$get_customer_orders$restaurant_order$items$restaurant_item instance,
-    TRes Function(
-            Query$get_customer_orders$restaurant_order$items$restaurant_item)
-        then,
-  ) = _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item;
-
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item;
-
-  TRes call({
-    String? item_type,
-    Query$get_customer_orders$restaurant_order$items$restaurant_item$name? name,
-    Query$get_customer_orders$restaurant_order$items$restaurant_item$description?
-        description,
-    int? position,
-    int? category_id,
-    bool? available,
-    int? restaurant_id,
-    String? special_period_end,
-    String? special_period_start,
-    bool? archived,
-    double? cost,
-    String? $__typename,
-  });
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name<
-      TRes> get name;
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description<
-      TRes> get description;
-}
-
-class _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item<
-            TRes> {
-  _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_customer_orders$restaurant_order$items$restaurant_item
-      _instance;
-
-  final TRes Function(
-      Query$get_customer_orders$restaurant_order$items$restaurant_item) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? item_type = _undefined,
-    Object? name = _undefined,
-    Object? description = _undefined,
-    Object? position = _undefined,
-    Object? category_id = _undefined,
-    Object? available = _undefined,
-    Object? restaurant_id = _undefined,
-    Object? special_period_end = _undefined,
-    Object? special_period_start = _undefined,
-    Object? archived = _undefined,
-    Object? cost = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_customer_orders$restaurant_order$items$restaurant_item(
-        item_type: item_type == _undefined || item_type == null
-            ? _instance.item_type
-            : (item_type as String),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name
-                as Query$get_customer_orders$restaurant_order$items$restaurant_item$name),
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Query$get_customer_orders$restaurant_order$items$restaurant_item$description?),
-        position: position == _undefined || position == null
-            ? _instance.position
-            : (position as int),
-        category_id: category_id == _undefined
-            ? _instance.category_id
-            : (category_id as int?),
-        available: available == _undefined || available == null
-            ? _instance.available
-            : (available as bool),
-        restaurant_id: restaurant_id == _undefined || restaurant_id == null
-            ? _instance.restaurant_id
-            : (restaurant_id as int),
-        special_period_end: special_period_end == _undefined
-            ? _instance.special_period_end
-            : (special_period_end as String?),
-        special_period_start: special_period_start == _undefined
-            ? _instance.special_period_start
-            : (special_period_start as String?),
-        archived: archived == _undefined || archived == null
-            ? _instance.archived
-            : (archived as bool),
-        cost: cost == _undefined || cost == null
-            ? _instance.cost
-            : (cost as double),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name<
-      TRes> get name {
-    final local$name = _instance.name;
-    return CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name(
-        local$name, (e) => call(name: e));
-  }
-
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description<
-      TRes> get description {
-    final local$description = _instance.description;
-    return local$description == null
-        ? CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description
-            .stub(_then(_instance))
-        : CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description(
-            local$description, (e) => call(description: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item<
-            TRes> {
-  _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? item_type,
-    Query$get_customer_orders$restaurant_order$items$restaurant_item$name? name,
-    Query$get_customer_orders$restaurant_order$items$restaurant_item$description?
-        description,
-    int? position,
-    int? category_id,
-    bool? available,
-    int? restaurant_id,
-    String? special_period_end,
-    String? special_period_start,
-    bool? archived,
-    double? cost,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name<
-          TRes>
-      get name =>
-          CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name
-              .stub(_res);
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description<
-          TRes>
-      get description =>
-          CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description
-              .stub(_res);
-}
-
-class Query$get_customer_orders$restaurant_order$items$restaurant_item$name {
-  Query$get_customer_orders$restaurant_order$items$restaurant_item$name({
-    required this.translations,
-    required this.$__typename,
-  });
-
-  factory Query$get_customer_orders$restaurant_order$items$restaurant_item$name.fromJson(
-      Map<String, dynamic> json) {
-    final l$translations = json['translations'];
-    final l$$__typename = json['__typename'];
-    return Query$get_customer_orders$restaurant_order$items$restaurant_item$name(
-      translations: (l$translations as List<dynamic>)
-          .map((e) =>
-              Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations>
-      translations;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$translations = translations;
-    _resultData['translations'] =
-        l$translations.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$translations = translations;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$translations.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_customer_orders$restaurant_order$items$restaurant_item$name) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$translations = translations;
-    final lOther$translations = other.translations;
-    if (l$translations.length != lOther$translations.length) {
-      return false;
-    }
-    for (int i = 0; i < l$translations.length; i++) {
-      final l$translations$entry = l$translations[i];
-      final lOther$translations$entry = lOther$translations[i];
-      if (l$translations$entry != lOther$translations$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_customer_orders$restaurant_order$items$restaurant_item$name
-    on Query$get_customer_orders$restaurant_order$items$restaurant_item$name {
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name<
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$name>
-      get copyWith =>
-          CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name<
-    TRes> {
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name(
-    Query$get_customer_orders$restaurant_order$items$restaurant_item$name
-        instance,
-    TRes Function(
-            Query$get_customer_orders$restaurant_order$items$restaurant_item$name)
-        then,
-  ) = _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name;
-
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name;
-
-  TRes call({
-    List<Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations>?
-        translations,
-    String? $__typename,
-  });
-  TRes translations(
-      Iterable<Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations> Function(
-              Iterable<
-                  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations<
-                      Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name<
-            TRes> {
-  _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_customer_orders$restaurant_order$items$restaurant_item$name
-      _instance;
-
-  final TRes Function(
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$name)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? translations = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$name(
-        translations: translations == _undefined || translations == null
-            ? _instance.translations
-            : (translations as List<
-                Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes translations(
-          Iterable<Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations> Function(
-                  Iterable<
-                      CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations<
-                          Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations>>)
-              _fn) =>
-      call(
-          translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name<
-            TRes> {
-  _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations>?
-        translations,
-    String? $__typename,
-  }) =>
-      _res;
-  translations(_fn) => _res;
-}
-
-class Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations {
-  Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations({
-    required this.language_id,
-    required this.value,
-    required this.$__typename,
-  });
-
-  factory Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations.fromJson(
-      Map<String, dynamic> json) {
-    final l$language_id = json['language_id'];
-    final l$value = json['value'];
-    final l$$__typename = json['__typename'];
-    return Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations(
-      language_id: (l$language_id as String),
-      value: (l$value as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String language_id;
-
-  final String value;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$value = value;
-    _resultData['value'] = l$value;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$language_id = language_id;
-    final l$value = value;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$language_id,
-      l$value,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations
-    on Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations {
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations<
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations>
-      get copyWith =>
-          CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations<
-    TRes> {
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations(
-    Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations
-        instance,
-    TRes Function(
-            Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations)
-        then,
-  ) = _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations;
-
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations;
-
-  TRes call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations<
-            TRes> {
-  _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations
-      _instance;
-
-  final TRes Function(
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? language_id = _undefined,
-    Object? value = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations(
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$name$translations(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$get_customer_orders$restaurant_order$items$restaurant_item$description {
-  Query$get_customer_orders$restaurant_order$items$restaurant_item$description({
-    required this.translations,
-    required this.$__typename,
-  });
-
-  factory Query$get_customer_orders$restaurant_order$items$restaurant_item$description.fromJson(
-      Map<String, dynamic> json) {
-    final l$translations = json['translations'];
-    final l$$__typename = json['__typename'];
-    return Query$get_customer_orders$restaurant_order$items$restaurant_item$description(
-      translations: (l$translations as List<dynamic>)
-          .map((e) =>
-              Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations>
-      translations;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$translations = translations;
-    _resultData['translations'] =
-        l$translations.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$translations = translations;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$translations.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_customer_orders$restaurant_order$items$restaurant_item$description) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$translations = translations;
-    final lOther$translations = other.translations;
-    if (l$translations.length != lOther$translations.length) {
-      return false;
-    }
-    for (int i = 0; i < l$translations.length; i++) {
-      final l$translations$entry = l$translations[i];
-      final lOther$translations$entry = lOther$translations[i];
-      if (l$translations$entry != lOther$translations$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_customer_orders$restaurant_order$items$restaurant_item$description
-    on Query$get_customer_orders$restaurant_order$items$restaurant_item$description {
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description<
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$description>
-      get copyWith =>
-          CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description<
-    TRes> {
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description(
-    Query$get_customer_orders$restaurant_order$items$restaurant_item$description
-        instance,
-    TRes Function(
-            Query$get_customer_orders$restaurant_order$items$restaurant_item$description)
-        then,
-  ) = _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description;
-
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description;
-
-  TRes call({
-    List<Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations>?
-        translations,
-    String? $__typename,
-  });
-  TRes translations(
-      Iterable<Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations> Function(
-              Iterable<
-                  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations<
-                      Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description<
-            TRes> {
-  _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_customer_orders$restaurant_order$items$restaurant_item$description
-      _instance;
-
-  final TRes Function(
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$description)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? translations = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$description(
-        translations: translations == _undefined || translations == null
-            ? _instance.translations
-            : (translations as List<
-                Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes translations(
-          Iterable<Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations> Function(
-                  Iterable<
-                      CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations<
-                          Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations>>)
-              _fn) =>
-      call(
-          translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description<
-            TRes> {
-  _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations>?
-        translations,
-    String? $__typename,
-  }) =>
-      _res;
-  translations(_fn) => _res;
-}
-
-class Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations {
-  Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations({
-    required this.language_id,
-    required this.value,
-    required this.$__typename,
-  });
-
-  factory Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations.fromJson(
-      Map<String, dynamic> json) {
-    final l$language_id = json['language_id'];
-    final l$value = json['value'];
-    final l$$__typename = json['__typename'];
-    return Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations(
-      language_id: (l$language_id as String),
-      value: (l$value as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String language_id;
-
-  final String value;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$value = value;
-    _resultData['value'] = l$value;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$language_id = language_id;
-    final l$value = value;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$language_id,
-      l$value,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$value = value;
-    final lOther$value = other.value;
-    if (l$value != lOther$value) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations
-    on Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations {
-  CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations<
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations>
-      get copyWith =>
-          CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations<
-    TRes> {
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations(
-    Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations
-        instance,
-    TRes Function(
-            Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations)
-        then,
-  ) = _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations;
-
-  factory CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations;
-
-  TRes call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations<
-            TRes> {
-  _CopyWithImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations
-      _instance;
-
-  final TRes Function(
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? language_id = _undefined,
-    Object? value = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations(
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        value: value == _undefined || value == null
-            ? _instance.value
-            : (value as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations<
-        TRes>
-    implements
-        CopyWith$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations<
-            TRes> {
-  _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$items$restaurant_item$description$translations(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? language_id,
-    String? value,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$get_customer_orders$restaurant_order$delivery {
-  Query$get_customer_orders$restaurant_order$delivery({
-    this.actual_delivered_time,
-    this.actual_package_ready_time,
-    this.actual_arrival_at_pickup_time,
-    this.actual_arrival_at_dropoff_time,
-    this.cancellation_time,
-    this.current_gps,
-    required this.delivery_cost,
-    required this.$__typename,
-  });
-
-  factory Query$get_customer_orders$restaurant_order$delivery.fromJson(
-      Map<String, dynamic> json) {
-    final l$actual_delivered_time = json['actual_delivered_time'];
-    final l$actual_package_ready_time = json['actual_package_ready_time'];
-    final l$actual_arrival_at_pickup_time =
-        json['actual_arrival_at_pickup_time'];
-    final l$actual_arrival_at_dropoff_time =
-        json['actual_arrival_at_dropoff_time'];
-    final l$cancellation_time = json['cancellation_time'];
-    final l$current_gps = json['current_gps'];
-    final l$delivery_cost = json['delivery_cost'];
-    final l$$__typename = json['__typename'];
-    return Query$get_customer_orders$restaurant_order$delivery(
-      actual_delivered_time: (l$actual_delivered_time as String?),
-      actual_package_ready_time: (l$actual_package_ready_time as String?),
-      actual_arrival_at_pickup_time:
-          (l$actual_arrival_at_pickup_time as String?),
-      actual_arrival_at_dropoff_time:
-          (l$actual_arrival_at_dropoff_time as String?),
-      cancellation_time: (l$cancellation_time as String?),
-      current_gps:
-          l$current_gps == null ? null : geographyFromJson(l$current_gps),
-      delivery_cost: moneyFromJson(l$delivery_cost),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String? actual_delivered_time;
-
-  final String? actual_package_ready_time;
-
-  final String? actual_arrival_at_pickup_time;
-
-  final String? actual_arrival_at_dropoff_time;
-
-  final String? cancellation_time;
-
-  final Geography? current_gps;
-
-  final double delivery_cost;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$actual_delivered_time = actual_delivered_time;
-    _resultData['actual_delivered_time'] = l$actual_delivered_time;
-    final l$actual_package_ready_time = actual_package_ready_time;
-    _resultData['actual_package_ready_time'] = l$actual_package_ready_time;
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    _resultData['actual_arrival_at_pickup_time'] =
-        l$actual_arrival_at_pickup_time;
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
-    _resultData['actual_arrival_at_dropoff_time'] =
-        l$actual_arrival_at_dropoff_time;
-    final l$cancellation_time = cancellation_time;
-    _resultData['cancellation_time'] = l$cancellation_time;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : geographyToJson(l$current_gps);
-    final l$delivery_cost = delivery_cost;
-    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$actual_delivered_time = actual_delivered_time;
-    final l$actual_package_ready_time = actual_package_ready_time;
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
-    final l$cancellation_time = cancellation_time;
-    final l$current_gps = current_gps;
-    final l$delivery_cost = delivery_cost;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$actual_delivered_time,
-      l$actual_package_ready_time,
-      l$actual_arrival_at_pickup_time,
-      l$actual_arrival_at_dropoff_time,
-      l$cancellation_time,
-      l$current_gps,
-      l$delivery_cost,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$get_customer_orders$restaurant_order$delivery) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$actual_delivered_time = actual_delivered_time;
-    final lOther$actual_delivered_time = other.actual_delivered_time;
-    if (l$actual_delivered_time != lOther$actual_delivered_time) {
-      return false;
-    }
-    final l$actual_package_ready_time = actual_package_ready_time;
-    final lOther$actual_package_ready_time = other.actual_package_ready_time;
-    if (l$actual_package_ready_time != lOther$actual_package_ready_time) {
-      return false;
-    }
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    final lOther$actual_arrival_at_pickup_time =
-        other.actual_arrival_at_pickup_time;
-    if (l$actual_arrival_at_pickup_time !=
-        lOther$actual_arrival_at_pickup_time) {
-      return false;
-    }
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
-    final lOther$actual_arrival_at_dropoff_time =
-        other.actual_arrival_at_dropoff_time;
-    if (l$actual_arrival_at_dropoff_time !=
-        lOther$actual_arrival_at_dropoff_time) {
-      return false;
-    }
-    final l$cancellation_time = cancellation_time;
-    final lOther$cancellation_time = other.cancellation_time;
-    if (l$cancellation_time != lOther$cancellation_time) {
-      return false;
-    }
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
       return false;
     }
     final l$delivery_cost = delivery_cost;
@@ -7568,6 +4166,36 @@ class Query$get_customer_orders$restaurant_order$delivery {
     if (l$delivery_cost != lOther$delivery_cost) {
       return false;
     }
+    final l$to_address = to_address;
+    final lOther$to_address = other.to_address;
+    if (l$to_address != lOther$to_address) {
+      return false;
+    }
+    final l$order_time = order_time;
+    final lOther$order_time = other.order_time;
+    if (l$order_time != lOther$order_time) {
+      return false;
+    }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (l$order_type != lOther$order_type) {
+      return false;
+    }
+    final l$payment_type = payment_type;
+    final lOther$payment_type = other.payment_type;
+    if (l$payment_type != lOther$payment_type) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$total_cost = total_cost;
+    final lOther$total_cost = other.total_cost;
+    if (l$total_cost != lOther$total_cost) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -7577,112 +4205,3877 @@ class Query$get_customer_orders$restaurant_order$delivery {
   }
 }
 
-extension UtilityExtension$Query$get_customer_orders$restaurant_order$delivery
-    on Query$get_customer_orders$restaurant_order$delivery {
-  CopyWith$Query$get_customer_orders$restaurant_order$delivery<
-          Query$get_customer_orders$restaurant_order$delivery>
+extension UtilityExtension$Query$get_customer_orders$customer_minimal_orders
+    on Query$get_customer_orders$customer_minimal_orders {
+  CopyWith$Query$get_customer_orders$customer_minimal_orders<
+          Query$get_customer_orders$customer_minimal_orders>
       get copyWith =>
-          CopyWith$Query$get_customer_orders$restaurant_order$delivery(
+          CopyWith$Query$get_customer_orders$customer_minimal_orders(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_customer_orders$restaurant_order$delivery<
+abstract class CopyWith$Query$get_customer_orders$customer_minimal_orders<
     TRes> {
-  factory CopyWith$Query$get_customer_orders$restaurant_order$delivery(
-    Query$get_customer_orders$restaurant_order$delivery instance,
-    TRes Function(Query$get_customer_orders$restaurant_order$delivery) then,
-  ) = _CopyWithImpl$Query$get_customer_orders$restaurant_order$delivery;
+  factory CopyWith$Query$get_customer_orders$customer_minimal_orders(
+    Query$get_customer_orders$customer_minimal_orders instance,
+    TRes Function(Query$get_customer_orders$customer_minimal_orders) then,
+  ) = _CopyWithImpl$Query$get_customer_orders$customer_minimal_orders;
 
-  factory CopyWith$Query$get_customer_orders$restaurant_order$delivery.stub(
+  factory CopyWith$Query$get_customer_orders$customer_minimal_orders.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$delivery;
+      _CopyWithStubImpl$Query$get_customer_orders$customer_minimal_orders;
 
   TRes call({
-    String? actual_delivered_time,
-    String? actual_package_ready_time,
-    String? actual_arrival_at_pickup_time,
-    String? actual_arrival_at_dropoff_time,
-    String? cancellation_time,
-    Geography? current_gps,
+    int? id,
+    String? image,
+    bool? in_process,
+    String? name,
     double? delivery_cost,
+    String? to_address,
+    String? order_time,
+    String? order_type,
+    String? payment_type,
+    String? status,
+    double? total_cost,
     String? $__typename,
   });
 }
 
-class _CopyWithImpl$Query$get_customer_orders$restaurant_order$delivery<TRes>
+class _CopyWithImpl$Query$get_customer_orders$customer_minimal_orders<TRes>
     implements
-        CopyWith$Query$get_customer_orders$restaurant_order$delivery<TRes> {
-  _CopyWithImpl$Query$get_customer_orders$restaurant_order$delivery(
+        CopyWith$Query$get_customer_orders$customer_minimal_orders<TRes> {
+  _CopyWithImpl$Query$get_customer_orders$customer_minimal_orders(
     this._instance,
     this._then,
   );
 
-  final Query$get_customer_orders$restaurant_order$delivery _instance;
+  final Query$get_customer_orders$customer_minimal_orders _instance;
 
-  final TRes Function(Query$get_customer_orders$restaurant_order$delivery)
-      _then;
+  final TRes Function(Query$get_customer_orders$customer_minimal_orders) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? actual_delivered_time = _undefined,
-    Object? actual_package_ready_time = _undefined,
-    Object? actual_arrival_at_pickup_time = _undefined,
-    Object? actual_arrival_at_dropoff_time = _undefined,
-    Object? cancellation_time = _undefined,
-    Object? current_gps = _undefined,
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? in_process = _undefined,
+    Object? name = _undefined,
     Object? delivery_cost = _undefined,
+    Object? to_address = _undefined,
+    Object? order_time = _undefined,
+    Object? order_type = _undefined,
+    Object? payment_type = _undefined,
+    Object? status = _undefined,
+    Object? total_cost = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_customer_orders$restaurant_order$delivery(
-        actual_delivered_time: actual_delivered_time == _undefined
-            ? _instance.actual_delivered_time
-            : (actual_delivered_time as String?),
-        actual_package_ready_time: actual_package_ready_time == _undefined
-            ? _instance.actual_package_ready_time
-            : (actual_package_ready_time as String?),
-        actual_arrival_at_pickup_time:
-            actual_arrival_at_pickup_time == _undefined
-                ? _instance.actual_arrival_at_pickup_time
-                : (actual_arrival_at_pickup_time as String?),
-        actual_arrival_at_dropoff_time:
-            actual_arrival_at_dropoff_time == _undefined
-                ? _instance.actual_arrival_at_dropoff_time
-                : (actual_arrival_at_dropoff_time as String?),
-        cancellation_time: cancellation_time == _undefined
-            ? _instance.cancellation_time
-            : (cancellation_time as String?),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
+      _then(Query$get_customer_orders$customer_minimal_orders(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
+        in_process: in_process == _undefined || in_process == null
+            ? _instance.in_process
+            : (in_process as bool),
+        name: name == _undefined ? _instance.name : (name as String?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
+        to_address: to_address == _undefined
+            ? _instance.to_address
+            : (to_address as String?),
+        order_time: order_time == _undefined || order_time == null
+            ? _instance.order_time
+            : (order_time as String),
+        order_type: order_type == _undefined || order_type == null
+            ? _instance.order_type
+            : (order_type as String),
+        payment_type: payment_type == _undefined
+            ? _instance.payment_type
+            : (payment_type as String?),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        total_cost: total_cost == _undefined || total_cost == null
+            ? _instance.total_cost
+            : (total_cost as double),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 }
 
-class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$delivery<
-        TRes>
+class _CopyWithStubImpl$Query$get_customer_orders$customer_minimal_orders<TRes>
     implements
-        CopyWith$Query$get_customer_orders$restaurant_order$delivery<TRes> {
-  _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$delivery(
+        CopyWith$Query$get_customer_orders$customer_minimal_orders<TRes> {
+  _CopyWithStubImpl$Query$get_customer_orders$customer_minimal_orders(
       this._res);
 
   TRes _res;
 
   call({
-    String? actual_delivered_time,
-    String? actual_package_ready_time,
-    String? actual_arrival_at_pickup_time,
-    String? actual_arrival_at_dropoff_time,
-    String? cancellation_time,
-    Geography? current_gps,
+    int? id,
+    String? image,
+    bool? in_process,
+    String? name,
     double? delivery_cost,
+    String? to_address,
+    String? order_time,
+    String? order_type,
+    String? payment_type,
+    String? status,
+    double? total_cost,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Subscription$listen_on_customer_orders {
+  factory Variables$Subscription$listen_on_customer_orders({
+    required int custId,
+    required bool inProcess,
+  }) =>
+      Variables$Subscription$listen_on_customer_orders._({
+        r'custId': custId,
+        r'inProcess': inProcess,
+      });
+
+  Variables$Subscription$listen_on_customer_orders._(this._$data);
+
+  factory Variables$Subscription$listen_on_customer_orders.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$custId = data['custId'];
+    result$data['custId'] = (l$custId as int);
+    final l$inProcess = data['inProcess'];
+    result$data['inProcess'] = (l$inProcess as bool);
+    return Variables$Subscription$listen_on_customer_orders._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get custId => (_$data['custId'] as int);
+  bool get inProcess => (_$data['inProcess'] as bool);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$custId = custId;
+    result$data['custId'] = l$custId;
+    final l$inProcess = inProcess;
+    result$data['inProcess'] = l$inProcess;
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$listen_on_customer_orders<
+          Variables$Subscription$listen_on_customer_orders>
+      get copyWith => CopyWith$Variables$Subscription$listen_on_customer_orders(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$listen_on_customer_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$custId = custId;
+    final lOther$custId = other.custId;
+    if (l$custId != lOther$custId) {
+      return false;
+    }
+    final l$inProcess = inProcess;
+    final lOther$inProcess = other.inProcess;
+    if (l$inProcess != lOther$inProcess) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$custId = custId;
+    final l$inProcess = inProcess;
+    return Object.hashAll([
+      l$custId,
+      l$inProcess,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$listen_on_customer_orders<TRes> {
+  factory CopyWith$Variables$Subscription$listen_on_customer_orders(
+    Variables$Subscription$listen_on_customer_orders instance,
+    TRes Function(Variables$Subscription$listen_on_customer_orders) then,
+  ) = _CopyWithImpl$Variables$Subscription$listen_on_customer_orders;
+
+  factory CopyWith$Variables$Subscription$listen_on_customer_orders.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$listen_on_customer_orders;
+
+  TRes call({
+    int? custId,
+    bool? inProcess,
+  });
+}
+
+class _CopyWithImpl$Variables$Subscription$listen_on_customer_orders<TRes>
+    implements CopyWith$Variables$Subscription$listen_on_customer_orders<TRes> {
+  _CopyWithImpl$Variables$Subscription$listen_on_customer_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$listen_on_customer_orders _instance;
+
+  final TRes Function(Variables$Subscription$listen_on_customer_orders) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? custId = _undefined,
+    Object? inProcess = _undefined,
+  }) =>
+      _then(Variables$Subscription$listen_on_customer_orders._({
+        ..._instance._$data,
+        if (custId != _undefined && custId != null) 'custId': (custId as int),
+        if (inProcess != _undefined && inProcess != null)
+          'inProcess': (inProcess as bool),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$listen_on_customer_orders<TRes>
+    implements CopyWith$Variables$Subscription$listen_on_customer_orders<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$listen_on_customer_orders(this._res);
+
+  TRes _res;
+
+  call({
+    int? custId,
+    bool? inProcess,
+  }) =>
+      _res;
+}
+
+class Subscription$listen_on_customer_orders {
+  Subscription$listen_on_customer_orders({
+    required this.customer_minimal_orders,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_orders.fromJson(
+      Map<String, dynamic> json) {
+    final l$customer_minimal_orders = json['customer_minimal_orders'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_orders(
+      customer_minimal_orders: (l$customer_minimal_orders as List<dynamic>)
+          .map((e) =>
+              Subscription$listen_on_customer_orders$customer_minimal_orders
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Subscription$listen_on_customer_orders$customer_minimal_orders>
+      customer_minimal_orders;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$customer_minimal_orders = customer_minimal_orders;
+    _resultData['customer_minimal_orders'] =
+        l$customer_minimal_orders.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$customer_minimal_orders = customer_minimal_orders;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$customer_minimal_orders.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$listen_on_customer_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$customer_minimal_orders = customer_minimal_orders;
+    final lOther$customer_minimal_orders = other.customer_minimal_orders;
+    if (l$customer_minimal_orders.length !=
+        lOther$customer_minimal_orders.length) {
+      return false;
+    }
+    for (int i = 0; i < l$customer_minimal_orders.length; i++) {
+      final l$customer_minimal_orders$entry = l$customer_minimal_orders[i];
+      final lOther$customer_minimal_orders$entry =
+          lOther$customer_minimal_orders[i];
+      if (l$customer_minimal_orders$entry !=
+          lOther$customer_minimal_orders$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_orders
+    on Subscription$listen_on_customer_orders {
+  CopyWith$Subscription$listen_on_customer_orders<
+          Subscription$listen_on_customer_orders>
+      get copyWith => CopyWith$Subscription$listen_on_customer_orders(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_orders<TRes> {
+  factory CopyWith$Subscription$listen_on_customer_orders(
+    Subscription$listen_on_customer_orders instance,
+    TRes Function(Subscription$listen_on_customer_orders) then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_orders;
+
+  factory CopyWith$Subscription$listen_on_customer_orders.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_orders;
+
+  TRes call({
+    List<Subscription$listen_on_customer_orders$customer_minimal_orders>?
+        customer_minimal_orders,
+    String? $__typename,
+  });
+  TRes customer_minimal_orders(
+      Iterable<Subscription$listen_on_customer_orders$customer_minimal_orders> Function(
+              Iterable<
+                  CopyWith$Subscription$listen_on_customer_orders$customer_minimal_orders<
+                      Subscription$listen_on_customer_orders$customer_minimal_orders>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_orders<TRes>
+    implements CopyWith$Subscription$listen_on_customer_orders<TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_orders _instance;
+
+  final TRes Function(Subscription$listen_on_customer_orders) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? customer_minimal_orders = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listen_on_customer_orders(
+        customer_minimal_orders: customer_minimal_orders == _undefined ||
+                customer_minimal_orders == null
+            ? _instance.customer_minimal_orders
+            : (customer_minimal_orders as List<
+                Subscription$listen_on_customer_orders$customer_minimal_orders>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes customer_minimal_orders(
+          Iterable<Subscription$listen_on_customer_orders$customer_minimal_orders> Function(
+                  Iterable<
+                      CopyWith$Subscription$listen_on_customer_orders$customer_minimal_orders<
+                          Subscription$listen_on_customer_orders$customer_minimal_orders>>)
+              _fn) =>
+      call(
+          customer_minimal_orders: _fn(_instance.customer_minimal_orders.map((e) =>
+              CopyWith$Subscription$listen_on_customer_orders$customer_minimal_orders(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_orders<TRes>
+    implements CopyWith$Subscription$listen_on_customer_orders<TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_orders(this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$listen_on_customer_orders$customer_minimal_orders>?
+        customer_minimal_orders,
+    String? $__typename,
+  }) =>
+      _res;
+  customer_minimal_orders(_fn) => _res;
+}
+
+const documentNodeSubscriptionlisten_on_customer_orders =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'listen_on_customer_orders'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'custId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'inProcess')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'customer_minimal_orders'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'args'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'cus_id'),
+                value: VariableNode(name: NameNode(value: 'custId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'in_process'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'inProcess')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'in_process'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'to_address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'payment_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'total_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$listen_on_customer_orders
+    _parserFn$Subscription$listen_on_customer_orders(
+            Map<String, dynamic> data) =>
+        Subscription$listen_on_customer_orders.fromJson(data);
+
+class Options$Subscription$listen_on_customer_orders extends graphql
+    .SubscriptionOptions<Subscription$listen_on_customer_orders> {
+  Options$Subscription$listen_on_customer_orders({
+    String? operationName,
+    required Variables$Subscription$listen_on_customer_orders variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlisten_on_customer_orders,
+          parserFn: _parserFn$Subscription$listen_on_customer_orders,
+        );
+}
+
+class WatchOptions$Subscription$listen_on_customer_orders
+    extends graphql.WatchQueryOptions<Subscription$listen_on_customer_orders> {
+  WatchOptions$Subscription$listen_on_customer_orders({
+    String? operationName,
+    required Variables$Subscription$listen_on_customer_orders variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlisten_on_customer_orders,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$listen_on_customer_orders,
+        );
+}
+
+class FetchMoreOptions$Subscription$listen_on_customer_orders
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$listen_on_customer_orders({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$listen_on_customer_orders variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeSubscriptionlisten_on_customer_orders,
+        );
+}
+
+extension ClientExtension$Subscription$listen_on_customer_orders
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$listen_on_customer_orders>>
+      subscribe$listen_on_customer_orders(
+              Options$Subscription$listen_on_customer_orders options) =>
+          this.subscribe(options);
+  graphql.ObservableQuery<Subscription$listen_on_customer_orders>
+      watchSubscription$listen_on_customer_orders(
+              WatchOptions$Subscription$listen_on_customer_orders options) =>
+          this.watchQuery(options);
+}
+
+class Subscription$listen_on_customer_orders$customer_minimal_orders {
+  Subscription$listen_on_customer_orders$customer_minimal_orders({
+    required this.id,
+    this.image,
+    required this.in_process,
+    this.name,
+    required this.delivery_cost,
+    this.to_address,
+    required this.order_time,
+    required this.order_type,
+    this.payment_type,
+    required this.status,
+    required this.total_cost,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_orders$customer_minimal_orders.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$in_process = json['in_process'];
+    final l$name = json['name'];
+    final l$delivery_cost = json['delivery_cost'];
+    final l$to_address = json['to_address'];
+    final l$order_time = json['order_time'];
+    final l$order_type = json['order_type'];
+    final l$payment_type = json['payment_type'];
+    final l$status = json['status'];
+    final l$total_cost = json['total_cost'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_orders$customer_minimal_orders(
+      id: (l$id as int),
+      image: (l$image as String?),
+      in_process: (l$in_process as bool),
+      name: (l$name as String?),
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      to_address: (l$to_address as String?),
+      order_time: (l$order_time as String),
+      order_type: (l$order_type as String),
+      payment_type: (l$payment_type as String?),
+      status: (l$status as String),
+      total_cost: moneyFromJson(l$total_cost),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String? image;
+
+  final bool in_process;
+
+  final String? name;
+
+  final double delivery_cost;
+
+  final String? to_address;
+
+  final String order_time;
+
+  final String order_type;
+
+  final String? payment_type;
+
+  final String status;
+
+  final double total_cost;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$in_process = in_process;
+    _resultData['in_process'] = l$in_process;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$to_address = to_address;
+    _resultData['to_address'] = l$to_address;
+    final l$order_time = order_time;
+    _resultData['order_time'] = l$order_time;
+    final l$order_type = order_type;
+    _resultData['order_type'] = l$order_type;
+    final l$payment_type = payment_type;
+    _resultData['payment_type'] = l$payment_type;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$total_cost = total_cost;
+    _resultData['total_cost'] = moneyToJson(l$total_cost);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$image = image;
+    final l$in_process = in_process;
+    final l$name = name;
+    final l$delivery_cost = delivery_cost;
+    final l$to_address = to_address;
+    final l$order_time = order_time;
+    final l$order_type = order_type;
+    final l$payment_type = payment_type;
+    final l$status = status;
+    final l$total_cost = total_cost;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$image,
+      l$in_process,
+      l$name,
+      l$delivery_cost,
+      l$to_address,
+      l$order_time,
+      l$order_type,
+      l$payment_type,
+      l$status,
+      l$total_cost,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_orders$customer_minimal_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$in_process = in_process;
+    final lOther$in_process = other.in_process;
+    if (l$in_process != lOther$in_process) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$to_address = to_address;
+    final lOther$to_address = other.to_address;
+    if (l$to_address != lOther$to_address) {
+      return false;
+    }
+    final l$order_time = order_time;
+    final lOther$order_time = other.order_time;
+    if (l$order_time != lOther$order_time) {
+      return false;
+    }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (l$order_type != lOther$order_type) {
+      return false;
+    }
+    final l$payment_type = payment_type;
+    final lOther$payment_type = other.payment_type;
+    if (l$payment_type != lOther$payment_type) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$total_cost = total_cost;
+    final lOther$total_cost = other.total_cost;
+    if (l$total_cost != lOther$total_cost) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_orders$customer_minimal_orders
+    on Subscription$listen_on_customer_orders$customer_minimal_orders {
+  CopyWith$Subscription$listen_on_customer_orders$customer_minimal_orders<
+          Subscription$listen_on_customer_orders$customer_minimal_orders>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_orders$customer_minimal_orders(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_orders$customer_minimal_orders<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_orders$customer_minimal_orders(
+    Subscription$listen_on_customer_orders$customer_minimal_orders instance,
+    TRes Function(
+            Subscription$listen_on_customer_orders$customer_minimal_orders)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_orders$customer_minimal_orders;
+
+  factory CopyWith$Subscription$listen_on_customer_orders$customer_minimal_orders.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_orders$customer_minimal_orders;
+
+  TRes call({
+    int? id,
+    String? image,
+    bool? in_process,
+    String? name,
+    double? delivery_cost,
+    String? to_address,
+    String? order_time,
+    String? order_type,
+    String? payment_type,
+    String? status,
+    double? total_cost,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_orders$customer_minimal_orders<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_orders$customer_minimal_orders<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_orders$customer_minimal_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_orders$customer_minimal_orders
+      _instance;
+
+  final TRes Function(
+      Subscription$listen_on_customer_orders$customer_minimal_orders) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? in_process = _undefined,
+    Object? name = _undefined,
+    Object? delivery_cost = _undefined,
+    Object? to_address = _undefined,
+    Object? order_time = _undefined,
+    Object? order_type = _undefined,
+    Object? payment_type = _undefined,
+    Object? status = _undefined,
+    Object? total_cost = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listen_on_customer_orders$customer_minimal_orders(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
+        in_process: in_process == _undefined || in_process == null
+            ? _instance.in_process
+            : (in_process as bool),
+        name: name == _undefined ? _instance.name : (name as String?),
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        to_address: to_address == _undefined
+            ? _instance.to_address
+            : (to_address as String?),
+        order_time: order_time == _undefined || order_time == null
+            ? _instance.order_time
+            : (order_time as String),
+        order_type: order_type == _undefined || order_type == null
+            ? _instance.order_type
+            : (order_type as String),
+        payment_type: payment_type == _undefined
+            ? _instance.payment_type
+            : (payment_type as String?),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        total_cost: total_cost == _undefined || total_cost == null
+            ? _instance.total_cost
+            : (total_cost as double),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_orders$customer_minimal_orders<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_orders$customer_minimal_orders<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_orders$customer_minimal_orders(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? image,
+    bool? in_process,
+    String? name,
+    double? delivery_cost,
+    String? to_address,
+    String? order_time,
+    String? order_type,
+    String? payment_type,
+    String? status,
+    double? total_cost,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateDriverOrderReviewId {
+  factory Variables$Mutation$updateDriverOrderReviewId({
+    required int orderId,
+    required int reviewId,
+  }) =>
+      Variables$Mutation$updateDriverOrderReviewId._({
+        r'orderId': orderId,
+        r'reviewId': reviewId,
+      });
+
+  Variables$Mutation$updateDriverOrderReviewId._(this._$data);
+
+  factory Variables$Mutation$updateDriverOrderReviewId.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    final l$reviewId = data['reviewId'];
+    result$data['reviewId'] = (l$reviewId as int);
+    return Variables$Mutation$updateDriverOrderReviewId._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  int get reviewId => (_$data['reviewId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    final l$reviewId = reviewId;
+    result$data['reviewId'] = l$reviewId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateDriverOrderReviewId<
+          Variables$Mutation$updateDriverOrderReviewId>
+      get copyWith => CopyWith$Variables$Mutation$updateDriverOrderReviewId(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateDriverOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    final l$reviewId = reviewId;
+    final lOther$reviewId = other.reviewId;
+    if (l$reviewId != lOther$reviewId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    final l$reviewId = reviewId;
+    return Object.hashAll([
+      l$orderId,
+      l$reviewId,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateDriverOrderReviewId<TRes> {
+  factory CopyWith$Variables$Mutation$updateDriverOrderReviewId(
+    Variables$Mutation$updateDriverOrderReviewId instance,
+    TRes Function(Variables$Mutation$updateDriverOrderReviewId) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateDriverOrderReviewId;
+
+  factory CopyWith$Variables$Mutation$updateDriverOrderReviewId.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateDriverOrderReviewId;
+
+  TRes call({
+    int? orderId,
+    int? reviewId,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateDriverOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateDriverOrderReviewId<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateDriverOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateDriverOrderReviewId _instance;
+
+  final TRes Function(Variables$Mutation$updateDriverOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? orderId = _undefined,
+    Object? reviewId = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateDriverOrderReviewId._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+        if (reviewId != _undefined && reviewId != null)
+          'reviewId': (reviewId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateDriverOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateDriverOrderReviewId<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateDriverOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    int? orderId,
+    int? reviewId,
+  }) =>
+      _res;
+}
+
+class Mutation$updateDriverOrderReviewId {
+  Mutation$updateDriverOrderReviewId({
+    this.update_delivery_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateDriverOrderReviewId.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_delivery_order_by_pk = json['update_delivery_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateDriverOrderReviewId(
+      update_delivery_order_by_pk: l$update_delivery_order_by_pk == null
+          ? null
+          : Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk
+              .fromJson(
+                  (l$update_delivery_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk?
+      update_delivery_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_delivery_order_by_pk = update_delivery_order_by_pk;
+    _resultData['update_delivery_order_by_pk'] =
+        l$update_delivery_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_delivery_order_by_pk = update_delivery_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_delivery_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateDriverOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_delivery_order_by_pk = update_delivery_order_by_pk;
+    final lOther$update_delivery_order_by_pk =
+        other.update_delivery_order_by_pk;
+    if (l$update_delivery_order_by_pk != lOther$update_delivery_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateDriverOrderReviewId
+    on Mutation$updateDriverOrderReviewId {
+  CopyWith$Mutation$updateDriverOrderReviewId<
+          Mutation$updateDriverOrderReviewId>
+      get copyWith => CopyWith$Mutation$updateDriverOrderReviewId(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateDriverOrderReviewId<TRes> {
+  factory CopyWith$Mutation$updateDriverOrderReviewId(
+    Mutation$updateDriverOrderReviewId instance,
+    TRes Function(Mutation$updateDriverOrderReviewId) then,
+  ) = _CopyWithImpl$Mutation$updateDriverOrderReviewId;
+
+  factory CopyWith$Mutation$updateDriverOrderReviewId.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateDriverOrderReviewId;
+
+  TRes call({
+    Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk?
+        update_delivery_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<TRes>
+      get update_delivery_order_by_pk;
+}
+
+class _CopyWithImpl$Mutation$updateDriverOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateDriverOrderReviewId<TRes> {
+  _CopyWithImpl$Mutation$updateDriverOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateDriverOrderReviewId _instance;
+
+  final TRes Function(Mutation$updateDriverOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_delivery_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateDriverOrderReviewId(
+        update_delivery_order_by_pk: update_delivery_order_by_pk == _undefined
+            ? _instance.update_delivery_order_by_pk
+            : (update_delivery_order_by_pk
+                as Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<TRes>
+      get update_delivery_order_by_pk {
+    final local$update_delivery_order_by_pk =
+        _instance.update_delivery_order_by_pk;
+    return local$update_delivery_order_by_pk == null
+        ? CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+            local$update_delivery_order_by_pk,
+            (e) => call(update_delivery_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateDriverOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateDriverOrderReviewId<TRes> {
+  _CopyWithStubImpl$Mutation$updateDriverOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk?
+        update_delivery_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<TRes>
+      get update_delivery_order_by_pk =>
+          CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdateDriverOrderReviewId =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateDriverOrderReviewId'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'reviewId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_delivery_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'orderId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'driver_review_by_customer_id'),
+                value: VariableNode(name: NameNode(value: 'reviewId')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'driver_review_by_customer_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateDriverOrderReviewId _parserFn$Mutation$updateDriverOrderReviewId(
+        Map<String, dynamic> data) =>
+    Mutation$updateDriverOrderReviewId.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateDriverOrderReviewId = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateDriverOrderReviewId?,
+);
+
+class Options$Mutation$updateDriverOrderReviewId
+    extends graphql.MutationOptions<Mutation$updateDriverOrderReviewId> {
+  Options$Mutation$updateDriverOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateDriverOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateDriverOrderReviewId? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateDriverOrderReviewId>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateDriverOrderReviewId(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateDriverOrderReviewId,
+          parserFn: _parserFn$Mutation$updateDriverOrderReviewId,
+        );
+
+  final OnMutationCompleted$Mutation$updateDriverOrderReviewId?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateDriverOrderReviewId
+    extends graphql.WatchQueryOptions<Mutation$updateDriverOrderReviewId> {
+  WatchOptions$Mutation$updateDriverOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateDriverOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateDriverOrderReviewId,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateDriverOrderReviewId,
+        );
+}
+
+extension ClientExtension$Mutation$updateDriverOrderReviewId
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateDriverOrderReviewId>>
+      mutate$updateDriverOrderReviewId(
+              Options$Mutation$updateDriverOrderReviewId options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateDriverOrderReviewId>
+      watchMutation$updateDriverOrderReviewId(
+              WatchOptions$Mutation$updateDriverOrderReviewId options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk {
+  Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk({
+    this.driver_review_by_customer_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$driver_review_by_customer_id = json['driver_review_by_customer_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+      driver_review_by_customer_id: (l$driver_review_by_customer_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int? driver_review_by_customer_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$driver_review_by_customer_id = driver_review_by_customer_id;
+    _resultData['driver_review_by_customer_id'] =
+        l$driver_review_by_customer_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$driver_review_by_customer_id = driver_review_by_customer_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$driver_review_by_customer_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$driver_review_by_customer_id = driver_review_by_customer_id;
+    final lOther$driver_review_by_customer_id =
+        other.driver_review_by_customer_id;
+    if (l$driver_review_by_customer_id != lOther$driver_review_by_customer_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk
+    on Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk {
+  CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+          Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+    Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk instance,
+    TRes Function(
+            Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk;
+
+  factory CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk;
+
+  TRes call({
+    int? driver_review_by_customer_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? driver_review_by_customer_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+        driver_review_by_customer_id: driver_review_by_customer_id == _undefined
+            ? _instance.driver_review_by_customer_id
+            : (driver_review_by_customer_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateDriverOrderReviewId$update_delivery_order_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? driver_review_by_customer_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateRestaurantOrderReviewId {
+  factory Variables$Mutation$updateRestaurantOrderReviewId({
+    required int orderId,
+    required int reviewId,
+  }) =>
+      Variables$Mutation$updateRestaurantOrderReviewId._({
+        r'orderId': orderId,
+        r'reviewId': reviewId,
+      });
+
+  Variables$Mutation$updateRestaurantOrderReviewId._(this._$data);
+
+  factory Variables$Mutation$updateRestaurantOrderReviewId.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    final l$reviewId = data['reviewId'];
+    result$data['reviewId'] = (l$reviewId as int);
+    return Variables$Mutation$updateRestaurantOrderReviewId._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  int get reviewId => (_$data['reviewId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    final l$reviewId = reviewId;
+    result$data['reviewId'] = l$reviewId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateRestaurantOrderReviewId<
+          Variables$Mutation$updateRestaurantOrderReviewId>
+      get copyWith => CopyWith$Variables$Mutation$updateRestaurantOrderReviewId(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateRestaurantOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    final l$reviewId = reviewId;
+    final lOther$reviewId = other.reviewId;
+    if (l$reviewId != lOther$reviewId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    final l$reviewId = reviewId;
+    return Object.hashAll([
+      l$orderId,
+      l$reviewId,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateRestaurantOrderReviewId<TRes> {
+  factory CopyWith$Variables$Mutation$updateRestaurantOrderReviewId(
+    Variables$Mutation$updateRestaurantOrderReviewId instance,
+    TRes Function(Variables$Mutation$updateRestaurantOrderReviewId) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateRestaurantOrderReviewId;
+
+  factory CopyWith$Variables$Mutation$updateRestaurantOrderReviewId.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateRestaurantOrderReviewId;
+
+  TRes call({
+    int? orderId,
+    int? reviewId,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateRestaurantOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateRestaurantOrderReviewId<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateRestaurantOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateRestaurantOrderReviewId _instance;
+
+  final TRes Function(Variables$Mutation$updateRestaurantOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? orderId = _undefined,
+    Object? reviewId = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateRestaurantOrderReviewId._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+        if (reviewId != _undefined && reviewId != null)
+          'reviewId': (reviewId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateRestaurantOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateRestaurantOrderReviewId<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateRestaurantOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    int? orderId,
+    int? reviewId,
+  }) =>
+      _res;
+}
+
+class Mutation$updateRestaurantOrderReviewId {
+  Mutation$updateRestaurantOrderReviewId({
+    this.update_restaurant_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateRestaurantOrderReviewId.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_restaurant_order_by_pk =
+        json['update_restaurant_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateRestaurantOrderReviewId(
+      update_restaurant_order_by_pk: l$update_restaurant_order_by_pk == null
+          ? null
+          : Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+              .fromJson(
+                  (l$update_restaurant_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk?
+      update_restaurant_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
+    _resultData['update_restaurant_order_by_pk'] =
+        l$update_restaurant_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_restaurant_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateRestaurantOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_restaurant_order_by_pk = update_restaurant_order_by_pk;
+    final lOther$update_restaurant_order_by_pk =
+        other.update_restaurant_order_by_pk;
+    if (l$update_restaurant_order_by_pk !=
+        lOther$update_restaurant_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateRestaurantOrderReviewId
+    on Mutation$updateRestaurantOrderReviewId {
+  CopyWith$Mutation$updateRestaurantOrderReviewId<
+          Mutation$updateRestaurantOrderReviewId>
+      get copyWith => CopyWith$Mutation$updateRestaurantOrderReviewId(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateRestaurantOrderReviewId<TRes> {
+  factory CopyWith$Mutation$updateRestaurantOrderReviewId(
+    Mutation$updateRestaurantOrderReviewId instance,
+    TRes Function(Mutation$updateRestaurantOrderReviewId) then,
+  ) = _CopyWithImpl$Mutation$updateRestaurantOrderReviewId;
+
+  factory CopyWith$Mutation$updateRestaurantOrderReviewId.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId;
+
+  TRes call({
+    Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk?
+        update_restaurant_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+      TRes> get update_restaurant_order_by_pk;
+}
+
+class _CopyWithImpl$Mutation$updateRestaurantOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateRestaurantOrderReviewId<TRes> {
+  _CopyWithImpl$Mutation$updateRestaurantOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateRestaurantOrderReviewId _instance;
+
+  final TRes Function(Mutation$updateRestaurantOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_restaurant_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateRestaurantOrderReviewId(
+        update_restaurant_order_by_pk: update_restaurant_order_by_pk ==
+                _undefined
+            ? _instance.update_restaurant_order_by_pk
+            : (update_restaurant_order_by_pk
+                as Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+      TRes> get update_restaurant_order_by_pk {
+    final local$update_restaurant_order_by_pk =
+        _instance.update_restaurant_order_by_pk;
+    return local$update_restaurant_order_by_pk == null
+        ? CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+            local$update_restaurant_order_by_pk,
+            (e) => call(update_restaurant_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateRestaurantOrderReviewId<TRes> {
+  _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk?
+        update_restaurant_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+          TRes>
+      get update_restaurant_order_by_pk =>
+          CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdateRestaurantOrderReviewId =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateRestaurantOrderReviewId'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'reviewId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_restaurant_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'orderId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'review_id'),
+                value: VariableNode(name: NameNode(value: 'reviewId')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'review_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateRestaurantOrderReviewId
+    _parserFn$Mutation$updateRestaurantOrderReviewId(
+            Map<String, dynamic> data) =>
+        Mutation$updateRestaurantOrderReviewId.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateRestaurantOrderReviewId
+    = FutureOr<void> Function(
+  dynamic,
+  Mutation$updateRestaurantOrderReviewId?,
+);
+
+class Options$Mutation$updateRestaurantOrderReviewId
+    extends graphql.MutationOptions<Mutation$updateRestaurantOrderReviewId> {
+  Options$Mutation$updateRestaurantOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateRestaurantOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateRestaurantOrderReviewId? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateRestaurantOrderReviewId>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateRestaurantOrderReviewId(
+                            data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateRestaurantOrderReviewId,
+          parserFn: _parserFn$Mutation$updateRestaurantOrderReviewId,
+        );
+
+  final OnMutationCompleted$Mutation$updateRestaurantOrderReviewId?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateRestaurantOrderReviewId
+    extends graphql.WatchQueryOptions<Mutation$updateRestaurantOrderReviewId> {
+  WatchOptions$Mutation$updateRestaurantOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateRestaurantOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateRestaurantOrderReviewId,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateRestaurantOrderReviewId,
+        );
+}
+
+extension ClientExtension$Mutation$updateRestaurantOrderReviewId
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateRestaurantOrderReviewId>>
+      mutate$updateRestaurantOrderReviewId(
+              Options$Mutation$updateRestaurantOrderReviewId options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateRestaurantOrderReviewId>
+      watchMutation$updateRestaurantOrderReviewId(
+              WatchOptions$Mutation$updateRestaurantOrderReviewId options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk {
+  Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk({
+    this.review_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$review_id = json['review_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+      review_id: (l$review_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int? review_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$review_id = review_id;
+    _resultData['review_id'] = l$review_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$review_id = review_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$review_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$review_id = review_id;
+    final lOther$review_id = other.review_id;
+    if (l$review_id != lOther$review_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+    on Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk {
+  CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+          Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+    Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+        instance,
+    TRes Function(
+            Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk;
+
+  factory CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk;
+
+  TRes call({
+    int? review_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk
+      _instance;
+
+  final TRes Function(
+          Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? review_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+        review_id:
+            review_id == _undefined ? _instance.review_id : (review_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateRestaurantOrderReviewId$update_restaurant_order_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? review_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateLaundryOrderReviewId {
+  factory Variables$Mutation$updateLaundryOrderReviewId({
+    required int orderId,
+    required int reviewId,
+  }) =>
+      Variables$Mutation$updateLaundryOrderReviewId._({
+        r'orderId': orderId,
+        r'reviewId': reviewId,
+      });
+
+  Variables$Mutation$updateLaundryOrderReviewId._(this._$data);
+
+  factory Variables$Mutation$updateLaundryOrderReviewId.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    final l$reviewId = data['reviewId'];
+    result$data['reviewId'] = (l$reviewId as int);
+    return Variables$Mutation$updateLaundryOrderReviewId._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  int get reviewId => (_$data['reviewId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    final l$reviewId = reviewId;
+    result$data['reviewId'] = l$reviewId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateLaundryOrderReviewId<
+          Variables$Mutation$updateLaundryOrderReviewId>
+      get copyWith => CopyWith$Variables$Mutation$updateLaundryOrderReviewId(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateLaundryOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    final l$reviewId = reviewId;
+    final lOther$reviewId = other.reviewId;
+    if (l$reviewId != lOther$reviewId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    final l$reviewId = reviewId;
+    return Object.hashAll([
+      l$orderId,
+      l$reviewId,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateLaundryOrderReviewId<TRes> {
+  factory CopyWith$Variables$Mutation$updateLaundryOrderReviewId(
+    Variables$Mutation$updateLaundryOrderReviewId instance,
+    TRes Function(Variables$Mutation$updateLaundryOrderReviewId) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateLaundryOrderReviewId;
+
+  factory CopyWith$Variables$Mutation$updateLaundryOrderReviewId.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateLaundryOrderReviewId;
+
+  TRes call({
+    int? orderId,
+    int? reviewId,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateLaundryOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateLaundryOrderReviewId<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateLaundryOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateLaundryOrderReviewId _instance;
+
+  final TRes Function(Variables$Mutation$updateLaundryOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? orderId = _undefined,
+    Object? reviewId = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateLaundryOrderReviewId._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+        if (reviewId != _undefined && reviewId != null)
+          'reviewId': (reviewId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateLaundryOrderReviewId<TRes>
+    implements CopyWith$Variables$Mutation$updateLaundryOrderReviewId<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateLaundryOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    int? orderId,
+    int? reviewId,
+  }) =>
+      _res;
+}
+
+class Mutation$updateLaundryOrderReviewId {
+  Mutation$updateLaundryOrderReviewId({
+    this.update_laundry_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateLaundryOrderReviewId.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_laundry_order_by_pk = json['update_laundry_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateLaundryOrderReviewId(
+      update_laundry_order_by_pk: l$update_laundry_order_by_pk == null
+          ? null
+          : Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk
+              .fromJson((l$update_laundry_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk?
+      update_laundry_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_laundry_order_by_pk = update_laundry_order_by_pk;
+    _resultData['update_laundry_order_by_pk'] =
+        l$update_laundry_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_laundry_order_by_pk = update_laundry_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_laundry_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateLaundryOrderReviewId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_laundry_order_by_pk = update_laundry_order_by_pk;
+    final lOther$update_laundry_order_by_pk = other.update_laundry_order_by_pk;
+    if (l$update_laundry_order_by_pk != lOther$update_laundry_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateLaundryOrderReviewId
+    on Mutation$updateLaundryOrderReviewId {
+  CopyWith$Mutation$updateLaundryOrderReviewId<
+          Mutation$updateLaundryOrderReviewId>
+      get copyWith => CopyWith$Mutation$updateLaundryOrderReviewId(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateLaundryOrderReviewId<TRes> {
+  factory CopyWith$Mutation$updateLaundryOrderReviewId(
+    Mutation$updateLaundryOrderReviewId instance,
+    TRes Function(Mutation$updateLaundryOrderReviewId) then,
+  ) = _CopyWithImpl$Mutation$updateLaundryOrderReviewId;
+
+  factory CopyWith$Mutation$updateLaundryOrderReviewId.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId;
+
+  TRes call({
+    Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk?
+        update_laundry_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<TRes>
+      get update_laundry_order_by_pk;
+}
+
+class _CopyWithImpl$Mutation$updateLaundryOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateLaundryOrderReviewId<TRes> {
+  _CopyWithImpl$Mutation$updateLaundryOrderReviewId(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateLaundryOrderReviewId _instance;
+
+  final TRes Function(Mutation$updateLaundryOrderReviewId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_laundry_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateLaundryOrderReviewId(
+        update_laundry_order_by_pk: update_laundry_order_by_pk == _undefined
+            ? _instance.update_laundry_order_by_pk
+            : (update_laundry_order_by_pk
+                as Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<TRes>
+      get update_laundry_order_by_pk {
+    final local$update_laundry_order_by_pk =
+        _instance.update_laundry_order_by_pk;
+    return local$update_laundry_order_by_pk == null
+        ? CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+            local$update_laundry_order_by_pk,
+            (e) => call(update_laundry_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId<TRes>
+    implements CopyWith$Mutation$updateLaundryOrderReviewId<TRes> {
+  _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk?
+        update_laundry_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<TRes>
+      get update_laundry_order_by_pk =>
+          CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdateLaundryOrderReviewId =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateLaundryOrderReviewId'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'reviewId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_laundry_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'orderId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'review_id'),
+                value: VariableNode(name: NameNode(value: 'reviewId')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'review_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateLaundryOrderReviewId
+    _parserFn$Mutation$updateLaundryOrderReviewId(Map<String, dynamic> data) =>
+        Mutation$updateLaundryOrderReviewId.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateLaundryOrderReviewId = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateLaundryOrderReviewId?,
+);
+
+class Options$Mutation$updateLaundryOrderReviewId
+    extends graphql.MutationOptions<Mutation$updateLaundryOrderReviewId> {
+  Options$Mutation$updateLaundryOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateLaundryOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateLaundryOrderReviewId? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateLaundryOrderReviewId>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateLaundryOrderReviewId(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateLaundryOrderReviewId,
+          parserFn: _parserFn$Mutation$updateLaundryOrderReviewId,
+        );
+
+  final OnMutationCompleted$Mutation$updateLaundryOrderReviewId?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateLaundryOrderReviewId
+    extends graphql.WatchQueryOptions<Mutation$updateLaundryOrderReviewId> {
+  WatchOptions$Mutation$updateLaundryOrderReviewId({
+    String? operationName,
+    required Variables$Mutation$updateLaundryOrderReviewId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateLaundryOrderReviewId,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateLaundryOrderReviewId,
+        );
+}
+
+extension ClientExtension$Mutation$updateLaundryOrderReviewId
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateLaundryOrderReviewId>>
+      mutate$updateLaundryOrderReviewId(
+              Options$Mutation$updateLaundryOrderReviewId options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateLaundryOrderReviewId>
+      watchMutation$updateLaundryOrderReviewId(
+              WatchOptions$Mutation$updateLaundryOrderReviewId options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk {
+  Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk({
+    this.review_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$review_id = json['review_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+      review_id: (l$review_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int? review_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$review_id = review_id;
+    _resultData['review_id'] = l$review_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$review_id = review_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$review_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$review_id = review_id;
+    final lOther$review_id = other.review_id;
+    if (l$review_id != lOther$review_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk
+    on Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk {
+  CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+          Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+    Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk instance,
+    TRes Function(
+            Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk;
+
+  factory CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk;
+
+  TRes call({
+    int? review_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? review_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+        review_id:
+            review_id == _undefined ? _instance.review_id : (review_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? review_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getCustomerOrdersByType {
+  factory Variables$Query$getCustomerOrdersByType({
+    required int custId,
+    required String orderType,
+    int? limit,
+    int? offset,
+  }) =>
+      Variables$Query$getCustomerOrdersByType._({
+        r'custId': custId,
+        r'orderType': orderType,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
+      });
+
+  Variables$Query$getCustomerOrdersByType._(this._$data);
+
+  factory Variables$Query$getCustomerOrdersByType.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$custId = data['custId'];
+    result$data['custId'] = (l$custId as int);
+    final l$orderType = data['orderType'];
+    result$data['orderType'] = (l$orderType as String);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    return Variables$Query$getCustomerOrdersByType._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get custId => (_$data['custId'] as int);
+  String get orderType => (_$data['orderType'] as String);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$custId = custId;
+    result$data['custId'] = l$custId;
+    final l$orderType = orderType;
+    result$data['orderType'] = l$orderType;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getCustomerOrdersByType<
+          Variables$Query$getCustomerOrdersByType>
+      get copyWith => CopyWith$Variables$Query$getCustomerOrdersByType(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getCustomerOrdersByType) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$custId = custId;
+    final lOther$custId = other.custId;
+    if (l$custId != lOther$custId) {
+      return false;
+    }
+    final l$orderType = orderType;
+    final lOther$orderType = other.orderType;
+    if (l$orderType != lOther$orderType) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$custId = custId;
+    final l$orderType = orderType;
+    final l$limit = limit;
+    final l$offset = offset;
+    return Object.hashAll([
+      l$custId,
+      l$orderType,
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getCustomerOrdersByType<TRes> {
+  factory CopyWith$Variables$Query$getCustomerOrdersByType(
+    Variables$Query$getCustomerOrdersByType instance,
+    TRes Function(Variables$Query$getCustomerOrdersByType) then,
+  ) = _CopyWithImpl$Variables$Query$getCustomerOrdersByType;
+
+  factory CopyWith$Variables$Query$getCustomerOrdersByType.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getCustomerOrdersByType;
+
+  TRes call({
+    int? custId,
+    String? orderType,
+    int? limit,
+    int? offset,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$getCustomerOrdersByType<TRes>
+    implements CopyWith$Variables$Query$getCustomerOrdersByType<TRes> {
+  _CopyWithImpl$Variables$Query$getCustomerOrdersByType(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getCustomerOrdersByType _instance;
+
+  final TRes Function(Variables$Query$getCustomerOrdersByType) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? custId = _undefined,
+    Object? orderType = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
+      _then(Variables$Query$getCustomerOrdersByType._({
+        ..._instance._$data,
+        if (custId != _undefined && custId != null) 'custId': (custId as int),
+        if (orderType != _undefined && orderType != null)
+          'orderType': (orderType as String),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getCustomerOrdersByType<TRes>
+    implements CopyWith$Variables$Query$getCustomerOrdersByType<TRes> {
+  _CopyWithStubImpl$Variables$Query$getCustomerOrdersByType(this._res);
+
+  TRes _res;
+
+  call({
+    int? custId,
+    String? orderType,
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
+}
+
+class Query$getCustomerOrdersByType {
+  Query$getCustomerOrdersByType({
+    required this.customer_minimal_orders_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerOrdersByType.fromJson(Map<String, dynamic> json) {
+    final l$customer_minimal_orders_aggregate =
+        json['customer_minimal_orders_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerOrdersByType(
+      customer_minimal_orders_aggregate:
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate
+              .fromJson((l$customer_minimal_orders_aggregate
+                  as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getCustomerOrdersByType$customer_minimal_orders_aggregate
+      customer_minimal_orders_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$customer_minimal_orders_aggregate =
+        customer_minimal_orders_aggregate;
+    _resultData['customer_minimal_orders_aggregate'] =
+        l$customer_minimal_orders_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$customer_minimal_orders_aggregate =
+        customer_minimal_orders_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$customer_minimal_orders_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCustomerOrdersByType) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$customer_minimal_orders_aggregate =
+        customer_minimal_orders_aggregate;
+    final lOther$customer_minimal_orders_aggregate =
+        other.customer_minimal_orders_aggregate;
+    if (l$customer_minimal_orders_aggregate !=
+        lOther$customer_minimal_orders_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerOrdersByType
+    on Query$getCustomerOrdersByType {
+  CopyWith$Query$getCustomerOrdersByType<Query$getCustomerOrdersByType>
+      get copyWith => CopyWith$Query$getCustomerOrdersByType(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerOrdersByType<TRes> {
+  factory CopyWith$Query$getCustomerOrdersByType(
+    Query$getCustomerOrdersByType instance,
+    TRes Function(Query$getCustomerOrdersByType) then,
+  ) = _CopyWithImpl$Query$getCustomerOrdersByType;
+
+  factory CopyWith$Query$getCustomerOrdersByType.stub(TRes res) =
+      _CopyWithStubImpl$Query$getCustomerOrdersByType;
+
+  TRes call({
+    Query$getCustomerOrdersByType$customer_minimal_orders_aggregate?
+        customer_minimal_orders_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<TRes>
+      get customer_minimal_orders_aggregate;
+}
+
+class _CopyWithImpl$Query$getCustomerOrdersByType<TRes>
+    implements CopyWith$Query$getCustomerOrdersByType<TRes> {
+  _CopyWithImpl$Query$getCustomerOrdersByType(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerOrdersByType _instance;
+
+  final TRes Function(Query$getCustomerOrdersByType) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? customer_minimal_orders_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCustomerOrdersByType(
+        customer_minimal_orders_aggregate: customer_minimal_orders_aggregate ==
+                    _undefined ||
+                customer_minimal_orders_aggregate == null
+            ? _instance.customer_minimal_orders_aggregate
+            : (customer_minimal_orders_aggregate
+                as Query$getCustomerOrdersByType$customer_minimal_orders_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<TRes>
+      get customer_minimal_orders_aggregate {
+    final local$customer_minimal_orders_aggregate =
+        _instance.customer_minimal_orders_aggregate;
+    return CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate(
+        local$customer_minimal_orders_aggregate,
+        (e) => call(customer_minimal_orders_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getCustomerOrdersByType<TRes>
+    implements CopyWith$Query$getCustomerOrdersByType<TRes> {
+  _CopyWithStubImpl$Query$getCustomerOrdersByType(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getCustomerOrdersByType$customer_minimal_orders_aggregate?
+        customer_minimal_orders_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<TRes>
+      get customer_minimal_orders_aggregate =>
+          CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate
+              .stub(_res);
+}
+
+const documentNodeQuerygetCustomerOrdersByType = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getCustomerOrdersByType'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'custId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderType')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'customer_minimal_orders_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'orderType')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'args'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'cus_id'),
+                value: VariableNode(name: NameNode(value: 'custId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'nodes'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getCustomerOrdersByType _parserFn$Query$getCustomerOrdersByType(
+        Map<String, dynamic> data) =>
+    Query$getCustomerOrdersByType.fromJson(data);
+
+class Options$Query$getCustomerOrdersByType
+    extends graphql.QueryOptions<Query$getCustomerOrdersByType> {
+  Options$Query$getCustomerOrdersByType({
+    String? operationName,
+    required Variables$Query$getCustomerOrdersByType variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetCustomerOrdersByType,
+          parserFn: _parserFn$Query$getCustomerOrdersByType,
+        );
+}
+
+class WatchOptions$Query$getCustomerOrdersByType
+    extends graphql.WatchQueryOptions<Query$getCustomerOrdersByType> {
+  WatchOptions$Query$getCustomerOrdersByType({
+    String? operationName,
+    required Variables$Query$getCustomerOrdersByType variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetCustomerOrdersByType,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getCustomerOrdersByType,
+        );
+}
+
+class FetchMoreOptions$Query$getCustomerOrdersByType
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getCustomerOrdersByType({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getCustomerOrdersByType variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetCustomerOrdersByType,
+        );
+}
+
+extension ClientExtension$Query$getCustomerOrdersByType
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getCustomerOrdersByType>>
+      query$getCustomerOrdersByType(
+              Options$Query$getCustomerOrdersByType options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getCustomerOrdersByType>
+      watchQuery$getCustomerOrdersByType(
+              WatchOptions$Query$getCustomerOrdersByType options) =>
+          this.watchQuery(options);
+  void writeQuery$getCustomerOrdersByType({
+    required Query$getCustomerOrdersByType data,
+    required Variables$Query$getCustomerOrdersByType variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetCustomerOrdersByType),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getCustomerOrdersByType? readQuery$getCustomerOrdersByType({
+    required Variables$Query$getCustomerOrdersByType variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerygetCustomerOrdersByType),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$getCustomerOrdersByType.fromJson(result);
+  }
+}
+
+class Query$getCustomerOrdersByType$customer_minimal_orders_aggregate {
+  Query$getCustomerOrdersByType$customer_minimal_orders_aggregate({
+    this.aggregate,
+    required this.nodes,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerOrdersByType$customer_minimal_orders_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$nodes = json['nodes'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerOrdersByType$customer_minimal_orders_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      nodes: (l$nodes as List<dynamic>)
+          .map((e) =>
+              Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate?
+      aggregate;
+
+  final List<
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>
+      nodes;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$nodes = nodes;
+    _resultData['nodes'] = l$nodes.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$nodes = nodes;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      Object.hashAll(l$nodes.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerOrdersByType$customer_minimal_orders_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$nodes = nodes;
+    final lOther$nodes = other.nodes;
+    if (l$nodes.length != lOther$nodes.length) {
+      return false;
+    }
+    for (int i = 0; i < l$nodes.length; i++) {
+      final l$nodes$entry = l$nodes[i];
+      final lOther$nodes$entry = lOther$nodes[i];
+      if (l$nodes$entry != lOther$nodes$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate
+    on Query$getCustomerOrdersByType$customer_minimal_orders_aggregate {
+  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate>
+      get copyWith =>
+          CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<
+    TRes> {
+  factory CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate(
+    Query$getCustomerOrdersByType$customer_minimal_orders_aggregate instance,
+    TRes Function(
+            Query$getCustomerOrdersByType$customer_minimal_orders_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate;
+
+  factory CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate;
+
+  TRes call({
+    Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate?
+        aggregate,
+    List<Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>?
+        nodes,
+    String? $__typename,
+  });
+  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate<
+      TRes> get aggregate;
+  TRes nodes(
+      Iterable<Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes> Function(
+              Iterable<
+                  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+                      Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerOrdersByType$customer_minimal_orders_aggregate
+      _instance;
+
+  final TRes Function(
+      Query$getCustomerOrdersByType$customer_minimal_orders_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? nodes = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCustomerOrdersByType$customer_minimal_orders_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate?),
+        nodes: nodes == _undefined || nodes == null
+            ? _instance.nodes
+            : (nodes as List<
+                Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+
+  TRes nodes(
+          Iterable<Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes> Function(
+                  Iterable<
+                      CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+                          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>>)
+              _fn) =>
+      call(
+          nodes: _fn(_instance.nodes.map((e) =>
+              CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate?
+        aggregate,
+    List<Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>?
+        nodes,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate
+              .stub(_res);
+  nodes(_fn) => _res;
+}
+
+class Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate {
+  Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate
+    on Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate {
+  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate<
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate(
+    Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate;
+
+  factory CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes {
+  Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes
+    on Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes {
+  CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes>
+      get copyWith =>
+          CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+    TRes> {
+  factory CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+    Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes
+        instance,
+    TRes Function(
+            Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes;
+
+  factory CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerOrdersByType$customer_minimal_orders_aggregate$nodes(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
     String? $__typename,
   }) =>
       _res;

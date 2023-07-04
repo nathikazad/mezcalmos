@@ -2,24 +2,33 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 
 class OperatorState {
-  final int? restaurantId;
+  final int? serviceProviderId;
+  final int? serviceProviderDetailsId;
+  final int? deliveryDetailsId;
+  final int? serviceLinkId;
   final AgentStatus operatorState;
   final bool owner;
   const OperatorState(
-      {required this.restaurantId,
+      {required this.serviceProviderId,
       required this.operatorState,
+      required this.deliveryDetailsId,
+      required this.serviceLinkId,
+      required this.serviceProviderDetailsId,
       required this.owner});
 
   factory OperatorState.fromSnapshot(data) {
     final int restaurantId = data['restaurantId'] ?? null;
     return OperatorState(
-        restaurantId: restaurantId,
+        serviceProviderId: restaurantId,
+        serviceLinkId: null,
+        serviceProviderDetailsId: null,
+        deliveryDetailsId: null,
         owner: false,
-        operatorState: AgentStatus.Awaiting_approval);
+        operatorState: AgentStatus.AwaitingApproval);
   }
 
   Map<String, dynamic> toJson() => {
-        "restaurantId": restaurantId,
+        "restaurantId": serviceProviderId,
         "operatorStat": operatorState.toFirebaseFormatString(),
       };
 }
@@ -65,17 +74,22 @@ class Operator {
   }
 
   bool get isWaitingToBeApprovedByOwner {
-    return state.operatorState == AgentStatus.Awaiting_approval &&
+    return state.operatorState == AgentStatus.AwaitingApproval &&
         state.owner == false;
   }
 }
 // ignore_for_file: constant_identifier_names
 
-enum OperatorType { Laundry, Restaurant }
+enum OperatorType { Laundry, Restaurant, Delivery, Business }
 
 extension ParseOrderTypeToString on OperatorType {
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  OperatorType toOperatorType() {
+    return OperatorType.values.firstWhere(
+        (OperatorType e) => e.toFirebaseFormatString().toLowerCase() == this);
   }
 }

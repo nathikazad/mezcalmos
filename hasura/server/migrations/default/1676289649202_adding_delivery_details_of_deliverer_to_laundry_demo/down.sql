@@ -1,0 +1,11 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- CREATE OR REPLACE FUNCTION public.laundry_delivery_details(laundry_row laundry.store)
+--  RETURNS delivery.details
+--  LANGUAGE sql
+--  STABLE
+-- AS $function$
+--     SELECT *
+--     FROM delivery.details d
+--
+-- $function$;

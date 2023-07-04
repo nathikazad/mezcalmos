@@ -1,35 +1,46 @@
-import { OrderStripeInfo } from "../../../utilities/stripe/model";
-import { DeliveryDriverType } from "./Delivery";
-import { Location } from "./Generic";
+import { OrderStripeInfo } from "../stripe";
+import { CustomerAppType } from "./Generic";
 import { UserInfo } from "./User";
 
 export interface Order {
-  orderType: OrderType,
-  serviceProviderId?: number,
-  cost: number;
-  paymentType: PaymentType,
-  to: Location,
-  customer: UserInfo,
-  orderTime: string,
-  secondaryChats: Record<SecondaryChat, string | null>,
-  estimatedDeliveryTimes: Partial<Record<DeliveryDriverType, Record<DeliveryAction, string | null>>>,
-  stripePaymentInfo?: OrderStripeInfo,
-  totalCostBeforeShipping: number;
-  totalCost: number;
-  refundAmount: number,
-  costToCustomer: number,
+  orderId: number;
+  spDetailsId: number;
+  customerId: number;
+  paymentType: PaymentType;
+  refundAmount?: number;
+  reviewId?: number;
+  deliveryType: DeliveryType;
+  orderTime?: string;
+  firebaseId?: string;
+  customerAppType: CustomerAppType;
+  notes?: string;
+  tax?: number;
+  deliveryCost: number;
+  chatId?: number;
+  scheduledTime?: string;
+  stripeInfo?: OrderStripeInfo;
+  stripeFees?: number | null;
+  cancellationTime?: string;
+  discountValue?: number;
+  totalCost?: number;
+  itemsCost?: number;
+}
+export enum DeliveryType {
+  Pickup = "pickup",
+  Delivery = "delivery",
 }
 
-export enum DeliveryAction {
-  Pickup = "pickup",
-  DropOff = "dropoff",
-}
+// export enum DeliveryAction {
+//   Pickup = "pickup",
+//   DropOff = "dropoff",
+// }
 
 export enum OrderType {
   Taxi = "taxi",
   Restaurant = "restaurant",
   Laundry = "laundry",
-  Water = "water"
+  Courier = "courier",
+  Business = "business",
 }
 //TODO
 
@@ -41,9 +52,10 @@ export const pluralizeOrderType = function (orderType: OrderType): string {
       return "restaurants";
     case OrderType.Laundry:
       return "laundries";
-    case OrderType.Water:
-      return "waters";
-
+    case OrderType.Courier:
+      return "couriers";
+    case OrderType.Business:
+      return "businesses";
   }
 }
 
@@ -53,12 +65,12 @@ export enum PaymentType {
   BankTransfer = "bankTransfer"
 }
 
-export enum SecondaryChat {
-  ServiceProviderDropOffDriverChat = "serviceProviderDropOffDriver",
-  ServiceProviderPickupDriverChat = "serviceProviderPickupDriver",
-  CustomerDropOffDriverChat = "customerDropOffDriver",
-  CustomerPickupDriverChat = "customerPickupDriver"
-}
+// export enum SecondaryChat {
+//   ServiceProviderDropOffDriverChat = "serviceProviderDropOffDriver",
+//   ServiceProviderPickupDriverChat = "serviceProviderPickupDriver",
+//   CustomerDropOffDriverChat = "customerDropOffDriver",
+//   CustomerPickupDriverChat = "customerPickupDriver"
+// }
 
 export interface DeliverableOrder extends Order {
   dropoffDriver?: DeliveryDriverInfo;

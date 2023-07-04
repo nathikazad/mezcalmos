@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["components"]["SavedLocationComponent"];
@@ -27,13 +30,16 @@ class SavedLocationComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(5),
+      elevation: 1.0,
+      margin: const EdgeInsets.all(8),
       child: Container(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.only(bottom: 10, left: 12, right: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   Icons.place,
@@ -41,95 +47,154 @@ class SavedLocationComponent extends StatelessWidget {
                   size: 18,
                 ),
                 SizedBox(
-                  width: 3,
+                  width: 4,
                 ),
                 Flexible(
-                    fit: FlexFit.tight,
-                    child: Text(
-                      savelocation.name,
-                      style: Get.textTheme.bodyText1,
-                    )),
-                InkWell(
-                  onTap: () {
-                    Get.find<CustomerAuthController>()
-                        .setAsDefaultLocation(savelocation);
-                  },
-                  borderRadius: BorderRadius.circular(16),
-                  child: Ink(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                    decoration: BoxDecoration(
-                        color: (savelocation.defaultLocation)
-                            ? primaryBlueColor
-                            : Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(16)),
-                    child: Text(
-                      "Default",
-                      style: Get.textTheme.bodyText2?.copyWith(
-                          color: (savelocation.defaultLocation)
-                              ? Colors.white
-                              : Colors.black),
-                    ),
+                  fit: FlexFit.tight,
+                  child: Text(savelocation.name.capitalizeFirst.toString(),
+                      style: context.txt.headlineMedium),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: StadiumBorder(),
+                          backgroundColor: (savelocation.defaultLocation)
+                              ? primaryBlueColor
+                              : backgroundShadeColor,
+                          shadowColor: Colors.transparent,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 4.25),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minimumSize: Size.zero),
+                      onPressed: () {
+                        Get.find<CustomerAuthController>()
+                            .setAsDefaultLocation(savelocation);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Text(
+                          '${_i18n()["defaultAddressText"]}',
+                          style: TextStyle(
+                            fontFamily: "Montserrat",
+                            color: (savelocation.defaultLocation)
+                                ? Colors.white
+                                : Color(0xFF787878),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 11.mezSp,
+                          ),
+                        ),
+                      )),
+                ),
+                // InkWell(
+                //   onTap: () {
+                //     Get.find<CustomerAuthController>()
+                //         .setAsDefaultLocation(savelocation);
+                //   },
+                //   //borderRadius: BorderRadius.circular(16),
+                //   child: Ink(
+                //     height: 3.2.h,
+                //     //width: 59.sp,
+                //     // width: Get.find<LanguageController>().userLanguageKey ==
+                //     //         LanguageType.EN
+                //     //     ? 20.w
+                //     //     : 28.w,
+                //     padding: EdgeInsets.symmetric(horizontal: 12),
+                //     decoration: BoxDecoration(
+                //         color: (savelocation.defaultLocation)
+                //             ? primaryBlueColor
+                //             : backgroundShadeColor,
+                //         borderRadius: BorderRadius.all(Radius.circular(50))),
+                //     child: Center(
+                //       child: Text(
+                //         '${_i18n()["defaultAddressText"]}',
+                //         style: TextStyle(
+                //           fontFamily: "Montserrat",
+                //           color: (savelocation.defaultLocation)
+                //               ? Colors.white
+                //               : Color(0xFF787878),
+                //           fontWeight: FontWeight.w600,
+                //           fontSize: 11.sp,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                SizedBox(
+                  width: 11,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: InkWell(
+                    onTap: () async {
+                      MezLocation? newLoc = await PickLocationView.navigate(
+                        initialLocation: savelocation.location.toLatLng(),
+                        onSaveLocation: ({MezLocation? location}) async {
+                          if (location != null) {
+                            await savedLocationDailog(
+                                context: context,
+                                loc: location,
+                                savedLoc: savelocation,
+                                skippable: false);
+                          }
+                        },
+                      );
+                    },
+                    customBorder: CircleBorder(),
+                    child: Ink(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: backgroundShadeColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.edit_outlined,
+                            color: Color(0xFF787878),
+                            size: 25,
+                          ),
+                        )),
                   ),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 11,
                 ),
-                InkWell(
-                  onTap: () {
-                    MezRouter.toNamed<void>(
-                      kPickLocationEditRoute,
-                      parameters: <String, String>{
-                        // TODO:544D-HASURA
-// added to.String()
-                        "id": savelocation.id!.toString()
-                      },
-                    );
-                  },
-                  customBorder: CircleBorder(),
-                  child: Ink(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.edit_outlined,
-                          color: Colors.black,
-                          size: 17.sp,
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: InkWell(
+                    onTap: () {
+                      _customerAuthController.deleteLocation(savelocation);
+                    },
+                    customBorder: CircleBorder(),
+                    child: Ink(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: offRedColor,
+                          shape: BoxShape.circle,
                         ),
-                      )),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                InkWell(
-                  onTap: () {
-                    _customerAuthController.deleteLocation(savelocation);
-                  },
-                  customBorder: CircleBorder(),
-                  child: Ink(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: offRedColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.delete_outline,
-                          color: Colors.red,
-                          size: 17.sp,
-                        ),
-                      )),
+                        child: Center(
+                          child: Icon(
+                            Icons.delete_outline,
+                            color: Color(0xFFE21132),
+                            size: 25,
+                          ),
+                        )),
+                  ),
                 ),
               ],
             ),
-            if (savelocation.location != null)
-              Container(
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(top: 5),
-                  child: Text(savelocation.location!.address))
+            SizedBox(
+              height: 12,
+            ),
+            Container(
+              child: Text(
+                savelocation.location.address,
+                style: context.txt.titleMedium?.copyWith(
+                  color: offShadeGreyColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
           ],
         ),
       ),

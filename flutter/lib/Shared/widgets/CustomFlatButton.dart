@@ -7,6 +7,8 @@ class CustomButton extends StatelessWidget {
     required this.onTap,
     required this.height,
     required this.text,
+    this.width,
+    this.borderRadius = 9.8,
     this.textAlignement = Alignment.center,
     Key? key,
   }) : super(key: key);
@@ -14,22 +16,25 @@ class CustomButton extends StatelessWidget {
   final void Function() onTap;
   final List<Color> buttonColor;
   final double height;
+  final double? width;
   final Alignment textAlignement;
+  final double borderRadius;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: Get.width,
-        height: 48,
+        width: width ?? Get.width,
+        height: height,
         decoration: BoxDecoration(
           color: buttonColor.length == 1 ? buttonColor.first : null,
-          borderRadius: BorderRadius.circular(9.8),
+          borderRadius: BorderRadius.circular(borderRadius),
           gradient: buttonColor.length > 1
               ? LinearGradient(colors: buttonColor)
               : null,
         ),
-        child: Align(alignment: textAlignement, child: text),
+        child: Center(child: text),
       ),
     );
   }

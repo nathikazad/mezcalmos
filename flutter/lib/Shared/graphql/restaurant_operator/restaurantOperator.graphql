@@ -1,8 +1,11 @@
 query getOperatorByUserId($userId: Int!) {
   restaurant_operator(where: {user_id: {_eq: $userId}}) {
     id
-    owner
+    operator_details {
+  owner
     status
+    }
+  
     user_id
     user {
       firebase_id
@@ -13,13 +16,50 @@ query getOperatorByUserId($userId: Int!) {
    
     }
     restaurant_id
+    restaurant{  details_id
+      details {
+        service_link_id
+      }
+
+      delivery_details_id}
    
    
   
   }
 }
+query getRestaurantOperators($restaurantId: Int!) {
+  restaurant_restaurant_by_pk(id: $restaurantId) {
+    restaurant_operators {
+      id
+
+      restaurant_id
+         restaurant{details_id
+      details {
+        service_link_id
+      }
+
+      delivery_details_id}
+      operator_details {
+        owner
+        status
+        
+      }
+      user {
+        phone
+        name
+        image
+        language_id
+        id
+        firebase_id
+      }
+    }
+  }
+}
 subscription restaurantOperatorStatusStream($userId: Int!) {
   restaurant_operator(where: {user_id: {_eq: $userId}}) {
+     operator_details {
+  
     status
+    }
   }
 }

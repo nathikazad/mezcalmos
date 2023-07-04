@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -18,6 +21,8 @@ class ROpMenuViewController {
   // state variables
   RxBool reOrderMode = RxBool(false);
   RxBool fetching = RxBool(false);
+  int? detailsId;
+
   //main categories //
   RxList<Category> mainCategories = RxList<Category>([]);
   RxList<Item> currentSpec = RxList<Item>([]);
@@ -31,11 +36,16 @@ class ROpMenuViewController {
   // This method needs to be called on the initState method of the view
   Future<void> init({required int restId}) async {
     restaurnatId = restId;
+    await _fetchDetailsId(restId);
     // assigning restaurant data and start the stream subscription //
     mezDbgPrint("INIT MENU VIEW FROM CONTROLLER =======>$restaurnatId");
     await fetchCategories();
     pageLoaded.value = true;
     mezDbgPrint("Main Categories length ====>${mainCategories.length}");
+  }
+
+  Future<void> _fetchDetailsId(int restId) async {
+    detailsId = await get_restaurant_details_id(restaurantId: restId);
   }
 
   Future<void> fetchCategories() async {
@@ -46,7 +56,9 @@ class ROpMenuViewController {
     final List<Category>? _categories =
         await get_restaurant_categories_by_id(restaurnatId, withCache: false);
     noCategory.value.items.clear();
-    noCategory.value.items = itemsWithNoCat;
+    noCategory.value.items = itemsWithNoCat
+        .where((Item element) => element.itemType != cModels.ItemType.Special)
+        .toList();
     noCategory.refresh();
     if (_categories != null) {
       mainCategories.clear();
@@ -143,17 +155,25 @@ class ROpMenuViewController {
     rOcategories.refresh();
   }
 
-  Future<void> saveReorder() async {
-    for (int i = 0; i < rOcategories.length; i++) {
-      // await restaurantInfoController!.editCategoryPosition(
-      //     position: rOcategories[i].position, categoryId: rOcategories[i].id!);
-      // for (int j = 0; j < rOcategories[i].items.length; j++) {
-      //   await restaurantInfoController!.editItemPosition(
-      //       position: rOcategories[i].items[j].position,
-      //       categoryId: rOcategories[i].id!,
-      //       itemId: rOcategories[i].items[j].id!);
-      // }
+  Future<bool> saveReorder() async {
+    try {
+      final bool catRes =
+          await update_category_positions(data: rOcategories.value);
+      return catRes;
+    } catch (e, stk) {
+      showErrorSnackBar(errorText: e.toString());
+      mezDbgPrint(stk);
+      return false;
     }
+  }
+
+  void switchItemAv({
+    required Item item,
+    required bool value,
+  }) {
+    update_item_by_id(itemId: item.id!, item: item.copyWith(available: value))
+        .then((bool value) =>
+            item.isSpecial ? fetchSpecials() : fetchCategories());
   }
 
   // when user clicks on the back button on reorder mode
@@ -166,21 +186,4 @@ class ROpMenuViewController {
   }
 
   // ----------------------------------------------------- Specials ----------------------------------------------------- //
-  Future<void> removeFromSpecials({required Item item}) async {
-    //  await restaurantInfoController!.removeSpecial(item: item);
-  }
-
-  Future<void> addToSpecials({
-    required Item item,
-  }) async {
-    //  await restaurantInfoController!.addToSpecials(item: item);
-  }
-
-  Future<void> switchSpecialItemAv(
-      {required bool v,
-      required String itemId,
-      required bool isCurrent}) async {
-    //  await restaurantInfoController!
-    //      .switchSpecialItemAv(itemId: itemId, value: v, isCurrent: isCurrent);
-  }
 }

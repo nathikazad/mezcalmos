@@ -1,10 +1,12 @@
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Option {
   int id;
   OptionType optionType;
-  Map<LanguageType, String> name;
+  Map<cModels.Language, String> name;
   int? nameId;
   List<Choice> choices;
   int position = 0;
@@ -51,10 +53,19 @@ class Option {
     );
     return option;
   }
+  bool get haveAtLeastOneChoiceAvailable {
+    return choices
+            .firstWhereOrNull((Choice element) => element.available == true) !=
+        null;
+  }
 
   void sortChoices() {
     choices.sort((Choice a, Choice b) => a.position.compareTo(b.position));
   }
+
+  bool get haveAtLeastOnChoiceAvailable =>
+      choices.firstWhereOrNull((Choice element) => element.available == true) !=
+      null;
 
   void changeOptionType(
     OptionType optionType, {
@@ -84,7 +95,7 @@ class Option {
     }
   }
 
-  Choice? findChoice(Map<LanguageType, String> name) {
+  Choice? findChoice(Map<cModels.Language, String> name) {
     Choice? selected;
     choices.forEach((Choice choice) {
       if (choice.name.toFirebaseFormat().toString() ==
@@ -143,7 +154,7 @@ class Option {
 
   Option copyWith({
     int? id,
-    Map<LanguageType, String>? name,
+    Map<cModels.Language, String>? name,
     int? nameId,
     List<Choice>? choices,
     int? position,

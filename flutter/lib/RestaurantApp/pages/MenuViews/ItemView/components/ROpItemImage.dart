@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -17,13 +18,6 @@ class ROpItemImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField(
-      // validator: (Object? value) {
-      //   if (viewController.newImageFile.value == null &&
-      //       viewController.newImageUrl.value == null) {
-      //     return "Image is required";
-      //   }
-      //   return null;
-      // },
       builder: (FormFieldState state) {
         return Obx(
           () => Column(
@@ -35,7 +29,7 @@ class ROpItemImage extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      backgroundColor: Colors.grey.shade300,
+                      backgroundColor: Color(0xFFEDEDED),
                       backgroundImage: viewController.getRightImage,
                       radius: 90,
                       child: (viewController.imageLoading.isTrue)
@@ -47,7 +41,7 @@ class ROpItemImage extends StatelessWidget {
                               ? Center(
                                   child: Text(
                                     '${_i18n()["addImage"]}',
-                                    style: Get.textTheme.bodyText1,
+                                    style: context.txt.bodyLarge,
                                     textAlign: TextAlign.center,
                                   ),
                                 )
@@ -78,14 +72,6 @@ class ROpItemImage extends StatelessWidget {
                   ],
                 ),
               ),
-              // if (!state.isValid)
-              //   Container(
-              //       margin: const EdgeInsets.only(top: 5),
-              //       child: Text(
-              //         state.errorText ?? "",
-              //         style:
-              //             Get.textTheme.subtitle1?.copyWith(color: Colors.red),
-              //       ))
             ],
           ),
         );

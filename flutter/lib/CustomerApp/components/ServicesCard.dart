@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -10,13 +11,13 @@ class ServicesCard extends StatelessWidget {
   const ServicesCard({
     Key? key,
     required this.title,
-    this.subtitle,
+    required this.subtitle,
     required this.url,
     this.onTap,
   }) : super(key: key);
 
   final String title;
-  final String? subtitle;
+  final String subtitle;
   final String url;
 
   final GestureTapCallback? onTap;
@@ -33,44 +34,26 @@ class ServicesCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: onTap,
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 17.5),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(width: 5),
               Flexible(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     //================= title=============
-                    Container(
-                      padding: const EdgeInsets.all(3),
-                      alignment: Alignment.centerLeft,
-                      child: Text("$title", style: textTheme.headline3),
-                    ),
+                    Text("$title", style: textTheme.displaySmall),
                     //================ subtitle============
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 7,
-                        vertical: 3,
-                      ),
-                      alignment: Alignment.centerLeft,
-                      // padding:
-                      //     subtitle == null ? EdgeInsets.only(left: 10) : null,
-                      child: subtitle != null
-                          ? Text("$subtitle", style: textTheme.subtitle1)
-                          : Text(
-                              "${i18n["comingSoon"]}",
-                              style: textTheme.subtitle1,
-                            ),
-                    )
+                    Text("$subtitle", style: textTheme.titleMedium)
                   ],
                 ),
               ),
-              const SizedBox(width: 15),
               Container(
-                width: 20.w,
-                height: 20.w,
+                width: 25.mezW,
+                height: 20.mezW,
                 child: Image.asset(
                   url,
                   fit: BoxFit.fill,

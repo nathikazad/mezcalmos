@@ -2,11 +2,27 @@ table:
   name: company
   schema: delivery
 object_relationships:
-  - name: description
+  - name: delivery_details
     using:
-      foreign_key_constraint_on: description_id
+      foreign_key_constraint_on: delivery_details_id
+  - name: details
+    using:
+      manual_configuration:
+        column_mapping:
+          details_id: id
+        insertion_order: null
+        remote_table:
+          name: details
+          schema: service_provider
 array_relationships:
-  - name: delivery_drivers
+  - name: delivery_operators
+    using:
+      foreign_key_constraint_on:
+        column: delivery_company_id
+        table:
+          name: operator
+          schema: delivery
+  - name: drivers
     using:
       manual_configuration:
         column_mapping:
@@ -16,10 +32,75 @@ array_relationships:
         remote_table:
           name: driver
           schema: delivery
-  - name: delivery_operators
+  - name: reviews
     using:
-      foreign_key_constraint_on:
-        column: delivery_company_id
-        table:
-          name: operator
-          schema: delivery
+      manual_configuration:
+        column_mapping:
+          id: to_entity_id
+          service_provider_type: to_entity_type
+        insertion_order: null
+        remote_table:
+          name: review
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - service_provider_type
+      filter: {}
+      allow_aggregations: true
+  - role: customer
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - service_provider_type
+      filter: {}
+      allow_aggregations: true
+  - role: delivery_driver
+    permission:
+      columns:
+        - id
+      filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - service_provider_type
+      filter:
+        delivery_operators:
+          user_id:
+            _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - delivery_details_id
+        - id
+        - service_provider_type
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - service_provider_type
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+      filter: {}

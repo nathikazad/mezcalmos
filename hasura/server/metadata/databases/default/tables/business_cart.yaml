@@ -1,0 +1,50 @@
+table:
+  name: cart
+  schema: business
+array_relationships:
+  - name: items
+    using:
+      manual_configuration:
+        column_mapping:
+          customer_id: customer_id
+        insertion_order: null
+        remote_table:
+          name: cart_item
+          schema: business
+computed_fields:
+  - name: cost
+    definition:
+      function:
+        name: cartcost
+        schema: business
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - business_id
+        - customer_id
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - customer_id
+        - business_id
+        - discount_value
+      computed_fields:
+        - cost
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - business_id
+        - customer_id
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      check: null

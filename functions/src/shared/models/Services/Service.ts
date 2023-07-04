@@ -1,43 +1,90 @@
-import { ServiceProviderStripeInfo } from "../../../utilities/stripe/model";
-import { AuthorizationStatus, Language } from "../Generic/Generic";
+import { ServiceProviderStripeInfo } from "../stripe";
+import { ParticipantType } from "../Generic/Chat";
+import { DeliveryDetails } from "../Generic/Delivery";
+import { AppType, AuthorizationStatus, Language, Location, NotificationInfo } from "../Generic/Generic";
 import {  PaymentType } from "../Generic/Order";
 import { UserInfo } from "../Generic/User";
+import { ForegroundNotification } from "../Notification";
+import { Schedule } from "../Generic/Schedule";
 
-export interface State {
-  authorizationStatus: AuthorizationStatus;
-  open: boolean;
+export interface ServiceProvider {
+  id: number;
+  serviceProviderDetailsId: number;
+  name: string;
+  image: string;
+  phoneNumber?: string;
+  firebaseId?: string;
+  location: Location;
+  description?: Record<Language, string>;
+  openStatus?: OpenStatus;
+  stripeInfo?: ServiceProviderStripeInfo;
+  acceptedPayments?: Record<PaymentType, boolean>;
+  approved?: boolean;
+  links?: ServiceLink;
+  creationTime?: string;
+  language: ServiceProviderLanguage;
+  schedule?: Schedule;
+  deliveryPartnerId?: number;
+  deliveryDetails: DeliveryDetails;
+  operators?: Array<Operator>;
+  serviceProviderType: ServiceProviderType;
+  uniqueId?: string;
+  currency?: Currency;
 }
 
-export interface Details {
-  description: Record<Language, string>;
-  languages: Language[];
-  paymentInfo: PaymentInfo;
+export interface Operator {
+  id: number;
+  detailsId: number;
+  serviceProviderDetailsId?: number;
+  serviceProviderId: number;
+  userId: number;
+  status: AuthorizationStatus;
+  online: boolean,
+  owner?: boolean;
+  appVersion?: string;
+  currentGps?: Location;
+  notificationInfo?: NotificationInfo;
+  user?: UserInfo;
 }
 
-export interface Service {
-  state: State;
-  info: UserInfo;
-  details: Details
+export enum OpenStatus {
+  Open = "open",
+  ClosedTemporarily = "closedTemporarily",
+  ClosedIndefinitely = "closedIndefinitely",
 }
 
-export interface PaymentInfo {
-  stripe: ServiceProviderStripeInfo;
-  acceptedPayments: Record<PaymentType, boolean>;
-}
+// export interface State {
+//   authorizationStatus: AuthorizationStatus;
+//   open: boolean;
+// }
+
+// export interface Details {
+//   description: Record<Language, string>;
+//   languages: Language[];
+//   paymentInfo: PaymentInfo;
+// }
+
+// export interface PaymentInfo {
+//   stripe: ServiceProviderStripeInfo;
+//   acceptedPayments: Record<PaymentType, boolean>;
+// }
 export interface ServiceLink{
   id?: number;
-  service_provider_id: number;
-  service_provider_type: ServiceProviderType;
-  operator_deep_link?: string; 
-  operator_qr_image_link?: string;
-  driver_deep_link?: string; 
-  driver_qr_image_link?: string; 
-
+  serviceProviderId: number;
+  serviceProviderType: ServiceProviderType;
+  operatorDeepLink?: string; 
+  operatorQrImageLink?: string;
+  driverDeepLink?: string; 
+  driverQrImageLink?: string;
+  customerFlyerLinks?: Record<Language, string>;
 }
 export enum ServiceProviderType {
   Restaurant = "restaurant",
   Laundry = "laundry",
-  Taxi = "taxi"
+  Business = "business",
+  DeliveryCompany = "deliveryCompany",
+  Customer = "customer",
+  DeliveryDriver = "deliveryDriver"
 }
 
 export interface Offer {
@@ -77,9 +124,41 @@ export interface OfferDetails {
 }
 
 export enum DiscountType {
-  FlatAmount = "flat_amount",
+  FlatAmount = "flatAmount",
   Percentage = "percentage",
-  AnotherSameFlat = "another_same_flat",
-  AnotherSamePercentage = "another_same_percentage",
-  StoreCredit = "store_credit",
+  AnotherSameFlat = "anotherSameFlat",
+  AnotherSamePercentage = "anotherSamePercentage",
+  StoreCredit = "storeCredit",
+}
+
+export enum Currency {
+  Peso = "peso",
+}
+
+export interface OperatorApprovedNotification extends ForegroundNotification {
+  operatorId: number,
+  approved: boolean,
+  serviceProviderName: string,
+  serviceProviderId: number,
+  participantType: ParticipantType,
+}
+
+export interface ServiceProviderLanguage {
+  primary: Language;
+  secondary?: Language;
+}
+
+export const ServiceProviderToAppType: Record<ServiceProviderType, AppType> = {
+  [ServiceProviderType.Restaurant]: AppType.Restaurant,
+  [ServiceProviderType.Laundry]: AppType.Laundry,
+  [ServiceProviderType.Business]: AppType.Business,
+  [ServiceProviderType.DeliveryCompany]: AppType.DeliveryAdmin,
+  [ServiceProviderType.Customer]: AppType.Customer,
+  [ServiceProviderType.DeliveryDriver]: AppType.Delivery,
+}
+
+export interface ServiceProviderDeletedNotification extends ForegroundNotification {
+  serviceProviderName?: string,
+  serviceProviderId: number,
+  serviceProviderType: ServiceProviderType,
 }

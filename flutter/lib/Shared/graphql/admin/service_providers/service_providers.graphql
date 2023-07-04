@@ -1,0 +1,99 @@
+query admin_get_dv_companies($limit: Int!, $offset: Int!) {
+  delivery_company(limit: $limit, offset: $offset) {
+    delivery_details {
+      cost_per_km
+      customer_pickup
+      delivery_available
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      radius
+      minimum_cost
+      self_delivery
+    }
+    details {
+      id
+      is_open
+      approved
+      online_ordering
+      image
+      name
+      language
+      schedule
+      open_status
+      creation_time
+      service_provider_type
+      location {
+        gps
+        address
+      }
+    }
+    delivery_details_id
+    id
+  }
+}
+query admin_get_laundries($limit: Int!, $offset: Int!) {
+  laundry_store(limit: $limit, offset: $offset) {
+    details {
+      id
+      is_open
+      approved
+      image
+      name
+      language
+      online_ordering
+      open_status
+      creation_time
+      service_provider_type
+      location {
+        gps
+        address
+      }
+    }
+    delivery_details_id
+    id
+  }
+}query admin_get_businesses($limit: Int!, $offset: Int!) {
+  business_business(limit: $limit, offset: $offset) {
+    details {
+      id
+      approved
+      image
+      is_open
+      name
+      language
+      open_status
+      creation_time
+      service_provider_type
+      location {
+        gps
+        address
+      }
+    }
+   profile
+    id
+  }
+}
+query admin_get_restaurants($limit: Int!, $offset: Int!) {
+  restaurant_restaurant(limit: $limit, offset: $offset) {
+    id
+    delivery_details_id
+    details {
+      id
+      is_open
+      approved
+      firebase_id
+      online_ordering
+      image
+
+      language
+      location {
+        gps
+        address
+      }
+      name
+      open_status
+      service_provider_type
+    }
+  }
+}

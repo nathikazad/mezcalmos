@@ -1,0 +1,26 @@
+mutation addStripePaymentInfo($data: service_provider_stripe_info_insert_input!) {
+  insert_service_provider_stripe_info_one(object: $data) {
+    id
+    stripe_id
+    status
+    requirements
+    payouts_enabled
+    email
+    details_submitted
+    charges_enabled
+    charge_fees_on_customer
+  }
+}
+mutation updateStripePaymentInfo($data: service_provider_stripe_info_set_input!,$sp_id: Int!) {
+  update_service_provider_stripe_info_by_pk(pk_columns: {id: $sp_id}, _set: $data) {
+    charge_fees_on_customer
+    details_submitted
+    charges_enabled
+    email
+    payouts_enabled
+    requirements
+    id
+    status
+    id
+  }
+}

@@ -1,62 +1,75 @@
-import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
-import 'package:mezcalmos/LaundryApp/pages/CategoryView/CategoryView.dart';
-import 'package:mezcalmos/LaundryApp/pages/CurrentOrdersList/LaundryOpOrdersListView.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
+import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/LaundryOpOrderView.dart';
-import 'package:mezcalmos/LaundryApp/pages/PastOrdresList/LaundryOpPastOrdersList.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrders.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpPastOrdersList.dart';
+import 'package:mezcalmos/LaundryApp/pages/TabsView/LaundryTabsView.dart';
+import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-// const String kCurrentOrdersListRoute = '/currentOrders';
-const String kCurrentOrdersListView = '/orders';
-const String kPastOrdersListView = '/pastorders';
-const String kAdminView = '/admin/:laundryId';
+class LaundryAppRoutes {
+  static const String kCurrentOrdersListViewRoute = '/orders';
+  static const String kPastOrdersListViewRoute = '/pastorders';
+  static const String kAdminViewRoute = '/admin/:laundryId';
+  static const String kEditInfoView = '/editInfo/:laundryId';
+  static const String kCategoryViewRoute =
+      '/laundryCategoryScreen/:laundryId/:categoryId';
+  static const String kOrderViewRoute = '/laundryOrders/:orderId';
+  static const String kLaundryTabsViewRoute = '/dashboard';
 
-const String kEditInfoView = '/editInfo/:laundryId';
-
-const String kCategoryView = '/categoryScreen/:laundryId/:categoryId';
-const String kOrderView = '/laundryOrders/:orderId';
-
-String getCategoryRoute({String? categoryId, required String laundryId}) {
-  mezDbgPrint("Categ =========>$categoryId");
-  String catgRoute = kCategoryView.replaceFirst(":laundryId", laundryId);
-  if (categoryId != null) {
-    catgRoute = catgRoute.replaceFirst(":categoryId", categoryId);
+  static String getEditInfoRoute({required int laundryId}) {
+    return kEditInfoView.replaceFirst(":laundryId", "$laundryId");
   }
-  mezDbgPrint("finalroute :======> $catgRoute");
-  return catgRoute;
-}
 
-String getAdminRoute({required String laundryId}) {
-  return kAdminView.replaceFirst(":laundryId", laundryId);
-}
+  static String getLaundryOpOrderRoute(int orderId) {
+    return kOrderViewRoute.replaceFirst(":orderId", "$orderId");
+  }
 
-String getEditInfoRoute({required String laundryId}) {
-  return kEditInfoView.replaceFirst(":laundryId", laundryId);
-}
-
-String getLaundryOpOrderRoute(String orderId) {
-  return kOrderView.replaceFirst(":orderId", orderId);
-}
-
-// GetX based Router (For navigating)
-class XRouter {
-  static dynamic mainRoutes = [
-        GetPage(name: kEditInfoView, page: () => LaundryOpEditInfoView()),
-        GetPage(name: kAdminView, page: () => LaundryOpAdminView()),
-        GetPage(
-            name: kCurrentOrdersListView,
-            page: () => LaundryOpCurrentOrdersListView()),
-        GetPage(
-            name: kPastOrdersListView, page: () => LaundryOpPastOrdersList()),
-        GetPage(name: kHomeRoute, page: () => LaundryWrapper()),
-        GetPage(
-          name: kCategoryView,
-          page: () => LaundryOpCategoryScreen(),
+  static final List<QRoute> mainRoutes = <QRoute>[
+        QRoute(
+          path: kLaundryTabsViewRoute,
+          name: kLaundryTabsViewRoute,
+          builder: () => LaundryTabsView(),
         ),
-        GetPage(name: kOrderView, page: () => LaundryOpOrderView())
+        QRoute(
+          path: kCurrentOrdersListViewRoute,
+          name: kCurrentOrdersListViewRoute,
+          builder: () => LaundryOpCurrentOrdersListView(),
+        ),
+        QRoute(
+          path: kPastOrdersListViewRoute,
+          name: kPastOrdersListViewRoute,
+          builder: () => LaundryOpPastOrdersList(),
+        ),
+        QRoute(
+          path: SharedRoutes.kHomeRoute,
+          name: SharedRoutes.kHomeRoute,
+          builder: () => LaundryWrapper(),
+        ),
       ] +
-      SharedRouter.sharedRoutes;
+      sharedWithAdminRoutes +
+      SharedRoutes.qRoutes +
+      SharedServiceProviderRoutes.routes;
+  static final List<QRoute> sharedWithAdminRoutes = [
+    QRoute(
+      path: kAdminViewRoute,
+      name: kAdminViewRoute,
+      builder: () => LaundryOpAdminView(),
+    ),
+    QRoute(
+      path: kOrderViewRoute,
+      name: kOrderViewRoute,
+      builder: () => LaundryOrderView(),
+    ),
+    QRoute(
+      path: kCategoryViewRoute,
+      name: kCategoryViewRoute,
+      builder: () => LaundrOpCategoryView(),
+    ),
+  ];
+
+//  +
+// NativeOnlyRoutes.routes;
 }

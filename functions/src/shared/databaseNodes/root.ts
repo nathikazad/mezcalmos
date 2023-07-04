@@ -14,12 +14,11 @@ const participantTypeToNodeMap: { [id in ParticipantType]: string } = {
   [ParticipantType.Customer]: "customers",
   [ParticipantType.DeliveryOperator]: "deliveryAdmins",
   [ParticipantType.Taxi]: "taxis",
-  [ParticipantType.Restaurant]: "restaurants",
   [ParticipantType.DeliveryDriver]: "deliveryDrivers",
-  [ParticipantType.Laundry]: "laundries",
   [ParticipantType.LaundryOperator]: "operators/laundry",
   [ParticipantType.RestaurantOperator]: "operators/restaurant",
   [ParticipantType.MezAdmin]: "medAdmins",
+  [ParticipantType.BusinessOperator]: "operators/business"
 };
 
 export function notificationInfoNode(participantType: ParticipantType, userId: string) {
@@ -39,7 +38,7 @@ export function pastOrders(orderType: OrderType, orderId?: string) {
 }
 
 export function notificationsQueueNode(notificationId?: string) {
-  let dbNode: string = `notificationQueue`
+  let dbNode: string = `notificationQueue2`
   if (notificationId != undefined) {
     dbNode += `/${notificationId}`
   }

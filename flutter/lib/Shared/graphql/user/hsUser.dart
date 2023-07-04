@@ -2,12 +2,12 @@
 
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/user/__generated/user.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 final HasuraDb _db = Get.find<HasuraDb>();
 Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
@@ -24,15 +24,16 @@ Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
       hasuraId: hasuraId,
       firebaseId: data.firebase_id,
       name: data.name,
-      language: data.language_id.toLanguageType(),
+      language: data.language_id.toLanguage(),
       image: data.image,
+      creationTime: data.creation_time,
     );
   }
 }
 
-Future<void> change_user_language({
+Future<cModels.Language> change_user_language({
   required int userId,
-  required LanguageType language,
+  required cModels.Language language,
 }) async {
   final QueryResult<Mutation$changeUserLanguage> _res =
       await _db.graphQLClient.mutate$changeUserLanguage(
@@ -44,15 +45,12 @@ Future<void> change_user_language({
     ),
   );
 
-  if (_res.hasException) {
-    mezDbgPrint(
-        "[ERROR] CALLED :: change_user_language :: EXCEPTION :: ${_res.exception}");
-  } else {
-    mezDbgPrint(
-        "[SUCCESS] CALLED :: change_user_language :: DATA :: ${_res.data}");
-
-    // Get.find<LanguageController>().setLanguage(language);
+  if (_res.parsedData?.update_user_by_pk == null) {
+    throwError(_res.exception);
   }
+  return _res.parsedData!.update_user_by_pk!.language_id.toLanguage();
+
+  // Get.find<LanguageController>().setLanguage(language);
 }
 
 Future<String> change_username({

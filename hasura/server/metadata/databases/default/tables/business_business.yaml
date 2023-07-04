@@ -1,0 +1,104 @@
+table:
+  name: business
+  schema: business
+object_relationships:
+  - name: details
+    using:
+      foreign_key_constraint_on: details_id
+array_relationships:
+  - name: events
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: event
+          schema: business
+  - name: home
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: home
+          schema: business
+  - name: operators
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: operator
+          schema: business
+  - name: products
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: product
+          schema: business
+  - name: rentals
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: rental
+          schema: business
+  - name: reviews
+    using:
+      manual_configuration:
+        column_mapping:
+          id: to_entity_id
+          service_provider_type: to_entity_type
+        insertion_order: null
+        remote_table:
+          name: review
+          schema: public
+  - name: services
+    using:
+      foreign_key_constraint_on:
+        column: business_id
+        table:
+          name: service
+          schema: business
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - details_id
+        - id
+        - service_provider_type
+        - profile
+      filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - details_id
+        - id
+        - service_provider_type
+        - profile
+      filter:
+        operators:
+          user_id:
+            _eq: X-Hasura-User-Id
+      allow_aggregations: true
+  - role: customer
+    permission:
+      columns:
+        - details_id
+        - id
+        - profile
+        - service_provider_type
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - details_id
+        - id
+        - service_provider_type
+        - profile
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

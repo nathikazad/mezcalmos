@@ -1,20 +1,22 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileView/controllers/UserProfileViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -26,6 +28,7 @@ class AuthController extends GetxController {
 
   RxnInt _hasuraUserId = RxnInt();
   int? get hasuraUserId => _hasuraUserId.value;
+  RxBool isUserSetted = RxBool(false);
 
   Rxn<UserInfo> _userInfo = Rxn();
   UserInfo? get user => _userInfo.value;
@@ -43,60 +46,111 @@ class AuthController extends GetxController {
 
   AuthController(this._onSignInCallback, this._onSignOutCallback);
   String? _previousUserValue = "init";
-  bool preserveNavigationStackAfterSignIn = false;
+  bool userRedirectFinish = false;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     // _authStateStream.addStream(_auth.authStateChanges());
 
-    mezDbgPrint('Auth controller init!');
     _auth.authStateChanges().listen((fireAuth.User? user) async {
-      if (user?.toString() == _previousUserValue) {
-        mezDbgPrint(
-            'Authcontroller:: same sign in event fired again, skipping it');
-        return;
-      }
-      _previousUserValue = user?.toString();
-
-      mezDbgPrint('Authcontroller:: Auth state change!');
-      mezDbgPrint(user?.hashCode);
-      mezDbgPrint(user ?? "empty");
-
-      if (user == null) {
-        _hasuraUserId.value = null;
-        await hasuraDb.initializeHasura();
-        await _onSignOutCallback();
-        mezDbgPrint('AuthController: User is currently signed out!');
-      } else {
-        mezDbgPrint('AuthController: User is currently signed in!');
-
-        fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult(true);
-        mezDbgPrint(tokenResult.claims);
-
-        if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null) {
-          mezDbgPrint("No token, calling addHasuraClaims");
-
-          await FirebaseFunctions.instance
-              .httpsCallable('user-addHasuraClaim')
-              .call();
-
-          tokenResult = await user.getIdTokenResult(true);
-        }
-        _hasuraUserId.value = int.parse(tokenResult
-            .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
-
-        mezDbgPrint(_hasuraUserId.value);
-
-        await hasuraDb.initializeHasura();
-        await fetchUserInfoFromHasura();
-        await _onSignInCallback();
-      }
-
-      _authStateStreamController.add(user);
+      await authChangeCallback(user);
     });
 
     super.onInit();
+  }
+
+  Future<void> authChangeCallback(fireAuth.User? user) async {
+    mezDbgPrint('Auth controller init! 👋👋👋👋👋');
+    userRedirectFinish = false;
+    if (user?.toString() == _previousUserValue) {
+      mezDbgPrint(
+          'Authcontroller:: same sign in event fired again, skipping it');
+      return;
+    }
+    _previousUserValue = user?.toString();
+
+    mezDbgPrint('Authcontroller:: Auth state change!');
+    mezDbgPrint(user?.hashCode);
+    mezDbgPrint(user ?? "empty");
+
+    if (user == null) {
+      _hasuraUserId.value = null;
+      await hasuraDb.initializeHasura();
+      await _onSignOutCallback();
+      mezDbgPrint('AuthController: User is currently signed out!');
+    } else {
+      mezDbgPrint('AuthController: User is currently signed in!');
+
+      fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult(true);
+      mezDbgPrint(tokenResult.claims);
+
+      if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null ||
+          roleMissing(tokenResult.claims!['https://hasura.io/jwt/claims']
+              ['x-hasura-allowed-roles'])) {
+        mezDbgPrint("No token, calling addHasuraClaims");
+
+        await CloudFunctions.user2_addHasuraClaim();
+
+        tokenResult = await user.getIdTokenResult(true);
+      }
+      _hasuraUserId.value = int.parse(tokenResult
+          .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
+
+      mezDbgPrint(_hasuraUserId.value);
+
+      await hasuraDb.initializeHasura();
+      await fetchUserInfoFromHasura();
+      _setLAppLanguage();
+      await _onSignInCallback();
+      // todo @sanchit
+      // we check if user just signed up using _userInfo.value.created time < 120 seconds
+      //    if yes we check if uniqueId is set in local storage
+      //        we call the cloud function
+      if (_userInfo.value?.creationTime != null) {
+        if ((DateTime.now().millisecondsSinceEpoch) -
+                (DateTime.parse(_userInfo.value!.creationTime!)
+                    .millisecondsSinceEpoch) <
+            120 * 1000) {
+          if (GetStorage().read('uniqueId') != null) {
+            // try {
+            //   final cModels.AddReferralResponse res =
+            //       await CloudFunctions.serviceProvider_addReferral(
+            //           uniqueId: GetStorage().read('uniqueId'));
+
+            //   if (res.success == false) {
+            //     mezDbgPrint(res.error);
+            //   }
+            //   // GetStorage().remove('uniqueId');
+            // } catch (e, stk) {
+            //   mezDbgPrint(e);
+            //   mezDbgPrint(stk);
+            // }
+          }
+        }
+      }
+    }
+
+    _authStateStreamController.add(user);
+  }
+
+  bool roleMissing(List<Object?> actualRoles) {
+    List<String> expectedRoles = <String>[
+      'anonymous',
+      'restaurant_operator',
+      'customer',
+      'mez_admin',
+      'deliverer',
+      'delivery_operator',
+      'delivery_driver',
+      'laundry_operator',
+      'business_operator',
+    ];
+
+    final List<String> difference =
+        expectedRoles.toSet().difference(actualRoles.toSet()).toList();
+    // return false;
+    return difference.length > 0;
   }
 
   Future<void> fetchUserInfoFromHasura() async {
@@ -141,43 +195,6 @@ class AuthController extends GetxController {
     }
   }
 
-  /// This Functions takes a File (Image) and an optional [isCompressed]
-  ///
-  /// And Upload it to firebaseStorage with at users/[uid]/avatar/[uid].[isCompressed ? 'cmpressed' : 'original'].[extension]
-  Future<String> uploadUserImgToFbStorage({
-    required File imageFile,
-    bool isCompressed = false,
-  }) async {
-    File compressedFile = imageFile;
-    if (isCompressed == false) {
-      // this holds userImgBytes of the original
-      final Uint8List originalBytes = await imageFile.readAsBytes();
-      // this is the bytes of our compressed image .
-      final Uint8List _compressedVersion =
-          await compressImageBytes(originalBytes);
-      // Get the actual File compressed
-      compressedFile = await writeFileFromBytesAndReturnIt(
-          filePath: imageFile.path, imgBytes: _compressedVersion);
-    }
-    String _uploadedImgUrl;
-    final List<String> splitted = imageFile.path.split('.');
-    final String imgPath =
-        "users/$hasuraUserId/avatar/$hasuraUserId.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
-    try {
-      await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .putFile(compressedFile);
-    } on firebase_core.FirebaseException catch (e) {
-      mezDbgPrint(e.message.toString());
-    } finally {
-      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
-          .ref(imgPath)
-          .getDownloadURL();
-    }
-
-    return _uploadedImgUrl;
-  }
-
   /// this is for setting the Original size of the image that was picked by the user,
   ///
   /// Made as a seprated function and not along with [editUserProfile]'s parameteres,
@@ -218,12 +235,28 @@ class AuthController extends GetxController {
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    await logOut();
   }
 
-  Future<void> changeLanguage(LanguageType newLanguage) async {
-    if (isUserSignedIn) {
-      await change_user_language(userId: user!.hasuraId, language: newLanguage);
+  Future<cModels.Language> changeLanguage(cModels.Language newLanguage) async {
+    return await change_user_language(
+        userId: user!.hasuraId, language: newLanguage);
+  }
+
+  void _setLAppLanguage() {
+    if (_userInfo.value != null) {
+      Get.find<LanguageController>().changeUserLanguage(
+          language: _userInfo.value?.language, saveToDatabase: false);
+    }
+  }
+
+  Future<bool> nameAndImageChecker() async {
+    if (isDisplayNameSet() && isUserImgSet()) {
+      return true;
+    } else {
+      showErrorSnackBar(errorText: "${_i18n()['setNameAndImage']}");
+      await UserProfileView.navigate(initalMode: UserProfileViewMode.Editing);
+      return isDisplayNameSet() && isUserImgSet();
     }
   }
 

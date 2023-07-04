@@ -1,28 +1,62 @@
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 
 abstract class Service {
   ServiceInfo info;
-  Schedule? schedule;
+  int serviceDetailsId;
+  cModels.Schedule? schedule;
+  String? phoneNumber;
+  int? serviceLinkId;
+  cModels.ServiceProviderType? serviceProviderType;
   ServiceState state;
-  ServiceStatus? status;
-  LanguageType primaryLanguage;
-  LanguageType? secondaryLanguage;
+  cModels.ServiceProviderLanguage languages;
+  cModels.Currency? currency;
+  List<Review> reviews = <Review>[];
+  num? rate;
+  num? numberOfReviews;
+  DeliveryCost? deliveryCost;
+  bool isOpen;
+  bool onlineOrdering;
+  String? uniqueId;
   PaymentInfo? paymentInfo;
+
   Service(
       {required this.info,
+      required this.serviceDetailsId,
       this.schedule,
-      this.status,
+      this.phoneNumber,
+      this.serviceLinkId,
+      this.numberOfReviews,
+      this.serviceProviderType,
       required this.state,
-      required this.primaryLanguage,
-      this.secondaryLanguage,
-      required this.paymentInfo});
+      required this.languages,
+      this.reviews = const [],
+      this.rate,
+      required this.isOpen,
+      required this.deliveryCost,
+      required this.onlineOrdering,
+      this.paymentInfo,
+      this.uniqueId,
+      this.currency});
+
+  cModels.Language get primaryLanguage => languages.primary;
+  cModels.Language? get secondaryLanguage => languages.secondary;
+
+  bool get showReviews {
+    return rate != null && reviews.isNotEmpty;
+  }
+
+  // bool isOpen {
+  //   return state.isOpen && (schedule?.isOpen ?? true);
+  // }
 }
 
 class ServiceState {
-  ServiceStatus status = ServiceStatus.Closed_indefinitely;
+  ServiceStatus status = ServiceStatus.ClosedIndefinitely;
   // bool available = false;
   bool approved = false;
   ServiceState(this.status, this.approved);
@@ -43,7 +77,7 @@ class ServiceState {
     });
     return ServiceState(
       stateData?["status"]?.toString().toServiceStatus() ??
-          ServiceStatus.Closed_temporarily,
+          ServiceStatus.ClosedTemporarily,
       stateData?["approved"] ?? false,
     );
   }
@@ -56,39 +90,23 @@ class ServiceState {
   bool get isAuthorized => approved;
   bool get available => approved && status == ServiceStatus.Open;
   bool get isOpen => status == ServiceStatus.Open;
+  bool get isClosedIndef => status == ServiceStatus.ClosedIndefinitely;
 }
 
-// enum ServiceStatus {
-//   Awaiting_verification,
-//   Open,
-//   Closed_temporarily,
-//   Closed_indefinitely
-// }
-
-// extension ServiceStatusHelper on ServiceStatus {
-//   String toHasuraFormat() {
-//     final String str = toString().split('.').last;
-//     mezDbgPrint("Hasura format ====>${str.toLowerCase()}");
-//     return str.toLowerCase();
-//   }
-
-//   ServiceState toServiceState() {
-//     ServiceState state =
-//         ServiceState(AuthorizationStatus.Authorized, false, false);
-//     if (this == ServiceStatus.Awaiting_verification) {
-//       state = ServiceState(AuthorizationStatus.InReview, false, false);
-//     } else if (this == ServiceStatus.Open) {
-//       state = ServiceState(AuthorizationStatus.Authorized, true, true);
-//     } else if (this == ServiceStatus.Closed_temporarily) {
-//       state = ServiceState(AuthorizationStatus.Authorized, true, false);
-//     }
-//     return state;
-//   }
-// }
-
-// extension ServiceStatusStringHelper on String {
-//   ServiceStatus toServiceStatus() {
-//     return ServiceStatus.values
-//         .firstWhere((ServiceStatus e) => e.toHasuraFormat() == this);
-//   }
-// }
+class MainService extends Service {
+  MainService({
+    required super.info,
+    required super.serviceDetailsId,
+    required super.state,
+    required super.languages,
+    required super.paymentInfo,
+    required super.isOpen,
+    required super.schedule,
+    required super.phoneNumber,
+    required super.serviceLinkId,
+    required super.serviceProviderType,
+    required super.deliveryCost,
+    required super.onlineOrdering,
+    super.uniqueId,
+  });
+}

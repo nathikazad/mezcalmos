@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class Geography {
   final double latitude;
@@ -36,20 +37,38 @@ String moneyToJson(double money) => "$money";
 
 /// Accepts a translations array (from hasura) and return a language map object
 // ignore: avoid_annotating_with_dynamic
-Map<LanguageType, String> toLanguageMap({required List translations}) {
-  final Map<LanguageType, String> map = {};
+Map<Language, String> toLanguageMap({required List translations}) {
+  final Map<Language, String> map = {};
   translations.forEach((element) {
-    map[element.language_id.toString().toLanguageType()] = element.value;
+    map[element.language_id.toString().toLanguage()] = element.value;
   });
   return map;
 }
 
-/// Decode a jsonString into a Map<String, dynamic>
-T mapFromJson<T>(jsonString) {
-  return jsonDecode(jsonString.toString()) as T;
+ServiceProviderLanguage convertToLanguages(languages) {
+  if (languages["primary"] == null)
+    return ServiceProviderLanguage(
+        primary: Language.EN, secondary: Language.ES);
+  return ServiceProviderLanguage(
+    primary: languages["primary"].toString().toLanguage(),
+    secondary: languages["secondary"] != null
+        ? languages["secondary"].toString().toLanguage()
+        : null,
+  );
 }
 
-/// Stringify a Map object
-String mapToJson(map) {
-  return jsonEncode(map);
+/// Decode a jsonString into a Map<String, dynamic>
+T mapFromJson<T>(jsonString) {
+  // mezDbgPrint("mapFromJson: $jsonString");
+  try {
+    return jsonDecode(jsonString.toString()) as T;
+  } on FormatException {
+    return jsonString;
+  }
+}
+
+//// Stringify a Map object
+dynamic mapToJson(map) {
+  mezDbgPrint("map =======>$map");
+  return map;
 }

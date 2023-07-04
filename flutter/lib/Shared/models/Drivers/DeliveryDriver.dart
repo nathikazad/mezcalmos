@@ -1,4 +1,5 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCompanyType.dart';
@@ -8,7 +9,7 @@ class DeliveryDriverState {
   AgentStatus status;
 
   bool online;
-  String? deliveryCompanyId;
+  int? deliveryCompanyId;
 
   DeliveryCompanyType? deliveryCompanyType;
 
@@ -50,6 +51,7 @@ class DeliveryDriverState {
 
 // used by delivery admin app
 class DeliveryDriver {
+  DeliveryDriverType type;
   DeliveryDriverState deliveryDriverState;
   DeliveryDriverUserInfo driverInfo;
   LatLng? driverLocation;
@@ -57,6 +59,7 @@ class DeliveryDriver {
   int deliveryDriverId;
 
   DeliveryDriver({
+    required this.type,
     required this.deliveryDriverState,
     this.driverLocation,
     this.lastLocationUpdateTime,
@@ -64,7 +67,7 @@ class DeliveryDriver {
     required this.driverInfo,
   });
 
-  factory DeliveryDriver.fromData(String deliveryDriverId, deliveryDriverData) {
+  factory DeliveryDriver.fromData(int deliveryDriverId, deliveryDriverData) {
     /// deliveryDriverState
     final DeliveryDriverState deliveryDriverState =
         DeliveryDriverState.fromSnapshot(deliveryDriverData['state']);
@@ -74,7 +77,7 @@ class DeliveryDriver {
         DeliveryDriverUserInfo.fromData(deliveryDriverData['info']);
 
     /// driverLocation
-    final dynamic? driverLocation = deliveryDriverData['location'] == null
+    final dynamic driverLocation = deliveryDriverData['location'] == null
         ? null
         : LatLng(deliveryDriverData["location"]["position"]["lat"],
             deliveryDriverData["location"]["position"]["lng"]);
@@ -86,11 +89,12 @@ class DeliveryDriver {
             : DateTime.parse(deliveryDriverData['location']['lastUpdateTime']);
 
     return DeliveryDriver(
-      deliveryDriverId: int.parse(deliveryDriverId),
+      deliveryDriverId: deliveryDriverId,
       deliveryDriverState: deliveryDriverState,
       driverLocation: driverLocation,
       lastLocationUpdateTime: lastLocationUpdateTime,
       driverInfo: deliveryDriverUserInfo,
+      type: DeliveryDriverType.Delivery_driver,
     );
   }
 
@@ -160,8 +164,8 @@ class DeliveryDriverUserInfo extends UserInfo {
         ? LatLng(data["location"]["position"]["lat"],
             data["location"]["position"]["lng"])
         : null;
-    final LanguageType? language = data["language"] != null
-        ? data["language"].toString().toLanguageType()
+    final cModels.Language? language = data["language"] != null
+        ? data["language"].toString().toLanguage()
         : null;
 // TODO:544D-HASURA
 
@@ -209,9 +213,9 @@ extension ParseDeliveryActionToString on DeliveryAction {
   }
 }
 
-extension ParseStringToDeliveryDriverType on String {
-  DeliveryDriverType toDeliveryDriverType() {
-    return DeliveryDriverType.values.firstWhere((DeliveryDriverType e) =>
-        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
+// extension ParseStringToDeliveryDriverType on String {
+//   DeliveryDriverType toDeliveryDriverType() {
+//     return DeliveryDriverType.values.firstWhere((DeliveryDriverType e) =>
+//         e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+//   }
+// }

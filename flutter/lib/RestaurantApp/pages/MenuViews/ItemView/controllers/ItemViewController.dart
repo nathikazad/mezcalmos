@@ -6,8 +6,9 @@ import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -19,14 +20,16 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/env.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpItemView"];
 
 class ROpItemViewController {
-  late RestaurantInfoController _restaurantInfoController;
-
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
+  LanguageTabsController _languageTabsController = LanguageTabsController();
 
   final TextEditingController prItemNameController = TextEditingController();
   final TextEditingController scItemNameController = TextEditingController();
@@ -36,22 +39,20 @@ class ROpItemViewController {
 
   Category addNewCatgeory = Category(
     name: {
-      LanguageType.EN: "Add new category",
-      LanguageType.ES: "Añadir nueva categoria"
+      cModels.Language.EN: "Add new category",
+      cModels.Language.ES: "Añadir nueva categoria"
     },
   );
   Category noCatgeory = Category(
     name: {
-      LanguageType.EN: "No category",
-      LanguageType.ES: "Ninguna Categoria"
+      cModels.Language.EN: "No category",
+      cModels.Language.ES: "Ninguna Categoria"
     },
   );
 
   final RxList<Category> categories = RxList.empty();
   final Rxn<Category> currentCategory = Rxn();
-  Rx<LanguageType> prLang = Rx(LanguageType.ES);
-  Rx<LanguageType> scLang = Rx(LanguageType.ES);
-  final Rxn<File> newImageFile = Rxn();
+  final Rxn<imPicker.XFile> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
   final RxList<Option> itemOptions = RxList([]);
@@ -69,25 +70,38 @@ class ROpItemViewController {
 
   RxBool needToRefetch = RxBool(false);
   RxBool isInitalized = RxBool(false);
-  Rxn<Schedule> schedule = Rxn();
+  Rxn<cModels.Schedule> schedule = Rxn();
+  cModels.ServiceProviderLanguage? get languages =>
+      _languageTabsController.language;
+  GlobalKey<FormState> get primaryFormKey =>
+      _languageTabsController.primaryLangFormKey;
+  GlobalKey<FormState>? get secondaryFormKey =>
+      _languageTabsController.secondaryLangFormKey;
+  bool get validate => _languageTabsController.validate();
+  bool get hasSecondaryLang => languages?.secondary != null;
 
   bool get isEditing => editMode.value && editableItem.value != null;
   late int restaurantId;
+  late int detailsId;
+  TabController? get tabController => _languageTabsController.tabController;
   Future<void> init(
-      {String? itemId,
-      String? categoryId,
+      {int? itemId,
+      int? categoryId,
       bool? specials,
-      required String restaurantId}) async {
-    this.restaurantId = int.parse(restaurantId);
-    if (specials != null) {
-      specialMode.value = specials;
-    }
+      required TickerProvider vsync,
+      required int detailsId,
+      required int restaurantId}) async {
+    this.restaurantId = restaurantId;
+    this.detailsId = detailsId;
+
+    specialMode.value = specials ?? false;
+
+    await _languageTabsController.init(vsync: vsync, detailsId: detailsId);
     if (specialMode.value) {
       schedule.value = await get_restaurant_schedule(
-          restaurantId: this.restaurantId, withCache: false);
+          restaurantId: restaurantId, withCache: false);
     }
-    prLang.value = await get_restaurant_priamry_lang(4) ?? LanguageType.ES;
-    scLang.value = prLang.value.toOpLang();
+
     await _assignCategories();
     mezDbgPrint("Item id ===========>>>>> $itemId");
     if (itemId != null) {
@@ -97,18 +111,19 @@ class ROpItemViewController {
     isInitalized.value = true;
   }
 
-  Future<void> _initEditMode(
-      {required String itemId, String? categoryId}) async {
+  Future<void> _initEditMode({required int itemId, int? categoryId}) async {
     editMode.value = true;
 
-    editableItem.value =
-        await get_one_item_by_id(int.parse(itemId), withCache: false);
+    editableItem.value = await get_one_item_by_id(itemId, withCache: false);
     mezDbgPrint(editableItem.value!.toJson());
-    prItemNameController.text = editableItem.value!.name[prLang]!;
+    prItemNameController.text = editableItem.value!.name[languages!.primary]!;
     newImageUrl.value = editableItem.value!.image;
-    scItemNameController.text = editableItem.value!.name[scLang]!;
-    prItemDescController.text = editableItem.value?.description?[prLang]! ?? "";
-    scItemDescController.text = editableItem.value!.description?[scLang]! ?? "";
+    scItemNameController.text =
+        editableItem.value!.name[languages!.secondary] ?? "";
+    prItemDescController.text =
+        editableItem.value?.description?[languages!.primary] ?? "";
+    scItemDescController.text =
+        editableItem.value!.description?[languages!.secondary] ?? "";
     periodOfTime.value = editableItem.value!.getPeriod;
 
     itemPriceController.text = editableItem.value!.cost.toString();
@@ -128,22 +143,33 @@ class ROpItemViewController {
   }
 
   Item _contructItem() {
+    final LanguageMap name = {languages!.primary: prItemNameController.text};
+    if (languages!.secondary != null && scItemNameController.text.isNotEmpty) {
+      name[languages!.secondary!] = scItemNameController.text;
+    }
+    LanguageMap? desc;
+    if (prItemDescController.text.isNotEmpty) {
+      desc = {
+        languages!.primary: prItemDescController.text,
+      };
+      if (languages!.secondary != null &&
+          scItemDescController.text.isNotEmpty) {
+        desc[languages!.secondary!] = scItemDescController.text;
+      }
+    }
+
     final Item newItem = Item(
       image: newImageUrl.value,
-      itemType: (specialMode.isTrue) ? ItemType.Special : ItemType.Daily,
+      itemType: (specialMode.isTrue)
+          ? cModels.ItemType.Special
+          : cModels.ItemType.Daily,
       id: editMode.value ? editableItem.value!.id : null,
       startsAt: specialMode.value ? periodOfTime.value?.start : null,
       endsAt: specialMode.value ? periodOfTime.value?.end : null,
       available: editableItem.value?.available ?? false,
       categoryId: currentCategory.value?.id,
-      name: {
-        prLang.value: prItemNameController.text,
-        scLang.value: scItemNameController.text,
-      },
-      description: {
-        prLang.value: prItemDescController.text,
-        scLang.value: scItemDescController.text,
-      },
+      name: name,
+      description: desc,
       cost: num.parse(itemPriceController.text),
     );
     return newItem;
@@ -160,19 +186,23 @@ class ROpItemViewController {
 
     if (newImageFile.value != null) {
       mezDbgPrint("m66are =====> uploading new image");
-      await _restaurantInfoController
-          .uploadImgToDb(imageFile: newImageFile.value!)
-          .then((String value) {
-        newImageUrl.value = value;
-      });
+      // await _restaurantInfoController
+      //     .uploadImgToDb(imageFile: newImageFile.value!)
+      //     .then((String value) {
+      //   newImageUrl.value = value;
+      // });
     }
-    const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
-    final AppLaunchMode mode = _tmpLmode.toLaunchMode();
-    if (mode == AppLaunchMode.dev || mode == AppLaunchMode.stage) {
+    if (MezEnv.appLaunchMode == AppLaunchMode.dev ||
+        MezEnv.appLaunchMode == AppLaunchMode.stage) {
       mezDbgPrint("Settign default image");
       newImageUrl.value =
           "https://s.inyourpocket.com/gallery/helsinki/2019/11/shutterstock-1306257490.jpg";
+    }
+    if (newImageFile.value != null) {
+      newImageUrl.value = await uploadImgToFbStorage(
+          imageFile: newImageFile.value!,
+          storageFolder: "/restaurants/$restaurantId/itemImages",
+          fileName: prItemNameController.text);
     }
     if (editMode.isFalse) {
       final int? newItemId = await add_one_item(
@@ -182,6 +212,9 @@ class ROpItemViewController {
       if (newItemId != null) {
         mezDbgPrint(
             "👌🏻👌🏻👌🏻 Item added successfuly id : $newItemId 👌🏻👌🏻👌🏻");
+        showSavedSnackBar(
+            title: "${_i18n()['added']}",
+            subtitle: "${_i18n()['addedSubtitle']}");
 
         editableItem.value = await get_one_item_by_id(newItemId);
         editMode.value = true;
@@ -196,14 +229,7 @@ class ROpItemViewController {
       final bool result = await update_item_by_id(
           itemId: editableItem.value!.id!, item: _contructItem());
       if (result) {
-        Get.snackbar('Saved', 'Item saved successfuly',
-            backgroundColor: Colors.black,
-            colorText: Colors.white,
-            shouldIconPulse: false,
-            icon: Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            ));
+        showSavedSnackBar();
         needToRefetch.value = true;
       }
     }
@@ -216,7 +242,7 @@ class ROpItemViewController {
         editableItem.value!.description, _contructItem().description)) {
       _contructItem()
           .description
-          ?.forEach((LanguageType key, String value) async {
+          ?.forEach((cModels.Language key, String value) async {
         await update_translation(
             langType: key,
             value: value,
@@ -229,7 +255,7 @@ class ROpItemViewController {
     mezDbgPrint(
         "UPDATE NAME ${!fd.mapEquals(editableItem.value!.name, _contructItem().name)}");
     if (!fd.mapEquals(editableItem.value!.name, _contructItem().name)) {
-      _contructItem().name.forEach((LanguageType key, String value) async {
+      _contructItem().name.forEach((cModels.Language key, String value) async {
         mezDbgPrint("updatttttt ${editableItem.value?.nameId}");
         await update_translation(
             langType: key,
@@ -239,10 +265,10 @@ class ROpItemViewController {
     }
   }
 
-  Future<bool?> deleteItem({required String itemId, String? catgeoryId}) async {
-    final int? deletedItemId = await delete_item_by_id(int.parse(itemId));
+  Future<bool?> deleteItem({required int itemId, int? catgeoryId}) async {
+    final int? deletedItemId = await delete_item_by_id(itemId);
     if (deletedItemId != null) {
-      MezRouter.back();
+      await MezRouter.back();
       mezDbgPrint("Item $deletedItemId have deleted 😢😢😢");
       return true;
     }
@@ -266,7 +292,7 @@ class ROpItemViewController {
 
       try {
         if (_res != null) {
-          newImageFile.value = File(_res.path);
+          newImageFile.value = _res;
         }
         imageLoading.value = false;
       } catch (e) {
@@ -277,22 +303,16 @@ class ROpItemViewController {
     }
   }
 
-  bool get isCurrentSpec {
-    // TODO Update to hasura @m66are
-
-    return false;
-  }
-
   ImageProvider? get getRightImage {
     if (newImageFile.value != null) {
-      return FileImage(newImageFile.value!);
+      return FileImage(File(newImageFile.value!.path));
     } else if (newImageUrl.value != null) {
       return CachedNetworkImageProvider(newImageUrl.value!);
     } else
       return null;
   }
 
-  List<String> getItemsNames(LanguageType languageType) {
+  List<String> getItemsNames(cModels.Language languageType) {
     final List<String> data = [];
     // TODO Update to hasura @m66are
     // final List<Item> items = restaurant.value!.getAllItems();
@@ -314,6 +334,7 @@ class ROpItemViewController {
     prItemNameController.clear();
     scItemNameController.clear();
     scItemDescController.clear();
+    _languageTabsController.dispose();
   }
 
   Future<void> fetchItem() async {

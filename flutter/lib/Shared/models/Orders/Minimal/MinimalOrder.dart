@@ -1,22 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class MinimalOrder {
   int id;
   String? toAdress;
   DateTime orderTime;
-  String customerName;
-  String? customerImage;
+  String? title;
+  String? image;
   MinimalOrderStatus status;
-  double totalCost;
+  OrderType orderType;
+  num? deliveryCost;
+
+  double? totalCost;
+  int? serviceProviderId;
+  ServiceProviderType? serviceProviderType;
   MinimalOrder({
     required this.id,
     required this.toAdress,
     required this.orderTime,
-    required this.customerName,
-    required this.customerImage,
+    required this.title,
+    this.deliveryCost,
+    required this.image,
     required this.status,
     required this.totalCost,
+    required this.orderType,
+    this.serviceProviderId,
+    this.serviceProviderType,
   });
 
   MinimalOrder copyWith({
@@ -31,9 +43,10 @@ class MinimalOrder {
     return MinimalOrder(
         id: id ?? this.id,
         toAdress: toAdress ?? this.toAdress,
+        orderType: orderType,
         orderTime: orderTime ?? this.orderTime,
-        customerName: customerName ?? this.customerName,
-        customerImage: customerImage ?? this.customerImage,
+        title: customerName ?? title,
+        image: customerImage ?? image,
         status: status ?? this.status,
         totalCost: this.totalCost);
   }
@@ -43,8 +56,8 @@ class MinimalOrder {
       'id': id,
       'toAdress': toAdress,
       'orderTime': orderTime.millisecondsSinceEpoch,
-      'customerName': customerName,
-      'customerImage': customerImage,
+      'customerName': title,
+      'customerImage': image,
       //  'status': status.toMap(),
       'totalCost': totalCost,
     };
@@ -52,7 +65,7 @@ class MinimalOrder {
 
   @override
   String toString() {
-    return 'MinimalRestaurantOrder(id: $id, toAdress: $toAdress, orderTime: $orderTime, customerName: $customerName, customerImage: $customerImage, status: $status, totalCost: $totalCost)';
+    return 'MinimalRestaurantOrder(id: $id, toAdress: $toAdress, orderTime: $orderTime, customerName: $title, customerImage: $image, status: $status, totalCost: $totalCost)';
   }
 
   @override
@@ -63,8 +76,8 @@ class MinimalOrder {
         other.id == id &&
         other.toAdress == toAdress &&
         other.orderTime == orderTime &&
-        other.customerName == customerName &&
-        other.customerImage == customerImage &&
+        other.title == title &&
+        other.image == image &&
         other.status == status &&
         other.totalCost == totalCost;
   }
@@ -74,8 +87,8 @@ class MinimalOrder {
     return id.hashCode ^
         toAdress.hashCode ^
         orderTime.hashCode ^
-        customerName.hashCode ^
-        customerImage.hashCode ^
+        title.hashCode ^
+        image.hashCode ^
         status.hashCode ^
         totalCost.hashCode;
   }

@@ -74,6 +74,10 @@ mutation add_saved_location(
   $saved_location: customer_saved_location_insert_input!
 ) {
   insert_customer_saved_location_one(object: $saved_location) {
-    id
+     id
+    name
+    location_gps
+    location_text
+    default
   }
 }

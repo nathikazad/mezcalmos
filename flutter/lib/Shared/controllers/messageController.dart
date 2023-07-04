@@ -5,10 +5,9 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
@@ -17,46 +16,32 @@ import 'package:mezcalmos/Shared/graphql/chat/hsChat.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+import 'package:mezcalmos/env.dart';
 
 class MessageController extends GetxController {
   Rxn<HasuraChat> chat = Rxn();
   FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   HasuraDb hasuraDb = Get.find<HasuraDb>();
   String? subscriptionId;
-
+  IncomingViewLink? incomingViewLink;
   AuthController _authController = Get.find<AuthController>();
-  SettingsController _settingsController = Get.find<SettingsController>();
   StreamSubscription? chatListener;
   late AppType appType;
+  material.VoidCallback? _onValueCallBack;
 
   @override
   void onInit() {
     super.onInit();
     mezDbgPrint("--------------------> messageController Initialized !");
-    appType = Get.find<SettingsController>().appType;
+  }
+
+  void setIncomingViewLink(IncomingViewLink? incomingViewLink) {
+    this.incomingViewLink = incomingViewLink;
   }
 
   void loadChat({required int chatId, material.VoidCallback? onValueCallBack}) {
     mezDbgPrint("Load chat id ------------->>>> $chatId");
-    // chatListener?.cancel();
-    // _databaseHelper.firebaseDatabase
-    //     .ref()
-    //     .child(chatNode(chatId))
-    //     .onValueWitchCatch()
-    //     .then((Stream<DatabaseEvent> value) {
-    //   chatListener = value.listen((DatabaseEvent event) {
-    //     if (event.snapshot.value != null) {
-    //       mezDbgPrint(
-    //           "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
-    //       // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
-    //       chat.value = Chat.fromJson(chatId, event.snapshot.value);
-    //       if (onValueCallBack != null) onValueCallBack();
-    //       // mezDbgPrint(
-    //       //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
-    //     }
-    //   });
-    // });
-    //chat.value = await get_chat_info(chat_id: chatId);
+
     get_chat_info(chat_id: chatId).then((HasuraChat? value) {
       mezDbgPrint("[77] Got Chat :: id ($chatId) :: $value !");
 
@@ -64,7 +49,10 @@ class MessageController extends GetxController {
         mezDbgPrint("[77] Got Chat !");
         chat.value = value;
 
-        if (onValueCallBack != null) onValueCallBack();
+        if (onValueCallBack != null) {
+          _onValueCallBack = onValueCallBack;
+          _onValueCallBack?.call();
+        }
       }
 
       if (subscriptionId != null) {
@@ -76,11 +64,12 @@ class MessageController extends GetxController {
         chatListener = listen_on_chat_messages(chatId: chatId)
             .listen((List<Message> msgs) {
           mezDbgPrint(
-              "[+] Chat :: new messages :: trigger :: listener! =====>> ${chat.value.toString()}");
-          if (msgs.isNotEmpty && msgs.length > chat.value!.messages.length) {
+              "[+] Chat :: new messages :: trigger :: listener! =====>> ${chat.value?.messages.length} ::::::: ${msgs.length}");
+          if (msgs.isNotEmpty) {
             chat.value!.messages.clear();
             chat.value!.messages.addAll(msgs);
-            if (onValueCallBack != null) onValueCallBack();
+            if (onValueCallBack != null && chat.value != null)
+              onValueCallBack();
           }
         });
       }, cancel: () {
@@ -90,43 +79,36 @@ class MessageController extends GetxController {
     });
   }
 
-  bool isUserAuthorizedToCall() {
-    return [AppType.CustomerApp, AppType.DeliveryApp].contains(appType);
+  bool isInAppCallFeatureAvailable() {
+    // This will be false for chats of type group
+    return true;
   }
 
   Future<void> sendMessage({
     required String message,
     required int chatId,
-    // OrderType? orderType,
-    // int? orderId,
   }) async {
+    chat.value?.messages.add(Message(
+        message: message,
+        timestamp: DateTime.now(),
+        userId: _authController.hasuraUserId!));
+    _onValueCallBack?.call();
+    mezDbgPrint(chat.value?.messages.last.message);
     final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .ref()
         .child(messagesNode(chatId.toString()))
         .push();
 
-    // messages => _append => messages
-    //TODO: write to hasura messages
-    // messageNode.set(<String, dynamic>{
-    //   "message": message,
-    //   "userId": _authController.user!.id,
-    //   "participantType": _settingsController.appType
-    //       .toParticipantTypefromAppType()
-    //       .toFirebaseFormattedString(),
-    //   "timestamp": DateTime.now().toUtc().toString(),
-    //   "chatId": chatId,
-    //   "orderId": orderId
-    // }).onError((Object? error, StackTrace stackTrace) {
-    //   mezDbgPrint(stackTrace);
-    // });
-
-    await send_message(chat_id: chatId, msg:
-        // timestamp as key
-        <String, dynamic>{
+    Map<String, dynamic> messageMap = <String, dynamic>{
       "timestamp": DateTime.now().toUtc().toString(),
       "message": message,
       "userId": _authController.user!.hasuraId,
-    });
+    };
+    if (incomingViewLink != null) {
+      // make sure that the last message with the link does not have the same url
+      messageMap["link"] = incomingViewLink!.toJson();
+    }
+    await send_message(chat_id: chatId, msg: messageMap);
 
     // ignore: unawaited_futures
     _databaseHelper.firebaseDatabase
@@ -137,75 +119,11 @@ class MessageController extends GetxController {
           userId: Get.find<AuthController>().hasuraUserId!,
           chatId: chatId.toString(),
           messageId: messageNode.key!,
-          participantType:
-              _settingsController.appType.toParticipantTypefromAppType(),
+          participantType: MezEnv.appType.convertParticipantTypefromAppType(),
         ).toFirebaseFormatJson());
+
+    incomingViewLink = null;
   }
-
-  Future<void> callUser(
-      {required String chatId,
-      required Participant callee,
-      String? orderId}) async {
-    return sendUserCallNotification(
-        chatId: chatId,
-        callee: callee,
-        callNotificationType: CallNotificationtType.Incoming);
-  }
-
-  Future<void> endCall(
-      {required String chatId,
-      required Participant callee,
-      String? orderId}) async {
-    return sendUserCallNotification(
-        chatId: chatId,
-        callee: callee,
-        callNotificationType: CallNotificationtType.EndCall);
-  }
-
-  Future<void> sendUserCallNotification(
-      {required String chatId,
-      required Participant callee,
-      required CallNotificationtType callNotificationType,
-      String? orderId}) async {
-    // final DatabaseReference notificationNode = _databaseHelper.firebaseDatabase
-    //     .ref()
-    //     .child(notificationQueueNode())
-    //     .push();
-
-    // ignore: unawaited_futures
-    // _databaseHelper.firebaseDatabase
-    //     .ref()
-    //     .child(notificationQueueNode(notificationNode.key))
-    //     .set(CallNotificationForQueue(
-    //             chatId: chatId,
-    //             callerId: FirebaseAuth.instance.currentUser!.uid,
-    //             callerParticipantType:
-    //                 _settingsController.appType.toParticipantTypefromAppType(),
-    //             calleeId: callee.id,
-    //             calleeParticipantType: callee.participantType,
-    //             callNotificationType: callNotificationType,
-    //             orderId: orderId)
-    //         .toFirebaseFormatJson());
-  }
-
-  // Participant? sender() {
-  //   return chat.value?.getParticipant(
-  //       _settingsController.appType.toParticipantTypefromAppType(),
-  //       FirebaseAuth.instance.currentUser!.uid);
-  // }
-
-  // Participant? recipient(
-  //     {required ParticipantType recipientType, String? recipientId}) {
-  //   if (chat.value == null) return null;
-  //   if (recipientId != null)
-  //     return chat.value!.getParticipant(recipientType, recipientId);
-  //   final Map<String, Participant>? participants =
-  //       chat.value!.getParticipants(recipientType);
-  //   if (participants != null && participants.keys.length > 0) {
-  //     return participants[participants.keys.toList()[0]];
-  //   }
-  //   return null;
-  // }
 
   void clearMessageNotifications({required int chatId}) {
     mezDbgPrint("Clearing message notifications");

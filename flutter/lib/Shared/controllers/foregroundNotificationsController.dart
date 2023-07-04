@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 typedef shouldSaveNotification = bool Function(Notification notification);
 
@@ -53,7 +54,8 @@ class ForegroundNotificationsController extends GetxController {
           final Notification _notification =
               notificationHandler(event.snapshot.key!, event.snapshot.value);
 
-          final bool alreadyOnLinkPage = isCurrentRoute(_notification.linkUrl);
+          final bool alreadyOnLinkPage =
+              MezRouter.isCurrentRoute(_notification.linkUrl);
 
           switch (_notification.notificationAction) {
             case NotificationAction.ShowPopUp:
@@ -63,33 +65,29 @@ class ForegroundNotificationsController extends GetxController {
               }
               break;
             case NotificationAction.ShowSnackBarAlways:
+            case NotificationAction.NavigteToLinkUrl:
               _displayNotificationsStreamController.add(_notification);
               break;
             case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
-              //   if (!alreadyOnLinkPage) {
-              _displayNotificationsStreamController.add(_notification);
-              //  }
+              if (!alreadyOnLinkPage) {
+                _displayNotificationsStreamController.add(_notification);
+              }
               break;
           }
-
-          // if (!alreadyOnLinkPage) {
-          notifications.add(_notification);
-          // } else {
-          //   removeNotification(_notification.id);
-          // }
+          if (!alreadyOnLinkPage &&
+              DateTime.now().difference(_notification.timestamp) <
+                  Duration(days: 5)) {
+            notifications.add(_notification);
+          } else {
+            removeNotification(_notification.id);
+          }
         } catch (e, stk) {
-          mezDbgPrint("Invalid notification");
+          mezDbgPrint("Invalid notification 🛑");
           mezDbgPrint(e);
           mezDbgPrint(stk);
         }
       });
     });
-
-    //     .listen((dynamic event) {
-    //   // mezDbgPrint("sd@s:ForegroundNotificationsController:: NEW NOTIFICATION");
-    //   // mezDbgPrint(event.snapshot.value);
-
-    // });
 
     _notificationNodeRemoveListener?.cancel();
     _databaseHelper.firebaseDatabase
@@ -108,6 +106,7 @@ class ForegroundNotificationsController extends GetxController {
   }
 
   void removeNotification(String notificationId) {
+    mezDbgPrint("👉 Removing notification $notificationId");
     _databaseHelper.firebaseDatabase
         .ref()
         .child("$_notificationNode/$notificationId")
@@ -129,6 +128,20 @@ class ForegroundNotificationsController extends GetxController {
     });
   }
 
+  void clearAllOrderNotifications(
+      {required OrderType orderType, required num orderId}) {
+    mezDbgPrint(
+        "🗑️ Clearing notifs of order id => $orderId and order type => $orderType");
+    notifications()
+        .where((Notification notification) =>
+            notification.orderId == orderId &&
+            notification.variableParams["orderType"] ==
+                orderType.toFirebaseFormatString())
+        .forEach((Notification element) {
+      removeNotification(element.id);
+    });
+  }
+
   void clearAllNotification() {
     mezDbgPrint("fbNotificationsController: Clearing All Notifications");
     _databaseHelper.firebaseDatabase.ref().child("$_notificationNode").remove();
@@ -142,16 +155,19 @@ class ForegroundNotificationsController extends GetxController {
   }
 
   bool hasNewMessageNotification(int chatId) {
-    mezDbgPrint("🥸 chatId ==========>>>$chatId");
-    notifications().forEach((Notification n) {
-      mezDbgPrint(n.chatId);
-    });
-    mezDbgPrint(
-        "Final value ===>${notifications().where((Notification notification) => notification.notificationType == NotificationType.NewMessage && notification.chatId == chatId).toList().isNotEmpty}");
     return notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&
             notification.chatId == chatId)
+        .toList()
+        .isNotEmpty;
+  }
+
+  bool hasNewSPMessageNotification() {
+    return notifications()
+        .where((Notification notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            (notification.isServiceProvderChat ?? false))
         .toList()
         .isNotEmpty;
   }

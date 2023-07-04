@@ -1,189 +1,214 @@
 import Stripe from 'stripe';
-import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
-import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
-import { StripeStatus } from './model';
+import { PaymentType } from '../../shared/models/Generic/Order';
+import { StripeStatus } from '../../shared/models/stripe';
 import { CustomerInfo } from '../../shared/models/Generic/User';
-import { OperatorStatus } from '../../shared/models/Services/Restaurant/Restaurant';
-import { HttpsError } from 'firebase-functions/v1/auth';
-import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
-import { updateRestaurantStripe } from '../../shared/graphql/restaurant/updateRestaurant';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
+import { Operator, ServiceProvider } from '../../shared/models/Services/Service';
+import { AuthorizationStatus, MezError } from "../../shared/models/Generic/Generic"
+import { getServiceProviderDetails } from '../../shared/graphql/serviceProvider/getServiceProvider';
+import { createServiceProviderStripe, updateServiceProviderPayment, updateServiceProviderStripe } from '../../shared/graphql/serviceProvider/updateServiceProvider';
+
 let keys: Keys = getKeys();
 
-export interface SetupDetails {
-  serviceProviderId: number,
-  orderType: OrderType,
-  acceptedPayments?: Record<PaymentType, boolean>
+export interface SetupStripeDetails {
+  serviceProviderDetailsId: number,
 }
-
-export async function setupServiceProvider(userId: number, setupDetails: SetupDetails) {
-
-  let serviceProvider;
-  let operator;
-
-  if(setupDetails.orderType == OrderType.Restaurant) {
-    serviceProvider = await getRestaurant(setupDetails.serviceProviderId);
-    operator = serviceProvider.restaurantOperators?.filter((o) => o.userId == userId)[0];
-  } else {
-    throw new HttpsError(
-      "internal",
-      "invalid order type"
-    );
-  }
-  if(!operator) {
-    throw new HttpsError(
-      "internal",
-      "No restaurant operator with that user id or restaurant id found"
-    );
-  }
-  if(operator.status != OperatorStatus.Authorized) {
-    throw new HttpsError(
-      "internal",
-      "restaurant operator not authorized"
-    );
-  }
-  const stripeOptions = { apiVersion: <any>'2020-08-27' };
-  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
-
-  if(!(serviceProvider.stripeInfo)) {
-    let owner;
-    if(setupDetails.orderType == OrderType.Restaurant)
-      owner = serviceProvider.restaurantOperators?.filter((o) => o.owner == true)[0];
-    
-    const account = await stripe.accounts.create({
-      type: 'standard',
-      email: owner?.user?.email ?? operator.user?.email ?? undefined,
-      business_type: 'individual',
-      business_profile: {
-        name: serviceProvider.name,
-        support_email: owner?.user?.email ?? operator.user?.email ?? undefined,
-        support_phone: owner?.user?.phoneNumber ?? operator.user?.phoneNumber ?? undefined,
-        url: `https://mezcalmos.com/?type=${setupDetails.orderType}&id=${setupDetails.serviceProviderId}`
-      },
-      individual: {
-        first_name: operator.user?.name ?? undefined,
-        email: operator.user?.email ?? undefined,
-        phone: operator.user?.phoneNumber ?? undefined,
-      },
-      country: "mx",
-      default_currency: "mxn",
-      metadata: {
-        id: setupDetails.serviceProviderId,
-        type: setupDetails.orderType,
-        user_id: userId
-      }
-    });
-    serviceProvider.stripeInfo = {
-      id: account.id,
-      status: StripeStatus.InProcess,
-      detailsSubmitted: false,
-      payoutsEnabled: false,
-      chargeFeesOnCustomer : null,
-      email: null,
-      chargesEnabled: false,
-      requirements: []
+export interface SetupStripeResponse {
+  success: boolean,
+  error?: SetupStripeError
+  unhandledError?: string,
+  object?: string,
+  created?: number,
+  expires_at?: number,
+  url?: string
+}
+export enum SetupStripeError {
+  UnhandledError = "unhandledError",
+  ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
+  UnauthorizedAccess = "unauthorizedAccess",
+  OperatorNotAuthorized = "operatorNotAuthorized",
+  StripeUpdateError = "stripeUpdateError",
+}
+export async function setupServiceProvider(userId: number, setupDetails: SetupStripeDetails): Promise<SetupStripeResponse> {
+  try {
+    let serviceProvider: ServiceProvider = await getServiceProviderDetails(setupDetails.serviceProviderDetailsId)
+    if(serviceProvider.operators!.filter((o) => o.userId == userId).length == 0) {
+      throw new MezError(SetupStripeError.UnauthorizedAccess);
     }
-    serviceProvider.acceptedPayments = setupDetails.acceptedPayments;
-    if(setupDetails.orderType == OrderType.Restaurant)
-      updateRestaurantStripe(serviceProvider);
-  }
+    let operator: Operator = serviceProvider.operators!.filter((o) => o.userId == userId)[0];
+    
+    if(operator.status != AuthorizationStatus.Authorized) {
+      throw new MezError(SetupStripeError.OperatorNotAuthorized);
+    }
+    const stripeOptions = { apiVersion: <any>'2020-08-27' };
+    const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-  const accountLink = await stripe.accountLinks.create({
-    account: serviceProvider.stripeInfo.id,
-    refresh_url: 'https://example.com/reauth',
-    return_url: 'https://example.com/return',
-    type: 'account_onboarding',
-  }, stripeOptions);
-  console.log("accountLink: ", accountLink)
-  return {
-    status: ServerResponseStatus.Success,
-    ...accountLink
+    if(!(serviceProvider.stripeInfo)) {
+      let owner;
+      owner = serviceProvider.operators?.filter((o) => o.owner == true)[0];
+      
+      const account = await stripe.accounts.create({
+        type: 'standard',
+        email: owner?.user?.email ?? operator.user?.email ?? undefined,
+        business_type: 'individual',
+        business_profile: {
+          name: serviceProvider.name,
+          support_email: owner?.user?.email ?? operator.user?.email ?? undefined,
+          support_phone: owner?.user?.phoneNumber ?? operator.user?.phoneNumber ?? undefined,
+          url: `https://mezcalmos.com/?id=${setupDetails.serviceProviderDetailsId}`
+        },
+        individual: {
+          first_name: operator.user?.name ?? undefined,
+          email: operator.user?.email ?? undefined,
+          phone: operator.user?.phoneNumber ?? undefined,
+        },
+        country: "mx",
+        default_currency: "mxn",
+        metadata: {
+          id: setupDetails.serviceProviderDetailsId,
+          user_id: userId
+        }
+      });
+      serviceProvider.stripeInfo = {
+        id: account.id,
+        status: StripeStatus.InProcess,
+        detailsSubmitted: false,
+        payoutsEnabled: false,
+        chargeFeesOnCustomer : true,
+        email: null,
+        chargesEnabled: false,
+        requirements: []
+      }
+      createServiceProviderStripe(serviceProvider);
+
+    }
+
+    const accountLink = await stripe.accountLinks.create({
+      account: serviceProvider.stripeInfo.id,
+      refresh_url: 'https://example.com/reauth',
+      return_url: 'https://example.com/return',
+      type: 'account_onboarding',
+    }, stripeOptions);
+    console.log("accountLink: ", accountLink)
+
+    return {
+      success: true,
+      ...accountLink
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(SetupStripeError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: SetupStripeError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
+    }
   }
 }
 
-export interface UpdateDetails {
-  serviceProviderId: number,
-  orderType: OrderType
+export interface UpdateStripeDetails {
+  serviceProviderDetailsId: number,
 }
+export interface UpdateStripeResponse {
+  success: boolean,
+  error?: UpdateStripeError
+  unhandledError?: string,
+}
+export enum UpdateStripeError {
+  UnhandledError = "unhandledError",
+  ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
+  UnauthorizedAccess = "unauthorizedAccess",
+  OperatorNotAuthorized = "operatorNotAuthorized",
+  NoStripeAccount = "noStripeAccount"
+}
+export async function updateServiceProvider(userId: number, updateDetails: UpdateStripeDetails): Promise<UpdateStripeResponse> {
+  try {
+    let serviceProvider: ServiceProvider = await getServiceProviderDetails(updateDetails.serviceProviderDetailsId);
 
-export async function updateServiceProvider(userId: number, updateDetails: UpdateDetails) {
-  let serviceProvider;
-  let operator;
+    if(serviceProvider.operators!.filter((o) => o.userId == userId).length == 0) {
+      throw new MezError(UpdateStripeError.UnauthorizedAccess);
+    }
+    let operator: Operator = serviceProvider.operators!.filter((o) => o.userId == userId)[0];
 
-  if(updateDetails.orderType == OrderType.Restaurant) {
-    serviceProvider = await getRestaurant(updateDetails.serviceProviderId);
-    operator = serviceProvider.restaurantOperators?.filter((o) => o.userId == userId)[0];
-  } else {
-    throw new HttpsError(
-      "internal",
-      "invalid order type"
-    );
-  }
-  if(!operator) {
-    throw new HttpsError(
-      "internal",
-      "No restaurant operator with that user id or restaurant id found"
-    );
-  }
-  if(operator.status != OperatorStatus.Authorized) {
-    throw new HttpsError(
-      "internal",
-      "restaurant operator not authorized"
-    );
-  }
-  
-  const stripeOptions = { apiVersion: <any>'2020-08-27' };
-  const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+    if(operator.status != AuthorizationStatus.Authorized) {
+      throw new MezError(UpdateStripeError.OperatorNotAuthorized);
+    }
+    
+    const stripeOptions = { apiVersion: <any>'2020-08-27' };
+    const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
 
-  let stripeInfo = serviceProvider.stripeInfo;
-  if(!stripeInfo) {
-    throw new HttpsError(
-      "internal",
-      "Account has not setup stripe yet"
-    );
-  }
-  const account: Stripe.Account = await stripe.accounts.retrieve(stripeInfo.id, stripeOptions);
-  let isWorking: boolean = account.details_submitted && account.charges_enabled;
+    let stripeInfo = serviceProvider.stripeInfo;
+    if(!stripeInfo) {
+      throw new MezError(UpdateStripeError.NoStripeAccount);
+    }
+    const account: Stripe.Account = await stripe.accounts.retrieve(stripeInfo.id, stripeOptions);
+    let isWorking: boolean = account.details_submitted && account.charges_enabled;
 
-  serviceProvider.stripeInfo = {
-    id: stripeInfo.id,
-    status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
-    detailsSubmitted: account.details_submitted,
-    payoutsEnabled: account.payouts_enabled,
-    chargeFeesOnCustomer: null ,
-    email: account.email,
-    chargesEnabled: account.charges_enabled,
-    requirements: account.requirements?.currently_due
-  }
-  if(updateDetails.orderType == OrderType.Restaurant)
-    updateRestaurantStripe(serviceProvider);
+    serviceProvider.stripeInfo = {
+      id: stripeInfo.id,
+      status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
+      detailsSubmitted: account.details_submitted,
+      payoutsEnabled: account.payouts_enabled,
+      chargeFeesOnCustomer: true,
+      email: account.email,
+      chargesEnabled: account.charges_enabled,
+      requirements: account.requirements?.currently_due
+    }
+    updateServiceProviderStripe(serviceProvider.stripeInfo)
 
-  return {
-    status: ServerResponseStatus.Success
+    if(isWorking) {
+      serviceProvider.acceptedPayments![PaymentType.Card] = true
+      updateServiceProviderPayment(serviceProvider);
+    }
+    return {
+      success: true
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(UpdateStripeError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: UpdateStripeError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
+    }
   }
 }
 
 export async function verifyCustomerIdForServiceAccount(
   customerInfo: CustomerInfo, 
-  serviceProviderId: number, 
-  orderType: OrderType, 
+  serviceProviderDetailsId: number, 
   stripe: Stripe, 
   stripeOptions: any
 ): Promise<CustomerInfo> {
   if(!(customerInfo.stripeInfo)) {
-    throw new HttpsError(
-      "internal",
-      "Customer does not have stripe account"
-    );
+    throw new MezError("noCustomerStripeInfo");
   }
-  if(customerInfo.stripeInfo.idsWithServiceProvider[orderType][serviceProviderId] == null) {
+  if(customerInfo.stripeInfo.idsWithServiceProvider[serviceProviderDetailsId] == null) {
     const customer: Stripe.Customer = await stripe.customers.create({
       name: customerInfo.name,
       metadata: { customerId: customerInfo.id },
     }, stripeOptions)
-    customerInfo.stripeInfo.idsWithServiceProvider[orderType][serviceProviderId] = customer.id;
+    customerInfo.stripeInfo.idsWithServiceProvider[serviceProviderDetailsId] = customer.id;
     updateCustomerStripe(customerInfo);
   }
   return customerInfo;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -34,14 +35,14 @@ class NoOrdersComponent extends StatelessWidget {
               ),
               Text(
                 "${_i18n()["title"]}",
-                style: Get.textTheme.bodyText1,
+                style: context.txt.bodyLarge,
               ),
               SizedBox(
                 height: 10,
               ),
               Text(
                 "${_i18n()["subtitle"]}",
-                style: Get.textTheme.bodyText1?.copyWith(
+                style: context.txt.bodyLarge?.copyWith(
                     fontSize: 11.sp,
                     fontWeight: FontWeight.w500,
                     color: Colors.grey.shade800),

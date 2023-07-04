@@ -1,0 +1,43 @@
+table:
+  name: service_provider_customer_chat
+  schema: public
+object_relationships:
+  - name: chat
+    using:
+      foreign_key_constraint_on: chat_id
+  - name: customer
+    using:
+      foreign_key_constraint_on: customer_id
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: restaurant
+select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - chat_id
+        - customer_id
+        - service_provider_id
+        - service_provider_type
+      filter:
+        chat:
+          chat_participants:
+            participant_id:
+              _eq: X-Hasura-User-Id
+  - role: customer
+    permission:
+      columns:
+        - chat_id
+        - customer_id
+        - service_provider_id
+        - service_provider_type
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id

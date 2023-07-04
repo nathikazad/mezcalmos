@@ -1,34 +1,44 @@
 import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
 import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder"
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { OrderType, PaymentType } from "../shared/models/Generic/Order";
+import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
-import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
-import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
-import { HttpsError } from "firebase-functions/v1/auth";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
+import { Operator } from "../shared/models/Services/Service";
+import { MezError } from "../shared/models/Generic/Generic";
 
 // Customer Canceling
-export async function cancelOrderFromCustomer(userId: number, data: any) {
+interface CancelOrderDetails {
+  orderId: number
+}
+export interface CancelRestaurantOrderResponse {
+  success: boolean,
+  error?: CancelOrderError
+  unhandledError?: string,
+}
+enum CancelOrderError {
+  UnhandledError = "unhandledError",
+  OrderNotFound = "orderNotFound",
+  RestaurantNotfound = "restaurantNotfound",
+  IncorrectOrderId = "incorrectOrderId",
+  OrderNotInProcess = "orderNotInProcess",
+  ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
+  OrderStripeInfoNotDefined = "orderStripeInfoNotDefined",
+  ServiceProviderStripeAccountDoesNotExist = "serviceProviderStripeAccountDoesNotExist",
+  UpdateOrderStripeError = "updateOrderStripeError",
+}
+export async function cancelOrderFromCustomer(userId: number, data: CancelOrderDetails): Promise<CancelRestaurantOrderResponse> {
   try {
-
-    if (data.orderId == null) {
-      throw new HttpsError(
-        "internal", 
-        `Expected order id`,
-      );
-    }
-
     let mezAdminPromise = getMezAdmins();
     console.log("[+] getMezAdmins " , mezAdminPromise);
 
@@ -38,39 +48,19 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
     let restaurantOperatorsPromise = getRestaurantOperators(order.restaurantId);
     console.log("[+] getRestaurantOperators " , restaurantOperatorsPromise);
 
-    let deliveryPromise = getDeliveryOrder(order.deliveryId!);
-    console.log("[+] getDeliveryOrder " , deliveryPromise);
-
-    //delivery id assumed to be not null
-
-    let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise, deliveryPromise]);
+    let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise]);
     let mezAdmins: MezAdmin[] = promiseResponse[0];
-    let restaurantOperators: RestaurantOperator[] = promiseResponse[1];
-    let deliveryOrder: DeliveryOrder = promiseResponse[2];
-    if (order == null) {
-      throw new HttpsError(
-        "internal",
-        `Order does not exist`,
-      );
-    }
+    let restaurantOperators: Operator[] = promiseResponse[1];
 
     if (order.customerId != userId) {
-      throw new HttpsError(
-        "internal",
-        `Order does not belong to customer`,
-      );
+      throw new MezError(CancelOrderError.IncorrectOrderId);
     }
-
     if (!orderInProcess(order.status)) {
-      throw new HttpsError(
-        "internal",
-        `Order cannot be cancelled because it is not in process`,
-      );
+      throw new MezError(CancelOrderError.OrderNotInProcess);
     }
     let paymentDetails: PaymentDetails = {
       orderId: order.orderId!,
-      orderType: OrderType.Restaurant,
-      serviceProviderId: order.restaurantId,
+      serviceProviderDetailsId: order.spDetailsId,
       orderStripePaymentInfo: order.stripeInfo
     }
     switch (order.status) {
@@ -78,10 +68,13 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
         if (order.paymentType == PaymentType.Card) {
           capturePayment(paymentDetails, 0)
         }
+        console.log("cancelling while order received")
+        console.log(order.totalCost)
         order.refundAmount = order.totalCost;
+        console.log(order.refundAmount)
         break;
-      case RestaurantOrderStatus.PreparingOrder:
-      case RestaurantOrderStatus.ReadyForPickup:
+      case RestaurantOrderStatus.Preparing:
+      case RestaurantOrderStatus.Ready:
         if (order.paymentType == PaymentType.Card) {
           capturePayment(paymentDetails, order.itemsCost)
         }
@@ -99,8 +92,7 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
     order.status = RestaurantOrderStatus.CancelledByCustomer;
 
     updateRestaurantOrderStatus(order)
-    deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
-    updateDeliveryOrderStatus(deliveryOrder);
+    
     
     let notification: Notification = {
       foreground: <RestaurantOrderStatusChangeNotification>{
@@ -115,31 +107,47 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
       linkUrl: orderUrl(OrderType.Restaurant, data.orderId)
     }
     mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
     restaurantOperators.forEach((r) => {
-      pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+      pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator, r.user?.language);
     });
-    if(order.deliveryId != undefined) {
-      let delivery: DeliveryOrder = await getDeliveryOrder(order.deliveryId);
-      if(delivery.deliveryDriver != undefined) {
-        notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
-        pushNotification(delivery.deliveryDriver.user?.firebaseId!, 
+
+    if(order.deliveryType == DeliveryType.Delivery && order.deliveryId) {
+
+      let deliveryOrder: DeliveryOrder = await getDeliveryOrder(order.deliveryId);
+
+      deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
+      updateDeliveryOrderStatus(deliveryOrder);
+      if(deliveryOrder.deliveryDriver != undefined) {
+        notification.linkUrl = `/orders/${order.deliveryId}`;
+        pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!, 
           notification, 
-          delivery.deliveryDriver.notificationInfo,
+          deliveryOrder.deliveryDriver.notificationInfo,
           ParticipantType.DeliveryDriver,
-          delivery.deliveryDriver.user?.language,
+          deliveryOrder.deliveryDriver.user?.language,
         );
       }
     }
-    
-    return { status: ServerResponseStatus.Success, orderId: data.orderId }
-  } catch(error) {
-    console.log("error =>", error);
-    throw new HttpsError(
-      "unknown",
-      "Request was not authenticated.",
-      error
-    );
+    return {
+      success: true
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(CancelOrderError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: CancelOrderError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
+    }
   }
 };

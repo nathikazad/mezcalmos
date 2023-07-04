@@ -41,7 +41,13 @@
 	<string>Mezcalmos</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+
 		<string>fbapi</string>
+		<string>http</string>
+		<string>https</string>
+		<string>sms</string>
+        <string>tel</string>
+        <string>mailto</string>
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
@@ -50,11 +56,15 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app require PhotoLibrary Access</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need microphone access in order to give the ability for our customers to call their delivery drivers.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>location</string>
 		<string>remote-notification</string>
+		<string>voip</string>
+		<string>processing</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App needs location when in use to update your customer about your location</string>

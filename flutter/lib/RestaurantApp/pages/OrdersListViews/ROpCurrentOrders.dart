@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
-import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
-import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpWaitingForApproval.dart';
+import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpPastOrdersList.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpCurrentOrdersController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
+import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ClosedServiceProviderWidget.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -45,8 +45,6 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
 
   @override
   void dispose() {
-    Get.delete<RestaurantInfoController>(force: true);
-
     super.dispose();
   }
 
@@ -57,26 +55,30 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
         return widget.canGoBack;
       },
       child: Scaffold(
-        appBar: mezcalmosAppBar(
+        appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Menu,
           showNotifications: true,
         ),
         key: Get.find<SideMenuDrawerController>().getNewKey(),
-        drawer: ROpDrawer(),
+        drawer: MezSideMenu(),
         body: Obx(() {
           if (viewController.initalized.isFalse) {
             return MezLogoAnimation(
               centered: true,
             );
           } else if (viewController.isAproved == false) {
-            return ROpWaitingForApproval();
+            return ServiceWaitingForApproval();
+          } else if (viewController.isClosedIdf) {
+            return ClosedServiceProviderWidget(
+              openCallBack: viewController.turnOnOrders,
+            );
           } else {
             return Column(
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
                   child: TitleWithOnOffSwitcher(
-                    title: "Restaurant status",
+                    title: "${_i18n()['incomingOrders']}",
                     onTurnedOn: () {
                       viewController.turnOnOrders();
                     },
@@ -129,17 +131,20 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                        style: Get.textTheme.bodyText1)),
+                        style: context.txt.bodyLarge)),
                 Flexible(
                   child: MezButton(
                     backgroundColor: secondaryLightBlueColor,
                     textColor: primaryBlueColor,
                     height: 32,
-                    //  width: 35.w,
+                    width: 35.w,
+                    textStyle: context.txt.bodyLarge
+                        ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
+                    // width: ,
                     borderRadius: 35,
                     label: '${_i18n()["pastButton"]}'.inCaps,
                     onClick: () async {
-                      await MezRouter.toNamed(kPastOrdersListView);
+                      await ROpPastOrdersList.navigate();
                     },
                   ),
                 ),
@@ -155,9 +160,9 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                         return MinimalOrderCard(
                           order: viewController.currentOrders[index],
                           onTap: () {
-                            MezRouter.toNamed(getROpOrderRoute(viewController
-                                .currentOrders[index].id
-                                .toString()));
+                            RestaurantOrderView.navigate(
+                                orderId:
+                                    viewController.currentOrders[index].id);
                           },
                         );
                       }),

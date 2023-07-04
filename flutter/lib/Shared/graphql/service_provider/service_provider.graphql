@@ -1,12 +1,211 @@
-query getServiceProviderLinks($serviceProviderId: Int!) {
-  service_provider_service_link(where: {service_provider_id: {_eq: $serviceProviderId}}) {
+query getServiceProviderLinks($serviceLinkId: Int!) {
+  service_provider_service_link_by_pk(id: $serviceLinkId) {
     id
     driver_deep_link
     driver_qr_image_link
     operator_deep_link
     operator_qr_image_link
-    service_provider_id
-    service_provider_type
+    customer_deep_link
+    customer_qr_image_link
+    customer_flyer_links
   }
 }
 
+query getServiceDetails($id: Int!) {
+  service_provider_details_by_pk(id: $id) {
+    unique_id
+    accepted_payments
+    approved
+    is_open
+    creation_time
+    description_id
+    firebase_id
+    id
+    image
+    language
+    name
+    open_status
+    phone_number
+    online_ordering
+    service_link_id
+    stripe_info {
+      charge_fees_on_customer
+      charges_enabled
+      details_submitted
+      email
+      payouts_enabled
+      requirements
+      id
+      status
+      stripe_id
+    }
+    service_provider_type
+    schedule
+    location {
+      id
+      gps
+      address
+    }
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+mutation updateServiceDetails($detailsId: Int!, $data: service_provider_details_set_input) {
+  update_service_provider_details_by_pk(pk_columns: {id: $detailsId}, _set: $data) {
+    accepted_payments
+    approved
+    creation_time
+    description_id
+    firebase_id
+    id
+    image
+    is_open
+    language
+    name
+    open_status
+    phone_number
+    service_link_id
+    currency
+    stripe_info {
+      charge_fees_on_customer
+      charges_enabled
+      details_submitted
+      email
+      payouts_enabled
+      requirements
+      id
+      status
+      stripe_id
+    }
+    service_provider_type
+    schedule
+    location {
+      id
+      gps
+      address
+    }
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+
+query getServiceInfo($serviceDetailsId: Int!) {
+  service_provider_details_by_pk(id: $serviceDetailsId) {
+    description_id
+    firebase_id
+    id
+    image
+    is_open
+    name
+    unique_id
+    phone_number
+    language
+    service_provider_type
+    location {
+      id
+      gps
+      address
+    }
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+query getServiceSchedule($serviceDetailsId: Int!) {
+  service_provider_details_by_pk(id: $serviceDetailsId) {
+    schedule
+  }
+}
+query getServicePaymentInfo($serviceDetailsId: Int!) {
+  service_provider_details_by_pk(id: $serviceDetailsId) {
+    accepted_payments
+    stripe_info {
+      charge_fees_on_customer
+      charges_enabled
+      details_submitted
+      email
+      payouts_enabled
+      requirements
+      id
+      status
+      stripe_id
+    }
+  }
+}
+
+query getServiceProviderType($unique_id: String!) {
+  service_provider_details(where: {unique_id: {_eq: $unique_id}}) {
+    id
+    service_provider_type
+    laundry_store {
+      id
+    }
+    restaurant {
+      id
+    }
+    business {
+      id
+    }
+  }
+}
+
+query getServiceProviderId($uniqueId: String) {
+  service_provider_details(where: {unique_id: {_eq: $uniqueId}}) {
+    service_provider_type
+    business {
+      id
+    }
+    delivery_company {
+      id
+    }
+    laundry_store {
+      id
+    }
+    restaurant {
+      id
+    }
+  }
+}
+
+
+query getServiceLanguage($serviceDetailsId: Int!) {
+  service_provider_details_by_pk(id: $serviceDetailsId) {
+    language
+  }
+}
+query getServiceIsOpen($serviceDetailsId: Int!) {
+  service_provider_details_by_pk(id: $serviceDetailsId) {
+    is_open
+  }
+}
+
+mutation setLastActiveTime($id: Int!) {
+  update_service_provider_details_by_pk(pk_columns: {id: $id}, _set: {last_active_time: "now()"}) {
+    last_active_time
+  }
+}
+
+mutation update_business_online_ordering(
+  $online_ordering: Boolean!
+  $id: Int!
+) {
+  update_service_provider_details_by_pk(
+    pk_columns: { id: $id }
+    _set: { online_ordering: $online_ordering }
+  ) {
+    online_ordering
+  }
+}

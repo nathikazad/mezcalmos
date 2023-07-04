@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/OrderTimeBar.dart';
-import 'package:intl/intl.dart';
 
 class OrderPositionedFromToTopBar {
   static dynamic i18n() => Get.find<LanguageController>().strings["TaxiApp"]
@@ -283,10 +283,10 @@ class OrderPositionedFromToTopBar {
                     SizedBox(width: 5),
                     Expanded(
                       child: GestureDetector(
-                        onTap: () =>
-                            MezSnackbar(i18n()["to"], order.to.address),
+                        onTap: () => MezSnackbar(
+                            i18n()["to"], order.dropOffLocation.address),
                         child: Text(
-                          order.to.address
+                          order.dropOffLocation.address
                               .replaceAll(' ', '\u00a0')
                               .toUpperCase(),
                           textAlign: TextAlign.left,

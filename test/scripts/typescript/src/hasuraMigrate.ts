@@ -1,29 +1,73 @@
 import * as firebaseAdmin from "firebase-admin";
+import * as functions from "firebase-functions";
+
 import * as fs from 'fs';
 import { getHasura } from "../../../../functions/src/utilities/hasura";
-import { insertRestaurants } from "../../../../functions/src/shared/graphql/restaurant/insertRestaurants";
+import { insertRestaurants, insertRestaurantStripeInfo } from "../../../../functions/src/shared/graphql/restaurant/insertRestaurants";
 import { insertRestaurantOrders } from "../../../../functions/src/shared/graphql/restaurant/order/insertRestaurantOrders"
 import { insertRestaurantOperators } from "../../../../functions/src/shared/graphql/restaurant/operators/insertRestaurantOperators"
 import { insertDeliveryDrivers } from "../../../../functions/src/shared/graphql/delivery/driver/insertDeliveryDrivers"
 import { insertCustomers } from "../../../../functions/src/shared/graphql/user/customer/insertCustomers"
+import { insertLaundryStores } from "../../../../functions/src/shared/graphql/laundry/insertLaundry"
+import { insertLaundryOrders } from "../../../../functions/src/shared/graphql/laundry/order/insertLaundryOrders"
+import { insertServiceLinks } from "../../../../functions/src/shared/graphql/insertServiceLinks"
 
 import { insertUsers } from "../../../../functions/src/shared/graphql/user/insertUsers"
+import { Language } from "../../../../functions/src/shared/models/Generic/Generic";
 
-process.env.FUNCTIONS_EMULATOR = "true";
+// process.env.FUNCTIONS_EMULATOR = "true";
 var serviceAccount = require("./../../../../../../../../service_account_production.json");
 
-const firebase = firebaseAdmin.initializeApp({
+const firebaseConfig = {
+  apiKey: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
+  authDomain: "mezcalmos-31f1c.firebaseapp.com",
   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
-  credential: firebaseAdmin.credential.cert(serviceAccount),
-}, "production");
+  projectId: "mezcalmos-31f1c",
+  storageBucket: "mezcalmos-31f1c.appspot.com",
+  messagingSenderId: "804036698204",
+  appId: "1:804036698204:web:39b22436cbb4ef633f8699",
+  measurementId: "G-5R20EL7CL9",
+  credential: firebaseAdmin.credential.cert("/home/sanchit/Work/mezcalmos/service_account_production.json")
+};
+
+const firebase = firebaseAdmin.initializeApp(
+  firebaseConfig
+//   {
+//   databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
+//   credential: firebaseAdmin.credential.cert(serviceAccount),
+// }
+)
+// , "production");
+
+functions.config()
+
+process.chdir('../')
+console.log("Current working directory: ", process.cwd()); 
+
 
 async function saveFile() {
-  let db = (await firebase.database().ref(`/customers/info`).once('value')).val();
+  let db = (await firebase.database().ref(`/orders/past/laundry`).once('value')).val();
   console.log("finished downloading, starting write");
 
   let data = JSON.stringify(db, null, "\t");
-  fs.writeFileSync("./../../../../../../data/db-snapshot-customers.json", data);
+  fs.writeFileSync("./data/db-snapshot-laundry-orders.json", data);
   console.log("Finished");
+
+  // let chain = getHasura();
+  // let response = await chain.query({
+  //   service_provider_details: [{}, {
+  //     name: true,
+  //     id: true
+  //   }]
+  // })
+  // let detailsIds: Record<string, number> = {};
+  // response.service_provider_details.forEach((d) => {
+  //   // if(!d.unique_id || !d.service_link_id)
+  //   //   return;
+  //   detailsIds[d.name] = d.id;
+  // })
+  // fs.writeFileSync("./details-Ids.json", JSON.stringify(detailsIds));
+
 }
 async function writeToDB() {
 
@@ -31,10 +75,11 @@ async function writeToDB() {
 //   // await deleteDrivers()
 //   // await deleteOrders()
 //   // return
-  let restaurants = JSON.parse(fs.readFileSync('./../../../../../../data/db-snapshot.json').toString());
-  
+  let restaurants = JSON.parse(fs.readFileSync('./data/db-snapshot.json').toString());
+  // let serviceLinkIds: Record<string, number> = JSON.parse(fs.readFileSync('./service-link-Ids.json').toString());
   // let drivers = data.taxiDrivers
   // let users = data.users
+  let chain = getHasura();
 
   let array = []
   for(let restaurantFirebaseId in restaurants) {
@@ -100,12 +145,47 @@ async function writeToDB() {
                   costPerExtra: option.costPerExtra,
                   choices: (choiceArray.length) ? choiceArray : null
                 }
+                switch (option.optionType) {
+                  case 'chooseOne':
+                    optionObject.minimumChoice = 1;
+                    optionObject.maximumChoice = 1;
+                    break;
+                  case 'chooseMany':
+                    optionObject.minimumChoice = 0;
+                    optionObject.maximumChoice = (option.choices) ? Object.keys(option.choices).length : 0;
+                    break;
+                  default: 
+                    break;
+                }
                 optionArray.push(optionObject);
               }
             }
-
+            if(!item.image)
+              continue;
+            await chain.mutation({
+              update_restaurant_item: [{
+                where: {
+                  name: {
+                    translations: {
+                      // language_id: {
+                      //   _eq: "en"
+                      // },
+                      value: {
+                        _eq: item.name.en
+                      }
+                    }
+                  }
+                },
+                _set: {
+                  image: item.image
+                }
+              }, {
+                affected_rows: true
+              }]
+            })
             let itemObject = {
               name: item.name,
+              image: item.image,
               description: item.description,
               position: item.position,
               available: item.available,
@@ -116,6 +196,8 @@ async function writeToDB() {
             // break;
           }
         }
+        console.log(itemArray.length)
+
         let categoryObject = {
           name: category.name,
           description: category.dialog,
@@ -136,14 +218,15 @@ async function writeToDB() {
       // languageId: restaurant.details.language.primary,
       approved: restaurant.state.authorizationStatus == "authorized",
       schedule: JSON.stringify(restaurant.details.schedule),
-      categories: (categoryArray.length) ? categoryArray : null
+      categories: (categoryArray.length) ? categoryArray : null,
+      uniqueId: restaurant.info.name.split(" ").join("").slice(0, 8).toLowerCase()
     }
     array.push(restaurantObject);
     // break;
   }
   // console.log( JSON.stringify(array[0].categories![0].items[0].options![0]))
-  insertRestaurants(array);
-
+  // insertRestaurants(array);
+  // insertRestaurantStripeInfo(restaurants)
 
 
 //   let driversArray = []
@@ -244,7 +327,9 @@ async function writeToDB() {
 //   await insertNotification({ objects: notificationsArray })
 }
 async function writeToDBUsers() {
-  let users = JSON.parse(fs.readFileSync('./../../../../../../data/db-snapshot-users.json').toString());
+
+  
+  let users = JSON.parse(fs.readFileSync('./data/db-snapshot-restaurant-operators.json').toString());
 
   let array = []
   for (let userId in users) {
@@ -273,7 +358,7 @@ async function writeToDBUsers() {
 
 async function writeToDBRestoOps() {
   let operators = JSON.parse(
-    fs.readFileSync('./../../../../../../data/db-snapshot-restaurant-operators.json').toString()
+    fs.readFileSync('./data/db-snapshot-restaurant-operators.json').toString()
   );
   
   let array = []
@@ -301,7 +386,7 @@ async function writeToDBRestoOps() {
 
 async function writeToDBDeliDrivers() {
   let drivers = JSON.parse(
-    fs.readFileSync('./../../../../../../data/db-snapshot-delivery-drivers.json').toString()
+    fs.readFileSync('./data/db-snapshot-delivery-drivers.json').toString()
   );
   
   let array = []
@@ -332,71 +417,196 @@ async function writeToDBDeliDrivers() {
 
 async function writeToDBRestoOrders() {
   let orders = JSON.parse(
-    fs.readFileSync('./../../../../../../data/db-snapshot-restaurant-orders.json').toString()
+    fs.readFileSync('./data/db-snapshot-restaurant-orders.json').toString()
   );
-  let array = []
-  for (let orderId in orders) {
-    let order = orders[orderId]
-    if (!order)
-      continue
+  let chain = getHasura();
 
-    let itemArray = [];
-    let orderItems = order.items
-    for(let itemFirebaseId in orderItems) {
-      let orderItem = orderItems[itemFirebaseId];
-      if(!orderItem)
+  let response = await chain.query({
+    restaurant_restaurant: [{}, {
+        id: true,
+        details: {
+          firebase_id: true,
+          location: {
+            gps: true,
+            address: true
+          }
+        },
+        items: [{}, {
+            id: true,
+            name: {
+                translations: [{
+                    where: {
+                        language_id: {
+                            _eq: Language.EN
+                        }
+                    }
+                }, {
+                    value: true
+                }]
+            }
+        }]
+    }],
+    user: [{}, {
+        id: true,
+        firebase_id: true,
+    }],
+    customer_customer: [{}, {
+        user_id: true,
+        user: {
+            firebase_id: true
+        }
+    }]
+});
+  // for(let i=0; i<3600; i+=200) {
+  //   console.log(i)
+    let array = []
+    for (let orderId of Object.keys(orders).slice(3600, 3691)) {
+      let order = orders[orderId]
+      if (!order)
         continue
-
-      let orderItemObject = {
-        itemName: orderItem.name.en,
-        inJSON: JSON.stringify({
-          name: orderItem.name,
-          selected_options: orderItem.chosenChoices
-        }),
-        notes: orderItem.notes,
-        unavailable: orderItem.unavailable,
-        quantity: orderItem.quantity,
-        costPerOne: orderItem.costPerOne
+  
+      let itemArray = [];
+      let orderItems = order.items
+      for(let itemFirebaseId in orderItems) {
+        let orderItem = orderItems[itemFirebaseId];
+        if(!orderItem)
+          continue
+  
+        let orderItemObject = {
+          itemName: orderItem.name.en,
+          inJSON: JSON.stringify({
+            name: orderItem.name,
+            selected_options: orderItem.chosenChoices
+          }),
+          notes: orderItem.notes,
+          unavailable: orderItem.unavailable,
+          quantity: orderItem.quantity,
+          costPerOne: orderItem.costPerOne
+        }
+        itemArray.push(orderItemObject)
       }
-      itemArray.push(orderItemObject)
+  
+      let orderObject = {
+        customerFirebaseId: order.customer.id,
+        restaurantFirebaseId: order.restaurant.id,
+        paymentType: order.PaymentType,
+        toLocationGps: (order.to) ? JSON.stringify({
+          "type": "Point",
+          "coordinates": [order.to.lng, order.to.lat]
+        }) : undefined,
+        toLocationAddress: (order.to) ? order.to.address : undefined,
+        estimatedFoodReadyTime: order.estimatedFoodReadyTime,
+        // stripePaymentId: (order.stripePaymentInfo) ? order.stripePaymentInfo.id : undefined,
+        status: order.status,
+        orderTime: order.orderTime,
+        firebaseId: orderId,
+        notes: order.notes,
+        deliveryCost: order.shippingCost,
+        refundAmount: order.refundAmount,
+        stripeInfo: order.stripePaymentInfo,
+        stripeFees: (order.stripePaymentInfo) ? order.stripePaymentInfo.stripeFees : order.stripeFees,
+        items: itemArray,
+        itemsCost: order.itemsCost,
+        review: (order.review) ? {
+          rating: order.review.rating,
+          note: order.review.comment,
+          createdAt: order.review.reviewTime
+        }: undefined
+      }
+      
+      array.push(orderObject)
+      // break;
     }
+    console.log(array.length)
+    await insertRestaurantOrders(array, response)
+  // }
+ 
+}
 
-    let orderObject = {
-      customerFirebaseId: order.customer.id,
-      restaurantFirebaseId: order.restaurant.id,
-      paymentType: order.PaymentType,
-      toLocationGps: (order.to) ? JSON.stringify({
-        "type": "Point",
-        "coordinates": [order.to.lng, order.to.lat]
-      }) : undefined,
-      toLocationAddress: (order.to) ? order.to.address : undefined,
-      estimatedFoodReadyTime: order.estimatedFoodReadyTime,
-      stripePaymentId: (order.stripePaymentInfo) ? order.stripePaymentInfo.id : undefined,
-      status: order.status,
-      orderTime: order.orderTime,
-      firebaseId: orderId,
-      notes: order.notes,
-      deliveryCost: order.shippingCost,
-      refundAmount: order.refundAmount,
-      items: itemArray,
-      review: (order.review) ? {
-        rating: order.review.rating,
-        note: order.review.comment,
-        createdAt: order.review.reviewTime
-      }: undefined
-    }
+async function writeToDBLaundry() {
+  let laundries = JSON.parse(
+    fs.readFileSync('./data/db-snapshot-laundry.json').toString()
+  );
+ 
+  insertLaundryStores(laundries)
+}
+
+async function writeToDBLaundryOrders() {
+  let orders = JSON.parse(
+    fs.readFileSync('./data/db-snapshot-laundry-orders.json').toString()
+  );
+  let chain = getHasura();
+
+  let response = await chain.query({
+    laundry_store: [{}, {
+        id: true,
+        details: {
+          firebase_id: true,
+        },
+    }],
+    user: [{}, {
+        id: true,
+        firebase_id: true,
+    }],
+    customer_customer: [{}, {
+        user_id: true,
+        user: {
+            firebase_id: true
+        }
+    }]
+  });
+  // for(let i=0; i<3200; i+=200) {
+  //   console.log(i)
+    let array = []
+    for (let orderId of Object.keys(orders)/*.slice(i, i+200)*/) {
+      let order = orders[orderId]
+      if (!order)
+        continue
+  
+      // let itemArray = [];
+      // let orderItems = order.items
+      // for(let itemFirebaseId in orderItems) {
+      //   let orderItem = orderItems[itemFirebaseId];
+      //   if(!orderItem)
+      //     continue
+  
+      //   let orderItemObject = {
+      //     itemName: orderItem.name.en,
+      //     inJSON: JSON.stringify({
+      //       name: orderItem.name,
+      //       selected_options: orderItem.chosenChoices
+      //     }),
+      //     notes: orderItem.notes,
+      //     unavailable: orderItem.unavailable,
+      //     quantity: orderItem.quantity,
+      //     costPerOne: orderItem.costPerOne
+      //   }
+      //   itemArray.push(orderItemObject)
+      // }
+      if(order.customer && order.laundry) {
+        let orderObject = {
+          customerFirebaseId: order.customer.id,
+          storeFirebaseId: order.laundry.id,
+          status: order.status,
+          orderTime: order.orderTime,
+          deliveryCost: order.shippingCost,
+          firebaseId: orderId,
+          itemsCost: order.cost
+        }
+        array.push(orderObject)
+      }
+      // break;
+    // }
     
-    array.push(orderObject)
-    // break;
   }
-  await insertRestaurantOrders(array)
+  console.log(array.length)
+  await insertLaundryOrders(array, response)
 }
 
 async function writeToDBCustomers() {
   let customers = JSON.parse(
-    fs.readFileSync('./../../../../../../data/db-snapshot-customers.json').toString()
+    fs.readFileSync('./data/db-snapshot-customers.json').toString()
   );
-  let array = []
   // let c: Record<string, number> = {}
   // for (let customerId in customers) {
   //     c[customerId] = 1;
@@ -408,25 +618,76 @@ async function writeToDBCustomers() {
   //   }
   //   array.push(customerObject)
   // }
-  for (let customerId in customers) {
-    let customer = customers[customerId]
-    if (!customer)
-      continue
+  // for(let i=0; i<1100; i+=100) {
+  //   console.log(i)
+    let array = []
 
-    let customerObject = {
-      userFirebaseId: customerId,
-      stripeInfo: customer.stripe
+    for (let customerId of Object.keys(customers).slice(1100, 1163)) {
+      let customer = customers[customerId]
+      if (!customer)
+        continue
+
+      let cardArray = [];
+      let idsWithServiceProviderObject: Record<any, any> = 
+        (customer.stripe 
+          && customer.stripe.idsWithServiceProvider 
+          && customer.stripe.idsWithServiceProvider.restaurant
+        )
+        ? customer.stripe.idsWithServiceProvider.restaurant
+        : undefined;
+
+      if(customer.stripe && customer.stripe.cards) {
+        let cards = customer.stripe.cards      
+          for (let cardId in cards) {
+            let card = cards[cardId]
+            if (!card)
+              continue
+    
+            // let cardIdsWithServiceProviderObject: Record<any, any> = {};
+            // if(card.idsWithServiceProvider) {
+            //   let idsWithServiceProvider = card.idsWithServiceProvider
+            //   for (let id in idsWithServiceProvider) {
+            //     let idWithServiceProvider = idsWithServiceProvider[id];
+    
+            //     cardIdsWithServiceProviderObject[id] = idWithServiceProvider.restaurant;
+            //   }
+            // }
+            // let cardObject = {
+            //   brand: "visa",
+            //   expMonth: 7,
+            //   expYear: 2025,
+            //   id: "pm_1MbbFQDV5wKm9SNKSbkC1sBR",
+            //   last4: "8620",
+            //   idsWithServiceProvider: cardIdsWithServiceProviderObject
+            // }
+            cardArray.push(card)
+          }
+      }
+
+      let customerObject = {
+        userFirebaseId: customerId,
+        // stripeInfo: customer.stripe,
+        stripeId: (customer.stripe) ? customer.stripe.id: undefined,
+        cards: cardArray,
+        stripeSPIds: idsWithServiceProviderObject
+      }
+      // console.log(customerObject)
+
+      array.push(customerObject)
     }
-    array.push(customerObject)
-  }
-  await insertCustomers(array)
+    console.log(array.length)
+    await insertCustomers(array)
+  // }
 }
 
-
+// insertDeliveryPartners()
   // saveFile()
-  // writeToDB()  
+  writeToDB()  
   // writeToDBUsers()
   // writeToDBRestoOps()
 // writeToDBDeliDrivers()
 // writeToDBCustomers()
-writeToDBRestoOrders()
+// writeToDBRestoOrders()
+// writeToDBLaundry()
+// writeToDBLaundryOrders()
+// insertServiceLinks()

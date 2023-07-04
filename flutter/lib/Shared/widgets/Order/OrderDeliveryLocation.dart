@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -10,8 +11,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 
 class OrderDeliveryLocation extends StatelessWidget {
   const OrderDeliveryLocation(
-      {super.key, required this.order, this.margin, this.titleTextStyle});
-  final Order order;
+      {super.key,
+      this.title,
+      required this.address,
+      this.margin,
+      this.titleTextStyle});
+  final String address;
+  final String? title;
   final EdgeInsets? margin;
   final TextStyle? titleTextStyle;
 
@@ -23,13 +29,14 @@ class OrderDeliveryLocation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${_i18n()["title"]}',
-            style: titleTextStyle,
+            title ?? '${_i18n()["title"]}',
+            style: titleTextStyle ?? context.txt.titleLarge,
           ),
           const SizedBox(
-            height: 10,
+            height: 4,
           ),
           Card(
+            elevation: .5,
             margin: EdgeInsets.zero,
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -38,16 +45,18 @@ class OrderDeliveryLocation extends StatelessWidget {
                   Icon(
                     Icons.fmd_good,
                     color: Colors.black,
-                    size: 18,
+                    size: 13.mezSp,
                   ),
                   const SizedBox(
-                    width: 8,
+                    width: 5,
                   ),
                   Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      order.to.address,
-                      style: Get.textTheme.bodyText1,
+                      address,
+                      style: context.txt.bodyLarge?.copyWith(
+                        fontSize: 12.mezSp,
+                      ),
                       maxLines: 1,
                     ),
                   ),

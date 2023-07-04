@@ -2,6 +2,16 @@ table:
   name: service_link
   schema: public
 object_relationships:
+  - name: delivery_company
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: delivery_company
+          schema: public
   - name: restaurant
     using:
       manual_configuration:

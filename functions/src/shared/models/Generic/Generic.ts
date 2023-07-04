@@ -1,10 +1,8 @@
-import { ParticipantType } from "./Chat";
-import { UserInfo } from "./User";
 
 export interface Location {
   lat: number,
   lng: number,
-  address?: string;
+  address: string;
 }
 
 export interface Review {
@@ -15,6 +13,16 @@ export interface Review {
   toEntityType: string
 }
 
+export class MezError extends Error {
+  details: Record<string, any>;
+  constructor(message: string, details: Record<string, any> = {}){
+    super(message);
+    this.details = details;      
+
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
 export enum Language {
   EN = "en",
   ES = "es",
@@ -22,45 +30,28 @@ export enum Language {
 
 export enum AppType {
   Customer = "customer",
-  RestaurantApp = "restaurant",
-  DeliveryApp = "delivery",
-  DeliveryAdmin = "delivery_admin",
-  MezAdmin = "mez_admin"
+  Restaurant = "restaurant",
+  Delivery = "delivery",
+  DeliveryAdmin = "deliveryAdmin",
+  MezAdmin = "mezAdmin",
+  Business = "business",
+  Laundry = "laundry",
 }
-export const ChatInfoAppName: Record<AppType, string> = {
-  [AppType.Customer]: "CustomerApp",
-  [AppType.DeliveryAdmin]: "DeliveryAdminApp",
-  [AppType.DeliveryApp]: "DeliveryApp",
-  [AppType.MezAdmin]: "MezAdminApp",
-  [AppType.RestaurantApp]: "RestaurantApp"
-}
-
-export const AppParticipant: Record<AppType, ParticipantType> = {
-  [AppType.Customer]: ParticipantType.Customer,
-  [AppType.DeliveryAdmin]: ParticipantType.DeliveryOperator,
-  [AppType.DeliveryApp]: ParticipantType.DeliveryDriver,
-  [AppType.MezAdmin]: ParticipantType.MezAdmin,
-  [AppType.RestaurantApp]: ParticipantType.RestaurantOperator
+export enum CustomerAppType {
+  Native = "native",
+  Web = "web"
 }
 
 export interface NotificationInfo {
   token: string;
-  AppTypeId: AppType;
+  turnOffNotifications: boolean;
+  appType?: AppType;
+  id?: number;
+  userId?: number;
 }
 
 export enum TokenType {
   DeviceNotificationToken = "deviceNotificationToken",
-}
-
-export interface Operator {
-  info: UserInfo,
-  versionNumber: string,
-  notificationInfo: NotificationInfo
-}
-export interface LaundryOperator extends Operator {
-  state: {
-    laundryId: string
-  }
 }
 
 export interface ServerResponse {
@@ -70,11 +61,11 @@ export interface ServerResponse {
   [key: string]: any;
 }
 
-export interface ValidationPass {
-  ok: boolean,
-  error?: ServerResponse,
-  [key: string]: any;
-}
+// export interface ValidationPass {
+//   ok: boolean,
+//   error?: ServerResponse,
+//   [key: string]: any;
+// }
 
 export enum ServerResponseStatus {
   Success = "Success",
@@ -84,10 +75,6 @@ export enum ServerResponseStatus {
 export enum AuthorizationStatus {
   InReview = "inReview",
   Authorized = "authorized",
-  Unauthorized = "unauthorized"
-}
-
-export enum OperatorType {
-  Delivery = "delivery",
-  Restaurant = "restaurant",
+  Unauthorized = "unauthorized",
+  AwaitingApproval = "awaitingApproval"
 }

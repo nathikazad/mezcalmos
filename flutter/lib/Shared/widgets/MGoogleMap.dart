@@ -9,12 +9,13 @@ import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
+    as MapHelper;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart'
     as LocationModel;
 import 'package:mezcalmos/Shared/widgets/MezSmartPointer.dart';
-import 'package:sizer/sizer.dart';
 
 class MGoogleMap extends StatefulWidget {
   final MapHelper.LocationChangesNotifier? notifyParentOfNewLocation;
@@ -25,13 +26,17 @@ class MGoogleMap extends StatefulWidget {
   final MGoogleMapController mGoogleMapController;
   final double recenterBtnBottomPadding;
   final EdgeInsets padding;
+  final bool zoomGesturesEnabled;
+  final void Function(CameraPosition)? onCameraMove;
 
   const MGoogleMap({
     Key? key,
     this.padding = const EdgeInsets.only(top: 80, bottom: 50),
     this.notifyParentOfNewLocation,
-    this.recenterBtnBottomPadding = 100,
+    this.recenterBtnBottomPadding = 10,
     this.debugString,
+    this.zoomGesturesEnabled = false,
+    this.onCameraMove,
 
     // this.mGoogleMapController,
 
@@ -116,7 +121,7 @@ class MGoogleMapState extends State<MGoogleMap> {
     try {
       currentLocation = await Location().getLocation();
       widget.notifyParentOfNewLocation?.call(
-        LocationModel.Location.fromFirebaseData(
+        LocationModel.MezLocation.fromFirebaseData(
           <String, dynamic>{
             "lat": currentLocation.latitude,
             "lng": currentLocation.longitude,
@@ -156,9 +161,11 @@ class MGoogleMapState extends State<MGoogleMap> {
                           "Pan gesture is enabled ==================> $PanGestureRecognizer()");
                       return PanGestureRecognizer();
                     })),
+                  zoomGesturesEnabled: widget.zoomGesturesEnabled,
                   minMaxZoomPreference:
                       widget.mGoogleMapController.getMapMinMaxZommPrefs(),
                   onCameraMove: (CameraPosition camMove) {
+                    widget.onCameraMove?.call(camMove);
                     if (lastZoomSnapshot != camMove.zoom) {
                       lastZoomSnapshot = camMove.zoom;
                       // make sure to not call heavy callbacks that do a lot of operations
@@ -172,7 +179,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                   buildingsEnabled: false,
                   markers: widget.mGoogleMapController.markers.toSet(),
                   polylines: widget.mGoogleMapController.polylines,
-                  zoomControlsEnabled: false,
+                  zoomControlsEnabled: widget.zoomGesturesEnabled,
                   compassEnabled: false,
                   mapType: MapType.normal,
                   tiltGesturesEnabled: true,
@@ -180,7 +187,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                       target: widget.mGoogleMapController.location.value!
                           .toLatLng()!,
                       tilt: 9.440717697143555,
-                      zoom: 5.151926040649414),
+                      zoom: widget.mGoogleMapController.initialZoomLevel),
                   onMapCreated: (GoogleMapController _gController) async {
                     mezDbgPrint(
                         "\n\n\n\n\n o n   m a p   c r e a t e d !\n\n\n\n\n\n");
@@ -223,8 +230,8 @@ class MGoogleMapState extends State<MGoogleMap> {
           }
         },
         child: Container(
-          height: 10.w,
-          width: 10.w,
+          height: 35.mezSp,
+          width: 35.mezSp,
           decoration: BoxDecoration(
             color: Color(0xffffffff),
             boxShadow: <BoxShadow>[

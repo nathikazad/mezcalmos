@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -16,17 +14,17 @@ class UnautthDriverViewController {
 
   // obs
   Rxn<AgentStatus> _status = Rxn();
+  AgentStatus? get status => _status.value;
 
   // stream sub
-  StreamSubscription<AgentStatus>? statusStream;
+  StreamSubscription<AgentStatus?>? statusStream;
   String? subscriptionId;
 
   Future<void> init() async {
     await dvAuthController.setupDeliveryDriver();
     _status.value = dvAuthController.driver?.deliveryDriverState.status;
-    if (_status.value! == AgentStatus.Awaiting_approval) {
-      _startListeningOnSatus();
-    }
+
+    _startListeningOnSatus();
   }
 
   void _startListeningOnSatus() {
@@ -35,11 +33,13 @@ class UnautthDriverViewController {
     subscriptionId = hasuraDb.createSubscription(start: () {
       statusStream = listen_driver_status(
               driverId: dvAuthController.driver!.driverInfo.hasuraId)
-          .listen((AgentStatus event) {
+          .listen((AgentStatus? event) {
         mezDbgPrint(
             "Stream triggred from unauthorized view controller ✅✅=>$event");
-        _status.value = event;
-        _handleStatusChange();
+        if (event != null) {
+          _status.value = event;
+          _handleStatusChange();
+        }
       });
       statusStream?.onError((e, stk) {
         //  MezRouter.offAndToNamed(kHomeRoute);
@@ -54,7 +54,7 @@ class UnautthDriverViewController {
     if (_status.value == AgentStatus.Authorized) {
       await dvAuthController.setupDeliveryDriver();
       // ignore: inference_failure_on_function_invocation, unawaited_futures
-      MezRouter.offAndToNamed(kCurrentOrdersListRoute);
+      // MezRouter.popEverythingTillBeforeHome().then((value) => DvOpCurrentOrdersListView().navigate());
     }
   }
 

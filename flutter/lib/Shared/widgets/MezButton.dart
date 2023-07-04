@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 class MezButton extends StatefulWidget {
   final double? width;
@@ -13,13 +15,16 @@ class MezButton extends StatefulWidget {
     this.withGradient = false,
     this.backgroundColor,
     this.textColor,
-    this.borderRadius = 10,
+    this.borderRadius = 8,
     this.textStyle,
     this.height = 55,
+    this.border,
     this.width,
     this.icon,
     required this.label,
     this.onClick,
+    this.borderColor,
+    this.fontSize,
   }) : super(key: key);
 
   final bool enabled;
@@ -27,11 +32,14 @@ class MezButton extends StatefulWidget {
   final String label;
   final double height;
   final Color? backgroundColor;
+  final Color? borderColor;
   final Color? textColor;
   final Future<void> Function()? onClick;
   final double? borderRadius;
   final TextStyle? textStyle;
   final IconData? icon;
+  final BoxBorder? border;
+  final double? fontSize;
 
   @override
   State<MezButton> createState() => _MezButtonState();
@@ -43,22 +51,29 @@ class _MezButtonState extends State<MezButton> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Card(
+        elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
-            side: BorderSide.none),
+          borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
+          side: BorderSide(
+            color: widget.borderColor ?? Colors.transparent,
+          ),
+        ),
         child: InkWell(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
             onTap:
                 (!isLoading.value && widget.enabled && widget.onClick != null)
                     ? () {
+                        HapticFeedback.lightImpact();
+                        SystemSound.play(SystemSoundType.click);
+
                         isLoading.value = true;
                         widget.onClick
                             ?.call()
                             .whenComplete(() => isLoading.value = false)
                             .onError((Object? e, StackTrace stk) {
+                          mezDbgPrint(e);
                           mezDbgPrint(stk);
-                          // Get.snackbar("Error", "", backgroundColor: Colors.black);
                         });
                       }
                     : null,
@@ -66,16 +81,16 @@ class _MezButtonState extends State<MezButton> {
               width: widget.width ?? double.infinity,
               height: widget.height,
               decoration: BoxDecoration(
+                  gradient: widget.withGradient &&
+                          widget.enabled &&
+                          widget.onClick != null
+                      ? bluePurpleGradient
+                      : null,
                   color: (widget.enabled && widget.onClick != null)
                       ? (widget.backgroundColor != null)
                           ? widget.backgroundColor
                           : primaryBlueColor
                       : Colors.grey.shade400,
-                  gradient: (widget.withGradient &&
-                          widget.enabled &&
-                          widget.onClick != null)
-                      ? bluePurpleGradient
-                      : null,
                   borderRadius:
                       BorderRadius.circular(widget.borderRadius ?? 10)),
               child: Container(
@@ -83,8 +98,8 @@ class _MezButtonState extends State<MezButton> {
                 child: (isLoading.value)
                     ? Transform.scale(
                         scale: 0.6,
-                        child: const CircularProgressIndicator(
-                          color: Colors.white,
+                        child: CircularProgressIndicator(
+                          color: widget.textColor ?? Colors.white,
                         ),
                       )
                     : Row(
@@ -93,18 +108,19 @@ class _MezButtonState extends State<MezButton> {
                         children: [
                           if (widget.icon != null)
                             Padding(
-                              padding: const EdgeInsets.only(right: 5),
+                              padding: const EdgeInsets.only(right: 12),
                               child: Icon(
                                 widget.icon,
                                 color: widget.textColor ?? Colors.white,
-                                size: 15.sp,
+                                size: 15.mezSp,
                               ),
                             ),
                           Flexible(
                             child: Text(
                               widget.label,
                               style: widget.textStyle ??
-                                  Get.textTheme.bodyText1?.copyWith(
+                                  context.txt.bodyLarge?.copyWith(
+                                      fontSize: widget.fontSize,
                                       color: widget.textColor ?? Colors.white),
                             ),
                           ),

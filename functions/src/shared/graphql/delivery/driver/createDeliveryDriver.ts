@@ -1,21 +1,23 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, Language } from "../../../models/Generic/Generic";
-import { DelivererStatus, DeliveryDriver } from "../../../models/Generic/Delivery";
+import { AppType, Language, MezError } from "../../../models/Generic/Generic";
+import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";;
+import { AuthorizationStatus } from "../../../models/Generic/Generic";
+import { ServiceProvider, ServiceProviderType } from "../../../models/Services/Service";
+import { AddDriverDetails, AddDriverError } from "../../../../serviceProvider/addDriver";
 
-export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Promise<DeliveryDriver>*/ {
+export async function createDeliveryDriver(userId: number, serviceProvider: ServiceProvider, addDriverDetails: AddDriverDetails): Promise<DeliveryDriver> {
     let chain = getHasura();
     let response = await chain.query({
         delivery_driver: [{
             where: {
                 user_id: {
-                    _eq: deliveryDriver.userId,
+                    _eq: userId,
                 },
                 delivery_company_type: {
-                    _eq: deliveryDriver.deliveryCompanyType
+                    _eq: serviceProvider.serviceProviderType
                 },
                 delivery_company_id: {
-                    _eq: deliveryDriver.deliveryCompanyId
+                    _eq: serviceProvider.id
                 }
             }
         }, {
@@ -24,10 +26,10 @@ export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Pr
         notification_info: [{
             where: {
                 user_id: {
-                    _eq: deliveryDriver.userId
+                    _eq: userId
                 },
                 app_type_id: {
-                    _eq: AppType.DeliveryApp
+                    _eq: AppType.Delivery
                 }
             }
         }, {
@@ -35,18 +37,15 @@ export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Pr
         }]
     })
     if(response.delivery_driver.length) {
-        throw new HttpsError(
-            "internal",
-            "The driver is already working for this delivery company or restaurant"
-        );
+        throw new MezError(AddDriverError.DriverAlreadyExists);
     }
     let mutationResponse = await chain.mutation({
         insert_delivery_driver_one: [{
             object: {
-                user_id: deliveryDriver.userId,
-                delivery_company_type: deliveryDriver.deliveryCompanyType,
-                delivery_company_id: deliveryDriver.deliveryCompanyId,
-                status: DelivererStatus.AwaitingApproval,
+                user_id: userId,
+                delivery_company_type: serviceProvider.serviceProviderType,
+                delivery_company_id: serviceProvider.id,
+                status: AuthorizationStatus.AwaitingApproval,
             }
         }, {
             id: true,
@@ -58,24 +57,54 @@ export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Pr
             }
         }]
     })
-    if(!(response.notification_info.length) && deliveryDriver.notificationInfo) {
+    if(mutationResponse.insert_delivery_driver_one == null) {
+        throw new MezError(AddDriverError.DriverCreationError);
+    }
+    if(!(response.notification_info.length) && addDriverDetails.notificationToken) {
         await chain.mutation({
             insert_notification_info_one: [{
                 object: {
-                    app_type_id: deliveryDriver.notificationInfo.AppTypeId,
-                    token: deliveryDriver.notificationInfo.token,
-                    user_id: deliveryDriver.userId
+                    app_type_id: AppType.Delivery,
+                    token: addDriverDetails.notificationToken,
+                    user_id: userId
                 }
             }, {
                 id: true
             }]
         });
     }
-    deliveryDriver.user = {
-        firebaseId: mutationResponse.insert_delivery_driver_one!.user.firebase_id,
-        id: deliveryDriver.userId,
-        language: mutationResponse.insert_delivery_driver_one!.user.language_id as Language,
-        name: mutationResponse.insert_delivery_driver_one!.user.name,
-        image: mutationResponse.insert_delivery_driver_one!.user.image
+    let deliveryCompanyType: DeliveryServiceProviderType;
+    switch (serviceProvider.serviceProviderType) {
+        case ServiceProviderType.Restaurant:
+            deliveryCompanyType = DeliveryServiceProviderType.Restaurant
+            break;
+        case ServiceProviderType.Laundry:
+            deliveryCompanyType = DeliveryServiceProviderType.Laundry
+            break;
+        case ServiceProviderType.DeliveryCompany:
+            deliveryCompanyType = DeliveryServiceProviderType.DeliveryCompany
+            break;
+        default:
+            throw new MezError(AddDriverError.InvalidServiceProviderType);
+    }
+    return {
+        id: mutationResponse.insert_delivery_driver_one?.id,
+        userId,
+        deliveryCompanyType,
+        deliveryCompanyId: serviceProvider.id,
+        status: AuthorizationStatus.AwaitingApproval,
+        notificationInfo: (addDriverDetails.notificationToken) ? {
+            appType: AppType.Delivery,
+            token: addDriverDetails.notificationToken,
+            turnOffNotifications: false
+        }: undefined,
+        user: {
+            firebaseId: mutationResponse.insert_delivery_driver_one!.user.firebase_id,
+            id: userId,
+            language: mutationResponse.insert_delivery_driver_one!.user.language_id as Language,
+            name: mutationResponse.insert_delivery_driver_one!.user.name,
+            image: mutationResponse.insert_delivery_driver_one!.user.image
+        }
+        // deliveryDriverType: ParticipantType.DeliveryDriver
     }
 }

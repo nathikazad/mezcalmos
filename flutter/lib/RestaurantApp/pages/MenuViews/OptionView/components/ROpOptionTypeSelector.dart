@@ -4,6 +4,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/RO
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/ROpOptionViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:sizer/sizer.dart';
 
@@ -28,12 +29,16 @@ class ROpOptionSelector extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Flexible(child: _singleOptionComponent(OptionType.ChooseOne)),
-              Flexible(child: _singleOptionComponent(OptionType.ChooseMany)),
-              Flexible(child: _singleOptionComponent(OptionType.Custom)),
+              Flexible(
+                  child: _singleOptionComponent(OptionType.ChooseOne, context)),
+              Flexible(
+                  child:
+                      _singleOptionComponent(OptionType.ChooseMany, context)),
+              Flexible(
+                  child: _singleOptionComponent(OptionType.Custom, context)),
             ],
           ),
-          if (_helperText() != null) _helperTextWidget(),
+          if (_helperText() != null) _helperTextWidget(context),
           if (viewController.optionType == OptionType.Custom)
             Container(
               alignment: Alignment.centerLeft,
@@ -45,7 +50,7 @@ class ROpOptionSelector extends StatelessWidget {
                   ),
                   Text(
                     '${_i18n()["opChoiches"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyLarge,
                   ),
                   SizedBox(
                     height: 10,
@@ -62,7 +67,7 @@ class ROpOptionSelector extends StatelessWidget {
                         children: [
                           Text(
                             '${_i18n()["min"]}',
-                            style: Get.textTheme.bodyText1,
+                            style: context.txt.bodyLarge,
                           ),
                           Container(
                             width: 20.w,
@@ -78,7 +83,7 @@ class ROpOptionSelector extends StatelessWidget {
                         children: [
                           Text(
                             '${_i18n()["free"]}',
-                            style: Get.textTheme.bodyText1,
+                            style: context.txt.bodyLarge,
                           ),
                           Container(
                             width: 20.w,
@@ -94,7 +99,7 @@ class ROpOptionSelector extends StatelessWidget {
                         children: [
                           Text(
                             '${_i18n()["max"]}',
-                            style: Get.textTheme.bodyText1,
+                            style: context.txt.bodyLarge,
                           ),
                           Container(
                             width: 20.w,
@@ -116,13 +121,13 @@ class ROpOptionSelector extends StatelessWidget {
                         ),
                         Text(
                           '${_i18n()["costAboveLimit"]}',
-                          style: Get.textTheme.bodyText1,
+                          style: context.txt.bodyLarge,
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         TextFormField(
-                          style: Get.textTheme.bodyText1,
+                          style: context.txt.bodyLarge,
                           controller: viewController.costPerExtra,
                           textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(
@@ -144,7 +149,7 @@ class ROpOptionSelector extends StatelessWidget {
         viewController.max.value! > viewController.free.value!;
   }
 
-  Widget _helperTextWidget() {
+  Widget _helperTextWidget(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 10),
       child: Row(
@@ -160,7 +165,7 @@ class ROpOptionSelector extends StatelessWidget {
           Flexible(
               child: Text(
             _helperText()!,
-            style: Get.textTheme.bodyText2?.copyWith(color: primaryBlueColor),
+            style: context.txt.bodyMedium?.copyWith(color: primaryBlueColor),
           ))
         ],
       ),
@@ -178,7 +183,7 @@ class ROpOptionSelector extends StatelessWidget {
     }
   }
 
-  Widget _singleOptionComponent(OptionType optionType) {
+  Widget _singleOptionComponent(OptionType optionType, BuildContext context) {
     return Card(
       margin: EdgeInsets.zero,
       child: InkWell(
@@ -195,7 +200,7 @@ class ROpOptionSelector extends StatelessWidget {
                   : Colors.grey.shade300),
           child: Text(
             '${_i18n()["${optionType.toOptionName().toLowerCase()}"]}',
-            style: Get.textTheme.bodyText1?.copyWith(
+            style: context.txt.bodyLarge?.copyWith(
                 color: (optionType == viewController.optionType.value)
                     ? Colors.white
                     : Colors.black),

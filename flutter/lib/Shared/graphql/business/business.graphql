@@ -1,0 +1,464 @@
+query get_business_by_id($id: Int!) {
+  business_business_by_pk(id: $id) {
+    details {
+      accepted_payments
+      approved
+      creation_time
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      id
+      image
+      language
+      location {
+        address
+        gps
+      }
+      name
+      open_status
+      online_ordering
+      phone_number
+      schedule
+      currency
+    }
+    events {
+      id
+      schedule_type
+      schedule
+      starts_at
+      ends_at
+      details {
+        additional_parameters
+        available
+        category1
+        cost
+        image
+        id
+        tags
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+        position
+      }
+    }
+    id
+    profile
+    rentals {
+      id
+      details {
+        additional_parameters
+        available
+        category1
+        cost
+        id
+        image
+        tags
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+        position
+      }
+    }
+    products {
+      id
+      details {
+        additional_parameters
+        available
+        category1
+        category2
+        name_id
+        description_id
+        cost
+        tags
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        id
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+    services {
+      id
+      details {
+        additional_parameters
+        available
+        category1
+        name_id
+        description_id
+        category2
+        cost
+        tags
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        id
+        image
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+      }
+    }
+    home {
+      details {
+        name_id
+        description_id
+        id
+        name {
+          translations {
+            language_id
+            value
+          }
+        }
+        additional_parameters
+        available
+        category1
+        category2
+        cost
+        image
+        position
+        tags
+      }
+      id
+      bathrooms
+      bedrooms
+      location {
+        address
+        gps
+        name
+      }
+      available_for
+      offering_type
+    }
+  }
+}
+
+query get_business_by_rental_category1(
+  $distance: Float!
+  $from: geography!
+  $categories1: [String!]
+  $offset: Int
+  $limit: Int,
+  $online_ordering: Boolean_comparison_exp = {},
+) {
+  business_business(
+    where: {
+      _and: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          },
+          online_ordering: $online_ordering,
+          approved: { _eq: true },
+          open_status: { _neq: "closedIndefinitely" },
+        }
+        rentals: { details: { category1: { _in: $categories1 } } }
+      }
+    }
+    offset: $offset
+    limit: $limit
+    order_by: { details: { referral_points: desc_nulls_last } }
+  ) {
+    id
+    details {
+      id
+      accepted_payments
+      image
+      name
+      online_ordering
+      currency
+      location {
+        address
+        gps
+      }
+    }
+    reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+        count
+      }
+    }
+  }
+}
+
+query get_business_by_home(
+  $distance: Float!
+  $from: geography!
+  $offset: Int
+  $limit: Int
+  $homeType: String!
+  $online_ordering: Boolean_comparison_exp = {},
+) {
+  business_business(
+    where: {
+      _and: {
+        details: {
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+          online_ordering: $online_ordering,
+        }
+        home: {
+          _and: {
+            id: { _is_null: false }
+            available_for: { _eq: $homeType }
+            location: {
+              gps: { _st_d_within: { distance: $distance, from: $from } }
+            }
+          }
+        }
+      }
+    }
+    offset: $offset
+    limit: $limit
+    order_by: { details: { referral_points: desc_nulls_last } }
+  ) {
+    id
+    details {
+      id
+      accepted_payments
+      image
+      online_ordering
+      name
+      currency
+      location {
+        address
+        gps
+      }
+    }
+    reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+        count
+      }
+    }
+  }
+}
+
+query get_business_by_event_category1(
+  $distance: Float!
+  $from: geography!
+  $offset: Int
+  $limit: Int
+  $categories1: [String!]
+  $schedule_type: [String!]
+  $online_ordering: Boolean_comparison_exp = {},
+) {
+  business_business(
+    where: {
+      _and: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+          online_ordering: $online_ordering,
+        }
+        events: {
+          details: { category1: { _in: $categories1 } }
+          schedule_type: { _in: $schedule_type }
+        }
+      }
+    }
+    offset: $offset
+    limit: $limit
+    order_by: { details: { referral_points: desc_nulls_last } }
+  ) {
+    id
+    details {
+      id
+      accepted_payments
+      image
+      name
+      online_ordering
+      currency
+    }
+    reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+        count
+      }
+    }
+  }
+}
+
+query get_business_by_service_category1(
+  $distance: Float!
+  $from: geography!
+  $categories1: [String!]
+  $offset: Int
+  $limit: Int
+  $online_ordering: Boolean_comparison_exp = {},
+) {
+  business_business(
+    where: {
+      _and: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+          online_ordering: $online_ordering,
+        }
+        services: { details: { category1: { _in: $categories1 } } }
+      }
+    }
+    offset: $offset
+    limit: $limit
+    order_by: { details: { referral_points: desc_nulls_last } }
+  ) {
+    id
+    details {
+      id
+      accepted_payments
+      image
+      online_ordering
+      currency
+      name
+    }
+    reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+        count
+      }
+    }
+  }
+}
+
+query get_business_by_product_category1(
+  $distance: Float!
+  $from: geography!
+  $categories1: [String!]
+  $offset: Int
+  $limit: Int
+  $online_ordering: Boolean_comparison_exp = {},
+) {
+  business_business(
+    where: {
+      _and: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+          online_ordering: $online_ordering,
+        }
+        products: { details: { category1: { _in: $categories1 } } }
+      }
+    }
+    offset: $offset
+    limit: $limit
+    order_by: { details: { referral_points: desc_nulls_last } }
+  ) {
+    id
+    details {
+      id
+      accepted_payments
+      image
+      currency
+      online_ordering
+      name
+    }
+    reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+        count
+      }
+    }
+  }
+}
+mutation update_business_item_details_by_id(
+  $id: Int!
+  $object: business_item_details_set_input
+) {
+  update_business_item_details_by_pk(pk_columns: { id: $id }, _set: $object) {
+    id
+  }
+}
+query getBusinessItemDetailsById($id: Int!) {
+  business_item_details_by_pk(id: $id) {
+    name_id
+
+    description_id
+    id
+    name {
+      translations {
+        language_id
+        value
+      }
+    }
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+    tags
+    additional_parameters
+    available
+    category1
+    category2
+    cost
+    image
+    position
+  }
+}
+mutation update_business_item_additional_params(
+  $_eq: Int!
+  $additional_parameters: jsonb!
+) {
+  update_business_item_details(
+    where: { id: { _eq: $_eq } }
+    _set: { additional_parameters: $additional_parameters }
+  ) {
+    affected_rows
+  }
+}
+
+query get_business_lang($id: Int!) {
+  business_business_by_pk(id: $id) {
+    details {
+      language
+    }
+  }
+}
+query get_business_id_from_details_id($businessDetailsId: Int!) {
+  business_business(where: { details_id: { _eq: $businessDetailsId } }) {
+    id
+  }
+}

@@ -31,8 +31,7 @@ class CounterOffer {
             DateTime.now().toUtc().add(Duration(seconds: validTimeInSeconds)));
   }
 
-  factory CounterOffer.fromData(dynamic data,
-      {required UserInfo taxiUserInfo}) {
+  factory CounterOffer.fromData(data, {required UserInfo taxiUserInfo}) {
     return CounterOffer(
         price: data["price"],
         offerValidTime: DateTime.parse(data["offerValidTime"]),
@@ -58,7 +57,7 @@ class CounterOffer {
   int validityTimeDifference() {
     mezDbgPrint(
         "offerTime => ${offerValidTime.toUtc()}  | now => ${DateTime.now()}");
-    var r = DateTime.now().toUtc().difference(offerValidTime.toUtc()).inSeconds;
+    int r = DateTime.now().toUtc().difference(offerValidTime.toUtc()).inSeconds;
     mezDbgPrint("validityTimeDifference ===> $r");
     return r;
   }
@@ -69,15 +68,15 @@ enum CounterOfferStatus { Submitted, Accepted, Rejected, Expired, Cancelled }
 
 extension ParseCounterOfferStatusToString on CounterOfferStatus {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }
 
 extension ParseStringToCounterOfferStatus on String {
   CounterOfferStatus toCounterOfferStatus() {
-    return CounterOfferStatus.values
-        .firstWhere((e) => e.toFirebaseFormatString() == this);
+    return CounterOfferStatus.values.firstWhere(
+        (CounterOfferStatus e) => e.toFirebaseFormatString() == this);
   }
 }
 

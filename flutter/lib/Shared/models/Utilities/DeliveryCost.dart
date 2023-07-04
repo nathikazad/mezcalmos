@@ -1,37 +1,40 @@
 import 'dart:convert';
 
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 class DeliveryCost {
   int? id;
-  ServiceProviderType serviceProviderType;
-  int serviceProviderId;
+
   double minimumCost;
+  bool selfDelivery;
   double costPerKm;
   double? freeDeliveryMinimumCost;
   double? freeDeliveryKmRange;
+  double? radius;
+  double? costPerKmFromBase;
   DeliveryCost({
     required this.id,
-    required this.serviceProviderType,
-    required this.serviceProviderId,
     required this.minimumCost,
+    required this.selfDelivery,
     required this.costPerKm,
     this.freeDeliveryMinimumCost,
-    this.freeDeliveryKmRange,
+    this.freeDeliveryKmRange = 0,
+    this.radius,
+    this.costPerKmFromBase,
   });
 
   DeliveryCost copyWith({
     ServiceProviderType? serviceProviderType,
     int? serviceProviderId,
+    bool? selfDelivery,
     double? minimumCost,
     double? costPerKm,
     double? freeDeliveryMinimumCost,
     double? freeDeliveryKmRange,
   }) {
     return DeliveryCost(
-      serviceProviderType: serviceProviderType ?? this.serviceProviderType,
-      serviceProviderId: serviceProviderId ?? this.serviceProviderId,
       minimumCost: minimumCost ?? this.minimumCost,
+      selfDelivery: selfDelivery ?? this.selfDelivery,
       costPerKm: costPerKm ?? this.costPerKm,
       id: id ?? id,
       freeDeliveryMinimumCost:
@@ -42,8 +45,6 @@ class DeliveryCost {
 
   Map<String, dynamic> toMap() {
     return {
-      'serviceProviderType': serviceProviderType.toFirebaseFormatString(),
-      'serviceProviderId': serviceProviderId,
       'minimumCost': minimumCost,
       'costPerKm': costPerKm,
       'freeDeliveryMinimumCost': freeDeliveryMinimumCost,
@@ -54,9 +55,7 @@ class DeliveryCost {
   factory DeliveryCost.fromMap(Map<String, dynamic> map) {
     return DeliveryCost(
       id: map["id"],
-      serviceProviderType:
-          map["serviceProviderType"].toString().toServiceProviderType(),
-      serviceProviderId: map['serviceProviderId']?.toInt() ?? 0,
+      selfDelivery: map["selfDelivery"],
       minimumCost: map['minimumCost']?.toDouble() ?? 0.0,
       costPerKm: map['costPerKm']?.toDouble() ?? 0.0,
       freeDeliveryMinimumCost:
@@ -71,17 +70,10 @@ class DeliveryCost {
       DeliveryCost.fromMap(json.decode(source));
 
   @override
-  String toString() {
-    return 'DeliveryCost(serviceProviderType: $serviceProviderType, serviceProviderId: $serviceProviderId, minimumCost: $minimumCost, costPerKm: $costPerKm, freeDeliveryMinimumCost: $freeDeliveryMinimumCost, freeDeliveryKmRange: $freeDeliveryKmRange)';
-  }
-
-  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is DeliveryCost &&
-        other.serviceProviderType == serviceProviderType &&
-        other.serviceProviderId == serviceProviderId &&
         other.minimumCost == minimumCost &&
         other.costPerKm == costPerKm &&
         other.freeDeliveryMinimumCost == freeDeliveryMinimumCost &&
@@ -90,9 +82,7 @@ class DeliveryCost {
 
   @override
   int get hashCode {
-    return serviceProviderType.hashCode ^
-        serviceProviderId.hashCode ^
-        minimumCost.hashCode ^
+    return minimumCost.hashCode ^
         costPerKm.hashCode ^
         freeDeliveryMinimumCost.hashCode ^
         freeDeliveryKmRange.hashCode;

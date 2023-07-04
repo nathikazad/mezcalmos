@@ -2,57 +2,71 @@
 // import 'package:intl/intl.dart';
 // import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 // import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
+    as cloudFunctionModels;
 import 'package:mezcalmos/Shared/models/Utilities/BankInfo.dart';
 
-enum PaymentType { Cash, Card, BankTransfer }
+// enum PaymentType { Cash, Card, BankTransfer }
 
 extension ParsePaymentTypeToString on PaymentType {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
+  // String toFirebaseFormatString() {
+  //   final String str = toString().split('.').last;
 
-    return str[0].toLowerCase() + str.substring(1);
-  }
+  //   return str[0].toLowerCase() + str.substring(1);
+  // }
 
   String toNormalString() {
     final String str = toString().split('.').last;
 
     return str;
   }
+
+  PaymentType toFirebaseFormatEnum() {
+    switch (this) {
+      case PaymentType.Cash:
+        return PaymentType.Cash;
+      case PaymentType.Card:
+        return PaymentType.Card;
+      default:
+        return PaymentType.Card;
+    }
+  }
 }
 
 extension ParseStringToPaymentType on String {
-  PaymentType toPaymentType() {
+  PaymentType convertToPaymentType() {
     return PaymentType.values.firstWhere((PaymentType e) =>
         e.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
-enum StripeStatus { InProcess, IsWorking, Inactive }
+// enum StripeStatus { InProcess, IsWorking, Inactive }
 
-extension ParseStripeStatusoString on StripeStatus {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
+// extension ParseStripeStatusoString on StripeStatus {
+//   String toFirebaseFormatString() {
+//     final String str = toString().split('.').last;
+//     return str[0].toLowerCase() + str.substring(1);
+//   }
 
-  String toNormalString() {
-    final String str = toString().split('.').last;
-    return str[0].toUpperCase() + str.substring(1);
-  }
-}
+//   String toNormalString() {
+//     final String str = toString().split('.').last;
+//     return str[0].toUpperCase() + str.substring(1);
+//   }
+// }
 
-extension ParseStringToStripeStatus on String {
-  StripeStatus toStripeStatus() {
-    return StripeStatus.values.firstWhere((StripeStatus e) =>
-        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
+// extension ParseStringToStripeStatus on String {
+//   StripeStatus toStripeStatus() {
+//     return StripeStatus.values.firstWhere((StripeStatus e) =>
+//         e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+//   }
+// }
 
 class StripeInfo {
   StripeStatus status;
-  String id;
+  int id;
+  String stripeId;
   bool chargeFeesOnCustomer;
   bool chargesEnabled;
   bool payoutsEnabled;
@@ -60,7 +74,8 @@ class StripeInfo {
   String? email;
   List<String> requirements;
   StripeInfo(
-      {required this.id,
+      {required this.stripeId,
+      required this.id,
       required this.status,
       this.chargesEnabled = false,
       this.payoutsEnabled = false,
@@ -80,7 +95,8 @@ class StripeInfo {
     List<String>? requirements,
   }) {
     return StripeInfo(
-      id: id ?? this.id,
+      id: this.id,
+      stripeId: id ?? stripeId,
       status: status ?? this.status,
       chargeFeesOnCustomer: chargeFeesOnCustomer ?? this.chargeFeesOnCustomer,
       chargesEnabled: chargesEnabled ?? this.chargesEnabled,
@@ -94,7 +110,7 @@ class StripeInfo {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'status': status.toFirebaseFormatString(),
-      'id': id,
+      'id': stripeId,
       'chargeFeesOnCustomer': chargeFeesOnCustomer,
       'chargesEnabled': chargesEnabled,
       'payoutsEnabled': payoutsEnabled,
@@ -118,31 +134,32 @@ class PaymentInfo {
       this.stripe,
       this.bankInfo});
 
-  factory PaymentInfo.fromData({stripeInfo, acceptedPayments}) {
+  factory PaymentInfo.fromData(
+      {required stripeInfo, required acceptedPayments}) {
     final Map<PaymentType, bool> _acceptedPayments = {
       PaymentType.Card: false,
       PaymentType.BankTransfer: false,
       PaymentType.Cash: true
     };
-    mezDbgPrint(
-        "🥰🥰🥰🥰🥰🥰🥰🥰 data : =======>$stripeInfo +======== $acceptedPayments");
+
     acceptedPayments?.forEach((String key, data) {
-      _acceptedPayments[key.toPaymentType()] = data;
+      _acceptedPayments[key.convertToPaymentType()] = data;
     });
     StripeInfo? stripe;
     if (_acceptedPayments[PaymentType.Card] == true && stripeInfo != null) {
       final List<String> requis = [];
-      stripeInfo?["requirements"]?.forEach((req) {
+      stripeInfo.requirements?.forEach((req) {
         requis.add(req.toString());
       });
       stripe = StripeInfo(
-          id: stripeInfo["id"],
-          status: stripeInfo["status"].toString().toStripeStatus(),
-          payoutsEnabled: stripeInfo["payoutsEnabled"] ?? false,
-          detailsSubmitted: stripeInfo["detailsSubmitted"] ?? false,
-          chargesEnabled: stripeInfo["chargesEnabled"] ?? false,
-          chargeFeesOnCustomer: stripeInfo["chargeFeesOnCustomer"] ?? true,
-          email: stripeInfo["email"],
+          id: stripeInfo.id,
+          stripeId: stripeInfo.stripe_id,
+          status: stripeInfo.status.toString().toStripeStatus(),
+          payoutsEnabled: stripeInfo.payouts_enabled ?? false,
+          detailsSubmitted: stripeInfo.details_submitted ?? false,
+          chargesEnabled: stripeInfo.charges_enabled ?? false,
+          chargeFeesOnCustomer: stripeInfo.charge_fees_on_customer ?? true,
+          email: stripeInfo.email,
           requirements: requis);
     }
 
@@ -191,7 +208,7 @@ class PaymentInfo {
   Map<PaymentType, bool> parseAcceptedPayments(data) {
     final Map<PaymentType, bool> result = {};
     data.forEach((String key, data) {
-      result[key.toPaymentType()] = data;
+      result[key.convertToPaymentType()] = data;
     });
     return result;
   }
@@ -201,17 +218,18 @@ class PaymentInfo {
 
     if (data != null) {
       final List<String> requis = [];
-      data["requirements"]?.forEach((req) {
+      data.requirements?.forEach((req) {
         requis.add(req.toString());
       });
       stripe = StripeInfo(
-          id: data["id"],
-          status: data["status"].toString().toStripeStatus(),
-          payoutsEnabled: data["payoutsEnabled"] ?? false,
-          detailsSubmitted: data["detailsSubmitted"] ?? false,
-          chargesEnabled: data["chargesEnabled"] ?? false,
-          chargeFeesOnCustomer: data["chargeFeesOnCustomer"] ?? true,
-          email: data["email"],
+          id: data.id,
+          stripeId: data.stripe_id,
+          status: data.status.toString().toStripeStatus(),
+          payoutsEnabled: data.payoutsEnabled ?? false,
+          detailsSubmitted: data.detailsSubmitted ?? false,
+          chargesEnabled: data.chargesEnabled ?? false,
+          chargeFeesOnCustomer: data.chargeFeesOnCustomer ?? true,
+          email: data.email,
           requirements: requis);
       return stripe;
     }

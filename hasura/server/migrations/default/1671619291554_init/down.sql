@@ -87,7 +87,7 @@ alter table "public"."customer" alter column "app_version" set not null;
 alter table "public"."delivery_order"
   add constraint "delivery_deliverer_app_type_id_fkey"
   foreign key ("delivery_driver_type")
-  references "topology"."app_type"
+  references "public"."app_type"
   ("id") on update restrict on delete restrict;
 
 comment on column "public"."delivery_driver"."delivery_driver_type" is NULL;
@@ -523,7 +523,7 @@ alter table "public"."deliverer" drop constraint "deliverer_notification_id_fkey
 
 comment on column "public"."delivery"."deliverer_app_type_id" is E'restaurant_operator, deliverer';
 
-comment on column "topology"."app_type"."id" is NULL;
+comment on column "public"."app_type"."id" is NULL;
 
 comment on column "public"."delivery"."deliverer_app_type_id" is NULL;
 
@@ -578,7 +578,7 @@ alter table "public"."notification_info" drop constraint "notification_info_user
 alter table "public"."notification_info" drop constraint "notification_info_app_type_id_fkey",
   add constraint "notification_info_app_type_id_fkey"
   foreign key ("app_type_id")
-  references "topology"."app_type"
+  references "public"."app_type"
   ("id") on update restrict on delete restrict;
 
 -- Could not auto-generate a down migration.
@@ -1209,7 +1209,7 @@ alter table "public"."notification_info" drop constraint "notification_info_app_
 
 alter table "public"."notification_info" rename column "app_type_id" to "app_type";
 
-DROP TABLE "topology"."app_type";
+DROP TABLE "public"."app_type";
 
 DROP INDEX IF EXISTS "public"."notification_info_user_id";
 
@@ -1407,7 +1407,7 @@ alter table "public"."translation" add column "language_id" int4;
 
 DROP TABLE "public"."translation";
 
-DROP TABLE "topology"."language";
+DROP TABLE "public"."language";
 
 DROP TABLE "public"."restaurant";
 

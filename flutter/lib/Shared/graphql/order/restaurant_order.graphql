@@ -5,21 +5,25 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     notes
     scheduled_time
     stripe_info
-
     restaurant {
       id
-      firebase_id
-      image
-      language_id
-      location_gps
-      location_text
-      name
+
+      details {
+        id
+        firebase_id
+        image
+        language
+        currency
+        location {
+          gps
+          address
+        }
+        name
+      }
     }
     items {
       in_json
       restaurant_item {
-        id
-        image
         item_type
         name {
           translations {
@@ -36,6 +40,8 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
         position
         category_id
         available
+        id
+        image
         restaurant_id
         special_period_end
         special_period_start
@@ -60,6 +66,10 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
       created_at
       from_entity_id
       from_entity_type
+       from_name,
+    from_image,
+    to_name,
+    to_image,
       id
       note
       rating
@@ -73,11 +83,14 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
         }
       }
     }
-    order_type
+
     order_time
-    firebase_id
     customer_app_type
     notes
+    tax
+    total_cost
+    items_cost
+    chat_id
     customer {
       user {
         id
@@ -85,29 +98,22 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
         image
       }
     }
-    tax
-    total_cost
-    items_cost
-    chat_id
     delivery_cost
     delivery {
       trip_polyline
       trip_distance
+      service_provider_type
       trip_duration
-      actual_delivered_time
-      actual_package_ready_time
-      actual_arrival_at_pickup_time
-      actual_arrival_at_dropoff_time
       chat_with_service_provider_id
       chat_with_customer_id
+      id
+      estimated_arrival_at_dropoff_time
+      estimated_arrival_at_pickup_time
       cancellation_time
-      current_gps
 
       delivery_cost
-
       delivery_driver {
-        current_location
-
+        id
         user {
           id
           image
@@ -123,16 +129,24 @@ query get_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
+
     scheduled_time
     stripe_info
     restaurant {
       id
-      firebase_id
-      image
-      language_id
-      location_gps
-      location_text
-      name
+
+      details {
+        id
+        firebase_id
+        image
+        language
+        currency
+        location {
+          gps
+          address
+        }
+        name
+      }
     }
     items {
       in_json
@@ -176,6 +190,10 @@ query get_restaurant_order_by_id($order_id: Int!) {
     status
     review_id
     review {
+       from_name,
+    from_image,
+    to_name,
+    to_image,
       created_at
       from_entity_id
       from_entity_type
@@ -192,9 +210,8 @@ query get_restaurant_order_by_id($order_id: Int!) {
         }
       }
     }
-    order_type
+
     order_time
-    firebase_id
     customer_app_type
     notes
     tax
@@ -211,21 +228,19 @@ query get_restaurant_order_by_id($order_id: Int!) {
     delivery_cost
     delivery {
       trip_polyline
+      service_provider_type
       trip_distance
       trip_duration
       chat_with_service_provider_id
       chat_with_customer_id
       id
-      actual_delivered_time
-      actual_package_ready_time
-      actual_arrival_at_pickup_time
-      actual_arrival_at_dropoff_time
+      estimated_arrival_at_dropoff_time
+      estimated_arrival_at_pickup_time
       cancellation_time
-      current_gps
 
       delivery_cost
       delivery_driver {
-        current_location
+        id
 
         user {
           id
@@ -248,6 +263,9 @@ subscription listen_restaurant_current_orders($restaurantId: Int!) {
     status
     total_cost
     to_location_address
+    delivery {
+      delivery_cost
+    }
     customer {
       user {
         name
@@ -256,6 +274,7 @@ subscription listen_restaurant_current_orders($restaurantId: Int!) {
     }
   }
 }
+
 query get_restaurant_current_orders($restaurantId: Int!) {
   restaurant_order(
     where: { restaurant_id: { _eq: $restaurantId }, in_process: { _eq: true } }
@@ -263,7 +282,9 @@ query get_restaurant_current_orders($restaurantId: Int!) {
     id
     order_time
     status
-
+    delivery {
+      delivery_cost
+    }
     total_cost
     to_location_address
     customer {
@@ -274,14 +295,23 @@ query get_restaurant_current_orders($restaurantId: Int!) {
     }
   }
 }
-query get_restaurant_past_orders($restaurantId: Int!) {
+query get_restaurant_past_orders(
+  $restaurantId: Int!
+  $offset: Int
+  $limit: Int
+) {
   restaurant_order(
     where: { restaurant_id: { _eq: $restaurantId }, in_process: { _eq: false } }
+    order_by: { order_time: desc }
+    offset: $offset
+    limit: $limit
   ) {
     id
     order_time
     status
-
+    delivery {
+      delivery_cost
+    }
     total_cost
     to_location_address
     customer {
@@ -304,25 +334,32 @@ mutation setRestaurantOrderEstFoodReadyTime(
   ) {
     estimated_food_ready_time
   }
-   update_delivery_order_by_pk(pk_columns: {id: $deliveryOrderId}, _set: {estimated_package_ready_time: $time}){
-    estimated_package_ready_time
-   }
-}
-mutation assignRestaurantOrderReview($orderId: Int!, $reviewId: Int!) {
-  update_restaurant_order_by_pk(
-    pk_columns: { id: $orderId }
-    _set: { review_id: $reviewId }
+  update_delivery_order_by_pk(
+    pk_columns: { id: $deliveryOrderId }
+    _set: { estimated_package_ready_time: $time }
   ) {
-    review_id
-    review {
-      created_at
-      from_entity_id
-      from_entity_type
+    estimated_package_ready_time
+  }
+}
+query get_restaurant_order_items_by_id($deliveryOrderId: Int!) {
+  restaurant_order(where: {delivery_id: {_eq: $deliveryOrderId}}) {
+    items {
       id
-      note
-      rating
-      to_entity_id
-      to_entity_type
+      notes
+      unavailable
+      quantity
+      cost_per_one
+      restaurant_item {
+        id
+        image
+        name {
+          id
+          translations {
+            language_id
+            value
+          }
+        }
+      }
     }
   }
 }

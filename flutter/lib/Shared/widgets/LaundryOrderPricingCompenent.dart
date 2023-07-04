@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -17,13 +20,13 @@ class LaundryOrderPricingComponent extends StatelessWidget {
   dynamic _i18n() =>
       Get.find<LanguageController>().strings['CustomerApp']['pages']['Laundry']
           ['LaundryCurrentOrderView']['Components']['LaundryPricingComponent'];
-  static LanguageType userLanguage =
+  static cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(top: 15),
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.all(12),
@@ -32,10 +35,10 @@ class LaundryOrderPricingComponent extends StatelessWidget {
           children: <Widget>[
             Text(
               _i18n()['laundryPricing'],
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             SizedBox(
-              height: 10,
+              height: 4,
             ),
             if (order.costsByType?.lineItems.isNotEmpty ?? false)
               Column(
@@ -48,17 +51,17 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                     }),
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           '${_i18n()["total"]}',
-                          style: Get.textTheme.bodyText1,
+                          style: context.txt.bodyLarge,
                         ),
                         Text(
                           order.costsByType!.weighedCost.toPriceString(),
-                          style: Get.textTheme.bodyText1,
+                          style: context.txt.bodyLarge,
                         ),
                       ],
                     ),
@@ -70,17 +73,19 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Icon(
-                      Icons.info_outline_rounded,
-                      color: Colors.grey.shade800,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Icon(
+                        Icons.info_outline_rounded,
+                        color: offShadeGreyColor,
+                        size: 22,
+                      ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 4),
                     Flexible(
                       child: Text(
                         _i18n()['laundryPricingNote'],
-                        style: TextStyle(
-                          color: Colors.grey.shade800,
-                        ),
+                        style: context.txt.bodyMedium,
                         maxLines: 3,
                       ),
                     ),
@@ -95,14 +100,14 @@ class LaundryOrderPricingComponent extends StatelessWidget {
 
   Widget _itemRowCard({required LaundryOrderCostLineItem item}) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
             fit: FlexFit.tight,
             child: Text(
-              item.name[userLanguage]?.inCaps ?? "",
+              item.name.getTranslation(userLanguage)!.inCaps,
               maxLines: 1,
             ),
           ),
@@ -110,7 +115,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
             width: 8,
           ),
           Text(
-            "\$${item.cost.round()} x ${item.weight}KG = \$${item.weighedCost.round()}",
+            "\$${item.cost.round()} x ${item.weight.round()}kg = \$${item.weighedCost.round()}",
           ),
         ],
       ),

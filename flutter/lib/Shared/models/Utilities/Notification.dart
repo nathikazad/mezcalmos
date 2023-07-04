@@ -11,7 +11,8 @@ enum NotificationType {
   DriverApproved,
   OperatorApproved,
   NewDriver,
-  Call
+  Call,
+  PriceChange
 }
 
 extension ParseNotificationTypeToString on NotificationType {
@@ -31,7 +32,8 @@ extension ParseStringToNotificationType on String {
 enum NotificationAction {
   ShowPopUp,
   ShowSnackBarAlways,
-  ShowSnackbarOnlyIfNotOnPage
+  ShowSnackbarOnlyIfNotOnPage,
+  NavigteToLinkUrl
 }
 
 extension ParseNotificationActionToString on NotificationAction {
@@ -55,11 +57,12 @@ class Notification {
   dynamic variableParams;
   bool isEmpty = false;
   DateTime timestamp;
+  Widget? notifWidget;
   IconData? icon;
   IconData? secondaryIcon;
   String title;
   String body;
-  String imgUrl;
+  String? imgUrl;
   String linkUrl;
   String? linkText;
   NotificationType notificationType;
@@ -71,13 +74,21 @@ class Notification {
     return null;
   }
 
-  int? get orderId => int.tryParse(variableParams['orderId']);
+  bool? get isServiceProvderChat {
+    if (variableParams['isServiceProviderChat'] != null) {
+      return variableParams['isServiceProviderChat'];
+    }
+    return null;
+  }
+
+  int? get orderId => variableParams['orderId'];
   String? get orderType => variableParams['orderType'];
   Notification(
       {required this.id,
       this.variableParams,
       this.icon,
       this.secondaryIcon,
+      this.notifWidget,
       required this.timestamp,
       required this.title,
       required this.body,

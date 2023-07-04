@@ -1,4 +1,4 @@
-enum DeliveryCompanyType { Restaurant, Laundry, Delivery_company }
+enum DeliveryCompanyType { Restaurant, Laundry, DeliveryCompany }
 
 extension ParseDeliveryCompanyTypeToString on DeliveryCompanyType {
   String toFirebaseFormatString() {
@@ -9,7 +9,7 @@ extension ParseDeliveryCompanyTypeToString on DeliveryCompanyType {
 
 extension ParseStringToDeliveryCompanyType on String {
   DeliveryCompanyType toDeliveryCompanyType() {
-    return DeliveryCompanyType.values.firstWhere((DeliveryCompanyType e) =>
-        e.toFirebaseFormatString().toLowerCase() == this);
+    return DeliveryCompanyType.values.firstWhere(
+        (DeliveryCompanyType e) => e.toFirebaseFormatString() == this);
   }
 }

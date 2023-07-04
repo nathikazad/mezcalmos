@@ -1,152 +1,170 @@
-// import * as functions from "firebase-functions";
-// import { constructLaundryOrder, ConstructLaundryOrderParameters, LaundryOrder } from '../shared/models/Services/Laundry/LaundryOrder';
-// import { buildChatForOrder, ChatObject, ParticipantType } from "../shared/models/Generic/Chat";
-// import { OrderType } from "../shared/models/Generic/Order";
-// import { UserInfo } from "../shared/models/Generic/User";
-// import { ServerResponseStatus } from "../shared/models/Generic/Generic";
-// import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-// import * as customerNodes from "../shared/databaseNodes/customer";
-// import *  as rootNodes from "../shared/databaseNodes/root";
-// import * as laundryNodes from "../shared/databaseNodes/services/laundry";
-// import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
-// import * as chatController from "../shared/controllers/chatController";
-// import { getUserInfo } from "../shared/controllers/rootController";
-// // import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-// // import { pushNotification } from "../utilities/senders/notifyUser";
-// // import { orderUrl } from "../utilities/senders/appRoutes";
-// import { Laundry } from "../shared/models/Services/Laundry/Laundry";
-// import { getLaundry } from "./laundryController";
-// // import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
+import { setLaundryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
+import { updateDeliveryOrderCompany } from "../shared/graphql/delivery/updateDelivery";
+import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
+import { createLaundryOrder } from "../shared/graphql/laundry/order/createLaundryOrder";
+import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
+import { notifyDeliveryCompany } from "../shared/helper";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { CustomerAppType, Language, Location, MezError } from "../shared/models/Generic/Generic";
+import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
+import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { LaundryOrder, NewLaundryOrderNotification } from "../shared/models/Services/Laundry/LaundryOrder";
+import { ServiceProvider } from "../shared/models/Services/Service";
+import { orderUrl } from "../utilities/senders/appRoutes";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 
-// export async function requestLaundry(userId: string, data: any) {
+export interface LaundryRequestDetails {
+    storeId: number,
+    paymentType: PaymentType,  
+    deliveryType: DeliveryType,
+    customerLocation: Location,
+    deliveryCost: number,
+    customerAppType: CustomerAppType,
+    notes?: string,
+    tax?: number,
+    scheduledTime?: string,
+    stripeFees?: number,
+    stripePaymentId?: string,
+    discountValue?: number,
+    tripDistance: number,
+    tripDuration: number,
+    tripPolyline: string
+    distanceFromBase?: number
+}
+export interface ReqLaundryResponse {
+    success: boolean,
+    error?: ReqLaundryError
+    unhandledError?: string,
+    orderId?: number
+}
+export enum ReqLaundryError {
+    UnhandledError = "unhandledError",
+    LaundryStoreNotfound = "laundryStoreNotfound",
+    CustomerNotFound = "customerNotFound",
+    LaundryStoreNotApproved = "laundryStoreNotApproved",
+    StoreClosed = "storeClosed",
+    DeliveryNotAvailable = "deliveryNotAvailable",
+    OrderCreationError = "orderCreationError",
+    NoChatId = "noChatId",
+    DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound",
+    ServiceProviderDetailsNotFound = "serviceProviderDetailsNotFound",
+    InvalidOrderType = "invalidOrderType",
+    NoStripeAccountOfServiceProvider = "noStripeAccountOfServiceProvider",
+    UpdateOrderStripeError = "updateOrderStripeError",
+}
 
-//   // let response = isSignedIn(userId)
-//   // if (response != undefined)
-//   //   return response;
+export async function requestLaundry(customerId: number, laundryRequestDetails: LaundryRequestDetails): Promise<ReqLaundryResponse> {
+    try {
+        let response = await Promise.all([
+            getLaundryStore(laundryRequestDetails.storeId), 
+            getCustomer(customerId),
+            getMezAdmins()
+        ])
+        let laundryStore: ServiceProvider = response[0];
+        let customer: CustomerInfo = response[1];
+        let mezAdmins: MezAdmin[] = response[2];
 
-//   let customerId: string = userId;
-//   if (!data.laundryId)
-//     return {
-//       status: "Error",
-//       errorMessage: "laundry id is not present",
-//       errorCode: "laundryIdNotPresent"
-//     }
-//   let laundry: Laundry = await getLaundry(data.laundryId);
-//   let orderParams: ConstructLaundryOrderParameters = <ConstructLaundryOrderParameters>data;
-//   // TODO limit number of active orders
-//   // let customerCurrentOrders = (await customerNodes.inProcessOrders(customerId).once('value')).val();
-//   // if (customerCurrentOrders && customerCurrentOrders.length >= 3) {
-//   //   return {
-//   //     status: "Error",
-//   //     errorMessage: "Customer is already in laundry orders",
-//   //     errorCode: "alreadyInLaundryOrder"
-//   //   }
-//   // }
+        errorChecks(laundryStore, laundryRequestDetails);
+        
+        let orderResponse = await createLaundryOrder(customerId, laundryRequestDetails, laundryStore, mezAdmins);
 
-//   let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock) {
-//     if (lock == true) {
-//       return
-//     } else {
-//       return true
-//     }
-//   })
+        setLaundryOrderChatInfo(orderResponse.laundryOrder, laundryStore, orderResponse.fromCustomerDeliveryOrder, customer);
 
-//   if (!transactionResponse.committed) {
-//     return {
-//       status: ServerResponseStatus.Error,
-//       errorMessage: 'Customer lock not available'
-//     }
-//   }
+        // assign delivery company 
+        if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
 
-//   try {
-//     let customerInfo: UserInfo = await getUserInfo(customerId);
-//     const order: LaundryOrder = constructLaundryOrder(orderParams, customerInfo, laundry.info);
+            updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, 7);
+            notifyDeliveryCompany(orderResponse.fromCustomerDeliveryOrder)
+        }
 
+        notify(orderResponse.laundryOrder, laundryStore, mezAdmins);
 
-//     let orderId: string = (await customerNodes.inProcessOrders(customerId).push(null)).key!;
+        // payment
+        if(laundryRequestDetails.paymentType == PaymentType.Card) {
+            let paymentDetails: PaymentDetails = {
+                orderId: orderResponse.laundryOrder.orderId!,
+                serviceProviderDetailsId: laundryStore.serviceProviderDetailsId
+            }
+            await updateOrderIdAndFetchPaymentInfo(paymentDetails, laundryRequestDetails.stripePaymentId!, laundryRequestDetails.stripeFees ?? 0)
+        }
+        
+        return {
+            success: true,
+            orderId: orderResponse.laundryOrder.orderId
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(ReqLaundryError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: ReqLaundryError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
+    }
+}
 
-//     if (data.stripePaymentId)
-//       // await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)
+function errorChecks(laundryStore: ServiceProvider, laundryRequestDetails: LaundryRequestDetails) {
 
-//     customerNodes.inProcessOrders(customerId, orderId).set(order);
+    if(laundryStore.approved == false) {
+        throw new MezError(ReqLaundryError.LaundryStoreNotApproved);
+    }
+    if(laundryStore.openStatus != "open") {
+        throw new MezError(ReqLaundryError.StoreClosed);
+    }
+    if(laundryRequestDetails.deliveryType == DeliveryType.Delivery) {
+        if(laundryStore.deliveryDetails.deliveryAvailable == false) {
+            throw new MezError(ReqLaundryError.DeliveryNotAvailable);
+        }
+    }
+}
+async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
 
-//     rootNodes.inProcessOrders(OrderType.Laundry, orderId).set(order);
-//     laundryNodes.inProcessOrders(laundry.info.firebaseId, orderId).set(order);
-
-
-//     let chat: ChatObject = buildChatForOrder(orderId, OrderType.Laundry);
-//     chat.addParticipant({
-//       ...customerInfo,
-//       participantType: ParticipantType.Customer,
-//       notificationInfo: null
-//     });
-
-//     chat.addParticipant({
-//       ...laundry.info,
-//       participantType: ParticipantType.Laundry,
-//       notificationInfo: null
-//     });
-
-//     await chatController.setChat(orderId, chat.chatData);
-
-
-//     deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
-//       let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-//       chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, orderId, ParticipantType.DeliveryOperator)
-//       notifyParticipants(Object.keys(deliveryAdmins), orderId, ParticipantType.DeliveryOperator)
-//     })
-
-//     laundryNodes.laundryOperators(data.laundryId).once('value').then((snapshot) => {
-//       if (snapshot.val() != null) {
-//         let laundryOperators: Record<string, boolean> = snapshot.val();
-//         chatController.addParticipantsToChat(Object.keys(laundryOperators), chat, orderId, ParticipantType.LaundryOperator)
-//         notifyParticipants(Object.keys(laundryOperators), orderId, ParticipantType.LaundryOperator)
-//       }
-//     })
-
-//     return {
-//       status: ServerResponseStatus.Success,
-//       orderId: orderId
-//     }
-//   } catch (e) {
-//     functions.logger.error(e);
-//     functions.logger.error(`Order request error ${customerId}`);
-//     return {
-//       status: ServerResponseStatus.Error,
-//       orderId: "Order request error"
-//     }
-//   } finally {
-//     await customerNodes.lock(customerId).remove();
-//   }
-// };
-
-
-// async function notifyParticipants(participants: Array<string>,
-//   orderId: string, participantType: ParticipantType) {
-
-//   // let notification: Notification = {
-//   //   foreground: <NewLaundryOrderNotification>{
-//   //     time: (new Date()).toISOString(),
-//   //     notificationType: NotificationType.NewOrder,
-//   //     orderType: OrderType.Laundry,
-//   //     orderId: parseInt(orderId),
-//   //     notificationAction: NotificationAction.ShowSnackBarAlways,
-//   //   },
-//   //   background: {
-//   //     [Language.ES]: {
-//   //       title: "Nueva Pedido",
-//   //       body: `Hay una nueva orden de lavaderia`
-//   //     },
-//   //     [Language.EN]: {
-//   //       title: "New Order",
-//   //       body: `There is a new laundry order`
-//   //     }
-//   //   },
-//   //   linkUrl: orderUrl(OrderType.Laundry, parseInt(orderId))
-//   // }
-
-//   // for (let index in participants) {
-//   //   let participantId: string = participants[index]
-//   //   pushNotification(participantId, notification, participantType);
-//   // }
-// }
+    let notification: Notification = {
+        foreground: <NewLaundryOrderNotification>{
+            time: (new Date()).toISOString(),
+            notificationType: NotificationType.NewOrder,
+            orderType: OrderType.Laundry,
+            orderId: laundryOrder.orderId,
+            notificationAction: NotificationAction.ShowSnackBarAlways,
+            laundryStore: {
+                name: laundryStore.name,
+                image: laundryStore.image,
+                id: laundryStore.id
+            }
+        },
+        background: {
+            [Language.ES]: {
+                title: "Nueva Pedido",
+                body: `Hay un nuevo pedido de lavandería.`
+            },
+            [Language.EN]: {
+                title: "New Order",
+                body: `There is a new laundry order`
+            }
+        },
+        linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId!)
+    }
+    mezAdmins.forEach((m) => {
+        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
+    });
+    if(laundryStore.operators != undefined) {
+        laundryStore.operators.forEach((l) => {
+          if(l.user && l.notificationInfo?.turnOffNotifications == false) {
+            pushNotification(l.user.firebaseId, notification, l.notificationInfo, ParticipantType.LaundryOperator, l.user.language);
+          }
+        });
+    }
+}
+  

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
 import 'package:mezcalmos/Shared/widgets/ToolTipTrianglePainter.dart';
 
 /// this is not being used currently but later on, i believe we will use it !
@@ -49,7 +48,7 @@ class MezToolTip extends StatefulWidget {
   const MezToolTip(
       {Key? key,
       this.hintWidgetsList = const [],
-      this.applyCacheIncrementing: true})
+      this.applyCacheIncrementing = true})
       : super(key: key);
 
   @override
@@ -116,7 +115,7 @@ class _MezToolTipState extends State<MezToolTip> {
           //   width: 1,
           // ),
         ),
-        child: widget.hintWidgetsList[this.currentHintIndex.value].hintWidget);
+        child: widget.hintWidgetsList[currentHintIndex.value].hintWidget);
   }
 
   /// This is the Triangle that points on an [x1, y1, x2, y2] Coords on the screen
@@ -146,7 +145,7 @@ class _MezToolTipState extends State<MezToolTip> {
         onTap: () {
           if (currentHintIndex.value == widget.hintWidgetsList.length - 1 &&
               widget.applyCacheIncrementing) {
-            Get.find<TaxiController>().increaseNumOfTimesToolTipShownToUser();
+            //  Get.find<TaxiController>().increaseNumOfTimesToolTipShownToUser();
           }
           // this is user in case we want some advanced stuff later on , on each hint close.
           widget.hintWidgetsList[currentHintIndex.value].onHintClose?.call();

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezPeriodPicker/controller/MezPeriodPickerController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -21,6 +21,7 @@ class MezPeriodPicker extends StatefulWidget {
       required this.startDate,
       required this.numberOfDaysInterval,
       required this.serviceSchedule,
+      this.basedOnSchedule = true,
       this.title,
       this.periodOfTime,
       this.confirmBtnText})
@@ -32,6 +33,7 @@ class MezPeriodPicker extends StatefulWidget {
   final Schedule serviceSchedule;
   final String? title;
   final String? confirmBtnText;
+  final bool basedOnSchedule;
 
   @override
   State<MezPeriodPicker> createState() => _MezPeriodPickerState();
@@ -42,7 +44,9 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
   @override
   void initState() {
     _controller.init(
-        period: widget.periodOfTime, schedule: widget.serviceSchedule);
+        period: widget.periodOfTime,
+        schedule: widget.serviceSchedule,
+        basedOnSchedule: widget.basedOnSchedule);
     super.initState();
   }
 
@@ -59,7 +63,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
               margin: const EdgeInsets.all(8),
               child: Text(
                 widget.title ?? '${_i18n()["title"]}',
-                style: Get.textTheme.headline3,
+                style: context.txt.displaySmall,
               ),
             ),
             Divider(),
@@ -69,7 +73,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
             // date picker
             Text(
               '${_i18n()["sDate"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
@@ -82,7 +86,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
             // date picker
             Text(
               '${_i18n()["startsAt"]}',
-              style: Get.textTheme.bodyText1,
+              style: context.txt.bodyLarge,
             ),
             const SizedBox(
               height: 10,
@@ -127,7 +131,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
                   ),
                   Text(
                     '${_i18n()["endsAt"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: context.txt.bodyLarge,
                   ),
                   const SizedBox(
                     height: 10,
@@ -177,7 +181,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
                   backgroundColor: offRedColor,
                   textColor: Colors.red,
                   onClick: () async {
-                    MezRouter.back();
+                    Navigator.pop(context);
                   },
                 )),
                 const SizedBox(
@@ -188,7 +192,7 @@ class _MezPeriodPickerState extends State<MezPeriodPicker> {
                   label: widget.confirmBtnText ?? '${_i18n()["confirm"]}',
                   withGradient: true,
                   onClick: () async {
-                    _controller.confirmCallBack();
+                    _controller.confirmCallBack(context);
                   },
                 )),
               ],

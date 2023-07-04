@@ -1,5 +1,4 @@
-import 'package:mezcalmos/DeliveryApp/models/utilities/DeliveryOrderStatus.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 enum MinimalOrderStatus {
   InProcess,
@@ -19,6 +18,7 @@ extension ParseDeliveryOrderStatusToMinimalOrderStatus on DeliveryOrderStatus {
     switch (this) {
       case DeliveryOrderStatus.CancelledByCustomer:
       case DeliveryOrderStatus.CancelledByDeliverer:
+      case DeliveryOrderStatus.CancelledByAdmin:
       case DeliveryOrderStatus.CancelledByServiceProvider:
         return MinimalOrderStatus.Cancelled;
       case DeliveryOrderStatus.Delivered:
@@ -38,6 +38,38 @@ extension ParseRestaurantOrderStatusToMinimalOrderStatus
       case RestaurantOrderStatus.CancelledByAdmin:
         return MinimalOrderStatus.Cancelled;
       case RestaurantOrderStatus.Delivered:
+        return MinimalOrderStatus.Delivered;
+
+      default:
+        return MinimalOrderStatus.InProcess;
+    }
+  }
+}
+
+extension ParseLaundryOrderStatusToMinimalOrderStatus on LaundryOrderStatus {
+  MinimalOrderStatus toMinimalOrderStatus() {
+    switch (this) {
+      case LaundryOrderStatus.CancelledByCustomer:
+      case LaundryOrderStatus.CancelledByAdmin:
+        return MinimalOrderStatus.Cancelled;
+      case LaundryOrderStatus.Delivered:
+        return MinimalOrderStatus.Delivered;
+
+      default:
+        return MinimalOrderStatus.InProcess;
+    }
+  }
+}
+
+extension ParseBusinessOrderStatusToMinimalOrderStatus
+    on BusinessOrderRequestStatus {
+  MinimalOrderStatus toMinimalOrderStatus() {
+    switch (this) {
+      case BusinessOrderRequestStatus.CancelledByCustomer:
+      case BusinessOrderRequestStatus.CancelledByBusiness:
+        return MinimalOrderStatus.Cancelled;
+      case BusinessOrderRequestStatus.Confirmed:
+      case BusinessOrderRequestStatus.Completed:
         return MinimalOrderStatus.Delivered;
 
       default:

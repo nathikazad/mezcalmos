@@ -2,6 +2,9 @@ table:
   name: operator
   schema: restaurant
 object_relationships:
+  - name: operator_details
+    using:
+      foreign_key_constraint_on: details_id
   - name: restaurant
     using:
       manual_configuration:
@@ -14,44 +17,30 @@ object_relationships:
   - name: user
     using:
       foreign_key_constraint_on: user_id
-computed_fields:
-  - name: notification_token
-    definition:
-      function:
-        name: restaurant_operator_notification_token
-        schema: public
-insert_permissions:
-  - role: restaurant_operator
+select_permissions:
+  - role: mez_admin
     permission:
-      check:
-        user_id:
-          _eq: X-Hasura-User-Id
       columns:
-        - owner
+        - details_id
+        - id
         - restaurant_id
         - user_id
-select_permissions:
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:
-        - current_gps
         - id
-        - owner
         - restaurant_id
-        - status
         - user_id
       filter:
         restaurant:
           restaurant_operators:
             user_id:
               _eq: X-Hasura-User-Id
-update_permissions:
-  - role: restaurant_operator
-    permission:
-      columns:
-        - app_version
-        - current_gps
-      filter:
-        user_id:
-          _eq: X-Hasura-User-Id
-      check: null

@@ -92,26 +92,28 @@ extension parseDateTime on DateTime {
             .inDays
             .abs() >
         0) {
-      return "${_i18n()["tomorrow"]}, ${DateFormat("hh:mm a").format(toLocal())}";
+      return "${_i18n()["tomorrow"]}, ${DateFormat("hh:mm a").format(toLocal())}"
+          .inCaps;
     } else if (now.difference(toLocal()).inHours.abs() > 0) {
-      return "${_i18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}";
+      return "${_i18n()["today"]} ${_i18n()["at"]} ${DateFormat("hh:mm a").format(toLocal())}"
+          .inCaps;
     } else {
-      return "${_i18n()["in"]} ${now.difference(toLocal()).inMinutes.abs()} min";
+      return "${_i18n()["in"]} ${now.difference(toLocal()).inMinutes.abs()} min"
+          .inCaps;
     }
   }
 
-  String getOrderTime() {
-    final DateTime cDate = DateTime.now();
+  String getOrderTime({bool withDayName = false}) {
+    final DateTime cDate = DateTime.now().toLocal();
     final String userLangCode =
         Get.find<LanguageController>().userLanguageKey.toLanguageCode();
     final DateFormat formatLongDay = DateFormat.MMMd(userLangCode);
     final DateFormat formatDay = DateFormat.EEEE(userLangCode);
     final DateFormat formatMonth = DateFormat.MMMd(userLangCode);
-
-    if (cDate.difference(toLocal()).inDays.abs() < 7) {
-      return "${formatDay.format(toLocal()).replaceFirst(".", "")}, ${formatMonth.format(toLocal()).replaceFirst(".", "")} ${DateFormat("hh:mm a").format(toLocal())}";
+    if (withDayName) {
+      return "${formatDay.format(toLocal()).replaceFirst(".", "")}, ${formatMonth.format(toLocal()).replaceFirst(".", "")}, ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
-      return "${formatLongDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
+      return "${formatLongDay.format(toLocal()).replaceFirst(".", "").capitalizeMonthAfterDay}, ${DateFormat("hh:mm a").format(toLocal())}";
     }
   }
 

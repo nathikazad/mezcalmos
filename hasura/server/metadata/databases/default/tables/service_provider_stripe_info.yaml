@@ -1,0 +1,167 @@
+table:
+  name: stripe_info
+  schema: service_provider
+object_relationships:
+  - name: detail
+    using:
+      foreign_key_constraint_on:
+        column: stripe_id
+        table:
+          name: details
+          schema: service_provider
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - email
+        - id
+        - payouts_enabled
+        - requirements
+        - status
+        - stripe_id
+      filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - id
+        - requirements
+        - email
+        - status
+        - stripe_id
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - email
+        - id
+        - requirements
+        - status
+        - stripe_id
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - id
+        - email
+        - requirements
+        - status
+        - stripe_id
+      filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - email
+        - id
+        - requirements
+        - status
+        - stripe_id
+      filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - email
+        - requirements
+        - id
+        - status
+        - stripe_id
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - email
+        - requirements
+        - status
+        - id
+        - stripe_id
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - email
+        - id
+        - requirements
+        - status
+        - stripe_id
+      filter: {}
+update_permissions:
+  - role: delivery_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+      filter:
+        detail:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check:
+        detail:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+      filter:
+        detail:
+          laundry_store:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+      filter:
+        detail:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check:
+        detail:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id

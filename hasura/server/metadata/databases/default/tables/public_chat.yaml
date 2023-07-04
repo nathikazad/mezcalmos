@@ -1,6 +1,14 @@
 table:
   name: chat
   schema: public
+object_relationships:
+  - name: service_provider_customer_chat
+    using:
+      foreign_key_constraint_on:
+        column: chat_id
+        table:
+          name: service_provider_customer_chat
+          schema: public
 array_relationships:
   - name: chat_participants
     using:
@@ -10,12 +18,30 @@ array_relationships:
           name: chat_participant
           schema: public
 select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - id
+        - chat_info
+        - last_message
+        - messages
+        - creation_time
+        - last_message_sent
+        - chat_type
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
         - chat_info
+        - chat_type
         - creation_time
         - id
+        - last_message
+        - last_message_sent
         - messages
       filter:
         chat_participants:
@@ -25,10 +51,43 @@ select_permissions:
   - role: delivery_driver
     permission:
       columns:
-        - id
         - chat_info
-        - messages
+        - chat_type
         - creation_time
+        - id
+        - last_message
+        - last_message_sent
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - chat_info
+        - chat_type
+        - creation_time
+        - id
+        - last_message
+        - last_message_sent
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - chat_info
+        - chat_type
+        - creation_time
+        - id
+        - last_message
+        - last_message_sent
+        - messages
       filter:
         chat_participants:
           user:
@@ -38,19 +97,29 @@ select_permissions:
     permission:
       columns:
         - chat_info
+        - chat_type
+        - creation_time
         - id
+        - last_message
+        - last_message_sent
         - messages
       filter:
-        chat_participants:
-          user:
-            id:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
               _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:
         - chat_info
+        - chat_type
         - creation_time
         - id
+        - last_message
+        - last_message_sent
         - messages
       filter:
         chat_participants:
@@ -58,9 +127,23 @@ select_permissions:
             id:
               _eq: X-Hasura-User-Id
 update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - last_message
+        - last_message_sent
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+      check: null
   - role: customer
     permission:
       columns:
+        - last_message_sent
+        - last_message
         - messages
       filter:
         chat_participants:
@@ -71,6 +154,8 @@ update_permissions:
   - role: delivery_driver
     permission:
       columns:
+        - last_message
+        - last_message_sent
         - messages
       filter:
         chat_participants:
@@ -78,23 +163,50 @@ update_permissions:
             id:
               _eq: X-Hasura-User-Id
       check: null
-  - role: mez_admin
+  - role: laundry_operator
     permission:
       columns:
+        - last_message
+        - last_message_sent
         - messages
       filter:
         chat_participants:
           user:
             id:
+              _eq: X-Hasura-User-Id
+      check:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - last_message
+        - last_message_sent
+        - messages
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
               _eq: X-Hasura-User-Id
       check: null
   - role: restaurant_operator
     permission:
       columns:
+        - last_message
+        - last_message_sent
         - messages
       filter:
         chat_participants:
           user:
             id:
               _eq: X-Hasura-User-Id
-      check: null
+      check:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id

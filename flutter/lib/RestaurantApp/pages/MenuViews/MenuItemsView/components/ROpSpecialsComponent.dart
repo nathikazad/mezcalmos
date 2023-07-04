@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpSpecialItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
-import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -48,17 +47,18 @@ class _ROpSpecialsComponentState extends State<ROpSpecialsComponent> {
               children: [
                 Text(
                   '${_i18n()["currentSp"]}',
-                  style: Get.textTheme.bodyText1,
+                  style: context.txt.bodyLarge,
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 MezAddButton(
                   onClick: () async {
-                    final bool? newItemAdded = await MezRouter.toNamed(
-                        getROpAddItemRoute(
-                            restaurantId: widget.viewController.restaurnatId),
-                        arguments: {"specials": true}) as bool?;
+                    final bool? newItemAdded = await ROpItemView.navigate(
+                        itemId: null,
+                        detailsId: widget.viewController.detailsId!,
+                        restaurantId: widget.viewController.restaurnatId,
+                        arguments: <String, dynamic>{"specials": true});
                     if (newItemAdded == true) {
                       await widget.viewController.fetchSpecials();
                     }
@@ -99,8 +99,7 @@ class _ROpSpecialsComponentState extends State<ROpSpecialsComponent> {
                                   element.startsAt!
                                       .toLocal()
                                       .toDayName(withDateNumber: true),
-                                  style: Get.textTheme.headline3
-                                      ?.copyWith(fontSize: 13.sp),
+                                  style: context.txt.bodyLarge,
                                 ),
                               );
                             },
@@ -133,7 +132,7 @@ class _ROpSpecialsComponentState extends State<ROpSpecialsComponent> {
                           ),
                           Text(
                             '${_i18n()["recentSp"]}',
-                            style: Get.textTheme.bodyText1,
+                            style: context.txt.bodyLarge,
                           ),
                           SizedBox(
                             height: 15,

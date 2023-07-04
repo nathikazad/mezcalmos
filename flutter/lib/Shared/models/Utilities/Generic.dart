@@ -1,8 +1,14 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:collection/collection.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
-enum ServiceStatus { Open, Closed_temporarily, Closed_indefinitely }
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["models"]
+    ["Utilities"]["Generic"];
+
+enum ServiceStatus { Open, ClosedTemporarily, ClosedIndefinitely }
 
 extension ParseServiceStatusToString on ServiceStatus {
   String toFirebaseFormatString() {
@@ -15,16 +21,20 @@ extension ParseStringToServiceStatusStatus on String {
   ServiceStatus toServiceStatus() {
     return ServiceStatus.values.firstWhere(
         (ServiceStatus e) => e.toFirebaseFormatString() == this,
-        orElse: () => ServiceStatus.Closed_indefinitely);
+        orElse: () => ServiceStatus.ClosedIndefinitely);
   }
 }
 
-enum LanguageType {
-  EN,
-  ES,
+extension LanguageHelper on ServiceProviderLanguage {
+  Map<String, dynamic> toFirebaseFormattedString() {
+    return <String, dynamic>{
+      "primary": primary.toFirebaseFormatString(),
+      "secondary": secondary?.toFirebaseFormatString(),
+    };
+  }
 }
 
-extension ParseLanugaugeTypeToString on LanguageType {
+extension ParseLangaugeToString on Language {
   String toLanguageCode() {
     String str = toString().split('.').last;
     if (str[1] == 's') {
@@ -33,59 +43,50 @@ extension ParseLanugaugeTypeToString on LanguageType {
     return "${str.toLowerCase()}";
   }
 
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
+  // String toFirebaseFormatString() {
+  //   final String str = toString().split('.').last;
 
-    return str[0].toLowerCase() + str.substring(1).toLowerCase();
-  }
+  //   return str[0].toLowerCase() + str.substring(1).toLowerCase();
+  // }
 
-  LanguageType toOpLang() {
-    if (this == LanguageType.EN) {
-      return LanguageType.ES;
+  Language toOpLang() {
+    if (this == Language.EN) {
+      return Language.ES;
     } else {
-      return LanguageType.EN;
+      return Language.EN;
     }
   }
 
   String? toLanguageName() {
-    final String str = toString().split('.').last;
-    switch (str) {
-      case "EN":
-        return "English";
-      case "ES":
-        return "Spanish";
-
-      default:
-        return null;
-    }
+    return _i18n()["${toFirebaseFormatString()}"];
   }
 }
 
-extension ParseStringToLanugaugeType on String {
-  LanguageType toLanguageType() {
-    return (LanguageType.values.firstWhereOrNull(
-          (LanguageType e) => e.toFirebaseFormatString().toLowerCase() == this,
-        )) ??
-        LanguageType.ES;
-  }
+extension ParseStringToLangauge on String {
+  // Language toLanguage() {
+  //   return (Language.values.firstWhereOrNull(
+  //         (Language e) => e.toFirebaseFormatString().toLowerCase() == this,
+  //       )) ??
+  //       Language.ES;
+  // }
 
-  LanguageType? toNullableLanguageType() {
-    return (LanguageType.values.firstWhereOrNull(
-          (LanguageType e) => e.toFirebaseFormatString().toLowerCase() == this,
+  Language? toNullableLanguageType() {
+    return (Language.values.firstWhereOrNull(
+          (Language e) => e.toFirebaseFormatString().toLowerCase() == this,
         )) ??
         null;
   }
 }
 
-typedef LanguageMap = Map<LanguageType, String>;
+typedef LanguageMap = Map<Language, String>;
 
 LanguageMap convertToLanguageMap(Map data) {
   // mezDbgPrint("@sa@d@: Trying to convert $data convertToLanguageMap !");
   final LanguageMap map = {};
   data.forEach((language, string) {
-    if (language == LanguageType.EN.toFirebaseFormatString() ||
-        language == LanguageType.ES.toFirebaseFormatString()) {
-      map[language.toString().toLanguageType()] = string;
+    if (language == Language.EN.toFirebaseFormatString() ||
+        language == Language.ES.toFirebaseFormatString()) {
+      map[language.toString().toLanguage()] = string;
     }
   });
   return map;
@@ -94,9 +95,31 @@ LanguageMap convertToLanguageMap(Map data) {
 extension LanguageMapToFirebaseFormat on LanguageMap {
   Map<String, String> toFirebaseFormat() {
     final Map<String, String> _tempMap = {};
-    keys.forEach((LanguageType key) {
+    keys.forEach((Language key) {
       _tempMap[key.toFirebaseFormatString()] = this[key]!;
     });
     return _tempMap;
   }
+
+  String? getTranslation(Language userLanguage) {
+    if (containsKey(userLanguage)) {
+      return this[userLanguage]!;
+    } else if (containsKey(Language.EN)) {
+      return this[Language.EN]!;
+    } else {
+      // values.
+      return values.firstOrNull;
+    }
+  }
+}
+
+/// used only on the view side
+enum EntityType {
+  Business,
+  Customer,
+  Laundry,
+  DeliveryCompany,
+  Admin,
+  Restaurant,
+  Driver
 }

@@ -1,0 +1,40 @@
+table:
+  name: class
+  schema: business
+object_relationships:
+  - name: business
+    using:
+      foreign_key_constraint_on: business_id
+  - name: service
+    using:
+      foreign_key_constraint_on: service_id
+select_permissions:
+    - role: mez_admin
+    permission:
+      columns:
+        - id
+        - business_id
+        - schedule_type
+        - schedule
+        - service_id
+        - gps_location
+        - time
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: customer
+    permission:
+      columns:
+        - id
+        - business_id
+        - schedule_type
+        - schedule
+        - service_id
+        - gps_location
+        - time
+      filter: {}

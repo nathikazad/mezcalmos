@@ -1,107 +1,133 @@
 import Stripe from 'stripe';
-import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
 import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
-import { OrderStripeInfo, StripePaymentStatus, StripeStatus } from './model';
+import { OrderStripeInfo, StripePaymentStatus, StripeStatus } from '../../shared/models/stripe';
 import { verifyCustomerIdForServiceAccount } from './serviceProvider';
-import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
 import { HttpsError } from 'firebase-functions/v1/auth';
 import { verifyCustomerStripeInfo } from './card';
 import { updateRestaurantOrderStripe } from '../../shared/graphql/restaurant/order/updateOrder';
 import { getCustomer } from '../../shared/graphql/user/customer/getCustomer';
 import { CustomerInfo } from '../../shared/models/Generic/User';
-let keys: Keys = getKeys();
+import { ServiceProvider, ServiceProviderType } from '../../shared/models/Services/Service';
+import { updateLaundryOrderStripe } from '../../shared/graphql/laundry/order/updateOrder';
+import { getServiceProviderDetails } from '../../shared/graphql/serviceProvider/getServiceProvider';
+import { MezError } from '../../shared/models/Generic/Generic';
 
+let keys: Keys = getKeys();
+ 
 export interface PaymentIntentDetails {
-  serviceProviderId: number,
-  orderType: OrderType,
+  serviceProviderDetailsId: number,
   paymentAmount: number,
 }
-export async function getPaymentIntent(userId: number, paymentIntentDetails: PaymentIntentDetails) {
-  let serviceProvider;
-  if(paymentIntentDetails.orderType == OrderType.Restaurant) {
-    serviceProvider = await getRestaurant(paymentIntentDetails.serviceProviderId);
-  } else {
-    throw new HttpsError(
-      "internal",
-      "invalid order type"
+export interface PaymentIntentResponse {
+  success: boolean,
+  error?: PaymentIntentError
+  unhandledError?: string,
+  paymentIntent?: string | null,
+  ephemeralKey?: string,
+  customer?: string,
+  publishableKey?: string,
+  stripeAccountId?: string
+}
+enum PaymentIntentError {
+  UnhandledError = "unhandledError",
+  ServiceProviderDetailsNotFound = 'serviceProviderDetailsNotFound',
+  CardNotAccepted = "cardNotAccepted",
+  StripeNotWorking = "stripeNotWorking",
+  CustomerNotFound = "customerNotFound",
+  NoCustomerStripeInfo = "noCustomerStripeInfo",
+  CustomerUpdateError = "customerUpdateError",
+}
+export async function getPaymentIntent(userId: number, paymentIntentDetails: PaymentIntentDetails): Promise<PaymentIntentResponse> {
+  try {
+    let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentIntentDetails.serviceProviderDetailsId)
+
+    if (!(serviceProvider.acceptedPayments) || serviceProvider.acceptedPayments[PaymentType.Card] == false) {
+      throw new MezError(PaymentIntentError.CardNotAccepted);
+    }
+    if (serviceProvider.stripeInfo == null || serviceProvider.stripeInfo.status != StripeStatus.IsWorking) {
+      throw new MezError(PaymentIntentError.StripeNotWorking);
+    }
+    let stripeOptionsDefault = { apiVersion: <any>'2020-08-27' };
+    let stripe = new Stripe(keys.stripe.secretkey, stripeOptionsDefault);
+    let customer: CustomerInfo = await getCustomer(userId);
+    customer = await verifyCustomerStripeInfo(customer, stripe);
+
+    let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };
+    stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
+    customer = await verifyCustomerIdForServiceAccount(
+      customer, 
+      paymentIntentDetails.serviceProviderDetailsId,
+      stripe,
+      stripeOptions
+    )
+    let stripeCustomerId = customer.stripeInfo?.idsWithServiceProvider[paymentIntentDetails.serviceProviderDetailsId];
+    const ephemeralKey: Stripe.EphemeralKey = await stripe.ephemeralKeys.create(
+      { customer: stripeCustomerId },
+      stripeOptions
     );
-  }
-  if (!(serviceProvider.acceptedPayments)
-    || serviceProvider.acceptedPayments[PaymentType.Card] == false
-    || serviceProvider.stripeInfo == null 
-    || serviceProvider.stripeInfo.status != StripeStatus.IsWorking
-  ) {
-    throw new HttpsError(
-      "internal",
-      "This service provider does not accept cards, apple pay or google pay"
-    );
-  }
-  let stripeOptionsDefault = { apiVersion: <any>'2020-08-27' };
-  let stripe = new Stripe(keys.stripe.secretkey, stripeOptionsDefault);
-  let customer: CustomerInfo = await getCustomer(userId);
-  customer = await verifyCustomerStripeInfo(customer, stripe);
 
-  let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };
-  stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
-  customer = await verifyCustomerIdForServiceAccount(
-    customer, 
-    paymentIntentDetails.serviceProviderId, 
-    paymentIntentDetails.orderType, 
-    stripe,
-    stripeOptions
-  )
-  let stripeCustomerId = customer.stripeInfo?.idsWithServiceProvider[paymentIntentDetails.orderType][paymentIntentDetails.serviceProviderId];
-  const ephemeralKey: Stripe.EphemeralKey = await stripe.ephemeralKeys.create(
-    { customer: stripeCustomerId },
-    stripeOptions
-  );
+    const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
+      amount: paymentIntentDetails.paymentAmount * 100,
+      currency: 'mxn',
+      customer: stripeCustomerId,
+      capture_method: 'manual'
+    }, stripeOptions);
 
-  const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create({
-    amount: paymentIntentDetails.paymentAmount * 100,
-    currency: 'mxn',
-    customer: stripeCustomerId,
-    capture_method: 'manual'
-  }, stripeOptions);
-
-  return {
-    status: ServerResponseStatus.Success,
-    paymentIntent: paymentIntent.client_secret,
-    ephemeralKey: ephemeralKey.secret,
-    customer: stripeCustomerId,
-    publishableKey: keys.stripe.publickey,
-    stripeAccountId: serviceProvider.stripeInfo.id
+    return <PaymentIntentResponse> {
+      success: true,
+      paymentIntent: paymentIntent.client_secret,
+      ephemeralKey: ephemeralKey.secret,
+      customer: stripeCustomerId,
+      publishableKey: keys.stripe.publickey,
+      stripeAccountId: serviceProvider.stripeInfo.id
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(PaymentIntentError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: PaymentIntentError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
+    }
   }
 }
 export interface PaymentDetails {
-  serviceProviderId: number,
-  orderType: OrderType,
+  serviceProviderDetailsId: number,
   orderId: number,
   orderStripePaymentInfo?: OrderStripeInfo,
 }
 export async function capturePayment(paymentDetails: PaymentDetails, amountToCapture?: number) {
 
-  let serviceProvider;
+  let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentDetails.serviceProviderDetailsId)
   if(!(paymentDetails.orderStripePaymentInfo)) {
-    throw new HttpsError(
-      "internal",
-      "Order stripe payment info is undefined"
-    );
+    throw new MezError("orderStripeInfoNotDefined");
   }
-  if(paymentDetails.orderType == OrderType.Restaurant) {
-    serviceProvider = await getRestaurant(paymentDetails.serviceProviderId);
-  } else {
-    throw new HttpsError(
-      "internal",
-      "invalid order type"
-    );
-  }
+  // switch (paymentDetails.orderType) {
+  //   case OrderType.Restaurant:
+  //     serviceProvider = await getRestaurant(paymentDetails.serviceProviderDetailsId);
+  //     break;
+  //   case OrderType.Laundry:
+  //     serviceProvider = await getLaundryStore(paymentDetails.serviceProviderDetailsId);
+  //     break;
+  //   default:
+  //     throw new HttpsError(
+  //       "internal",
+  //       "invalid order type"
+  //     );
+  // }
   if(!(serviceProvider.stripeInfo)) {
-    throw new HttpsError(
-      "internal",
-      "Service provider does not have a stripe account"
-    );
+    throw new MezError("serviceProviderStripeAccountDoesNotExist");
   }
   
   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };
@@ -120,28 +146,40 @@ export async function capturePayment(paymentDetails: PaymentDetails, amountToCap
     paymentDetails.orderStripePaymentInfo.amountCharged = 0;
     paymentDetails.orderStripePaymentInfo.status = StripePaymentStatus.Cancelled
   }
-  if(paymentDetails.orderType == OrderType.Restaurant) {
-    updateRestaurantOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+  switch (serviceProvider.serviceProviderType) {
+    case ServiceProviderType.Restaurant:
+      updateRestaurantOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+      break;
+    case ServiceProviderType.Laundry:
+      updateLaundryOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+      break;
+    default:
+      break;
   }
 }
 
 export async function refundPayment(paymentDetails: PaymentDetails, amountToRefund: number) {
 
-  let serviceProvider;
+  let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentDetails.orderId)
   if(!(paymentDetails.orderStripePaymentInfo)) {
     throw new HttpsError(
       "internal",
       "Order stripe payment info is undefined"
     );
   }
-  if(paymentDetails.orderType == OrderType.Restaurant) {
-    serviceProvider = await getRestaurant(paymentDetails.serviceProviderId);
-  } else {
-    throw new HttpsError(
-      "internal",
-      "invalid order type"
-    );
-  }
+  // switch (paymentDetails.orderType) {
+  //   case OrderType.Restaurant:
+  //     serviceProvider = await getRestaurant(paymentDetails.serviceProviderDetailsId);
+  //     break;
+  //   case OrderType.Laundry:
+  //     serviceProvider = await getLaundryStore(paymentDetails.serviceProviderDetailsId);
+  //     break;
+  //   default:
+  //     throw new HttpsError(
+  //       "internal",
+  //       "invalid order type"
+  //     );
+  // }
   if(!(serviceProvider.stripeInfo)) {
     throw new HttpsError(
       "internal",
@@ -155,9 +193,18 @@ export async function refundPayment(paymentDetails: PaymentDetails, amountToRefu
     amount: amountToRefund * 100,
   }, stripeOptions)
   paymentDetails.orderStripePaymentInfo.amountRefunded += amountToRefund;
-  if(paymentDetails.orderType == OrderType.Restaurant) {
-    updateRestaurantOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+
+  switch (serviceProvider.serviceProviderType) {
+    case ServiceProviderType.Restaurant:
+      updateRestaurantOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+      break;
+    case ServiceProviderType.Laundry:
+      updateLaundryOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+      break;
+    default:
+      break;
   }
+
 }
 
 export async function updateOrderIdAndFetchPaymentInfo(
@@ -165,26 +212,28 @@ export async function updateOrderIdAndFetchPaymentInfo(
   stripePaymentId: string, 
   stripeFees: number
 ) {
-  let serviceProvider;
-  if(!(paymentDetails.serviceProviderId)) {
-    throw new HttpsError(
-      "internal",
-      "Order service provider id is undefined"
-    );
-  }
-  if(paymentDetails.orderType == OrderType.Restaurant) {
-    serviceProvider = await getRestaurant(paymentDetails.serviceProviderId);
-  } else {
-    throw new HttpsError(
-      "internal",
-      "invalid order type"
-    );
+  let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentDetails.serviceProviderDetailsId);
+  // if(!(paymentDetails.serviceProviderDetailsId)) {
+  //   throw new HttpsError(
+  //     "internal",
+  //     "Order service provider id is undefined"
+  //   );
+  // }
+  let orderType: OrderType;
+  switch (serviceProvider.serviceProviderType) {
+    case ServiceProviderType.Restaurant:
+      orderType = OrderType.Restaurant
+      break;
+    case ServiceProviderType.Laundry:
+      orderType = OrderType.Laundry
+      break;
+    default:
+      throw new MezError("invalidOrderType");
+
   }
   if(!(serviceProvider.stripeInfo)) {
-    throw new HttpsError(
-      "internal",
-      "Service provider does not have a stripe account"
-    );
+    // TODO: @sanchit remove all throw errors, needs to be enums
+    throw new MezError("noStripeAccountOfServiceProvider");
   }
   let stripeOptions = { apiVersion: <any>'2020-08-27', stripeAccount: serviceProvider.stripeInfo.id };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
@@ -192,9 +241,8 @@ export async function updateOrderIdAndFetchPaymentInfo(
   await stripe.paymentIntents.update(
     stripePaymentId,
     { metadata: { 
-      orderId: paymentDetails.orderId, 
-      orderType: paymentDetails.orderType, 
-      serviceProviderId: paymentDetails.serviceProviderId ?? "unknown" 
+      orderId: paymentDetails.orderId,
+      serviceProviderId: paymentDetails.serviceProviderDetailsId ?? "unknown" 
     } },
     stripeOptions
   );
@@ -208,6 +256,7 @@ export async function updateOrderIdAndFetchPaymentInfo(
     pi.payment_method as string,
     stripeOptions
   );
+  // TODO @sanchit, check status is the correct status and not requires_action
   paymentDetails.orderStripePaymentInfo = {
     id: stripePaymentId,
     stripeFees: stripeFees,
@@ -225,7 +274,15 @@ export async function updateOrderIdAndFetchPaymentInfo(
       expYear: pm.card.exp_year,
       brand: pm.card.brand,
     }
-  if(paymentDetails.orderType == OrderType.Restaurant) {
-    updateRestaurantOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+
+  switch (orderType) {
+    case OrderType.Restaurant:
+      updateRestaurantOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+      break;
+    case OrderType.Laundry:
+      updateLaundryOrderStripe(paymentDetails.orderId, paymentDetails.orderStripePaymentInfo);
+      break;
+    default:
+      break;
   }
 }

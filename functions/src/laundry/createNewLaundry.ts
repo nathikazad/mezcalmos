@@ -1,74 +1,111 @@
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
-import * as firebase from "firebase-admin";
-import { UserRecord } from "firebase-functions/v1/auth";
-import * as laundryNodes from "../shared/databaseNodes/services/laundry";
-// import * as operatorNodes from "../shared/databaseNodes/operators/operator";
-// import { OrderType } from "../shared/models/Generic/Order";
-import { userInfoNode } from "../shared/databaseNodes/root";
-import { UserInfo } from "../shared/models/Generic/User";
+import { Language, Location, MezError } from "../shared/models/Generic/Generic";
+import { MezAdmin } from "../shared/models/Generic/User";
+import { DeliveryDetails } from "../shared/models/Generic/Delivery";
+import { getUser } from "../shared/graphql/user/getUser";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
+import { ServiceProvider, ServiceProviderLanguage } from "../shared/models/Services/Service";
+import { createLaundryStore } from "../shared/graphql/laundry/createLaundry";
+import { NewLaundryNotification } from "../shared/models/Services/Laundry/Laundry";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { laundryUrl } from "../utilities/senders/appRoutes";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { Schedule } from "../shared/models/Generic/Schedule";
 
-export async function createLaundry(userId: string, data: any) {
+export interface LaundryDetails {
+  name: string,
+  image: string,
+  location: Location,
+  schedule: Schedule,
+  laundryOperatorNotificationToken?: string,
+  firebaseId?: string,
+  deliveryPartnerId?: number,
+  deliveryDetails: DeliveryDetails,
+  language: ServiceProviderLanguage,
+  uniqueId?: string
+}
+export interface LaundryResponse {
+  success: boolean,
+  error?: LaundryError
+  unhandledError?: string,
+}
+export enum LaundryError {
+  UnhandledError = "unhandledError",
+  DeliveryDetailsNotSet = "deliveryDetailsNotSet",
+  UserNotFound = "userNotFound",
+  DeepLinkError = "deepLinkError",
+  QRGenerationError = "qrGenerationError",
+  LaundryCreationError = "laundryCreationError"
+}
 
-  // let response = isSignedIn(userId)
-  // if (response != undefined) {
-  //   return {
-  //     ok: false,
-  //     error: response
-  //   }
-  // }
-
-  // let response = await checkDeliveryAdmin(userId)
-  // if (response != undefined) {
-  //   return {
-  //     ok: false,
-  //     error: response
-  //   };
-  // }
-
-
-  if (!data.emailIdOrPhoneNumber && !data.laundryName) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "required parameters emailIdOrPhoneNumber and laundryName"
-    }
-  }
-  let user: UserRecord;
+export async function createLaundry(userId: number, laundryDetails: LaundryDetails): Promise<LaundryResponse> {
   try {
-    user = await firebase.auth().getUserByPhoneNumber(data.emailIdOrPhoneNumber);
-  } catch (a) {
-    console.log("phone number not there");
-    try {
-      user = await firebase.auth().getUserByEmail(data.emailIdOrPhoneNumber)
-    } catch (a) {
-      console.log("email also not there");
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: "User not found",
+    if(laundryDetails.deliveryDetails.deliveryAvailable) {
+      if(laundryDetails.deliveryDetails.selfDelivery && !(laundryDetails.deliveryDetails.radius)) {
+        throw new MezError(LaundryError.DeliveryDetailsNotSet);
       }
     }
+  
+    let userPromise = getUser(userId);
+    let mezAdminsPromise = getMezAdmins();
+    let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
+    let mezAdmins: MezAdmin[] = promiseResponse[1];
+  
+    let laundryStore: ServiceProvider = await createLaundryStore(laundryDetails, userId);
+  
+    notifyAdmins(laundryStore, mezAdmins);  
+    return {
+      success: true
+    }
+  } catch(e: any) {
+    if (e instanceof MezError) {
+      if (Object.values(LaundryError).includes(e.message as any)) {
+        return {
+          success: false,
+          error: e.message as any
+        }
+      } else {
+        return {
+          success: false,
+          error: LaundryError.UnhandledError,
+          unhandledError: e.message as any
+        }
+      }
+    } else {
+      throw e
+    }
   }
-
-  let operatorInfo: UserInfo = (await userInfoNode(user.uid).once('value')).val();
-  if(operatorInfo == null || operatorInfo.name == null)
-  return {
-    status: ServerResponseStatus.Error,
-    errorMessage: "User info not there",
-  }
-
-  let laundryId: string = (await laundryNodes.info().push()).key!;
-  let newLaundry = JSON.parse(laundryTemplateInJson);
-  newLaundry.info.id = laundryId
-  newLaundry.info.name = data.laundryName;
-  newLaundry.state.operators[user.uid] = true;
-  laundryNodes.info(laundryId).set(newLaundry);
-
-  // let newOperator = { info: operatorInfo, state: { laundryId: laundryId } };
-  // operatorNodes.operatorInfo(OrderType.Laundry, user.uid).set(newOperator);
-  return { status: ServerResponseStatus.Success }
+  
 };
 
+function notifyAdmins(laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
+  let notification: Notification = {
+    foreground: <NewLaundryNotification>{
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.NewLaundry,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
+      name: laundryStore.name,
+      image: laundryStore.image,
+      id: laundryStore.id
+    },
+    background: {
+      [Language.ES]: {
+        title: "Nueva Lavandería",
+        body: `Hay una nueva Lavandería`
+      },
+      [Language.EN]: {
+        title: "New Laundry Store",
+        body: `There is a new Laundry Store`
+      }
+    },
+    linkUrl: laundryUrl(laundryStore.id)
+  };
+  mezAdmins.forEach((m) => {
+    pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
+  });
+}
 
-let laundryTemplateInJson = `{
+export const laundryTemplateInJson = `{
   "details": {
     "averageNumberOfDays": 1,
     "costs": {

@@ -2,45 +2,99 @@ table:
   name: service_link
   schema: service_provider
 object_relationships:
-  - name: restaurant
+  - name: service_provider
     using:
-      manual_configuration:
-        column_mapping:
-          service_provider_id: id
-          service_provider_type: service_provider_type
-        insertion_order: null
-        remote_table:
-          name: restaurant
-          schema: restaurant
+      foreign_key_constraint_on:
+        column: service_link_id
+        table:
+          name: details
+          schema: service_provider
 insert_permissions:
   - role: restaurant_operator
     permission:
-      check:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      check: {}
       columns:
         - driver_deep_link
         - driver_qr_image_link
         - operator_deep_link
         - operator_qr_image_link
 select_permissions:
-  - role: restaurant_operator
+  - role: business_operator
+    permission:
+      columns:
+        - customer_deep_link
+        - customer_flyer_links
+        - customer_qr_image_link
+        - driver_deep_link
+        - driver_qr_image_link
+        - id
+        - operator_deep_link
+        - operator_qr_image_link
+      filter:
+        service_provider:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - driver_deep_link
+        - driver_qr_image_link
+        - id
+        - operator_deep_link
+        - operator_qr_image_link
+      filter: {}
+  - role: laundry_operator
     permission:
       columns:
         - id
-        - service_provider_id
+        - customer_deep_link
+        - customer_qr_image_link
         - driver_deep_link
         - driver_qr_image_link
         - operator_deep_link
         - operator_qr_image_link
-        - service_provider_type
       filter:
-        restaurant:
-          restaurant_operators:
+        service_provider:
+          laundry_store:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - id
+        - customer_deep_link
+        - customer_qr_image_link
+        - driver_deep_link
+        - driver_qr_image_link
+        - operator_deep_link
+        - operator_qr_image_link
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
             user_id:
               _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+        - customer_deep_link
+        - customer_qr_image_link
+        - driver_deep_link
+        - driver_qr_image_link
+        - operator_deep_link
+        - operator_qr_image_link
+      filter:
+        service_provider:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
 update_permissions:
   - role: restaurant_operator
     permission:
@@ -49,9 +103,5 @@ update_permissions:
         - driver_qr_image_link
         - operator_deep_link
         - operator_qr_image_link
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
       check: null

@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/controller/LocationPermissionController.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/widgets/LocationPermissionsWidgets.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['LocationPermissionScreen'];
@@ -43,10 +43,10 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   void initState() {
     viewWidgets = LocationPermissionWidgets(viewController: viewController);
     viewController.init(
-      onLocationPermissionsStatusChange: _onLocationPermissionsChange,
-      initialAndroidBodyTextSetter: _updateAndroidPermissionAskingText,
-      initialIosBodyTextSetter: _updateIosPermissionAskingText,
-    );
+        onLocationPermissionsStatusChange: _onLocationPermissionsChange,
+        initialAndroidBodyTextSetter: _updateAndroidPermissionAskingText,
+        initialIosBodyTextSetter: _updateIosPermissionAskingText,
+        initialWebBodyTextSetter: _updateWebPermissionAskingText);
     super.initState();
   }
 
@@ -82,6 +82,11 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
         setErrorTextByRefrence(null);
         break;
     }
+  }
+
+  void _updateWebPermissionAskingText() {
+    setAskPermissionsTextByRefrence(
+        () => _i18n()['locationPermissionText']['ios']['foreground']);
   }
 
   void _updateIosPermissionAskingText() {
@@ -151,7 +156,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Lang),
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Lang),
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -240,13 +245,13 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                   SizedBox(
                     height: getSizeRelativeToScreen(25, Get.height, Get.width),
                   ),
-                  GestureDetector(
+                  InkWell(
                     onTap: viewController.onGivePermissionsClick,
-                    child: Container(
-                      height:
-                          getSizeRelativeToScreen(25, Get.height, Get.width),
-                      width:
-                          getSizeRelativeToScreen(100, Get.height, Get.width),
+                    child: Ink(
+                      width: getSizeRelativeToScreen(100, Get.height, Get.width,
+                          fixedMin: 150),
+                      height: getSizeRelativeToScreen(25, Get.height, Get.width,
+                          fixedMin: 30),
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: <Color>[
@@ -265,13 +270,12 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                       child: Center(
                           child: Obx(
                         () => Text(
-                          _i18n()['permissionBtn'],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
+                          '${_i18n()['permissionBtn']}',
+                          style: context.textTheme.displaySmall?.copyWith(
                               color: Colors.white,
-                              fontFamily: 'psb',
-                              fontSize: 10,
-                              letterSpacing: 1),
+                              fontSize: 9.mezSp,
+                              fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center,
                         ),
                       )),
                     ),

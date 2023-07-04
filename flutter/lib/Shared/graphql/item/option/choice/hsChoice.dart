@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/src/core/query_result.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -57,17 +58,23 @@ Future<int?> add_choice(
             data: Input$translation_insert_input(
               service_provider_id: restaurantId,
               service_provider_type:
-                  OrderType.Restaurant.toFirebaseFormatString(),
+                  cModels.OrderType.Restaurant.toFirebaseFormatString(),
               translations: Input$translation_value_arr_rel_insert_input(
-                data: [
-                  Input$translation_value_insert_input(
-                      language_id: LanguageType.EN.toFirebaseFormatString(),
-                      value: choice.name[LanguageType.EN]),
-                  Input$translation_value_insert_input(
-                      language_id: LanguageType.ES.toFirebaseFormatString(),
-                      value: choice.name[LanguageType.ES]),
-                ],
-              ),
+                  data: choice.name.entries
+                      .map((MapEntry<cModels.Language, String> e) =>
+                          Input$translation_value_insert_input(
+                              language_id: e.key.toFirebaseFormatString(),
+                              value: e.value))
+                      .toList()
+                  // [
+                  //   Input$translation_value_insert_input(
+                  //       language_id: cModels.Language.EN.toFirebaseFormatString(),
+                  //       value: choice.name[cModels.Language.EN]),
+                  //   Input$translation_value_insert_input(
+                  //       language_id: cModels.Language.ES.toFirebaseFormatString(),
+                  //       value: choice.name[cModels.Language.ES]),
+                  // ],
+                  ),
             ),
           ),
         ),
@@ -83,7 +90,8 @@ Future<int?> add_choice(
   return null;
 }
 
-Future<bool> update_choice_by_id(int choiceId, Choice choice) async {
+Future<bool> update_choice_by_id(
+    {required int choiceId, required Choice choice}) async {
   final QueryResult<Mutation$updateChoiceById> response = await _db
       .graphQLClient
       .mutate$updateChoiceById(Options$Mutation$updateChoiceById(
@@ -129,14 +137,22 @@ Input$restaurant_option_choice_map_insert_input convert_choice_to_hasura(
       name: Input$translation_obj_rel_insert_input(
         data: Input$translation_insert_input(
           translations: Input$translation_value_arr_rel_insert_input(
-              data: <Input$translation_value_insert_input>[
-                Input$translation_value_insert_input(
-                    language_id: LanguageType.EN.toFirebaseFormatString(),
-                    value: choice.name[LanguageType.EN]),
-                Input$translation_value_insert_input(
-                    language_id: LanguageType.ES.toFirebaseFormatString(),
-                    value: choice.name[LanguageType.ES]),
-              ]),
+              data: choice.name.entries
+                  .map((MapEntry<cModels.Language, String> e) =>
+                      Input$translation_value_insert_input(
+                          language_id: e.key.toFirebaseFormatString(),
+                          value: e.value))
+                  .toList()
+
+              // <Input$translation_value_insert_input>[
+              //   Input$translation_value_insert_input(
+              //       language_id: cModels.Language.EN.toFirebaseFormatString(),
+              //       value: choice.name[cModels.Language.EN]),
+              //   Input$translation_value_insert_input(
+              //       language_id: cModels.Language.ES.toFirebaseFormatString(),
+              //       value: choice.name[cModels.Language.ES]),
+              // ]
+              ),
         ),
       ),
     ),

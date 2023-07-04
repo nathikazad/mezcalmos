@@ -1,0 +1,477 @@
+query get_event_by_id($id: Int!) {
+  business_event_by_pk(id: $id) {
+    business {
+      id
+      details {
+        last_active_time
+        id
+        accepted_payments
+        image
+        online_ordering
+        phone_number
+        name
+        currency
+      }
+      reviews_aggregate {
+        aggregate {
+          avg {
+            rating
+          }
+          count
+        }
+      }
+    }
+    id
+    schedule
+    schedule_type
+    gps_location
+    address
+    starts_at
+    ends_at
+    details {
+      name_id
+      description_id
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      tags
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      id
+      image
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      position
+    }
+  }
+}
+
+query get_event_by_category(
+  $categories1: [String!]
+  $distance: Float
+  $from: geography
+  $limit: Int
+  $offset: Int
+  $categories2: [String!]
+  $schedule_type: [String!]
+  $tags: [String!]
+  $online_ordering: Boolean_comparison_exp = {}
+) {
+  business_event(
+    where: {
+      details: {
+        category1: { _in: $categories1 }
+        category2: { _in: $categories2 }
+        _not: { tags: { _has_key: "class" } }
+        tags: { _has_keys_all: $tags }
+        business: {
+          details: {
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering
+          }
+        }
+      }
+      schedule_type: { _in: $schedule_type }
+      _or: [{ ends_at: { _is_null: true } }, { ends_at: { _gte: "now()" } }]
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
+  ) {
+    details {
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      cost
+      tags
+      image
+      position
+    }
+    id
+    gps_location
+    address
+    schedule_type
+    schedule
+    starts_at
+    ends_at
+    business {
+      id
+      details {
+        id
+        name
+        currency
+        location {
+          gps
+          address
+        }
+      }
+    }
+  }
+}
+
+query get_class_by_category(
+  $categories1: [String!]
+  $distance: Float!
+  $from: geography!
+  $limit: Int
+  $offset: Int
+  $categories2: [String!]
+  $schedule_type: [String!]
+  $tags: [String!]
+  $online_ordering: Boolean_comparison_exp = {}
+) {
+  business_event(
+    where: {
+      _and: {
+        details: {
+          _and: {
+            category1: { _in: $categories1 }
+            category2: { _in: $categories2 }
+            tags: { _has_keys_all: $tags }
+          }
+          tags: { _has_key: "class" }
+        }
+        schedule_type: { _in: $schedule_type }
+        business: {
+          details: {
+            location: {
+              gps: { _st_d_within: { distance: $distance, from: $from } }
+            }
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering
+          }
+        }
+      }
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
+  ) {
+    details {
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      cost
+      tags
+      image
+      position
+    }
+    id
+    gps_location
+    address
+    schedule_type
+    schedule
+    starts_at
+    ends_at
+    business {
+      id
+      details {
+        id
+        name
+        currency
+        location {
+          gps
+          address
+        }
+      }
+    }
+  }
+}
+
+query number_of_classes($distance: Float!, $from: geography!) {
+  business_event_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+        }
+      }
+      details: { tags: { _has_key: "class" } }
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query number_of_therapy($distance: Float!, $from: geography!) {
+  business_event_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+        }
+      }
+      details: { category1: { _eq: "therapy" } }
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query number_of_events($distance: Float!, $from: geography!) {
+  business_event_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+        }
+      }
+      details: { category1: { _in: ["party", "dance", "social"] } }
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query number_of_volunteer($distance: Float!, $from: geography!) {
+  business_event_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+        }
+      }
+      details: { category1: { _eq: "volunteer" } }
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+query number_of_adventure($distance: Float!, $from: geography!) {
+  business_event_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+        }
+      }
+      details: { category1: { _eq: "adventure" } }
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+
+mutation add_event($object: business_event_insert_input!) {
+  insert_business_event_one(object: $object) {
+    details_id
+    id
+  }
+}
+
+query get_business_events($businessId: Int!, $limit: Int, $offset: Int) {
+  business_event(
+    where: { business_id: { _eq: $businessId } }
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    gps_location
+    address
+    schedule_type
+    schedule
+
+    starts_at
+    ends_at
+    details {
+      name_id
+      description_id
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      tags
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+    }
+    business {
+      id
+      details {
+        id
+        name
+        currency
+      }
+    }
+  }
+}
+
+mutation update_event_by_id($id: Int!, $object: business_event_set_input) {
+  update_business_event_by_pk(pk_columns: { id: $id }, _set: $object) {
+    business {
+      id
+      details {
+        id
+        accepted_payments
+        image
+        online_ordering
+        name
+        currency
+      }
+      reviews_aggregate {
+        aggregate {
+          avg {
+            rating
+          }
+          count
+        }
+      }
+    }
+    id
+    schedule
+    schedule_type
+    gps_location
+    address
+    starts_at
+    ends_at
+    details {
+      name_id
+      description_id
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      tags
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      id
+      image
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      position
+    }
+  }
+}
+
+mutation add_class(
+  $business_id: Int!
+  $gps_location: geography
+  $address: String
+  $schedule_type: String
+  $schedule: jsonb
+  $starts_at: timestamptz
+  $ends_at: timestamptz
+  $available: Boolean
+  $tags: jsonb = ["class"]
+  $category1: String
+  $category2: String
+  $cost: jsonb
+  $image: jsonb
+  $name: translation_obj_rel_insert_input
+  $position: Int = 1
+  $additional_parameters: jsonb
+  $description: translation_obj_rel_insert_input
+) {
+  insert_business_event_one(
+    object: {
+      business_id: $business_id
+      details: {
+        data: {
+          business_id: $business_id
+          available: $available
+          tags: $tags
+          category1: $category1
+          category2: $category2
+          cost: $cost
+          image: $image
+          name: $name
+          position: $position
+          additional_parameters: $additional_parameters
+          description: $description
+        }
+      }
+      gps_location: $gps_location
+      address: $address
+      schedule_type: $schedule_type
+      schedule: $schedule
+      starts_at: $starts_at
+      ends_at: $ends_at
+    }
+  ) {
+    details_id
+    id
+  }
+}
+mutation delete_business_event($id: Int!) {
+  delete_business_event_by_pk(id: $id) {
+    id
+  }
+}

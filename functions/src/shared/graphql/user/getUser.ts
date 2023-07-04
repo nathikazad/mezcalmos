@@ -1,6 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { Language } from "../../models/Generic/Generic";
+import { Language, MezError } from "../../models/Generic/Generic";
 import { UserInfo } from "../../models/Generic/User";
 
 export async function getUser(userId: number): Promise<UserInfo> {
@@ -20,10 +19,7 @@ export async function getUser(userId: number): Promise<UserInfo> {
         }]
     });
     if(response.user_by_pk == null) {
-        throw new HttpsError(
-            "internal",
-            "User not found"
-        );
+        throw new MezError("userNotFound");
     }
     let user: UserInfo = {
         id: userId,
@@ -33,6 +29,43 @@ export async function getUser(userId: number): Promise<UserInfo> {
         firebaseId: response.user_by_pk.firebase_id,
         email: response.user_by_pk.email,
         phoneNumber: response.user_by_pk.phone
+    }
+    return user;
+}
+
+
+export async function getUserFromFbId(fbId: string): Promise<UserInfo | undefined> {
+    let chain = getHasura();
+  
+    let response = await chain.query({
+        user: [{
+            where: {
+                    firebase_id: {
+                        _eq: fbId
+                    }
+            }
+        }, {
+                id: true,
+                name: true,
+                firebase_id: true,
+                language_id: true,
+                image: true,
+                deleted: true,
+                email: true,
+                phone: true,
+        }]
+    });
+    if(response.user.length == 0) {
+        return undefined;
+    }
+    let user: UserInfo = {
+        id: response.user[0].id,
+        name: response.user[0].name,
+        image: response.user[0].image,
+        language: response.user[0].language_id as Language,
+        firebaseId: response.user[0].firebase_id,
+        email: response.user[0].email,
+        phoneNumber: response.user[0].phone
     }
     return user;
 }

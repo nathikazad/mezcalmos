@@ -10,6 +10,6 @@ export interface fgPayload {
 }
 
 export async function push(payload: fgPayload): Promise<void> {
-  console.log("payload: ", payload);
+  // console.log("payload: ", payload);
   notificationsNode(payload.participantType, payload.firebaseUserId).push(payload.notification);
 }

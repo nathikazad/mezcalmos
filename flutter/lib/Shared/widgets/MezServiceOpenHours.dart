@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["MezServiceOpenHours"];
 
 class MezServiceOpenHours extends StatelessWidget {
-  const MezServiceOpenHours({Key? key, required this.schedule})
+  const MezServiceOpenHours({Key? key, required this.schedule, this.textStyle})
       : super(key: key);
   final Schedule schedule;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -20,45 +21,101 @@ class MezServiceOpenHours extends StatelessWidget {
         Container(
           child: Text(
             "${_i18n()["openHours"]}",
-            style: Get.textTheme.bodyText1,
+            style: context.txt.bodyLarge,
           ),
         ),
         SizedBox(
-          height: 8,
+          height: 2,
         ),
-        Container(
-            child: Column(
-                children: schedule
-                    .concatenatedVersion()
-                    .entries
-                    .map((MapEntry<String, OpenHours> v) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 3),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+        Column(
+          children:
+              List.generate(schedule.openHours.entries.length, (int index) {
+            final MapEntry<Weekday, WorkingDay> entry =
+                schedule.openHours.entries.elementAt(index);
+            final bool isLastElement =
+                index == schedule.openHours.entries.length - 1;
+
+            return Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 2),
-                  child: Icon(
-                    Icons.schedule,
-                    size: 18,
+                  margin: const EdgeInsets.only(bottom: 5),
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    border: isLastElement
+                        ? null
+                        : Border(
+                            bottom: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 0.5,
+                            ),
+                          ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 2),
+                        child: Icon(
+                          Icons.calendar_today,
+                          size: 18,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Text(
+                          "${_i18n()["weekDays"][entry.key.toFirebaseFormatString()]}",
+                          style: textStyle?.copyWith(
+                                  fontWeight: FontWeight.w600) ??
+                              context.txt.titleLarge,
+                        ),
+                      ),
+                      Flexible(
+                          fit: FlexFit.tight,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: List.generate(entry.value.openHours.length,
+                                  (int hourIndex) {
+                                return Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.watch_later_outlined,
+                                          size: 18),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        convertToAmPm(
+                                           entry.value.openHours[hourIndex].from[0]
+                                                .toInt(),
+                                          entry.value.openHours[hourIndex].from[1]
+                                                .toInt()),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        convertToAmPm(
+                                           entry.value.openHours[hourIndex].to[0]
+                                                .toInt(),
+                                            entry.value.openHours[hourIndex].to[1]
+                                                .toInt()),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ]);
+                              }))),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  getDayName(v.key).capitalizeDays,
-                  style: Get.textTheme.bodyText2
-                      ?.copyWith(fontWeight: FontWeight.w600),
-                ),
-                Spacer(),
-                Text(
-                    "${convertToAmPm(v.value.from[0], v.value.from[1])} - ${convertToAmPm(v.value.to[0], v.value.to[1])}"),
               ],
-            ),
-          );
-        }).toList())),
+            );
+          }),
+        )
       ],
     );
   }

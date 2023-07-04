@@ -1,10 +1,11 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['AppNeedsUpdateScreen'];
@@ -33,7 +34,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         floatingActionButton: _floatingActionBtn(),
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Lang, autoBack: false),
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Lang, autoBack: false),
         body: Center(
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -60,7 +61,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
                           _i18n()['newVersion'], //remoteVersion
                           textAlign: TextAlign.center,
                           style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: 18,
                                     color: Colors.purple.shade900,
                                   ),
@@ -111,7 +112,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
               "v${_versionStatus?.storeVersion} ${_i18n()['news']}",
               textAlign: TextAlign.center,
               style:
-                  Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20),
+                  Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 20),
             ),
             const SizedBox(height: 25),
             Text(

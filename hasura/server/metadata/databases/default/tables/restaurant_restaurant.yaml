@@ -2,9 +2,18 @@ table:
   name: restaurant
   schema: restaurant
 object_relationships:
-  - name: description
+  - name: delivery_details
     using:
-      foreign_key_constraint_on: description_id
+      foreign_key_constraint_on: delivery_details_id
+  - name: details
+    using:
+      manual_configuration:
+        column_mapping:
+          details_id: id
+        insertion_order: null
+        remote_table:
+          name: details
+          schema: service_provider
 array_relationships:
   - name: categories
     using:
@@ -13,16 +22,23 @@ array_relationships:
         table:
           name: category
           schema: restaurant
-  - name: delivery_drivers
+  - name: delivery_partners
     using:
       manual_configuration:
         column_mapping:
-          id: delivery_company_id
-          service_provider_type: delivery_company_type
+          id: service_provider_id
+          service_provider_type: service_provider_type
         insertion_order: null
         remote_table:
-          name: driver
-          schema: delivery
+          name: delivery_partner
+          schema: service_provider
+  - name: items
+    using:
+      foreign_key_constraint_on:
+        column: restaurant_id
+        table:
+          name: item
+          schema: restaurant
   - name: orders
     using:
       foreign_key_constraint_on:
@@ -48,6 +64,11 @@ array_relationships:
           name: review
           schema: public
 computed_fields:
+  - name: delivery_details_of_deliverer
+    definition:
+      function:
+        name: restaurant_delivery_details
+        schema: public
   - name: specials
     definition:
       function:
@@ -57,115 +78,77 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
-        - accepted_payments
-        - approved
-        - description_id
-        - firebase_id
+        - delivery_details_id
+        - details_id
         - id
-        - image
-        - language_id
-        - location_gps
-        - location_text
-        - name
-        - open_status
-        - schedule
-        - self_delivery
-        - service_provider_type
-        - stripe_info
       filter: {}
+      allow_aggregations: true
   - role: customer
     permission:
       columns:
-        - accepted_payments
-        - approved
-        - description_id
-        - firebase_id
+        - delivery_details_id
+        - details_id
         - id
-        - image
-        - language_id
-        - location_gps
-        - location_text
-        - name
-        - open_status
-        - schedule
-        - self_delivery
-        - service_provider_type
-        - stripe_info
       filter: {}
+      allow_aggregations: true
   - role: delivery_driver
     permission:
       columns:
-        - firebase_id
+        - delivery_details_id
+        - details_id
         - id
-        - image
-        - language_id
-        - location_gps
-        - location_text
-        - name
-        - open_status
-        - service_provider_type
       filter:
-        delivery_drivers:
-          user_id:
-            _eq: X-Hasura-User-Id
+        _or:
+          - orders:
+              delivery:
+                delivery_driver:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - _and:
+              - orders:
+                  delivery:
+                    delivery_driver_id:
+                      _is_null: true
+              - orders:
+                  delivery:
+                    delivery_company:
+                      drivers:
+                        user_id:
+                          _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+      filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+      filter: {}
   - role: mez_admin
     permission:
       columns:
-        - approved
-        - description_id
-        - firebase_id
+        - delivery_details_id
+        - details_id
         - id
-        - image
-        - language_id
-        - location_gps
-        - location_text
-        - name
-        - open_status
-        - schedule
         - service_provider_type
-      filter:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
   - role: restaurant_operator
     permission:
       columns:
-        - accepted_payments
-        - approved
-        - description_id
-        - firebase_id
+        - delivery_details_id
+        - details_id
         - id
-        - image
-        - language_id
-        - location_gps
-        - location_text
-        - name
-        - open_status
-        - schedule
-        - self_delivery
-        - service_provider_type
-        - stripe_info
-      filter:
-        restaurant_operators:
-          user_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
 update_permissions:
   - role: mez_admin
     permission:
       columns:
-        - approved
-        - description_id
-        - image
-        - language_id
-        - location_gps
-        - location_text
-        - name
-        - open_status
-        - schedule
+        - id
       filter:
         _exists:
           _table:
@@ -177,21 +160,7 @@ update_permissions:
       check: null
   - role: restaurant_operator
     permission:
-      columns:
-        - accepted_payments
-        - approved
-        - description_id
-        - firebase_id
-        - image
-        - language_id
-        - location_gps
-        - location_text
-        - name
-        - open_status
-        - schedule
-        - self_delivery
-        - service_provider_type
-        - stripe_info
+      columns: []
       filter:
         restaurant_operators:
           user_id:

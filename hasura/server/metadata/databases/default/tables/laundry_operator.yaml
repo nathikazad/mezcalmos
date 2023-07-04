@@ -1,0 +1,40 @@
+table:
+  name: operator
+  schema: laundry
+object_relationships:
+  - name: operator_details
+    using:
+      foreign_key_constraint_on: details_id
+  - name: store
+    using:
+      foreign_key_constraint_on: store_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+select_permissions:
+  - role: laundry_operator
+    permission:
+      columns:
+        - id
+        - store_id
+        - user_id
+      filter:
+        store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - details_id
+        - id
+        - store_id
+        - user_id
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

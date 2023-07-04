@@ -1,21 +1,24 @@
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 class ServiceLink {
   int id;
-  int serivceProviderId;
-  OrderType serviceProviderType;
+
   String? operatorDeepLink;
   String? operatorQrImageLink;
   String? driverDeepLink;
   String? driverQrImageLink;
+  String? customerDeepLink;
+  String? customerQrImageLink;
+  Map<Language, String>? customerFlyerLinks;
   ServiceLink({
     required this.id,
-    required this.serivceProviderId,
-    required this.serviceProviderType,
     this.operatorDeepLink,
     this.operatorQrImageLink,
     this.driverDeepLink,
     this.driverQrImageLink,
+    this.customerDeepLink,
+    this.customerQrImageLink,
+    this.customerFlyerLinks
   });
 
   ServiceLink copyWith({
@@ -29,8 +32,6 @@ class ServiceLink {
   }) {
     return ServiceLink(
       id: id ?? this.id,
-      serivceProviderId: serivceProviderId ?? this.serivceProviderId,
-      serviceProviderType: serviceProviderType ?? this.serviceProviderType,
       operatorDeepLink: operatorDeepLink ?? this.operatorDeepLink,
       operatorQrImageLink: operatorQrImageLink ?? this.operatorQrImageLink,
       driverDeepLink: driverDeepLink ?? this.driverDeepLink,
@@ -41,8 +42,6 @@ class ServiceLink {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'serivceProviderId': serivceProviderId,
-      'serviceProviderType': serviceProviderType.toFirebaseFormatString(),
       'operatorDeepLink': operatorDeepLink,
       'operatorQrImageLink': operatorQrImageLink,
       'driverDeepLink': driverDeepLink,
@@ -52,7 +51,7 @@ class ServiceLink {
 
   @override
   String toString() {
-    return 'ServiceLink(id: $id, serivceProviderId: $serivceProviderId, serviceProviderType: $serviceProviderType, operatorDeepLink: $operatorDeepLink, operatorQrImageLink: $operatorQrImageLink, driverDeepLink: $driverDeepLink, driverQrImageLink: $driverQrImageLink)';
+    return 'ServiceLink(id: $id, , operatorDeepLink: $operatorDeepLink, operatorQrImageLink: $operatorQrImageLink, driverDeepLink: $driverDeepLink, driverQrImageLink: $driverQrImageLink)';
   }
 
   @override
@@ -61,8 +60,6 @@ class ServiceLink {
 
     return other is ServiceLink &&
         other.id == id &&
-        other.serivceProviderId == serivceProviderId &&
-        other.serviceProviderType == serviceProviderType &&
         other.operatorDeepLink == operatorDeepLink &&
         other.operatorQrImageLink == operatorQrImageLink &&
         other.driverDeepLink == driverDeepLink &&
@@ -72,8 +69,6 @@ class ServiceLink {
   @override
   int get hashCode {
     return id.hashCode ^
-        serivceProviderId.hashCode ^
-        serviceProviderType.hashCode ^
         operatorDeepLink.hashCode ^
         operatorQrImageLink.hashCode ^
         driverDeepLink.hashCode ^

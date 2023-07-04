@@ -1,0 +1,186 @@
+import 'package:get/get.dart';
+import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/admin/service_providers/__generated/service_providers.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Service.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+
+HasuraDb _hasuraDb = Get.find<HasuraDb>();
+
+Future<List<Restaurant>> admin_get_restaurants(
+    {bool withCache = true, required int limit, required int offset}) async {
+  final QueryResult<Query$admin_get_restaurants> result = await _hasuraDb
+      .graphQLClient
+      .query$admin_get_restaurants(Options$Query$admin_get_restaurants(
+          variables: Variables$Query$admin_get_restaurants(
+              limit: limit, offset: offset),
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
+  if (result.parsedData?.restaurant_restaurant == null) {
+    throwError(result.exception);
+  }
+  final List<Query$admin_get_restaurants$restaurant_restaurant> data =
+      result.parsedData!.restaurant_restaurant;
+  final List<Restaurant> returnedList = data
+      .map((Query$admin_get_restaurants$restaurant_restaurant data) =>
+          Restaurant(
+              onlineOrdering: data.details!.online_ordering ?? false,
+              isOpen: data.details!.is_open ?? false,
+              languages: convertToLanguages(data.details!.language),
+              serviceDetailsId: data.details!.id,
+              deliveryDetailsId: data.delivery_details_id,
+              userInfo: ServiceInfo(
+                  location: MezLocation.fromHasura(data.details!.location.gps,
+                      data.details!.location.address),
+                  hasuraId: data.id,
+                  image: data.details!.image,
+                  name: data.details!.name),
+              paymentInfo: null,
+              restaurantState: ServiceState(
+                  data.details!.open_status.toServiceStatus(),
+                  data.details!.approved),
+              schedule: null))
+      .toList();
+  returnedList.sort((Restaurant a, Restaurant b) =>
+      a.info.hasuraId.compareTo(b.info.hasuraId));
+  return returnedList;
+}
+
+Future<List<DeliveryCompany>> admin_get_dv_companies(
+    {required int limit, required int offset, bool withCache = true}) async {
+  final QueryResult<Query$admin_get_dv_companies> result = await _hasuraDb
+      .graphQLClient
+      .query$admin_get_dv_companies(Options$Query$admin_get_dv_companies(
+          variables: Variables$Query$admin_get_dv_companies(
+              limit: limit, offset: offset),
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
+  if (result.parsedData?.delivery_company == null) {
+    throwError(result.exception);
+  }
+  final List<Query$admin_get_dv_companies$delivery_company> data =
+      result.parsedData!.delivery_company;
+  final List<DeliveryCompany> returnedList = data
+      .map((Query$admin_get_dv_companies$delivery_company data) =>
+          DeliveryCompany(
+              onlineOrdering: data.details!.online_ordering ?? false,
+              isOpen: data.details!.is_open ?? false,
+              deliveryCost: null,
+              schedule: null,
+              languages: convertToLanguages(data.details!.language),
+              serviceDetailsId: data.details!.id,
+              deliveryDetailsId: data.delivery_details_id,
+              info: ServiceInfo(
+                  hasuraId: data.id,
+                  image: data.details!.image,
+                  name: data.details!.name,
+                  location: MezLocation.fromHasura(data.details!.location.gps,
+                      data.details!.location.address)),
+              creationTime: DateTime.parse(data.details!.creation_time),
+              state: ServiceState(data.details!.open_status.toServiceStatus(),
+                  data.details!.approved)))
+      .toList();
+  returnedList.sort((DeliveryCompany a, DeliveryCompany b) =>
+      a.info.hasuraId.compareTo(b.info.hasuraId));
+  return returnedList;
+}
+
+Future<List<cm.Business>> admin_get_businesses(
+    {required int limit, required int offset, bool withCache = true}) async {
+  final QueryResult<Query$admin_get_businesses> result = await _hasuraDb
+      .graphQLClient
+      .query$admin_get_businesses(Options$Query$admin_get_businesses(
+          variables: Variables$Query$admin_get_businesses(
+              limit: limit, offset: offset),
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
+  if (result.parsedData?.business_business == null) {
+    throwError(result.exception);
+  }
+  List<Query$admin_get_businesses$business_business> data =
+      result.parsedData!.business_business;
+
+  final List<cm.Business> returnedList =
+      data.map((Query$admin_get_businesses$business_business data) {
+    return cm.Business(
+        id: data.id,
+        profile: data.profile.toBusinessProfile(),
+        details: cm.ServiceProvider(
+          id: data.details.id,
+          name: data.details.name,
+          image: data.details.image,
+          location: cm.Location(
+            address: data.details.location.address,
+            lat: data.details.location.gps.latitude,
+            lng: data.details.location.gps.longitude,
+          ),
+          deliveryDetails: cm.DeliveryDetails(
+              deliveryAvailable: false,
+              customerPickup: false,
+              selfDelivery: false),
+          serviceProviderDetailsId: data.details.id,
+          serviceProviderType: cm.ServiceProviderType.Business,
+          // location: MezLocation.fromHasura(data.details!.location.gps,
+          //     data.details!.location.address),
+          openStatus: data.details.open_status.toOpenStatus(),
+          approved: data.details.approved,
+          creationTime: data.details.creation_time,
+          language: convertToLanguages(data.details.language),
+        ));
+  }).toList();
+  returnedList.sort(
+      (cm.Business a, cm.Business b) => a.details.id.compareTo(b.details.id));
+  return returnedList;
+}
+
+Future<List<Laundry>> admin_get_laundries(
+    {required int limit, required int offset, bool withCache = true}) async {
+  final QueryResult<Query$admin_get_laundries> result = await _hasuraDb
+      .graphQLClient
+      .query$admin_get_laundries(Options$Query$admin_get_laundries(
+          variables:
+              Variables$Query$admin_get_laundries(limit: limit, offset: offset),
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
+  if (result.parsedData?.laundry_store == null) {
+    throwError(result.exception);
+  }
+  final List<Query$admin_get_laundries$laundry_store> data =
+      result.parsedData!.laundry_store;
+  final List<Laundry> returnedList = data
+      .map((Query$admin_get_laundries$laundry_store data) => Laundry(
+          onlineOrdering: data.details!.online_ordering ?? false,
+          isOpen: data.details!.is_open ?? false,
+          languages: convertToLanguages(data.details!.language),
+          serviceDetailsId: data.details!.id,
+          deliveryDetailsId: data.delivery_details_id,
+          userInfo: ServiceInfo(
+              hasuraId: data.id,
+              image: data.details!.image,
+              name: data.details!.name,
+              location: MezLocation.fromHasura(
+                  data.details!.location.gps, data.details!.location.address)),
+          laundryState: ServiceState(
+              data.details!.open_status.toServiceStatus(),
+              data.details!.approved),
+          selfDelivery: false,
+          deliveryCost: DeliveryCost(
+              costPerKm: 0, id: 0, minimumCost: 0, selfDelivery: false),
+          laundryCosts: LaundryCosts(),
+          paymentInfo: PaymentInfo(),
+          schedule: null))
+      .toList();
+  returnedList.sort(
+      (Laundry a, Laundry b) => a.info.hasuraId.compareTo(b.info.hasuraId));
+  return returnedList;
+}

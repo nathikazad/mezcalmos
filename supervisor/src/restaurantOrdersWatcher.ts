@@ -7,7 +7,7 @@ import { MezAdmin } from "../../functions/src/shared/models/Generic/User";
 import { NotificationType, NotificationAction, Notification } from "../../functions/src/shared/models/Notification";
 import { orderUrl } from "../../functions/src/utilities/senders/appRoutes";
 import { pushNotification } from "../../functions/src/utilities/senders/notifyUser";
-import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmins";
+import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmin";
 import * as firebase from "firebase-admin";
 
 
@@ -26,6 +26,7 @@ async function checkRestaurantOrders() {
   let mezAdmins: MezAdmin[] = response[1];
   restaurantOrders.forEach(async(o) => {
     if((new Date()).getTime() - (new Date(o.orderTime!)).getTime() < 60 * 1000) {
+      // console.log("orderId: ", o.orderId)
       let notification: Notification = {
         foreground: <NewRestaurantOrderNotification>{
           time: (new Date()).toISOString(),
@@ -46,17 +47,21 @@ async function checkRestaurantOrders() {
         },
         linkUrl: orderUrl(OrderType.Restaurant, o.orderId!)
       }
-      let snap = await firebase.database().ref(`/orders/restaurant/${o.orderId}`).once("value");
+      let snap = await firebase.database().ref(`/orderNotifications/restaurant/${o.orderId}`).once("value");
       let readOperators = snap.val();
-      // console.log(readOperators)
-      o.restaurant!.restaurantOperators!.forEach((r) => {
-        if(!(readOperators && readOperators[r.userId!]) &&  r.user) {
-          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+      // console.log("readOperators: ", readOperators)
+      o.restaurant!.operators!.forEach((r) => {
+        if(!(readOperators && readOperators[r.userId!]) &&  r.user && r.online) {
+          // console.log("operators: ", r.userId);
+          // console.log("notificationInfo: ", r.notificationInfo);
+          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator, r.user.language, false);
         }
       });
       mezAdmins.forEach((m) => {
         if(!(readOperators && readOperators[m.id])) {
-          pushNotification(m.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
+          // console.log("mezAdmin: ", m.id);
+          // console.log("notificationInfo: ", m.notificationInfo);
+          pushNotification(m.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language, false);
         }
       })
     }
@@ -90,38 +95,3 @@ async function checkRestaurantOrders() {
 //     });
 // }
 
-// async function notifyOperators(orderId: number, operators: RestaurantOperator[]) {
-//     let notification: Notification = {
-//       foreground: <NewRestaurantOrderNotification>{
-//         time: (new Date()).toISOString(),
-//         notificationType: NotificationType.NewOrder,
-//         orderType: OrderType.Restaurant,
-//         orderId,
-//         notificationAction: NotificationAction.ShowSnackBarAlways,
-//       },
-//       background: {
-//         [Language.ES]: {
-//           title: "Nueva Pedido",
-//           body: `Hay una nueva orden de alimento`
-//         },
-//         [Language.EN]: {
-//           title: "New Order",
-//           body: `There is a new restaurant order`
-//         }
-//       },
-//       linkUrl: orderUrl(OrderType.Restaurant, orderId)
-//     }
-//     let snap = await firebase.database().ref(`/orders/restaurant/${orderId}`).once("value");
-//     let readOperators = snap.val();
-//     // console.log(readOperators)
-//     operators.forEach((r) => {
-//       if(!(readOperators && readOperators[r.id!]) &&  r.user) {
-//         pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
-//       }
-//     });
-//     mezAdmins.forEach((m) => {
-//       if(!(readOperators && readOperators[m.userId]) && m.user) {
-//         pushNotification(m.user.firebaseId, notification, m.notificationInfo, ParticipantType.MezAdmin);
-//       }
-//     })
-//   }

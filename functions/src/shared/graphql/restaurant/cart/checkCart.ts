@@ -1,5 +1,5 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
+import { MezError } from "../../../models/Generic/Generic";
 
 export async function checkCart(customerId: number, restaurantId: number) {
     let chain = getHasura();
@@ -12,9 +12,6 @@ export async function checkCart(customerId: number, restaurantId: number) {
         }]
     });
     if(response.restaurant_cart_by_pk?.restaurant_id != restaurantId) {
-        throw new HttpsError(
-            "internal",
-            "Restaurant id mismatch"
-        );
+        throw new MezError("restaurantIdMismatch");
     }
 }

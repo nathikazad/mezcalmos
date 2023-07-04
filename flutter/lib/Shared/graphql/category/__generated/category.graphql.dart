@@ -3322,7 +3322,16 @@ const documentNodeQuerygetRestaurantCategories = DocumentNode(definitions: [
                 ]),
               )
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'position'),
+                value: EnumValueNode(name: NameNode(value: 'asc')),
+              )
+            ]),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -5934,6 +5943,1165 @@ class _CopyWithStubImpl$Query$getRestaurantCategories$restaurant_category$items$
   call({
     String? language_id,
     String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateCategoryPositions {
+  factory Variables$Mutation$updateCategoryPositions(
+          {required List<Input$restaurant_category_updates> updates}) =>
+      Variables$Mutation$updateCategoryPositions._({
+        r'updates': updates,
+      });
+
+  Variables$Mutation$updateCategoryPositions._(this._$data);
+
+  factory Variables$Mutation$updateCategoryPositions.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$updates = data['updates'];
+    result$data['updates'] = (l$updates as List<dynamic>)
+        .map((e) => Input$restaurant_category_updates.fromJson(
+            (e as Map<String, dynamic>)))
+        .toList();
+    return Variables$Mutation$updateCategoryPositions._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  List<Input$restaurant_category_updates> get updates =>
+      (_$data['updates'] as List<Input$restaurant_category_updates>);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$updates = updates;
+    result$data['updates'] = l$updates.map((e) => e.toJson()).toList();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateCategoryPositions<
+          Variables$Mutation$updateCategoryPositions>
+      get copyWith => CopyWith$Variables$Mutation$updateCategoryPositions(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateCategoryPositions) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$updates = updates;
+    final lOther$updates = other.updates;
+    if (l$updates.length != lOther$updates.length) {
+      return false;
+    }
+    for (int i = 0; i < l$updates.length; i++) {
+      final l$updates$entry = l$updates[i];
+      final lOther$updates$entry = lOther$updates[i];
+      if (l$updates$entry != lOther$updates$entry) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$updates = updates;
+    return Object.hashAll([Object.hashAll(l$updates.map((v) => v))]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateCategoryPositions<TRes> {
+  factory CopyWith$Variables$Mutation$updateCategoryPositions(
+    Variables$Mutation$updateCategoryPositions instance,
+    TRes Function(Variables$Mutation$updateCategoryPositions) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateCategoryPositions;
+
+  factory CopyWith$Variables$Mutation$updateCategoryPositions.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateCategoryPositions;
+
+  TRes call({List<Input$restaurant_category_updates>? updates});
+}
+
+class _CopyWithImpl$Variables$Mutation$updateCategoryPositions<TRes>
+    implements CopyWith$Variables$Mutation$updateCategoryPositions<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateCategoryPositions(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateCategoryPositions _instance;
+
+  final TRes Function(Variables$Mutation$updateCategoryPositions) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? updates = _undefined}) =>
+      _then(Variables$Mutation$updateCategoryPositions._({
+        ..._instance._$data,
+        if (updates != _undefined && updates != null)
+          'updates': (updates as List<Input$restaurant_category_updates>),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateCategoryPositions<TRes>
+    implements CopyWith$Variables$Mutation$updateCategoryPositions<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateCategoryPositions(this._res);
+
+  TRes _res;
+
+  call({List<Input$restaurant_category_updates>? updates}) => _res;
+}
+
+class Mutation$updateCategoryPositions {
+  Mutation$updateCategoryPositions({
+    this.update_restaurant_category_many,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateCategoryPositions.fromJson(Map<String, dynamic> json) {
+    final l$update_restaurant_category_many =
+        json['update_restaurant_category_many'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateCategoryPositions(
+      update_restaurant_category_many: (l$update_restaurant_category_many
+              as List<dynamic>?)
+          ?.map((e) => e == null
+              ? null
+              : Mutation$updateCategoryPositions$update_restaurant_category_many
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Mutation$updateCategoryPositions$update_restaurant_category_many?>?
+      update_restaurant_category_many;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_restaurant_category_many = update_restaurant_category_many;
+    _resultData['update_restaurant_category_many'] =
+        l$update_restaurant_category_many?.map((e) => e?.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_restaurant_category_many = update_restaurant_category_many;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_restaurant_category_many == null
+          ? null
+          : Object.hashAll(l$update_restaurant_category_many.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateCategoryPositions) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_restaurant_category_many = update_restaurant_category_many;
+    final lOther$update_restaurant_category_many =
+        other.update_restaurant_category_many;
+    if (l$update_restaurant_category_many != null &&
+        lOther$update_restaurant_category_many != null) {
+      if (l$update_restaurant_category_many.length !=
+          lOther$update_restaurant_category_many.length) {
+        return false;
+      }
+      for (int i = 0; i < l$update_restaurant_category_many.length; i++) {
+        final l$update_restaurant_category_many$entry =
+            l$update_restaurant_category_many[i];
+        final lOther$update_restaurant_category_many$entry =
+            lOther$update_restaurant_category_many[i];
+        if (l$update_restaurant_category_many$entry !=
+            lOther$update_restaurant_category_many$entry) {
+          return false;
+        }
+      }
+    } else if (l$update_restaurant_category_many !=
+        lOther$update_restaurant_category_many) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateCategoryPositions
+    on Mutation$updateCategoryPositions {
+  CopyWith$Mutation$updateCategoryPositions<Mutation$updateCategoryPositions>
+      get copyWith => CopyWith$Mutation$updateCategoryPositions(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateCategoryPositions<TRes> {
+  factory CopyWith$Mutation$updateCategoryPositions(
+    Mutation$updateCategoryPositions instance,
+    TRes Function(Mutation$updateCategoryPositions) then,
+  ) = _CopyWithImpl$Mutation$updateCategoryPositions;
+
+  factory CopyWith$Mutation$updateCategoryPositions.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateCategoryPositions;
+
+  TRes call({
+    List<Mutation$updateCategoryPositions$update_restaurant_category_many?>?
+        update_restaurant_category_many,
+    String? $__typename,
+  });
+  TRes update_restaurant_category_many(
+      Iterable<Mutation$updateCategoryPositions$update_restaurant_category_many?>? Function(
+              Iterable<
+                  CopyWith$Mutation$updateCategoryPositions$update_restaurant_category_many<
+                      Mutation$updateCategoryPositions$update_restaurant_category_many>?>?)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$updateCategoryPositions<TRes>
+    implements CopyWith$Mutation$updateCategoryPositions<TRes> {
+  _CopyWithImpl$Mutation$updateCategoryPositions(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateCategoryPositions _instance;
+
+  final TRes Function(Mutation$updateCategoryPositions) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_restaurant_category_many = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateCategoryPositions(
+        update_restaurant_category_many: update_restaurant_category_many ==
+                _undefined
+            ? _instance.update_restaurant_category_many
+            : (update_restaurant_category_many as List<
+                Mutation$updateCategoryPositions$update_restaurant_category_many?>?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes update_restaurant_category_many(
+          Iterable<Mutation$updateCategoryPositions$update_restaurant_category_many?>? Function(
+                  Iterable<
+                      CopyWith$Mutation$updateCategoryPositions$update_restaurant_category_many<
+                          Mutation$updateCategoryPositions$update_restaurant_category_many>?>?)
+              _fn) =>
+      call(
+          update_restaurant_category_many: _fn(
+              _instance.update_restaurant_category_many?.map((e) => e == null
+                  ? null
+                  : CopyWith$Mutation$updateCategoryPositions$update_restaurant_category_many(
+                      e,
+                      (i) => i,
+                    )))?.toList());
+}
+
+class _CopyWithStubImpl$Mutation$updateCategoryPositions<TRes>
+    implements CopyWith$Mutation$updateCategoryPositions<TRes> {
+  _CopyWithStubImpl$Mutation$updateCategoryPositions(this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$updateCategoryPositions$update_restaurant_category_many?>?
+        update_restaurant_category_many,
+    String? $__typename,
+  }) =>
+      _res;
+  update_restaurant_category_many(_fn) => _res;
+}
+
+const documentNodeMutationupdateCategoryPositions = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateCategoryPositions'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'updates')),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'restaurant_category_updates'),
+            isNonNull: true,
+          ),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_restaurant_category_many'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'updates'),
+            value: VariableNode(name: NameNode(value: 'updates')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateCategoryPositions _parserFn$Mutation$updateCategoryPositions(
+        Map<String, dynamic> data) =>
+    Mutation$updateCategoryPositions.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateCategoryPositions = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateCategoryPositions?,
+);
+
+class Options$Mutation$updateCategoryPositions
+    extends graphql.MutationOptions<Mutation$updateCategoryPositions> {
+  Options$Mutation$updateCategoryPositions({
+    String? operationName,
+    required Variables$Mutation$updateCategoryPositions variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateCategoryPositions? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateCategoryPositions>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateCategoryPositions(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateCategoryPositions,
+          parserFn: _parserFn$Mutation$updateCategoryPositions,
+        );
+
+  final OnMutationCompleted$Mutation$updateCategoryPositions?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateCategoryPositions
+    extends graphql.WatchQueryOptions<Mutation$updateCategoryPositions> {
+  WatchOptions$Mutation$updateCategoryPositions({
+    String? operationName,
+    required Variables$Mutation$updateCategoryPositions variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateCategoryPositions,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateCategoryPositions,
+        );
+}
+
+extension ClientExtension$Mutation$updateCategoryPositions
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateCategoryPositions>>
+      mutate$updateCategoryPositions(
+              Options$Mutation$updateCategoryPositions options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateCategoryPositions>
+      watchMutation$updateCategoryPositions(
+              WatchOptions$Mutation$updateCategoryPositions options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateCategoryPositions$update_restaurant_category_many {
+  Mutation$updateCategoryPositions$update_restaurant_category_many({
+    required this.affected_rows,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateCategoryPositions$update_restaurant_category_many.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateCategoryPositions$update_restaurant_category_many(
+      affected_rows: (l$affected_rows as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateCategoryPositions$update_restaurant_category_many) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateCategoryPositions$update_restaurant_category_many
+    on Mutation$updateCategoryPositions$update_restaurant_category_many {
+  CopyWith$Mutation$updateCategoryPositions$update_restaurant_category_many<
+          Mutation$updateCategoryPositions$update_restaurant_category_many>
+      get copyWith =>
+          CopyWith$Mutation$updateCategoryPositions$update_restaurant_category_many(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateCategoryPositions$update_restaurant_category_many<
+    TRes> {
+  factory CopyWith$Mutation$updateCategoryPositions$update_restaurant_category_many(
+    Mutation$updateCategoryPositions$update_restaurant_category_many instance,
+    TRes Function(
+            Mutation$updateCategoryPositions$update_restaurant_category_many)
+        then,
+  ) = _CopyWithImpl$Mutation$updateCategoryPositions$update_restaurant_category_many;
+
+  factory CopyWith$Mutation$updateCategoryPositions$update_restaurant_category_many.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateCategoryPositions$update_restaurant_category_many;
+
+  TRes call({
+    int? affected_rows,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateCategoryPositions$update_restaurant_category_many<
+        TRes>
+    implements
+        CopyWith$Mutation$updateCategoryPositions$update_restaurant_category_many<
+            TRes> {
+  _CopyWithImpl$Mutation$updateCategoryPositions$update_restaurant_category_many(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateCategoryPositions$update_restaurant_category_many
+      _instance;
+
+  final TRes Function(
+      Mutation$updateCategoryPositions$update_restaurant_category_many) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateCategoryPositions$update_restaurant_category_many(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateCategoryPositions$update_restaurant_category_many<
+        TRes>
+    implements
+        CopyWith$Mutation$updateCategoryPositions$update_restaurant_category_many<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateCategoryPositions$update_restaurant_category_many(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateItemsPositions {
+  factory Variables$Mutation$updateItemsPositions(
+          {required List<Input$restaurant_item_updates> updates}) =>
+      Variables$Mutation$updateItemsPositions._({
+        r'updates': updates,
+      });
+
+  Variables$Mutation$updateItemsPositions._(this._$data);
+
+  factory Variables$Mutation$updateItemsPositions.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$updates = data['updates'];
+    result$data['updates'] = (l$updates as List<dynamic>)
+        .map((e) =>
+            Input$restaurant_item_updates.fromJson((e as Map<String, dynamic>)))
+        .toList();
+    return Variables$Mutation$updateItemsPositions._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  List<Input$restaurant_item_updates> get updates =>
+      (_$data['updates'] as List<Input$restaurant_item_updates>);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$updates = updates;
+    result$data['updates'] = l$updates.map((e) => e.toJson()).toList();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateItemsPositions<
+          Variables$Mutation$updateItemsPositions>
+      get copyWith => CopyWith$Variables$Mutation$updateItemsPositions(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateItemsPositions) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$updates = updates;
+    final lOther$updates = other.updates;
+    if (l$updates.length != lOther$updates.length) {
+      return false;
+    }
+    for (int i = 0; i < l$updates.length; i++) {
+      final l$updates$entry = l$updates[i];
+      final lOther$updates$entry = lOther$updates[i];
+      if (l$updates$entry != lOther$updates$entry) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$updates = updates;
+    return Object.hashAll([Object.hashAll(l$updates.map((v) => v))]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateItemsPositions<TRes> {
+  factory CopyWith$Variables$Mutation$updateItemsPositions(
+    Variables$Mutation$updateItemsPositions instance,
+    TRes Function(Variables$Mutation$updateItemsPositions) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateItemsPositions;
+
+  factory CopyWith$Variables$Mutation$updateItemsPositions.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateItemsPositions;
+
+  TRes call({List<Input$restaurant_item_updates>? updates});
+}
+
+class _CopyWithImpl$Variables$Mutation$updateItemsPositions<TRes>
+    implements CopyWith$Variables$Mutation$updateItemsPositions<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateItemsPositions(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateItemsPositions _instance;
+
+  final TRes Function(Variables$Mutation$updateItemsPositions) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? updates = _undefined}) =>
+      _then(Variables$Mutation$updateItemsPositions._({
+        ..._instance._$data,
+        if (updates != _undefined && updates != null)
+          'updates': (updates as List<Input$restaurant_item_updates>),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateItemsPositions<TRes>
+    implements CopyWith$Variables$Mutation$updateItemsPositions<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateItemsPositions(this._res);
+
+  TRes _res;
+
+  call({List<Input$restaurant_item_updates>? updates}) => _res;
+}
+
+class Mutation$updateItemsPositions {
+  Mutation$updateItemsPositions({
+    this.update_restaurant_item_many,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateItemsPositions.fromJson(Map<String, dynamic> json) {
+    final l$update_restaurant_item_many = json['update_restaurant_item_many'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateItemsPositions(
+      update_restaurant_item_many:
+          (l$update_restaurant_item_many as List<dynamic>?)
+              ?.map((e) => e == null
+                  ? null
+                  : Mutation$updateItemsPositions$update_restaurant_item_many
+                      .fromJson((e as Map<String, dynamic>)))
+              .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Mutation$updateItemsPositions$update_restaurant_item_many?>?
+      update_restaurant_item_many;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_restaurant_item_many = update_restaurant_item_many;
+    _resultData['update_restaurant_item_many'] =
+        l$update_restaurant_item_many?.map((e) => e?.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_restaurant_item_many = update_restaurant_item_many;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_restaurant_item_many == null
+          ? null
+          : Object.hashAll(l$update_restaurant_item_many.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateItemsPositions) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_restaurant_item_many = update_restaurant_item_many;
+    final lOther$update_restaurant_item_many =
+        other.update_restaurant_item_many;
+    if (l$update_restaurant_item_many != null &&
+        lOther$update_restaurant_item_many != null) {
+      if (l$update_restaurant_item_many.length !=
+          lOther$update_restaurant_item_many.length) {
+        return false;
+      }
+      for (int i = 0; i < l$update_restaurant_item_many.length; i++) {
+        final l$update_restaurant_item_many$entry =
+            l$update_restaurant_item_many[i];
+        final lOther$update_restaurant_item_many$entry =
+            lOther$update_restaurant_item_many[i];
+        if (l$update_restaurant_item_many$entry !=
+            lOther$update_restaurant_item_many$entry) {
+          return false;
+        }
+      }
+    } else if (l$update_restaurant_item_many !=
+        lOther$update_restaurant_item_many) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateItemsPositions
+    on Mutation$updateItemsPositions {
+  CopyWith$Mutation$updateItemsPositions<Mutation$updateItemsPositions>
+      get copyWith => CopyWith$Mutation$updateItemsPositions(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateItemsPositions<TRes> {
+  factory CopyWith$Mutation$updateItemsPositions(
+    Mutation$updateItemsPositions instance,
+    TRes Function(Mutation$updateItemsPositions) then,
+  ) = _CopyWithImpl$Mutation$updateItemsPositions;
+
+  factory CopyWith$Mutation$updateItemsPositions.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateItemsPositions;
+
+  TRes call({
+    List<Mutation$updateItemsPositions$update_restaurant_item_many?>?
+        update_restaurant_item_many,
+    String? $__typename,
+  });
+  TRes update_restaurant_item_many(
+      Iterable<Mutation$updateItemsPositions$update_restaurant_item_many?>? Function(
+              Iterable<
+                  CopyWith$Mutation$updateItemsPositions$update_restaurant_item_many<
+                      Mutation$updateItemsPositions$update_restaurant_item_many>?>?)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$updateItemsPositions<TRes>
+    implements CopyWith$Mutation$updateItemsPositions<TRes> {
+  _CopyWithImpl$Mutation$updateItemsPositions(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateItemsPositions _instance;
+
+  final TRes Function(Mutation$updateItemsPositions) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_restaurant_item_many = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateItemsPositions(
+        update_restaurant_item_many: update_restaurant_item_many == _undefined
+            ? _instance.update_restaurant_item_many
+            : (update_restaurant_item_many as List<
+                Mutation$updateItemsPositions$update_restaurant_item_many?>?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes update_restaurant_item_many(
+          Iterable<Mutation$updateItemsPositions$update_restaurant_item_many?>? Function(
+                  Iterable<
+                      CopyWith$Mutation$updateItemsPositions$update_restaurant_item_many<
+                          Mutation$updateItemsPositions$update_restaurant_item_many>?>?)
+              _fn) =>
+      call(
+          update_restaurant_item_many:
+              _fn(_instance.update_restaurant_item_many?.map((e) => e == null
+                  ? null
+                  : CopyWith$Mutation$updateItemsPositions$update_restaurant_item_many(
+                      e,
+                      (i) => i,
+                    )))?.toList());
+}
+
+class _CopyWithStubImpl$Mutation$updateItemsPositions<TRes>
+    implements CopyWith$Mutation$updateItemsPositions<TRes> {
+  _CopyWithStubImpl$Mutation$updateItemsPositions(this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$updateItemsPositions$update_restaurant_item_many?>?
+        update_restaurant_item_many,
+    String? $__typename,
+  }) =>
+      _res;
+  update_restaurant_item_many(_fn) => _res;
+}
+
+const documentNodeMutationupdateItemsPositions = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateItemsPositions'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'updates')),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'restaurant_item_updates'),
+            isNonNull: true,
+          ),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_restaurant_item_many'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'updates'),
+            value: VariableNode(name: NameNode(value: 'updates')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateItemsPositions _parserFn$Mutation$updateItemsPositions(
+        Map<String, dynamic> data) =>
+    Mutation$updateItemsPositions.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateItemsPositions = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateItemsPositions?,
+);
+
+class Options$Mutation$updateItemsPositions
+    extends graphql.MutationOptions<Mutation$updateItemsPositions> {
+  Options$Mutation$updateItemsPositions({
+    String? operationName,
+    required Variables$Mutation$updateItemsPositions variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateItemsPositions? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateItemsPositions>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateItemsPositions(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateItemsPositions,
+          parserFn: _parserFn$Mutation$updateItemsPositions,
+        );
+
+  final OnMutationCompleted$Mutation$updateItemsPositions?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateItemsPositions
+    extends graphql.WatchQueryOptions<Mutation$updateItemsPositions> {
+  WatchOptions$Mutation$updateItemsPositions({
+    String? operationName,
+    required Variables$Mutation$updateItemsPositions variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateItemsPositions,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateItemsPositions,
+        );
+}
+
+extension ClientExtension$Mutation$updateItemsPositions
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateItemsPositions>>
+      mutate$updateItemsPositions(
+              Options$Mutation$updateItemsPositions options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateItemsPositions>
+      watchMutation$updateItemsPositions(
+              WatchOptions$Mutation$updateItemsPositions options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateItemsPositions$update_restaurant_item_many {
+  Mutation$updateItemsPositions$update_restaurant_item_many({
+    required this.affected_rows,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateItemsPositions$update_restaurant_item_many.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateItemsPositions$update_restaurant_item_many(
+      affected_rows: (l$affected_rows as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateItemsPositions$update_restaurant_item_many) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateItemsPositions$update_restaurant_item_many
+    on Mutation$updateItemsPositions$update_restaurant_item_many {
+  CopyWith$Mutation$updateItemsPositions$update_restaurant_item_many<
+          Mutation$updateItemsPositions$update_restaurant_item_many>
+      get copyWith =>
+          CopyWith$Mutation$updateItemsPositions$update_restaurant_item_many(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateItemsPositions$update_restaurant_item_many<
+    TRes> {
+  factory CopyWith$Mutation$updateItemsPositions$update_restaurant_item_many(
+    Mutation$updateItemsPositions$update_restaurant_item_many instance,
+    TRes Function(Mutation$updateItemsPositions$update_restaurant_item_many)
+        then,
+  ) = _CopyWithImpl$Mutation$updateItemsPositions$update_restaurant_item_many;
+
+  factory CopyWith$Mutation$updateItemsPositions$update_restaurant_item_many.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateItemsPositions$update_restaurant_item_many;
+
+  TRes call({
+    int? affected_rows,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateItemsPositions$update_restaurant_item_many<
+        TRes>
+    implements
+        CopyWith$Mutation$updateItemsPositions$update_restaurant_item_many<
+            TRes> {
+  _CopyWithImpl$Mutation$updateItemsPositions$update_restaurant_item_many(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateItemsPositions$update_restaurant_item_many _instance;
+
+  final TRes Function(Mutation$updateItemsPositions$update_restaurant_item_many)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateItemsPositions$update_restaurant_item_many(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateItemsPositions$update_restaurant_item_many<
+        TRes>
+    implements
+        CopyWith$Mutation$updateItemsPositions$update_restaurant_item_many<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateItemsPositions$update_restaurant_item_many(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
     String? $__typename,
   }) =>
       _res;

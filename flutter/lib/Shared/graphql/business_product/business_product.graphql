@@ -1,0 +1,226 @@
+query get_product_by_id($id: Int!) {
+  business_product_by_pk(id: $id) {
+    id
+    business {
+      id
+      details {
+        last_active_time
+        id
+        accepted_payments
+        image
+        online_ordering
+        phone_number
+        name
+        currency
+      }
+      reviews_aggregate {
+        aggregate {
+          avg {
+            rating
+          }
+          count
+        }
+      }
+    }
+    details {
+      additional_parameters
+      available
+      category1
+      category2
+      name_id
+      description_id
+      cost
+      tags
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      id
+      image
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+    }
+  }
+}
+
+query get_product_by_category(
+  $categories1: [String!]
+  $distance: Float!
+  $from: geography!
+  $limit: Int
+  $offset: Int
+  $categories2: [String!]
+  $tags: [String!]
+  $online_ordering: Boolean_comparison_exp = {}
+) {
+  business_product(
+    where: {
+      _and: {
+        details: {
+          _and: {
+            category1: { _in: $categories1 }
+            category2: { _in: $categories2 }
+            tags: { _has_keys_all: $tags }
+          }
+        }
+        business: {
+          details: {
+            location: {
+              gps: { _st_d_within: { distance: $distance, from: $from } }
+            }
+            approved: { _eq: true }
+            open_status: { _neq: "closedIndefinitely" }
+            online_ordering: $online_ordering
+          }
+        }
+      }
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
+  ) {
+    details {
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      cost
+      tags
+      image
+      position
+    }
+    id
+    business {
+      id
+      details {
+        id
+        name
+        currency
+        location {
+          gps
+          address
+        }
+      }
+    }
+  }
+}
+
+query number_of_products($distance: Float!, $from: geography!) {
+  business_product_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+        }
+      }
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+
+query number_of_products_by_category(
+  $distance: Float!
+  $from: geography!
+  $category1: String
+) {
+  business_product_aggregate(
+    where: {
+      business: {
+        details: {
+          location: {
+            gps: { _st_d_within: { distance: $distance, from: $from } }
+          }
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
+        }
+      }
+      details: { category1: { _eq: $category1 } }
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+
+mutation add_product($object: business_product_insert_input!) {
+  insert_business_product_one(object: $object) {
+    details_id
+    id
+  }
+}
+
+query get_business_products($businessId: Int!, $limit: Int, $offset: Int) {
+  business_product(
+    where: { business_id: { _eq: $businessId } }
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+
+    details {
+      name_id
+      description_id
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      tags
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+    }
+    business {
+      id
+      details {
+        id
+        name
+        currency
+      }
+    }
+  }
+}
+
+mutation update_product_category1($id: Int!, $category1: String!) {
+  update_business_item_details(
+    where: { id: { _eq: $id } }
+    _set: { category1: $category1 }
+  ) {
+    affected_rows
+  }
+}
+mutation delete_business_product($id: Int!) {
+  delete_business_product_by_pk(id: $id) {
+    id
+  }
+}

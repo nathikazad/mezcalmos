@@ -1,38 +1,40 @@
-import { PaymentType } from '../../Generic/Order';
+import { DeliveryType, PaymentType } from '../../Generic/Order';
 import { OrderNotification } from '../../Notification';
-import { AppType, Language, Location } from '../../Generic/Generic';
-import { Restaurant } from './Restaurant';
-import { OrderStripeInfo } from '../../../../utilities/stripe/model';
+import { CustomerAppType, Language, Location } from '../../Generic/Generic';
 import { DeliveryOrderStatus } from '../../Generic/Delivery';
+import { ServiceProvider } from '../Service';
+import { OrderStripeInfo } from '../../stripe';
 
 export interface RestaurantOrder {
-  orderId?: number;
-  customerId: number;
   restaurantId: number;
-  
-  paymentType: PaymentType;
-  toLocation: Location;
+  toLocation?: Location;
   estimatedFoodReadyTime?: string;
   actualFoodReadyTime?: string;
-  stripePaymentId?: number;
-  refundAmount?: number;
-  deliveryId?: number;
   status: RestaurantOrderStatus;
+  items: Array<OrderItem>;
+  restaurant?: ServiceProvider;
+  deliveryId?: number;
+  orderId: number;
+  spDetailsId: number;
+  customerId: number;
+  paymentType: PaymentType;
+  refundAmount?: number;
   reviewId?: number;
-  orderType: RestaurantOrderType;
+  deliveryType: DeliveryType;
   orderTime?: string;
   firebaseId?: string;
-  customerAppType: AppType;
+  customerAppType: CustomerAppType;
   notes?: string;
   tax?: number;
-  items: Array<OrderItem>;
   deliveryCost: number;
-  itemsCost?: number;
-  totalCost?: number;
   chatId?: number;
   scheduledTime?: string;
-  restaurant?: Restaurant;
   stripeInfo?: OrderStripeInfo;
+  stripeFees?: number;
+  cancellationTime?: string;
+  discountValue?: number;
+  totalCost?: number;
+  itemsCost?: number;
 }
 export interface OrderItem {
   orderItemId?: number;
@@ -51,30 +53,25 @@ export interface OrderItem {
 export interface SelectedOption {
   optionId: number;
   optionNames: Record<Language, string>;
-  selectedChoices: Record<Language, string[]>;
+  selectedChoices: Record<Language, Array<string>>;
   //TODO choice costs
 }
 
 export enum RestaurantOrderStatus {
   OrderReceived = "orderReceived",
-  PreparingOrder = "preparing",
-  ReadyForPickup = "ready",
+  Preparing = "preparing",
+  Ready = "ready",
   OnTheWay = "onTheWay",
   Delivered = "delivered",
   CancelledByAdmin = "cancelledByAdmin",
   CancelledByCustomer = "cancelledByCustomer"
 }
-export enum DeliveryMode {
-  ForwardedToMezCalmos = "forwardedToMezCalmos",
-  SelfDeliveryByRestaurant = "selfDeliveryByRestaurant",
-  SelfDeliveryByDriver = "SelfDeliveryByDriver",
-  None = "none",
-}
-
-export enum RestaurantOrderType {
-  Pickup = "pickup",
-  Delivery = "delivery",
-}
+// export enum DeliveryMode {
+//   ForwardedToMezCalmos = "forwardedToMezCalmos",
+//   SelfDeliveryByRestaurant = "selfDeliveryByRestaurant",
+//   SelfDeliveryByDriver = "SelfDeliveryByDriver",
+//   None = "none",
+// }
 
 export function orderInProcess(status: RestaurantOrderStatus): boolean {
   return !(status == RestaurantOrderStatus.CancelledByAdmin ||

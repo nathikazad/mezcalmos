@@ -1,0 +1,277 @@
+table:
+  name: order
+  schema: laundry
+object_relationships:
+  - name: chat
+    using:
+      foreign_key_constraint_on: chat_id
+  - name: customer
+    using:
+      foreign_key_constraint_on: customer_id
+  - name: from_customer_delivery
+    using:
+      foreign_key_constraint_on: from_customer_delivery_id
+  - name: review
+    using:
+      foreign_key_constraint_on: review_id
+  - name: store
+    using:
+      foreign_key_constraint_on: store_id
+  - name: to_customer_delivery
+    using:
+      foreign_key_constraint_on: to_customer_delivery_id
+array_relationships:
+  - name: categories
+    using:
+      foreign_key_constraint_on:
+        column: order_id
+        table:
+          name: order_category
+          schema: laundry
+computed_fields:
+  - name: in_process
+    definition:
+      function:
+        name: order_in_process
+        schema: laundry
+  - name: items_cost
+    definition:
+      function:
+        name: itemscost
+        schema: laundry
+  - name: total_cost
+    definition:
+      function:
+        name: totalcost
+        schema: laundry
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - customer_location_gps
+        - chat_id
+        - customer_id
+        - from_customer_delivery_id
+        - id
+        - review_id
+        - store_id
+        - to_customer_delivery_id
+        - stripe_info
+        - delivery_cost
+        - discount_value
+        - refund_amount
+        - stripe_fees
+        - tax
+        - customer_address
+        - customer_app_type
+        - delivery_type
+        - firebase_id
+        - notes
+        - payment_type
+        - status
+        - actual_ready_time
+        - cancellation_time
+        - estimated_ready_time
+        - order_time
+        - scheduled_time
+      computed_fields:
+        - in_process
+        - items_cost
+        - total_cost
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - id
+        - stripe_info
+      filter:
+        _or:
+          - from_customer_delivery:
+              delivery_driver:
+                user_id:
+                  _eq: X-Hasura-User-Id
+          - to_customer_delivery:
+              delivery_driver:
+                user_id:
+                  _eq: X-Hasura-User-Id
+          - from_customer_delivery:
+              delivery_company:
+                drivers:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - to_customer_delivery:
+              delivery_company:
+                drivers:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - customer_location_gps
+        - chat_id
+        - customer_id
+        - from_customer_delivery_id
+        - id
+        - review_id
+        - store_id
+        - to_customer_delivery_id
+        - stripe_info
+        - delivery_cost
+        - discount_value
+        - refund_amount
+        - stripe_fees
+        - tax
+        - customer_address
+        - customer_app_type
+        - delivery_type
+        - firebase_id
+        - notes
+        - payment_type
+        - status
+        - actual_ready_time
+        - cancellation_time
+        - estimated_ready_time
+        - order_time
+        - scheduled_time
+      computed_fields:
+        - in_process
+        - items_cost
+        - total_cost
+      filter:
+        _or:
+          - from_customer_delivery:
+              delivery_company:
+                delivery_operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - to_customer_delivery:
+              delivery_company:
+                delivery_operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - id
+        - customer_id
+        - store_id
+        - payment_type
+        - estimated_ready_time
+        - actual_ready_time
+        - from_customer_delivery_id
+        - to_customer_delivery_id
+        - status
+        - review_id
+        - delivery_type
+        - order_time
+        - notes
+        - delivery_cost
+        - customer_location_gps
+        - customer_address
+        - chat_id
+        - firebase_id
+        - customer_app_type
+        - cancellation_time
+        - tax
+        - refund_amount
+        - scheduled_time
+        - stripe_info
+        - stripe_fees
+        - discount_value
+      computed_fields:
+        - in_process
+        - items_cost
+        - total_cost
+      filter:
+        store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - customer_location_gps
+        - chat_id
+        - customer_id
+        - from_customer_delivery_id
+        - id
+        - review_id
+        - store_id
+        - to_customer_delivery_id
+        - stripe_info
+        - delivery_cost
+        - discount_value
+        - refund_amount
+        - stripe_fees
+        - tax
+        - customer_address
+        - customer_app_type
+        - delivery_type
+        - firebase_id
+        - notes
+        - payment_type
+        - status
+        - actual_ready_time
+        - cancellation_time
+        - estimated_ready_time
+        - order_time
+        - scheduled_time
+      computed_fields:
+        - in_process
+        - items_cost
+        - total_cost
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - review_id
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      check:
+        customer_id:
+          _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - estimated_ready_time
+      filter:
+        store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - estimated_ready_time
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

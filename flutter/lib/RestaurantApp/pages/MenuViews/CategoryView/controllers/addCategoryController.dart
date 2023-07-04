@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/LanguagesTabsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -12,6 +12,8 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class AddCategoryController {
+  LanguageTabsController languageTabsController = LanguageTabsController();
+
   /// Text input controllers ///
   final TextEditingController primaryCategoryNameController =
       TextEditingController();
@@ -21,50 +23,48 @@ class AddCategoryController {
   final TextEditingController secondaryCategoryNameController =
       TextEditingController();
 
-  /// Controllers ///
-  TabController? tabController;
-
-  late RestaurantInfoController restaurantInfoController;
-
   /// Variables ///
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
+  final Language userLanguage = Get.find<LanguageController>().userLanguageKey;
   late int restaurantId;
+  late int detailsId;
+
   Rxn<Category> category = Rxn<Category>();
 
-  Rxn<LanguageType> primaryLang = Rxn();
+  // Rxn<ServiceProviderLanguage> languages = Rxn();
 
-  Rxn<LanguageType> secondaryLang = Rxn();
+  // Rxn<Language?> secondaryLang = Rxn();
 
   RxList<LaundryCostLineItem> categories = <LaundryCostLineItem>[].obs;
   RxBool editMode = RxBool(false);
   String? editableCategoryId;
+  RxBool _hasData = RxBool(false);
 
-  bool get isLoading {
-    if (editMode.value) {
-      return category.value != null;
-    } else
-      return primaryLang.value != null && secondaryLang.value != null;
-  }
+  bool get isLoading => _hasData.value;
+
+  ServiceProviderLanguage? get languages => languageTabsController.language;
+
+  bool get hasSecondaryLang => languageTabsController.hasSecondaryLang;
+
+  bool refetch = false;
 
   /// LOGIC ///
 
   // INIT STATE ///
-  Future<void> init({required String restaurantId, String? categoryId}) async {
+  Future<void> init(
+      {required String restaurantId,
+      String? categoryId,
+      required TickerProvider vsync,
+      required int detailsId}) async {
     this.restaurantId = int.parse(restaurantId);
+    this.detailsId = detailsId;
+    await languageTabsController.init(vsync: vsync, detailsId: detailsId);
     mezDbgPrint("INIT CATEGORY VIEW ========================>$categoryId");
     this.restaurantId = int.parse(restaurantId);
 
-    await initLanguages();
-
-    if (categoryId != null) {
+    if (categoryId != null && int.tryParse(categoryId) != null) {
       await initEditMode(categoryId);
     }
-  }
-
-  Future<void> initLanguages() async {
-    primaryLang.value = await get_restaurant_priamry_lang(restaurantId);
-    secondaryLang.value = primaryLang.value!.toOpLang();
+    _hasData.value = true;
   }
 
   Future<void> initEditMode(String categoryId) async {
@@ -74,11 +74,13 @@ class AddCategoryController {
     category.value = await get_category_by_id(
         categoryId: int.parse(categoryId), withCache: false);
     if (category.value != null) {
-      primaryCategoryNameController.text = category.value!.name![primaryLang]!;
+      primaryCategoryNameController.text =
+          category.value!.name![languages?.primary]!;
       secondaryCategoryNameController.text =
-          category.value!.name![secondaryLang]!;
-      primaryCatDesc.text = category.value!.dialog?[primaryLang] ?? "";
-      secondaryCatDesc.text = category.value!.dialog?[secondaryLang] ?? "";
+          category.value!.name![languages?.secondary] ?? "";
+      primaryCatDesc.text = category.value!.dialog?[languages?.primary] ?? "";
+      secondaryCatDesc.text =
+          category.value!.dialog?[languages?.secondary] ?? "";
     }
   }
 
@@ -95,6 +97,7 @@ class AddCategoryController {
       try {
         await _updateName();
         await _updateDescription();
+        refetch = true;
         return true;
       } on Exception catch (e, stk) {
         mezDbgPrint(e);
@@ -104,9 +107,11 @@ class AddCategoryController {
       // await restaurantInfoController.editCategory(
       //     category: constructCategory(), categoryId: editableCategoryId!);
     } else {
+      
       try {
         final String? newCatId = await add_category(
             category: constructCategory(), restaurantId: restaurantId);
+        refetch = true;
         return true;
       } on Exception catch (e, stk) {
         mezDbgPrint(e);
@@ -125,10 +130,10 @@ class AddCategoryController {
       mezDbgPrint("Name changed ✅");
 
       await Future.forEach(_contructName().entries,
-          (MapEntry<LanguageType, String> element) async {
+          (MapEntry<Language, String> element) async {
         await update_translation(
             langType: element.key,
-            translationId: category.value!.descriptionId!,
+            translationId: category.value!.nameId!,
             value: element.value);
       });
     }
@@ -137,7 +142,7 @@ class AddCategoryController {
   Future<void> _updateDescription() async {
     if (!fd.mapEquals(_contructDescription(), category.value!.dialog)) {
       await Future.forEach(_contructDescription()!.entries,
-          (MapEntry<LanguageType, String> element) async {
+          (MapEntry<Language, String> element) async {
         await update_translation(
             langType: element.key,
             translationId: category.value!.descriptionId!,
@@ -146,23 +151,32 @@ class AddCategoryController {
     }
   }
 
-  Map<LanguageType, String> _contructName() {
-    final Map<LanguageType, String> name = {
-      primaryLang.value!: primaryCategoryNameController.text,
-      secondaryLang.value!: secondaryCategoryNameController.text,
+  LanguageMap _contructName() {
+    final LanguageMap name = {
+      languages!.primary: primaryCategoryNameController.text
     };
+    if (languages!.secondary != null &&
+        secondaryCategoryNameController.text.isNotEmpty) {
+      name[languages!.secondary!] = secondaryCategoryNameController.text;
+    }
     return name;
   }
 
-  Map<LanguageType, String>? _contructDescription() {
-    final Map<LanguageType, String>? desc = {
-      primaryLang.value!: primaryCatDesc.text,
-      secondaryLang.value!: secondaryCatDesc.text,
-    };
+  LanguageMap? _contructDescription() {
+    final LanguageMap desc = {};
+    if (primaryCatDesc.text.isNotEmpty) {
+      desc[languages!.primary] = primaryCatDesc.text;
+    }
+    if (languages!.secondary != null && secondaryCatDesc.text.isNotEmpty) {
+      desc[languages!.secondary!] = secondaryCategoryNameController.text;
+    }
+    if (desc.isEmpty) {
+      return null;
+    }
     return desc;
   }
 
-  List<String> getCatNames(LanguageType languageType) {
+  List<String> getCatNames(Language languageType) {
     final List<String> data = [];
     // restaurant.value!.getCategories.forEach((Category element) {
     //   if (element.name?[languageType] != null) {

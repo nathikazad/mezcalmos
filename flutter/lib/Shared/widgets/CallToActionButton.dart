@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 
 class CallToActionButton extends StatefulWidget {
   const CallToActionButton(
@@ -44,7 +45,7 @@ class _CallToActionButtonState extends State<CallToActionButton> {
                           )
                         : Text(
                             widget.text,
-                            style: Get.textTheme.bodyText1
+                            style: context.txt.bodyLarge
                                 ?.copyWith(color: Colors.white),
                           ))),
             onTap: widget.onTap != null

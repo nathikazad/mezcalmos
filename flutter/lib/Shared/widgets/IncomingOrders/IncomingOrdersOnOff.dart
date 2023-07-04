@@ -7,29 +7,30 @@ class TitleWithOnOffSwitcher extends StatelessWidget {
   String title;
   final Function onTurnedOn;
   final Function onTurnedOff;
+  bool isLoading;
+  EdgeInsetsGeometry margin;
   TitleWithOnOffSwitcher({
     required this.title,
     this.initialSwitcherValue = false,
     required this.onTurnedOn,
     required this.onTurnedOff,
+    this.isLoading = false,
+    this.margin = const EdgeInsets.only(bottom: 10.0),
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
+      padding: margin,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w700,
-              fontSize: 13.sp,
-            ),
-          ),
+          Text(title,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium
+                  ?.copyWith(fontSize: 15.sp)),
           SizedBox(
             width: 10,
           ),
@@ -49,16 +50,19 @@ class TitleWithOnOffSwitcher extends StatelessWidget {
           initialPosition:
               initialSwitcherValue, //_taxiAuthController.taxiState?.isLooking ?? false,
           values: <String>['ON', 'OFF'],
-          onToggleCallback: (int v) {
-            // turn ut ON
-            if (v == 0) {
-              onTurnedOn();
-            } else {
-              onTurnedOff();
-            }
-          },
-          buttonColor:
-              initialSwitcherValue //_taxiAuthController.taxiState?.isLooking == true
+          onToggleCallback: (isLoading)
+              ? (int v) {}
+              : (int v) {
+                  // turn ut ON
+                  if (v == 0) {
+                    onTurnedOn();
+                  } else {
+                    onTurnedOff();
+                  }
+                },
+          buttonColor: (isLoading)
+              ? Colors.grey.shade300
+              : initialSwitcherValue //_taxiAuthController.taxiState?.isLooking == true
                   ? Colors.green
                   : Colors.red,
           backgroundColor: Colors.transparent,

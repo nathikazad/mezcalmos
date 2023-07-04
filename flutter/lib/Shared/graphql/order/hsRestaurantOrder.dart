@@ -1,26 +1,23 @@
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.graphql.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -38,7 +35,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       .map<RestaurantOrder?>(
           (QueryResult<Subscription$listen_on_restaurant_order_by_id> event) {
     mezDbgPrint(
-        "Event from hs restaurant order 🚀🚀🚀 ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver?.current_location}");
+        "Event from hs restaurant order 🚀🚀🚀 =====>driver ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver}");
 
     if (event.parsedData?.restaurant_order_by_pk != null) {
       final List<RestaurantOrderItem> items = [];
@@ -62,21 +59,14 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
           (item.in_json['selected_options'] as Map<String, dynamic>)
               .forEach((String key, value) {
             final List<Choice> choices = [];
-            _restauItem.optionNames[key] = {
-              LanguageType.EN: value['optionName']["en"],
-              LanguageType.ES: value['optionName']["es"]
-            };
+            _restauItem.optionNames[key] =
+                convertToLanguageMap(value['optionName']);
 
             value['choices'].forEach((key, value) {
               choices.add(
                 Choice(
                   id: value['id'],
-                  name: {
-                    LanguageType.EN: value['name']
-                        [userLanguage.toFirebaseFormatString()],
-                    LanguageType.ES: value['name']
-                        [userLanguage.toFirebaseFormatString()]
-                  },
+                  name: convertToLanguageMap(value['name']),
                   cost: value['cost'],
                 ),
               );
@@ -94,17 +84,45 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       }
 
       final RestaurantOrder res = RestaurantOrder(
-        dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
-        chatId: orderData.chat_id,
+        deliveryProviderType:
+            orderData.delivery!.service_provider_type.toServiceProviderType(),
+        serviceProviderDriverChatId:
+            orderData.delivery?.chat_with_service_provider_id,
+        chatId: orderData.chat_id!,
         orderId: orderData.id,
         notes: orderData.notes,
-        estimatedFoodReadyTime: (orderData.estimated_food_ready_time != null)
+        estimatedPackageReadyTime: (orderData.estimated_food_ready_time != null)
             ? DateTime.tryParse(orderData.estimated_food_ready_time!)
             : null,
+        estimatedArrivalAtDropoff:
+            (orderData.delivery?.estimated_arrival_at_dropoff_time != null)
+                ? DateTime.tryParse(
+                    orderData.delivery!.estimated_arrival_at_dropoff_time!)
+                : null,
+        estimatedArrivalAtPickup:
+            (orderData.delivery?.estimated_arrival_at_pickup_time != null)
+                ? DateTime.tryParse(
+                    orderData.delivery!.estimated_arrival_at_pickup_time!)
+                : null,
         status: orderData.status.toRestaurantOrderStatus(),
-        quantity: 1,
         deliveryOrderId: orderData.delivery_id,
         serviceProviderId: orderData.restaurant.id,
+        review: (orderData.review != null)
+            ? Review(
+                comment: orderData.review!.note,
+                rating: orderData.review!.rating,
+                toEntityId: orderData.review!.to_entity_id,
+                fromImage: orderData.review!.from_image,
+                fromName: orderData.review!.from_name,
+                toImage: orderData.review!.to_image,
+                toName: orderData.review!.to_name,
+                toEntityType:
+                    orderData.review!.to_entity_type.toServiceProviderType(),
+                fromEntityId: orderData.review!.from_entity_id,
+                fromEntityType:
+                    orderData.review!.from_entity_type.toServiceProviderType(),
+                reviewTime: DateTime.parse(orderData.review!.created_at))
+            : null,
         routeInformation: (orderData.delivery?.trip_polyline != null &&
                 orderData.delivery?.trip_polyline != null &&
                 orderData.delivery?.trip_polyline != null)
@@ -117,50 +135,50 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
                     orderData.delivery!.trip_distance!),
                 polyline: orderData.delivery!.trip_polyline!)
             : null,
-        paymentType: orderData.payment_type.toPaymentType(),
-        customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
+        paymentType: orderData.payment_type.convertToPaymentType(),
+        customerDriverChatId: orderData.delivery?.chat_with_customer_id,
         orderTime: DateTime.parse(orderData.order_time),
-        cost: orderData.delivery_cost,
-        restaurant: ServiceInfo(
-          location: Location(
-            orderData.restaurant.location_text,
-            orderData.restaurant.location_gps.toLocationData(),
+        serviceProvider: ServiceInfo(
+          location: MezLocation(
+            orderData.restaurant.details!.location.address,
+            orderData.restaurant.details!.location.gps.toLocationData(),
           ),
-          firebaseId: orderData.restaurant.firebase_id,
+          firebaseId: orderData.restaurant.details!.firebase_id,
           hasuraId: orderData.restaurant.id,
-          image: orderData.restaurant.image,
-          name: orderData.restaurant.name,
+          image: orderData.restaurant.details!.image,
+          name: orderData.restaurant.details!.name,
+          currency: orderData.restaurant.details!.currency.toCurrency(),
         ),
-        dropoffDriver: (orderData.delivery?.delivery_driver != null)
-            ? DeliveryDriverUserInfo(
-                location:
-                    (orderData.delivery?.delivery_driver?.current_location !=
-                            null)
-                        ? LatLng(
-                            orderData.delivery!.delivery_driver!
-                                .current_location!.latitude,
-                            orderData.delivery!.delivery_driver!
-                                .current_location!.longitude)
-                        : null,
+        driverInfo: (orderData.delivery?.delivery_driver != null)
+            ? UserInfo(
                 hasuraId: orderData.delivery!.delivery_driver!.user.id,
                 name: orderData.delivery!.delivery_driver!.user.name,
                 image: orderData.delivery!.delivery_driver!.user.image,
                 language: orderData.delivery!.delivery_driver!.user.language_id
-                    .toLanguageType())
+                    .toLanguage())
             : null,
-        scheduledTime: (orderData.scheduled_time != null)
+        scheduleTime: (orderData.scheduled_time != null)
             ? DateTime.tryParse(orderData.scheduled_time!)
             : null,
         customer: UserInfo(
             hasuraId: orderData.customer.user.id,
             image: orderData.customer.user.image,
             name: orderData.customer.user.name),
-        to: Location(orderData.to_location_address!,
+        dropOffLocation: MezLocation(orderData.to_location_address!,
             orderData.to_location_gps!.toLocationData()),
-        itemsCost: orderData.items_cost ?? 0,
-        totalCost: orderData.total_cost,
-        shippingCost: orderData.delivery_cost,
-        deliveryMode: DeliveryMode.ForwardedToMezCalmos,
+        // itemsCost: orderData.items_cost ?? 0,
+        // totalCost: orderData.total_cost,
+        // shippingCost: orderData.delivery_cost,
+        // refundAmount: orderData.refund_amount,
+        costs: OrderCosts(
+            deliveryCost: orderData.delivery_cost,
+            refundAmmount: orderData.refund_amount,
+            tax: null,
+            orderItemsCost: orderData.items_cost,
+            totalCost: orderData.total_cost),
+        deliveryCompany: null, driverLocation: null,
+        deliveryDirection: cModels.DeliveryDirection.ToCustomer,
+        pickupLocation: null,
       );
 
       res.items = items;
@@ -189,7 +207,8 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk orderData =
       response.parsedData!.restaurant_order_by_pk!;
   mezDbgPrint(
-      "🥹🥹🥹🥹====  $orderId get_restaurant_order_by_id::SUCCESS ====>${orderData.delivery?.delivery_driver}");
+      "Event from hs restaurant order from query 🚀🚀🚀 =====>driver ${orderData.delivery?.delivery_driver}");
+
   final List<RestaurantOrderItem> items = [];
 
   orderData.items.forEach(
@@ -209,21 +228,14 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       (item.in_json['selected_options'] as Map<String, dynamic>)
           .forEach((String key, value) {
         final List<Choice> choices = [];
-        _restauItem.optionNames[key] = {
-          LanguageType.EN: value['optionName']["en"],
-          LanguageType.ES: value['optionName']["es"]
-        };
+        _restauItem.optionNames[key] =
+            convertToLanguageMap(value['optionName']);
 
         value['choices'].forEach((key, value) {
           choices.add(
             Choice(
               id: value['id'],
-              name: {
-                LanguageType.EN: value['name']
-                    [userLanguage.toFirebaseFormatString()],
-                LanguageType.ES: value['name']
-                    [userLanguage.toFirebaseFormatString()]
-              },
+              name: convertToLanguageMap(value['name']),
               cost: value['cost'],
             ),
           );
@@ -239,19 +251,46 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
   }
   final RestaurantOrder res = RestaurantOrder(
-    chatId: orderData.chat_id,
-    customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
-    scheduledTime: (orderData.scheduled_time != null)
-        ? DateTime.tryParse(orderData.scheduled_time!)
-        : null,
+    pickupLocation: null,
+    deliveryProviderType:
+        orderData.delivery!.service_provider_type.toServiceProviderType(),
+    serviceProviderDriverChatId:
+        orderData.delivery?.chat_with_service_provider_id,
+    chatId: orderData.chat_id!,
     orderId: orderData.id,
     notes: orderData.notes,
-    dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
-    estimatedFoodReadyTime: (orderData.estimated_food_ready_time != null)
+    estimatedPackageReadyTime: (orderData.estimated_food_ready_time != null)
         ? DateTime.tryParse(orderData.estimated_food_ready_time!)
         : null,
+    estimatedArrivalAtDropoff:
+        (orderData.delivery?.estimated_arrival_at_dropoff_time != null)
+            ? DateTime.tryParse(
+                orderData.delivery!.estimated_arrival_at_dropoff_time!)
+            : null,
+    estimatedArrivalAtPickup:
+        (orderData.delivery?.estimated_arrival_at_pickup_time != null)
+            ? DateTime.tryParse(
+                orderData.delivery!.estimated_arrival_at_pickup_time!)
+            : null,
     status: orderData.status.toRestaurantOrderStatus(),
-    quantity: 1,
+    deliveryOrderId: orderData.delivery_id,
+    serviceProviderId: orderData.restaurant.id,
+    review: (orderData.review != null)
+        ? Review(
+            comment: orderData.review!.note,
+            rating: orderData.review!.rating,
+            toEntityId: orderData.review!.to_entity_id,
+            fromImage: orderData.review!.from_image,
+            fromName: orderData.review!.from_name,
+            toImage: orderData.review!.to_image,
+            toName: orderData.review!.to_name,
+            toEntityType:
+                orderData.review!.to_entity_type.toServiceProviderType(),
+            fromEntityId: orderData.review!.from_entity_id,
+            fromEntityType:
+                orderData.review!.from_entity_type.toServiceProviderType(),
+            reviewTime: DateTime.parse(orderData.review!.created_at))
+        : null,
     routeInformation: (orderData.delivery?.trip_polyline != null &&
             orderData.delivery?.trip_polyline != null &&
             orderData.delivery?.trip_polyline != null)
@@ -264,67 +303,54 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
                 orderData.delivery!.trip_distance!),
             polyline: orderData.delivery!.trip_polyline!)
         : null,
-    serviceProviderId: orderData.restaurant.id,
-    paymentType: orderData.payment_type.toPaymentType(),
+    paymentType: orderData.payment_type.convertToPaymentType(),
+    customerDriverChatId: orderData.delivery?.chat_with_customer_id,
     orderTime: DateTime.parse(orderData.order_time),
-    cost: orderData.delivery_cost,
-    dropoffDriver: (orderData.delivery?.delivery_driver != null)
-        ? DeliveryDriverUserInfo(
-            location:
-                (orderData.delivery?.delivery_driver?.current_location != null)
-                    ? LatLng(
-                        orderData.delivery!.delivery_driver!.current_location!
-                            .latitude,
-                        orderData.delivery!.delivery_driver!.current_location!
-                            .longitude)
-                    : null,
+    serviceProvider: ServiceInfo(
+      location: MezLocation(
+        orderData.restaurant.details!.location.address,
+        orderData.restaurant.details!.location.gps.toLocationData(),
+      ),
+      firebaseId: orderData.restaurant.details!.firebase_id,
+      hasuraId: orderData.restaurant.id,
+      image: orderData.restaurant.details!.image,
+      name: orderData.restaurant.details!.name,
+      currency: orderData.restaurant.details!.currency.toCurrency(),
+    ),
+    driverInfo: (orderData.delivery?.delivery_driver != null)
+        ? UserInfo(
             hasuraId: orderData.delivery!.delivery_driver!.user.id,
             name: orderData.delivery!.delivery_driver!.user.name,
             image: orderData.delivery!.delivery_driver!.user.image,
             language: orderData.delivery!.delivery_driver!.user.language_id
-                .toLanguageType())
+                .toLanguage())
         : null,
-    review: (orderData.review != null)
-        ? Review(
-            comment: orderData.review!.note,
-            rating: orderData.review!.rating,
-            toEntityId: orderData.review!.to_entity_id,
-            customer: UserInfo(
-              name: orderData.review?.customer?.user.name,
-              image: orderData.review?.customer?.user.image,
-              hasuraId: orderData.review!.customer!.user.id,
-            ),
-            toEntityType:
-                orderData.review!.to_entity_type.toServiceProviderType(),
-            fromEntityId: orderData.review!.from_entity_id,
-            fromEntityType:
-                orderData.review!.from_entity_type.toServiceProviderType(),
-            reviewTime: DateTime.parse(orderData.review!.created_at))
+    scheduleTime: (orderData.scheduled_time != null)
+        ? DateTime.tryParse(orderData.scheduled_time!)
         : null,
-    restaurant: ServiceInfo(
-      location: Location(
-        orderData.restaurant.location_text,
-        orderData.restaurant.location_gps.toLocationData(),
-      ),
-      firebaseId: orderData.restaurant.firebase_id,
-      hasuraId: orderData.restaurant.id,
-      image: orderData.restaurant.image,
-      name: orderData.restaurant.name,
-    ),
-    deliveryOrderId: orderData.delivery_id,
     customer: UserInfo(
         hasuraId: orderData.customer.user.id,
         image: orderData.customer.user.image,
         name: orderData.customer.user.name),
-    to: Location(orderData.to_location_address!,
+    dropOffLocation: MezLocation(orderData.to_location_address!,
         orderData.to_location_gps!.toLocationData()),
-    itemsCost: orderData.items_cost ?? 0,
-    totalCost: orderData.total_cost,
-    shippingCost: orderData.delivery_cost,
-    deliveryMode: DeliveryMode.ForwardedToMezCalmos,
+    // itemsCost: orderData.items_cost ?? 0,
+    // totalCost: orderData.total_cost,
+    // shippingCost: orderData.delivery_cost,
+    // refundAmount: orderData.refund_amount,
+    costs: OrderCosts(
+        deliveryCost: orderData.delivery_cost,
+        refundAmmount: orderData.refund_amount,
+        tax: null,
+        orderItemsCost: orderData.items_cost,
+        totalCost: orderData.total_cost),
+    deliveryCompany: null, driverLocation: null,
+    deliveryDirection: cModels.DeliveryDirection.ToCustomer,
   );
 
   res.items = items;
+  mezDbgPrint(
+      "⏰⏰⏰⏰⏰⏰⏰⏰⏰⏰⏰⏰ From  get restuarnt order By id =============>>>>$_paymentInfo");
   res.stripePaymentInfo = _paymentInfo;
   return res;
 }
@@ -349,10 +375,12 @@ Stream<List<MinimalOrder>?> listen_on_current_restaurant_orders(
               orderData) {
         return MinimalOrder(
             id: orderData.id,
+            orderType: cModels.OrderType.Restaurant,
             toAdress: orderData.to_location_address,
+            deliveryCost: orderData.delivery?.delivery_cost,
             orderTime: DateTime.parse(orderData.order_time),
-            customerName: orderData.customer.user.name!,
-            customerImage: orderData.customer.user.image,
+            title: orderData.customer.user.name!,
+            image: orderData.customer.user.image,
             status: orderData.status
                 .toRestaurantOrderStatus()
                 .toMinimalOrderStatus(),
@@ -382,10 +410,12 @@ Future<List<MinimalOrder>?> get_current_restaurant_orders(
         .map((Query$get_restaurant_current_orders$restaurant_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          orderType: cModels.OrderType.Restaurant,
           toAdress: orderData.to_location_address,
+          deliveryCost: orderData.delivery?.delivery_cost,
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost!);
@@ -398,13 +428,15 @@ Future<List<MinimalOrder>?> get_current_restaurant_orders(
 }
 
 Future<List<MinimalOrder>?> get_past_restaurant_orders(
-    {required int restaurantId}) async {
+    {required int restaurantId,
+    required int limit,
+    required int offset}) async {
   final QueryResult<Query$get_restaurant_past_orders> queryResult =
       await _hasuraDb.graphQLClient.query$get_restaurant_past_orders(
     Options$Query$get_restaurant_past_orders(
       fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Query$get_restaurant_past_orders(
-          restaurantId: restaurantId),
+          restaurantId: restaurantId, offset: offset, limit: limit),
     ),
   );
   if (queryResult.parsedData?.restaurant_order != null) {
@@ -415,17 +447,46 @@ Future<List<MinimalOrder>?> get_past_restaurant_orders(
         .map((Query$get_restaurant_past_orders$restaurant_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          orderType: cModels.OrderType.Restaurant,
           toAdress: orderData.to_location_address,
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.total_cost!);
+          totalCost: orderData.total_cost ?? 0);
     }).toList();
     return orders;
   } else {
     throw Exception(
         "🚨 Getting min orders exceptions \n ${queryResult.exception}");
   }
+}
+
+Future<List<RestaurantOrderItem>> get_dv_order_restaurant_items(
+    {required int deliveryOrderId, bool withCache = true}) async {
+  QueryResult<Query$get_restaurant_order_items_by_id> res =
+      await _hasuraDb.graphQLClient.query$get_restaurant_order_items_by_id(
+          Options$Query$get_restaurant_order_items_by_id(
+              fetchPolicy:
+                  withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+              variables: Variables$Query$get_restaurant_order_items_by_id(
+                  deliveryOrderId: deliveryOrderId)));
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  List<Query$get_restaurant_order_items_by_id$restaurant_order$items> data =
+      res.parsedData!.restaurant_order.first.items;
+  return data
+      .map((Query$get_restaurant_order_items_by_id$restaurant_order$items e) =>
+          RestaurantOrderItem(
+              costPerOne: e.cost_per_one,
+              totalCost: e.cost_per_one * e.quantity,
+              idInCart: 0,
+              idInRestaurant: e.restaurant_item.id,
+              name: toLanguageMap(
+                  translations: e.restaurant_item.name.translations),
+              image: e.restaurant_item.image,
+              quantity: e.quantity))
+      .toList();
 }

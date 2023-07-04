@@ -1,0 +1,104 @@
+table:
+  name: home
+  schema: business
+object_relationships:
+  - name: business
+    using:
+      manual_configuration:
+        column_mapping:
+          business_id: id
+        insertion_order: null
+        remote_table:
+          name: business
+          schema: business
+  - name: details
+    using:
+      manual_configuration:
+        column_mapping:
+          details_id: id
+        insertion_order: null
+        remote_table:
+          name: item_details
+          schema: business
+  - name: location
+    using:
+      manual_configuration:
+        column_mapping:
+          location_id: id
+        insertion_order: null
+        remote_table:
+          name: home_location
+          schema: business
+insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - available_for
+        - bathrooms
+        - bedrooms
+        - business_id
+        - details_id
+        - location_id
+        - offering_type
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - bathrooms
+        - bedrooms
+        - business_id
+        - details_id
+        - id
+        - location_id
+        - available_for
+        - offering_type
+      filter: {}
+      allow_aggregations: true
+  - role: business_operator
+    permission:
+      columns:
+        - bathrooms
+        - bedrooms
+        - business_id
+        - details_id
+        - id
+        - location_id
+        - available_for
+        - offering_type
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: customer
+    permission:
+      columns:
+        - bathrooms
+        - bedrooms
+        - business_id
+        - details_id
+        - id
+        - location_id
+        - available_for
+        - offering_type
+      filter: {}
+      allow_aggregations: true
+update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - available_for
+        - bathrooms
+        - bedrooms
+        - location_id
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null

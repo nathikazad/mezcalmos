@@ -1,7 +1,25 @@
 import { getHasura } from "../../../../utilities/hasura";
+import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
 
 export async function insertRestaurantOperators(data: any) {
     let chain = getHasura();
+    // let queryResponse = await chain.query({
+    //     restaurant_operator: [{}, {
+    //         user: {
+    //             firebase_id: true
+    //         }
+    //     }]
+    // })
+    // let insertedOps: Record<string, boolean> = {};
+    // queryResponse.restaurant_operator.forEach((r:any) => {
+    //     // if(rdetails?.firebase_id == null)
+    //         // return;
+    //     // console.log(typeof r.details.firebase_id)
+    //     insertedOps[r.user.firebase_id] = true;
+    // })
+    console.log(data.length)
+    // data = data.filter((r: any) => insertedOps[r.userFirebaseId] == undefined)
+    // console.log(data)
 
     let operators = data.map(async (o: any) => {
         let opResponse = await chain.query({
@@ -14,10 +32,12 @@ export async function insertRestaurantOperators(data: any) {
             }, {
                 id: true,
             }],
-            restaurant: [{
+            restaurant_restaurant: [{
                 where: {
-                    firebase_id: {
-                        _eq: o.restaurantFirebaseId
+                    details: {
+                        firebase_id: {
+                            _eq: o.restaurantFirebaseId
+                        }
                     }
                 }
             }, {
@@ -27,17 +47,28 @@ export async function insertRestaurantOperators(data: any) {
         // if(!(opResponse.user[0].id))
             // console.log("user: ", o.userFirebaseId)
             // console.log(opResponse.user[0].id)
-            console.log("restaurant: ", o.restaurantFirebaseId)
-            console.log(opResponse.restaurant[0])
-            console.log("\n")
+            // console.log("restaurant: ", o.restaurantFirebaseId)
+            // console.log(opResponse.restaurant_restaurant[0])
+            // console.log("\n")
         // if(!(opResponse.restaurant[0]))
         //     console.log("restaurant: ", o.restaurantFirebaseId)
         return {
             user_id: opResponse.user[0].id,
-            restaurant_id: (opResponse.restaurant[0]) ? opResponse.restaurant[0].id : undefined,
-            status: "authorized",
-            owner: true,
-            app_version: o.appVersion,
+            restaurant_id: (opResponse.restaurant_restaurant[0]) ? opResponse.restaurant_restaurant[0].id : undefined,
+            operator_details: {
+                data: {
+                    user_id: opResponse.user[0].id,
+                    status: AuthorizationStatus.Authorized,
+                    owner: true,
+                    app_version: o.appVersion,
+                    app_type_id: AppType.Restaurant,
+                    // notification_info: (o.notificationToken) ? {
+                    //     user_id: o.user_id,
+                    //     app_type_id: AppType.RestaurantApp,
+                    //     token: o.notification_token
+                    // }: undefined
+                }
+            },
             notification_token: o.notificationToken
         }
     })
@@ -48,7 +79,7 @@ export async function insertRestaurantOperators(data: any) {
     let operatorsNotif = operators.map((o: any) => {
         return {
             user_id: o.user_id,
-            app_type_id: "restaurant",
+            app_type_id: AppType.Restaurant,
             token: o.notification_token
         }
     })
@@ -58,12 +89,10 @@ export async function insertRestaurantOperators(data: any) {
         return {
             user_id: o.user_id,
             restaurant_id: o.restaurant_id,
-            status: "authorized",
-            owner: true,
-            app_version: o.appVersion,
+            operator_details: o.operator_details
         }
     });
-
+    console.log(operators)
     let response1 = await chain.mutation({
         insert_restaurant_operator: [{
             objects: operators
@@ -80,14 +109,14 @@ export async function insertRestaurantOperators(data: any) {
                 id: true,
             }
         }],
-        insert_notification_info: [{
-            objects: operatorsNotif
+        // insert_notification_info: [{
+        //     objects: operatorsNotif
 
-        }, {
-            returning: {
-                id: true,
-            }
-        }],
+        // }, {
+        //     returning: {
+        //         id: true,
+        //     }
+        // }],
     })
     console.log("response: ", response1)
 }

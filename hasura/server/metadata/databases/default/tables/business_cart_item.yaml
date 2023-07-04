@@ -1,0 +1,99 @@
+table:
+  name: cart_item
+  schema: business
+object_relationships:
+  - name: event
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: event
+          schema: business
+  - name: home
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: home
+          schema: business
+  - name: product
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: product
+          schema: business
+  - name: rental
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: rental
+          schema: business
+  - name: service
+    using:
+      manual_configuration:
+        column_mapping:
+          item_id: id
+          offering_type: offering_type
+        insertion_order: null
+        remote_table:
+          name: service
+          schema: business
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - id
+        - item_id
+        - customer_id
+        - parameters
+        - offering_type
+        - time
+        - cost
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - cost
+        - customer_id
+        - id
+        - item_id
+        - offering_type
+        - parameters
+        - time
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - cost
+        - parameters
+        - time
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: customer
+    permission:
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id

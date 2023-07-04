@@ -2,6 +2,19 @@ table:
   name: notification_info
   schema: public
 insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        _and:
+          - app_type_id:
+              _eq: business
+          - user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - app_type_id
+        - token
+        - user_id
+        - turn_off_notifications
   - role: customer
     permission:
       check:
@@ -14,6 +27,7 @@ insert_permissions:
         - app_type_id
         - token
         - user_id
+        - turn_off_notifications
   - role: delivery_driver
     permission:
       check:
@@ -26,18 +40,46 @@ insert_permissions:
         - app_type_id
         - token
         - user_id
+        - turn_off_notifications
+  - role: delivery_operator
+    permission:
+      check:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - app_type_id:
+              _eq: deliveryAdmin
+      columns:
+        - app_type_id
+        - token
+        - user_id
+        - turn_off_notifications
+  - role: laundry_operator
+    permission:
+      check:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - app_type_id:
+              _eq: laundry
+      columns:
+        - app_type_id
+        - token
+        - turn_off_notifications
+        - user_id
   - role: mez_admin
     permission:
       check:
         _and:
           - app_type_id:
-              _eq: mez_admin
+              _eq: mezAdmin
           - user_id:
               _eq: X-Hasura-User-Id
       columns:
         - app_type_id
         - token
         - user_id
+        - turn_off_notifications
   - role: restaurant_operator
     permission:
       check:
@@ -50,7 +92,22 @@ insert_permissions:
         - app_type_id
         - token
         - user_id
+        - turn_off_notifications
 select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - app_type_id
+        - id
+        - token
+        - turn_off_notifications
+        - user_id
+      filter:
+        _and:
+          - app_type_id:
+              _eq: business
+          - user_id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
@@ -58,6 +115,7 @@ select_permissions:
         - id
         - token
         - user_id
+        - turn_off_notifications
       filter:
         user_id:
           _eq: X-Hasura-User-Id
@@ -68,10 +126,54 @@ select_permissions:
         - user_id
         - app_type_id
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
               _eq: delivery
+          - user_id:
+              _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - id
+        - user_id
+        - app_type_id
+        - token
+        - turn_off_notifications
+      filter:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - app_type_id:
+              _eq: deliveryAdmin
+  - role: laundry_operator
+    permission:
+      columns:
+        - turn_off_notifications
+        - id
+        - user_id
+        - app_type_id
+        - token
+      filter:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - app_type_id:
+              _eq: laundry
+  - role: mez_admin
+    permission:
+      columns:
+        - turn_off_notifications
+        - id
+        - user_id
+        - app_type_id
+        - token
+        - turn_off_notifications
+      filter:
+        _and:
+          - app_type_id:
+              _eq: mezAdmin
           - user_id:
               _eq: X-Hasura-User-Id
   - role: restaurant_operator
@@ -81,6 +183,7 @@ select_permissions:
         - user_id
         - app_type_id
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
@@ -88,10 +191,30 @@ select_permissions:
           - user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - app_type_id
+        - token
+        - user_id
+        - turn_off_notifications
+      filter:
+        _and:
+          - app_type_id:
+              _eq: business
+          - user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _and:
+          - app_type_id:
+              _eq: business
+          - user_id:
+              _eq: X-Hasura-User-Id
   - role: customer
     permission:
       columns:
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
@@ -103,6 +226,7 @@ update_permissions:
     permission:
       columns:
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
@@ -110,14 +234,49 @@ update_permissions:
           - user_id:
               _eq: X-Hasura-User-Id
       check: null
+  - role: delivery_operator
+    permission:
+      columns:
+        - token
+        - turn_off_notifications
+      filter:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - app_type_id:
+              _eq: deliveryAdmin
+      check:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - app_type_id:
+              _eq: deliveryAdmin
+  - role: laundry_operator
+    permission:
+      columns:
+        - token
+        - turn_off_notifications
+      filter:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - app_type_id:
+              _eq: laundry
+      check:
+        _and:
+          - user_id:
+              _eq: X-Hasura-User-Id
+          - app_type_id:
+              _eq: laundry
   - role: mez_admin
     permission:
       columns:
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
-              _eq: mez_admin
+              _eq: mezAdmin
           - user_id:
               _eq: X-Hasura-User-Id
       check: null
@@ -125,6 +284,7 @@ update_permissions:
     permission:
       columns:
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:

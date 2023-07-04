@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
 class TwoCirclesAvatar extends StatelessWidget {
@@ -13,21 +14,19 @@ class TwoCirclesAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: Colors.red,
-      height: 85,
+      margin: const EdgeInsets.only(right: 40),
       child: Stack(
+        clipBehavior: Clip.none,
         fit: StackFit.passthrough,
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.center,
         children: [
-          Positioned(
-            top: 6,
-            child: CircleAvatar(
-              radius: 20,
-              backgroundImage: CachedNetworkImageProvider(topImg),
-            ),
+          CircleAvatar(
+            radius: 22,
+            backgroundImage: CachedNetworkImageProvider(topImg),
           ),
+
           Positioned(
-            bottom: 6,
+            left: 30,
             // child: Container(
             //   decoration: BoxDecoration(
             //     shape: BoxShape.circle,
@@ -36,12 +35,12 @@ class TwoCirclesAvatar extends StatelessWidget {
             //     ),
             //   ),
             child: Container(
-              height: 40,
-              width: 40,
+              height: 50,
+              width: 50,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: primaryBlueColor,
-                border: Border.all(color: Colors.white),
+                border: Border.all(color: Colors.white, width: 1.5),
               ),
               child: Center(
                 child: Icon(

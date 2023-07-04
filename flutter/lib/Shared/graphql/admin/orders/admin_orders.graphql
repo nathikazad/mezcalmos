@@ -1,0 +1,236 @@
+# For mez admin only
+
+subscription admin_listen_on_dv_orders($inProccess: Boolean!) {
+  delivery_order(
+    where: {
+      service_provider_type: { _eq: "deliveryCompany" }
+      in_process: { _eq: $inProccess }
+    }
+  ) {
+    id
+    order_time
+    status
+    package_cost
+    package_ready
+    delivery_cost
+    order_type
+    dropoff_address
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    service_provider_id
+    service_provider_type
+  }
+}
+query admin_get_dv_orders($inProccess: Boolean!, $limit: Int, $offset: Int) {
+  delivery_order(
+    limit: $limit
+    offset: $offset
+    where: {
+      service_provider_type: { _eq: "deliveryCompany" }
+      in_process: { _eq: $inProccess }
+    }
+    order_by: { order_time: desc }
+  ) {
+    id
+    order_time
+    status
+    package_cost
+    delivery_cost
+    package_ready
+    dropoff_address
+    dropoff_gps
+    order_type
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    service_provider_id
+    service_provider_type
+  }
+}
+
+subscription admin_listen_on_restaurant_orders($inProccess: Boolean!) {
+  restaurant_order(where: { in_process: { _eq: $inProccess } }) {
+    id
+    restaurant_id
+    order_time
+    status
+    delivery {
+      delivery_cost
+    }
+    total_cost
+    to_location_address
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
+query admin_get_restaurant_orders(
+  $inProccess: Boolean!
+  $limit: Int
+  $offset: Int
+) {
+  restaurant_order(
+    limit: $limit
+    offset: $offset
+    where: { in_process: { _eq: $inProccess } }
+    order_by: { order_time: desc }
+  ) {
+    id
+    restaurant_id
+    order_time
+    status
+    delivery {
+      delivery_cost
+    }
+    total_cost
+    to_location_address
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
+
+subscription admin_listen_on_laundry_orders($inProccess: Boolean!) {
+  laundry_order(where: { in_process: { _eq: $inProccess } }) {
+    id
+    store_id
+    order_time
+    status
+    from_customer_delivery {
+      delivery_cost
+    }
+    to_customer_delivery {
+      delivery_cost
+    }
+
+    total_cost
+    customer_address
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
+query admin_get_laundry_orders(
+  $inProccess: Boolean!
+  $limit: Int
+  $offset: Int
+) {
+  laundry_order(
+    limit: $limit
+    offset: $offset
+    where: { in_process: { _eq: $inProccess } }
+    order_by: { order_time: desc }
+  ) {
+    id
+    store_id
+    order_time
+    status
+    from_customer_delivery {
+      delivery_cost
+    }
+    to_customer_delivery {
+      delivery_cost
+    }
+    total_cost
+    customer_address
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
+
+query admin_get_service__orders(
+  $serviceProviderType: String!
+  $serviceProviderId: Int!
+  $inProccess: Boolean!
+  $limit: Int!
+  $offset: Int!
+) {
+  delivery_order(
+    where: {
+      service_provider_type: { _eq: $serviceProviderType }
+      service_provider_id: { _eq: $serviceProviderId }
+      in_process: { _eq: $inProccess }
+    }
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    order_time
+    status
+    package_cost
+    package_ready
+    dropoff_address
+    order_type
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    service_provider_id
+    service_provider_type
+  }
+}
+
+subscription admin_listen_on_business_orders($inProccess: Boolean!) {
+  business_order_request(where: { in_progress: { _eq: $inProccess } }) {
+    id
+    business_id
+    order_time
+    status
+    cost
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
+
+query admin_get_business_orders(
+  $inProccess: Boolean!
+  $limit: Int
+  $offset: Int
+) {
+  business_order_request(
+    limit: $limit
+    offset: $offset
+    where: { in_progress: { _eq: $inProccess } }
+    order_by: { order_time: desc }
+  ) {
+    id
+    business_id
+    order_time
+    status
+    cost
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}

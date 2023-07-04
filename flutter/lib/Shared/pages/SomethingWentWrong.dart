@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
@@ -32,7 +32,7 @@ class SomethingWentWrongScreen extends StatelessWidget {
         // appBar: mezcalmosAppBar(
         //   AppBarLeftButtonType.Lang,
         // ),
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
             onClick: () => Get.find<SideMenuDrawerController>().openMenu()),
         body: Flex(
           direction: Axis.vertical,

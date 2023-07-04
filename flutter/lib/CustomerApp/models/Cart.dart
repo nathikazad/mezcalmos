@@ -1,31 +1,29 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/Utilities/DeliveryType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 class Cart {
   List<CartItem> cartItems = <CartItem>[];
-  Location? toLocation;
+  MezLocation? toLocation;
   Restaurant? restaurant;
   DateTime? deliveryTime;
-  DeliveryType? deliveryType;
+  cModels.DeliveryType? deliveryType;
 
   String? notes;
-  PaymentType paymentType = PaymentType.Cash;
+  cModels.PaymentType paymentType = cModels.PaymentType.Cash;
 
   num? shippingCost;
   RouteInformation? _routeInformation;
@@ -51,7 +49,7 @@ class Cart {
               itemIdInCart: itemIdInCart));
       });
       toLocation = cartData["to"] != null
-          ? Location.fromFirebaseData(cartData["to"])
+          ? MezLocation.fromFirebaseData(cartData["to"])
           : null;
       notes = cartData["notes"];
       deliveryTime = (cartData["deliveryTime"] != null)
@@ -84,7 +82,7 @@ class Cart {
     });
 
     return <String, dynamic>{
-      "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+      "orderType": cModels.OrderType.Restaurant.toFirebaseFormatString(),
       "routeInformation": _routeInformation?.toJson(),
       "serviceProviderId": restaurant?.info.hasuraId.toString(),
       "quantity": quantity(),
@@ -115,14 +113,14 @@ class Cart {
 
   num get totalCost {
     num tcost = itemsCost() + (shippingCost ?? 0);
-    if (paymentType == PaymentType.Card &&
+    if (paymentType == cModels.PaymentType.Card &&
         restaurant!.paymentInfo?.stripe?.chargeFeesOnCustomer == true) {
       tcost += stripeFees;
     }
     return tcost;
   }
 
-  num get stripeFees => paymentType == PaymentType.Card
+  num get stripeFees => paymentType == cModels.PaymentType.Card
       ? getStripeCost(itemsCost() + (shippingCost ?? 0))
       : 0;
 
@@ -383,7 +381,7 @@ class CartItem {
   }
 
   bool get isSpecial {
-    return item.itemType == ItemType.Special &&
+    return item.itemType == cModels.ItemType.Special &&
         item.startsAt != null &&
         item.endsAt != null;
   }

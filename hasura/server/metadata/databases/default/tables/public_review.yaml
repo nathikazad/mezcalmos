@@ -12,6 +12,27 @@ object_relationships:
         remote_table:
           name: customer
           schema: customer
+computed_fields:
+  - name: from_image
+    definition:
+      function:
+        name: fromimage
+        schema: public
+  - name: from_name
+    definition:
+      function:
+        name: fromname
+        schema: public
+  - name: to_image
+    definition:
+      function:
+        name: toimage
+        schema: public
+  - name: to_name
+    definition:
+      function:
+        name: toname
+        schema: public
 insert_permissions:
   - role: customer
     permission:
@@ -63,19 +84,50 @@ select_permissions:
         - from_entity_type
         - note
         - to_entity_type
+        - created_at
+      computed_fields:
+        - from_image
+        - from_name
+        - to_image
+        - to_name
       filter: {}
+      allow_aggregations: true
+  - role: business_operator
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+        - created_at
+      computed_fields:
+        - from_image
+        - from_name
+        - to_image
+        - to_name
+      filter: {}
+      allow_aggregations: true
   - role: customer
     permission:
       columns:
-        - created_at
+        - id
+        - rating
+        - note
         - from_entity_id
         - from_entity_type
-        - id
-        - note
-        - rating
         - to_entity_id
         - to_entity_type
+        - created_at
+      computed_fields:
+        - from_image
+        - from_name
+        - to_image
+        - to_name
       filter: {}
+      allow_aggregations: true
   - role: delivery_driver
     permission:
       columns:
@@ -86,6 +138,47 @@ select_permissions:
         - from_entity_type
         - note
         - to_entity_type
+        - created_at
+      computed_fields:
+        - from_image
+        - from_name
+        - to_image
+        - to_name
+      filter: {}
+      allow_aggregations: true
+  - role: delivery_operator
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+        - created_at
+      computed_fields:
+        - from_image
+        - from_name
+        - to_image
+        - to_name
+      filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - from_entity_id
+        - id
+        - rating
+        - to_entity_id
+        - from_entity_type
+        - note
+        - to_entity_type
+        - created_at
+      computed_fields:
+        - from_image
+        - from_name
+        - to_image
+        - to_name
       filter: {}
   - role: mez_admin
     permission:
@@ -97,17 +190,29 @@ select_permissions:
         - from_entity_type
         - note
         - to_entity_type
+        - created_at
+      computed_fields:
+        - from_image
+        - from_name
+        - to_image
+        - to_name
       filter: {}
+      allow_aggregations: true
   - role: restaurant_operator
     permission:
       columns:
-        - created_at
         - from_entity_id
-        - from_entity_type
         - id
-        - note
         - rating
         - to_entity_id
+        - from_entity_type
+        - note
         - to_entity_type
+        - created_at
+      computed_fields:
+        - from_image
+        - from_name
+        - to_image
+        - to_name
       filter: {}
       allow_aggregations: true

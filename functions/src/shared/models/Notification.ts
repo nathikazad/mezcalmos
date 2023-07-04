@@ -13,14 +13,21 @@ export enum NotificationType {
   OperatorApproved = "operatorApproved",
   AuthorizeOperator = "authorizeOperator",
   NewRestaurant = "newRestaurant",
+  NewLaundry = "newLaundry",
   NewDriver = "newDriver",
-  DriverApproved = "driverApproved"
+  DriverApproved = "driverApproved",
+  ServiceProviderDeleted = "serviceProviderDeleted",
+  NewBusiness = "newBusiness",
+  PriceChange = "priceChange",
+ 
+  DriverRemoved = "driverRemoved",
 }
 
 export enum NotificationAction {
   ShowPopUp = "showPopUp",
   ShowSnackBarAlways = "showSnackbarAlways",
-  ShowSnackbarOnlyIfNotOnPage = "showSnackbarOnlyIfNotOnPage"
+  ShowSnackbarOnlyIfNotOnPage = "showSnackbarOnlyIfNotOnPage",
+  NavigteToLinkUrl = "navigteToLinkUrl"
 }
 
 export interface Notification {
@@ -43,7 +50,8 @@ export interface NewMessageNotification extends ForegroundNotification {
   sender: Participant,
   message: string,
   orderId?: string
-  orderType: OrderType
+  orderType: OrderType,
+  isServiceProviderChat: boolean,
 }
 
 export interface NewCallBackgroundNotification {
@@ -54,6 +62,18 @@ export interface NewCallBackgroundNotification {
   callerType: ParticipantType,
   notificationType: NotificationType,
   callNotificationType: CallNotificationtType,
+  callerId: string,
+  chatId: string,
+  [key: string]: string;
+}
+
+export interface EndCallBackgroundNotification {
+  linkUrl: string,
+  callerType: ParticipantType,
+  notificationType: NotificationType,
+  callNotificationType: CallNotificationtType,
+  callerId: string,
+  chatId: string,
   [key: string]: string;
 }
 

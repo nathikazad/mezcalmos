@@ -45,6 +45,11 @@
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
+		<string>http</string>
+		<string>https</string>
+		<string>sms</string>
+        <string>tel</string>
+        <string>mailto</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -60,10 +65,14 @@
 	<string>App need access to PhotoLibrary in order to change User's profile pictures.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>App Needs camera access in case the user wanted to change his/her profile picture directly using his iPhone's camera.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need microphone access in order to give the ability for our customers to call their delivery drivers.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>remote-notification</string>
+		<string>voip</string>
+		<string>processing</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -76,7 +85,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-
+		<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://mezc.co</string>
+	</array>
 
  	<key>CFBundlePrimaryIcon</key>
 	<dict>

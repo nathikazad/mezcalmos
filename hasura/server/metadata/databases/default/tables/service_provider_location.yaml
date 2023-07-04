@@ -1,0 +1,103 @@
+table:
+  name: location
+  schema: service_provider
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
+update_permissions:
+  - role: delivery_operator
+    permission:
+      columns:
+        - address
+        - gps
+      filter: {}
+      check: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - address
+        - gps
+      filter: {}
+      check: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - address
+        - gps
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - address
+        - gps
+      filter: {}
+      check: {}
