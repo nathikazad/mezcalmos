@@ -20,13 +20,17 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
 
 class MessagesListView extends StatefulWidget {
-  const MessagesListView({super.key, this.entityType, this.showAppbar = true});
+  const MessagesListView(
+      {super.key, this.entityType, this.entityId, this.showAppbar = true});
   final EntityType? entityType;
+  final int? entityId;
+
   final bool showAppbar;
 
-  static Future<void> navigate({required EntityType entityType}) async {
+  static Future<void> navigate(
+      {required EntityType entityType, required int entityId}) async {
     return MezRouter.toPath(constructPath(),
-        arguments: {"entityType": entityType});
+        arguments: {"entityType": entityType, "entityId": entityId});
   }
 
   static String constructPath() {
@@ -40,6 +44,7 @@ class MessagesListView extends StatefulWidget {
 class _MessagesListViewState extends State<MessagesListView> {
   late MessagesListViewController viewcontroller;
   EntityType? serviceProvider;
+  int? entityId;
 
   @override
   void initState() {
@@ -57,7 +62,9 @@ class _MessagesListViewState extends State<MessagesListView> {
         viewcontroller = CustMessagesListViewController();
         break;
       case EntityType.Business:
-        viewcontroller = BsOpMessagesListViewController();
+        viewcontroller = ServiceProviderMessagesListViewController(
+            serviceId: entityId!,
+            type: serviceProvider!.toServiceProviderType());
         break;
       case EntityType.Admin:
         viewcontroller = AdminMessagesListViewController();
@@ -69,6 +76,7 @@ class _MessagesListViewState extends State<MessagesListView> {
   }
 
   void _assignVariables() {
+    entityId = widget.entityId ?? MezRouter.bodyArguments?["entityId"] as int?;
     serviceProvider = widget.entityType ??
         MezRouter.bodyArguments?["entityType"] as EntityType?;
   }

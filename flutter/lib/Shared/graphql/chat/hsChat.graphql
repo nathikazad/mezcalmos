@@ -33,8 +33,9 @@ query getMezAdminChat($recipient_id: Int!, $recipient_type: String!) {
 }
 
 
-query get_customer_chats($customer_id: Int) {
-  service_provider_customer_chat(where: {customer_id: {_eq: $customer_id}}, order_by: {chat: {last_message_sent: desc}}) {
+query get_customer_chats($customer_id: Int, $limit: Int, $offset: Int) {
+  service_provider_customer_chat(   limit: $limit,
+    offset: $offset,,where: {customer_id: {_eq: $customer_id}}, order_by: {chat: {last_message_sent: desc}}) {
     service_provider_id
     chat {
       id
@@ -44,8 +45,21 @@ query get_customer_chats($customer_id: Int) {
     }
   }
 }
-query get_service_provider_chats($service_id: Int, $service_provider_type: String) {
-  service_provider_customer_chat(where: {service_provider_id: {_eq: $service_id}, service_provider_type: {_eq: $service_provider_type}}, order_by: {chat: {last_message_sent: desc}}) {
+subscription listen_on_customer_chats($customer_id: Int, $limit: Int, $offset: Int) {
+  service_provider_customer_chat(   limit: $limit,
+    offset: $offset,,where: {customer_id: {_eq: $customer_id}}, order_by: {chat: {last_message_sent: desc}}) {
+    service_provider_id
+    chat {
+      id
+     
+      last_message
+     
+    }
+  }
+}
+query get_service_provider_chats($service_id: Int, $service_provider_type: String,$limit: Int, $offset: Int) {
+  service_provider_customer_chat(   limit: $limit,
+    offset: $offset,,where: {service_provider_id: {_eq: $service_id}, service_provider_type: {_eq: $service_provider_type}}, order_by: {chat: {last_message_sent: desc}}) {
     service_provider_id
     chat {
       id
@@ -54,6 +68,21 @@ query get_service_provider_chats($service_id: Int, $service_provider_type: Strin
       creation_time
       last_message
       last_message_sent
+    }
+  }
+}
+subscription listen_on_service_provider_chats($service_id: Int, $service_provider_type: String,$limit: Int, $offset: Int) {
+  service_provider_customer_chat(
+    limit: $limit,
+    offset: $offset,
+    
+    
+    where: {service_provider_id: {_eq: $service_id}, service_provider_type: {_eq: $service_provider_type}}, order_by: {chat: {last_message_sent: desc}}) {
+    service_provider_id
+    chat {
+      id
+      last_message
+      
     }
   }
 }
