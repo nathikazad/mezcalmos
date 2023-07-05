@@ -86,9 +86,39 @@ subscription listen_on_service_provider_chats($service_id: Int, $service_provide
       
     }
   }
+}query get_admin_service_customer_chats($limit: Int, $offset: Int) {
+  service_provider_customer_chat(   limit: $limit,
+    offset: $offset, order_by: {chat: {last_message_sent: desc}}) {
+    service_provider_id
+    chat {
+      id
+      chat_info
+      messages
+      creation_time
+      last_message
+      last_message_sent
+    }
+  }
 }
-query get_admin_chats {
-  mez_admin_chat( order_by: {chat: {last_message_sent: desc}}) {
+subscription listen_on_admin_service_customer_chats($limit: Int, $offset: Int) {
+  service_provider_customer_chat(
+    limit: $limit,
+    offset: $offset,
+    
+    
+    order_by: {chat: {last_message_sent: desc}}) {
+    service_provider_id
+    chat {
+      id
+      last_message
+   
+      
+    }
+  }
+}
+query get_admin_chats($limit: Int,$offset: Int) {
+
+  mez_admin_chat( limit : $limit,offset : $offset,order_by: {chat: {last_message_sent: desc}}) {
      
     recipient_id
     recipient_type
@@ -99,6 +129,19 @@ query get_admin_chats {
       creation_time
       last_message
       last_message_sent
+    }
+  }
+}
+subscription listen_on_admin_chats($limit: Int,$offset: Int) {
+
+  mez_admin_chat( limit : $limit,offset : $offset,order_by: {chat: {last_message_sent: desc}}) {
+     
+  
+    chat {
+      id
+      
+      last_message
+     
     }
   }
 }

@@ -347,12 +347,19 @@ Stream<List<Message>?> listen_on_customer_chats({
   });
 }
 
-Future<List<HasuraChat>> get_admin_chats() async {
+Future<List<HasuraChat>> get_admin_services_chats(
+    {bool withCache = true, int limit = 10, int offset = 0}) async {
   final List<HasuraChat> _chats = <HasuraChat>[];
 
   final QueryResult<Query$get_admin_chats> response =
       await _hasuraDb.graphQLClient.query$get_admin_chats(
-    Options$Query$get_admin_chats(),
+    Options$Query$get_admin_chats(
+        fetchPolicy:
+            withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+        variables: Variables$Query$get_admin_chats(
+          limit: limit,
+          offset: offset,
+        )),
   );
   mezDbgPrint(
       "chat response $response  ${response.parsedData?.mez_admin_chat}");
@@ -392,6 +399,123 @@ Future<List<HasuraChat>> get_admin_chats() async {
   } else {
     return [];
   }
+}
+
+Stream<List<Message>?> listen_on_admin_services_chats({
+  bool withCache = true,
+  int limit = 10,
+  int offset = 0,
+}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_admin_chats(
+          Options$Subscription$listen_on_admin_chats(
+              variables: Variables$Subscription$listen_on_admin_chats(
+                  limit: limit, offset: offset)))
+      .map<List<Message>?>(
+          (QueryResult<Subscription$listen_on_admin_chats> event) {
+    if (event.hasException) {
+      throwError(event.exception);
+    }
+    if (event.parsedData?.mez_admin_chat != null) {
+      return event.parsedData!.mez_admin_chat
+          .map<Message>(
+              (Subscription$listen_on_admin_chats$mez_admin_chat e) => Message(
+                    message: e.chat!.last_message['message'],
+                    timestamp: DateTime.parse(e.chat!.last_message['timestamp'])
+                        .toLocal(),
+                    userId: e.chat!.last_message['userId'],
+                  ))
+          .toList();
+    }
+    return null;
+  });
+}
+
+Future<List<HasuraChat>> get_admin_customers_chats(
+    {bool withCache = true, int limit = 10, int offset = 0}) async {
+  final List<HasuraChat> _chats = <HasuraChat>[];
+
+  final QueryResult<Query$get_admin_service_customer_chats> response =
+      await _hasuraDb.graphQLClient.query$get_admin_service_customer_chats(
+    Options$Query$get_admin_service_customer_chats(
+        fetchPolicy:
+            withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+        variables: Variables$Query$get_admin_service_customer_chats(
+          limit: limit,
+          offset: offset,
+        )),
+  );
+
+  if (response.parsedData?.service_provider_customer_chat != null) {
+    response.parsedData!.service_provider_customer_chat.forEach(
+        (Query$get_admin_service_customer_chats$service_provider_customer_chat
+            data) async {
+      _chats.add(HasuraChat(
+          chatInfo: HasuraChatInfo(
+            chatTite:
+                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
+                    ['chatTitle'],
+            phoneNumber:
+                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
+                    ['phoneNumber'],
+            chatImg:
+                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
+                    ['chatImage'],
+            parentlink:
+                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
+                    ['parentLink'],
+          ),
+          creationTime: DateTime.parse(data.chat.creation_time).toLocal(),
+          id: data.chat.id,
+          messages: _get_messages(data.chat.messages),
+          lastMessage: data.chat.last_message != null
+              ? Message(
+                  message: data.chat.last_message['message'],
+                  timestamp: DateTime.parse(data.chat.last_message['timestamp'])
+                      .toLocal(),
+                  userId: data.chat.last_message['userId'],
+                )
+              : null,
+          participants: []));
+    });
+    return _chats;
+  } else {
+    return [];
+  }
+}
+
+Stream<List<Message>?> listen_on_admin_customers_chats({
+  bool withCache = true,
+  int limit = 10,
+  int offset = 0,
+}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_admin_service_customer_chats(
+          Options$Subscription$listen_on_admin_service_customer_chats(
+              variables:
+                  Variables$Subscription$listen_on_admin_service_customer_chats(
+                      limit: limit, offset: offset)))
+      .map<List<Message>?>(
+          (QueryResult<Subscription$listen_on_admin_service_customer_chats>
+              event) {
+    if (event.hasException) {
+      throwError(event.exception);
+    }
+    if (event.parsedData?.service_provider_customer_chat != null) {
+      return event.parsedData!.service_provider_customer_chat
+          .map<Message>(
+              (Subscription$listen_on_admin_service_customer_chats$service_provider_customer_chat
+                      e) =>
+                  Message(
+                    message: e.chat.last_message['message'],
+                    timestamp: DateTime.parse(e.chat.last_message['timestamp'])
+                        .toLocal(),
+                    userId: e.chat.last_message['userId'],
+                  ))
+          .toList();
+    }
+    return null;
+  });
 }
 
 Future<void> send_message(

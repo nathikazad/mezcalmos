@@ -298,22 +298,4 @@ class ServiceProviderMessagesListViewController
   }
 }
 
-class AdminMessagesListViewController extends MessagesListViewController {
-  @override
-  Future<void> getMessages() async {
-    isLoading.value = true;
-    // todo
 
-    final List<HasuraChat> chatData = await get_admin_chats();
-    _allChats.value = [];
-    _allChats.value = chatData;
-    mezDbgPrint(
-        "BsOpMessagesListViewController chats ${_allChats.map((HasuraChat element) => element.messages.isEmpty ? null : element.messages.last.message)}");
-    isLoading.value = false;
-  }
-
-  @override
-  void listenOnChats() {
-    // TODO: implement listenOnChats
-  }
-}
