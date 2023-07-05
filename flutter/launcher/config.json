@@ -370,8 +370,8 @@
       "pubspec": {
         "dependencies": {
           "agora_rtc_engine": "6.1.0",
-          "open_file": "^3.3.2"
-        },
+          "open_file": "^3.3.2",
+          "social_share": "^2.3.1"        },
         "assets": [
           "assets/images/",
           "assets/images/customer/",
@@ -748,7 +748,8 @@
       "pubspec": {
         "dependencies": {
           "agora_rtc_engine": "6.1.0",
-          "open_file": "^3.3.2"
+          "open_file": "^3.3.2",
+          "social_share": "^2.3.1"
         },
         "assets": [
           "assets/images/",
