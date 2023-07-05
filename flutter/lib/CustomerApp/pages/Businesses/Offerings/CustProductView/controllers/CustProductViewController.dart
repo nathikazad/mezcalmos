@@ -79,7 +79,7 @@ class CustProductViewController {
         parameters: BusinessItemParameters(
           numberOfUnits: 1,
           timeUnit: TimeUnit.Unit,
-          previousCost: totalOrderCost.value,
+          
         ),
         cost: totalOrderCost.value,
         product: _product.value,
