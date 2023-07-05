@@ -425,89 +425,22 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
   }
 
   void _showQrPdfModal() {
-    Future<File?> getFilePath() async {
-      final String fileName = "business_flyer_${DateTime.now()}.pdf";
-      // Get the application documents directory
-      File? file;
-      if (Platform.isIOS) {
-        final Directory dir = await getApplicationDocumentsDirectory();
-        file = File('${dir.path}/$fileName');
-      } else if (Platform.isAndroid) {
-        final Map<Permission, PermissionStatus> statuses = await [
-          Permission.storage,
-          Permission.manageExternalStorage,
-        ].request();
-
-        var storage = statuses[Permission.storage];
-        var manageExternalStorage = statuses[Permission.manageExternalStorage];
-        if (storage!.isGranted || manageExternalStorage!.isGranted) {
-          final String downloadsFolderPath = '/storage/emulated/0/Download';
-          final Directory dir = Directory(downloadsFolderPath);
-          file = File('${dir.path}/$fileName');
-        }
-      }
-      return file;
-    }
-
-    Future<void> downloadPdfFromLink(String url) async {
-      try {
-        if (kIsWeb) {
-          return;
-        }
-        final File? file = await getFilePath();
-        final String filePath = file!.path;
-
-        // Download the PDF file
-        final http.Response response = await http.get(Uri.parse(url));
-
-        // Save the file to the specified path
-        // File file = File(filePath);
-        await file.writeAsBytes(response.bodyBytes);
-
-        print('PDF downloaded successfully. File path: $filePath');
-        OpenFile.open(filePath);
-      } catch (e) {
-        print('Failed to download PDF: $e');
-      }
-    }
-
     Future<void> shareToSocial(ShareType type) async {
-      String filePath = "";
-      try {
-        final File? file = await getFilePath();
-        filePath = file!.path;
-        final http.Response response = await http.get(Uri.parse(
-            _viewController.serviceLink!.customerFlyerLinks![Language.EN]!));
+      final File? file = await _viewController.getDownloadedBusinessImage();
+      final String filePath = file?.path ?? "";
 
-        // Save the file to the specified path
-        // File file = File(filePath);
-        await file.writeAsBytes(response.bodyBytes);
-      } catch (e) {
-        print(e);
-      }
       switch (type) {
         case ShareType.CopyLink:
           final String text =
-              _viewController.serviceLink!.customerDeepLink.toString();
+              "https://mezkala.app/${_viewController.service.uniqueId.toString()}";
           Clipboard.setData(ClipboardData(text: text)).then(
               (value) => showSavedSnackBar(title: "Copied", subtitle: text));
           return;
         case ShareType.WhatsApp:
           await SocialShare.shareWhatsapp("content");
           return;
-        case ShareType.WhatsAppStatus:
-          await SocialShare.shareWhatsapp("content");
-          return;
-        case ShareType.Instagram:
-          await SocialShare.shareInstagramStory(
-              appId: "content", imagePath: filePath);
-          return;
         case ShareType.InstagramStory:
           await SocialShare.shareInstagramStory(
-              appId: "content", imagePath: filePath);
-          return;
-        case ShareType.Facebook:
-          await SocialShare.shareFacebookStory(
               appId: "content", imagePath: filePath);
           return;
         case ShareType.FacebookStory:
@@ -550,77 +483,62 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                 ),
               ),
               SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.link,
-                    color: primaryBlueColor,
-                  ),
-                  SizedBox(width: 2),
-                  GestureDetector(
-                    onTap: () {
-                      final String text = _viewController
-                          .serviceLink!.customerDeepLink
-                          .toString();
-                      Clipboard.setData(ClipboardData(text: text)).then(
-                          (value) => showSavedSnackBar(
-                              title: "Copied", subtitle: text));
-                    },
-                    child: Text(
-                      "Copy your link",
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        color: primaryBlueColor,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 2),
-                  Text("& share your account"),
-                ],
-              ),
-              SizedBox(height: 10),
+              Divider(),
+              SizedBox(height: 4),
               SizedBox(
                 height: 40.sp,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: 7,
+                  itemCount: _viewController.shareIconData.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 16),
-                      child: GestureDetector(
-                        onTap: () {
-                          shareToSocial(
-                            _viewController.shareIconData[index].type,
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 2.0),
-                              child: SizedBox(
-                                height: 40,
-                                width: 40,
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  radius: 40,
-                                  backgroundImage: AssetImage(
-                                    _viewController.shareIconData[index].icon,
+                      child: Builder(builder: (context) {
+                        bool isLoading = false;
+                        return StatefulBuilder(builder: (context, setState) {
+                          return GestureDetector(
+                            onTap: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              await shareToSocial(
+                                _viewController.shareIconData[index].type,
+                              );
+                              setState(() {
+                                isLoading = false;
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 2.0),
+                                  child: SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: isLoading
+                                        ? CircularProgressIndicator()
+                                        : CircleAvatar(
+                                            backgroundColor: Colors.transparent,
+                                            radius: 40,
+                                            backgroundImage: AssetImage(
+                                              _viewController
+                                                  .shareIconData[index].icon,
+                                            ),
+                                          ),
                                   ),
                                 ),
-                              ),
+                                Text(
+                                  "${_i18n()[_viewController.shareIconData[index].label]}",
+                                  style: context.textTheme.labelSmall!.copyWith(
+                                    letterSpacing: 0,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              "${_i18n()[_viewController.shareIconData[index].label]}",
-                              style: context.textTheme.labelSmall!.copyWith(
-                                letterSpacing: 0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                          );
+                        });
+                      }),
                     );
                   },
                 ),
@@ -654,7 +572,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                 borderColor: primaryBlueColor,
                 onClick: () async {
                   if (_viewController.serviceLink!.customerFlyerLinks != null) {
-                    await downloadPdfFromLink(_viewController
+                    await _viewController.downloadPdfFromLink(_viewController
                         .serviceLink!.customerFlyerLinks![Language.EN]!);
                     return;
                   }
@@ -674,7 +592,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                 backgroundColor: Colors.white,
                 onClick: () async {
                   if (_viewController.serviceLink!.customerFlyerLinks != null) {
-                    await downloadPdfFromLink(_viewController
+                    await _viewController.downloadPdfFromLink(_viewController
                         .serviceLink!.customerFlyerLinks![Language.ES]!);
                     return;
                   }
