@@ -13,6 +13,25 @@ export async function createLaundryStore(
 ): Promise<ServiceProvider>  {
     let chain = getHasura();
 
+    if(laundryDetails.uniqueId) {
+        let queryResponse = await chain.query({
+            service_provider_details: [{
+                where: {
+                    unique_id: {
+                        _eq: laundryDetails.uniqueId
+                    }
+                }
+            }, {
+                id: true,
+            }]
+        });
+        if(queryResponse.service_provider_details.length) {
+            throw new MezError(LaundryError.UniqueIdAlreadyExists);
+        }
+    }
+    if(laundryDetails.phoneNumber.length == 10) {
+        laundryDetails.phoneNumber = `+52${laundryDetails.phoneNumber}`;
+    }
     let uniqueId: string = laundryDetails.uniqueId ?? generateString();
 
     let linksResponse: Partial<Record<DeepLinkType, IDeepLink>> = await generateDeepLinks(uniqueId, AppType.Laundry)

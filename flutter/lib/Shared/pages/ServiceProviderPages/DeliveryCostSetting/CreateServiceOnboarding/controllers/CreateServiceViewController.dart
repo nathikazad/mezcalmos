@@ -316,7 +316,7 @@ class CreateServiceViewController {
       final RestaurantResponse res =
           await CloudFunctions.restaurant3_createRestaurant(
         name: serviceInput.value.serviceInfo!.name,
-        uniqueId: businessId.text.trim(),
+        uniqueId: (businessId.text.isEmpty) ? null : businessId.text.trim(),
         phoneNumber: phone.text,
         image: serviceInput.value.serviceInfo!.image,
         location: cModels.Location(
@@ -368,7 +368,7 @@ class CreateServiceViewController {
             address: serviceInput.value.serviceInfo!.location.address),
         language: languages.value,
         profile: businessProfile!,
-        uniqueId: businessId.text.trim(),
+        uniqueId: (businessId.text.isEmpty) ? null : businessId.text.trim(),
         schedule: oldSchedule.value,
       );
       if (res.success == false) {
