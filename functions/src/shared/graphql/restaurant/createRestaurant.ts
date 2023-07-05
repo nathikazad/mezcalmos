@@ -1,5 +1,5 @@
 import { $, notification_info_constraint, notification_info_update_column } from "../../../../../hasura/library/src/generated/graphql-zeus";
-import { RestaurantDetails } from "../../../restaurant/createNewRestaurant";
+import { RestaurantDetails, RestaurantError } from "../../../restaurant/createNewRestaurant";
 import { getHasura } from "../../../utilities/hasura";
 import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../../utilities/links/deeplink";
 import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
@@ -14,6 +14,25 @@ export async function createRestaurant(
 ): Promise<ServiceProvider> {
   let chain = getHasura();
 
+  if(restaurantDetails.uniqueId) {
+    let queryResponse = await chain.query({
+        service_provider_details: [{
+            where: {
+                unique_id: {
+                    _eq: restaurantDetails.uniqueId
+                }
+            }
+        }, {
+            id: true,
+        }]
+    });
+    if(queryResponse.service_provider_details.length) {
+        throw new MezError(RestaurantError.UniqueIdAlreadyExists);
+    }
+  }
+  if(restaurantDetails.phoneNumber.length == 10) {
+    restaurantDetails.phoneNumber = `+52${restaurantDetails.phoneNumber}`;
+}
   let uniqueId: string = restaurantDetails.uniqueId ?? generateString();
 
   let linksResponse: Partial<Record<DeepLinkType, IDeepLink>> = await generateDeepLinks(uniqueId, AppType.Restaurant)
@@ -102,7 +121,7 @@ export async function createRestaurant(
 
   if (response.insert_restaurant_restaurant_one == null) {
 
-    throw new MezError("restaurantCreationError");
+    throw new MezError(RestaurantError.RestaurantCreationError);
   }
   if(restaurantDetails.restaurantOperatorNotificationToken) {
     chain.mutation({

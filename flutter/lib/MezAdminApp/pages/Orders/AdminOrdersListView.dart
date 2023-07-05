@@ -8,12 +8,9 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
@@ -138,8 +135,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                                 .restaurantOrders.value![index].id);
                       })),
             )
-          : (viewController.restaurantPastOrders.value == null ||
-                  viewController.restaurantPastOrders.value.isEmpty == true)
+          : (viewController.restaurantPastOrders.value.isEmpty == true)
               ? Container(
                   margin: EdgeInsets.only(top: 10.h),
                   alignment: Alignment.center,
@@ -162,8 +158,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                                 viewController.deliveryOrders.value![index].id);
                       })),
             )
-          : (viewController.dvPastOrders.value == null ||
-                  viewController.dvPastOrders.value.isEmpty == true)
+          : (viewController.dvPastOrders.value.isEmpty == true)
               ? Container(
                   margin: EdgeInsets.only(top: 10.h),
                   alignment: Alignment.center,
@@ -186,8 +181,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                                 viewController.laundryOrders.value![index].id);
                       })),
             )
-          : (viewController.laundryPastOrders.value == null ||
-                  viewController.laundryPastOrders.value.isEmpty == true)
+          : (viewController.laundryPastOrders.value.isEmpty == true)
               ? Container(
                   margin: EdgeInsets.only(top: 10.h),
                   alignment: Alignment.center,
@@ -211,8 +205,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                                 viewController.businessOrders.value![index].id);
                       })),
             )
-          : (viewController.businessPastOrders.value == null ||
-                  viewController.businessPastOrders.value.isEmpty == true)
+          : (viewController.businessPastOrders.value.isEmpty == true)
               ? Container(
                   margin: EdgeInsets.only(top: 10.h),
                   alignment: Alignment.center,

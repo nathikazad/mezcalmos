@@ -153,7 +153,7 @@ class CustServiceViewController {
           parameters: BusinessItemParameters(
             numberOfUnits: totalHours.value,
             timeUnit: timeCost.value!.keys.first,
-            previousCost: totalOrderCost.value,
+            
           ),
           cost: totalOrderCost.value,
           service: _service.value,

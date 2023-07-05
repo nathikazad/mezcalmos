@@ -23,9 +23,9 @@ Future<List<RentalCard>> get_rental_by_category(
     int? limit,
     required bool withCache}) async {
   final List<RentalCard> _rentals = <RentalCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
 
   final QueryResult<Query$get_rental_by_category> response = await _db
@@ -41,7 +41,7 @@ Future<List<RentalCard>> get_rental_by_category(
                   ["uncategorized"],
               tags: tags ?? [],
               distance: distance,
-              online_ordering: online_ordering_exp,
+              online_ordering: onlineOrderingExp,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               offset: offset,
@@ -125,7 +125,7 @@ Future<RentalWithBusinessCard?> get_rental_by_id(
             phoneNo: data.business.details.phone_number,
             onlineOrdering: data.business.details.online_ordering,
             lastActive: data.business.details.last_active_time != null
-                ? DateTime.parse(data.business.details.last_active_time!)
+                ? DateTime.parse(data.business.details.last_active_time)
                 : null,
             id: data.business.id,
             detailsId: data.business.details.id,
@@ -165,7 +165,8 @@ Future<HomeWithBusinessCard?> get_home_by_id(
   if (response.parsedData?.business_home_by_pk == null) {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   } else if (response.parsedData != null) {
-    mezDbgPrint("✅✅✅✅ Hasura query success ");
+    mezDbgPrint(
+        "✅✅✅✅ Hasura query success online ordering ====>${response.parsedData?.business_home_by_pk?.business?.details.online_ordering} ");
     final Query$get_home_by_id$business_home_by_pk? data =
         response.parsedData?.business_home_by_pk!;
 
@@ -207,7 +208,7 @@ Future<HomeWithBusinessCard?> get_home_by_id(
             phoneNo: data.business!.details.phone_number,
             onlineOrdering: data.business!.details.online_ordering,
             lastActive: data.business!.details.last_active_time != null
-                ? DateTime.parse(data.business!.details.last_active_time!)
+                ? DateTime.parse(data.business!.details.last_active_time)
                 : null,
             id: data.business!.id,
             detailsId: data.business!.details.id,

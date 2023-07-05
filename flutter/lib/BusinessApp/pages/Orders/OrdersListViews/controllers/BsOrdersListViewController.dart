@@ -31,10 +31,20 @@ class BsOrdersListViewController {
   bool _pastFetchingData = false;
   bool _pastReachedEndOfData = false;
   StreamSubscription<List<MinimalBsOrder>?>? pendingOrderStream;
+  StreamSubscription<List<MinimalBsOrder>?>? upcomingOrdersStream;
   String? subscriptionId;
 
   Future<void> init({required TickerProvider vsync}) async {
     tabController = TabController(length: 3, vsync: vsync);
+    tabController.addListener(() {
+      if (tabController.index == 1) {
+        fetchUpcoming();
+      }
+      if (tabController.index == 2) {
+        fetchPast();
+      }
+    });
+
     _upcomingScrollController.onBottomReach(fetchUpcoming, sensitivity: 200);
     _pastScrollController.onBottomReach(fetchPast, sensitivity: 200);
     mezDbgPrint("businessId =================>$businessId");
@@ -60,7 +70,8 @@ class BsOrdersListViewController {
         if (event != null) {
           _pendingOrders.clear();
           _pendingOrders.value = event;
-          _pendingOrders.sort((a, b) => a.time.compareTo(b.time));
+          _pendingOrders.sort(
+              (MinimalBsOrder a, MinimalBsOrder b) => a.time.compareTo(b.time));
         }
       });
     }, cancel: () {
@@ -86,7 +97,8 @@ class BsOrdersListViewController {
               limit: fetchSize,
               withCache: false);
       upcomingItems += newData;
-      upcomingItems.sort((a, b) => a.time.compareTo(b.time));
+      upcomingItems.sort((MinimumBusinessItem a, MinimumBusinessItem b) =>
+          a.time.compareTo(b.time));
       if (newData.length == 0) {
         _upcomingReachedEndOfData = true;
       }
@@ -109,7 +121,8 @@ class BsOrdersListViewController {
           limit: fetchSize,
           withCache: false);
       _pastItems += newData;
-      _pastItems.sort((a, b) => a.time.compareTo(b.time));
+      _pastItems.sort((MinimumBusinessItem a, MinimumBusinessItem b) =>
+          a.time.compareTo(b.time));
       if (newData.length == 0) {
         _pastReachedEndOfData = true;
       }

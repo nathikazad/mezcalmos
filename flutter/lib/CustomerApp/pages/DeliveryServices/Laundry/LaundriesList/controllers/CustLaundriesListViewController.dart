@@ -1,24 +1,29 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapLaundryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapLaundryCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/constants/mapConstants.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
-import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
 
 class CustLaundriesListViewController {
+  MGoogleMapController mapController = MGoogleMapController(
+    enableMezSmartPointer: true,
+  );
   RxList<Laundry> filteredServices = RxList<Laundry>.empty();
 
   List<Laundry> _services = List<Laundry>.empty();
@@ -51,11 +56,11 @@ class CustLaundriesListViewController {
   RxList<Laundry> _mapViewLaundries = <Laundry>[].obs;
   List<Laundry> get mapViewLaundries => _mapViewLaundries;
 
-  RxSet<Marker> _laundriesMarkers = <Marker>{}.obs;
-  RxSet<Marker> get laundriesMarkers => _laundriesMarkers;
+  RxSet<MezMarker> _laundriesMarkers = <MezMarker>{}.obs;
+  RxSet<MezMarker> get laundriesMarkers => _laundriesMarkers;
 
-  RxSet<Marker> _allMarkers = <Marker>{}.obs;
-  RxSet<Marker> get allMarkers => _allMarkers;
+  RxSet<MezMarker> _allMarkers = <MezMarker>{}.obs;
+  RxSet<MezMarker> get allMarkers => _allMarkers;
 
   BuildContext? ctx;
   // Map view //
@@ -150,33 +155,18 @@ class CustLaundriesListViewController {
   // Map view //
   void switchView() => _isMapView.value = !_isMapView.value;
 
-  Future<void> _fetchMapViewLaundries(
-      {bool currentPostitionBased = true}) async {
+  Future<void> fetchMapViewLaundries(
+      {required LatLng? fromLoc, required double? distance}) async {
     try {
-      if (currentPostitionBased) {
-        _mapViewLaundries.value = await get_laundries(
-            fromLocation: cModels.Location(
-                lat: _currentLocation.latitude,
-                lng: _currentLocation.longitude,
-                address: ''),
-            withCache: false,
-            online_ordering: _filterInput['onlineOrder']!.last.contains('true')
-                ? true
-                : null,
-            distance: getFetchDistance);
-      } else {
-        _mapViewLaundries.value = await get_laundries(
-            distance: _calculateDistance(
-                await _googleMapController!.getVisibleRegion()),
-            fromLocation: cModels.Location(
-                lat: _screenToWorldPosition!.latitude,
-                lng: _screenToWorldPosition!.longitude,
-                address: ''),
-            online_ordering: _filterInput['onlineOrder']!.last.contains('true')
-                ? true
-                : null,
-            withCache: false);
-      }
+      _mapViewLaundries.value = await get_laundries(
+          fromLocation: cModels.Location(
+              lat: fromLoc?.latitude ?? _currentLocation.latitude,
+              lng: fromLoc?.longitude ?? _currentLocation.longitude,
+              address: ''),
+          withCache: false,
+          online_ordering:
+              _filterInput['onlineOrder']!.last.contains('true') ? true : null,
+          distance: distance ?? getFetchDistance);
     } catch (e) {
       mezDbgPrint(e);
     } finally {
@@ -185,35 +175,36 @@ class CustLaundriesListViewController {
   }
 
   Future<void> _fillMapsMarkers() async {
-    _laundriesMarkers = <Marker>{}.obs;
+    _laundriesMarkers = <MezMarker>{}.obs;
 
     for (Laundry restaurant in _mapViewLaundries) {
-      await _allMarkers.addLabelMarker(LabelMarker(
+      _allMarkers.add(MezMarker(
         flat: true,
-        label: null,
-        altIconPath: mezLaundryIcon,
+        icon: await bitmapDescriptorLoader(
+            (await cropRonded(
+                (await rootBundle.load(mezLaundryIcon)).buffer.asUint8List())),
+            70,
+            70,
+            isBytes: true),
         markerId: MarkerId(restaurant.info.hasuraId.toString()),
-        backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(restaurant),
         position: LatLng(restaurant.info.location.position.latitude!,
             restaurant.info.location.position.longitude!),
       ));
-      await _laundriesMarkers.addLabelMarker(LabelMarker(
+      _laundriesMarkers.add(MezMarker(
+        icon: await bitmapDescriptorLoader(
+            (await cropRonded(
+                (await rootBundle.load(mezLaundryIcon)).buffer.asUint8List())),
+            70,
+            70,
+            isBytes: true),
         flat: true,
-        label: null,
-        altIconPath: mezLaundryIcon,
         markerId: MarkerId(restaurant.info.hasuraId.toString()),
-        backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(restaurant),
         position: LatLng(restaurant.info.location.position.latitude!,
             restaurant.info.location.position.longitude!),
       ));
     }
-  }
-
-  void fetchMapViewLaundries() {
-    _fetchMapViewLaundries(currentPostitionBased: false);
-    _showFetchButton.value = false;
   }
 
   void recenterMap() {
@@ -222,17 +213,6 @@ class CustLaundriesListViewController {
 
   void setOnlyOpenOnMap() =>
       _showOnlyOpenOnMap.value = !_showOnlyOpenOnMap.value;
-
-  Future<void> onMapCreated(GoogleMapController? gMapController) async {
-    _googleMapController = gMapController;
-    await _googleMapController?.setMapStyle(mezMapStyle);
-    await _fetchMapViewLaundries();
-  }
-
-  void onCameraMove(CameraPosition cameraPosition) {
-    _screenToWorldPosition = cameraPosition.target;
-    _showFetchButton.value = true;
-  }
 
   void _onSelectRentalTag(Laundry laundry) {
     showModalBottomSheet(

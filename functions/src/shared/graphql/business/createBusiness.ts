@@ -11,6 +11,25 @@ import { ServiceProviderType } from "../../models/Services/Service";
 export async function createBusiness(businessDetails: BusinessDetails, businessOperatorUserId: number): Promise<Business> {
     let chain = getHasura();
 
+    if(businessDetails.uniqueId) {
+        let queryResponse = await chain.query({
+            service_provider_details: [{
+                where: {
+                    unique_id: {
+                        _eq: businessDetails.uniqueId
+                    }
+                }
+            }, {
+                id: true,
+            }]
+        });
+        if(queryResponse.service_provider_details.length) {
+            throw new MezError(BusinessError.UniqueIdAlreadyExists);
+        }
+    }
+    if(businessDetails.phoneNumber.length == 10) {
+        businessDetails.phoneNumber = `+52${businessDetails.phoneNumber}`;
+    }
     let uniqueId: string = businessDetails.uniqueId ?? generateString();
 
     let linksResponse: Partial<Record<DeepLinkType, IDeepLink>> = await generateDeepLinks(uniqueId, AppType.Business);

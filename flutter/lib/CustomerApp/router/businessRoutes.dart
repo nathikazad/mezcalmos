@@ -1,3 +1,5 @@
+import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/BsHomeRentalOrderView.dart'
+    deferred as bsHomeRentalOrderView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart'
     deferred as custEventsListView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart'
@@ -12,6 +14,8 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView
     deferred as custServiceView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart'
     deferred as custHomeRentalsListView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustCoWorkingListView.dart'
+    deferred as custCoWorkingListView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/CustRealEstateListView.dart'
     deferred as custRealEstateListView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealEstateView/CustRealestateView.dart'
@@ -74,6 +78,8 @@ class CustBusinessRoutes {
   static String custImageViewRoute = "/customer/imageView";
   static String custCartRoute = "/customer/cart";
   static String custOrderViewRoute = "/customer/orderView/:id";
+  static String custCoWorkingListRoute = "/customer/coWorking";
+  static const String kBsOpBusinessOrder = '/businessOrders/:id';
 
   // wrappers //
   static String custRentalsWrapperRoute = "/rentalsWrapper";
@@ -165,6 +171,14 @@ class CustBusinessRoutes {
       builder: () => custHomeRentalsListView.CustHomeRentalListView(),
       middleware: <QMiddleware>[
         DefferedLoader(custHomeRentalsListView.loadLibrary),
+      ],
+    ),
+    QRoute(
+      name: custCoWorkingListRoute,
+      path: custCoWorkingListRoute,
+      builder: () => custCoWorkingListView.CustCoWorkingListView(),
+      middleware: <QMiddleware>[
+        DefferedLoader(custCoWorkingListView.loadLibrary),
       ],
     ),
     QRoute(
@@ -309,6 +323,14 @@ class CustBusinessRoutes {
       builder: () => custOrderView.CustOrderView(),
       middleware: <QMiddleware>[
         DefferedLoader(custOrderView.loadLibrary),
+      ],
+    ),
+    QRoute(
+      path: kBsOpBusinessOrder,
+      name: kBsOpBusinessOrder,
+      builder: () => bsHomeRentalOrderView.BsHomeRentalOrderView(),
+      middleware: <QMiddleware>[
+        DefferedLoader(bsHomeRentalOrderView.loadLibrary),
       ],
     ),
   ];

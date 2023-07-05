@@ -24,9 +24,12 @@ class BsHomeRentalOrderViewController {
   BusinessOrder? get order => _order.value;
   UserInfo? get customer => order?.customer;
   bool get hasChanges =>
-      order?.items.any((BusinessOrderItem element) =>
-          element.parameters.previousCost != null ||
-          element.parameters.previoustime != null) ??
+      order?.items.any((BusinessOrderItem element) {
+        mezDbgPrint(
+            "Checl item params ====> ${element.parameters.toFirebaseFormattedJson()}");
+        return element.parameters.previousCost != null ||
+            element.parameters.previoustime != null;
+      }) ??
       false;
   bool get orderIsRequested =>
       order?.status == BusinessOrderRequestStatus.RequestReceived;

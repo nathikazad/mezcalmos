@@ -3737,7 +3737,8 @@ enum RestaurantError {
   UserNotFound,
   DeepLinkError,
   QRGenerationError,
-  RestaurantCreationError
+  RestaurantCreationError,
+  UniqueIdAlreadyExists
 }
 
 extension ParseRestaurantErrorToString on RestaurantError {
@@ -3850,7 +3851,12 @@ extension ParseStringToCancelOrderError on String {
   }
 }
 
-enum BusinessError { UnhandledError, UserNotFound, BusinessCreationError }
+enum BusinessError {
+  UnhandledError,
+  UserNotFound,
+  BusinessCreationError,
+  UniqueIdAlreadyExists
+}
 
 extension ParseBusinessErrorToString on BusinessError {
   String toFirebaseFormatString() {
@@ -3950,7 +3956,8 @@ enum LaundryError {
   UserNotFound,
   DeepLinkError,
   QRGenerationError,
-  LaundryCreationError
+  LaundryCreationError,
+  UniqueIdAlreadyExists
 }
 
 extension ParseLaundryErrorToString on LaundryError {

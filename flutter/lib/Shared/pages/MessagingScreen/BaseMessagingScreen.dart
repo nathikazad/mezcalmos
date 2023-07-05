@@ -331,6 +331,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                             child: InkWell(
                               borderRadius: BorderRadius.circular(10),
                               onTap: () {
+                                mezDbgPrint(
+                                    "👫👫👫link: ${controller.chat.value!.chatInfo.parentlink}");
                                 MezRouter.toPath(
                                   controller.chat.value!.chatInfo.parentlink!,
                                 );
