@@ -1,3 +1,5 @@
+import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/BsHomeRentalOrderView.dart'
+    deferred as bsHomeRentalOrderView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart'
     deferred as custEventsListView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart'
@@ -74,6 +76,7 @@ class CustBusinessRoutes {
   static String custImageViewRoute = "/customer/imageView";
   static String custCartRoute = "/customer/cart";
   static String custOrderViewRoute = "/customer/orderView/:id";
+  static const String kBsOpBusinessOrder = '/businessOrders/:id';
 
   // wrappers //
   static String custRentalsWrapperRoute = "/rentalsWrapper";
@@ -309,6 +312,14 @@ class CustBusinessRoutes {
       builder: () => custOrderView.CustOrderView(),
       middleware: <QMiddleware>[
         DefferedLoader(custOrderView.loadLibrary),
+      ],
+    ),
+    QRoute(
+      path: kBsOpBusinessOrder,
+      name: kBsOpBusinessOrder,
+      builder: () => bsHomeRentalOrderView.BsHomeRentalOrderView(),
+      middleware: <QMiddleware>[
+        DefferedLoader(bsHomeRentalOrderView.loadLibrary),
       ],
     ),
   ];

@@ -84,6 +84,7 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
       case BusinessOpTabView.Messages:
         return MessagesListView(
           entityType: EntityType.Business,
+          entityId: opAuthController.companyId,
         );
 
       default:

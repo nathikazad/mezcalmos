@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
+import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
-import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
-import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 
 class CustHomeRentalViewController {
@@ -64,35 +64,36 @@ class CustHomeRentalViewController {
       _cartId.value = cartId;
       if (roomType != null) changeSelectedRoom(roomType);
     }
+    mezlog(isOnlineOrdering.value);
     _calcTotalOrderCost();
   }
 
   Future<void> fetchData({required int rentalId}) async {
     _homeRental.value = await get_home_by_id(
       id: rentalId,
-      withCache: true,
+      withCache: false,
     );
     final bool? multiRooms = (_homeRental
             .value!.details.additionalParameters?["additionalRooms"] as List?)
         ?.isNotEmpty;
     if (multiRooms != null) {
-      selectedRoom.value =
-          _homeRental.value!.details.additionalParameters?["additionalRooms"]
-                  ?[0]["roomType"] as String? ??
-              "";
-      isMultipleRooms.value = multiRooms;
-      additionalRooms.value = _homeRental
-              .value!.details.additionalParameters?["additionalRooms"]
-              ?.map<Map<String, dynamic>>(
-            (dynamic e) {
-              return {
-                "roomType": e["roomType"],
-                "cost": constructBusinessServiceCost(e["cost"]),
-              };
-            },
-          )?.toList() as List<Map<String, dynamic>>? ??
-          [];
-      selectedRoomCostUnits.value = additionalRooms[0]["cost"];
+      // selectedRoom.value =
+      //     _homeRental.value!.details.additionalParameters?["additionalRooms"]
+      //             ?[0]["roomType"] as String? ??
+      //         "";
+      // isMultipleRooms.value = multiRooms;
+      // additionalRooms.value = _homeRental
+      //         .value!.details.additionalParameters?["additionalRooms"]
+      //         ?.map<Map<String, dynamic>>(
+      //       (e) {
+      //         return {
+      //           "roomType": e["roomType"],
+      //           "cost": constructBusinessServiceCost(e["cost"]),
+      //         };
+      //       },
+      //     )?.toList() as List<Map<String, dynamic>>? ??
+      //     [];
+      // selectedRoomCostUnits.value = additionalRooms[0]["cost"];
     }
     _setInitialTimeCost();
     _calcTotalOrderCost();
@@ -102,7 +103,7 @@ class CustHomeRentalViewController {
     selectedRoom.value = value;
     final int index = _homeRental
         .value!.details.additionalParameters!["additionalRooms"]!
-        .indexWhere((dynamic e) => e["roomType"] == value);
+        .indexWhere((e) => e["roomType"] == value);
     _timeCost.value = additionalRooms[index]["cost"];
     selectedRoomCostUnits.value = additionalRooms[index]["cost"];
     _calcTotalOrderCost();
@@ -204,7 +205,6 @@ class CustHomeRentalViewController {
             numberOfUnits: _duration.value,
             timeUnit: timeCost.value!.keys.first,
             roomType: selectedRoom.value,
-            previousCost: totalOrderCost.value,
           ),
           cost: totalOrderCost.value,
           home: _homeRental.value,
