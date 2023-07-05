@@ -123,3 +123,25 @@ enum EntityType {
   Restaurant,
   Driver
 }
+
+extension EntityTypeHelper on EntityType {
+  ServiceProviderType toServiceProviderType() {
+    switch (this) {
+      case EntityType.Business:
+        return ServiceProviderType.Business;
+      case EntityType.Customer:
+        return ServiceProviderType.Customer;
+      case EntityType.Laundry:
+        return ServiceProviderType.Laundry;
+      case EntityType.DeliveryCompany:
+        return ServiceProviderType.DeliveryCompany;
+
+      case EntityType.Restaurant:
+        return ServiceProviderType.Restaurant;
+      case EntityType.Driver:
+        return ServiceProviderType.DeliveryDriver;
+      default:
+        throw Exception("EntityTypeHelper: $this is not a valid type");
+    }
+  }
+}

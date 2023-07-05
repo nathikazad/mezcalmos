@@ -155,14 +155,19 @@ Future<int?> get_admin_chat_id(
       : null;
 }
 
-Future<List<HasuraChat>> get_customer_chats({required int customerId}) async {
+Future<List<HasuraChat>> get_customer_chats(
+    {required int customerId,
+    bool withCache = true,
+    int limit = 10,
+    int offset = 0}) async {
   final List<HasuraChat> _chats = <HasuraChat>[];
 
   final QueryResult<Query$get_customer_chats> response =
       await _hasuraDb.graphQLClient.query$get_customer_chats(
     Options$Query$get_customer_chats(
-      variables: Variables$Query$get_customer_chats(customer_id: customerId),
-      fetchPolicy: FetchPolicy.networkOnly,
+      fetchPolicy: withCache ? FetchPolicy.cacheFirst : FetchPolicy.networkOnly,
+      variables: Variables$Query$get_customer_chats(
+          customer_id: customerId, limit: limit, offset: offset),
     ),
   );
 
@@ -205,21 +210,31 @@ Future<List<HasuraChat>> get_customer_chats({required int customerId}) async {
   }
 }
 
-Future<List<HasuraChat>> get_business_provider_chats({
+Future<List<HasuraChat>> get_service_provider_chats({
   required int serviceId,
+  required ServiceProviderType serviceType,
+  bool withCache = true,
+  int limit = 10,
+  int offset = 0,
 }) async {
   final List<HasuraChat> _chats = <HasuraChat>[];
 
   final QueryResult<Query$get_service_provider_chats> response =
       await _hasuraDb.graphQLClient.query$get_service_provider_chats(
     Options$Query$get_service_provider_chats(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
       variables: Variables$Query$get_service_provider_chats(
+        limit: limit,
+        offset: offset,
         service_id: serviceId,
-        service_provider_type:
-            ServiceProviderType.Business.toFirebaseFormatString(),
+        service_provider_type: serviceType.toFirebaseFormatString(),
       ),
     ),
   );
+  if (response.hasException) {
+    throwError(response.hasException);
+  }
   mezDbgPrint(
       "chat response $response $serviceId ${response.parsedData?.service_provider_customer_chat}");
   if (response.parsedData?.service_provider_customer_chat != null) {
@@ -258,21 +273,99 @@ Future<List<HasuraChat>> get_business_provider_chats({
   } else {
     return [];
   }
-}Future<List<HasuraChat>> get_admin_chats() async {
+}
+
+Stream<List<Message>?> listen_on_service_provider_chats({
+  required int serviceId,
+  required ServiceProviderType serviceType,
+  bool withCache = true,
+  int limit = 10,
+  int offset = 0,
+}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_service_provider_chats(
+          Options$Subscription$listen_on_service_provider_chats(
+              variables:
+                  Variables$Subscription$listen_on_service_provider_chats(
+                      limit: limit,
+                      offset: offset,
+                      service_id: serviceId,
+                      service_provider_type:
+                          serviceType.toFirebaseFormatString())))
+      .map<List<Message>?>(
+          (QueryResult<Subscription$listen_on_service_provider_chats> event) {
+    if (event.hasException) {
+      throwError(event.exception);
+    }
+    if (event.parsedData?.service_provider_customer_chat != null) {
+      return event.parsedData!.service_provider_customer_chat
+          .map<Message>(
+              (Subscription$listen_on_service_provider_chats$service_provider_customer_chat
+                      e) =>
+                  Message(
+                    message: e.chat.last_message['message'],
+                    timestamp: DateTime.parse(e.chat.last_message['timestamp'])
+                        .toLocal(),
+                    userId: e.chat.last_message['userId'],
+                  ))
+          .toList();
+    }
+    return null;
+  });
+}
+
+Stream<List<Message>?> listen_on_customer_chats({
+  required int customerId,
+  bool withCache = true,
+  int limit = 10,
+  int offset = 0,
+}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_customer_chats(
+          Options$Subscription$listen_on_customer_chats(
+              variables: Variables$Subscription$listen_on_customer_chats(
+                  limit: limit, offset: offset, customer_id: customerId)))
+      .map<List<Message>?>(
+          (QueryResult<Subscription$listen_on_customer_chats> event) {
+    if (event.hasException) {
+      throwError(event.exception);
+    }
+    if (event.parsedData?.service_provider_customer_chat != null) {
+      return event.parsedData!.service_provider_customer_chat
+          .map<Message>(
+              (Subscription$listen_on_customer_chats$service_provider_customer_chat
+                      e) =>
+                  Message(
+                    message: e.chat.last_message['message'],
+                    timestamp: DateTime.parse(e.chat.last_message['timestamp'])
+                        .toLocal(),
+                    userId: e.chat.last_message['userId'],
+                  ))
+          .toList();
+    }
+    return null;
+  });
+}
+
+Future<List<HasuraChat>> get_admin_services_chats(
+    {bool withCache = true, int limit = 10, int offset = 0}) async {
   final List<HasuraChat> _chats = <HasuraChat>[];
 
   final QueryResult<Query$get_admin_chats> response =
       await _hasuraDb.graphQLClient.query$get_admin_chats(
     Options$Query$get_admin_chats(
-      
-    ),
+        fetchPolicy:
+            withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+        variables: Variables$Query$get_admin_chats(
+          limit: limit,
+          offset: offset,
+        )),
   );
   mezDbgPrint(
       "chat response $response  ${response.parsedData?.mez_admin_chat}");
   if (response.parsedData?.mez_admin_chat != null) {
-    response.parsedData!.mez_admin_chat.forEach(
-        (
-            Query$get_admin_chats$mez_admin_chat data) async {
+    response.parsedData!.mez_admin_chat
+        .forEach((Query$get_admin_chats$mez_admin_chat data) async {
       _chats.add(HasuraChat(
           chatInfo: HasuraChatInfo(
             chatTite:
@@ -294,8 +387,9 @@ Future<List<HasuraChat>> get_business_provider_chats({
           lastMessage: data.chat!.last_message != null
               ? Message(
                   message: data.chat!.last_message['message'],
-                  timestamp: DateTime.parse(data.chat!.last_message['timestamp'])
-                      .toLocal(),
+                  timestamp:
+                      DateTime.parse(data.chat!.last_message['timestamp'])
+                          .toLocal(),
                   userId: data.chat!.last_message['userId'],
                 )
               : null,
@@ -305,6 +399,123 @@ Future<List<HasuraChat>> get_business_provider_chats({
   } else {
     return [];
   }
+}
+
+Stream<List<Message>?> listen_on_admin_services_chats({
+  bool withCache = true,
+  int limit = 10,
+  int offset = 0,
+}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_admin_chats(
+          Options$Subscription$listen_on_admin_chats(
+              variables: Variables$Subscription$listen_on_admin_chats(
+                  limit: limit, offset: offset)))
+      .map<List<Message>?>(
+          (QueryResult<Subscription$listen_on_admin_chats> event) {
+    if (event.hasException) {
+      throwError(event.exception);
+    }
+    if (event.parsedData?.mez_admin_chat != null) {
+      return event.parsedData!.mez_admin_chat
+          .map<Message>(
+              (Subscription$listen_on_admin_chats$mez_admin_chat e) => Message(
+                    message: e.chat!.last_message['message'],
+                    timestamp: DateTime.parse(e.chat!.last_message['timestamp'])
+                        .toLocal(),
+                    userId: e.chat!.last_message['userId'],
+                  ))
+          .toList();
+    }
+    return null;
+  });
+}
+
+Future<List<HasuraChat>> get_admin_customers_chats(
+    {bool withCache = true, int limit = 10, int offset = 0}) async {
+  final List<HasuraChat> _chats = <HasuraChat>[];
+
+  final QueryResult<Query$get_admin_service_customer_chats> response =
+      await _hasuraDb.graphQLClient.query$get_admin_service_customer_chats(
+    Options$Query$get_admin_service_customer_chats(
+        fetchPolicy:
+            withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+        variables: Variables$Query$get_admin_service_customer_chats(
+          limit: limit,
+          offset: offset,
+        )),
+  );
+
+  if (response.parsedData?.service_provider_customer_chat != null) {
+    response.parsedData!.service_provider_customer_chat.forEach(
+        (Query$get_admin_service_customer_chats$service_provider_customer_chat
+            data) async {
+      _chats.add(HasuraChat(
+          chatInfo: HasuraChatInfo(
+            chatTite:
+                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
+                    ['chatTitle'],
+            phoneNumber:
+                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
+                    ['phoneNumber'],
+            chatImg:
+                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
+                    ['chatImage'],
+            parentlink:
+                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
+                    ['parentLink'],
+          ),
+          creationTime: DateTime.parse(data.chat.creation_time).toLocal(),
+          id: data.chat.id,
+          messages: _get_messages(data.chat.messages),
+          lastMessage: data.chat.last_message != null
+              ? Message(
+                  message: data.chat.last_message['message'],
+                  timestamp: DateTime.parse(data.chat.last_message['timestamp'])
+                      .toLocal(),
+                  userId: data.chat.last_message['userId'],
+                )
+              : null,
+          participants: []));
+    });
+    return _chats;
+  } else {
+    return [];
+  }
+}
+
+Stream<List<Message>?> listen_on_admin_customers_chats({
+  bool withCache = true,
+  int limit = 10,
+  int offset = 0,
+}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_admin_service_customer_chats(
+          Options$Subscription$listen_on_admin_service_customer_chats(
+              variables:
+                  Variables$Subscription$listen_on_admin_service_customer_chats(
+                      limit: limit, offset: offset)))
+      .map<List<Message>?>(
+          (QueryResult<Subscription$listen_on_admin_service_customer_chats>
+              event) {
+    if (event.hasException) {
+      throwError(event.exception);
+    }
+    if (event.parsedData?.service_provider_customer_chat != null) {
+      return event.parsedData!.service_provider_customer_chat
+          .map<Message>(
+              (Subscription$listen_on_admin_service_customer_chats$service_provider_customer_chat
+                      e) =>
+                  Message(
+                    message: e.chat.last_message['message'],
+                    timestamp: DateTime.parse(e.chat.last_message['timestamp'])
+                        .toLocal(),
+                    userId: e.chat.last_message['userId'],
+                  ))
+          .toList();
+    }
+    return null;
+  });
 }
 
 Future<void> send_message(
