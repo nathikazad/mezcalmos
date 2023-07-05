@@ -36,7 +36,8 @@ export enum RestaurantError {
   UserNotFound = "userNotFound",
   DeepLinkError = "deepLinkError",
   QRGenerationError = "qrGenerationError",
-  RestaurantCreationError = "restaurantCreationError"
+  RestaurantCreationError = "restaurantCreationError",
+  UniqueIdAlreadyExists = "uniqueIdAlreadyExists"
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails): Promise<RestaurantResponse> {

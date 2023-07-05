@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -17,6 +19,10 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
 
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
+import 'package:permission_handler/permission_handler.dart' as pHandler;
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 
 class ServiceProfileController extends GetxController {
   // constants //
@@ -52,24 +58,9 @@ class ServiceProfileController extends GetxController {
       type: ShareType.WhatsApp,
     ),
     SocialShareData(
-      icon: whatsappStatusAsset,
-      label: "status",
-      type: ShareType.WhatsAppStatus,
-    ),
-    SocialShareData(
-      icon: instaAsset,
-      label: "instagram",
-      type: ShareType.Instagram,
-    ),
-    SocialShareData(
       icon: instaStoryAsset,
       label: "story",
       type: ShareType.InstagramStory,
-    ),
-    SocialShareData(
-      icon: facebookAsset,
-      label: "facebook",
-      type: ShareType.Facebook,
     ),
     SocialShareData(
       icon: facebookStoryAsset,
@@ -195,15 +186,104 @@ class ServiceProfileController extends GetxController {
           controllerType: service.serviceProviderType!);
     }
   }
+
+  Future<void> downloadPdfFromLink(String url) async {
+    try {
+      if (kIsWeb) {
+        return;
+      }
+      final File? file = await getFilePath();
+      final String filePath = file!.path;
+
+      // Download the PDF file
+      final http.Response response = await http.get(Uri.parse(url));
+
+      // Save the file to the specified path
+      // File file = File(filePath);
+      await file.writeAsBytes(response.bodyBytes);
+
+      print('PDF downloaded successfully. File path: $filePath');
+      await OpenFile.open(filePath);
+    } catch (e) {
+      print('Failed to download PDF: $e');
+    }
+  }
+
+  Future<File?> getFilePath() async {
+    final String fileName = "business_flyer_${DateTime.now()}.pdf";
+    // Get the application documents directory
+    File? file;
+    if (Platform.isIOS) {
+      final Directory dir = await getApplicationDocumentsDirectory();
+      file = File('${dir.path}/$fileName');
+    } else if (Platform.isAndroid) {
+      final Map<pHandler.Permission, pHandler.PermissionStatus> statuses =
+          await [
+        pHandler.Permission.storage,
+        pHandler.Permission.manageExternalStorage,
+      ].request();
+
+      var storage = statuses[pHandler.Permission.storage];
+      var manageExternalStorage =
+          statuses[pHandler.Permission.manageExternalStorage];
+      if (storage!.isGranted || manageExternalStorage!.isGranted) {
+        final String downloadsFolderPath = '/storage/emulated/0/Download';
+        final Directory dir = Directory(downloadsFolderPath);
+        file = File('${dir.path}/$fileName');
+      }
+    }
+    return file;
+  }
+
+  Future<File?> getDownloadedBusinessImage() async {
+    if (kIsWeb) {
+      return null;
+    }
+    final String fileName = "business_story_${DateTime.now()}.png";
+    // Get the application documents directory
+    File? file;
+    if (Platform.isIOS) {
+      final Directory dir = await getApplicationDocumentsDirectory();
+      file = File('${dir.path}/$fileName');
+    } else if (Platform.isAndroid) {
+      final Map<pHandler.Permission, pHandler.PermissionStatus> statuses =
+          await [
+        pHandler.Permission.storage,
+        pHandler.Permission.manageExternalStorage,
+      ].request();
+
+      var storage = statuses[pHandler.Permission.storage];
+      var manageExternalStorage =
+          statuses[pHandler.Permission.manageExternalStorage];
+      if (storage!.isGranted || manageExternalStorage!.isGranted) {
+        final String downloadsFolderPath = '/storage/emulated/0/Download';
+        final Directory dir = Directory(downloadsFolderPath);
+        file = File('${dir.path}/$fileName');
+      }
+    }
+    try {
+      final String filePath = file!.path;
+
+      // Download the PDF file
+      final http.Response response = await http.get(Uri.parse(businessStoryEn));
+
+      // Save the file to the specified path
+      // File file = File(filePath);
+      await file.writeAsBytes(response.bodyBytes);
+
+      print('Story Image downloaded successfully. File path: $filePath');
+      await OpenFile.open(filePath);
+    } catch (e) {
+      print('Failed to download Story Image: $e');
+    }
+    return file;
+  }
 }
 
 enum ShareType {
   CopyLink,
   WhatsApp,
-  WhatsAppStatus,
-  Instagram,
   InstagramStory,
-  Facebook,
   FacebookStory,
 }
 

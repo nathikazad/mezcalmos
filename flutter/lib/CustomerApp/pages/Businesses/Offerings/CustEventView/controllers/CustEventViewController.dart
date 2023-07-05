@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
+import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
-import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
-import 'package:bot_toast/src/toast.dart';
 
 class CustEventViewController {
   CustBusinessCartController? custBusinessCartController =
@@ -165,7 +163,6 @@ class CustEventViewController {
           parameters: BusinessItemParameters(
             numberOfUnits: totalHours.value,
             timeUnit: timeCost.value!.keys.first,
-            previousCost: totalOrderCost.value,
           ),
           cost: totalOrderCost.value,
           event: _event.value,
