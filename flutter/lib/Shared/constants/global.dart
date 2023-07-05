@@ -355,6 +355,14 @@ const String mezVehicleRentalIconMarker =
 const String mezLaundryIcon = "assets/images/shared/markers/laundryIcon.png";
 const String mezLookingAsset = "assets/images/shared/looking.png";
 
+const String copyLinkAsset = "assets/images/shared/copyLink.png";
+const String instaAsset = "assets/images/shared/insta.png";
+const String instaStoryAsset = "assets/images/shared/instaStory.png";
+const String whatsappAsset = "assets/images/shared/whatsappIcon2.png";
+const String whatsappStatusAsset = "assets/images/shared/whatsappStatus.png";
+const String facebookAsset = "assets/images/shared/facebook.png";
+const String facebookStoryAsset = "assets/images/shared/facebookStory.png";
+
 const String customImageUrl =
     "https://villaexperience.com/wp-content/uploads/2019/09/zacilna-rivieramaya-1-3.jpg";
 Future<void> launchAppStoreLink() async {

@@ -51,11 +51,11 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-       actionIcons: [
-          FloatingCartComponent(
-            cartType: CartType.business,
-          ),
-        ],
+          actionIcons: [
+            FloatingCartComponent(
+              cartType: CartType.business,
+            ),
+          ],
           onClick: MezRouter.back,
           titleWidget: Obx(() => Text(
                 viewController.isMapView
@@ -375,6 +375,7 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                               fontWeight: FontWeight.bold),
                         ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -404,7 +405,7 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                                       null)
                                     Row(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Icon(Icons.single_bed_outlined,
@@ -438,7 +439,7 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                                       null)
                                     Row(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Icon(Icons.house_siding,

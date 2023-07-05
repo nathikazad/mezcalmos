@@ -9,6 +9,7 @@ import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -290,6 +291,10 @@ double calculateDistance(LocationData from, LocationData to) {
 
   return res;
 }
+
+LocModel.MezLocation alitasLoc = LocModel.MezLocation.fromHasura(
+    Geography(15.87259551891018, -97.0804708551),
+    "Costa Chica, 71984 Puerto Escondido, Oaxaca");
 
 /// Don't use thid directly , Use [encodePolyLine()]!
 String _encode(double current, double previous, int factor) {

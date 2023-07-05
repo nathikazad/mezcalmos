@@ -180,9 +180,6 @@ Future<FilterInput?> cusShowBusinessFilerSheet(
                                       );
                                     }),
                                   ),
-                            SizedBox(
-                              height: 5,
-                            ),
                           ],
                         );
                       }),

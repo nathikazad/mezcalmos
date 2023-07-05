@@ -20,8 +20,10 @@ select_permissions:
         - id
         - user_id
       filter:
-        user_id:
-          _eq: X-Hasura-User-Id
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:

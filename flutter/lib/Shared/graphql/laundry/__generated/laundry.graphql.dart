@@ -666,6 +666,13 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'cost_per_km_from_base'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'free_delivery_km_range'),
                 alias: null,
                 arguments: [],
@@ -2460,6 +2467,7 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store$categories$name$transla
 class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
   Query$getLaundries$laundry_store$delivery_details_of_deliverer({
     required this.cost_per_km,
+    required this.cost_per_km_from_base,
     this.free_delivery_km_range,
     required this.self_delivery,
     this.free_delivery_minimum_cost,
@@ -2472,6 +2480,7 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
   factory Query$getLaundries$laundry_store$delivery_details_of_deliverer.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
+    final l$cost_per_km_from_base = json['cost_per_km_from_base'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
     final l$self_delivery = json['self_delivery'];
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
@@ -2481,6 +2490,7 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     final l$$__typename = json['__typename'];
     return Query$getLaundries$laundry_store$delivery_details_of_deliverer(
       cost_per_km: moneyFromJson(l$cost_per_km),
+      cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       self_delivery: (l$self_delivery as bool),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
@@ -2494,6 +2504,8 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
   }
 
   final double cost_per_km;
+
+  final double cost_per_km_from_base;
 
   final double? free_delivery_km_range;
 
@@ -2513,6 +2525,8 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     final _resultData = <String, dynamic>{};
     final l$cost_per_km = cost_per_km;
     _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    _resultData['cost_per_km_from_base'] = moneyToJson(l$cost_per_km_from_base);
     final l$free_delivery_km_range = free_delivery_km_range;
     _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
     final l$self_delivery = self_delivery;
@@ -2536,6 +2550,7 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
   @override
   int get hashCode {
     final l$cost_per_km = cost_per_km;
+    final l$cost_per_km_from_base = cost_per_km_from_base;
     final l$free_delivery_km_range = free_delivery_km_range;
     final l$self_delivery = self_delivery;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
@@ -2545,6 +2560,7 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
+      l$cost_per_km_from_base,
       l$free_delivery_km_range,
       l$self_delivery,
       l$free_delivery_minimum_cost,
@@ -2568,6 +2584,11 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     final l$cost_per_km = cost_per_km;
     final lOther$cost_per_km = other.cost_per_km;
     if (l$cost_per_km != lOther$cost_per_km) {
+      return false;
+    }
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    final lOther$cost_per_km_from_base = other.cost_per_km_from_base;
+    if (l$cost_per_km_from_base != lOther$cost_per_km_from_base) {
       return false;
     }
     final l$free_delivery_km_range = free_delivery_km_range;
@@ -2635,6 +2656,7 @@ abstract class CopyWith$Query$getLaundries$laundry_store$delivery_details_of_del
 
   TRes call({
     double? cost_per_km,
+    double? cost_per_km_from_base,
     double? free_delivery_km_range,
     bool? self_delivery,
     double? free_delivery_minimum_cost,
@@ -2665,6 +2687,7 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliver
 
   TRes call({
     Object? cost_per_km = _undefined,
+    Object? cost_per_km_from_base = _undefined,
     Object? free_delivery_km_range = _undefined,
     Object? self_delivery = _undefined,
     Object? free_delivery_minimum_cost = _undefined,
@@ -2677,6 +2700,10 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliver
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
+        cost_per_km_from_base:
+            cost_per_km_from_base == _undefined || cost_per_km_from_base == null
+                ? _instance.cost_per_km_from_base
+                : (cost_per_km_from_base as double),
         free_delivery_km_range: free_delivery_km_range == _undefined
             ? _instance.free_delivery_km_range
             : (free_delivery_km_range as double?),
@@ -2711,6 +2738,7 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details_of_del
 
   call({
     double? cost_per_km,
+    double? cost_per_km_from_base,
     double? free_delivery_km_range,
     bool? self_delivery,
     double? free_delivery_minimum_cost,
@@ -4408,6 +4436,13 @@ const documentNodeQuerygetLaundryStoreById = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
                 name: NameNode(value: 'cost_per_km'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'cost_per_km_from_base'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -6315,6 +6350,7 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$categories
 class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer {
   Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer({
     required this.cost_per_km,
+    required this.cost_per_km_from_base,
     this.free_delivery_km_range,
     this.free_delivery_minimum_cost,
     required this.id,
@@ -6327,6 +6363,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
   factory Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
+    final l$cost_per_km_from_base = json['cost_per_km_from_base'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
@@ -6336,6 +6373,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     final l$$__typename = json['__typename'];
     return Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
       cost_per_km: moneyFromJson(l$cost_per_km),
+      cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
           ? null
@@ -6349,6 +6387,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
   }
 
   final double cost_per_km;
+
+  final double cost_per_km_from_base;
 
   final double? free_delivery_km_range;
 
@@ -6368,6 +6408,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     final _resultData = <String, dynamic>{};
     final l$cost_per_km = cost_per_km;
     _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    _resultData['cost_per_km_from_base'] = moneyToJson(l$cost_per_km_from_base);
     final l$free_delivery_km_range = free_delivery_km_range;
     _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
@@ -6391,6 +6433,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
   @override
   int get hashCode {
     final l$cost_per_km = cost_per_km;
+    final l$cost_per_km_from_base = cost_per_km_from_base;
     final l$free_delivery_km_range = free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
@@ -6400,6 +6443,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
+      l$cost_per_km_from_base,
       l$free_delivery_km_range,
       l$free_delivery_minimum_cost,
       l$id,
@@ -6423,6 +6467,11 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     final l$cost_per_km = cost_per_km;
     final lOther$cost_per_km = other.cost_per_km;
     if (l$cost_per_km != lOther$cost_per_km) {
+      return false;
+    }
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    final lOther$cost_per_km_from_base = other.cost_per_km_from_base;
+    if (l$cost_per_km_from_base != lOther$cost_per_km_from_base) {
       return false;
     }
     final l$free_delivery_km_range = free_delivery_km_range;
@@ -6491,6 +6540,7 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_d
 
   TRes call({
     double? cost_per_km,
+    double? cost_per_km_from_base,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
     int? id,
@@ -6522,6 +6572,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_detai
 
   TRes call({
     Object? cost_per_km = _undefined,
+    Object? cost_per_km_from_base = _undefined,
     Object? free_delivery_km_range = _undefined,
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
@@ -6535,6 +6586,10 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_detai
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
+        cost_per_km_from_base:
+            cost_per_km_from_base == _undefined || cost_per_km_from_base == null
+                ? _instance.cost_per_km_from_base
+                : (cost_per_km_from_base as double),
         free_delivery_km_range: free_delivery_km_range == _undefined
             ? _instance.free_delivery_km_range
             : (free_delivery_km_range as double?),
@@ -6569,6 +6624,7 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_d
 
   call({
     double? cost_per_km,
+    double? cost_per_km_from_base,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
     int? id,
@@ -10305,6 +10361,13 @@ const documentNodeMutationupdateLaundryInfo = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'cost_per_km_from_base'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'free_delivery_km_range'),
                 alias: null,
                 arguments: [],
@@ -11026,6 +11089,7 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk<
 class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer {
   Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer({
     required this.cost_per_km,
+    required this.cost_per_km_from_base,
     this.free_delivery_km_range,
     this.free_delivery_minimum_cost,
     required this.id,
@@ -11038,6 +11102,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
   factory Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
+    final l$cost_per_km_from_base = json['cost_per_km_from_base'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
@@ -11047,6 +11112,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
     final l$$__typename = json['__typename'];
     return Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer(
       cost_per_km: moneyFromJson(l$cost_per_km),
+      cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
           ? null
@@ -11060,6 +11126,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
   }
 
   final double cost_per_km;
+
+  final double cost_per_km_from_base;
 
   final double? free_delivery_km_range;
 
@@ -11079,6 +11147,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
     final _resultData = <String, dynamic>{};
     final l$cost_per_km = cost_per_km;
     _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    _resultData['cost_per_km_from_base'] = moneyToJson(l$cost_per_km_from_base);
     final l$free_delivery_km_range = free_delivery_km_range;
     _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
@@ -11102,6 +11172,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
   @override
   int get hashCode {
     final l$cost_per_km = cost_per_km;
+    final l$cost_per_km_from_base = cost_per_km_from_base;
     final l$free_delivery_km_range = free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
@@ -11111,6 +11182,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
+      l$cost_per_km_from_base,
       l$free_delivery_km_range,
       l$free_delivery_minimum_cost,
       l$id,
@@ -11134,6 +11206,11 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
     final l$cost_per_km = cost_per_km;
     final lOther$cost_per_km = other.cost_per_km;
     if (l$cost_per_km != lOther$cost_per_km) {
+      return false;
+    }
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    final lOther$cost_per_km_from_base = other.cost_per_km_from_base;
+    if (l$cost_per_km_from_base != lOther$cost_per_km_from_base) {
       return false;
     }
     final l$free_delivery_km_range = free_delivery_km_range;
@@ -11202,6 +11279,7 @@ abstract class CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
 
   TRes call({
     double? cost_per_km,
+    double? cost_per_km_from_base,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
     int? id,
@@ -11233,6 +11311,7 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delive
 
   TRes call({
     Object? cost_per_km = _undefined,
+    Object? cost_per_km_from_base = _undefined,
     Object? free_delivery_km_range = _undefined,
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
@@ -11246,6 +11325,10 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delive
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
+        cost_per_km_from_base:
+            cost_per_km_from_base == _undefined || cost_per_km_from_base == null
+                ? _instance.cost_per_km_from_base
+                : (cost_per_km_from_base as double),
         free_delivery_km_range: free_delivery_km_range == _undefined
             ? _instance.free_delivery_km_range
             : (free_delivery_km_range as double?),
@@ -11280,6 +11363,7 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
 
   call({
     double? cost_per_km,
+    double? cost_per_km_from_base,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
     int? id,

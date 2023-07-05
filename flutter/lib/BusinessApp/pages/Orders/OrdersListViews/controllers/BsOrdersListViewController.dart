@@ -60,6 +60,7 @@ class BsOrdersListViewController {
         if (event != null) {
           _pendingOrders.clear();
           _pendingOrders.value = event;
+          _pendingOrders.sort((a, b) => a.time.compareTo(b.time));
         }
       });
     }, cancel: () {
@@ -85,6 +86,7 @@ class BsOrdersListViewController {
               limit: fetchSize,
               withCache: false);
       upcomingItems += newData;
+      upcomingItems.sort((a, b) => a.time.compareTo(b.time));
       if (newData.length == 0) {
         _upcomingReachedEndOfData = true;
       }
@@ -107,6 +109,7 @@ class BsOrdersListViewController {
           limit: fetchSize,
           withCache: false);
       _pastItems += newData;
+      _pastItems.sort((a, b) => a.time.compareTo(b.time));
       if (newData.length == 0) {
         _pastReachedEndOfData = true;
       }
