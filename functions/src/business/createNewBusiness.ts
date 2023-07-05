@@ -31,7 +31,8 @@ export interface BusinessResponse {
 export enum BusinessError {
   UnhandledError = "unhandledError",
   UserNotFound = "userNotFound",
-  BusinessCreationError = "businessCreationError"
+  BusinessCreationError = "businessCreationError",
+  UniqueIdAlreadyExists = "uniqueIdAlreadyExists"
 }
 
 export async function createNewBusiness(userId: number, businessDetails: BusinessDetails): Promise<BusinessResponse> {

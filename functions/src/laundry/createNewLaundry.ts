@@ -16,6 +16,7 @@ export interface LaundryDetails {
   name: string,
   image: string,
   location: Location,
+  phoneNumber: string,
   schedule: Schedule,
   laundryOperatorNotificationToken?: string,
   firebaseId?: string,
@@ -35,7 +36,8 @@ export enum LaundryError {
   UserNotFound = "userNotFound",
   DeepLinkError = "deepLinkError",
   QRGenerationError = "qrGenerationError",
-  LaundryCreationError = "laundryCreationError"
+  LaundryCreationError = "laundryCreationError",
+  UniqueIdAlreadyExists = "uniqueIdAlreadyExists"
 }
 
 export async function createLaundry(userId: number, laundryDetails: LaundryDetails): Promise<LaundryResponse> {
