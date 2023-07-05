@@ -29,6 +29,9 @@
     "shared_pubspec": {
       "dependencies": {
         "ensure_visible_when_focused": "^1.1.1",
+        "open_file": "^3.3.2",
+        "social_share": "^2.3.1",
+
 
         "cupertino_icons": "^1.0.2",
         "google_api_availability": "^5.0.0",
@@ -369,9 +372,9 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0",
-          "open_file": "^3.3.2",
-          "social_share": "^2.3.1"        },
+          "agora_rtc_engine": "6.1.0"
+         
+           },
         "assets": [
           "assets/images/",
           "assets/images/customer/",
@@ -747,9 +750,9 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0",
-          "open_file": "^3.3.2",
-          "social_share": "^2.3.1"
+          "agora_rtc_engine": "6.1.0"
+       
+       
         },
         "assets": [
           "assets/images/",
