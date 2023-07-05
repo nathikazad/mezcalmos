@@ -4,7 +4,8 @@ import { getCart } from "../shared/graphql/restaurant/cart/getCart";
 import { updateCartDiscount } from "../shared/graphql/restaurant/cart/updateCart";
 import { getCustomerRestaurantOrders } from "../shared/graphql/restaurant/order/getRestaurantOrder";
 import { Cart } from "../shared/models/Services/Restaurant/Cart";
-import { Discount, DiscountType, Offer, ServiceProviderType } from "../shared/models/Services/Service";
+import { Discount, DiscountType, Offer } from "../shared/models/Services/Offer";
+import { ServiceProviderType } from "../shared/models/Services/Service";
 
 export async function applyDiscount(customerId: number, couponCode?: string): Promise< Record<number, Discount> > {
     let cart = await getCart(customerId);
@@ -65,7 +66,7 @@ export async function applyPromotions(customerId: number, cart: Cart): Promise< 
                 || Date.now() > Date.parse(o.details.validityRangeEnd)
             ) return;
         }
-        if(o.details.offerForOrder == "first_order") {
+        if(o.details.offerForOrder == "firstOrder") {
             if(customerRestaurantOrders.length) return;
         }
         appliedPromotions[o.id] = {
@@ -113,7 +114,7 @@ export async function applyCoupon(customerId: number, applyCouponDetails: ApplyC
         }
     }
 
-    if(coupon.details.offerForOrder == "first_order") {
+    if(coupon.details.offerForOrder == "firstOrder") {
         if(customerRestaurantOrders.length) {
             throw new HttpsError(
                 "internal",
@@ -142,7 +143,7 @@ function calculateDiscount(cart: Cart, offer: Offer/*, applyStoreCredit: boolean
     } else 
     if(offer.details.discountType == DiscountType.FlatAmount) {
         if(offer.details.offerForItems) {
-            if(offer.details.offerForItems == "particular_items") {
+            if(offer.details.offerForItems == "particularItems") {
                 cart.items.forEach((i) => {
                     offer.details.items?.forEach((c) => {
                         if(c == i.itemId) {
@@ -150,7 +151,7 @@ function calculateDiscount(cart: Cart, offer: Offer/*, applyStoreCredit: boolean
                         }
                     })
                 })
-            } else if(offer.details.offerForItems == "particular_categories") {
+            } else if(offer.details.offerForItems == "particularCategories") {
                 cart.items.forEach((i) => {
                     offer.details.categories?.forEach((c) => {
                         if(c == i.categoryId) {
@@ -164,7 +165,7 @@ function calculateDiscount(cart: Cart, offer: Offer/*, applyStoreCredit: boolean
         }
     } else if(offer.details.discountType == DiscountType.Percentage) {
         if(offer.details.offerForItems) {
-            if(offer.details.offerForItems == "particular_items") {
+            if(offer.details.offerForItems == "particularItems") {
                 cart.items.forEach((i) => {
                     offer.details.items?.forEach((c) => {
                         if(c == i.itemId) {
@@ -186,7 +187,7 @@ function calculateDiscount(cart: Cart, offer: Offer/*, applyStoreCredit: boolean
         }
     } else if(offer.details.discountType == DiscountType.AnotherSameFlat) {
         let sameItems: number = 0;
-        if(offer.details.offerForItems == "particular_items") {
+        if(offer.details.offerForItems == "particularItems") {
             for(let cartItem of cart.items) {
                 for(let itemId of offer.details.items!) {
                     if(cartItem.itemId == itemId) {
@@ -207,7 +208,7 @@ function calculateDiscount(cart: Cart, offer: Offer/*, applyStoreCredit: boolean
     } else if(offer.details.discountType == DiscountType.AnotherSamePercentage) {
         let sameItems: number = 0;
         let leastCost = 1000000000;
-        if(offer.details.offerForItems == "particular_items") {
+        if(offer.details.offerForItems == "particularItems") {
             for(let cartItem of cart.items) {
                 for(let itemId of offer.details.items!) {
                     if(cartItem.itemId == itemId) {

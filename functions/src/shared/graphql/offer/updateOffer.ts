@@ -1,5 +1,5 @@
 import { getHasura } from "../../../utilities/hasura";
-import { Discount } from "../../models/Services/Service";
+import { Discount } from "../../models/Services/Offer";
 
 export async function updateOffersApplied(orderId: number, offerIdsAndDiscount: Record<number, Discount>) {
     let chain = getHasura();

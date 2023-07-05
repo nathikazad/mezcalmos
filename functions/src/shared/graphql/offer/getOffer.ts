@@ -1,6 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { Offer, OfferStatus, OfferType, ServiceProviderType } from "../../models/Services/Service";
+import { Offer, OfferStatus, OfferType } from "../../models/Services/Offer";
+import { ServiceProviderType } from "../../models/Services/Service";
 
 export async function getServiceProviderOffers(
     serviceProviderId: number, 
@@ -30,6 +31,7 @@ export async function getServiceProviderOffers(
             offer_type: true,
             coupon_code: true,
             details: [{}, true],
+            status: true,
             // name: 
         }]
     });
@@ -41,6 +43,7 @@ export async function getServiceProviderOffers(
             serviceProviderId,
             couponCode: o.coupon_code,
             details: JSON.parse(o.details),
+            status: o.status as OfferStatus
         }
     })
     return offers;
@@ -80,6 +83,7 @@ export async function getCouponDetails(
             offer_type: true,
             coupon_code: true,
             details: [{}, true],
+            status: true,
             // name: 
         }]
     });
@@ -96,6 +100,7 @@ export async function getCouponDetails(
         serviceProviderId,
         couponCode,
         details: JSON.parse(response.service_provider_offer[0].details),
+        status: response.service_provider_offer[0].status as OfferStatus
     }
 }
 

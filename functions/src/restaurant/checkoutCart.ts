@@ -19,10 +19,11 @@ import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/s
 import { applyDiscount } from "./applyOffer";
 import { updateOffersApplied } from "../shared/graphql/offer/updateOffer";
 import { updateStoreCredit } from "../shared/graphql/offer/updateStoreCredit";
-import { DiscountType, ServiceProviderType } from "../shared/models/Services/Service";
+import { ServiceProviderType } from "../shared/models/Services/Service";
 import { updateDeliveryOrderCompany } from '../shared/graphql/delivery/updateDelivery';
 import { ServiceProvider } from '../shared/models/Services/Service';
 import { notifyDeliveryCompany } from '../shared/helper';
+import { DiscountType } from '../shared/models/Services/Offer';
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
