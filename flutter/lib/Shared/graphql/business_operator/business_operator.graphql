@@ -8,6 +8,9 @@ query getBusinessOperatorByUserId($userId: Int!) {
     }
   business{
     details_id
+    details {
+      online_ordering
+    }
   }
     user_id
     user {
@@ -37,6 +40,19 @@ business{
   
   }
 }
+query getOperatorBusinessOnlineOrdering($userId: Int!) {
+  business_operator(where: {user_id: {_eq: $userId}}) {
+business{
+  details {
+    online_ordering
+  }
+  
+}
+   
+   
+  
+  }
+}
 
 query getBusinessOperators($businessId: Int!) {
   business_business_by_pk(id: $businessId) {
@@ -49,7 +65,7 @@ query getBusinessOperators($businessId: Int!) {
     }
   business{
     details_id
-    details{service_link_id}
+    details{service_link_id,online_ordering}
   }
     user_id
     user {

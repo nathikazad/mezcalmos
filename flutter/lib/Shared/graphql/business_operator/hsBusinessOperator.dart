@@ -59,6 +59,26 @@ Future<BusinessProfile?> get_operator_business_profile(
   return null;
 }
 
+Future<bool?> get_business_online_ordering({required int opUserId}) async {
+  QueryResult<Query$getOperatorBusinessOnlineOrdering> res =
+      await _db.graphQLClient.query$getOperatorBusinessOnlineOrdering(
+          Options$Query$getOperatorBusinessOnlineOrdering(
+              fetchPolicy: FetchPolicy.noCache,
+              variables: Variables$Query$getOperatorBusinessOnlineOrdering(
+                  userId: opUserId)));
+
+  if (res.parsedData?.business_operator == null) {
+    throw Exception("🟥 Get business operator exceptions =>${res.exception}");
+  }
+
+  if (res.parsedData!.business_operator.isNotEmpty) {
+    final Query$getOperatorBusinessOnlineOrdering$business_operator data =
+        res.parsedData!.business_operator.first;
+    return data.business.details.online_ordering;
+  }
+  return null;
+}
+
 Future<List<dartModel.Operator>> get_business_ops(
     {required int businessId}) async {
   QueryResult<Query$getBusinessOperators> res = await _db.graphQLClient
@@ -78,6 +98,7 @@ Future<List<dartModel.Operator>> get_business_ops(
             dartModel.Operator(
                 state: dartModel.OperatorState(
                     deliveryDetailsId: null,
+                    isOnlineOrdering: e.business.details.online_ordering,
                     serviceProviderDetailsId: e.business.details_id,
                     serviceLinkId: e.business.details.service_link_id,
                     operatorState: e.operator_details.status.toAgentStatus(),
