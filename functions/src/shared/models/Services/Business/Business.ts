@@ -156,6 +156,7 @@ export enum BusinessProfile {
   Photography = "photography",
   BeautySalon = "beautySalon",
   TattooArtist = "tattooArtist",
+  CoWorking = "coWorking",
   RealEstate = "realEstate",
 }
 export enum RentalCategory2 {

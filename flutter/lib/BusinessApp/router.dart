@@ -2,6 +2,7 @@ import 'package:mezcalmos/BusinessApp/BusinessWrapper.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/BsOpSchedulePickerView.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpTabsView.dart';
 import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/BsHomeRentalOrderView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsCoWorkingView/BsCoWorkingView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsOtherServiceView/BsOtherServiceView.dart';
@@ -20,6 +21,7 @@ class BusinessOpRoutes {
   static const String kBusniessOpTabsView = '/tabsView';
   static const String kBusniessOpServiceList = '/services/:id';
   static const String kBsOpHomeRental = '/homeRental/:id';
+  static const String kBsCoWorking = '/woWorking/:id';
   static const String kBsOpRealEstate = '/realEstate/:id';
   static const String kBsOpHomeRentalOrder = '/homeRentalOrder/:id';
   static const String kBsOpRental = '/rental/:id';
@@ -83,6 +85,11 @@ class BusinessOpRoutes {
       path: kBsOpHomeRental,
       name: kBsOpHomeRental,
       builder: () => BsOpHomeRentalView(),
+    ),
+    QRoute(
+      path: kBsCoWorking,
+      name: kBsCoWorking,
+      builder: () => BsCoWorkingView(),
     ),
     QRoute(
       path: kBsOpRealEstate,
