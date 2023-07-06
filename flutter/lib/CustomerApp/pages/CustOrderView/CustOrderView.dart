@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/EventCartItemCard.dart';
@@ -72,20 +71,19 @@ class _CustOrderViewState extends State<CustOrderView> {
           : Obx(() {
               if (custBusinessCartController.currentOrderInView.value == null) {
                 return SizedBox.shrink();
-              } else if (custBusinessCartController
-                          .currentOrderInView.value!.status ==
-                      BusinessOrderRequestStatus.Confirmed ||
-                  custBusinessCartController.currentOrderInView.value!.status ==
-                      BusinessOrderRequestStatus.Completed) {
-                return CustAddReviewButton(
-                  orderId:
-                      custBusinessCartController.currentOrderInView.value!.id!,
-                  toEntityId: custBusinessCartController
-                      .currentOrderInView.value!.businessId!
-                      .toInt(),
-                  toEntityType: ServiceProviderType.Business,
-                );
-              } else {
+              }
+              // else if (custBusinessCartController
+              //     .currentOrderInView.value!.showReviewButton) {
+              //   return CustAddReviewButton(
+              //     orderId:
+              //         custBusinessCartController.currentOrderInView.value!.id!,
+              //     toEntityId: custBusinessCartController
+              //         .currentOrderInView.value!.businessId!
+              //         .toInt(),
+              //     toEntityType: ServiceProviderType.Business,
+              //   );
+              // }
+              else {
                 return SizedBox.shrink();
               }
             }),
