@@ -18,7 +18,8 @@ class BusinessOpAuthController extends GetxController {
   RxnInt _companyDetailsId = RxnInt();
   int? get companyId => _companyId.value;
   int? get companyDetailsId => _companyDetailsId.value;
-
+  RxBool _isOnlineOrdering = RxBool(false);
+  bool get isOnlineOrdering => _isOnlineOrdering.value;
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
 
@@ -36,9 +37,9 @@ class BusinessOpAuthController extends GetxController {
 
   int get businessDetailsId =>
       operator.value!.serviceProviderDetailsId!.toInt();
-  set setBusinessProfile(BusinessProfile? value) {
-    _businessProfile = value;
-  }
+  // set setBusinessProfile(BusinessProfile? value) {
+  //   _businessProfile = value;
+  // }
 
   @override
   void onInit() {
@@ -66,8 +67,6 @@ class BusinessOpAuthController extends GetxController {
     try {
       mezDbgPrint("Gettign Business operator for user id: $operatorUserId");
       operator.value = await get_business_operator(userId: operatorUserId);
-
-      mezDbgPrint("Operator value  ====>${operator.value}");
       _businessProfile =
           await get_operator_business_profile(userId: operatorUserId);
       mezDbgPrint("_businessProfile $_businessProfile");
@@ -75,8 +74,10 @@ class BusinessOpAuthController extends GetxController {
         _companyId.value = operator.value!.serviceProviderId.toInt();
         _companyDetailsId.value =
             operator.value!.serviceProviderDetailsId!.toInt();
-        _businessProfile =
-            await get_operator_business_profile(userId: operatorUserId);
+        _isOnlineOrdering.value =
+            await get_business_online_ordering(opUserId: operatorUserId) ??
+                false;
+
         mezDbgPrint("_businessProfile $_businessProfile");
         Get.find<SideMenuDrawerController>()
             .addContactAdminItem(id: companyId!, type: RecipientType.Business);

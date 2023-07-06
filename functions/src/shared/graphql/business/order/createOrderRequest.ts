@@ -54,7 +54,7 @@ export async function createOrderRequest(
                         chat_participants: {
                             data: [{
                                 participant_id: customerId,
-                                app_type_id: AppType.Business
+                                app_type_id: AppType.Customer
                             },
                             ...businessOperatorsDetails,
                             ...mezAdminDetails]

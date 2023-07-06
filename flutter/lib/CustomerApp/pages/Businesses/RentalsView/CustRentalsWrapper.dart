@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustCoWorkingListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -48,6 +49,9 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
         return;
       case MezService.Home:
         CustHomeRentalListView.navigate();
+        return;
+      case MezService.CoWorking:
+        CustCoWorkingListView.navigate();
         return;
     }
   }
