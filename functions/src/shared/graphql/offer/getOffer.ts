@@ -1,7 +1,7 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { Offer, OfferStatus, OfferType } from "../../models/Services/Offer";
 import { ServiceProviderType } from "../../models/Services/Service";
+import { MezError } from "../../models/Generic/Generic";
 
 export async function getServiceProviderOffers(
     serviceProviderId: number, 
@@ -88,10 +88,7 @@ export async function getCouponDetails(
         }]
     });
     if(response.service_provider_offer.length == 0) {
-        throw new HttpsError(
-            "internal",
-            "invalid coupon code"
-        );
+        throw new MezError("invalidCouponCode");
     }
     return {
         id: response.service_provider_offer[0].id,

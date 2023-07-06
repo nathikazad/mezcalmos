@@ -130,7 +130,7 @@ export async function applyCoupon(customerId: number, applyCouponDetails: ApplyC
     }
 }
 
-function calculateDiscount(cart: Cart, offer: Offer/*, applyStoreCredit: boolean*/): number {
+export function calculateDiscount(cart: Cart, offer: Offer/*, applyStoreCredit: boolean*/): number {
     let discountValue = 0;
     if(offer.details.discountType == DiscountType.StoreCredit/* && applyStoreCredit*/) {
     //         updateStoreCredit(

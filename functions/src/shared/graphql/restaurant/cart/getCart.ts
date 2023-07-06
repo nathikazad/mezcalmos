@@ -37,7 +37,7 @@ export async function getCart(customerId: number): Promise<Cart> {
         }]
     });
 
-    if(response.restaurant_cart == null || response.restaurant_cart.length == 0) {
+    if(response.restaurant_cart == null || response.restaurant_cart.length == 0 || response.restaurant_cart[0].restaurant_id == null) {
         throw new MezError("cartNotFound");
     }
     // console.log("[GLOBAL[0]] SelectedOptions ===> ", response.restaurant_cart[0].items[0].selected_options);
